@@ -26,12 +26,12 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What does BioStack actually do?',
     answer:
-      'BioStack is a personal bio-protocol operating system. It lets you log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
+      'BioStack is a free, public library of what the research says about peptides and similar compounds, graded by evidence strength. Paid tiers add your own layer: log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
   },
   {
     question: 'Who is BioStack designed for?',
     answer:
-      'BioStack is built for serious self-experimenters who manage complex compound protocols and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
+      'BioStack is built for serious self-experimenters who manage complex stacks and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
   },
   {
     question: 'What is the Reconstitution Calculator?',
@@ -51,17 +51,17 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What is Pathway Overlap detection?',
     answer:
-      'Pathway Overlap detection analyzes your protocol and identifies when two or more compounds share the same biological pathways. BioStack surfaces flags and evidence confidence levels so you can investigate further.',
+      'Pathway Overlap detection analyzes your stack and identifies when two or more compounds share the same biological pathways. BioStack surfaces findings and confidence levels so you can investigate further.',
   },
   {
     question: 'Where is my data stored?',
     answer:
-      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share protocol information with third parties.',
+      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share stack information with third parties.',
   },
   {
     question: 'How is BioStack different from a spreadsheet?',
     answer:
-      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for protocol operations rather than passive storage.',
+      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack pairs source-graded evidence with those tools rather than passive storage.',
   },
   {
     question: 'What daily metrics can I track?',
@@ -105,7 +105,7 @@ const pricingContent: Record<ProductPlanCode, Omit<PricingTier, 'name' | 'taglin
     description: 'Longitudinal Intelligence.',
     detail:
       'Advanced reviewed intelligence for ambiguity analysis and longitudinal observational reports.',
-    ctaLabel: 'See Commander',
+    ctaLabel: 'Choose Commander',
     highlights: [
       'Protocol review across run history',
       'Pattern memory snapshots',
@@ -130,7 +130,7 @@ export const pricingTiers: PricingTier[] = (['observer', 'operator', 'commander'
 
 export const landingFeatures = [
   'Compound tracking with precision structure',
-  'Pathway overlap intelligence across your active protocol',
+  'Pathway overlap intelligence across your active stack',
   'Reconstitution, volume, and unit conversion math',
   'Evidence-tiered knowledge base entries',
   'Daily check-ins that turn subjectivity into analyzable signal',

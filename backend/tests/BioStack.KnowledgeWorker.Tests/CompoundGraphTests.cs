@@ -232,6 +232,96 @@ public class CompoundGraphTests
     }
 
     [Fact]
+    public void Builder_Falls_Back_To_Registry_Tier_For_Source_Not_Declared_By_Packet()
+    {
+        // The packet does not declare this source, so the registry is the only place the tier can come
+        // from. Registry schema v2 nests the id under identity and the tier under evidencePolicy; before
+        // the lookup was fixed this fallback read top-level fields, matched nothing, and the edge was
+        // left with no authority mix at all.
+        var builder = new CompoundGraphBuilder(new RelationshipPacketAuthorizer());
+        var packet = BuildRelationshipPacket(
+            packetId: "p-registry-fallback",
+            relationships: new[]
+            {
+                MakeRelationshipJson(
+                    subject: "RegistrySubj",
+                    obj: "RegistryObj",
+                    relationshipType: "complementary",
+                    sourceRefs: new[] { "nih-ods-vitamin-d-hp" },
+                    evidenceTier: "Limited",
+                    confidence: "moderate"),
+            },
+            packetSources: Array.Empty<(string, string)>());
+
+        var registry = (JsonNode)new JsonObject
+        {
+            ["sources"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["identity"] = new JsonObject
+                    {
+                        ["sourceId"] = "nih-ods",
+                        ["aliases"] = new JsonArray("nih-ods-vitamin-d-hp"),
+                    },
+                    ["evidencePolicy"] = new JsonObject { ["authorityTier"] = "C2" },
+                },
+            },
+        };
+
+        var graph = builder.Build(
+            new JsonArray(), Array.Empty<JsonNode>(), new[] { (JsonNode)packet }, registry);
+
+        var edge = graph.Edges.Single(e =>
+            e.EdgeId.StartsWith("relationship:registrysubj:registryobj", StringComparison.Ordinal));
+        Assert.Equal(new[] { "C2" }, edge.SourceAuthorityMix.AuthorityTiers);
+    }
+
+    [Fact]
+    public void Builder_Prefers_Packet_Declared_Tier_Over_Registry()
+    {
+        // Registry resolution is a fallback only. A source the packet declares keeps the packet's tier,
+        // so fixing the fallback cannot silently retier an existing packet source.
+        var builder = new CompoundGraphBuilder(new RelationshipPacketAuthorizer());
+        var packet = BuildRelationshipPacket(
+            packetId: "p-packet-precedence",
+            relationships: new[]
+            {
+                MakeRelationshipJson(
+                    subject: "PrecedenceSubj",
+                    obj: "PrecedenceObj",
+                    relationshipType: "complementary",
+                    sourceRefs: new[] { "nih-ods" },
+                    evidenceTier: "Limited",
+                    confidence: "moderate"),
+            },
+            packetSources: new[] { ("nih-ods", "B1") });
+
+        var registry = (JsonNode)new JsonObject
+        {
+            ["sources"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["identity"] = new JsonObject
+                    {
+                        ["sourceId"] = "nih-ods",
+                        ["aliases"] = new JsonArray(),
+                    },
+                    ["evidencePolicy"] = new JsonObject { ["authorityTier"] = "C2" },
+                },
+            },
+        };
+
+        var graph = builder.Build(
+            new JsonArray(), Array.Empty<JsonNode>(), new[] { (JsonNode)packet }, registry);
+
+        var edge = graph.Edges.Single(e =>
+            e.EdgeId.StartsWith("relationship:precedencesubj:precedenceobj", StringComparison.Ordinal));
+        Assert.Equal(new[] { "B1" }, edge.SourceAuthorityMix.AuthorityTiers);
+    }
+
+    [Fact]
     public void Builder_Flags_Source_Authority_Mix_Mismatch_From_Packet()
     {
         var builder = new CompoundGraphBuilder(new RelationshipPacketAuthorizer());

@@ -1,12 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { PublicCalculatorExperience } from '@/components/marketing/PublicCalculatorExperience';
-import type { Metadata } from 'next';
+import { createPublicPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createPublicPageMetadata({
   title: 'Dose Volume Calculator | BioStack',
   description: 'Calculate the draw volume for a target dose from a known concentration.',
-};
+  path: '/tools/volume-calculator',
+});
 
 export default function VolumeCalculatorPage() {
   const howToSchema = {

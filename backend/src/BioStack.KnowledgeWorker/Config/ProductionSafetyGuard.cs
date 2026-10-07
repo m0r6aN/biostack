@@ -36,7 +36,8 @@ public static class ProductionSafetyGuard
         {
             throw new InvalidOperationException(
                 "Worker:RunMode must be set to 'Seed', 'Refresh', 'Research', 'PromotionImportDryRun', " +
-                "or 'ProtocolIntelligenceEvaluation' in Production. " +
+                "'ProtocolIntelligenceEvaluation', 'SourceAcquisition', or " +
+                "'SourceAcquisitionRetention' in Production. " +
                 "The worker runs one-shot under Azure Container App Jobs and does not " +
                 "accept implicit defaults in Production.");
         }
@@ -122,7 +123,11 @@ public static class ProductionSafetyGuard
         return false;
     }
 
-    private static bool IsLocalHost(string host)
+    /// <summary>
+    /// Public so other startup guards (e.g. the Refresh <c>AllowUnpromoted</c> override)
+    /// can apply the same localhost definition without duplicating it.
+    /// </summary>
+    public static bool IsLocalHost(string host)
     {
         return host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
             || host.Equals("127.0.0.1", StringComparison.Ordinal)

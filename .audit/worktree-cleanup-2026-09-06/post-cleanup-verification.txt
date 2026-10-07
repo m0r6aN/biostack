@@ -1,0 +1,36 @@
+Post-cleanup verification — generated 2026-09-07 01:09 UTC from live git state
+=======================================================================
+
+Registered worktrees: 12  (before: 125)
+D:/Repos/BioStack                                                          d4494f8 [lead/gtm-wave006-rereview-20260905]
+C:/Users/clint/.codex/worktrees/biostack-remediation-q02/BioStack          dea7212 [codex/biostack-remediation-q02]
+C:/Users/clint/.codex/worktrees/biostack-sidecar-deployment-goal/BioStack  038b617 [codex/goal-biostack-sidecar-deployment]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-contracts/BioStack     879def1 [codex/test-repro-contracts]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-evidence/BioStack      2c9d6ca [codex/test-repro-evidence]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-interaction/BioStack   56b7ad2 [codex/test-repro-interaction]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-outbound/BioStack      c3e30a9 [codex/test-repro-outbound]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-parser/BioStack        817f6f3 [codex/test-repro-parser]
+C:/Users/clint/.codex/worktrees/biostack-test-repro-sidecar/BioStack       82295c3 [codex/test-repro-sidecar]
+D:/Repos/BioStack-governance-p1                                            456fed2 [codex/biostack-governance-p1]
+D:/Repos/BioStack-governed-delivery-charter                                d230ce9 [codex/biostack-governed-delivery-charter]
+D:/Repos/BioStack/.worktrees/track-c-production-ops                        5e0d0ea [codex/track-c-production-ops-20260728]
+
+D:/Repos/BioStack-* directories remaining: 2  (before: 83)
+/d/Repos/BioStack-governance-p1//
+/d/Repos/BioStack-governed-delivery-charter//
+
+Local branches: 221  (before: 221 — see refs-before.txt)
+
+Salvage tags (orphaned commits made permanently reachable):
+  salvage/orphan-auth-session-recovery -> 2c4bdac  fix(auth): persist sessions and recover stale cookies
+  salvage/orphan-db-auth-billing-repair -> 5404e20  fix(db): repair PostgreSQL auth and billing type drift
+  salvage/orphan-passkey-webauthn -> b3cde26  feat(auth): add passkey WebAuthn sign-in
+  salvage/orphan-profile-goals-contract -> ff5eb5e  fix: implement authenticated profile goals contract
+
+Loose objects after gc:
+count: 49
+in-pack: 11063
+garbage: 0
+
+Dangling commits remaining (all 98 archived to bundle before gc):
+  12

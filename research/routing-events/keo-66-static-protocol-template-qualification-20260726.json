@@ -1,0 +1,80 @@
+{
+  "event_id": "keo-66-static-protocol-template-qualification-20260726",
+  "timestamp": "2026-07-26T18:45:00Z",
+  "task_id": "KEO-66-STATIC-PROTOCOL-TEMPLATE-QUALIFICATION-027",
+  "event_type": "validate",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used an existing clean agent-owned audit worktree after repeated new-worktree materialization failures.",
+    "Removed a false persisted-success claim rather than introducing an unauthenticated client-only simulation.",
+    "Kept the change to the static template and a deterministic source-contract test."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "client-only-dose-log",
+      "reason": "Browser-only state would still misrepresent persistence and would not satisfy authorization, idempotency, retention, or privacy requirements."
+    },
+    {
+      "id": "new-live-dose-api",
+      "reason": "A new authenticated persistence contract is outside this narrow customer-surface qualification parcel."
+    }
+  ],
+  "effort": "low",
+  "context": {
+    "estimated_tokens": 3500,
+    "artifact_refs": [
+      "frontend/templates/protocol_template.html",
+      "frontend/src/__tests__/templates/ProtocolTemplateQualification.test.ts",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-66-STATIC-PROTOCOL-TEMPLATE-QUALIFICATION-027.md"
+    ],
+    "data_classification": "public"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "repository-read",
+    "focused-test-execution",
+    "git-read",
+    "git-write",
+    "draft-pr-publication"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "vitest",
+    "git-read",
+    "git-write",
+    "github"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Focused static-template Vitest",
+      "status": "blocked",
+      "evidence_ref": "Local worktree has no installed frontend dependencies; hosted CI is the acceptance gate."
+    },
+    {
+      "method": "Git diff whitespace and scope audit",
+      "status": "passed",
+      "evidence_ref": "git diff --check passed; exact scope is two implementation/test files and two evidence files."
+    },
+    {
+      "method": "Routing event schema",
+      "status": "passed",
+      "evidence_ref": "Validated against the optimized-model-routing-orchestrator routing-event schema."
+    }
+  ],
+  "retry_count": 1,
+  "escalation_history": [
+    "Local focused Vitest could not start because vitest/config and the frontend dependency tree are not installed in this clean worktree; deferred execution to hosted CI."
+  ],
+  "outcome": "partial"
+}

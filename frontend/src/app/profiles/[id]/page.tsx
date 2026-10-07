@@ -34,7 +34,14 @@ export default function ProfileDetailPage() {
   useEffect(() => {
     loadData();
     setCurrentProfileId(id);
-    if (new URLSearchParams(window.location.search).get('imported') === 'tools') {
+    const importedSources = (new URLSearchParams(window.location.search).get('imported') ?? '').split(',');
+    if (importedSources.includes('analyzer')) {
+      setImportConfirmation(
+        importedSources.includes('tools')
+          ? 'We added the compounds you entered in the Protocol Analyzer, plus your saved calculations and setups from this device.'
+          : 'We added the compounds you entered in the Protocol Analyzer, as you entered them. Review them below.'
+      );
+    } else if (importedSources.includes('tools')) {
       setImportConfirmation('We imported your saved calculations and setups from this device.');
     }
   }, [id]);
@@ -139,6 +146,7 @@ export default function ProfileDetailPage() {
               {isEditing ? (
                 <ProfileForm
                   initialData={profile}
+                  initialGoalIds={profileGoals.map(goal => goal.id)}
                   onSubmit={handleUpdate}
                   onCancel={() => setIsEditing(false)}
                   isSubmitting={isSubmitting}
@@ -231,7 +239,7 @@ export default function ProfileDetailPage() {
               ) : (
                 <div className="space-y-3">
                   {compounds.slice(0, 5).map((comp) => (
-                    <div key={comp.id} className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:bg-white/[0.04] transition-colors group">
+                    <Link key={comp.id} href={`/compounds?select=${comp.id}`} className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:bg-white/[0.04] transition-colors group">
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-white/80 truncate group-hover:text-white transition-colors">{comp.name}</p>
                         <p className="text-[10px] uppercase font-bold tracking-wider text-white/20 mt-0.5">{comp.category}</p>
@@ -245,7 +253,7 @@ export default function ProfileDetailPage() {
                       }`}>
                         {comp.status.toUpperCase()}
                       </span>
-                    </div>
+                    </Link>
                   ))}
                   {compounds.length > 5 && (
                     <Link href="/compounds" className="block text-center text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white/40 pt-2 transition-colors">

@@ -1,0 +1,95 @@
+{
+  "event_id": "keo-74-network-foundation-20260726",
+  "event_type": "validate",
+  "outcome": "accepted",
+  "task_id": "KEO-74-NETWORK-FOUNDATION-020",
+  "timestamp": "2026-07-26T16:46:07Z",
+  "selected": {
+    "id": "codex-isolated-author",
+    "kind": "agent",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "effort": "medium",
+  "permissions": [
+    "isolated-worktree-write",
+    "git-read",
+    "azure-read-only-query",
+    "azure-what-if",
+    "azure-bicep-compile"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "azure-cli-read",
+    "azure-what-if",
+    "azure-bicep-compile",
+    "git-read"
+  ],
+  "rationale": [
+    "Kept the network foundation separate from merged PR #231 so current workloads and final-state ACR checks remain unchanged.",
+    "Used an additive parallel VNet-integrated workload-profile environment and explicit preservation guards for the transitional ACR upgrade.",
+    "Accepted the review-only foundation after independent infrastructure review; cost approval, global CIDR ownership, runner provisioning, and deployment authorization remain separate operator gates."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "modify-current-container-apps-environment",
+      "reason": "The current environment cannot be safely retrofitted without migrating existing apps and widening the authorized scope."
+    },
+    {
+      "id": "disable-acr-public-access-now",
+      "reason": "The transition must preserve current registry access until private publication and pull paths are independently proven."
+    },
+    {
+      "id": "provision-self-hosted-runner",
+      "reason": "Runner compute is an external operator-owned prerequisite and is explicitly outside this parcel."
+    }
+  ],
+  "context": {
+    "data_classification": "internal",
+    "artifact_refs": [
+      "infra/azure/source-acquisition-network-foundation.bicep",
+      "infra/azure/source-acquisition-acr-transition.bicep",
+      "infra/azure/source-acquisition-network-foundation.parameters.example.json",
+      "infra/azure/verify-source-acquisition-network-foundation.ps1",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-NETWORK-FOUNDATION-020.md"
+    ],
+    "estimated_tokens": 12000
+  },
+  "cost": {
+    "estimated": null,
+    "actual": null,
+    "currency": "USD",
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "enabled-subscription VNet inventory",
+      "status": "passed",
+      "evidence_ref": "Zero VNets returned for subscription 909e0322-c3c0-4bce-ae53-b3d2ed735bd4 on 2026-07-26."
+    },
+    {
+      "method": "existing ACR transition-state query",
+      "status": "passed",
+      "evidence_ref": "Basic; publicNetworkAccess Enabled; adminUserEnabled true; no secret values queried."
+    },
+    {
+      "method": "Bicep compile and deterministic verifier",
+      "status": "passed",
+      "evidence_ref": "Both Bicep templates compiled; verifier passed nine root resources and all seven downstream network outputs."
+    },
+    {
+      "method": "Azure what-if",
+      "status": "passed",
+      "evidence_ref": "Foundation what-if succeeded with eight additive creates; direct ACR what-if had only sku.name delta and preserved Enabled/true access."
+    },
+    {
+      "method": "independent infrastructure review",
+      "status": "passed",
+      "evidence_ref": "Independent re-review passed both Bicep compiles, canonical routing schema, staged diff validation, exact eight-Create allowlist enforcement, and direct ACR sku.name-only what-if."
+    }
+  ],
+  "retry_count": 1,
+  "escalation_history": [
+    "An initial direct ACR what-if exposed inferred deletion of three ancillary properties; the transition module was hardened to preserve the entire audited registry policy state, and the final direct what-if reported only sku.name."
+  ]
+}

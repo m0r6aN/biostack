@@ -9,7 +9,13 @@ import { SettingsProvider } from '@/lib/settings';
 import type { CheckIn, CompoundRecord, GoalDefinition, ProtocolRun } from '@/lib/types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+// Header renders the app-shell GlobalSearch, which needs next/navigation's
+// router context — these tests don't mount one, so provide a minimal stub.
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
 
 // Wrappers
 const WithSettings = ({ children }: { children: React.ReactNode }) => (

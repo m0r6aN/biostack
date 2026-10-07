@@ -99,7 +99,19 @@ function formatTimestamp(iso: string): string {
 
 export default function AuditReceiptFeedPage() {
   if (!isEnabled("decisionTheater")) {
-    return null;
+    return (
+      <div className="flex-1 p-6 max-w-3xl mx-auto w-full space-y-3">
+        <h1 className="text-xl font-semibold text-white">Audit Receipts.</h1>
+        <p className="text-sm text-white/55">
+          This surface streams the verifiable decision receipts recorded for governed
+          actions — protocol reviews, compound classifications, data exports, and
+          promotion gates — so every consequential decision can be audited after the fact.
+        </p>
+        <p className="text-sm text-white/40">
+          It is not enabled in this environment yet.
+        </p>
+      </div>
+    );
   }
 
   return <AuditReceiptFeedContent />;

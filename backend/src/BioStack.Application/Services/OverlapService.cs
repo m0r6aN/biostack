@@ -24,7 +24,7 @@ public sealed class OverlapService : IOverlapService
 
         var intelligence = await _interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, cancellationToken);
         var flags = intelligence.Interactions
-            .Where(result => result.Type != InteractionType.Neutral)
+            .Where(result => result.Type != InteractionType.Neutral && result.Type != InteractionType.Unknown)
             .Select(MapToFlag)
             .ToList();
 

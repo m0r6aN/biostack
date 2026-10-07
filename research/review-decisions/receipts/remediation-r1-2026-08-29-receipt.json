@@ -1,0 +1,358 @@
+{
+ "fixes": [
+  {
+   "slug": "clomiphene",
+   "ok": true,
+   "itemsFixed": [
+    "externalIdentifiers: populated casNumber (50-41-9), unii (1B8447E7YI), drugbank (DBSALT000490) \u2014 verified via live Sigma-Aldrich, DailyMed, and DrugBank fetches this session",
+    "clomiphene-warning-ohss-visual-multiple-pregnancy-001: softened CRVO/visual-disturbance wording from settled-causation to 'possible predisposing association, further trials needed' per Karger systematic review, added verbatim quotes + new sourceRef",
+    "clomiphene-efficacy-male-hypogonadism-testosterone-001: added durability caveat (TT falls from 22.7\u00b18.1 to 10.2\u00b13.9 nmol/L 3 months post-discontinuation, 78% below threshold) sourced to a fetched primary study (PMID 27622282)",
+    "clomiphene-evidence-gap-pct-marketing-001: updated 'no controlled human trials' framing to acknowledge two newly published 2026 sources (BJU International cohort study PMID 41147237; Andrology review PMID 42387872), bumped evidenceTier Insufficient->Limited, added verbatim quotes",
+    "clomiphene-adverse-effects-male-hypogonadism-001: removed self-certifying inline reviewFlags text (process concern / promotionBlocker 4) and moved that verification context into ops.reviewReasons",
+    "ops.reviewReasons and ops.qualityFlags updated to document all remediation actions and remaining gaps; appended 'remediation-pass-2026-08-29' to qualityFlags"
+   ],
+   "itemsStillGated": [
+    "PCT evidence-gap claim (clomiphene-evidence-gap-pct-marketing-001): the 2026 BJU/Andrology sources are a non-randomized cohort study and a narrative review, not RCTs, so no RCT-grade PCT-specific efficacy/safety data exists yet; PubMed full-text access was CAPTCHA-blocked this session, so only Europe PMC REST abstract data could be verified \u2014 claim stays review-gated pending full-text confirmation",
+    "RxNorm and ChEMBL identifiers remain null: RxNav lookup returned ambiguous RxCUI candidates (142431, 2596) without a confirmable match, and no ChEMBL ID was located this session",
+    "Male-hypogonadism and PCT-specific human evidence remains comparatively thin overall (meta-analysis flags its own safety analysis as underpowered) and is recommended for reconfirmation against an endocrine-society guideline at next review",
+    "Vendor/marketing source (ro.co) remains a single non-independent example of PCT marketing language; broader marketing-claim sampling still recommended before publication",
+    "conflicts entry clomiphene-conflict-male-use-status-001 remains resolutionStatus=needs-human-review per the verdict's note that this framing should stay review-gated"
+   ],
+   "newSources": [
+    "https://pubmed.ncbi.nlm.nih.gov/27622282/ (Clomiphene citrate treatment for late onset hypogonadism: rise and fall)",
+    "https://karger.com/goi/article/71/2/73/152291/Association-between-Clomiphene-Citrate-and-Visual",
+    "https://europepmc.org/article/MED/41147237 (BJU International PCT cohort study)",
+    "https://europepmc.org/article/MED/42387872 (Andrology PCT narrative review)",
+    "https://www.sigmaaldrich.com/US/en/product/sial/c6272 (CAS 50-41-9 verification)",
+    "https://go.drugbank.com/salts/DBSALT000490 (DrugBank salt ID verification)"
+   ],
+   "summary": "Remediated the clomiphene packet against every claimVerdict and promotionBlocker in the review. Fetched and verified all figures live this session before writing them: confirmed CAS 50-41-9 / UNII 1B8447E7YI / DrugBank DBSALT000490 (closing the identifiers gap), confirmed the Karger CRVO quote used to soften the visual-disturbance warning, confirmed the exact 22.7/10.2 nmol/L and 78% figures for the male-hypogonadism durability caveat, and confirmed abstract text for two newly published 2026 PCT studies (BJU International cohort, Andrology review) via Europe PMC REST after PubMed itself returned a CAPTCHA wall. Fixed the process concern by removing self-certifying inline reviewFlags text and routing that verification context through ops.reviewReasons instead. All four promotionBlockers addressed; packet validates against the schema with needsReview=true retained and 'remediation-pass-2026-08-29' appended to qualityFlags. No existing sound claims were removed."
+  },
+  {
+   "slug": "ospemifene",
+   "ok": true,
+   "itemsFixed": [
+    "ospemifene-contraindication-breastcancer-001: added reviewFlag capturing the drugs.com 'contraindication' vs FDA 'Use in Specific Populations' terminology nuance (confirmed-with-note).",
+    "ospemifene-efficacy-dyspareunia-vva-001: added Wurz et al. 2014 (Dove/CIA) as a second, independently-authored review source with verbatim quotes on vaginal pH, parabasal cells, dyspareunia score, and no endometrial hyperplasia; corrected the reviewer's mischaracterization of this source as a 'primary phase 3 RCT' (it is itself a secondary narrative review) and updated reviewFlags accordingly. Did not add the reviewer-mentioned 2023 Simon et al. network meta-analysis since it could not be verified in the fetched page.",
+    "ospemifene-evidence-gap-vulvar-specific-001 + linked conflict ospemifene-conflict-vulvar-evidence-001: added the 2019 Duchesnay-sponsored Menopause vulvar-vestibular-photography trial (via fetched PR Newswire summary, verbatim quotes) noting it partially closes the vulvar-assessment gap in post-approval literature while the original-approval-trial gap still stands.",
+    "RxNorm identifier resolved: RxCUI 1370971 confirmed via live RxNav REST fetch this session; added as compound.externalIdentifiers.rxnorm and as a new source.",
+    "UNII identifier resolved: B0P231ILBK confirmed via live DailyMed label re-fetch this session; added as compound.externalIdentifiers.unii.",
+    "ospemifene-studied-use-bone-density-001: tightened claim statement to explicitly flag it as single-study/non-corroborated/exploratory; added Komi et al. 2004 (PMID 15255284, correcting the verdict's 'Ohta' misattribution) as same-family corroboration only, with reviewFlag explaining why it doesn't satisfy independent verification.",
+    "Appended 'remediation-pass-2026-08-29' to ops.qualityFlags and documented all resolution/attempt outcomes in ops.reviewReasons; ops.needsReview kept true."
+   ],
+   "itemsStillGated": [
+    "ospemifene-studied-use-bone-density-001: remains review-gated. One serious attempt was made to find cross-family independent verification (Europe PMC REST search and a PubMed search, both rate-limited HTTP 429 on retry; a direct-proxy curl fallback was also blocked). Only a same-family controlled-human-study (Komi 2004) was found, which per the independent-review rule does not resolve the gap. Statement tightened; must not be presented as more than an exploratory, single-study finding pending a future systematic-review/guideline search.",
+    "ospemifene-evidence-gap-vulvar-specific-001 / conflict-vulvar-evidence-001: the gap in the ORIGINAL 2013 approval trials is confirmed and unchanged; the 2019 corroborating trial was only accessible via a sponsor's PR Newswire summary (not the full peer-reviewed Menopause text, which returned a 402/paywall error), so human review of the primary journal article is still recommended before treating that finding as fully independently verified.",
+    "Primary phase III RCT abstracts underlying the efficacy claim (PMID 24679891, PMID 23361170) remain blocked by bot-verification and were not directly re-fetched this session; only a secondary review (Wurz 2014) was used as additional corroboration."
+   ],
+   "newSources": [
+    "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ospemifene (RxNorm RxCUI 1370971)",
+    "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9accbcc9-78ee-4f84-9b7e-704f2ab1c413 (re-fetched for UNII B0P231ILBK, label v4 Feb 2025 -- confirms existing dailymed source, no new sourceId needed)",
+    "https://www.dovepress.com/safety-and-efficacy-of-ospemifene-for-the-treatment-of-dyspareunia-ass-peer-reviewed-fulltext-article-CIA (Wurz et al. 2014 review)",
+    "https://pubmed.ncbi.nlm.nih.gov/15255284/ (Komi et al. 2004 bone-turnover RCT)",
+    "https://www.prnewswire.com/news-releases/effects-of-ospemifene-on-genitourinary-health-prospective-vulvar-vestibular-photography-and-direct-assessments-in-post-menopausal-women-300862713.html (2019 vulvar-vestibular-photography trial summary)"
+   ],
+   "summary": "Applied all verdict-directed changes to /home/user/evidence-run/packets/ospemifene.evidence.json in place. Fetched and verbatim-quoted 5 pages this session (RxNav, DailyMed re-fetch, Dove/CIA review, PubMed Komi 2004, PR Newswire 2019 trial summary) and added them as new sources with quotes. Resolved the RxNorm/UNII promotionBlocker with confirmed identifiers. Updated the vulvar-evidence-gap claim and its linked conflict to cite the 2019 Menopause trial while preserving the original-trial gap finding. Made one serious, documented attempt (Europe PMC REST + PubMed + direct-proxy fallback, all failed/rate-limited) to independently verify the bone-density claim beyond same-family corroboration; since it failed, tightened the claim's language instead of forcing a resolution, per instructions. Notably, caught and corrected two inaccuracies in the reviewer verdict itself during verification: the 'primary phase 3 RCT' Dove Medical Press source is actually a secondary review article, and the bone-turnover study attributed to 'Ohta et al./JBMM 2004' is actually Komi et al. 2004 in Gynecological Endocrinology (PMID 15255284) -- the packet now cites the correct authorship. ops.needsReview remains true, qualityFlags now includes 'remediation-pass-2026-08-29', and the packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "bazedoxifene",
+   "ok": true,
+   "itemsFixed": [
+    "bazedoxifene-efficacy-vertebral-fracture-001: corrected context.population from conflated ~1583 BMD-substudy figure to the pivotal trial's actual 6847 ITT subjects (verified via Silverman et al. 2008 JBMR, fetched this session); added the verified vertebral-fracture RRR (42%, 2.3% vs 4.1%) and the post hoc nonvertebral-fracture high-risk-subgroup finding (50% RRR, n=1772, p=0.02) with verbatim quotes and new sourceRef",
+    "bazedoxifene-adverse-effect-vte-001: added independent 2017 pooled meta-analysis (PMC5728840) VTE risk-ratio quote (RR 1.56, 95% CI 0.92-2.64, p=.10) and a reviewFlag noting the broader pooled evidence is not uniformly statistically significant",
+    "bazedoxifene-regulatory-approved-product-001: added independently fetched Drugs@FDA record (NDA 022247, active/approved, March 2024 labeling supplement) as a new source with verbatim quote, plus a hedged reviewFlag on 2026 real-world DUAVEE supply friction",
+    "promotionBlocker (identifiers): resolved RxNorm (RxCUI 1441386, confirmed via RxNav name lookup) and UNII (Q16TT9C5BK, confirmed via NCATS GSRS substance search)",
+    "promotionBlocker (primary trial not directly cited): Silverman et al. 2008 now cited/quoted directly in sourceRefs and extractedEvidence rather than relying solely on secondary reviews",
+    "promotionBlocker (nonvertebral subgroup finding absent): added to the claim's statement and extractedEvidence with proper sourceRef, explicitly labeled as a post hoc subgroup finding",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29; ops.reviewReasons rewritten to mark resolved items and document remaining gaps"
+   ],
+   "itemsStillGated": [
+    "ChEMBL identifier remains null/unresolved: ebi.ac.uk ChEMBL REST API and explore UI were persistently rate-limited/blocked this session across multiple retries; the one route that returned data (DrugCentral drugcard 4334) listed two ambiguous candidate IDs (CHEMBL46740, CHEMBL2106615) with no way to confirm which is the base compound -- left null rather than guessing, documented in ops.reviewReasons with attempted routes",
+    "2026 DUAVEE retail supply-friction note (medfinder.com) could not be independently re-fetched this session (404 at attempted URL); added as a hedged, unsourced note in reviewFlags rather than a cited claim -- does not affect the underlying regulatory-approval status, which was independently confirmed via live Drugs@FDA"
+   ],
+   "newSources": [
+    "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022247",
+    "https://academic.oup.com/jbmr/article-abstract/23/12/1923/7599523",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC5728840"
+   ],
+   "summary": "Read the verdict, then addressed each claimVerdict per the remediation rules. Fetched and verified this session: Silverman et al. 2008 JBMR (6847 ITT, 42% vertebral-fracture RRR, post hoc nonvertebral subgroup 50% RRR n=1772 p=0.02), PMC5728840 meta-analysis (VTE RR 1.56, CI 0.92-2.64, p=.10), the live Drugs@FDA NDA 022247 record (active/approved), RxNav (RxCUI 1441386 for bazedoxifene) and NCATS GSRS (UNII Q16TT9C5BK). Corrected the efficacy claim's population figure and added the verified subgroup finding, added confirmed-with-note context to the VTE and regulatory claims, added 3 new sources, resolved RxNorm/UNII identifiers, and left ChEMBL properly gated (ambiguous secondary-source result, primary ChEMBL API unreachable this session). Packet validates against schema.json; ops.needsReview stays true and remediation-pass-2026-08-29 was appended to qualityFlags. No existing sound claims were deleted."
+  },
+  {
+   "slug": "somatropin",
+   "ok": true,
+   "itemsFixed": [
+    "somatropin-regulatory-mortality-signal-inconclusive-001 (promotionBlocker #1): added 2020 SAGhE cohort follow-up (Lancet Diabetes & Endocrinology, PMID 32707116), fetched and verbatim-quoted this session, to statement, extractedEvidence, sourceRefs, and the linked conflict record",
+    "somatropin-boxed-risk-warnings-001 (promotionBlocker #2): fetched the live DailyMed Genotropin label this session and added verbatim 42% vs 19% acute-critical-illness mortality figure and second-neoplasm/meningioma wording to extractedEvidence",
+    "somatropin-approved-indications-001 (promotionBlocker #3): added reviewFlag clarifying Prader-Willi syndrome is a Genotropin-specific labeled indication, not somatropin-class-wide, per Mayo Clinic's contraindication-only framing",
+    "compound.externalIdentifiers: resolved and added ChEMBL (CHEMBL1201621, via ChEMBL REST API) and RxNorm (RxCUI 61148, via RxNav REST API), both fetched this session"
+   ],
+   "itemsStillGated": [
+    "somatropin-regulatory-mortality-signal-inconclusive-001 / conflict somatropin-conflict-mortality-signal-001: still needs-human-review -- no later definitive FDA communication addressing either the original SAGhE signal or the 2020 follow-up was located despite the added source",
+    "somatropin-contraindications-001: only the hypersensitivity contraindication has been re-quoted verbatim against the label; the remaining items (acute critical illness, malignancy, retinopathy, closed epiphyses, PWS obesity/respiratory criteria) are corroborated in substance by independent Mayo Clinic/StatPearls sources per the reviewer but not yet individually re-quoted verbatim against the label PDF",
+    "compound.externalIdentifiers.pubchem: still null -- re-attempted this session via PubChem PUG-REST (blocked by robots.txt) and the PubChem compound page (404); likely no small-molecule PubChem CID exists for this large recombinant protein",
+    "ops.needsReview remains true packet-wide, as required (expansion-batch packet requiring human sign-off before publication)"
+   ],
+   "newSources": [
+    "https://pubmed.ncbi.nlm.nih.gov/32707116/ (added as source pubmed-saghe-2020-mortality-followup)",
+    "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765 (re-fetched this session to verbatim-confirm existing source dailymed-genotropin-label's boxed-warning figures)",
+    "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=somatropin&format=json (used to confirm ChEMBL ID, not added as a packet source entry)",
+    "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=somatropin (used to confirm RxCUI, not added as a packet source entry)"
+   ],
+   "summary": "Read the verdict: all 9 claims came back confirmed or confirmed-with-note (none needs-adjustment/unresolved), so remediation focused on the three promotionBlockers. Fetched PubMed for the 2020 SAGhE cohort follow-up (PMID 32707116) and added it with verbatim quotes to the mortality-signal claim and its conflict record; fetched the live DailyMed Genotropin label and added verbatim quotes for the 42% vs 19% acute-critical-illness mortality figure and the meningioma/second-neoplasm wording to the boxed-warning claim; added a reviewFlag clarifying PWS is a Genotropin-specific indication rather than somatropin-class-wide. Also resolved the ChEMBL and RxNorm identifiers via their REST APIs (fetched this session) and re-confirmed PubChem CID genuinely cannot be resolved (blocked/404). Updated ops.reviewReasons to record what was fixed and what remains, kept ops.needsReview=true, and appended remediation-pass-2026-08-29 to ops.qualityFlags. Packet validates against schema.json."
+  },
+  {
+   "slug": "oxytocin",
+   "ok": true,
+   "itemsFixed": [
+    "oxytocin-mechanism-identity-001 (needs-adjustment): dropped 'recombinant' from statement/formulation, replaced with 'synthetic', per live-fetched DailyMed Pitocin label ('synthetic oxytocin'/'prepared synthetically'); added that quote as new extractedEvidence and flagged DrugBank's 'recombinant hormone' quote as imprecise rather than fact.",
+    "oxytocin-efficacy-intranasal-asd-negative-rct-001 (confirmed-with-note): added independently-fetched 2024 Frontiers in Psychiatry dose-response meta-analysis as a new source with verbatim quotes on the >=48 IU/day dose-response signal; upgraded reviewFlags from hypothetical caveat to citation of this actual paper.",
+    "oxytocin-evidence-gap-social-behavioral-use-001 (confirmed-with-note): live-fetched the FDA 503A bulk drug substance safety-risk list, confirmed oxytocin is absent from both the category-2 and withdrawn-nomination tables; added as new source, closed the open reviewFlag/reviewReason accordingly.",
+    "oxytocin-regulatory-approved-indications-001 (confirmed-with-note): added ACOG Practice Bulletin 107 as an independent clinical-guideline source with verbatim quote distinguishing the DailyMed label's 'not indicated for elective induction' language from ACOG's own gestational-age/informed-choice criteria permitting elective induction in practice.",
+    "promotionBlocker (recombinant mischaracterization): resolved via the mechanism-identity fix above.",
+    "promotionBlocker (efficacy/evidence-gap should cite 2024 Frontiers meta-analysis): resolved via the efficacy claim update above.",
+    "promotionBlocker (FDA compounding/bulk-substance reviewReasons stale): resolved -- ops.reviewReasons now states this was checked and oxytocin is absent from the list."
+   ],
+   "itemsStillGated": [
+    "UNII and ChEMBL identifiers remain null: this pass attempted NCATS GSRS substance-search API and ChEMBL REST API lookups, both returned HTTP 429 (rate-limited) at fetch time; recorded as an attempted-but-unresolved route in the claim's reviewFlags and ops.reviewReasons rather than forcing a value.",
+    "conflict oxytocin-conflict-marketing-vs-rct-001 stays resolutionStatus=needs-human-review by design, per the verdict's own recommendation -- independent sources (2024 Frontiers meta-analysis) sharpen but do not fully resolve the marketing-vs-evidence tension.",
+    "Positive single-dose adult proof-of-concept oxytocin trials mentioned in secondary literature remain unfetched/unverified this session; evidence-gap claim still anchors primarily on the negative pediatric RCT, now supplemented by the dose-response meta-analysis."
+   ],
+   "newSources": [
+    "https://www.mnhospitals.org/wp-content/uploads/Portals/Documents/patientsafety/Perinatal/acog--practice_bulletin_107_2009.pdf (ACOG Practice Bulletin 107)",
+    "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2024.1477076/full (2024 Frontiers dose-response meta-analysis)",
+    "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks (FDA 503A bulk substance safety-risk list)"
+   ],
+   "summary": "Read the verdict first, then re-fetched the live DailyMed Pitocin label, the FDA 503A bulk-substance safety-risk list, the ACOG Practice Bulletin 107 PDF, and the 2024 Frontiers in Psychiatry dose-response meta-analysis this session to verify every figure before writing it. Fixed the needs-adjustment identity claim by replacing 'recombinant' with 'synthetic' (verified verbatim against the fetched label) and flagging DrugBank's own imprecise wording. Addressed both confirmed-with-note items requiring citation upgrades: added the 2024 Frontiers meta-analysis to the efficacy claim with verbatim dose-response quotes, and added ACOG PB107 to the approved-indications claim to distinguish label language from clinical practice. Resolved the open evidence-gap question by confirming oxytocin's absence from the FDA compounding bulk-substance list. Attempted but could not resolve UNII/ChEMBL identifiers (rate-limited APIs); recorded the attempted routes rather than forcing values. Kept the marketing-vs-RCT conflict human-review-gated per the verdict's own recommendation. Added 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, deleted no existing claims, and the packet validates against schema.json."
+  },
+  {
+   "slug": "creatine",
+   "ok": true,
+   "itemsFixed": [
+    "creatine-safety-common-adverse-effects-001: added independent 2025 JISSN pharmacovigilance source (Kreider et al., PMID 40198156), verbatim quotes, updated stale reviewFlag, upgraded evidenceTier Moderate->Strong / confidence moderate->high",
+    "creatine-misinformation-hairloss-dht-001: added independent American Hair Loss Association critique source with verbatim quotes on outdated trichogram method, no scalp-level DHT measurement, no genetic-predisposition screening, and industry-funding conflict of interest; statement and reviewFlags updated",
+    "creatine-monitoring-renal-function-001: added independent 2026 International Urology and Nephrology meta-analysis (26 RCTs, 1036 participants) confirming modest creatinine rise / no significant Cr-EDTA GFR change, and refining renal-impairment gap (hemodialysis data exists, non-dialysis CKD data does not)",
+    "creatine-efficacy-highintensity-strength-lbm-001: added independent 2025 MDPI Nutrients strength/power meta-analysis with verbatim effect-size quotes and a reviewFlag softening the 'most effective ergogenic supplement' framing as source-attributed rather than universally large/uniform",
+    "compound.externalIdentifiers.unii: resolved and verified via FDA/NCATS GSRS (MU72812GK0, CAS 57-00-1 cross-confirmed)",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29; ops.reviewReasons updated to document all remediation actions and remaining gaps"
+   ],
+   "itemsStillGated": [
+    "creatine-monitoring-renal-function-001 / conflict creatine-renal-safety-population-scope-001: stays needs-human-review -- independent 2026 meta-analysis confirms zero trials exist in non-dialysis CKD patients; genuinely unresolvable by sourcing, per reviewer verdict",
+    "compound.externalIdentifiers.chembl: still null -- attempted ChEMBL REST API and molecule-explorer page (two distinct routes), both blocked by persistent proxy rate-limiting (HTTP 429) even after backoff retries; DrugBank identifier table remains behind an auth wall as previously noted; documented in ops.reviewReasons for a future pass",
+    "Cognitive-enhancement/anti-aging marketing claims for creatine: out of scope for this pass (not evaluated), as previously flagged; would need dedicated fetches before any claim is added"
+   ],
+   "newSources": [
+    "https://precision.fda.gov/uniisearch/srs/unii/MU72812GK0",
+    "https://pubmed.ncbi.nlm.nih.gov/40198156/",
+    "https://www.americanhairloss.org/creatine-and-hair-loss-what-the-latest-study-got-right-and-what-it-missed/",
+    "https://link.springer.com/article/10.1007/s11255-026-05287-x",
+    "https://www.mdpi.com/2072-6643/17/17/2748"
+   ],
+   "summary": "Remediated the creatine evidence packet against its verdict: all four confirmed-with-note claims (adverse-effects, hairloss-misinformation, renal-monitoring, efficacy) were strengthened with newly fetched-and-verified independent sources and verbatim quotes, with reviewFlags updated to reflect current evidence rather than stale framing. Resolved the UNII identifier gap via FDA/NCATS GSRS (verified against CAS 57-00-1 already in the packet); ChEMBL remains unresolved after a genuine attempt (proxy rate-limiting on two routes), documented rather than forced. The renal-impairment population-scope conflict remains correctly and permanently human-review-gated, as no independent source (including the new 2026 meta-analysis) covers non-dialysis CKD patients. ops.needsReview stayed true, remediation-pass-2026-08-29 was appended to qualityFlags, and the packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "vitamin-d3",
+   "ok": true,
+   "itemsFixed": [
+    "vitamind3-efficacy-fracture-falls-uspstf-negative-001 (needs-adjustment): re-fetched live USPSTF page this session, confirmed 'being updated' banner and quoted the Dec 17, 2024 draft (broadened Grade D against-recommendation covering community-dwelling postmenopausal women AND men age 60+ for both fracture and fall prevention, plus a kidney-stone harm signal, pooled RR 1.11, ~2 extra stones/1000 treated). Statement, context.population, sourceRefs, extractedEvidence, and reviewFlags all updated to disclose the pending revision instead of presenting 2018 grades as settled.",
+    "promotionBlocker #1 (USPSTF claim) addressed directly in the claim edit above.",
+    "promotionBlocker #2 (general expansion-batch human sign-off gate): left ops.needsReview=true as required; not something a remediation pass can close itself.",
+    "vitamind3-adverse-effect-hypercalcemia-toxicity-001 (confirmed-with-note): added StatPearls (NCBI Bookshelf) as a new fetched-and-quoted source distinguishing the NIH ODS >125 nmol/L caution threshold from the StatPearls ~375 nmol/L frank-toxicity threshold; also captured the supplement-overuse etiology and 4000 IU/day UL quotes.",
+    "vitamind3-efficacy-vital-cancer-cvd-negative-001 (confirmed-with-note): added NCI Cancer Currents Blog as a fetched-and-quoted independent source (6.1% vs 6.3% invasive cancer, 1.1% vs 1.4% cancer deaths, ~40% serum 25(OH)D rise) resolving the packet's own flagged CAPTCHA/PMC access gap via a different authoritative family.",
+    "vitamind3-regulatory-supplement-status-001 (confirmed-with-note): added reviewFlags noting live re-verification (DSLD cross-check) and the exploratory March 2026 FDA modernization meeting.",
+    "vitamind3-dose-context-rda-ul-001 (confirmed-with-note): added reviewFlag noting Harvard Nutrition Source corroboration and the values' 2010 IOM/NASEM DRI provenance.",
+    "ops.reviewReasons rewritten to mark each resolved item with 'RESOLVED (2026-08-29)' and record what still remains open; ops.qualityFlags appended with remediation-pass-2026-08-29 (needsReview kept true)."
+   ],
+   "itemsStillGated": [
+    "vitamind3-efficacy-fracture-falls-uspstf-negative-001: USPSTF's December 2024 draft is not yet finalized, so the 2018 grades remain technically official; claim stays fieldAuthorityRequired/review-gated pending finalization.",
+    "VITAL trial claim: direct NEJM/PMC primary full text remained CAPTCHA/403-blocked this session even though NCI's independent account corroborates the figures; still flagged for a future direct-primary-text check.",
+    "RxNorm identifier remains null/unresolved -- not a reviewer-listed promotionBlocker, so left untouched this pass rather than guessed.",
+    "Multiple DailyMed cholecalciferol SKUs (combination/prescription-strength) were not individually reviewed; only the one representative OTC label was verified, per original packet caveat (unchanged).",
+    "General expansion-batch human sign-off requirement (ops.needsReview=true) is a packet-level gate independent of any single claim and cannot be closed by this remediation pass."
+   ],
+   "newSources": [
+    "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-combined-supplementation-primary-prevention-falls-fractures-communitydwelling-adults (USPSTF Dec 2024 draft recommendation, fetched and quoted)",
+    "https://www.ncbi.nlm.nih.gov/books/NBK557876/ (StatPearls Vitamin D Toxicity, NCBI Bookshelf, fetched and quoted)",
+    "https://www.cancer.gov/news-events/cancer-currents-blog/2018/vitamin-d-supplement-cancer-prevention (NCI Cancer Currents Blog on VITAL trial, fetched and quoted)"
+   ],
+   "summary": "Read the verdict, then addressed all 7 claim verdicts and both promotionBlockers in /home/user/evidence-run/packets/vitamin-d3.evidence.json. The one needs-adjustment claim (USPSTF fracture/falls) was corrected by fetching the live USPSTF page this session and quoting its 'being updated' banner plus the Dec 17, 2024 draft's broadened against-recommendation (now covering men 60+) and new kidney-stone harm signal, with the claim text now disclosing the pending revision rather than presenting 2018 as settled. Two confirmed-with-note claims (hypercalcemia/toxicity and the VITAL trial finding) were strengthened with newly fetched, verbatim-quoted independent sources (StatPearls and NCI respectively) that the reviewer had identified as corroborating routes. The remaining confirmed-with-note claims (regulatory status, RDA/UL) got reviewFlags carrying the reviewer's contextual notes without needing new fetches. ops.reviewReasons was rewritten to mark resolved items and honestly record what remains open (no fabricated attempts), ops.needsReview stayed true, and 'remediation-pass-2026-08-29' was appended to qualityFlags. No existing sound claims were deleted. The packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "glutathione",
+   "ok": true,
+   "itemsFixed": [
+    "glutathione-regulatory-compounding-endotoxin-001: statement updated to disclose recurrence \u2014 added two independently fetched/verified 2026 FDA recall notices (Optimal Balance Pharmacy, announced 2026-08-20; Victory Medical Center Pharmacy, announced 2026-08-05) as new sources with verbatim quotes; resolves the promotionBlocker.",
+    "glutathione-regulatory-injectable-skin-lightening-001: added corroborating US FDA 2015 consumer update source (Relumins/Tatiomax 2014 seizure) with verbatim quotes per reviewer note.",
+    "glutathione-regulatory-otc-unapproved-001: added FDA Dec 2022 homeopathic-drug-products guidance source with verbatim quote explaining enforcement-discretion framework; re-confirmed DailyMed label unchanged.",
+    "glutathione-efficacy-oral-whitening-rct-001: added independent Dilokthornsakul 2019 systematic review (fetched via Europe PMC REST) corroborating sun-exposed-only effect and 'inconclusive evidence' characterization.",
+    "externalIdentifiers.unii: filled previously-null UNII (GAN16C9B8O), verified this session via FDA precision.fda.gov UNII Search Service."
+   ],
+   "itemsStillGated": [
+    "glutathione-dose-context-oral-bioavailability-001: remains fieldAuthorityRequired=true / human-review-gated. Made one additional targeted attempt this pass (Drugs@FDA search for an approved oral glutathione product/approval package) \u2014 found none; no A1/A2 regulator-tier source exists for the proprietary micellar-vs-standard oral-GSH bioavailability comparison across three total search passes. Statement language tightened to describe only the single small (n=14) trial's own findings rather than a settled comparative conclusion, per the 'assert no more than sources support' rule."
+   ],
+   "newSources": [
+    "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/optimal-balance-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded-glutathione-200",
+    "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/victory-medical-center-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded",
+    "https://www.americanmedspa.org/news/fda-releases-consumer-update-on-injectable-skin-lightening-products/",
+    "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/homeopathic-drug-products-guidance-fda-staff-and-industry",
+    "https://pubmed.ncbi.nlm.nih.gov/30895708/ (DOI 10.1111/jocd.12910, fetched via Europe PMC REST)"
+   ],
+   "summary": "Remediated /home/user/evidence-run/packets/glutathione.evidence.json in place against its verdict. Resolved both promotionBlockers to the extent evidence allows: the compounding-endotoxin claim now discloses the 2019 incident's 2026 recurrence (two new FDA recall notices, quotes independently verified this session); the oral-bioavailability dose-context claim received one further genuine search attempt (Drugs@FDA), found no qualifying A1/A2 source, and stays correctly human-review-gated with tightened, non-overreaching language. All three confirmed-with-note claims got their reviewer-suggested corroborating sources added with verbatim, session-fetched quotes. Filled a previously-null UNII identifier via FDA's UNII registry. ops.needsReview stayed true; ops.qualityFlags gained 'remediation-pass-2026-08-29'; no existing sound claims were deleted. Final file validates against schema.json (jsonschema.validate ran clean)."
+  },
+  {
+   "slug": "mecasermin",
+   "ok": true,
+   "itemsFixed": [
+    "promotionBlocker: CAS/ChEMBL/RxNorm identifiers -- resolved via NCATS Inxight Drugs (drugs.ncats.io/drug/7GR9I2683O), independent of PubChem/DrugBank which were JS/auth-blocked; casNumber=68562-41-4 (PRIMARY), chembl=CHEMBL1201716, rxnorm=274403 added to compound.externalIdentifiers",
+    "mecasermin-contraindication-001 (confirmed-with-note / promotionBlocker): added 'premature infants or neonates' as an additional contraindicated population, verbatim-quoted from NCBI Bookshelf NBK596664 (re-fetched this session)",
+    "mecasermin-efficacy-growth-velocity-001 (confirmed-with-note / promotionBlocker): added independent SPIGFD registry (213-patient, Frontiers in Endocrinology 2022) quotes and a reviewFlag clarifying the packet's specific cm/yr and SDS figures are single-cohort, not pooled",
+    "mecasermin-adverse-effect-profile-001 (confirmed-with-note / promotionBlocker): added SPIGFD registry quote and reviewFlag clarifying the 83%/47%/35%/21%/20% figures are single-cohort, not pooled"
+   ],
+   "itemsStillGated": [
+    "mecasermin-misinformation-bodybuilding-marketing-001: no mecasermin-specific (non-analog) gray-market vendor source was found in this pass either; remains sourced to an IGF-1 DES vendor page and stays review-gated as documented in ops.reviewReasons",
+    "ops.needsReview stays true per instructions -- packet as a whole remains gated for human promotion review despite blockers being addressed"
+   ],
+   "newSources": [
+    "https://drugs.ncats.io/drug/7GR9I2683O (NCATS Inxight Drugs -- CAS/ChEMBL/RxNorm identifiers)",
+    "https://public-pages-files-2025.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2022.812568/text (Frontiers in Endocrinology 2022, SPIGFD registry, re-fetched and quoted verbatim this session)"
+   ],
+   "summary": "Read the verdict (recommendation: request-changes, 3 promotionBlockers, no 'unresolved' or 'needs-adjustment' claimVerdicts -- all 9 claims were confirmed or confirmed-with-note). Addressed all three promotionBlockers: (1) fetched NCATS Inxight Drugs directly (a government structured-database independent of the JS-blocked PubChem/DrugBank) and confirmed CAS 68562-41-4 (PRIMARY), ChEMBL CHEMBL1201716, and RxCUI 274403, writing them into compound.externalIdentifiers and adding the source; (2) re-fetched NCBI Bookshelf NBK596664 and added the verbatim 'premature infants or neonates' contraindication language to mecasermin-contraindication-001; (3) re-fetched the Frontiers/SPIGFD registry paper cited in the verdict, added it as a source, quoted it verbatim in both the efficacy and adverse-effect claims, and added reviewFlags clarifying that the packet's specific percentage/magnitude figures are single-cohort statistics rather than pooled estimates. Appended 'remediation-pass-2026-08-29' to ops.qualityFlags, updated ops.reviewReasons to record what was resolved and what remains gated (the mecasermin-specific vendor-marketing source gap), kept ops.needsReview=true, made no changes to sound existing claims, and validated the packet against schema.json (passes)."
+  },
+  {
+   "slug": "setmelanotide",
+   "ok": true,
+   "itemsFixed": [
+    "setmelanotide-efficacy-pomc-lepr-phase3-001 (needs-adjustment): corrected LEPR responder rate from 46% to 45% (5 of 11), verified verbatim against the primary paper's abstract via Europe PMC REST API (PMID 33137293); added source europepmc-abstract-33137293 and reconciling note in the statement + reviewFlags.",
+    "setmelanotide-safety-warnings-001 (needs-adjustment / promotionBlocker): re-fetched live DailyMed label (revision 4/2026) and added the two missing aHO-specific warnings \u2014 Section 5.5 Acute Adrenal Insufficiency (5% vs 0% placebo) and Section 5.6 Sodium Imbalance/hyponatremia-hypernatremia (6%/5% vs 2%/4% placebo) \u2014 with verbatim quotes; also confirmed no boxed warning exists, closing that open reviewFlag.",
+    "setmelanotide-adverse-effect-common-001 (confirmed-with-note): added reviewFlag distinguishing the independently-confirmed common-AE list from the unresolved cardiovascular-neutrality/fasting-glucose sub-claims, which stay review-gated.",
+    "setmelanotide-evidence-gap-research-chemical-marketing-001 (confirmed-with-note): re-searched FDA Warning Letters database directly, confirmed no setmelanotide-specific letter exists (found only unrelated Gram Peptides 3/2026 letter); added source fda-warning-letters-database-search-2026 and reviewFlag/ops.reviewReasons documenting the reconfirmation.",
+    "Both promotionBlockers listed in the verdict (safety-warnings omission; 46%->45% efficacy figure) are fixed."
+   ],
+   "itemsStillGated": [
+    "Cardiovascular-neutrality and fasting-glucose-improvement sub-claims in setmelanotide-adverse-effect-common-001 remain unresolved \u2014 no independent source found this pass (PES summary, StatPearls) discusses cardiovascular endpoints or fasting glucose; needs a primary-trial safety-table check.",
+    "No FDA import alert or warning letter specific to setmelanotide research-chemical sellers exists as of this pass (setmelanotide-evidence-gap-research-chemical-marketing-001) \u2014 reconfirmed absent, not resolved; recheck at next review.",
+    "CAS/UNII/DrugBank/ChEMBL external identifiers remain null \u2014 not addressed this pass since the verdict did not list them as a promotionBlocker; still open in ops.reviewReasons for a future pass."
+   ],
+   "newSources": [
+    "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:33137293&format=json&resultType=core (europepmc-abstract-33137293)",
+    "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/gram-peptides-721806-03312026 (fda-warning-letters-database-search-2026)"
+   ],
+   "summary": "Read the verdict, then fetched the live DailyMed IMCIVREE label (confirmed revision 4/2026, no boxed warning, and verbatim text for the two new aHO-specific warnings in Sections 5.5/5.6) and the Europe PMC abstract record for PMID 33137293 (verbatim 45% LEPR figure), plus the FDA Warning Letters page cited by the reviewer (confirmed it does not name setmelanotide). Applied the two needs-adjustment fixes exactly as specified (efficacy figure correction with reconciliation note; addition of the two missing safety warnings), addressed both confirmed-with-note items by tightening language/reviewFlags without overclaiming, and closed both promotionBlockers. Added 2 new sources with verbatim extractedEvidence quotes, updated ops.reviewReasons to document what was resolved vs. what remains gated, appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, and did not delete any existing claims. Schema validation passes."
+  }
+ ],
+ "audit": {
+  "overallPass": true,
+  "perPacket": [
+   {
+    "slug": "clomiphene",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "RxNorm and ChEMBL remain unresolved (RxNav returned ambiguous CUIs; no ChEMBL ID located) \u2014 honestly documented as attempted-and-blocked in ops.reviewReasons, not fabricated. Non-blocking.",
+     "Spot-check passed: karger-crvo-systematic-review quote ('CC may predispose to CRVO, but further trials are clearly needed in this area.') verified verbatim on the live Karger page."
+    ]
+   },
+   {
+    "slug": "ospemifene",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Bone-density claim (fieldAuthorityRequired) correctly stays unresolved/review-gated: only same-family corroboration was found, cross-family search attempts (Europe PMC, PubMed) were rate-limited and this is disclosed, not glossed over.",
+     "Vulvar-specific evidence-gap update relies on a sponsor-affiliated (Duchesnay) 2019 trial known only via a PR Newswire summary, not the peer-reviewed text \u2014 appropriately flagged as such in reviewFlags/ops.reviewReasons.",
+     "Spot-check passed: PR Newswire vulvar-vestibular-photography quotes verified verbatim on the source page."
+    ]
+   },
+   {
+    "slug": "bazedoxifene",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "needs-adjustment item (ITT population conflation, ~1583 vs 6847) fixed and independently re-sourced to Silverman et al. 2008 with nonvertebral-fracture subgroup finding added as a proper sourced claim.",
+     "ChEMBL identifier remains unresolved (two candidate IDs found, ambiguous, correctly left null rather than guessed) \u2014 non-blocking, documented.",
+     "2026 DUAVEE retail-supply-friction note cites an unverified secondary source (medfinder.com) that could not be re-fetched this session; hedged appropriately in reviewFlags, does not affect the core regulatory-approval claim.",
+     "Spot-check passed: Silverman et al. 2008 JBMR quote ('Among 6847 subjects in the intent-to-treat population...') verified verbatim on the Oxford Academic abstract page."
+    ]
+   },
+   {
+    "slug": "somatropin",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "All three promotionBlockers addressed: 2020 SAGhE cohort follow-up added to the mortality-signal claim/conflict; 42%/19% mortality figure and meningioma wording verbatim-reconfirmed against the live label; Prader-Willi-syndrome brand-specificity annotated.",
+     "Spot-check passed: SAGhE 2020 quote (SMR 1.1, 95% CI 0.9-1.3) verified verbatim on PubMed."
+    ]
+   },
+   {
+    "slug": "oxytocin",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Mechanism-identity needs-adjustment item fixed: 'recombinant' mischaracterization removed, now correctly stated as 'synthetic' per the live DailyMed label, with DrugBank's imprecise wording flagged rather than restated as fact.",
+     "UNII and ChEMBL remain unresolved (rate-limited API attempts, honestly documented). Non-blocking.",
+     "Spot-check passed: 2024 Frontiers in Psychiatry dose-response quote verified verbatim on the source page."
+    ]
+   },
+   {
+    "slug": "creatine",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Renal-safety conflict (non-dialysis CKD population) correctly remains unresolved/review-gated \u2014 independent 2026 meta-analysis confirms zero trials exist in that subgroup, so this cannot and should not be closed.",
+     "Adverse-effect claim's evidenceTier was upgraded Moderate\u2192Strong on the strength of a new independent pharmacovigilance analysis; defensible per the verdict's own finding but worth a human reviewer's confirmation since tier upgrades are a substantive change beyond the literal blocker text.",
+     "ChEMBL remains unresolved (rate-limited, documented). Non-blocking.",
+     "Spot-check passed: JISSN 2025 pharmacovigilance quote (13.2% vs 13.7% side-effect rates) verified verbatim on PubMed."
+    ]
+   },
+   {
+    "slug": "vitamin-d3",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "needs-adjustment item (USPSTF fracture/falls claim) fixed: now discloses the topic is under active revision, cites the Dec 2024 draft's broadened Grade D scope (men 60+) and the new kidney-stone harm signal.",
+     "RxNorm remains null; ops.reviewReasons explicitly and correctly notes this was not a promotionBlocker so was not re-attempted this pass \u2014 transparent, non-blocking.",
+     "Spot-check passed: USPSTF Dec 2024 draft kidney-stone and broadened-scope language verified verbatim on the live USPSTF page."
+    ]
+   },
+   {
+    "slug": "glutathione",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "needs-adjustment item (compounding-endotoxin claim) fixed: two 2026 FDA recalls (Optimal Balance Pharmacy, Victory Medical Center Pharmacy) added with verbatim quotes, correctly reframing this as a recurring rather than isolated-2019 problem.",
+     "Oral-bioavailability dose-context claim (fieldAuthorityRequired, safety-critical) remains genuinely unresolved after three documented independent search passes (Europe PMC, PubMed, Drugs@FDA) \u2014 correctly stays human-review-gated rather than forced closed; this is the single highest-risk open item in this audit batch, though it is handled exactly as the directive requires.",
+     "RxNorm and ChEMBL remain unresolved (documented). Non-blocking.",
+     "Spot-check passed: FDA Optimal Balance Pharmacy recall quote (elevated bacterial endotoxin, patient adverse events) verified verbatim on the live FDA page."
+    ]
+   },
+   {
+    "slug": "mecasermin",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "All three promotionBlockers addressed: CAS/ChEMBL/RxNorm identifiers all resolved via NCATS Inxight Drugs (independent structured database) and populated into compound.externalIdentifiers; single-cohort caveat added to efficacy/adverse-effect claims; 'premature infants or neonates' added to contraindications.",
+     "Spot-check passed: SPIGFD registry (Frontiers in Endocrinology 2022) height-SDS quote verified verbatim on the source page."
+    ]
+   },
+   {
+    "slug": "setmelanotide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Both needs-adjustment items fixed: LEPR responder rate corrected from 46% (FDA press release) to 45% (primary Lancet paper, treated as authoritative) with the discrepancy explicitly noted; two aHO-specific label warnings (Section 5.5 acute adrenal insufficiency, Section 5.6 sodium imbalance) added to the safety-warnings claim.",
+     "CAS/UNII/DrugBank/ChEMBL remain entirely null \u2014 ops.reviewReasons transparently states this was deprioritized since the reviewer verdict did not flag identifiers as a blocker; worth a dedicated identifier-resolution pass in a future cycle but non-blocking here.",
+     "Cardiovascular-neutrality/fasting-glucose sub-claim within the adverse-effect claim correctly remains flagged as unresolved/review-gated pending primary-trial safety-table confirmation.",
+     "Spot-check passed: Europe PMC abstract quote (80%/45% responder rates, PMID 33137293) verified verbatim."
+    ]
+   }
+  ],
+  "blockers": [],
+  "warnings": [
+   "All 10 packets pass jsonschema Draft 2020-12 validation against schema.json with zero errors.",
+   "All 10 packets carry 'remediation-pass-2026-08-29' in ops.qualityFlags and ops.needsReview: true, satisfying the timestamp/gating requirement.",
+   "Language scan across all edited claim statements and reviewFlags in all 10 packets found no advice language, no efficacy inflation, and no unwarranted safety assurances \u2014 the one 'safe/well-tolerated' phrase found (creatine) is explicitly attributed in-line to its NIH/ISSN source rather than asserted as BioStack's own assurance, and dosing content is consistently and correctly framed as 'label/trial protocol context, not a use recommendation' throughout.",
+   "10/10 targeted WebFetch spot-checks of newly added/corrected source quotes (prioritizing corrected figures: bazedoxifene's 6847-subject ITT population, somatropin's SAGhE 2020 SMR, setmelanotide's 45%-vs-46% LEPR responder rate, USPSTF's Dec-2024 draft kidney-stone signal, and others) all located the quoted text verbatim on the live source \u2014 zero unlocatable quotes, so zero WebFetch blockers.",
+   "Recurring pattern across the batch: several external identifiers (RxNorm, ChEMBL, UNII, CAS for setmelanotide) remain unresolved after genuine documented attempts. None of these were required by the specific reviewer promotionBlockers to be closed in this pass, and all are transparently logged in ops.reviewReasons rather than silently dropped or fabricated \u2014 recommend a dedicated identifier-resolution pass across the wider packet library in a future cycle.",
+   "Two claims across the batch (ospemifene bone-density; glutathione oral-bioavailability) remain genuinely unresolved fieldAuthorityRequired claims after multiple independent search passes \u2014 both are correctly kept human-review-gated rather than forced to a false resolution, consistent with the Independent Review Rule, but they are the two highest-residual-risk items in this batch for the human reviewer to prioritize.",
+   "creatine-safety-common-adverse-effects-001's evidenceTier was upgraded from Moderate to Strong during remediation on the strength of a new independent pharmacovigilance source; this is a defensible but substantive change worth the human reviewer's explicit sign-off since it goes beyond the literal text of the reviewer's promotionBlocker."
+  ]
+ }
+}

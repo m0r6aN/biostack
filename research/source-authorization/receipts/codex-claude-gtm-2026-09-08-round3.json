@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified session. Claude's completed handoff reported no subagents; a generic running-task indicator was not treated as proof of another model."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "8497ce421b173aaa80db011a5e36b7a8ce392e09c78570627d0258dc5a19c88f",
+  "requested_lanes": [
+    "Prepare unsigned owner-decision sheet with actual independence requirements, S1 excerpt scope and specific commercial-content choices"
+  ],
+  "response_status": "partial",
+  "artifacts": [
+    "research/source-authorization/OWNER-DECISION-SHEET-2026-09-08.md",
+    "research/source-authorization/CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md",
+    "git:7cf7f1d61f6950e759e270abfd1bb56d34dc8b31"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read completed Claude response and owner-decision sheet",
+      "Compared claimed absence of independence requirements against the manual-capture guard, its caller and the NCCIH reviewer receipt",
+      "Read complete afamelanotide claim including its other citations and review flag",
+      "Verified current 285 unregistered IDs and PR #289 merged before the decision-sheet commit",
+      "Checked GSRS data licence and the scope of published CAS Common Chemistry API terms"
+    ],
+    "passed": false
+  },
+  "deviations": [
+    "The response overgeneralized a role-schema finding into absence of any independent-review requirement; NCCIH provides a direct counterexample.",
+    "No CAS-specific exclusion was verified, yet the response inferred a restriction from the identifier's origin.",
+    "A historical afamelanotide name-only issue was reopened without reading its existing co-citations.",
+    "PR #289 merged concurrently before the new decision-sheet commit. That commit remained branch-only.",
+    "Codex took ownership of correction edits and Git work for a fourth, read-only Claude review."
+  ],
+  "dissent": [
+    "Round 3 was not accepted as written. No proposed owner decision or source permission was issued."
+  ]
+}

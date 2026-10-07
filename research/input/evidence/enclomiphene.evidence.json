@@ -10,8 +10,8 @@
     "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "15690-57-0", "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
   },
   "sources": [
-    { "sourceId": "pmc-enclomiphene-pkpd-2014", "sourceType": "paper", "authorityTier": "B2", "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/", "doi": null, "pmid": null, "publishedAt": "2014-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" },
-    { "sourceId": "pmc-enclomiphene-secondary-hypogonadism-2016", "sourceType": "review", "authorityTier": "B1", "title": "Enclomiphene Citrate for the Treatment of Secondary Male Hypogonadism", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/", "doi": null, "pmid": null, "publishedAt": "2016-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+    { "sourceId": "pmc-enclomiphene-pkpd-2014", "sourceType": "paper", "authorityTier": "B2", "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pmc-enclomiphene-secondary-hypogonadism-2016", "sourceType": "review", "authorityTier": "B1", "title": "Enclomiphene Citrate for the Treatment of Secondary Male Hypogonadism", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
   ],
   "claims": [
     {
@@ -34,5 +34,5 @@
     }
   ],
   "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot hormone/SERM evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "regulatory-ambiguity", "hormone-axis-boundary"] }
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot hormone/SERM evidence packet requires human review before publication.", "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."], "qualityFlags": ["pilot-input", "regulatory-ambiguity", "hormone-axis-boundary", "placeholder-date-cleanup-2026-09-07"] }
 }

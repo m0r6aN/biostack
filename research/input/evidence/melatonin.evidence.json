@@ -11,7 +11,11 @@
   },
   "sources": [
     { "sourceId": "pubchem-melatonin", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Melatonin", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/896", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
-    { "sourceId": "nih-nccih-melatonin-what-to-know", "sourceType": "medical-summary", "authorityTier": "C2", "title": "Melatonin: What You Need To Know", "publisher": "NIH National Center for Complementary and Integrative Health", "url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+    { "sourceId": "nih-nccih-melatonin-what-to-know", "sourceType": "medical-summary", "authorityTier": "C2", "title": "Melatonin: What You Need To Know", "publisher": "NIH National Center for Complementary and Integrative Health", "url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "statpearls-melatonin-nbk534823", "sourceType": "paper-level-reference", "authorityTier": "B1", "title": "Melatonin (StatPearls)", "publisher": "NCBI Bookshelf / StatPearls Publishing", "url": "https://www.ncbi.nlm.nih.gov/books/NBK534823/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "aasm-sleepeducation-melatonin-longterm-2026", "sourceType": "professional-society", "authorityTier": "B2", "title": "New Study Raises Questions About Long-Term Melatonin Use", "publisher": "American Academy of Sleep Medicine (sleepeducation.org)", "url": "https://sleepeducation.org/new-study-raises-questions-about-long-term-melatonin-use/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "cdc-mmwr-pediatric-melatonin-2022", "sourceType": "government-surveillance-report", "authorityTier": "A2", "title": "Pediatric Melatonin Ingestions — United States, 2012–2021", "publisher": "US Centers for Disease Control and Prevention, MMWR", "url": "https://www.cdc.gov/mmwr/volumes/71/wr/mm7122a1.htm", "doi": null, "pmid": null, "publishedAt": "2022-06-03T00:00:00Z", "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "fda-dietary-supplements-consumer-info", "sourceType": "regulator", "authorityTier": "A1", "title": "Information for Consumers on Using Dietary Supplements", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/food/dietary-supplements/information-consumers-using-dietary-supplements", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-08-29T00:00:00Z" }
   ],
   "claims": [
     {
@@ -24,15 +28,57 @@
       "claimId": "melatonin-hormone-sleep-wake-001", "claimType": "mechanism", "statement": "PubChem describes melatonin as a hormone produced by the pineal gland that is believed to play a role in regulation of the sleep-wake cycle.",
       "context": { "population": "general physiology context", "route": null, "formulation": null, "useCase": "sleep-wake physiology", "doseText": null },
       "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-melatonin"],
-      "extractedEvidence": [{ "sourceRef": "pubchem-melatonin", "quote": "Melatonin is a hormone produced by the pineal gland that has multiple effects including somnolence, and is believed to play a role in regulation of the sleep-wake cycle.", "pageOrSection": "Description" }], "reviewFlags": ["customer-facing wording should avoid overstating supplement outcomes"]
+      "extractedEvidence": [
+        { "sourceRef": "pubchem-melatonin", "quote": "Melatonin is a hormone produced by the pineal gland that has multiple effects including somnolence, and is believed to play a role in regulation of the sleep-wake cycle.", "pageOrSection": "Description" },
+        { "sourceRef": "statpearls-melatonin-nbk534823", "quote": "Melatonin regulates the body's sleep-wake cycles by interacting with the suprachiasmatic nucleus of the hypothalamus and the retina.", "pageOrSection": "Mechanism of Action" }
+      ], "reviewFlags": ["customer-facing wording should avoid overstating supplement outcomes", "independent review (StatPearls) confirms this as an established receptor-level mechanism (MT1/MT2 interaction with the suprachiasmatic nucleus) rather than a tentative association; the packet's 'believed to play a role' hedge is therefore, if anything, understated rather than overstated relative to independent literature -- retained as-is for consumer-facing caution"]
     },
     {
-      "claimId": "melatonin-long-term-safety-gap-001", "claimType": "evidence-gap", "statement": "NCCIH states that short-term use of melatonin supplements appears to be safe for most people, but information on long-term safety is lacking; BioStack should keep this as an evidence gap unless stronger safety review is completed.",
-      "context": { "population": "general consumer supplement context", "route": "oral", "formulation": "over-the-counter melatonin supplements", "useCase": "safety evidence boundary", "doseText": null },
-      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-nccih-melatonin-what-to-know"],
-      "extractedEvidence": [{ "sourceRef": "nih-nccih-melatonin-what-to-know", "quote": "Short-term use of melatonin supplements appears to be safe for most people, but information on the long-term safety of supplementing with melatonin is lacking.", "pageOrSection": "Is it safe to take melatonin?" }], "reviewFlags": ["do not convert into personalized safety guidance", "pediatric claims require separate review"]
+      "claimId": "melatonin-long-term-safety-gap-001", "claimType": "evidence-gap", "statement": "NCCIH states that short-term use of melatonin supplements appears to be safe for most people, but information on long-term safety is lacking. Independent sources add three further safety-boundary signals BioStack must carry alongside this gap: (1) a 2025 preliminary, non-peer-reviewed observational study reported chronic (12+ month) melatonin use in adults with insomnia was associated with roughly 90% higher five-year incidence of heart failure and higher heart-failure hospitalization versus non-users -- an association only, not shown to be causal, and not yet peer-reviewed; (2) independent lab testing found melatonin content in more than 71% of tested supplements differed from the labeled dose by more than 10% (ranging from 83% less to 478% more than labeled); (3) CDC surveillance recorded a 530% rise in pediatric melatonin ingestion cases reported to US poison control centers, from 8,337 in 2012 to 52,563 in 2021, with thousands of hospitalizations and two reported deaths in children under age 2. BioStack should keep this as an evidence gap unless stronger safety review is completed, and must not present the cardiovascular signal as an established or causal risk.",
+      "context": { "population": "general consumer supplement context; pediatric ingestion data specific to children aged ≤5 years", "route": "oral", "formulation": "over-the-counter melatonin supplements", "useCase": "safety evidence boundary", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": true, "sourceRefs": ["nih-nccih-melatonin-what-to-know", "aasm-sleepeducation-melatonin-longterm-2026", "cdc-mmwr-pediatric-melatonin-2022"],
+      "extractedEvidence": [
+        { "sourceRef": "nih-nccih-melatonin-what-to-know", "quote": "Short-term use of melatonin supplements appears to be safe for most people, but information on the long-term safety of supplementing with melatonin is lacking.", "pageOrSection": "Is it safe to take melatonin?" },
+        { "sourceRef": "aasm-sleepeducation-melatonin-longterm-2026", "quote": "adults with chronic insomnia who used melatonin long-term had about a 90% higher chance of developing heart failure over five years compared with adults who didn't take melatonin (4.6% vs. 2.7%).", "pageOrSection": "New Study Raises Questions About Long-Term Melatonin Use" },
+        { "sourceRef": "aasm-sleepeducation-melatonin-longterm-2026", "quote": "The study hasn't been peer-reviewed, so the findings should be viewed as early evidence, not final answers.", "pageOrSection": "New Study Raises Questions About Long-Term Melatonin Use" },
+        { "sourceRef": "aasm-sleepeducation-melatonin-longterm-2026", "quote": "the melatonin content in more than 71% of supplements differed from the label by more than 10%, ranging from 83% less to 478% more than the label stated.", "pageOrSection": "New Study Raises Questions About Long-Term Melatonin Use" },
+        { "sourceRef": "cdc-mmwr-pediatric-melatonin-2022", "quote": "the annual number of ingestions increased 530% from 8,337 in 2012 to 52,563 in 2021", "pageOrSection": "Pediatric Melatonin Ingestions -- United States, 2012-2021" },
+        { "sourceRef": "cdc-mmwr-pediatric-melatonin-2022", "quote": "Five children required mechanical ventilation, and two died. Both deaths occurred in children aged <2 years (3 months and 13 months) and occurred in the home.", "pageOrSection": "Pediatric Melatonin Ingestions -- United States, 2012-2021" }
+      ],
+      "reviewFlags": [
+        "do not convert into personalized safety guidance",
+        "pediatric overdose risk: CDC MMWR reports a 530% rise in pediatric melatonin ingestions (2012-2021) with hospitalizations and deaths in children under age 2 -- treat as a distinct, higher-priority safety thread, not a generic pediatric caveat",
+        "cardiovascular signal: 2025 study reporting elevated heart-failure incidence in chronic melatonin users is preliminary, non-peer-reviewed, and association-only -- must not be presented as established or causal risk; re-check for peer-reviewed publication at next review",
+        "supplement label-accuracy risk: independent testing found >71% of products deviate >10% from labeled dose -- relevant to any dosing guidance BioStack surfaces",
+        "fieldAuthorityRequired escalated to true per directive rule for safety-critical claims; route through field-authority review before public promotion"
+      ]
+    },
+    {
+      "claimId": "melatonin-regulatory-status-001", "claimType": "regulatory", "statement": "In the United States, melatonin is sold as an over-the-counter dietary supplement and is not officially approved by the FDA for any indication; the FDA does not review or approve dietary supplements for safety or effectiveness before they reach the market, and does not regulate them as rigorously as pharmaceutical drugs. BioStack must not imply melatonin products carry FDA drug-approval-level safety or efficacy review.",
+      "context": { "population": "US consumers of melatonin products", "route": null, "formulation": "over-the-counter melatonin supplements", "useCase": "regulatory status disclosure", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["statpearls-melatonin-nbk534823", "fda-dietary-supplements-consumer-info"],
+      "extractedEvidence": [
+        { "sourceRef": "statpearls-melatonin-nbk534823", "quote": "Although melatonin is not officially approved for any indication by the US Food and Drug Administration (FDA) in the United States, exogenously supplied melatonin, which is available as a synthetic dietary supplement, mimics the regulatory functions of endogenous melatonin.", "pageOrSection": "Continuing Education Activity" },
+        { "sourceRef": "statpearls-melatonin-nbk534823", "quote": "In addition, it is crucial to inform patients that the FDA does not regulate supplements, and melatonin currently lacks FDA approval.", "pageOrSection": "Enhancing Healthcare Team Outcomes" },
+        { "sourceRef": "fda-dietary-supplements-consumer-info", "quote": "FDA is not authorized to approve dietary supplements for safety and effectiveness before they are marketed", "pageOrSection": "Information for Consumers on Using Dietary Supplements" }
+      ],
+      "reviewFlags": [
+        "new claim added in remediation pass to close promotionBlocker: packet previously had no regulatory-status claim",
+        "regulatory disclosure claim -- route through field-authority review before public promotion per directive rule for regulatory claims",
+        "do not imply FDA premarket safety/efficacy review applies to melatonin products"
+      ]
     }
   ],
   "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot evidence packet has not received human review."], "qualityFlags": ["pilot-input", "no-safety-canonicalization"] }
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Pilot evidence packet has not received human review.",
+      "Cardiovascular (heart-failure) signal for chronic melatonin use rests on a preliminary, non-peer-reviewed 2025 study; re-check for peer-reviewed publication or retraction at next review and update the safety-gap claim accordingly.",
+      "DrugBank identifier DB01065 in externalIdentifiers could not be cross-checked against a fetched DrugBank page this session; no claim currently hinges on this field, so it remains non-blocking but unverified.",
+      "Newly added regulatory-status and expanded safety-gap claims are marked fieldAuthorityRequired=true and require field-authority (regulatory/safety) sign-off before public promotion."
+    ],
+    "qualityFlags": ["pilot-input", "no-safety-canonicalization", "remediation-pass-2026-08-29"]
+  }
 }

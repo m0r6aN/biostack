@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
     <PackageReference Include="JsonSchema.Net" Version="7.3.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
@@ -17,7 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.9" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +27,10 @@
     <ProjectReference Include="..\BioStack.Infrastructure\BioStack.Infrastructure.csproj" />
     <!-- BioStack.Application provides the build-time ProtocolIntelligenceGate + DoctrineSanitizer -->
     <ProjectReference Include="..\BioStack.Application\BioStack.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="BioStack.KnowledgeWorker.Tests" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +60,12 @@
     <None Update="Schemas\relationship-packet.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Schemas\source-authorization-decision.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\source-authorization-decision.v2.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Schemas\evaluation-taxonomy.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -69,6 +81,19 @@
     <None Update="Seeds\substances-seed.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <!--
+    The DrugBank excerpt-containment scope from owner decision C1. shared/source-rights/ is
+    authoritative; scripts/sync-source-rights.mjs generates this in-project copy so the Docker build
+    context stays self-contained, and CI rejects a stale copy. Embedding it means the worker enforces
+    C1 without depending on an optional registry file being supplied at run time, and the frontend
+    imports the same manifest so both surfaces contain exactly one scope. RestrictedExcerptPolicy
+    throws if this resource is missing rather than emitting uncontained artifacts.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="SourceRights\drugbank-containment.v1.json"
+                      LogicalName="BioStack.KnowledgeWorker.SourceRights.drugbank-containment.v1.json" />
   </ItemGroup>
 
 </Project>

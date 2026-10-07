@@ -20,7 +20,7 @@ public class SpineRepositoryTests : IDisposable
 
         _db = new BioStackDbContext(options);
         _db.Database.EnsureCreated();
-        _sut = new SpineRepository(_db);
+        _sut = SpineTestHelpers.CreateRepository(_db);
     }
 
     public void Dispose()

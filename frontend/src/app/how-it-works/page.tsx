@@ -1,12 +1,19 @@
 import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata } from '@/lib/site';
 import Link from 'next/link';
+
+export const metadata = createPublicPageMetadata({
+  title: 'How BioStack Works',
+  description: 'See how BioStack organizes tracking, calculations, overlap context, and protocol history.',
+  path: '/how-it-works',
+});
 
 const sections = [
   {
     eyebrow: 'Current State',
-    title: 'Your protocol is more complex than your system for tracking it.',
+    title: 'Your stack is more complex than your system for tracking it.',
     body: [
       'You have compounds, notes, papers, and intent. The hard part is keeping them together under pressure.',
       'BioStack closes the gap between a spreadsheet and a clinical system without pretending to prescribe.',
@@ -33,14 +40,14 @@ const sections = [
     title: 'General ranges are only the start.',
     body: [
       'Age, weight, goals, and tracking history turn generic guidance into useful context.',
-      'BioStack gets more useful as your protocol history becomes clearer.',
+      'BioStack gets more useful as your stack history becomes clearer.',
     ],
   },
 ];
 
 const provides = [
   'Compound tracking with precision structure',
-  'Pathway overlap intelligence across your active protocol',
+  'Pathway overlap intelligence across your active stack',
   'Reconstitution, volume, and unit conversion math',
   'Evidence-tiered knowledge base entries',
   'Daily check-ins that turn subjectivity into signal',
@@ -52,16 +59,16 @@ export default function HowItWorksPage() {
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main>
+      <main id="main" tabIndex={-1}>
         <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">
             How it works
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-            The deeper explanation lives here.
+            Structure for the stack you actually run.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
-            BioStack gives complex protocols a place for tracking, calculators, overlap checks, and timeline context.
+            BioStack gives complex stacks a place for findings, calculators, overlap checks, and timeline context.
           </p>
         </section>
 
@@ -103,7 +110,7 @@ export default function HowItWorksPage() {
               href="/start"
               className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
             >
-              Start a Protocol
+              Start a Stack Check
             </Link>
             <Link
           href="/tools/analyzer"

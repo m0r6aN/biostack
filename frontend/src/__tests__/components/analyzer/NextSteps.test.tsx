@@ -57,7 +57,7 @@ describe('NextSteps', () => {
   it('renders the upgrade CTA when the result belongs to a non-entitled account', () => {
     render(<NextSteps {...makeProps()} />);
     expect(screen.getByRole('button', { name: /save analysis/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /convert to biostack protocol/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add this stack to biostack/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /view operator access/i })).toBeInTheDocument();
   });
 
@@ -68,10 +68,10 @@ describe('NextSteps', () => {
     expect(onSave).toHaveBeenCalledOnce();
   });
 
-  it('clicking Convert to BioStack Protocol fires onConvert', () => {
+  it('clicking Add this stack to BioStack fires onConvert', () => {
     const onConvert = vi.fn();
     render(<NextSteps {...makeProps({ onConvert })} />);
-    fireEvent.click(screen.getByRole('button', { name: /convert to biostack protocol/i }));
+    fireEvent.click(screen.getByRole('button', { name: /add this stack to biostack/i }));
     expect(onConvert).toHaveBeenCalledOnce();
   });
 

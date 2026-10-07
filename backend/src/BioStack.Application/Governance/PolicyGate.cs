@@ -1,6 +1,5 @@
 namespace BioStack.Application.Governance;
 
-using System.Text.RegularExpressions;
 using BioStack.Infrastructure.Keon;
 using Microsoft.Extensions.Logging;
 
@@ -28,21 +27,6 @@ public sealed class PolicyGate(
     IKeonRuntimeClient keon,
     ILogger<PolicyGate> logger)
 {
-    // Banned-phrase patterns mirror DoctrineSanitizer's patterns.
-    // Both classes share the same doctrine but are not coupled in code:
-    // changes to one must be applied to the other to keep them consistent.
-    private static readonly Regex[] ProhibitedPatterns =
-    [
-        new(@"\byou\s+should\b",             RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\byou\s+must\b",               RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\btake\s+\d+\s*(mg|mcg|g)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bdose\s+at\b",                RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bis\s+safe\b",                RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bwill\s+treat\b",             RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bcures?\b",                   RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bproven\s+to\b",              RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bstop\s+taking\b",            RegexOptions.IgnoreCase | RegexOptions.Compiled),
-    ];
 
     private static readonly PolicyHash ZeroedPolicyHash = new("local-classifier-v0", "0.0.0");
 
@@ -105,12 +89,12 @@ public sealed class PolicyGate(
         if (string.IsNullOrWhiteSpace(text))
             return null;
 
-        foreach (var pattern in ProhibitedPatterns)
-        {
-            if (pattern.IsMatch(text))
-                return LanguageClassification.Prohibited;
-        }
-
-        return null;
+        // Strict tier: PolicyGate screens BioStack-authored narrative, which carries no
+        // attribution, so unattributed subject claims ("is safe", "cures") are prohibited here
+        // alongside personalized direction. Source-attributed evidence text takes the
+        // OutputAttribution.SourceAttributed path via DoctrineSanitizer instead (F2).
+        return DoctrineRuleset.IsProhibited(text, OutputAttribution.Unattributed)
+            ? LanguageClassification.Prohibited
+            : null;
     }
 }

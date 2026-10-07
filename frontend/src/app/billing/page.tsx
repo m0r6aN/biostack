@@ -6,8 +6,9 @@ import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { apiClient } from '@/lib/api';
 import { pricingTiers } from '@/lib/marketing';
+import { tierRank } from '@/lib/productContract';
 import { CurrentSubscription } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function formatPeriodEnd(value: string | null) {
   if (!value) return '';
@@ -47,17 +48,19 @@ function stateCopy(subscription: CurrentSubscription) {
 export default function BillingPage() {
   const [subscription, setSubscription] = useState<CurrentSubscription | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [checkoutState, setCheckoutState] = useState<'success' | 'cancelled' | null>(null);
+  const checkoutStartedRef = useRef(false);
 
   const load = async () => {
     try {
       setLoading(true);
       setSubscription(await apiClient.getCurrentSubscription());
-      setError(null);
+      setLoadError(null);
     } catch {
-      setError('Billing state could not be loaded.');
+      setLoadError('Billing state could not be loaded.');
     } finally {
       setLoading(false);
     }
@@ -69,17 +72,51 @@ export default function BillingPage() {
     void load();
   }, []);
 
-  const startCheckout = async (planCode: 'operator' | 'commander') => {
+  const startCheckout = useCallback(async (
+    planCode: 'operator' | 'commander',
+    consumePlanIntent = false,
+  ) => {
+    if (checkoutStartedRef.current) return;
+
+    checkoutStartedRef.current = true;
+    setActionError(null);
+    setBusy(planCode);
+
+    if (consumePlanIntent) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('plan');
+      window.history.replaceState(
+        window.history.state,
+        '',
+        `${url.pathname}${url.search}${url.hash}`,
+      );
+    }
+
     try {
-      setBusy(planCode);
       const session = await apiClient.createCheckoutSession(planCode);
       window.location.href = session.url;
     } catch {
-      setError('Checkout is not available yet. Confirm Stripe price configuration.');
-    } finally {
+      checkoutStartedRef.current = false;
       setBusy(null);
+      setActionError(
+        'Checkout could not be started. Choose a plan below to try again.',
+      );
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (loading || !subscription) return;
+
+    const planIntent = new URLSearchParams(window.location.search).get('plan');
+    if (!planIntent) return;
+
+    if (planIntent !== 'operator' && planIntent !== 'commander') {
+      setActionError('That plan link is not valid. Choose an available plan below.');
+      return;
+    }
+
+    void startCheckout(planIntent, true);
+  }, [loading, startCheckout, subscription]);
 
   const manageBilling = async () => {
     try {
@@ -87,7 +124,7 @@ export default function BillingPage() {
       const session = await apiClient.createBillingPortalSession();
       window.location.href = session.url;
     } catch {
-      setError('Billing management is not available for this account yet.');
+      setActionError('Billing management is not available for this account yet.');
     } finally {
       setBusy(null);
     }
@@ -115,10 +152,16 @@ export default function BillingPage() {
             <p className="mt-2 text-sm leading-6 text-white/60">No plan change was requested. You can continue on your current plan.</p>
           </section>
         )}
+        {actionError && (
+          <section role="alert" className="rounded-lg border border-amber-300/20 bg-amber-400/[0.08] p-5">
+            <h2 className="font-semibold text-amber-50">Billing action needs attention</h2>
+            <p className="mt-2 text-sm leading-6 text-amber-50/70">{actionError}</p>
+          </section>
+        )}
         {loading ? (
           <LoadingSkeleton />
-        ) : error ? (
-          <ErrorState message={error} onRetry={load} />
+        ) : loadError ? (
+          <ErrorState message={loadError} onRetry={load} />
         ) : subscription && copy ? (
           <>
             <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-6">
@@ -172,13 +215,23 @@ export default function BillingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => startCheckout('operator')}
-                  disabled={busy !== null}
-                  className="mt-5 rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/10 disabled:opacity-50"
-                >
-                  {busy === 'operator' ? 'Opening...' : 'Upgrade to Operator'}
-                </button>
+                {subscription?.tier === 'Operator' ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+                    <span aria-hidden="true">✓</span> Subscribed
+                  </p>
+                ) : tierRank(subscription?.tier ?? '') > tierRank('Operator') ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/60">
+                    Included with {subscription?.tier}
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => void startCheckout('operator')}
+                    disabled={busy !== null}
+                    className="mt-5 rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/10 disabled:opacity-50"
+                  >
+                    {busy === 'operator' ? 'Opening...' : 'Upgrade to Operator'}
+                  </button>
+                )}
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
@@ -193,13 +246,19 @@ export default function BillingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => startCheckout('commander')}
-                  disabled={busy !== null}
-                  className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300 disabled:opacity-50"
-                >
-                  {busy === 'commander' ? 'Opening...' : 'Upgrade to Commander'}
-                </button>
+                {subscription?.tier === 'Commander' ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+                    <span aria-hidden="true">✓</span> Subscribed
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => void startCheckout('commander')}
+                    disabled={busy !== null}
+                    className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300 disabled:opacity-50"
+                  >
+                    {busy === 'commander' ? 'Opening...' : 'Upgrade to Commander'}
+                  </button>
+                )}
               </div>
             </section>
           </>

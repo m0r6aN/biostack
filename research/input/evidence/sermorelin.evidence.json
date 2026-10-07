@@ -1,0 +1,455 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "sermorelin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Sermorelin",
+    "aliases": [
+      "Geref",
+      "GRF 1-29",
+      "GHRH(1-29)NH2",
+      "Sermorelin acetate",
+      "Somatorelin (related INN)"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic 29-amino-acid growth-hormone-releasing hormone (GHRH) analog / GHRH-receptor agonist",
+    "externalIdentifiers": {
+      "rxnorm": "56188",
+      "unii": "89243S03TE",
+      "casNumber": "86168-78-7",
+      "drugbank": "DB00010",
+      "pubchem": "16132413",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fedreg-geref-determination-2013",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Determination That GEREF (Sermorelin Acetate) Injection, 0.5 Milligrams Base/Vial and 1.0 Milligrams Base/Vial, and GEREF (Sermorelin Acetate) Injection, 0.05 Milligrams Base/Amp, Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
+      "publisher": "U.S. Food and Drug Administration / Federal Register",
+      "url": "https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2013-03-04T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "dailymed-search-sermorelin",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed Search Results for SERMORELIN",
+      "publisher": "U.S. National Library of Medicine / DailyMed (FDA-sourced labeling repository)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sermorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-drug-substances-category2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-16132413",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Sermorelin, CID 16132413",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sermorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db00010",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Sermorelin (DB00010)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB00010",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pmc-gh-secretagogues-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The Safety and Efficacy of Growth Hormone Secretagogues",
+      "publisher": "PubMed Central (NIH)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5632578/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "healthline-sermorelin",
+      "sourceType": "consumer-health-content",
+      "authorityTier": "C1",
+      "title": "Sermorelin Therapy Benefits, Risks, Uses, Approval, and Side Effects",
+      "publisher": "Healthline Media",
+      "url": "https://www.healthline.com/health/sermorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "biospace-geref-discontinuation-2008",
+      "sourceType": "trade-news",
+      "authorityTier": "C1",
+      "title": "EMD Serono, Inc. to Discontinue Geref Diagnostic",
+      "publisher": "BioSpace",
+      "url": "https://www.biospace.com/emd-serono-inc-to-discontinue-geref-diagnostic",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2008-10-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "vittone-1997-ghrh-elderly-men",
+      "sourceType": "primary-literature",
+      "authorityTier": "B1",
+      "title": "Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men",
+      "publisher": "Metabolism: Clinical and Experimental (via Johns Hopkins University research repository)",
+      "url": "https://pure.johnshopkins.edu/en/publications/effects-of-single-nightly-injections-of-growth-hormone-releasing--6/",
+      "doi": "10.1016/S0026-0495(97)90174-8",
+      "pmid": "9005976",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "vitiello-2006-ghrh-cognition-elderly",
+      "sourceType": "primary-literature",
+      "authorityTier": "B1",
+      "title": "Growth hormone releasing hormone improves the cognition of healthy older adults",
+      "publisher": "Neurobiology of Aging (secondary reporting via NIH Bookshelf/Endotext and PMC review, PubMed record unreachable due to bot-detection blocking)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK279163/",
+      "doi": null,
+      "pmid": "16399214",
+      "publishedAt": "2006-02-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "rxnav-nlm-sermorelin",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "RxNorm RxCUI lookup for sermorelin",
+      "publisher": "U.S. National Library of Medicine / RxNav",
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=sermorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "sermorelin-regulatory-discontinuation-not-safety-001",
+      "claimType": "regulatory",
+      "statement": "FDA-approved sermorelin acetate injection (brand GEREF) was indicated for treatment of idiopathic growth hormone deficiency in children with growth failure; the manufacturer (EMD Serono) discontinued the product in 2008, and FDA formally determined the product was not withdrawn from sale for reasons of safety or effectiveness.",
+      "context": {
+        "population": "pediatric patients with idiopathic growth hormone deficiency (historical approved indication)",
+        "route": "subcutaneous injection (approved GEREF product)",
+        "formulation": "GEREF (sermorelin acetate) injection, 0.5 mg base/vial and 1.0 mg base/vial",
+        "useCase": "regulatory history / withdrawal determination",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fedreg-geref-determination-2013"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fedreg-geref-determination-2013",
+          "quote": "GEREF (Sermorelin Acetate) injection, 0.5 mg base/vial and 1.0 mg base/vial, is indicated for the treatment of idiopathic growth hormone deficiency (GHD) in children with growth failure",
+          "pageOrSection": "Determination notice, Table 1 / indication description"
+        },
+        {
+          "sourceRef": "fedreg-geref-determination-2013",
+          "quote": "In a letter dated December 2, 2008, EMD Serono notified FDA that GEREF (Sermorelin Acetate) injection, 0.5 mg base/vial and 1.0 mg base/vial, was being discontinued",
+          "pageOrSection": "Determination notice, background"
+        },
+        {
+          "sourceRef": "fedreg-geref-determination-2013",
+          "quote": "FDA has determined under § 314.161 that GEREF (Sermorelin Acetate) injection, 0.5 mg base/vial and 1.0 mg base/vial, and GEREF (Sermorelin Acetate) injection, 0.05 mg base/amp, were not withdrawn for reasons of safety or effectiveness.",
+          "pageOrSection": "Determination notice, conclusion"
+        },
+        {
+          "sourceRef": "biospace-geref-discontinuation-2008",
+          "quote": "The drug will be discontinued because the active ingredient used to produce Gerer Diagnostic is no longer being manufactured.",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "this determination governs 503A compounding eligibility and should be reconfirmed against the current FDA determinations list at review time",
+        "independent trade-press corroboration (BioSpace, Oct 2008) attributes the discontinuation specifically to the API/raw-material supplier ceasing production — a supply-chain/business reason, consistent with but more specific than the Federal Register's 'not withdrawn for safety or effectiveness' framing"
+      ]
+    },
+    {
+      "claimId": "sermorelin-regulatory-no-current-fda-product-001",
+      "claimType": "regulatory",
+      "statement": "As of the access date, no sermorelin or sermorelin acetate drug product is listed in DailyMed (the NLM/FDA labeling repository), and sermorelin/sermorelin acetate does not appear in FDA's Category 2 table of bulk drug substances presenting significant safety risks or in the table of substances nominated but withdrawn on the FDA 503A bulk substances page; there is currently no FDA-approved sermorelin product on the market.",
+      "context": {
+        "population": "prospective users of compounded sermorelin products",
+        "route": null,
+        "formulation": "compounded sermorelin / sermorelin acetate (no FDA-approved product currently marketed)",
+        "useCase": "current regulatory/marketing-status verification",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-search-sermorelin",
+        "fda-bulk-drug-substances-category2",
+        "fedreg-geref-determination-2013"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-search-sermorelin",
+          "quote": "No Drug Package Labels found.",
+          "pageOrSection": "Search results for query: sermorelin"
+        },
+        {
+          "sourceRef": "fda-bulk-drug-substances-category2",
+          "quote": null,
+          "pageOrSection": "Category 2 table and 'nominated but withdrawn' table (sermorelin/sermorelin acetate not present in either table as of access date)"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "FDA compounding bulk-substance listings and DailyMed contents are revised periodically; re-verify absence/presence at each review cycle rather than relying on this snapshot"
+      ]
+    },
+    {
+      "claimId": "sermorelin-mechanism-ghrh-analog-001",
+      "claimType": "identity",
+      "statement": "PubChem lists a compound record titled Sermorelin under CID 16132413 with molecular formula C149H246N44O42S.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "PubChem compound record CID 16132413",
+        "useCase": "compound identity/reference data",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-16132413"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-16132413",
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 16132413 property response: CID, Title and MolecularFormula; factual paraphrase only."
+        }
+      ],
+      "reviewFlags": [
+        "Identity-only alternative prepared 2026-09-13: stable historical claimId retains audit linkage, not current mechanism support. GHRH mechanism, acetate relationship and structural/synthetic details remain unresolved; database identity does not replace those requirements or clear related review issues. Original flags retained as historical. Inherited Strong/high, contributor origin/family and evidence acceptance remain pending. See research/source-authorization/sermorelin-identity-resource-candidate-2026-09-13.json."
+      ]
+    },
+    {
+      "claimId": "sermorelin-formulation-historical-approved-product-001",
+      "claimType": "formulation",
+      "statement": "The only FDA-approved sermorelin products were GEREF injection formulations (0.5 mg base/vial and 1.0 mg base/vial for pediatric GHD treatment; 0.05 mg base/amp for diagnostic testing of pituitary somatotroph GH secretory capacity); both were discontinued by the manufacturer in the 2000s and are no longer manufactured, so sermorelin currently reaches consumers only as a compounded or research-labeled product outside the FDA-approved supply chain.",
+      "context": {
+        "population": "historical GEREF recipients (pediatric GHD treatment; adult diagnostic testing)",
+        "route": "subcutaneous injection",
+        "formulation": "GEREF (sermorelin acetate) injection - discontinued; compounded sermorelin products currently unregulated by an FDA-approved label",
+        "useCase": "product/formulation history, presented as label context only — not a current use recommendation",
+        "doseText": "Historical approved strengths only: 0.5 mg base/vial, 1.0 mg base/vial (treatment); 0.05 mg base/amp (diagnostic). No current administration-schedule label exists in DailyMed to cite."
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fedreg-geref-determination-2013",
+        "dailymed-search-sermorelin"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fedreg-geref-determination-2013",
+          "quote": "GEREF (Sermorelin Acetate) injection, 0.5 mg base/vial and 1.0 mg base/vial, is indicated for the treatment of idiopathic growth hormone deficiency (GHD) in children with growth failure",
+          "pageOrSection": "Determination notice, Table 1 / indication description"
+        },
+        {
+          "sourceRef": "dailymed-search-sermorelin",
+          "quote": "No Drug Package Labels found.",
+          "pageOrSection": "Search results for query: sermorelin"
+        },
+        {
+          "sourceRef": "biospace-geref-discontinuation-2008",
+          "quote": "The drug will be discontinued because the active ingredient used to produce Gerer Diagnostic is no longer being manufactured.",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific formulation/dosing claim",
+        "doseText intentionally limited to discontinued-label strengths; no current administration schedule should be sourced from non-label (compounder/vendor) material",
+        "independent trade-press source (BioSpace, Oct 2008) corroborates the discontinuation as an API-supply issue, consistent with this claim's historical-formulation account"
+      ]
+    },
+    {
+      "claimId": "sermorelin-evidence-gap-adult-wellness-uses-001",
+      "claimType": "evidence-gap",
+      "statement": "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking.",
+      "context": {
+        "population": "adults seeking wellness/anti-aging/body-composition use",
+        "route": "subcutaneous (typical gray-market use)",
+        "formulation": "compounded or research-labeled sermorelin",
+        "useCase": "anti-aging, wellness, body-composition marketing claims in adults",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "healthline-sermorelin",
+        "pmc-gh-secretagogues-review",
+        "vittone-1997-ghrh-elderly-men",
+        "vitiello-2006-ghrh-cognition-elderly"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "healthline-sermorelin",
+          "quote": "Studies investigating the benefits of sermorelin in adults are scarce",
+          "pageOrSection": "Body of article"
+        },
+        {
+          "sourceRef": "healthline-sermorelin",
+          "quote": "definitive research to support the anti-aging effect of sermorelin is lacking",
+          "pageOrSection": "Body of article"
+        },
+        {
+          "sourceRef": "pmc-gh-secretagogues-review",
+          "quote": "Sermorelin and tesamorelin mimic GHRH and act as GHRH-R agonists, acting synergistically with ibutamoren.",
+          "pageOrSection": "Discussion of GHRH-mimetic secretagogues (sermorelin discussed only as a mechanistic comparator, not with dedicated outcome data)"
+        },
+        {
+          "sourceRef": "vittone-1997-ghrh-elderly-men",
+          "quote": "Two of six measures of muscle strength, upright row and shoulder press, and a test of muscle endurance, abdominal crunch improved; GHRH treatment did not change weight, body mass index, waist to hip ratio, DEXA measures of muscle and fat",
+          "pageOrSection": "Citation/results summary (Johns Hopkins research repository record)"
+        },
+        {
+          "sourceRef": "vitiello-2006-ghrh-cognition-elderly",
+          "quote": "significant improvement on several cognitive assessments, particularly those involving problem solving, psychomotor processing speed, and working memory",
+          "pageOrSection": "Endotext 'Growth Hormone and Aging' chapter, summarizing Vitiello et al. 2006"
+        }
+      ],
+      "reviewFlags": [
+        "resolved 2026-08-29: two sermorelin/GHRH(1-29)-specific controlled human trials were located (Vittone et al. 1997, Metabolism, PMID 9005976; Vitiello et al. 2006, Neurobiology of Aging, PMID 16399214) via institutional-repository and NIH Bookshelf sources after direct PubMed/PMC access remained blocked by bot-detection this session too",
+          "correction to reviewer's finding: the reviewer's suggested fix described the 1997 trial as showing increased lean body mass and decreased visceral fat with no strength gains — the primary-source record actually fetched this session shows the opposite pattern (partial strength/endurance improvement, no DEXA body-composition change), so the packet states the verified result rather than the reviewer's unverified characterization",
+        "both trials are small, decades-old, and do not establish general anti-aging, wellness, insulin-sensitivity, or libido efficacy; PubMed/PMC direct access remained CAPTCHA-blocked, so full original abstracts could not be independently re-confirmed beyond institutional-repository and secondary-review citations"
+      ]
+    },
+    {
+      "claimId": "sermorelin-misinformation-anti-aging-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits.",
+      "context": {
+        "population": "general adult consumers of online/compounded sermorelin products",
+        "route": "subcutaneous (typical marketed use)",
+        "formulation": "compounded/research-labeled sermorelin marketed for wellness use",
+        "useCase": "anti-aging, lean mass, libido, well-being marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "healthline-sermorelin",
+        "fedreg-geref-determination-2013",
+        "vittone-1997-ghrh-elderly-men",
+        "vitiello-2006-ghrh-cognition-elderly"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "healthline-sermorelin",
+          "quote": "sermorelin is a pro-aging support therapy that can restore your body's natural hGH production",
+          "pageOrSection": "Body of article (describing common marketing framing)"
+        },
+        {
+          "sourceRef": "healthline-sermorelin",
+          "quote": "sermorelin may increase: general well-being, lean body mass, insulin sensitivity, libido",
+          "pageOrSection": "Body of article"
+        },
+        {
+          "sourceRef": "healthline-sermorelin",
+          "quote": "use of sermorelin in healthy adults to reverse the effects of aging and in bodybuilding remains controversial",
+          "pageOrSection": "Body of article"
+        },
+        {
+          "sourceRef": "vittone-1997-ghrh-elderly-men",
+          "quote": "GHRH treatment did not change weight, body mass index, waist to hip ratio, DEXA measures of muscle and fat",
+          "pageOrSection": "Citation/results summary (Johns Hopkins research repository record)"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims lack supporting controlled human outcome evidence",
+        "cross-check against vendor sites that assert current FDA approval or clinical endorsement, which conflicts with the confirmed discontinued/no-current-product regulatory status",
+        "narrowed 2026-08-29 per independent review: the reviewer's suggested fix asserted the lean-body-mass marketing claim has 'limited but real controlled-trial support' based on Vittone et al. 1997 — the primary source actually fetched this session shows the opposite (no DEXA body-composition change, only partial strength/endurance improvement), so the lean-body-mass claim is retained as unsupported rather than partially vindicated; libido, insulin-sensitivity, and general-well-being/anti-aging claims remain unsupported by any identified controlled trial"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "sermorelin-conflict-marketing-vs-regulatory-status-001",
+      "claimRefs": [
+        "sermorelin-regulatory-no-current-fda-product-001",
+        "sermorelin-misinformation-anti-aging-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Direct-to-consumer and compounding-pharmacy marketing pages frequently present sermorelin as a legitimate, clinically endorsed anti-aging/wellness therapy, while the confirmed regulatory record shows no FDA-approved sermorelin product currently on the market (DailyMed returns no results) and only sparse adult human trial evidence; this gap between marketing framing and the documented regulatory/evidence record is unresolved pending a dedicated review of individual vendor claims against updated FDA compounding status.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Remediation pass 2026-08-29: located two sermorelin/GHRH(1-29)-specific controlled human trials (Vittone et al. 1997, PMID 9005976; Vitiello et al. 2006, PMID 16399214) via institutional-repository (Johns Hopkins Pure) and NIH Bookshelf/PMC secondary-review citations, since direct PubMed/PMC full-text access remained blocked by bot-detection (reCAPTCHA) this session as well. Original journal abstracts (Metabolism; Neurobiology of Aging) could not be independently re-confirmed beyond these secondary citations — this residual gap stays review-gated.",
+      "ChEMBL identifier not yet resolved (EBI ChEMBL API was rate-limited/unreachable this session); RxNorm identifier resolved this session via NLM RxNav (RxCUI 56188).",
+      "Current FDA 503A/503B bulk-substance listing status for sermorelin was re-verified live against the FDA bulk drug substances page and DailyMed on 2026-08-28 per the independent review; still absent from both. Continue to re-verify at each review cycle since these lists are revised periodically.",
+      "Verify DailyMed absence-of-listing finding is still current, since compounded or newly approved products could appear between snapshots.",
+      "Reviewer's recommended fix for the lean-body-mass marketing claim (that Vittone et al. 1997 showed increased lean mass and decreased visceral fat) was checked against the primary-source citation this session and found to be incorrect — the trial actually found no DEXA body-composition change, only partial strength/muscle-endurance improvement. The packet was corrected to reflect the verified result, not the reviewer's characterization; this discrepancy should be flagged back to the review process.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "thin-human-evidence",
+      "no-current-fda-approved-product",
+      "gray-market-only",
+      "marketing-vs-evidence-gap-documented",
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
+    ]
+  }
+}

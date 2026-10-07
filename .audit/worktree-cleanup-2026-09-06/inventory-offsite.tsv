@@ -1,0 +1,48 @@
+2d94/BioStack	ff5eb5e	DETACHED	NOT_ANC	mod=0;unt=0	ab=25/10	uq=10	2026-08-28 11:04:00 -0400|fix: implement authenticated profile goals contract
+3109/BioStack	2c4bdac	DETACHED	NOT_ANC	mod=0;unt=0	ab=25/10	uq=10	2026-08-28 11:10:21 -0400|fix(auth): persist sessions and recover stale cookies
+6691/BioStack	2b077f5	DETACHED	ANC	mod=0;unt=0	ab=49/0	uq=0	2026-07-27 12:43:48 -0400|Fix fail-closed Keon receipt atomicity (#241)
+890d/BioStack	b4cdd6c	codex/keo-68-neon-sandbox-init	NOT_ANC	mod=0;unt=0	ab=87/4	uq=4	2026-07-15 13:30:43 -0400|fix: tolerate newer Stripe webhook API versions
+a9a0/BioStack	5404e20	DETACHED	NOT_ANC	mod=0;unt=0	ab=25/10	uq=10	2026-08-28 10:55:24 -0400|fix(db): repair PostgreSQL auth and billing type drift
+biostack-algorithm-remediation-goal/BioStack	ec80434	codex/goal-biostack-algorithm-remediation	NOT_ANC	mod=0;unt=0	ab=13/45	uq=45	2026-09-03 06:33:43 -0400|Complete BioStack remediation Stage F
+biostack-remediation-integration/BioStack	339f259	DETACHED	ANC	mod=27;unt=0	ab=13/0	uq=0	2026-08-30 09:51:07 -0400|feat(auth): post-magic-link passkey enrollment offer + clearer sign-in copy (#264)
+biostack-remediation-p01/BioStack	751090e	codex/biostack-remediation-p01	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 12:59:19 -0400|fix(parser): remediate D5 semantics
+biostack-remediation-p02/BioStack	1b57420	codex/biostack-remediation-p02	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 13:01:17 -0400|fix(protocol): enforce ingestion cancellation and consent
+biostack-remediation-p03/BioStack	a69d945	codex/biostack-remediation-p03	NOT_ANC	mod=0;unt=0	ab=13/2	uq=2	2026-09-02 19:27:50 -0400|fix graph artifact provenance
+biostack-remediation-p04/BioStack	38ebffb	codex/biostack-remediation-p04	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 15:09:41 -0400|fix evidence provenance boundaries
+biostack-remediation-p05-p06-combined/BioStack	2f4a092	DETACHED	NOT_ANC	mod=2;unt=0	ab=13/2	uq=2	2026-09-02 16:55:23 -0400|harden sidecar terminal update atomicity
+biostack-remediation-p05/BioStack	2f4a092	codex/biostack-remediation-p05	NOT_ANC	mod=0;unt=0	ab=13/2	uq=2	2026-09-02 16:55:23 -0400|harden sidecar terminal update atomicity
+biostack-remediation-p06/BioStack	c435caf	codex/biostack-remediation-p06	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 17:16:42 -0400|enforce sidecar accepted source cap
+biostack-remediation-p07-lint-baseline/BioStack	339f259	codex/biostack-remediation-p07-lint-baseline	ANC	mod=0;unt=0	ab=13/0	uq=0	2026-08-30 09:51:07 -0400|feat(auth): post-magic-link passkey enrollment offer + clearer sign-in copy (#264)
+biostack-remediation-p07/BioStack	c35df75	codex/biostack-remediation-p07	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 16:08:25 -0400|fix: require current consent before research relay
+biostack-remediation-p08/BioStack	47c2be0	codex/biostack-remediation-p08	NOT_ANC	mod=0;unt=0	ab=13/1	uq=0	2026-09-02 15:45:41 -0400|fix: require consent before Collective outbound calls
+biostack-remediation-q01/BioStack	83d1235	codex/biostack-remediation-q01	NOT_ANC	mod=0;unt=0	ab=13/1	uq=1	2026-09-02 13:39:23 -0400|test(cognition): preserve collective outbound boundary evidence
+biostack-remediation-q02-v2/BioStack	339f259	codex/biostack-remediation-q02-v2	ANC	mod=0;unt=0	ab=13/0	uq=0	2026-08-30 09:51:07 -0400|feat(auth): post-magic-link passkey enrollment offer + clearer sign-in copy (#264)
+biostack-remediation-q02/BioStack	dea7212	codex/biostack-remediation-q02	NOT_ANC	mod=0;unt=0	ab=13/1	uq=1	2026-09-02 13:57:33 -0400|test(api): inventory bounded gate metadata
+biostack-remediation-q03/BioStack	339f259	codex/biostack-remediation-q03	ANC	mod=0;unt=0	ab=13/0	uq=0	2026-08-30 09:51:07 -0400|feat(auth): post-magic-link passkey enrollment offer + clearer sign-in copy (#264)
+biostack-remediation-q04/BioStack	339f259	codex/biostack-remediation-q04	ANC	mod=0;unt=0	ab=13/0	uq=0	2026-08-30 09:51:07 -0400|feat(auth): post-magic-link passkey enrollment offer + clearer sign-in copy (#264)
+biostack-remediation-release/BioStack	aa747f7	codex/biostack-algorithm-remediation-integration	ANC	mod=0;unt=0	ab=5/0	uq=0	2026-09-03 05:48:51 -0400|fix(collective): normalize P08 outbound authorization
+biostack-sidecar-deployment-goal/BioStack	038b617	codex/goal-biostack-sidecar-deployment	NOT_ANC	mod=0;unt=0	ab=4/6	uq=6	2026-09-03 09:53:05 -0400|Ratify scoped Gate 1 re-open: amend D5/D12, add D19-D21, split P04
+biostack-test-repro-contracts/BioStack	879def1	codex/test-repro-contracts	NOT_ANC	mod=0;unt=0	ab=13/5	uq=5	2026-09-02 11:21:56 -0400|docs(audit): record charter ratification
+biostack-test-repro-evidence/BioStack	2c9d6ca	codex/test-repro-evidence	NOT_ANC	mod=0;unt=0	ab=13/3	uq=3	2026-09-02 10:37:41 -0400|test(audit): reproduce evidence provenance gaps
+biostack-test-repro-interaction/BioStack	56b7ad2	codex/test-repro-interaction	NOT_ANC	mod=0;unt=0	ab=13/3	uq=3	2026-09-02 10:37:41 -0400|test(interactions): reproduce audit safety gaps
+biostack-test-repro-outbound/BioStack	c3e30a9	codex/test-repro-outbound	NOT_ANC	mod=0;unt=0	ab=13/3	uq=3	2026-09-02 10:44:43 -0400|test(audit): reproduce outbound boundary gaps
+biostack-test-repro-parser/BioStack	817f6f3	codex/test-repro-parser	NOT_ANC	mod=0;unt=0	ab=13/3	uq=3	2026-09-02 10:37:41 -0400|test(parser): reproduce audit invariants
+biostack-test-repro-sidecar/BioStack	82295c3	codex/test-repro-sidecar	NOT_ANC	mod=0;unt=0	ab=13/3	uq=3	2026-09-02 10:37:41 -0400|test(sidecar): reproduce lifecycle boundary gaps
+calculator-overlap-language/BioStack	40d64d2	codex/calculator-overlap-language	NOT_ANC	mod=0;unt=0	ab=24/1	uq=0	2026-08-28 12:47:04 -0400|Clarify calculator compound overlap language
+fdf1/BioStack	b3cde26	DETACHED	NOT_ANC	mod=0;unt=0	ab=25/10	uq=10	2026-08-28 11:13:05 -0400|feat(auth): add passkey WebAuthn sign-in
+.worktrees/analyzer-ux-pass	0fe17cd	feature/analyzer-ux-ia-pass	NOT_ANC	mod=2;unt=0	ab=413/8	uq=8	2026-04-24 13:34:39 -0400|feat(analyzer): OCR unavailable state, analytics events, fix aside save button
+.worktrees/dependency-hygiene-nuget-vulnerabilities	a0047b8	dependency-hygiene/nuget-vulnerabilities	NOT_ANC	mod=0;unt=0	ab=281/1	uq=0	2026-07-01 09:34:32 -0400|Fix cryptography XML package vulnerability
+.worktrees/gtm-source-truth-20260905	2b451da	lead/gtm-source-truth-20260905	ANC	mod=0;unt=0	ab=3/0	uq=0	2026-09-05 06:53:49 -0400|docs(research): hold wave 006 candidates after source re-review
+.worktrees/gtm-wave006-20260905	910cc4a	gtm/wave-006-rereview-2026-09-05	ANC	mod=0;unt=0	ab=3/0	uq=0	2026-09-05 07:10:05 -0400|docs(research): hold wave 006 after independent re-review
+.worktrees/pr150-cli-hardening	36bc7ca	codex/protocol-operations-cli-hardening	ANC	mod=0;unt=0	ab=248/0	uq=0	2026-07-04 10:20:00 -0400|Harden verifier CLI arguments
+.worktrees/pr151-negative-fixtures	accdd9c	codex/protocol-operations-negative-fixtures	ANC	mod=1;unt=0	ab=248/0	uq=0	2026-07-04 10:27:25 -0400|Add offline negative fixture matrix
+.worktrees/pr152-offline-kit-docs	eb914c0	codex/protocol-operations-offline-kit-docs	ANC	mod=0;unt=0	ab=248/0	uq=0	2026-07-04 10:19:37 -0400|docs: expand offline kit README
+.worktrees/pr154-offline-release-checklist	e5a5fee	codex/protocol-operations-offline-release-checklist	ANC	mod=0;unt=0	ab=240/0	uq=0	2026-07-04 11:55:30 -0400|docs: add offline verification release checklist
+.worktrees/pr155-cli-result-json	e1da53e	codex/protocol-operations-cli-result-json	ANC	mod=0;unt=0	ab=240/0	uq=0	2026-07-04 11:56:04 -0400|feat: add offline verifier result json mode
+.worktrees/pr156-dependency-boundary-guard	f5fdac7	codex/protocol-operations-dependency-boundary-guard	ANC	mod=0;unt=0	ab=240/0	uq=0	2026-07-04 11:56:36 -0400|test: add offline verification dependency guard
+.worktrees/pr157-auditor-packet-design-note	b3f4bf7	codex/protocol-operations-auditor-packet-design-note	ANC	mod=0;unt=0	ab=234/0	uq=0	2026-07-04 14:22:22 -0400|docs: add offline verification auditor packet design note
+.worktrees/protocol-operations-export-bundle-offline-verification-cli-foundation	15f5f87	codex/protocol-operations-export-bundle-offline-verification-cli-foundation	ANC	mod=0;unt=0	ab=262/0	uq=0	2026-07-03 08:48:57 -0400|add protocol operations export bundle verification cli foundation
+.worktrees/track-c-production-ops	5e0d0ea	codex/track-c-production-ops-20260728	NOT_ANC	mod=0;unt=0	ab=47/9	uq=9	2026-07-28 19:55:01 -0400|test: add disposable staging verifier
+worktrees/analyzer-premium-redesign	649b253	worktree-analyzer-premium-redesign	NOT_ANC	mod=0;unt=1	ab=314/21	uq=20	2026-06-12 19:25:08 -0400|test(analyzer): deterministic v3-migration assertion + clear/analysis-started coverage
+worktrees/feat+go-live-hardening	4d5ae0a	worktree-feat+go-live-hardening	NOT_ANC	mod=0;unt=0	ab=402/30	uq=30	2026-05-09 10:15:09 -0400|docs: add go-live hardening implementation plan
+worktrees/frontend-readiness-remediation	ad056ea	worktree-frontend-readiness-remediation	ANC	mod=0;unt=0	ab=171/0	uq=0	2026-07-06 10:27:47 -0400|feat(frontend): surface benefits and drug interactions in compound dossier

@@ -1,0 +1,25 @@
+SEAT: Consistency (Opus) — narrative arc, credibility, internal contradiction, audience routing. Blind.
+
+VERDICT: REJECT CURRENT FORM
+
+TOP 6 BRUTAL FINDINGS
+1. [BLOCKER] The proof section contradicts the disclaimer strip one screen below it — H2 "See what BioStack catches" over a panel showing a named compound pair (BPC-157 + TB-500), an "insight" block and a "Suggested next action" block, while 2.4 states the product "does not prescribe, diagnose, recommend" — a system that catches something in your stack and suggests your next action is doing the thing the page denies doing, which breaches the non-negotiable Guidance Content Contract.
+   [ORCHESTRATOR NOTE: REFUTED on content, UPHELD as labeling risk, downgraded to MINOR. Every nextAction string in onboardingIntelligence.ts is navigational; Class D is never engaged. See DIRECTIVE "Disputed / Refuted".]
+2. [BLOCKER] The page's only evidence is fabricated and unlabeled — StackIntelligencePanel is a hardcoded mock (2.3) dressed with a working List/Evidence toggle, status pill, stats row and auto-rotating insight, presented under a claim of demonstration, while O12 confirms zero logos, counts, testimonials, dates, or company identity — the entire credibility case rests on a simulation the visitor is invited to read as output.
+3. [BLOCKER] It asks for peptide/SARM logs and never says where they go — "local-first" (1) appears nowhere on the page, there is no privacy, security or compliance line, the sole privacy signal is a 14px footer link at exactly 4.50:1, and the written answer "Where is my data stored?" sits unrendered in marketing.ts (2.8) — silence on data custody in this category is disqualifying, and it discards the product's strongest differentiator.
+4. [BLOCKER] "Start Free" is contradicted inside its own viewport — nav promises free, card 1 says "Operator required," card 3 "Operator access," the proof section invites anyone to "Paste a stack" while card 1 restricts pasting to "Operator and Commander members," and both solid-emerald CTAs on the page (O4) lead to that gate while Observer/Operator/Commander are never defined or priced (O5) — the loudest action on the page is a locked door with no posted price.
+5. [MAJOR] Desktop and mobile disagree about the primary action, simultaneously — O14: the sticky nav privileges Start Free -> /start while the mobile sticky bar's only solid fill is Analyze -> /tools/analyzer and omits /start entirely, so a mobile visitor sees two persistent bars arguing opposite next steps.
+6. [MAJOR] A four-door router with three doors, and five names for one product — cards 1 and 3 are adjacent, framed as different jobs, and resolve to the same URL (O2); title, meta, JSON-LD, footer and FAQ ship five category descriptions and the H1 names none (O13) — the IA promises differentiation it does not deliver, and nothing on the page tells a stranger what this is.
+
+TOP 5 MOVES
+1. Retitle H2 to a non-diagnostic claim ("See how a stack gets structured"), rename the panel's "Suggested next action" to a navigation-only label, and place a permanent "Illustrative example — not real user data" caption inside the panel border; outcome: proof stops contradicting the disclaimer.
+2. Add one content block between proof and disclaimer rendering the existing marketing.ts pairs "Where is my data stored?" and "How is BioStack different from a spreadsheet?", stating local-first explicitly; outcome: trust gap and differentiation gap closed with copy that already exists.
+3. Make /start the single solid-emerald action page-wide: demote proof-section "Analyze a stack" to outline, and swap the mobile bar's Evidence slot for a solid Start with Analyze outlined (/knowledge survives in the footer); outcome: one primary action, identical across breakpoints, ungated.
+4. Merge hero cards 1 and 3 into one Analyzer card and give the freed slot a "What BioStack is" card -> /how-it-works; outcome: four doors, four destinations, and the evaluating skeptic stops being stranded.
+5. Publish one category line verbatim in title, meta, JSON-LD, footer and as a visible line under the H1; replace the four bare Operator gate strings with one price-anchored sentence; and give LandingHero.tsx:79 an explicit className so the substance list stops rendering brighter and larger than the subhead.
+
+PRESERVE
+- The H1/subhead pair — purely observational, zero prescription, banned strings correctly absent; it is the one place the page keeps its doctrine perfectly. Do not touch.
+- The disclaimer strip's body copy — plain, specific, non-defensive, enumerating exactly four denials; keep verbatim, change only its neighbours.
+- The panel's "educational reference only" hedge and the honored useReducedMotion — both show the contract being applied at component level.
+- The four-card intent router as a device — routing by self-identified audience above the fold is correct IA for four audiences; fix the destinations, keep the pattern.

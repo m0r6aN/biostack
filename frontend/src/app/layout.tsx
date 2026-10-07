@@ -1,24 +1,13 @@
 import { AppShell } from '@/components/AppShell';
 import { AuthProvider } from '@/lib/AuthProvider';
 import { ProfileProvider } from '@/lib/context';
+import { EntitlementsProvider } from '@/lib/entitlements';
 import { SettingsProvider } from '@/lib/settings';
+import { ROOT_METADATA } from '@/lib/site';
 import type { Metadata } from 'next';
 import './globals.css';
 
-export const metadata: Metadata = {
-  title: {
-    default: 'BioStack | Protocol Operations',
-    template: '%s',
-  },
-  description:
-    'Your protocol operations system. Track compounds, surface overlap, and turn daily signal into continuity.',
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-  },
-};
+export const metadata: Metadata = ROOT_METADATA;
 
 export default async function RootLayout({
   children,
@@ -28,6 +17,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="bg-[#0B0F14] text-white/90 font-sans">
+        <a
+          href="#main"
+          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-emerald-400 focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[#0B0F14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
+        >
+          Skip to main content
+        </a>
         {/* Atmospheric ambient light — gives glass surfaces something to blur through */}
         <div className="pointer-events-none fixed inset-0 overflow-hidden" style={{ zIndex: 0 }}>
           <div className="absolute -top-[20%] right-[5%] w-[70vw] h-[60vh] rounded-full bg-emerald-500/[0.055] blur-[140px]" />
@@ -37,9 +32,11 @@ export default async function RootLayout({
 
         <AuthProvider>
           <SettingsProvider>
-            <ProfileProvider>
-              <AppShell>{children}</AppShell>
-            </ProfileProvider>
+            <EntitlementsProvider>
+              <ProfileProvider>
+                <AppShell>{children}</AppShell>
+              </ProfileProvider>
+            </EntitlementsProvider>
           </SettingsProvider>
         </AuthProvider>
       </body>

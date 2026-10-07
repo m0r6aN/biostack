@@ -46,6 +46,25 @@ describe('EmptyState', () => {
     fireEvent.click(screen.getByText('Add item'));
     expect(onClick).toHaveBeenCalledOnce();
   });
+
+  it('renders a secondary link action alongside the primary button', () => {
+    const onClick = vi.fn();
+    render(
+      <EmptyState
+        title="T"
+        description="D"
+        action={{ label: 'Add item', onClick }}
+        secondaryAction={{ label: 'Browse the library', href: '/knowledge' }}
+      />
+    );
+    expect(screen.getByRole('link', { name: 'Browse the library' })).toHaveAttribute('href', '/knowledge');
+  });
+
+  it('renders only the secondary link when no primary action is given', () => {
+    render(<EmptyState title="T" description="D" secondaryAction={{ label: 'Browse the library', href: '/knowledge' }} />);
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Browse the library' })).toBeInTheDocument();
+  });
 });
 
 // ─── ErrorState ────────────────────────────────────────────────────────────────

@@ -3,11 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/lib/AuthProvider';
 
 export function MobileStickyCta() {
   const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
   const isStartRoute = pathname === '/start';
+  const { user, loading } = useAuth();
+  const isAuthenticated = !loading && user !== null;
 
   useEffect(() => {
     function updateVisibility() {
@@ -27,34 +30,45 @@ export function MobileStickyCta() {
   return (
     <nav
       aria-label="Primary actions"
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0B0F14]/92 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition duration-200 md:hidden ${
+      aria-hidden={!isVisible}
+      inert={!isVisible}
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0B0F14]/92 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition duration-200 motion-reduce:transition-none md:hidden ${
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
     >
       <div className="grid grid-cols-4 gap-2">
-        <Link
-          href="/tools/analyzer"
-          className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
-        >
-          Analyze
-        </Link>
+        {isAuthenticated ? (
+          <Link
+            href="/protocol-console"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/start"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
+          >
+            Start free
+          </Link>
+        )}
         <Link
           href="/knowledge"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
           Evidence
         </Link>
         <Link
-          href="/pricing"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-center text-sm font-semibold text-white"
+          href="/tools/analyzer"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
-          Pricing
+          Analyze
         </Link>
         <Link
-          href="/providers"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-amber-300/16 bg-amber-300/[0.06] px-2 text-center text-sm font-semibold text-white"
+          href="/pricing"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
-          Provider
+          Pricing
         </Link>
       </div>
     </nav>

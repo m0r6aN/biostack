@@ -1,0 +1,60 @@
+# BIO-ANALYZER-004 — Independent Code Review (Reviewer lens: correctness and hostile input)
+
+Worktree `D:/Repos/BioStack/.worktrees/bio-analyzer-004-20261004`, branch `fix/analyzer-spreadsheet-row-reconstruction`, diff `65e2242b..2a205e08`, spec rev 6. Scratch probe test used for hostile-input probing has been deleted; `git status --short` is empty (verified after deletion).
+
+## Findings
+
+| ID | severity | file:line | evidence (observed) | required change |
+|---|---|---|---|---|
+| F1 | blocking | backend/src/BioStack.Application/Services/ProtocolIngestionService.cs:1054-1057 | Name cleanup is gated: `if (!string.Equals(stripped, candidate)) candidate = CleanName(stripped);`. Probe (real ingestion+parse, scratch test, deleted): CSV `Compound,Dose,Frequency` / `Zorbatide (),250mcg,weekly` → NormalizedText `Zorbatide () 250mcg weekly`, **0 entries** (row silently lost at `ProtocolParser.IsLikelyCompoundName`, which rejects the letterless token `()`); `Zorbatide -,250mcg,weekly` → **0 entries**; `Zorbatide(),250mcg,weekly` → entry named **`Zorbatide()`**. Spec Name bullet (line 76): the name candidate is the value "after embedded-quantity removal **and cleanup** (below)" and "**Cleanup after removal:** delete empty bracket pairs (`()`, `[]`), delete leading/trailing separator-only tokens … `Zorbatide (5mg)` → `Zorbatide`". For all three inputs the spec pipeline yields name `Zorbatide` → entry `Zorbatide` 250 mcg weekly; observed output differs. The cleanup rule was added at closure round M2 precisely to stop "unknown compound dropped" — that failure is reproduced for the no-removal-triggered variants. Known aliases are unaffected (probe: `BPC-157 (),250mcg,weekly` → entry `BPC-157` 250 mcg weekly via the parser alias path), so impact is limited to unknown/unrecognized compounds. | Apply `CleanName` unconditionally to the name candidate after embedded-quantity removal (drop the `stripped != candidate` condition at :1054-1057; `CleanName` is a no-op on clean names, so T1/T2/T14/T15 fixtures are unaffected). Add T28 rows: `Zorbatide ()` and `Zorbatide -` with Dose `250mcg`, Frequency `weekly` → entry `Zorbatide` 250 `mcg` `weekly`; `Zorbatide()` → entry `Zorbatide`. Triage note: the cleanup bullet's heading "Cleanup after removal" admits the builder's narrower reading; my judgment against the full sentence ("after embedded-quantity removal and cleanup") is that both transforms apply to every name candidate. If the coordinator rules the narrow reading acceptable, F1 downgrades to documented residual — but as written, spec text is violated. |
+| F2 | info | backend/src/BioStack.Application/Services/ProtocolIngestionService.cs:659-665 | XLSX XML is loaded with `XDocument.Load`; DTD entities in worksheet XML **do expand** (probe: `x&e;y` with `<!ENTITY e "EXPANDED">` → cell reads `xEXPANDEDy`). Expansion is framework-bounded: nested-entity probe at 10^6 chars succeeded (29 ms), 10^7 chars threw `XmlException: The input document has exceeded a limit set by MaxCharactersFromEntities`, surfaced by the extractor as the sanctioned `ProtocolIngestionException` "The spreadsheet contains malformed content and could not be read.". `LoadXml` is untouched by this diff (pre-existing, BIO-ANALYZER-002 class). | None for this parcel (bounded, friendly failure, pre-existing). Optional follow-up parcel: disable DTD processing on the XLSX XML readers. |
+| F3 | info | backend/src/BioStack.Application/Services/ProtocolIngestionService.cs:749-767 | Probe: XLSX row `A2=BPC-157`, a `<c>` with **no** `r` attribute value `Evil 5mg`, `C2=daily` → observed entry `BPC-157` dose 5 `mg` frequency `daily`. The no-`r` cell was placed at previous+1 = column 1 (the Dose role) and bound. This is the spec's own placement rule ("placed at (previous cell's index + 1, or 0 for the first)"); T17's "hostile cells produce no entries" (entry names) still holds. | None; documented consequence of the ratified placement rule — a mislocated cell can land in a mapped column. |
+| F4 | info | backend/src/BioStack.Application/Services/ProtocolIngestionService.cs:900-901 | Probe: name cell `BPC-157\uFEFF` → U+FEFF survives `Sanitise` into NormalizedText (`BPC-157<FEFF> 500mcg`), but the parser's alias normalization resolves it: entry `BPC-157`, `recognized=True`, dose 500. Spec strips only a file-leading BOM; binding is correct. | None. |
+| F5 | info | backend/src/BioStack.Application/Services/ProtocolIngestionService.cs:804-838 | CSV fields at column ≥ 16384 are dropped (`if (column < MaxColumns) row.Set(...)`) without setting `HasContentPastLimit`, so a CSV row whose only content sits past the XFD cap is discarded as all-blank instead of skipped-and-counted; the XLSX path sets the flag (:786-790). Divergence only at 16 384+ columns (pathological); probe with a 200 000-field row: 7 ms, no throw, no spurious warning. | Optional parity fix in `ReadCsvRows`; negligible. |
+
+No other findings: no exception other than `ProtocolIngestionException` escaped any probed hostile input; no unbounded resource use (columns capped at XFD, sparse rows, entity expansion bounded, wide CSV rows O(n)); no vacuous test found (every new assertion carries real equality/set checks with discriminating messages; T14/T10/T21/T23 locks assert concrete behavior and pass unmodified).
+
+## Builder interpretations vs spec text
+
+| # | interpretation | judgment |
+|---|---|---|
+| 1 | First non-empty dose cell decides, no fall-through | **Acceptable refinement** — spec-literal ("take the first with a non-empty sanitised value"; omission rules say "the dose is omitted", never "try the next column"). Probes P2a/P2b confirm (`BPC-157,5mg,TBD` → dose 0; `BPC-157,250-500mcg,5mg` → dose 0). Contrast is with frequency/duration, which the spec does write as fall-through — the asymmetry is in the spec. |
+| 2 | First duration column with a clean match wins | **Acceptable refinement** — spec-literal ("first whose sanitised value contains a DurationPattern match and does **not** contain a range … or match … CyclePattern"). Probe P3: `4-6 weeks` then `12 weeks` → duration `12 weeks`. |
+| 3 | Header width = highest non-blank header column + 1 | **Acceptable refinement** — the spec uses "header width" but never defines it; this reading is the only one consistent with "Cells beyond the header width are ignored (unmapped)" plus "blank cells are omitted". Probe P5: `Compound,Dose,,` header + `BPC-157,500mcg,daily,x` → `BPC-157 500mcg`, extra cells ignored. |
+| 4 | Row whose only content is past the header width is skipped and counted | **Acceptable refinement** — spec-literal: all-blank = "no non-whitespace cell"; such a row has non-whitespace cells → data row → no name → "skipped and counted". Probe P4: exactly one warning `1 row(s) skipped: no compound name found.`, junk not echoed. |
+| 5 | Name cleanup only when embedded-quantity removal changed the name | **Spec deviation** — see F1 (blocking). The spec sentence applies removal *and* cleanup to every name candidate; the trigger condition exists only in the implementation. Observed silent row loss and junk-name emission for unknown compounds. |
+
+## AC check
+
+- AC1 (red/green per test, expected-RED list) — **MET**: EVIDENCE records per-test RED failure text naming the leaked header/shifted value/dose 0 for every expected-RED test (52 failed / 6 passed of 58 before), green-locks green before (T10, T14, T21, T7 zero-dose cases, T23=160). Documented forecast deviations (T10b/T21b splits, T20a/c/d red, T15c red) are recorded and weaken nothing. I re-ran the GREEN suite: 58/58.
+- AC2 (only the three assertions + 002 golden literal) — **MET**: diff shows exactly 3 assertion lines in `ProtocolIngestionServiceTests.cs` and 1 line (`GoldenExtractedText`) in `SpreadsheetProtocolExtractorPackageTests.cs`; `Contains("Sheet: Stack")` unchanged; no other existing assertion edited.
+- AC3 (test commands) — **MET** (run by me from `backend/`): SpreadsheetRowReconstructionTests 58/58; ProtocolUploadGracefulFailureTests 160/160 (file unmodified); full `BioStack.Application.Tests` 953 passed / 5 skipped / 0 failed = 958 (= baseline 900 + 58); `AnalyzeEndpointsIntegrationTests`+`AnalyzerGateIntegrationTests` 6/6.
+- AC4 (no header name as parsed compound) — **MET**: T1/T8 assert exact entry sets with leak messages (green); probes P5/P6 confirm unmapped/header text cannot leak or rename.
+- AC5 (Allowed Files only; fingerprint constant only; no public contract change) — **MET**: `git diff --stat` = 6 files, all Allowed; `ProtocolFingerprintService.cs` diff is the single `IngestionVersion` line; `ProtocolExtractionResult` constructed with the pre-existing 4-arg shape; private signature changes only.
+- AC6 (local only) — **MET**: `fix/analyzer-spreadsheet-row-reconstruction` has no upstream; no push/PR evidence in the repo.
+- AC7 (smoke before/after) — **MET**: EVIDENCE records preview text, `Protocol[]` doses/units/frequencies/durations, and issues/score before and after for two CSV fixtures, including the analysis-visible change (4 new evidence-context issues on the high-dose fixture).
+
+## Probes run (real ingestion → real `ProtocolParser` with `LocalKnowledgeSource`; scratch xUnit test, deleted before finishing)
+
+1. `Zorbatide (),250mcg,weekly` → text `Zorbatide () 250mcg weekly`; **entries: none** (spec: `Zorbatide` 250 mcg weekly).
+2. `Zorbatide -,250mcg,weekly` → text `Zorbatide - 250mcg weekly`; **entries: none** (spec: `Zorbatide` 250 mcg weekly).
+3. `Zorbatide(),250mcg,weekly` → entry **`Zorbatide()`** [250mcg weekly] (spec: `Zorbatide`).
+4. `BPC-157 (),250mcg,weekly` → entry `BPC-157` [250mcg weekly] recognized=True (alias path rescues junk names).
+5. `Compound,Strength,Dose` / `BPC-157,5mg,TBD` → entry `BPC-157` dose **0** (no fall-through to Strength).
+6. `Compound,Dose,Strength` / `BPC-157,250-500mcg,5mg` → entry `BPC-157` dose **0** (range omitted, no fall-through).
+7. `Compound,Dose,Duration,Length` / `BPC-157,500mcg,4-6 weeks,12 weeks` → `BPC-157 500mcg 12 weeks` (first clean duration wins).
+8. `Compound,Dose` / `BPC-157,500mcg` / `,,,junk 5mg daily` → text `BPC-157 500mcg`; warning `1 row(s) skipped: no compound name found.` (past-header-width row counted, not emitted).
+9. `Compound,Dose,,` / `BPC-157,500mcg,daily,x` → text `BPC-157 500mcg` (trailing blank header cells don't widen the width; `daily`/`x` ignored).
+10. `BPC-157,"500mcg stack with TB-500",daily` → `BPC-157 500mcg daily`; no TB-500 entry (dose cell reduced to first phrase).
+11. Unterminated quoted CSV field → `ProtocolIngestionException: The spreadsheet contains malformed content and could not be read.` (exact spec wording).
+12. Garbage bytes as `protocol.xlsx` → `ProtocolIngestionException: The spreadsheet appears to be corrupted or is not a valid XLSX file.`
+13. Worksheet XML with DTD entity `x&e;y` → cell reads `xEXPANDEDy` (entities expand); nested-entity bomb at 10^7 chars → `ProtocolIngestionException` (malformed-content wording) after `XmlException: … MaxCharactersFromEntities`; 10^6 chars expand in 29 ms. Bounded; friendly failure.
+14. Hostile refs in one row (`r="ZZZ1"` past XFD, `r="1A"` malformed, duplicate `r="C2"`), plus valid row → no exception, 6 ms, entry `BPC-157` [500mcg weekly] (duplicate `r` last-wins; hostile values produce no entries).
+15. `<c>` with no `r` after `A2` (`Evil 5mg`) + `C2=daily` → entry `BPC-157` [5mg daily] (spec placement rule previous+1 lands in the Dose column).
+16. `BPC-157\uFEFF,500mcg` → text keeps U+FEFF; entry `BPC-157` [500mcg] recognized=True (alias normalization strips it).
+17. CSV row with 200 000 empty fields → 7 ms, no throw, no spurious warning.
+18. `Zorbatide 5mg + Zorbamide 2mg,250mcg,weekly` → name-only lines `Zorbatide` / `Zorbamide`; entries: none (unknown name-only lines are dropped by the parser — spec-consistent, parser-level drops unwarned).
+
+Suites re-run by me (final tree): SpreadsheetRowReconstructionTests 58/58; ProtocolUploadGracefulFailureTests 160/160; BioStack.Application.Tests 953 passed/5 skipped/0 failed; BioStack.Api.Tests analyzer filters 6/6. `git diff --check` clean; `git status --short` empty.
+
+VERDICT: FAIL

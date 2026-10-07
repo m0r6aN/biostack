@@ -3,29 +3,41 @@ import Link from 'next/link';
 export function MarketingFooter() {
   return (
     <footer className="border-t border-white/8 bg-black/20">
-      <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-white/45 sm:px-8 md:flex-row md:items-center md:justify-between">
-        <p>BioStack. Tracking, math, and clarity for complex stacks.</p>
+      <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-white/60 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <p>BioStack. What the research says, graded by evidence strength.</p>
 
         <div className="flex flex-wrap items-center gap-4">
-          <Link href="/how-it-works" className="transition-colors hover:text-white">
+          <a href="mailto:support@biostack.cc" className="inline-flex min-h-11 items-center text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            BioStack Support
+          </a>
+          <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             How it works
           </Link>
-          <Link href="/tools" className="transition-colors hover:text-white">
+          <Link href="/knowledge/methodology" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            How we grade evidence
+          </Link>
+          <Link href="/tools" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Tools
           </Link>
-          <Link href="/knowledge" className="transition-colors hover:text-white">
-            Compounds & Evidence
+          <Link href="/knowledge" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            Library
           </Link>
-          <Link href="/providers" className="transition-colors hover:text-white">
+          <Link href="/pricing" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            Pricing
+          </Link>
+          <Link href="/start" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            Start Free
+          </Link>
+          <Link href="/providers" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             For Providers
           </Link>
-          <Link href="/safety" className="transition-colors hover:text-white">
+          <Link href="/safety" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Safety
           </Link>
-          <Link href="/terms" className="transition-colors hover:text-white">
+          <Link href="/terms" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Terms
           </Link>
-          <Link href="/privacy" className="transition-colors hover:text-white">
+          <Link href="/privacy" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Privacy
           </Link>
         </div>

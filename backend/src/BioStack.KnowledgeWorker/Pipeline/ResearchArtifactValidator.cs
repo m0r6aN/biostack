@@ -17,10 +17,17 @@ public sealed class ResearchArtifactValidator : IResearchArtifactValidator
     };
 
     private readonly IReadOnlyDictionary<ResearchArtifactKind, JsonSchema> _schemas;
+    private readonly IReadOnlyDictionary<string, JsonSchema> _sourceAuthorizationSchemas;
 
-    public ResearchArtifactValidator(IReadOnlyDictionary<ResearchArtifactKind, JsonSchema> schemas)
+    public ResearchArtifactValidator(
+        IReadOnlyDictionary<ResearchArtifactKind, JsonSchema> schemas,
+        IReadOnlyDictionary<string, JsonSchema>? sourceAuthorizationSchemas = null)
     {
         _schemas = schemas ?? throw new ArgumentNullException(nameof(schemas));
+        _sourceAuthorizationSchemas = sourceAuthorizationSchemas
+            ?? (schemas.TryGetValue(ResearchArtifactKind.SourceAuthorizationDecisionBatch, out var historical)
+                ? new Dictionary<string, JsonSchema>(StringComparer.Ordinal) { ["1.2.0"] = historical }
+                : new Dictionary<string, JsonSchema>(StringComparer.Ordinal));
     }
 
     public static ResearchArtifactValidator LoadFromDirectory(string schemaDirectory)
@@ -46,7 +53,18 @@ public sealed class ResearchArtifactValidator : IResearchArtifactValidator
             schemas[descriptor.Kind] = JsonSchema.FromFile(path);
         }
 
-        return new ResearchArtifactValidator(schemas);
+        var sourceAuthorizationSchemas = new Dictionary<string, JsonSchema>(StringComparer.Ordinal);
+        foreach (var (version, fileName) in ResearchArtifactSchemas.SourceAuthorizationVersions)
+        {
+            var path = Path.Combine(resolved, fileName);
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException($"Research schema file not found at '{path}'.", path);
+            }
+            sourceAuthorizationSchemas[version] = JsonSchema.FromFile(path);
+        }
+
+        return new ResearchArtifactValidator(schemas, sourceAuthorizationSchemas);
     }
 
     public ValidationResult Validate(ResearchArtifactKind kind, JsonNode artifactNode)
@@ -55,6 +73,20 @@ public sealed class ResearchArtifactValidator : IResearchArtifactValidator
         if (!_schemas.TryGetValue(kind, out var schema))
         {
             throw new ArgumentOutOfRangeException(nameof(kind), kind, "No loaded schema for research artifact kind.");
+        }
+
+        if (kind == ResearchArtifactKind.SourceAuthorizationDecisionBatch)
+        {
+            if (artifactNode is not JsonObject artifact
+                || artifact["schemaVersion"] is not JsonValue versionNode
+                || !versionNode.TryGetValue<string>(out var version)
+                || !_sourceAuthorizationSchemas.TryGetValue(version, out schema))
+            {
+                return ValidationResult.Invalid(new[]
+                {
+                    new ValidationError("/schemaVersion", "enum", "Unsupported source authorization schema version."),
+                });
+            }
         }
 
         var results = schema.Evaluate(artifactNode, Options);

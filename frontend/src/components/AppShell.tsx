@@ -2,9 +2,11 @@
 
 import { Sidebar } from '@/components/Sidebar';
 import { useAuth } from '@/lib/AuthProvider';
+import { isProtectedRoutePath } from '@/lib/appRoutes';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
+  '/account',
   '/protocol-console',
   '/mission-control',
   '/my-protocol',
@@ -13,6 +15,9 @@ const APP_ROUTE_PREFIXES = [
   '/protocols',
   '/checkins',
   '/timeline',
+  '/calculators',
+  '/tools',
+  '/map-my-stack',
   '/knowledge',
   '/billing',
   '/governance',
@@ -26,11 +31,24 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
-  const { user } = useAuth();
-  const isKnowledgeRoute = pathname.startsWith('/knowledge');
+  const { user, loading } = useAuth();
+  const isProtectedRoute = isProtectedRoutePath(pathname);
+  const isPublicAppSurface = pathname.startsWith('/knowledge') || pathname.startsWith('/tools');
   const isAppRoute =
     APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix)) &&
-    (!isKnowledgeRoute || Boolean(user));
+    (!isPublicAppSurface || Boolean(user));
+
+  if (isProtectedRoute && (loading || !user)) {
+    return (
+      <main
+        id="main"
+        tabIndex={-1}
+        className="flex min-h-screen items-center justify-center px-6 text-center text-sm text-white/55"
+      >
+        <p role="status">{loading ? 'Checking your session…' : 'Redirecting to sign in…'}</p>
+      </main>
+    );
+  }
 
   if (!isAppRoute) {
     return <>{children}</>;
@@ -39,8 +57,8 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="flex h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <Sidebar />
-      <main className="flex-1 overflow-y-auto">
-        {children}
+      <main id="main" tabIndex={-1} className="flex-1 overflow-y-auto flex flex-col">
+        <div className="flex-1">{children}</div>
         <p
           aria-label="App-wide disclaimer"
           className="sticky bottom-0 border-t border-white/[0.04] bg-[#0B0F14]/80 px-5 py-1.5 text-center text-[11px] leading-tight text-white/35 backdrop-blur-sm"

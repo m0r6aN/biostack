@@ -1,0 +1,96 @@
+{
+  "event_id": "bio-rt-01-fail-closed-offline-receipts-20260726",
+  "timestamp": "2026-07-26T17:38:19Z",
+  "task_id": "BIO-RT-01",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-sandy-reviewer",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used a fresh isolated BioStack worktree at the coordinator-specified origin/main commit because receipt-authority hardening must not overlap active product lanes.",
+    "Applied the existing IKeonRuntimeClient contract directly: unavailable Runtime receipt issuance throws and halts before any local Governed Spine append."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "explicitly-local-non-keon-receipt",
+      "reason": "No current caller requires an offline artifact, while introducing one would create a new authority, persistence, and product contract outside this parcel."
+    },
+    {
+      "id": "continue-after-receipt-failure",
+      "reason": "The existing interface requires callers to halt when Keon cannot issue the authoritative receipt."
+    },
+    {
+      "id": "live-runtime-contract-rewrite",
+      "reason": "Cross-repository Runtime API alignment is a separate dependent parcel and was explicitly outside this BioStack-only change."
+    }
+  ],
+  "effort": "low",
+  "context": {
+    "estimated_tokens": 12000,
+    "artifact_refs": [
+      "backend/src/BioStack.Infrastructure/Keon/KeonRuntimeClientStub.cs",
+      "backend/tests/BioStack.Api.Tests/KeonRuntimeClientStubTests.cs",
+      "backend/tests/BioStack.Api.Tests/Unit/Keon/RuntimeReceiptFactoryTests.cs",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/BIO-RT-01-FAIL-CLOSED-OFFLINE-RECEIPTS.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "bounded-backend-and-test-files",
+    "local-focused-tests",
+    "parcel-and-routing-event-write",
+    "no-live-service-calls",
+    "no-deployment",
+    "no-commit",
+    "no-push",
+    "no-pull-request"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-test",
+    "git-read"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Focused offline Keon Runtime stub suite",
+      "status": "passed",
+      "evidence_ref": "7 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Focused Runtime receipt factory suite",
+      "status": "passed",
+      "evidence_ref": "5 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Receipt authority negative assertions",
+      "status": "passed",
+      "evidence_ref": "No receipt value or Governed Spine entry is emitted when Runtime is offline"
+    },
+    {
+      "method": "Independent security-focused self-audit",
+      "status": "passed",
+      "evidence_ref": "No receipt value, authority URI, or Spine append can escape the offline failure path"
+    },
+    {
+      "method": "Full BioStack API regression suite",
+      "status": "failed",
+      "evidence_ref": "266 passed, 30 failed: receipt-producing integration factories implicitly depended on synthetic offline receipts"
+    }
+  ],
+  "retry_count": 1,
+  "escalation_history": [
+    "The initial full worktree checkout was replaced with a clean sparse checkout after tracked build and media artifacts exceeded the command window; the branch remained at the exact authorized base.",
+    "The broad API suite exposed 30 integration-test dependencies on synthetic offline receipts; four affected test files overlap pull request #230, so the parcel stopped rather than modifying them or weakening fail-closed production behavior."
+  ],
+  "outcome": "partial"
+}

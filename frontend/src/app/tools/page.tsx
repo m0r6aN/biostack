@@ -1,12 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { ToolsDecisionSurface } from '@/components/tools/ToolsDecisionSurface';
-import type { Metadata } from 'next';
+import { createPublicPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createPublicPageMetadata({
   title: 'Dose, Mix, and Compatibility Tools | BioStack',
   description: 'Free volume, concentration, unit-conversion, and compatibility calculations. No account required.',
-};
+  path: '/tools',
+});
 
 export default function ToolsPage() {
   return (

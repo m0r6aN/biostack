@@ -1,6 +1,6 @@
 import { OnboardingExperience } from '@/components/marketing/OnboardingExperience';
 import { apiClient } from '@/lib/api';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { ComponentProps } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -86,7 +86,7 @@ describe('OnboardingExperience', () => {
     localStorage.clear();
   });
 
-  it('shows context only for one input and keeps relationship analysis locked', async () => {
+  it('shows context only for one input and keeps the first finding locked', async () => {
     render(<OnboardingExperience />);
 
     expect(screen.getByText('What do you want help with first?')).toBeInTheDocument();
@@ -95,13 +95,13 @@ describe('OnboardingExperience', () => {
     const input = await screen.findByPlaceholderText('Type a compound, supplement, or medication…');
     fireEvent.change(input, { target: { value: 'BPC-157' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Add to My List' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Analyze My Stack' }));
 
-    expect(await screen.findAllByText('Context established.')).not.toHaveLength(0);
-    expect(screen.getAllByText('Relationship analysis unavailable.').length).toBeGreaterThan(0);
+    expect(await screen.findAllByText('First item recognized.')).not.toHaveLength(0);
+    expect(screen.getAllByText('Need one more item for a stack finding.').length).toBeGreaterThan(0);
     expect(screen.queryByText('This is the point.')).not.toBeInTheDocument();
     expect(screen.queryByText('Why this matters')).not.toBeInTheDocument();
-    expect(screen.queryByText('Relationship detected.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Possible overlap found.')).not.toBeInTheDocument();
     expect(screen.queryByText('Recovery context: Both were selected by the user, so this is a real input check.')).not.toBeInTheDocument();
     expect(apiClient.checkOverlap).not.toHaveBeenCalled();
   });
@@ -128,15 +128,15 @@ describe('OnboardingExperience', () => {
       code: 'Enter',
     });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Add to My List' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Analyze My Stack' }));
 
-    expect(await screen.findAllByText('Relationship detected.')).not.toHaveLength(0);
+    expect(await screen.findAllByText('Possible overlap found.')).not.toHaveLength(0);
     expect(screen.getByText('Recovery context: Both were selected by the user, so this is a real input check.')).toBeInTheDocument();
-    expect(screen.getByText('One earned relationship outcome emitted.')).toBeInTheDocument();
+    expect(screen.getByText('One headline finding is ready.')).toBeInTheDocument();
     expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
     expect(screen.getAllByText('NAD+').length).toBeGreaterThan(0);
 
-    expect(screen.getByRole('link', { name: 'Finish Setup' })).toHaveAttribute('href', '/profiles');
+    expect(screen.getByRole('link', { name: 'Save and Track This Stack' })).toHaveAttribute('href', '/profiles');
   });
 
   it('lets beginners start from an example without knowing compound names', async () => {
@@ -150,6 +150,18 @@ describe('OnboardingExperience', () => {
     expect(screen.getByText('Glycine')).toBeInTheDocument();
     expect(screen.getByText('3 items added')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Type a compound, supplement, or medication…')).toBeInTheDocument();
-    expect(await screen.findByText('Relationship analysis active.')).toBeInTheDocument();
+    expect(await screen.findByText('Stack analysis active.')).toBeInTheDocument();
+  });
+
+  it('exposes the onboarding steps as a named list with the current step marked', () => {
+    render(<OnboardingExperience />);
+
+    const list = screen.getByRole('list', { name: 'Onboarding progress' });
+    const items = within(list).getAllByRole('listitem');
+
+    expect(items).toHaveLength(3);
+    expect(items[0]).toHaveAttribute('aria-current', 'step');
+    expect(items[1]).not.toHaveAttribute('aria-current');
+    expect(items[2]).not.toHaveAttribute('aria-current');
   });
 });

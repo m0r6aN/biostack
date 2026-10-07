@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-context-candidate-record",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "recordedAtUtc": "2026-09-14T03:31:19.979336+00:00",
+  "historicalPacket": {
+    "gitRevision": "c41aeaaba0722eb8d3c38b12f87b9de5990b6428",
+    "path": "research/input/evidence/bpc-157.evidence.json",
+    "sha256": "2c4092efbaf0000e533157bb9cfac8b73da9cd90bb51fc3e764fa34946660515",
+    "bytes": 14078
+  },
+  "hashEncoding": "Object SHA256: UTF8 sorted-key compact JSON ensure_ascii true, no newline. File hashes: exact bytes.",
+  "originalSourceSnapshot": {
+    "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
+    "sourceType": "systematic-review",
+    "authorityTier": "B1",
+    "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine",
+    "publisher": "PubMed",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+    "doi": null,
+    "pmid": "40756949",
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T00:00:00Z"
+  },
+  "originalSourceSha256": "a5f35057abd0b6d15ed785e7d7e18b4d0ac50466c4c641c914ff8513d578335d",
+  "originalClaimSha256": "bbf3ae4e06e24d1960f4ffd885ca92220447c268dfce480446715ddff4c484ef",
+  "originalClaimLocator": "c41aeaaba0722eb8d3c38b12f87b9de5990b6428:research/input/evidence/bpc-157.evidence.json#bpc157-preclinical-human-gap-001",
+  "originalClaimUnchanged": true,
+  "candidateClaim": {
+    "claimId": "bpc157-preclinical-human-gap-001",
+    "claimType": "evidence-gap",
+    "statement": "A systematic review searching English-language literature through 3 June 2024 included 36 BPC-157 studies: 35 preclinical studies and one clinical study.",
+    "context": {
+      "population": "studies included in an English-language systematic review through 3 June 2024",
+      "route": null,
+      "formulation": "BPC-157 (review subject; no product equivalence established)",
+      "useCase": "review-attributed preclinical and clinical study-design distribution",
+      "doseText": null
+    },
+    "evidenceTier": "Insufficient",
+    "confidence": "high",
+    "fieldAuthorityRequired": false,
+    "sourceRefs": [
+      "pubmed-vasireddi-2025-orthosportsmed"
+    ],
+    "extractedEvidence": [
+      {
+        "sourceRef": "pubmed-vasireddi-2025-orthosportsmed",
+        "quote": null,
+        "pageOrSection": "PubMed PMID 40756949; Article/Abstract/AbstractText[1] (unlabeled), review search cutoff and included-study design counts"
+      }
+    ],
+    "reviewFlags": [
+      "Proposed narrower research context only; human and claim-level review remain pending.",
+      "Counts describe studies included in one review through 3 June 2024, not a current evidence census.",
+      "Do not infer human efficacy from preclinical studies or equate study counts with clinical certainty.",
+      "No outcomes, safety, dose or product equivalence assessed in this candidate; original broader packet claim remains unchanged."
+    ]
+  },
+  "inheritedGrades": {
+    "evidenceTier": "Insufficient",
+    "confidence": "high",
+    "status": "unchanged; not a new grade"
+  },
+  "citationProjection": {
+    "pmid": "40756949",
+    "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review.",
+    "journal": "HSS journal : the musculoskeletal journal of Hospital for Special Surgery",
+    "volume": "21",
+    "issue": "4",
+    "issueDate": {
+      "Year": "2025",
+      "Month": "Nov"
+    },
+    "articleDates": [
+      {
+        "DateType": "Electronic",
+        "Year": "2025",
+        "Month": "07",
+        "Day": "31"
+      }
+    ],
+    "articleIds": [
+      {
+        "IdType": "pubmed",
+        "value": "40756949"
+      },
+      {
+        "IdType": "pmc",
+        "value": "PMC12313605"
+      },
+      {
+        "IdType": "doi",
+        "value": "10.1177/15563316251355551"
+      },
+      {
+        "IdType": "pii",
+        "value": "10.1177_15563316251355551"
+      }
+    ],
+    "authors": [
+      {
+        "LastName": "Vasireddi",
+        "ForeName": "Nikhil",
+        "Initials": "N"
+      },
+      {
+        "LastName": "Hahamyan",
+        "ForeName": "Henrik",
+        "Initials": "H"
+      },
+      {
+        "LastName": "Salata",
+        "ForeName": "Michael J",
+        "Initials": "MJ"
+      },
+      {
+        "LastName": "Karns",
+        "ForeName": "Michael",
+        "Initials": "M"
+      },
+      {
+        "LastName": "Calcei",
+        "ForeName": "Jacob G",
+        "Initials": "JG"
+      },
+      {
+        "LastName": "Voos",
+        "ForeName": "James E",
+        "Initials": "JE"
+      },
+      {
+        "LastName": "Apostolakos",
+        "ForeName": "John M",
+        "Initials": "JM"
+      }
+    ],
+    "publicationTypes": [
+      "Journal Article",
+      "Review"
+    ],
+    "commentsCorrections": [],
+    "copyright": "© The Author(s) 2025.",
+    "abstractLabels": [
+      {}
+    ],
+    "receipt": "recovery02-receipt-20260914T031150469023Z.json"
+  },
+  "acquisitionReceipt": {
+    "author": "Codex",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=40756949&retmode=xml&tool=BioStackEvidenceReview",
+    "method": "GET",
+    "startedAtUtc": "2026-09-14T03:11:50.469023+00:00",
+    "attempt": 2,
+    "lifetimeEFetchAttemptsIncludingThis": 2,
+    "requestBudget": 1,
+    "automaticRetries": 0,
+    "redirectsEnabled": false,
+    "responseByteLimit": 262144,
+    "socketTimeoutSeconds": 20,
+    "elapsedReadLimitSeconds": 30,
+    "httpStatus": 200,
+    "headers": {
+      "Date": "Mon, 14 Sep 2026 03:11:50 GMT",
+      "Content-Type": "text/xml; charset=UTF-8"
+    },
+    "responseBytes": 32872,
+    "responseSha256": "a1cfd29266d3b6c3b9dd19729217ba11c168d9b81687576ac16d656a703a8e4a",
+    "disposition": "citation-and-transient-study-design-only",
+    "completedAtUtc": "2026-09-14T03:11:50.875421+00:00",
+    "rawPayloadRetained": false
+  },
+  "sourceRegistryId": "pubmed",
+  "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed",
+  "sourceMethod": "api",
+  "quoteRetention": "No new source passage retained; candidate extractedEvidence quote is null. Historical packet excerpts remain unchanged.",
+  "gates": {
+    "humanReviewStatus": "pending",
+    "independentFamilyClosure": false,
+    "publicationApproved": false,
+    "runtimeAuthority": false,
+    "drugbankReplacementCountChange": 0
+  },
+  "limitations": [
+    "Same-paper verification does not create an independent family.",
+    "Original broader statements, grades, history and needsReview remain unchanged.",
+    "Research-only sidecar is not an issued review decision or importable promotion record.",
+    "Source snapshot allows additional properties, but non-core authors/PMCID/journal/issue precision and receipt remain in sidecar rather than adding runtime-facing fields."
+  ],
+  "historicalReviewFlagProvenance": {
+    "flags": [
+      "do not infer human efficacy from animal models",
+      "vendor healing claims require misinformation monitoring",
+      "independently corroborated 2026-08-29: essentially zero controlled human safety data across an independent 2025 systematic review of 36 studies"
+    ],
+    "status": "historical-non-operative; not reassessed and not accepted for this candidate",
+    "origin": "c41aeaaba0722eb8d3c38b12f87b9de5990b6428:research/input/evidence/bpc-157.evidence.json#bpc157-preclinical-human-gap-001",
+    "appliesToCandidate": false
+  }
+}

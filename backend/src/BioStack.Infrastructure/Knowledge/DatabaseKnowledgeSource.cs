@@ -90,6 +90,25 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
             : KnowledgeUpsertDisposition.Updated;
     }
 
+    public async Task<KnowledgeUpsertDisposition> PreviewUpsertAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)
+    {
+        // AsNoTracking: this instance is never attached to the change tracker, so running
+        // it through ApplyChanges below to compute the diff is safe — there is nothing for
+        // a stray SaveChangesAsync to persist, and this method never calls SaveChangesAsync.
+        var existing = await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .FirstOrDefaultAsync(k => k.CanonicalName == entry.CanonicalName, cancellationToken);
+
+        if (existing is null)
+        {
+            return KnowledgeUpsertDisposition.Created;
+        }
+
+        return ApplyChanges(existing, entry)
+            ? KnowledgeUpsertDisposition.Updated
+            : KnowledgeUpsertDisposition.Unchanged;
+    }
+
     public async Task<int> IngestBulkAsync(List<KnowledgeEntry> entries, CancellationToken cancellationToken = default)
     {
         int count = 0;

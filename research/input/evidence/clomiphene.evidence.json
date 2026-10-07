@@ -1,0 +1,520 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "clomiphene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Clomiphene",
+    "aliases": [
+      "Clomifene",
+      "Clomid",
+      "Clomiphene citrate",
+      "Serophene"
+    ],
+    "classification": "Small-molecule drug",
+    "compoundFamily": "Selective estrogen receptor modulator (triphenylethylene SERM)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "1B8447E7YI",
+      "casNumber": "50-41-9",
+      "drugbank": "DBSALT000490",
+      "pubchem": "2800",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-clomid-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: CLOMID- clomiphene citrate tablet",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2ca373c1-4dba-4126-8616-5c533d606fe5",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc-serm-male-hypogonadism-meta-2025",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Clomiphene or enclomiphene citrate for the treatment of male hypogonadism: a systematic review and meta-analysis of randomized controlled trials",
+      "publisher": "PubMed Central (PMC)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12510335/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-2800",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Clomiphene | C26H28ClNO | CID 2800",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Clomiphene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "ro-co-clomid-pct-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Clomid PCT (Post Cycle Therapy) Protocol: What to Know",
+      "publisher": "Ro (ro.co)",
+      "url": "https://ro.co/erectile-dysfunction/clomid-for-post-cycle-therapy/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "loh-rise-fall-2016",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Clomiphene citrate treatment for late onset hypogonadism: rise and fall",
+      "publisher": "PubMed (NLM)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27622282/",
+      "doi": null,
+      "pmid": "27622282",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "karger-crvo-systematic-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Association between Clomiphene Citrate and Visual Disturbances/Central Retinal Vein Occlusion",
+      "publisher": "Karger (Ophthalmologica / Gynecologic and Obstetric Investigation)",
+      "url": "https://karger.com/goi/article/71/2/73/152291/Association-between-Clomiphene-Citrate-and-Visual",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "europepmc-pct-bju-cohort-2026",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Post-cycle therapy after short-term anabolic-androgenic steroid use: comparative outcomes in recreational bodybuilders",
+      "publisher": "BJU International (via Europe PMC)",
+      "url": "https://europepmc.org/article/MED/41147237",
+      "doi": null,
+      "pmid": "41147237",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "europepmc-pct-andrology-review-2026",
+      "sourceType": "systematic-review",
+      "authorityTier": "B2",
+      "title": "Clomiphene Citrate in off-Label Post-Cycle Therapy: Mechanisms, Efficacy and Diagnostic Challenges in Endocrine Recovery Following Anabolic Steroid Use",
+      "publisher": "Andrology (via Europe PMC)",
+      "url": "https://europepmc.org/article/MED/42387872",
+      "doi": null,
+      "pmid": "42387872",
+      "publishedAt": "2026-07-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "sigma-aldrich-clomiphene-cas",
+      "sourceType": "structured-database",
+      "authorityTier": "C1",
+      "title": "Clomiphene analytical standard, CAS 50-41-9",
+      "publisher": "Sigma-Aldrich (Merck)",
+      "url": "https://www.sigmaaldrich.com/US/en/product/sial/c6272",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "drugbank-clomifene-citrate-salt",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Clomifene citrate | DrugBank Salt DBSALT000490",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/salts/DBSALT000490",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "clomiphene-approved-indication-ovulatory-dysfunction-001",
+      "claimType": "approved-indication",
+      "statement": "Clomiphene citrate (Clomid) is FDA-approved for the treatment of ovulatory dysfunction in women desiring pregnancy; it is not approved, and the label states there is no adequate evidence of effectiveness, for male infertility.",
+      "context": {
+        "population": "women with ovulatory dysfunction desiring pregnancy",
+        "route": "oral",
+        "formulation": "50 mg tablet",
+        "useCase": "ovulation induction",
+        "doseText": "Label regimen: 50 mg daily for 5 days as an initial course; a second course of 100 mg daily for 5 days may be used if ovulation does not occur (label text, not a use recommendation)."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Clomiphene citrate is indicated for the treatment of ovulatory dysfunction in women desiring pregnancy.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Treatment of the selected patient should begin with a low dose, 50 mg daily (1 tablet) for 5 days.",
+          "pageOrSection": "Dosage and Administration"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / dosing-adjacent regulatory claim"
+      ]
+    },
+    {
+      "claimId": "clomiphene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Clomiphene citrate is a triphenylethylene selective estrogen receptor modulator (SERM) that competes with estrogen at estrogen-receptor-binding sites in the hypothalamus and pituitary, triggering increased pituitary gonadotropin (FSH/LH) release that drives follicular development and a preovulatory gonadotropin surge.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "clomiphene citrate",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "may compete with estrogen for estrogen-receptor-binding sites",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "a series of endocrine events culminating in a preovulatory gonadotropin surge and subsequent follicular rupture",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "clomiphene-warning-ohss-visual-multiple-pregnancy-001",
+      "claimType": "warning",
+      "statement": "Clomiphene citrate labeling carries warnings for ovarian hyperstimulation syndrome (OHSS), which can progress rapidly and in severe cases has resulted in death from hypovolemic shock, hemoconcentration, or thromboembolism; for visual disturbances (blurring, spots, flashes) that may occasionally be irreversible, especially at increased dosage — an independent systematic review characterizes the specific link between clomiphene and central retinal vein occlusion (CRVO) as a possible predisposing association for which further controlled trials are needed, not an established causal relationship; and for an increased chance of multiple pregnancy.",
+      "context": {
+        "population": "women treated with clomiphene citrate for ovulation induction",
+        "route": "oral",
+        "formulation": "clomiphene citrate tablet",
+        "useCase": "ovulation induction safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label",
+        "karger-crvo-systematic-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "may progress rapidly (within 24 hours to several days)",
+          "pageOrSection": "Warnings / Ovarian Hyperstimulation Syndrome"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "gross ovarian enlargement, gastrointestinal symptoms, ascites, dyspnea, oliguria, and pleural effusion",
+          "pageOrSection": "Warnings / Ovarian Hyperstimulation Syndrome"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Blurring or other visual symptoms such as spots or flashes may occasionally occur during therapy...visual disturbances may be irreversible, especially with increased dosage.",
+          "pageOrSection": "Warnings / Visual Disturbances"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There is an increased chance of multiple pregnancy",
+          "pageOrSection": "Warnings / Multiple Pregnancy"
+        },
+        {
+          "sourceRef": "karger-crvo-systematic-review",
+          "quote": "CC may predispose to CRVO, but further trials are clearly needed in this area.",
+          "pageOrSection": "Abstract / Conclusion"
+        },
+        {
+          "sourceRef": "karger-crvo-systematic-review",
+          "quote": "Physicians should be aware of the potential risk of CC, especially in patients with associated risk factors for CRVO.",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical warning claim",
+        "confirmed-with-note (independent review 2026-08-29): an independent systematic review (Karger) frames the CRVO/visual-disturbance link as a possible predisposing association requiring further trials, not settled causation; statement wording softened accordingly while retaining the label warning."
+      ]
+    },
+    {
+      "claimId": "clomiphene-contraindications-001",
+      "claimType": "contraindication",
+      "statement": "Clomiphene citrate is contraindicated in pregnancy, in patients with known hypersensitivity to the drug, in patients with liver disease or a history of liver dysfunction, in abnormal uterine bleeding of undetermined origin, and in ovarian cysts or enlargement not due to polycystic ovarian syndrome; prolonged use may also increase the risk of a borderline or invasive ovarian tumor.",
+      "context": {
+        "population": "patients considered for clomiphene citrate therapy",
+        "route": "oral",
+        "formulation": "clomiphene citrate tablet",
+        "useCase": "prescribing eligibility screening",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Clomiphene citrate use in pregnant women is contraindicated",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Prolonged use of clomiphene citrate tablets USP may increase the risk of a borderline or invasive ovarian tumor",
+          "pageOrSection": "Warnings / Ovarian Cancer"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "available human data do not suggest an increased risk for congenital anomalies",
+          "pageOrSection": "Use in Specific Populations / Pregnancy"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+      "claimType": "efficacy",
+      "statement": "In a systematic review and meta-analysis of randomized controlled trials, clomiphene/enclomiphene (SERM) therapy significantly raised total testosterone versus placebo (moderate-quality GRADE evidence) and was comparable to topical testosterone gel for raising total testosterone; sperm concentration improved more than with testosterone gel, but SERM therapy was not significantly different from placebo on sperm concentration. This off-label male-hypogonadism use is not an FDA-approved indication. Testosterone gains are not shown to persist after discontinuation: an independent primary study of late-onset hypogonadism reported mean total testosterone fell from 22.7±8.1 nmol/L on-treatment to 10.2±3.9 nmol/L three months after stopping clomiphene (p<0.01), with 78% of patients dropping below the 11 nmol/L therapeutic threshold.",
+      "context": {
+        "population": "men with functional/late-onset hypogonadism enrolled in RCTs (pooled analysis)",
+        "route": "oral",
+        "formulation": "clomiphene or enclomiphene citrate",
+        "useCase": "off-label treatment of male hypogonadism (investigational/off-label, not FDA-approved for men)",
+        "doseText": "Pooled trial follow-up ranged 2 to 30 weeks across included studies (systematic-review protocol context, not a use recommendation)."
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pmc-serm-male-hypogonadism-meta-2025",
+        "dailymed-clomid-label",
+        "loh-rise-fall-2016"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "SERM therapy significantly improved TT (MD: 273.76 ng/dL; 95% CI: 191.87-355.66 ng/dL; p < 0.01)",
+          "pageOrSection": "Results / Testosterone outcomes"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "there were no significant differences between SERM and placebo groups regarding sperm concentration",
+          "pageOrSection": "Results / Semen parameters"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "this study remains underpowered with regard to safety endpoints",
+          "pageOrSection": "Discussion / Limitations"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        },
+        {
+          "sourceRef": "loh-rise-fall-2016",
+          "quote": "Mean TT level before discontinuation of CC was 22.7±8.1nmol/L (mean±SD). Three months after discontinuation, mean TT level significantly decreased in all patients, 10.2±3.9nmol/l (p < 0.01).",
+          "pageOrSection": "Abstract / Results"
+        },
+        {
+          "sourceRef": "loh-rise-fall-2016",
+          "quote": "Twenty-one patients (78%) decreased TT levels under 11nmol/L.",
+          "pageOrSection": "Abstract / Results"
+        },
+        {
+          "sourceRef": "loh-rise-fall-2016",
+          "quote": "In the short term LOH does not seem to be a reversible condition in most patients after CC treatment.",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "off-label use claim; not FDA-approved for men",
+        "safety endpoints in the meta-analysis are explicitly underpowered per the authors",
+        "confirmed-with-note (independent review 2026-08-29): added durability caveat from an independent primary study — testosterone gains are not shown to persist after clomiphene discontinuation."
+      ]
+    },
+    {
+      "claimId": "clomiphene-adverse-effects-male-hypogonadism-001",
+      "claimType": "adverse-effect",
+      "statement": "In the same meta-analysis of male-hypogonadism trials, 21% of men experienced adverse events attributed to the study drug (most commonly headaches and minor estradiol elevation), none rated severe, and no included trials reported decreased sexual desire or erectile function with SERM therapy; the authors caution the safety analysis was underpowered.",
+      "context": {
+        "population": "men with functional/late-onset hypogonadism in RCTs",
+        "route": "oral",
+        "formulation": "clomiphene or enclomiphene citrate",
+        "useCase": "off-label male hypogonadism treatment, safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc-serm-male-hypogonadism-meta-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "53 (21%) men experienced adverse events related to the study drug; none were severe",
+          "pageOrSection": "Results / Safety"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "no studies reporting a decrease in sexual desire or penile erections",
+          "pageOrSection": "Results / Safety"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "this study remains underpowered with regard to safety endpoints",
+          "pageOrSection": "Discussion / Limitations"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim; underpowered safety data per source authors",
+        "confirmed-with-note (independent review 2026-08-29): claimType adverse-effect falls outside the directive's fieldAuthorityRequired scope; independent literature (mdpi.com/1424-8247/17/9/1233) corroborates headache and estradiol elevation as recognized side effects. The prior version of this flag improperly asserted its own completed independent-search justification inline; that search context now lives in ops.reviewReasons instead, per the directive."
+      ]
+    },
+    {
+      "claimId": "clomiphene-evidence-gap-pct-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Clomiphene ('Clomid') is widely marketed and used off-label as post-cycle therapy (PCT) to restore natural testosterone after anabolic-androgenic steroid use, with vendor content claiming it 'safely' boosts testosterone production; however, the same vendor content and the underlying literature acknowledge that PCT efficacy and the long-term safety of SERM-based PCT protocols remain unsettled. A 2026 dual-centre cohort study (not a randomized controlled trial) reported higher normozoospermia rates at 12 months with clomiphene plus hCG (87.5%) and clomiphene alone (69.2%) versus no treatment (58.6%), and a separate 2026 narrative review still characterizes clomiphene PCT as evidentially unsettled with diagnostic and monitoring challenges; no randomized controlled trial establishes PCT-specific efficacy or safety outcomes, so the vendor's 'safely' framing remains unsupported by controlled trial-grade evidence (as distinct from the FDA-approved female indication or the studied off-label male-hypogonadism use above).",
+      "context": {
+        "population": "anabolic-androgenic steroid users seeking to restore endogenous testosterone",
+        "route": "oral",
+        "formulation": "clomiphene citrate, self-directed PCT protocols",
+        "useCase": "post-cycle therapy (PCT) after anabolic steroid use",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ro-co-clomid-pct-marketing",
+        "dailymed-clomid-label",
+        "europepmc-pct-bju-cohort-2026",
+        "europepmc-pct-andrology-review-2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "safely giving your body a boost as it increases testosterone production",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "Some researchers acknowledge that the efficacy of PCT is still unproven, as are many of the practices surrounding steroid use.",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "their safety and long-term effects as a PCT protocol are still unknown",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        },
+        {
+          "sourceRef": "europepmc-pct-bju-cohort-2026",
+          "quote": "normozoospermia rates were 87.5%",
+          "pageOrSection": "Abstract (dual-centre cohort study, n=79)"
+        },
+        {
+          "sourceRef": "europepmc-pct-andrology-review-2026",
+          "quote": "CC antagonizes oestrogen receptors, reducing negative feedback on the hypothalamic-pituitary axis",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "europepmc-pct-andrology-review-2026",
+          "quote": "adverse metabolic and long-term efficacy",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor 'safely' framing is not supported by controlled PCT-specific trial evidence",
+        "distinguish PCT-specific claims from the studied male-hypogonadism evidence in claim clomiphene-efficacy-male-hypogonadism-testosterone-001",
+        "confirmed-with-note (independent review 2026-08-29): updated to reflect two newly published 2026 sources (BJU International cohort study; Andrology narrative review); neither is a randomized controlled trial, so 'no RCT establishes PCT-specific efficacy/safety' still holds and this claim remains review-gated."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "clomiphene-conflict-male-use-status-001",
+      "claimRefs": [
+        "clomiphene-approved-indication-ovulatory-dysfunction-001",
+        "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+        "clomiphene-evidence-gap-pct-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "The FDA label states there are no adequate or well-controlled studies demonstrating effectiveness in male infertility and clomiphene is not approved for men, while a published RCT meta-analysis shows a significant testosterone-raising effect in male hypogonadism and vendor/consumer marketing presents off-label PCT use as a 'safe' testosterone-restoration protocol; the strength and applicability of male-use evidence therefore differs sharply by claim (regulatory status vs. hypogonadism RCT data vs. unproven PCT-specific marketing claims) and needs continued human review to keep these distinctions clear to readers.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Remediation pass 2026-08-29: CAS (50-41-9, verified via a live-fetched Sigma-Aldrich product page and cross-checked against DrugBank/LGC/MedKoo listings), UNII (1B8447E7YI, verified via the live DailyMed label page), and DrugBank salt ID (DBSALT000490, verified via a live-fetched DrugBank page) are now populated. RxNorm and ChEMBL remain unresolved: an RxNav RxCUI lookup returned ambiguous candidate CUIs (142431, 2596) without a confirmable label match this session, and no ChEMBL ID was located; both remain gated pending a follow-up lookup.",
+      "Remediation pass 2026-08-29: male-hypogonadism efficacy claim updated with an independent-source durability caveat (mean TT fell from 22.7±8.1 to 10.2±3.9 nmol/L three months post-discontinuation, p<0.01; 78% dropped below the 11 nmol/L threshold), sourced to a live-fetched primary study (pubmed.ncbi.nlm.nih.gov/27622282) per the reviewer's finding. Still recommend reconfirming against an endocrine-society guideline at next review.",
+      "Remediation pass 2026-08-29: OHSS/visual-disturbance warning claim's CRVO-specific wording softened to 'possible predisposing association, further trials needed', sourced to a live-fetched independent systematic review (karger.com/goi/article/71/2/73/152291), per the reviewer's finding.",
+      "Remediation pass 2026-08-29: PCT evidence-gap claim updated with two newly published 2026 independent sources fetched this session (BJU International dual-centre cohort study, PMID 41147237; Andrology narrative review, PMID 42387872) that post-date the packet's original 'no controlled human trials' line. Both are non-randomized/narrative, not RCTs, so the underlying gap (no RCT-grade PCT-specific efficacy or safety data; vendor 'safely' claim unsupported) still holds and the claim remains review-gated; recommend obtaining full-text methodology (PubMed access was blocked by a CAPTCHA this session) at next review.",
+      "Remediation pass 2026-08-29 (process fix): removed self-certifying inline reviewFlags language on the adverse-effects claim that had asserted its own completed independent search inline. That search context is recorded here instead: DailyMed CLOMID label ADVERSE REACTIONS section and an FDA.gov safety-communication search were checked and do not address male-hypogonadism-specific adverse-event rates; no regulator document exists for this off-label population, so the claim remains sourced to the peer-reviewed meta-analysis only and stays outside fieldAuthorityRequired scope per the directive.",
+      "Male-hypogonadism and PCT-specific evidence is comparatively thin (meta-analysis flags its own safety analysis as underpowered; PCT-specific data is now a non-randomized cohort study, not an RCT) and should be reconfirmed against additional independent source families (e.g., an endocrine society guideline) at review time.",
+      "Vendor/marketing source (ro.co) is a single non-independent example of PCT marketing language; broader marketing-claim sampling recommended before publication.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product-label-backed",
+      "off-label-male-use-documented",
+      "thin-human-evidence-for-pct-specific-claims",
+      "misinformation-adjacent-marketing-flagged",
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
+    ]
+  }
+}

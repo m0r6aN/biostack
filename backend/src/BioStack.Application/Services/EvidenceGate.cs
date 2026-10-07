@@ -71,9 +71,10 @@ public sealed class EvidenceGateViolationException : InvalidOperationException
 ///   3. TargetCanonicalName is set
 ///   4. 'evidenceTier' key present and non-empty
 ///   5. evidenceTier is a supported tier
-///   6. 'citations' key present and non-empty
+///   6. 'citations' key present, non-empty, and includes a stable external source locator
 ///   7. Tiers requiring mechanism: 'mechanismSummary' present and non-empty
-///   8. No banned safety-recommendation language in scanned text fields
+///   8. No personalized medical direction in scanned text fields. Evaluated as
+///      source-attributed, which Check 6 guarantees — see the inline note (F2).
 /// </summary>
 public sealed class EvidenceGate : IEvidenceGate
 {
@@ -163,6 +164,13 @@ public sealed class EvidenceGate : IEvidenceGate
                 "Evidence gate requires at least one citation in source metadata key 'citations'.");
         }
 
+        if (!HasExternalSourceLocator(citations))
+        {
+            return Reject(
+                "missing_external_source_locator",
+                "Evidence gate requires at least one stable external source locator.");
+        }
+
         // Check 7 — mechanism required for certain tiers.
         if (TiersRequiringMechanism.Contains(evidenceTier))
         {
@@ -176,20 +184,68 @@ public sealed class EvidenceGate : IEvidenceGate
         }
 
         // Check 8 — safety language scan.
+        //
+        // F2: this scan runs AFTER Check 6, which already rejected any record without citations.
+        // Attribution is therefore structurally guaranteed by the time we get here, so these
+        // fields are evaluated as OutputAttribution.SourceAttributed: personalized direction
+        // ("you should", "start at", "take 5 mg") is still rejected, but reporting what a cited
+        // source found ("the trial reported it is safe at the studied doses", "proven to bind X")
+        // is permitted Class A published-evidence context.
+        //
+        // Previously this used the strict tier, which rejected legitimate cited evidence as
+        // "unsafe_recommendation_language" — the guard was suppressing the exact material the
+        // Guidance Content Contract permits under Class A.
         foreach (var key in SafetyCheckedKeys)
         {
             if (!request.SourceMetadata.TryGetValue(key, out var text) || string.IsNullOrWhiteSpace(text))
                 continue;
 
-            if (Sanitizer.ContainsBannedPhrase(text))
+            if (Sanitizer.ContainsBannedPhrase(text, OutputAttribution.SourceAttributed))
             {
                 return Reject(
                     "unsafe_recommendation_language",
-                    $"Source metadata field '{key}' contains unsafe recommendation language.");
+                    $"Source metadata field '{key}' contains personalized medical direction.");
             }
         }
 
         return new EvidenceGateResult(IsGateOpen: true, RejectionCode: null, RejectionReason: null);
+    }
+
+    private static bool HasExternalSourceLocator(string citations)
+    {
+        foreach (var entry in citations.Split('|'))
+        {
+            var candidate = entry.Trim();
+            if (Uri.TryCreate(candidate, UriKind.Absolute, out var uri) &&
+                (string.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)) &&
+                !string.IsNullOrEmpty(uri.Host))
+            {
+                return true;
+            }
+
+            if (candidate.StartsWith("doi:", StringComparison.OrdinalIgnoreCase))
+            {
+                var doi = candidate[4..];
+                if (doi.StartsWith("10.", StringComparison.Ordinal) &&
+                    doi.Contains('/') &&
+                    !doi.Any(char.IsWhiteSpace))
+                {
+                    return true;
+                }
+            }
+
+            if (candidate.StartsWith("pmid:", StringComparison.OrdinalIgnoreCase))
+            {
+                var pmid = candidate[5..];
+                if (pmid.Length > 0 && pmid.All(character => character is >= '0' and <= '9'))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private static EvidenceGateResult Reject(string code, string reason)

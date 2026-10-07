@@ -1,0 +1,179 @@
+{
+ "fixes": [
+  {
+   "slug": "tirzepatide",
+   "ok": true,
+   "itemsFixed": [
+    "tirzepatide-mounjaro-regulatory-001: updated statement/extractedEvidence/reviewFlags to add FDA's 2026-08-28 approval of the CV-risk-reduction indication (SURPASS-CVOT), verified verbatim via WebFetch of Lilly/PR Newswire announcement fetched this session; added prnewswire-mounjaro-cv-approval to sources.",
+    "tirzepatide-compounded-warning-001: rewrote statement to reflect FDA's ended compounding enforcement discretion for tirzepatide (503A: Feb 18 2025; 503B: Mar 19 2025), verified verbatim via WebFetch of FDA's April 2026 statement page fetched this session; added fda-compounder-glp1-supply-stabilize to sources.",
+    "tirzepatide-mtc-men2-contraindication-001: added the rodent-study basis of the boxed warning (verbatim DailyMed Mounjaro boxed-warning quote fetched this session) to statement and extractedEvidence per the confirmed-with-note finding.",
+    "promotionBlocker (Mounjaro indication staleness): resolved via source swap/addition above.",
+    "promotionBlocker (compounding claim understatement): resolved via statement rewrite above.",
+    "promotionBlocker (MTC rodent-basis addition): resolved, added as minor precision fix.",
+    "ops updated: qualityFlags appended with remediation-pass-2026-08-29; reviewReasons expanded with per-claim resolution notes; needsReview kept true."
+   ],
+   "itemsStillGated": [
+    "tirzepatide-mounjaro-regulatory-001 stays fieldAuthorityRequired/review-gated: DailyMed label text for Mounjaro has not yet been revised to include the CV indication as of 2026-08-29, so the claim currently relies on the press announcement rather than the primary label; flagged to re-verify against DailyMed once the label update posts.",
+    "tirzepatide-compounded-warning-001 stays review-gated: legal/regulatory status claim (fieldAuthorityRequired) \u2014 verified against FDA's own current statement but retained for human sign-off given its legal-status implications for readers.",
+    "tirzepatide-mtc-men2-contraindication-001 stays review-gated: safety-critical contraindication, per schema/directive rule regardless of independent confirmation.",
+    "tirzepatide-zepbound-regulatory-001 unchanged: verdict was 'confirmed' with no blocker; left as-is."
+   ],
+   "newSources": [
+    "https://www.prnewswire.com/news-releases/fda-approves-lillys-mounjaro-tirzepatide-to-reduce-cardiovascular-risk-in-adults-with-type-2-diabetes-302862415.html",
+    "https://www.fda.gov/drugs/drug-alerts-and-statements/fda-clarifies-policies-compounders-national-glp-1-supply-begins-stabilize"
+   ],
+   "summary": "Read the verdict and packet, then fetched (this session, via WebFetch) the PR Newswire/Lilly announcement of Mounjaro's 2026-08-28 CV-risk-reduction approval, FDA's April 2026 compounder-policy statement (shortage-resolved determination and 503A/503B enforcement-discretion end dates), and the DailyMed Mounjaro boxed-warning text for the rodent-study basis note. Updated the two needs-adjustment claims (Mounjaro regulatory, compounded-warning) with verbatim-quoted corrections and added their independent sources to the packet's sources array; added the reviewer's rodent-study nuance to the confirmed-with-note MTC/MEN2 claim using an already-cited DailyMed quote. Left the confirmed Zepbound claim untouched. All three promotionBlockers are addressed; all touched claims remain fieldAuthorityRequired/review-gated per the safety/regulatory nature of the claims and directive rules. ops.needsReview stays true, qualityFlags gained \"remediation-pass-2026-08-29\", and reviewReasons documents what was resolved and what still needs a human/DailyMed-label recheck. Schema validation passes."
+  },
+  {
+   "slug": "bpc-157",
+   "ok": true,
+   "itemsFixed": [
+    "bpc157-regulatory-compounding-risk-001 (needs-adjustment): rewritten to state BPC-157 was removed from FDA Category 2 in April 2026 after nomination withdrawal, now listed under 'nominated but withdrawn', remains an unapproved new drug not on any permitted compounding list, with PCAC review scheduled July 23-24 2026; re-verified via a fresh live fetch of the FDA page plus independent Holt Law regulatory commentary, both added to sources with verbatim quotes.",
+    "bpc157-preclinical-human-gap-001 (confirmed-with-note): added independent corroboration from Vasireddi et al. 2025 (PubMed 40756949) \u2014 36 studies reviewed, only 1 human clinical study, no clinical safety data found \u2014 added as source + verbatim quote + reviewFlag.",
+    "bpc157-misinformation-boundary-001 (confirmed): added STAT News (Feb 2026) independent corroboration with verbatim physician quote ('Should not be used by humans' - Univ. of Utah Health) and reviewFlag noting single-research-group evidence base and the withdrawn 2015 human trial.",
+    "promotionBlocker on stale regulatory Category 2 claim: resolved via the rewrite above.",
+    "promotionBlocker on ops.reviewReasons being too generic: replaced with an explicit entry naming the FDA Category 2 status change, what was re-verified, and a forward-looking note to re-check ahead of the July 2026 PCAC meeting.",
+    "compound.externalIdentifiers completeness gap (noted, non-blocking): filled pubchem (9941957), casNumber (137525-51-0), unii (8ED8NXK95P), drugbank (DB11882), chembl (CHEMBL4297358) via PubChem REST lookup this session."
+   ],
+   "itemsStillGated": [
+    "bpc157-regulatory-compounding-risk-001 remains fieldAuthorityRequired=true and flagged for a follow-up re-check around/after the July 23-24 2026 PCAC meeting, since that meeting could change BPC-157's status again (e.g., addition to an approved 503A list or a new Category 1/2 action).",
+    "The 'sole registered Phase I trial unknown status since 2016' detail cited in the verdict for claim 2 was NOT added \u2014 my fetch of the specific PubMed 40756949 abstract/results this session did not contain that detail (only 'no clinical safety data found' and the 36-study/1-clinical-study breakdown were verifiable verbatim), so per the verbatim-quote-only rule it was left out rather than asserted unverified.",
+    "compound.externalIdentifiers.rxnorm, .doi, and .pmid remain null \u2014 not applicable to a compound-identity record (rxnorm doesn't cover research peptides; doi/pmid belong to source-level literature, already captured in the sources array).",
+    "ops.needsReview stays true and packet remains human-review-gated overall, per pilot misinformation-heavy packet policy, independent of the individual claim resolutions above."
+   ],
+   "newSources": [
+    "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks (fresh live re-fetch, 2026-08-29, sourceId fda-bpc157-category2-recheck-2026-08)",
+    "https://djholtlaw.com/regulatory-alert-fdas-april-2026-update-on-bpc-157-and-ghk-cu/",
+    "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+    "https://www.statnews.com/2026/02/03/bpc-157-peptide-science-safety-regulatory-questions/",
+    "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/9941957/synonyms/TXT (used for identifier lookups; not added as a packet source since it supports compound.externalIdentifiers, not a claim)"
+   ],
+   "summary": "Remediated /home/user/evidence-run/packets/bpc-157.evidence.json in place against its verdict. Rewrote the stale FDA Category-2 regulatory claim to reflect the April 2026 removal (nomination withdrawal, not new safety data) and pending July 2026 PCAC review, backed by a fresh FDA re-fetch plus an independent Holt Law commentary source, both added to sources[] with verbatim quotes. Strengthened the human-evidence-gap claim with an independent 2025 systematic review (PubMed 40756949: 36 studies, 1 human clinical study, no clinical safety data found) and the misinformation-boundary claim with a STAT News quote from a University of Utah Health physician plus reviewFlags on the single-research-group evidence base and a withdrawn 2015 human trial. Filled compound.externalIdentifiers (PubChem, CAS, UNII, DrugBank, ChEMBL) via PubChem REST lookup. Updated ops.reviewReasons with explicit, dated resolution notes (including a forward-looking flag for the July 2026 PCAC meeting) and appended 'remediation-pass-2026-08-29' to ops.qualityFlags; ops.needsReview stays true. One detail from the verdict's finding ('trial status unknown since 2016') could not be verified verbatim against the PubMed source fetched this session and was deliberately omitted rather than asserted. Packet validates against schema.json."
+  },
+  {
+   "slug": "ghk-cu",
+   "ok": true,
+   "itemsFixed": [
+    "ghk-cu-identity-pubchem-001: confirmed-with-note applied \u2014 added DrugBank (Prezatide, DB11296) as independent source with verbatim quotes corroborating Gly-His-Lys copper-complex identity and cosmetic use; noted DrugBank's CAS field was login-gated so CAS corroboration relied on vendor listings",
+    "ghk-cu-skin-regeneration-context-001: confirmed-with-note applied \u2014 added CuHeal Phase 2 trial registry entry as independent source with verbatim quote/status, and reviewFlag clarifying preclinical evidence must not imply established human efficacy",
+    "ghk-cu-hype-boundary-001: needs-adjustment applied \u2014 fetched and verbatim-quoted the live FDA/PCAC 503A record (Orrick, April 2026); statement now states GHK-Cu's actual regulatory status (not on 503A bulk list, Category 1 nomination withdrawn, PCAC consultation before Feb 2027); fieldAuthorityRequired set to true",
+    "promotionBlocker: no claim had fieldAuthorityRequired=true \u2014 fixed by setting it true on ghk-cu-hype-boundary-001",
+    "promotionBlocker: regulatory status not stated anywhere in packet \u2014 fixed with explicit statement + sourced quote",
+    "promotionBlocker: ops.reviewReasons was a generic placeholder \u2014 replaced/expanded with the specific regulatory gap and CAS-cross-check gap as concrete open items",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29"
+   ],
+   "itemsStillGated": [
+    "Identity CAS cross-check: DrugBank's own CAS field is login-gated; only vendor chemical-safety listings (non-primary-database) corroborate CAS 300801-03-0 \u2014 a CAS Common Chemistry or ChemIDplus check remains an open item, recorded in ops.reviewReasons",
+    "Regulatory status: PCAC has not yet acted; consultation is only scheduled before end of Feb 2027, so the claim stays fieldAuthorityRequired=true and needsReview=true pending that outcome",
+    "CuHeal trial: still enrolling with no results yet, so the topical wound-healing claim remains capped at 'Limited' evidence tier pending trial completion"
+   ],
+   "newSources": [
+    "https://go.drugbank.com/drugs/DB11296",
+    "https://ctv.veeva.com/study/topical-ghk-cu-gel-for-acute-skin-wound-healing",
+    "https://www.orrick.com/en/Insights/2026/04/FDA-Announces-Removal-of-12-Peptides-from-Category-2-and-Schedules-PCAC-Meetings"
+   ],
+   "summary": "Read the ghk-cu verdict, then fetched and verbatim-quoted all three of the reviewer's cited independent sources this session (DrugBank Prezatide entry, CuHeal CTV trial registry page, Orrick FDA/PCAC regulatory analysis). Added them to the packet's sources array, attached verbatim quotes to extractedEvidence for the relevant claims, resolved both confirmed-with-note items by folding the reviewer's noted context into reviewFlags, and resolved the needs-adjustment item by setting fieldAuthorityRequired=true and rewriting the hype-boundary claim's statement to state GHK-Cu's actual current FDA 503A/PCAC nomination status. Updated ops.reviewReasons to name the remaining concrete gaps (PCAC action still pending, CAS field only corroborated via vendor data) instead of the old generic placeholder, and appended remediation-pass-2026-08-29 to qualityFlags. needsReview stays true. Validated the edited packet against schema.json with jsonschema.validate \u2014 passes."
+  },
+  {
+   "slug": "melatonin",
+   "ok": true,
+   "itemsFixed": [
+    "promotionBlocker 1: melatonin-long-term-safety-gap-001 statement and extractedEvidence expanded with the 2025 preliminary cardiovascular (heart-failure) signal (caveated as non-peer-reviewed/association-only), CDC MMWR pediatric overdose trend data (530% rise, 8,337->52,563 cases 2012-2021, hospitalizations/deaths), and supplement label-accuracy data (>71% of products deviate >10% from labeled dose), all with verbatim quotes from sources fetched this session",
+    "promotionBlocker 2: fieldAuthorityRequired flipped from false to true on melatonin-long-term-safety-gap-001",
+    "promotionBlocker 3: added new claim melatonin-regulatory-status-001 (claimType regulatory, fieldAuthorityRequired=true) documenting melatonin's OTC dietary-supplement status and lack of FDA drug approval/premarket review, sourced to StatPearls + FDA dietary-supplements consumer page",
+    "melatonin-hormone-sleep-wake-001 (confirmed-with-note): added StatPearls corroborating quote and a reviewFlag capturing the reviewer's note that the mechanism is understated rather than overstated by the packet's current hedge language"
+   ],
+   "itemsStillGated": [
+    "melatonin-long-term-safety-gap-001: cardiovascular/heart-failure signal kept explicitly non-causal and gated pending peer-reviewed publication (or retraction) of the underlying 2025 study -- recorded in ops.reviewReasons and reviewFlags rather than promoted to an established risk",
+    "compound.externalIdentifiers.drugbank (DB01065): DrugBank cross-check remains unresolved/unverified this session (no fetchable confirmation obtained); non-blocking since no claim statement depends on this field, recorded in ops.reviewReasons",
+    "Both the expanded safety-gap claim and the new regulatory-status claim are marked fieldAuthorityRequired=true and ops.needsReview stays true -- both require human field-authority sign-off before public promotion, per directive rule for safety-critical and regulatory claims"
+   ],
+   "newSources": [
+    "https://www.ncbi.nlm.nih.gov/books/NBK534823/ (StatPearls, Melatonin)",
+    "https://sleepeducation.org/new-study-raises-questions-about-long-term-melatonin-use/ (AASM sleepeducation.org)",
+    "https://www.cdc.gov/mmwr/volumes/71/wr/mm7122a1.htm (CDC MMWR, Pediatric Melatonin Ingestions 2012-2021)",
+    "https://www.fda.gov/food/dietary-supplements/information-consumers-using-dietary-supplements (FDA)"
+   ],
+   "summary": "Read the verdict first, then remediated /home/user/evidence-run/packets/melatonin.evidence.json in place. None of the three original claimVerdicts was needs-adjustment or unresolved (all confirmed / confirmed-with-note), so no figures needed correcting -- the work centered on the three promotionBlockers. Fetched four new primary/authority pages this session (StatPearls NBK534823, AASM sleepeducation.org, CDC MMWR mm7122a1, FDA dietary-supplements consumer page), added them to the sources array with real accessedAt timestamps, and used only verbatim quotes obtained from those fetches (re-fetched StatPearls a second time after the first response paraphrased rather than quoted, to keep every quote genuinely verbatim). Expanded the safety-gap claim's statement, extractedEvidence, and reviewFlags to cover the emerging (explicitly non-causal, non-peer-reviewed) cardiovascular signal, CDC pediatric-overdose trend data, and supplement label-accuracy data, and flipped its fieldAuthorityRequired to true. Added a new regulatory-status claim (fieldAuthorityRequired=true) disclosing melatonin's OTC dietary-supplement status and lack of FDA drug approval. Added a corroborating StatPearls quote and reviewer-note reviewFlag to the hormone/mechanism claim. Updated ops.reviewReasons with the specific remaining gaps (unresolved DrugBank cross-check, pending peer review of the cardiovascular study, field-authority sign-off needed) and appended \\\"remediation-pass-2026-08-29\\\" to ops.qualityFlags, keeping ops.needsReview=true. Validated the final packet against schema.json via the specified python3/jsonschema command -- it passes, and a follow-up script confirmed every sourceRef/extractedEvidence.sourceRef in all 4 claims resolves to one of the 6 sources."
+  },
+  {
+   "slug": "testosterone-cypionate",
+   "ok": true,
+   "itemsFixed": [
+    "testosterone-cypionate-contraindications-001: added Endocrine Society Clinical Practice Guideline (PMID 29562364, verified via WebFetch this session) as independent source; tightened statement + reviewFlags to distinguish FDA label's 5 absolute contraindications from broader guideline 'do not start' criteria; added conflict entry testosterone-cypionate-contraindication-scope-001 (resolved)",
+    "testosterone-cypionate-warning-hypercalcemia-001: independently re-fetched Azmiro (NDA 216318, 2022) FDA label PDF this session confirming its hypercalcemia caution covers only cancer patients, not 'immobilized patients'; added as source + extractedEvidence, tightened statement + reviewFlags to mark the DEPO-TESTOSTERONE 'immobilized patients' phrasing as label-specific, added conflict entry testosterone-cypionate-hypercalcemia-label-specificity-001 (resolved)",
+    "promotionBlocker 1: ops.reviewReasons rewritten with concrete, claim-specific notes (contraindication scope gap, hypercalcemia label-specificity, single-source-family caveat, DailyMed re-verification reminder) instead of the generic pilot-review boilerplate",
+    "promotionBlocker 2: contraindications claim annotated distinguishing label vs. guideline lists",
+    "promotionBlocker 3: hypercalcemia claim annotated distinguishing label-specific vs. class-wide warning"
+   ],
+   "itemsStillGated": [
+    "testosterone-cypionate-approved-indication-001: confirmed by reviewer, no changes needed, remains fieldAuthorityRequired/reviewed",
+    "testosterone-cypionate-misuse-boundary-001: confirmed by reviewer as appropriately evidence-gapped, no changes needed",
+    "Packet-wide: ops.needsReview kept true; only 2 of 4 claims now have a second independent source in the packet's sources array -- dailymed-depo-testosterone re-verification against the live setid (735b5bf3-4464-412c-a072-1bd02f2e5380) still recommended before public promotion given ongoing 2025 FDA class-wide testosterone labeling changes (TRAVERSE-related boxed-warning removal), per reviewer note"
+   ],
+   "newSources": [
+    "https://pubmed.ncbi.nlm.nih.gov/29562364/ (Endocrine Society Clinical Practice Guideline, JCEM 2018, DOI 10.1210/jc.2018-00229)",
+    "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/216318s000lbl.pdf (FDA label, Azmiro testosterone cypionate injection, NDA 216318)"
+   ],
+   "summary": "No claim in the verdict was 'needs-adjustment' or 'unresolved' -- all four were 'confirmed' or 'confirmed-with-note', so no factual figures needed correction. For the two confirmed-with-note claims (contraindications, hypercalcemia warning), I independently re-fetched the two primary sources the reviewer named (Endocrine Society JCEM 2018 guideline via PubMed, and the Azmiro FDA label PDF), verified their content this session, quoted them verbatim in extractedEvidence, added them to the packet's sources array, tightened each claim's statement to not overstate the label's scope, added explanatory reviewFlags, and recorded two 'resolved' conflict entries documenting the scope/specificity gaps. I rewrote ops.reviewReasons to replace the generic boilerplate with the concrete notes the promotionBlockers demanded, appended 'remediation-pass-2026-08-29' to ops.qualityFlags, and left ops.needsReview=true. The other two claims (approved-indication, misuse-boundary) were untouched since the verdict found no issue with them. The packet validates against schema.json."
+  }
+ ],
+ "audit": {
+  "overallPass": true,
+  "perPacket": [
+   {
+    "slug": "tirzepatide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check: compounded-warning-001 quotes (shortage-resolved sentence; Feb 18 2025 / Mar 19 2025 dates) verified verbatim on live FDA page. Mounjaro CV-approval quote not independently re-fetched this pass (budget: one spot-check per packet was performed on the higher-authority regulatory source; PR Newswire quote is standard press-release boilerplate, low fabrication risk) \u2014 treat as warning-level residual, not a blocker."
+    ]
+   },
+   {
+    "slug": "bpc-157",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check: live FDA bulk-substances page confirmed BPC-157 sits under 'Bulk drug substances nominated but withdrawn' (not Category 2) with the exact 'immunogenicity ... peptide-related impurities ... API characterization' quote matching verbatim.",
+     "Minor/non-blocking: the misinformation claim's first extractedEvidence entry (pmc-bpc157-review-2025) still has quote:null \u2014 flagged as non-blocking by the original reviewer and not remediated, consistent with that guidance."
+    ]
+   },
+   {
+    "slug": "ghk-cu",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check: Orrick page quote on GHK-Cu Category 1 removal and 'before the end of February 2027' PCAC timeline verified verbatim.",
+     "fieldAuthorityRequired correctly escalated to true on the hype-boundary claim as instructed; regulatory status now stated explicitly in both claim and reviewFlags."
+    ]
+   },
+   {
+    "slug": "melatonin",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check: sleepeducation.org quotes (90% higher/4.6% vs 2.7%, 'hasn't been peer-reviewed', 71% label-accuracy figure) all verified verbatim.",
+     "All three promotionBlockers addressed: safety-gap statement expanded with properly hedged CV/pediatric/label-accuracy signals, fieldAuthorityRequired escalated to true on that claim, and a new regulatory-status claim (OTC/not FDA-approved) was added with fieldAuthorityRequired=true."
+    ]
+   },
+   {
+    "slug": "testosterone-cypionate",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check: Azmiro (NDA 216318) label quote on hypercalcemia confirmed verbatim, confirming the 'immobilized patients' phrasing is indeed absent from that label as the packet now states.",
+     "Both conflicts (contraindication-scope, hypercalcemia-label-specificity) properly resolved with resolutionStatus:'resolved' and matching claim/reviewFlag edits."
+    ]
+   }
+  ],
+  "blockers": [],
+  "warnings": [
+   "tirzepatide: the newly added prnewswire-mounjaro-cv-approval quote was not independently re-fetched in this audit pass (one spot-check per packet was prioritized on the FDA compounding-policy source instead); recommend a follow-up fetch of the PR Newswire URL before final sign-off, though risk is low.",
+   "bpc-157: one extractedEvidence entry (pmc-bpc157-review-2025 on the misinformation claim) still has a null quote \u2014 the original reviewer explicitly called this non-blocking, but it remains a minor auditability gap.",
+   "All 5 packets are read-only on disk (chmod 444) as of the remediation pass \u2014 not a content issue, but note this precludes further in-place edits without a permissions change."
+  ]
+ },
+ "operatorCorrections": [
+  "bpc-157: remediation agent wrote the July 23-24 2026 PCAC meeting in future tense; the meeting occurred and voted to recommend BPC-157 (with KPV, TB-500, MOTS-c, Epitalon, Semax) for the 503A Bulks List. Statement corrected with live-fetched NCPA source + verbatim quote; advisory/non-binding framing preserved; publication-time recheck flag added."
+ ]
+}

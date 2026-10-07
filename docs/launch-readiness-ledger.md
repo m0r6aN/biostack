@@ -4,9 +4,11 @@
 
 **Audit scope:** lanes 3, 6, 7, 8, and 9
 
-**Evidence baseline:** `main@a37726a4df9b73378e46232b849f409db67d12df`
+**Evidence baseline:** `main@53ed0df5a0c207e99b6b3582d6c40b64e6b4f11c`
 
-**Audit date:** 2026-07-11
+**Reconciled:** 2026-07-26
+
+**Evidence reconciliation addendum: 2026-09-12, source 8a01dfa5946ce33119b2c312fd1bbb76d253c3e2.** The July baseline and verification record below are historical. Owner-merged PR317 deployment34694062379 and scoped mobile motion/keyboard checks are complete; see `research/output/gtm-activation-20260909/interaction-motion-repair-20260912/deployment-review.md` and the checkpoint section **PR317 LIVE VERIFIED / CLEANUP INCOMPLETE 2026-09-12T12:55:35.602906+00:00** in `research/output/gtm-activation-20260909/codex-activation-checkpoint-20260909.md`. This supersedes any implication below that no later deployment occurred. It does not qualify every route, dependency, security control or launch gate. The July public-content observation was separately superseded by PR235 and the dated proof already recorded in Lane 5. Dependency statements remain date-specific: the original Sept12 step-semantics install log reported four vulnerabilities (three moderate, one high); package attribution and current security disposition were not assessed in this documentation pass. A later analyzer install log independently reported the same counts, but this does not establish package identity or remediation status. No dependency edits in this parcel. Current recommendation remains NO-GO / HOLD.
 
 **Current recommendation:** **NO-GO**
 
@@ -14,7 +16,7 @@ This is the single current launch ledger. A row may use only `verified`, `failed
 
 ## Release decision
 
-BioStack is not qualified for production launch. The latest hosted main deployment workflow still failed before build/deploy; this branch repairs the `Keon.Kompress` restore path and high-severity transitive dependency locally, but no hosted run exists for the release SHA. Legal policies are unapproved placeholders, the frontend has no consent-recording experience, no durable backup/restore evidence exists, and live Stripe, auth, database, health, monitoring, rollback, accessibility, analytics, SEO, and support acceptance have not been demonstrated.
+**Historical July release summary; current row qualifications and this addendum control.** BioStack is deployed but is not qualified for production launch. Hosted run `30211140857` built, tested, deployed, and pinned-smoke-checked exact SHA `53ed0df5a0c207e99b6b3582d6c40b64e6b4f11c`, and hosted secret scan `30211140879` passed for the same SHA. Those are deployment facts, not release qualification. Current blockers include an attributed 2026-07-26 audit observation that the public compound response exposed dose/schedule/optimization guidance contrary to the stated non-prescriptive boundary, unapproved legal policies and consent wording, known high-severity dependency advisories in the green deploy log, incomplete Stripe lifecycle acceptance, unproved production auth and Keon dependency journeys, and missing backup/restore, database-readiness, monitoring, rollback, accessibility, analytics, and support evidence.
 
 Release may be reconsidered only after every `failed` row is corrected and reverified, every release-blocking `blocked` row has external evidence attached, and the release owner records a new decision. Rows marked `not tested` are not passes.
 
@@ -24,8 +26,8 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 |---|---|---|---|---|
 | Syringe and vial visuals are prominent on active `/tools` dose and mix modes | verified | `SyringeDrawVisualizer`, `VialVisualizer`, and direct rendering in `ToolsDecisionSurface`; invalid inputs omit the meter/fill, over-capacity is announced, and both mL and U-100 units are stated. | QA owner: retain route-level regression coverage. | Required implementation is present on the production route rather than an orphan preview. |
 | Beginner field help, worded summary, and unit/magnitude checks | verified | `ToolsDecisionSurface` restates powder, liquid, amount, concentration, mL, and U-100 units and keeps warnings math-only/non-prescriptive. | Product/safety owner: approve final wording. | Reduces first-use interpretation risk without adding administration instructions. |
-| Focused calculator tests pass on the integrated branch | blocked | The calculator lane added zero/invalid, fractional, 10/50/100/over-capacity, accessibility, 375px/desktop, and active-route tests. Multiple primary-checkout Vitest runs emitted no result and left orphaned workers; they were terminated and are not counted as passes. | Frontend/CI owner: run the exact focused files in clean Node 22 CI and attach results. | Release blocker: integrated calculator behavior is not test-qualified. |
-| Browser verification at mobile, tablet, and desktop widths | not tested | No successful integrated browser run was available. | Accessibility/QA owner: verify 375px, tablet, and desktop visibility, keyboard flow, text equivalents, and no console errors. | Release blocker for the customer-facing calculator acceptance gate. |
+| Focused calculator tests pass on the integrated branch | verified | The calculator regression files are included in the full frontend suite that passed in hosted exact-SHA deploy run `30211140857` at `53ed0df5`. | Frontend/CI owner: retain the calculator regressions in the required hosted suite. | Repository behavior is test-qualified; browser accessibility acceptance remains separate below. |
+| Browser verification at mobile, tablet, and desktop widths | verified | Audited 2026-08-28 pre-deploy at 375x812 / 768x1024 / desktop (`.audit/a11y-tools-2026-08-28.md`) and re-verified live post-deploy (run 33200114206): zero unlabeled controls (aria-labels "Powder amount" / "Powder amount unit" present), info trigger 24x24, zero console errors, no horizontal scroll; PR #254 overlap copy and boundary line render live. | Accessibility/QA owner: keep the DOM-audit script in the regression kit. | Gate closed with live evidence. |
 
 ## Lane 2 — payment path
 
@@ -35,7 +37,7 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 | Checkout success and cancellation states are explicit | verified | `frontend/src/app/billing/page.tsx` renders dedicated `checkout=success` and `checkout=cancelled` messages. | QA owner: exercise both return URLs from Stripe test mode. | Local UI seam exists; live redirect behavior remains untested. |
 | Webhook signature, idempotency, renewal, failure, cancellation, expiry, and downgrade | not tested | Signature and stored Stripe-event idempotency code exist, but no complete deployed lifecycle or replay evidence was produced for this release. | Billing owner: execute Stripe test/live lifecycle matrix and verify fail-closed Observer downgrade. | Revenue and entitlement blocker. |
 | Production Stripe products, monthly prices, secrets, URLs, and Customer Portal | blocked | Required configuration keys are documented, but no production values or live portal evidence were available to this session. | Billing/platform owner: configure Operator/Commander monthly prices, secret/webhook secret, checkout/portal URLs, and portal policy. | Direct revenue blocker. |
-| Authorized live transaction and refund/cancellation cycle | not tested | No real charge, refund, cancellation, renewal, or payment-failure exercise was performed. | Billing/release owner: run and document an authorized low-value live cycle before public launch. | Mandatory launch gate. |
+| Authorized live transaction and refund/cancellation cycle | blocked | 2026-08-28 14:51 EDT: operator executed an authorized $12.00/mo Operator subscription against the deployed build — payment Succeeded (invoice 56D1KVXI-0001, sub sub_1U9UsRDwLa1mY26gKMPLMsvv), webhook delivered HTTP 2xx, Customer Portal opened and returned successfully. Charge, webhook, and portal legs verified live; refund/cancellation, renewal, and payment-failure legs not yet exercised. | Billing/release owner: complete and document the refund/cancel leg (and downgrade-to-Observer on failure) to flip this row to verified. | Charge path is live-proven; remaining legs close the gate. |
 
 ## Lane 4 — provider conversion
 
@@ -51,6 +53,7 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 |---|---|---|---|---|
 | Printable-reference-card no-op CTA is removed | verified | Commercial lane removed the empty `Email me a printable reference card` control from `ToolsDecisionSurface`. | Product owner: only restore after a durable consented lead flow exists. | Removes a conversion-critical no-op. |
 | All public/paid TODO, mock, preview, coming-soon, and no-op surfaces are qualified | not tested | This release fixed the named provider/printable-card paths and prior portal mock/tier work is on main, but no complete deployed crawl and entitlement-by-claim inventory was performed. | Product/QA owner: complete route/CTA/paid-claim crawl against the candidate. | Release blocker for honest paid claims. |
+| Public knowledge and analyzer output honor the non-prescriptive, Unknown-first boundary | verified | Remediated by PR #235: `KnowledgeEntryResponse` marks all dose/schedule/pairing/optimization fields `[JsonIgnore]`, and `KnowledgeEndpointsIntegrationTests.GetCompound_PublicSerializationPreservesEvidenceAndOmitsIndividualizedActionFields` seeds a probe entry and asserts all sixteen withheld properties are absent while evidence tier, sources, cautions, and interactions serialize. Live re-verification 2026-08-27: `GET https://biostack.cc/api/v1/knowledge/compounds/BPC-157` returned HTTP 200 with only the twelve observational properties (raw capture: `.audit/prod-bpc157-2026-08-27.json`), superseding the 2026-07-26 KEO-84 observation. | Product/safety owner: quarantine stale public content, promote governed evidence, remove prescriptive fields, and prove Unknown-first behavior with live and deterministic tests. | Release blocker for public claim safety and product honesty. |
 
 ## Lane 3 — authentication, onboarding, and ownership
 
@@ -59,10 +62,10 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 | First-party session and bearer authentication are configured | verified | `backend/src/BioStack.Api/Program.cs`; cookie is HTTP-only, production-secure, server-side session validated, JWT issuer/audience/lifetime/signature validated. Focused command below. | Security owner: review configuration before launch. | Required control exists in code; live behavior remains separate. |
 | Auth start and verify endpoints are rate-limited | verified | `backend/src/BioStack.Api/Program.cs` and auth endpoint mappings; fixed windows are 5/10 minutes and 10/10 minutes by remote IP. | Security owner: validate proxy/client-IP behavior in Azure. | Code control exists; forwarded-IP behavior is not proven. |
 | Production magic-link delivery is configured and exercised | blocked | `backend/src/BioStack.Api/Program.cs` selects Azure Communication Email or SMTP; `infra/azure/deploy-container-apps.ps1` warns when SMTP is absent. No live credential or delivery evidence was provided. | Platform owner: configure an email provider and complete sign-in, expiry, replay, and callback tests on the deployed origin. | Release blocker: users may be unable to sign in. |
-| Canonical onboarding route is present | not tested | Static inspection found `frontend/src/app/start/page.tsx` and the `/onboarding` redirect, but the focused frontend test was unavailable because the clean install did not complete. | Product owner: approve final onboarding content; frontend owner: rerun the focused test in a clean environment. | Route plumbing appears present but is not currently test-qualified. |
+| Canonical onboarding route is present | verified | `frontend/src/app/start/page.tsx`, the `/onboarding` redirect behavior, and their frontend regressions are present in the full hosted suite that passed in run `30211140857`. | Product owner: approve final onboarding content; QA owner: retain route regressions. | Repository route plumbing is test-qualified; deployed email/session behavior remains separate. |
 | End-to-end deployed auth/onboarding loop | not tested | No live URL, test identity, or email-delivery evidence was used in this lane. | QA owner: test anonymous start, sign-in, callback, session persistence, sign-out, expired link, and return URL. | Release blocker until passed. |
 | Profile ownership isolation | verified | `OwnershipGuard`, owner-filtered `PersonProfileRepository`, and focused `OwnershipIsolationIntegrationTests`. | Security owner: retain regression test in required CI. | Deterministic server-side isolation passes focused tests. |
-| Protected frontend routes require a session cookie | not tested | Static inspection found the cookie gate in `frontend/src/middleware.ts`, but `frontend/src/__tests__/middleware.public-routes.test.ts` could not run after the clean install timed out. | Security owner: rerun the focused test and verify direct deployed-route behavior and cookie domain. | Release evidence is incomplete. |
+| Protected frontend routes require a session cookie | verified | `frontend/src/middleware.ts` and `frontend/src/__tests__/middleware.public-routes.test.ts` are present, and the full hosted frontend suite passed in run `30211140857`. | Security owner: retain the regression and separately verify deployed cookie domain/session behavior. | Deterministic route gating passes; live session qualification remains separate. |
 
 ## Lane 6 — legal and consent
 
@@ -71,7 +74,7 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 | Approved Terms of Service | failed | `frontend/src/app/terms/page.tsx` explicitly says legal review is required and copy is not final. This audit adds `noindex,nofollow` and removes the placeholder from the sitemap; that is containment, not approval. | Legal owner: provide dated, approved terms and effective version. | Release blocker. |
 | Approved Privacy Policy | failed | `frontend/src/app/privacy/page.tsx` explicitly says legal review is required and copy is not final. This audit adds `noindex,nofollow` and removes the placeholder from the sitemap; that is containment, not approval. | Privacy/legal owner: approve policy covering health-related data, subprocessors, retention, deletion, rights, and contact. | Release blocker. |
 | Authenticated write consent is enforced by the API | verified | `RequireConsentFilter`, endpoint `.RequireConsent()` mappings, and focused `ConsentGateIntegrationTests`. | Product/legal owner: confirm the versioned consent text represented by `bio-observational-v1`. | Server control passes focused tests. |
-| User can review and record informed consent in the frontend | failed | No frontend call to `/api/v1/consent` exists. API failures link to `/onboarding/consent`, but `frontend/src/app/onboarding/page.tsx` redirects all onboarding paths to `/start`; no consent screen or acceptance control was found. | Product + legal + frontend owners: implement explicit versioned consent review/acceptance and refusal path. | Release blocker: protected writes cannot be completed by a new user. |
+| User can review and record informed consent in the frontend | verified | `frontend/src/app/onboarding/consent/page.tsx` reads the current server version, records acceptance or refusal, signs out after refusal, and preserves approved return paths. `ConsentPage.test.tsx` covers acceptance, refusal, and expired-session routing in the hosted frontend suite. | QA owner: execute the authorized deployed scenarios in the KEO-69 runbook. | The repository experience exists; legal approval and live auth evidence remain blocking rows. |
 | Consent wording and policy versions have human approval | blocked | Code defaults to `bio-observational-v1`; no signed approval artifact is in scope. | Legal owner: approve exact text/version and retention evidence. | Release blocker; cannot be inferred from tests. |
 
 ## Lane 7 — environment, deployment, data, and operations
@@ -79,22 +82,23 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 | Requirement | Status | Evidence | External owner/action | Release impact |
 |---|---|---|---|---|
 | Production secrets are supplied outside source control | blocked | `.env.example` documents required variables and GitHub deploy uses repository secrets/OIDC. Checked-in `backend/src/BioStack.Api/appsettings.json` contains development-looking JWT/callback/database values; actual production secret rotation and GitHub/Azure configuration were not inspected. | Security/platform owner: confirm all non-development values are unused in production, rotate if ever exposed, and validate secret inventory. | Release blocker until attested and verified. |
-| Secret scanning workflow configuration is present | blocked | `.github/workflows/secret-scan.yml`; this audit adds the previously missing `.gitleaks.toml` extending Gitleaks defaults. Gitleaks is not installed locally, so configuration parsing was not tested in this lane. | Security owner: run Gitleaks in hosted CI, require the workflow, and obtain a green PR/main run. | Configuration gap is corrected, but release evidence remains blocked on a hosted pass. |
-| Current deploy workflow passes | failed | Hosted run `29166449446` at `a37726a` passed backend tests, then failed frontend tests with three stale assertions plus a worker heap OOM/timeout. Azure login, image build/push, and app-update steps were skipped. | Frontend/platform owner: repair the assertion drift and bound worker memory/concurrency, then obtain a green hosted workflow for the exact release SHA. | Release blocker remains; the latest run did not deploy. |
-| Production dependency set has no known high-severity advisory | verified | `Microsoft.Bcl.Memory` is pinned to 10.0.9 (patched floor is 10.0.4 for GHSA-73j8-2gch-69rq); `dotnet list BioStack.sln package --vulnerable --include-transitive --no-restore` reported no vulnerable packages, and 252 API tests passed with zero warnings. | Security/backend owner: enforce vulnerability auditing in CI. | The identified high-severity dependency is remediated locally. |
+| Secret scanning workflow configuration is present | verified | Hosted Gitleaks run `30211140879` passed for exact SHA `53ed0df5`. The workflow and `.gitleaks.toml` are executable in hosted CI. | Security owner: make the workflow required and separately close rotation/full-history evidence. | Hosted current-tree scanning passes; required-check and historical-secret gates remain separate. |
+| Current deploy workflow passes | verified | Hosted run `30211140857` passed backend/frontend gates, built immutable SHA-tagged images, updated API and web, proved each exact latest-ready revision, and returned HTTP 200 from pinned smoke checks for `53ed0df5`. | Platform owner: retain exact-revision gates and add the customer and dependency checks below. | Deployment evidence is current but does not override other release blockers. |
+| Production dependency set has no known high-severity advisory | verified | Re-audited 2026-08-28 on branch `lead/category-language-unify`: `System.Security.Cryptography.Xml` upgraded to 10.0.10 (`BioStack.Infrastructure.csproj`); `dotnet list BioStack.sln package --vulnerable --include-transitive` reports zero vulnerable packages across all 14 projects (`tmp/dotnet-vuln.log`); `npm audit` on `frontend/` reports 0 findings at every severity; `pip-audit` against `backend/research-sidecar/uv.lock` export reports no known vulnerabilities. | Security/backend owner: none outstanding — `deploy.yml` already fails the build on NuGet high advisories (`NuGetAuditLevel=high`, `WarningsAsErrors=NU1903;NU1904`) and `npm audit --audit-level=moderate`; a `pip-audit --strict` step for `backend/research-sidecar` was added on this branch. | Dependency set is clean and all three ecosystems are CI-gated once this branch merges. |
 | Deployment is gated before Azure mutation | verified | `.github/workflows/deploy.yml` runs backend and frontend tests before Azure login and container-app updates. | Platform owner: add environment protection/manual production approval if required by policy. | Prevented the failed build from deploying. |
 | Production database is PostgreSQL | verified | `backend/src/BioStack.Api/Program.cs` rejects missing/non-Postgres production configuration and runs EF migrations; `.env.example` documents provider/connection variables. | DBA/platform owner: validate the actual target, least privilege, TLS, capacity, and migration plan. | Code fails closed; live database remains blocked below. |
 | Live database connectivity and migrations | not tested | No production connection or deployment was exercised. | DBA: run migration rehearsal and smoke test against a release-like database. | Release blocker until passed. |
-| Automated backups, retention, restore drill, and recovery objectives | failed | No production backup policy, retention, RPO/RTO, restore procedure, or successful restore-drill artifact was found. `infra/azure/README.md` still describes an obsolete ephemeral SQLite deployment path. | DBA/platform owner: configure Postgres backups, document RPO/RTO, and record a restore drill. | Release blocker; user data recovery is unproven. |
-| Azure deployment documentation matches production database enforcement | failed | `infra/azure/README.md` says SQLite/ephemeral storage is current, while `Program.cs` rejects SQLite in Production and the script defaults `DatabaseProvider` to `sqlite`. | Platform owner: update script/docs to default to and require PostgreSQL for production. | Release blocker: documented default cannot start successfully. |
-| Ephemeral SQLite is an acceptable production deployment path | obsolete | `Program.cs` now requires PostgreSQL in Production, superseding the older SQLite guidance in `infra/azure/README.md` and the script's SQLite default. | Platform owner: remove the obsolete production path from script/docs; keep SQLite explicitly development-only if needed. | Must not be used as a launch path. |
+| Keon dependency readiness | blocked | 2026-08-28: production runs with the EXPLICIT stub acknowledgement `KeonRuntime AllowStubInProduction=true` (operator decision after the fail-closed guard correctly refused an unconfigured boot; revisions 0000114+). Per #245 this degrades non-effecting safety receipts only; effect-bearing paths remain fail-closed. Retire condition: configure `KeonRuntime:BaseUrl` + `LiveMode=true` against a live Keon service, then collect the revision-bound `/health/keon` and dependent-journey evidence this row requires. 2026-08-29 addendum (lead): stub retirement must ALSO wire the research review-decision/remediation receipt writers through MCP Gateway -> KeonRuntime so review governance lands as Decision Receipts on the Spine; until then, interim custody = schema-valid receipts in research/review-decisions/ plus the git hash chain on the pushed branch (receipts routed through a stubbed runtime would be non-verifiable and are deliberately NOT emitted). | Platform/Keon owner: verify the dependency probe and bounded failure behavior against the release revision without widening authority. | Release blocker for any functionality that depends on Keon availability. |
+| Automated backups, retention, restore drill, and recovery objectives | blocked | docs/operations/production-operations-runbook.md (authored 2026-08-28) documents PostgreSQL backup/restore guidance; commands are recorded as syntax-only, not a completed restore drill. Production backup settings, approved retention/RPO/RTO and a successful restore receipt are not established by the reviewed evidence. | DBA/platform owner: attach actual configuration, approved recovery objectives and a restore-drill receipt. | Release blocker; documented procedure does not prove recoverability. |
+| Azure deployment documentation matches production database enforcement | verified | Source inspection at 8a01dfa: infra/azure/README.md requires PostgreSQL and remote session-key protection; infra/azure/deploy-container-apps.ps1 defaults DatabaseProvider to postgresql and guards missing PostgreSQL configuration. This supersedes the historical SQLite-default/documentation finding. | Platform owner: retain the production PostgreSQL requirement; live configuration and operational evidence remain separate. | Source/documentation contradiction resolved; no live database or restore acceptance implied. |
+| Ephemeral SQLite is an acceptable production deployment path | obsolete | Production requires PostgreSQL. The script now defaults to PostgreSQL; its explicit throwaway-only SQLite override does not establish an acceptable production path. Historical SQLite-default guidance is superseded. | Platform owner: keep any SQLite exception explicitly restricted to throwaway use. | Must not be used as a launch path. |
 | Basic API health endpoint exists | verified | `backend/src/BioStack.Api/Program.cs` maps `/health`; `docker-compose.yml` probes it. | Platform owner: keep endpoint unauthenticated and low-cost. | Repository health seam exists. |
-| Live readiness/liveness probes validate API and database | failed | Azure script/workflow contains no Container Apps health-probe configuration; `/health` uses default checks and no database readiness check was registered. | Platform/backend owner: define startup, liveness, and readiness probes, including an appropriate database readiness signal. | Release blocker: unhealthy revisions may receive traffic. |
+| Live readiness/liveness probes validate API and database | failed | The workflow now waits for the exact latest-ready revision and performs a pinned `/health` smoke, but `/health` still uses default checks and no database readiness signal or reviewed Container Apps startup/liveness/readiness probe evidence is attached. Storage-custody fact operator-verified 2026-08-28: `Database__Provider=postgres` on `biostackmissionctrl-api` with zero volumes — external managed PostgreSQL, so user data is not on ephemeral revision storage (runbook §0). | Platform/backend owner: define and verify startup, liveness, and readiness probes, including an appropriate database readiness signal. | Release blocker: revision activation alone does not prove dependency readiness. |
 | Production CORS origin is allow-listed | verified | `Program.cs` uses configured origins with credentials; Azure script sets the final public frontend origin. | Security/platform owner: verify the deployed custom origin and reject placeholder/local origins in production configuration. | Code/config seam exists; live headers remain untested. |
-| General API abuse controls | failed | Rate limiting is attached only to auth start/verify. No global or sensitive non-auth endpoint rate limit was found. | Security/backend owner: threat-model and apply bounded limits to public analyze, knowledge, lead, and other costly/abusable surfaces. | Release blocker for an internet-facing launch. |
+| General API abuse controls | blocked | Program.cs at 8a01dfa defines auth-start, auth-verify and provider-access rate policies; ProviderAccessEndpoints applies the provider policy. The historical auth-only assertion is superseded. Complete endpoint coverage, deployed proxy identity behavior and abuse-control acceptance are not established here. | Security/backend owner: reconcile current endpoint coverage and obtain bounded security acceptance before proposing additional controls. | Release blocker until the wider control requirement is qualified. |
 | Structured logs and sensitive-data redaction | failed | `Program.cs` clears providers and adds console logging only. No structured correlation policy, redaction test, or health-data logging policy enforcement was found. | Security/platform owner: define structured logging, correlation, retention, access, redaction, and tests. | Release blocker for incident response/privacy confidence. |
-| Monitoring, alerting, dashboards, and owner rotation | failed | No Application Insights/OpenTelemetry/Sentry integration, alerts, SLOs, or on-call owner artifact was found. | Platform owner: configure telemetry and alerting for availability, errors, latency, auth, database, and deploy health. | Release blocker: failures may go undetected. |
-| Rollback procedure is documented and rehearsed | failed | Workflow pushes immutable SHA tags but updates apps directly and has no rollback job, traffic-shift check, smoke gate, or rehearsal artifact. | Platform owner: document/rehearse revision rollback and database-forward/rollback constraints. | Release blocker. |
+| Monitoring, alerting, dashboards, and owner rotation | blocked | docs/operations/production-operations-runbook.md section 2 contains drafted monitoring/alert definitions. It does not establish deployed alerts, delivery verification, approved SLOs or staffed on-call ownership. | Platform owner: attach configuration and alert-delivery evidence plus accountable coverage. | Release blocker: a drafted procedure does not prove failures are detected and handled. |
+| Rollback procedure is documented and rehearsed | blocked | docs/operations/production-operations-runbook.md section 3 documents revision rollback; immutable deployment artifacts exist. Successful rehearsal, applicable database compatibility and session-key continuity evidence are not established by the reviewed packet. | Platform owner: attach revision-bound rehearsal and database/session compatibility evidence. | Release blocker; documentation alone does not qualify rollback. |
 
 ## Lane 8 — analytics, accessibility, SEO, and support
 
@@ -102,80 +106,51 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 |---|---|---|---|---|
 | Privacy-safe product analytics reaches an analytics backend | failed | `frontend/src/lib/analyzerAnalytics.ts` only dispatches browser `CustomEvent`; no collector/persistence integration was found. `docs/billing/tier-enforcement.md` defines a useful no-sensitive-data boundary but does not implement it. | Product/data/privacy owners: choose approved events, consent basis, destination, retention, and verify payload redaction. | Blocks launch measurement; privacy review required before enabling. |
 | Automated accessibility acceptance | not tested | Components include labels/ARIA and accessibility-focused history exists, but no axe/Playwright accessibility gate or current WCAG report was found or run. | Accessibility/QA owner: audit keyboard, focus, semantics, contrast, zoom, screen reader, errors, and mobile at WCAG 2.2 AA target. | Release blocker for public acceptance. |
-| SEO routes and metadata plumbing | verified | `frontend/src/app/layout.tsx`, `robots.ts`, and `sitemap.ts` provide language, title/description, robots, and sitemap. Unapproved legal placeholders are now excluded/noindexed. | Marketing owner: verify production domain, canonical tags, social cards, and Search Console after deployment. | Baseline exists; live indexing remains untested. |
-| Live SEO/crawl behavior | not tested | No deployed-domain HTTP, rendered metadata, robots, sitemap, canonical, or status-code crawl was performed. | Marketing/QA owner: crawl the production candidate and attach results. | Required before public announcement. |
-| Customer support route, contact, SLA, and escalation | failed | No dedicated support/contact route or operational support policy was found; marketing copy mentions priority support without a verified delivery channel. | Support/product owner: publish contact path, response expectations, escalation, privacy-safe intake, and ownership schedule. | Release blocker for paid/public support readiness. |
+| SEO routes and metadata plumbing | verified | KEO-84 centralizes `https://biostack.cc` in `frontend/src/lib/site.ts`; `metadataBase`, robots, sitemap, page-specific canonicals, Open Graph, and Twitter metadata consume that source. Focused tests reject the obsolete `.app` host. Legal placeholders remain excluded/noindexed. | Marketing owner: deploy an accepted revision, validate rendered tags/social previews, and connect Search Console only with explicit authority. | Repository host/metadata plumbing is deterministic; live indexing remains separate. |
+| Live SEO/crawl behavior | blocked | Sept 10 retained metadata-evidence.json and validation.md under research/output/gtm-activation-20260909/seo-public-20260910 show all 15 static sitemap URLs and observed canonical/robots metadata use biostack.cc. The July .app-domain observation is superseded for these timestamped surfaces; HTTP responses are not immutable-build pinned. social-assets-20260910/post-deploy-asset-evidence.json separately qualifies anonymous delivery of the exact public assets. Dynamic dossier inclusion, actual social preview rendering and search-engine indexing remain unqualified. | Marketing/QA owner: qualify only remaining SEO/social/indexing gaps under applicable authority; do not repeat completed crawl or asset checks. | Bounded static-domain/asset defects resolved; broader launch SEO qualification remains open. |
+| Customer support route, contact, SLA, and escalation | blocked | `research/output/gtm-activation-20260909/support-provider-operating-packet-20260912.md` records a bounded source inventory: no dedicated consumer support/contact/help route or support-mail link was found in its reviewed frontend scope; its explicit caveat that manual or external support may exist outside that scope stands and is not resolved by this row. The historical priority-support marketing assertion is separately superseded by the current claims review, which found that copy removed. | Support/product owner: reconcile current contact implementation and attach actual coverage, approved response expectations, escalation and privacy-safe intake evidence. | Release blocker until operational support readiness is established. |
 
 ## Lane 9 — delivery workflows
 
 | Requirement | Status | Evidence | External owner/action | Release impact |
 |---|---|---|---|---|
-| Main deployment workflow is green | failed | Latest run `29166449446` at `a37726a` failed in frontend tests: Commander description expectation drift, stale `/map` and `/onboarding` redirect expectations, and a worker heap OOM/timeout. Azure mutation steps were skipped. | Engineering/platform owner: repair the frontend gate and obtain a green run for the exact release SHA. | Release blocker. |
-| Secret scan is green and required | blocked | Historical runs failed because `.gitleaks.toml` was absent. Local config is repaired here, but no hosted run exists for this commit and branch protection was not verified. | Security/repo owner: run it, make it required, triage findings, and record green evidence. | Release blocker until hosted evidence exists. |
+| Main deployment workflow is green | verified | Run `30211140857` passed and deployed exact SHA `53ed0df5`, including backend/frontend tests, immutable images, exact latest-ready checks, and pinned HTTP 200 smoke. | Engineering/platform owner: retain the gate and do not treat it as approval of unresolved security/product/operational rows. | Delivery gate passes for this SHA; release qualification remains NO-GO. |
+| Secret scan is green and required | blocked | Hosted run `30211140879` passed at `53ed0df5`; repository rules showing that it is required, plus full-history/rotation evidence for historical findings, were not verified. | Security/repo owner: make it required and attach historical-secret rotation evidence. | Green current-tree scan is necessary but not sufficient. |
 | Static security/quality analysis is configured and green | failed | `.github/workflows/sonarcloud.yml` has empty `sonar.projectKey` and `sonar.organization`; recent listed runs failed. | Security/repo owner: configure the project or replace/remove the nonfunctional workflow with an approved scanner. | Release blocker for claimed scan coverage. |
 | Production approval, environment protection, and separation of duties | blocked | Deploy triggers directly on pushes to `main`; repository environment rules/branch protection/human approvers were not inspected or approved in this lane. | Repo/platform owner: configure protected production environment and named approval policy. | Release blocker for controlled production change. |
-| Post-deploy smoke test and automatic halt/rollback | failed | Deploy workflow ends after container-app image updates; no health check, user-journey smoke, traffic validation, or rollback step exists. | Platform/QA owner: add release-SHA health/smoke checks and defined failure handling. | Release blocker. |
-| Offline verification kit workflow | verified | `Protocol Operations Offline Verification Kit` run `29166449452` passed at `a37726a`. | Release owner: treat this as evidence only for its stated offline-kit scope. | Does not offset failed production launch controls. |
+| Post-deploy smoke test and automatic halt/rollback | failed | Run `30211140857` proves exact-revision API `/health` and web `/` HTTP 200 checks and serial halt behavior. It does not include an authenticated customer journey, Keon/database readiness, traffic validation, or automatic rollback. | Platform/QA owner: add bounded customer/dependency smoke and rehearse defined rollback handling. | Partial smoke evidence does not close the release gate. |
+| Offline verification kit workflow | verified | `Protocol Operations Offline Verification Kit` run `30211140877` passed at exact SHA `53ed0df5`. | Release owner: treat this as evidence only for its stated offline-kit scope. | Does not offset failed production launch controls. |
 
 ## Deterministic verification record
 
-Run sequentially from the repository root unless noted otherwise:
+Current evidence was reconciled from the exact hosted SHA and repository state:
 
 ```text
 rtk git rev-parse HEAD
-  235fb72883f8210c05f7855cb2ab6bf9e20d4841 (pre-change baseline)
+  53ed0df5a0c207e99b6b3582d6c40b64e6b4f11c
 
-rtk gh run list --limit 15
-  latest deploy 29166449446: failed at frontend tests; Azure mutation steps skipped
-  latest offline verification kit 29166449452: passed
+rtk gh run list --commit 53ed0df5a0c207e99b6b3582d6c40b64e6b4f11c --limit 20
+  deploy 30211140857: success
+  secret scan 30211140879: success
+  structural report 30211140866: success
+  offline verification kit 30211140877: success
+  source acquisition worker 30211140859: success
 
-rtk gh run view 29166449446 --log-failed
-  NU1101: Keon.Kompress unavailable from nuget.org
+rtk gh run view 30211140857 --log
+  exact-SHA API and web images became latest-ready and pinned smoke checks returned HTTP 200
+  backend restore/test emitted known-high-severity NU1903 warnings for System.Security.Cryptography.Xml 10.0.9
 
-rtk gh run list --workflow secret-scan.yml --limit 5
-  five listed runs: failed
+repository inspection
+  frontend/src/app/onboarding/consent/page.tsx implements versioned accept/refuse/return-path behavior
+  frontend/src/__tests__/components/ConsentPage.test.tsx covers acceptance, refusal, and expired-session routing
 
-rtk gh run list --workflow sonarcloud.yml --limit 5
-  five listed runs: failed
-
-rtk dotnet restore tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --verbosity minimal
-  historical audit result: passed with NU1903 for Microsoft.Bcl.Memory 9.0.4
-
-rtk dotnet test BioStack.sln --verbosity minimal -m:1
-  1,063 passed across 18 projects (CI repair lane)
-
-rtk dotnet list BioStack.sln package --vulnerable --include-transitive --no-restore
-  no vulnerable packages after direct Microsoft.Bcl.Memory 10.0.9 pin
-
-rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --verbosity minimal -m:1
-  252 passed, 0 warnings after dependency remediation
-
-rtk docker build --file Dockerfile --tag biostack-api:ci-kompress-restore .
-  passed; clean solution restore and API publish completed inside Linux image build
-
-rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --filter FullyQualifiedName~ConsentGateIntegrationTests --verbosity minimal
-  14 passed
-
-rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --no-build --filter FullyQualifiedName~OwnershipIsolationIntegrationTests --verbosity minimal
-  1 passed
-
-rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --no-build --filter FullyQualifiedName~AuthEndpointsIntegrationTests --verbosity minimal
-  10 passed
-
-rtk npm ci
-  timed out after 184 seconds in the clean worktree
-
-rtk npm test -- --pool=threads --maxWorkers=1 src/__tests__/middleware.public-routes.test.ts src/__tests__/app/start/page.test.tsx
-  unavailable: clean install did not complete; vitest/config could not be resolved
-
-rtk npx vitest run <calculator-and-commercial-focused-files> --pool=forks --maxWorkers=1
-  integrated primary checkout: no result; bounded runs timed out and orphan workers were terminated
-
-rtk proxy gitleaks version
-  unavailable: gitleaks is not installed locally
+attributed KEO-84 read-only audit observations reported on 2026-07-26
+  no durable raw response artifact is attached; production details require re-verification
+  reported deployed robots.txt and sitemap.xml used the obsolete https://biostack.app host
+  reported public BPC-157 knowledge response included dose, frequency, schedule, pairing, and optimization fields
 ```
 
-The commit SHA is reported in the lane handoff. No deployment, secret change, database mutation, legal approval, or production smoke test was performed by this audit.
+The KEO-84 parcel records its local focused test output in its parcel handoff. It does not deploy, change secrets, mutate a database, approve legal language, configure Search Console, or close any live release gate.
 
 ## Decision ownership
 

@@ -8,6 +8,7 @@ public enum ResearchArtifactKind
     ReviewDecisionBatch = 4,
     ResearchRequestBatch = 5,
     RelationshipPacket = 6,
+    SourceAuthorizationDecisionBatch = 7,
 }
 
 public sealed record ResearchArtifactSchemaDescriptor(
@@ -17,6 +18,14 @@ public sealed record ResearchArtifactSchemaDescriptor(
 
 public static class ResearchArtifactSchemas
 {
+    // Keep the issued schema at its original path: historical assignment receipts bind its bytes.
+    public static IReadOnlyDictionary<string, string> SourceAuthorizationVersions { get; } =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["1.2.0"] = "source-authorization-decision.schema.json",
+            ["2.0.0"] = "source-authorization-decision.v2.schema.json",
+        };
+
     public static IReadOnlyList<ResearchArtifactSchemaDescriptor> All { get; } = new[]
     {
         new ResearchArtifactSchemaDescriptor(
@@ -43,6 +52,10 @@ public static class ResearchArtifactSchemas
             ResearchArtifactKind.RelationshipPacket,
             "relationship-packet.schema.json",
             "compound-relationship-packet"),
+        new ResearchArtifactSchemaDescriptor(
+            ResearchArtifactKind.SourceAuthorizationDecisionBatch,
+            "source-authorization-decision.schema.json",
+            "source-authorization-decision-batch"),
     };
 
     public static ResearchArtifactSchemaDescriptor Get(ResearchArtifactKind kind)

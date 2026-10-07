@@ -2,7 +2,10 @@
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { hasPendingAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
+import { useAnalyzerProtocolDraft } from '@/lib/useAnalyzerProtocolDraft';
 import { canonicalRoutes } from '@/lib/productContract';
+import { authenticateWithPasskey, passkeyAuthenticationErrorMessage, passkeysSupported } from '@/lib/passkeys';
 import { useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
@@ -13,7 +16,7 @@ function resolveRedirectPath(callbackUrl: string | null) {
     return canonicalRoutes.postSignInDefault;
   }
 
-  if (callbackUrl.startsWith('/')) {
+  if (callbackUrl.startsWith('/') && !callbackUrl.startsWith('//') && !callbackUrl.includes('\\')) {
     return callbackUrl;
   }
 
@@ -34,17 +37,61 @@ function SignInPageContent() {
   const searchParams = useSearchParams();
   const redirectPath = useMemo(() => resolveRedirectPath(searchParams.get('callbackUrl')), [searchParams]);
   const error = searchParams.get('error');
-  const isProtocolContinuation = redirectPath.startsWith('/protocol-console');
+  const analyzerDraft = useAnalyzerProtocolDraft();
+  const isProtocolContinuation = redirectPath.split(/[?#]/, 1)[0] === '/protocol-console' &&
+    hasPendingAnalyzerProtocolDraft(analyzerDraft);
   const [email, setEmail] = useState('');
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState('');
   const [cooldownUntil, setCooldownUntil] = useState(0);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(0);
+  // Optimistic: show the passkey option the moment the browser supports WebAuthn.
+  // The status check below only HIDES it on an explicit disable — waiting for the
+  // check before showing anything delayed the option for seconds on cold starts.
+  const [passkeysEnabled, setPasskeysEnabled] = useState(() => passkeysSupported());
+  const [isUsingPasskey, setIsUsingPasskey] = useState(false);
+  const [passkeyError, setPasskeyError] = useState('');
 
   const isInboxStep = Boolean(submittedEmail);
   const cooldownMs = Math.max(0, cooldownUntil - now);
   const cooldownSeconds = Math.ceil(cooldownMs / 1000);
+
+  useEffect(() => {
+    if (!passkeysSupported()) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadPasskeysEnabled() {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const response = await fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' });
+          if (response.ok) {
+            const status = (await response.json()) as { enabled?: boolean } | null;
+            if (!cancelled && status?.enabled === false) setPasskeysEnabled(false);
+            return;
+          }
+        } catch {
+          // Transient failure — retried once below.
+        }
+        const { promise, resolve } = Promise.withResolvers<void>();
+        setTimeout(resolve, 500);
+        await promise;
+      }
+
+      // Unverifiable after a retry: when the browser supports WebAuthn, offer
+      // passkey sign-in rather than silently hiding it — an actual disablement
+      // surfaces at click time as a clear error instead of an invisible button.
+      if (!cancelled) setPasskeysEnabled(true);
+    }
+
+    void loadPasskeysEnabled();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!cooldownUntil) {
@@ -82,8 +129,10 @@ function SignInPageContent() {
         throw new Error('Unable to send sign-in link.');
       }
 
+      const submittedAt = Date.now();
       setSubmittedEmail(normalized);
-      setCooldownUntil(Date.now() + 30000);
+      setNow(submittedAt);
+      setCooldownUntil(submittedAt + 30000);
     } catch {
       setSendError('We could not send that sign-in link. Try again in a moment.');
     } finally {
@@ -96,8 +145,19 @@ function SignInPageContent() {
     void startAuth();
   }
 
+  async function handlePasskeySignIn() {
+    setIsUsingPasskey(true);
+    setPasskeyError('');
+    try {
+      window.location.replace(await authenticateWithPasskey(redirectPath));
+    } catch (error) {
+      setPasskeyError(passkeyAuthenticationErrorMessage(error));
+      setIsUsingPasskey(false);
+    }
+  }
+
   return (
-    <main className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
+    <main id="main" tabIndex={-1} className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md flex-col justify-center">
         <div className="mb-8 flex justify-center">
           <BioStackLogo variant="stacked" theme="dark" size="lg" />
@@ -109,7 +169,7 @@ function SignInPageContent() {
               <div className="mb-7 text-center">
                 <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to BioStack</h1>
                 <p className="mt-2 text-sm leading-6 text-white/45">
-                  Use your email. We will send a private sign-in link.
+                  Already added a passkey? Use it for one-tap sign-in. New here, or on a new device? Email yourself a sign-in link — you can add a passkey once you’re in.
                 </p>
                 <p className="mt-3 text-sm leading-6 text-white/55">
                   Create a free profile to save your analysis and track how your stack changes over time. No card required.
@@ -118,8 +178,8 @@ function SignInPageContent() {
 
               {isProtocolContinuation && (
                 <div className="mb-5 rounded-lg border border-emerald-300/18 bg-emerald-400/[0.08] px-4 py-3 text-sm leading-6 text-emerald-50/82">
-                  <p className="font-semibold text-emerald-50">Your saved analysis will carry through sign-in.</p>
-                  <p className="mt-1">No need to restart. Continue to create your BioStack protocol.</p>
+                  <p className="font-semibold text-emerald-50">Your saved analysis is waiting on this browser.</p>
+                  <p className="mt-1">Finish sign-in here, then review the compounds you entered before they are added to a profile. Nothing is applied automatically.</p>
                 </div>
               )}
 
@@ -127,7 +187,9 @@ function SignInPageContent() {
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {error === 'session-expired'
                     ? 'Your session expired. Sign in again to continue where you left off.'
-                    : 'That sign-in link is expired or already used. Send yourself a new one.'}
+                    : error === 'session-unavailable'
+                      ? 'We could not verify your session. Sign in again to continue, or retry in a moment.'
+                      : 'That sign-in link is expired or already used. Send yourself a new one.'}
                 </div>
               )}
 
@@ -135,6 +197,30 @@ function SignInPageContent() {
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {sendError}
                 </div>
+              )}
+
+              {passkeyError && (
+                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                  {passkeyError}
+                </div>
+              )}
+
+              {passkeysEnabled && (
+                <>
+                  <button
+                    type="button"
+                    disabled={isUsingPasskey}
+                    onClick={() => void handlePasskeySignIn()}
+                    className="min-h-12 w-full rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
+                  >
+                    {isUsingPasskey ? 'Checking passkey…' : 'Sign in with a passkey'}
+                  </button>
+                  <div className="my-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/25">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <span>Or use email</span>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                </>
               )}
 
               <form onSubmit={onSubmit} className="space-y-4">
@@ -157,7 +243,7 @@ function SignInPageContent() {
                   disabled={isSending}
                   className="min-h-12 w-full rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
                 >
-                  {isSending ? 'Sending...' : 'Continue'}
+                  {isSending ? 'Sending...' : 'Email me a sign-in link'}
                 </button>
               </form>
             </>
@@ -187,7 +273,7 @@ function SignInPageContent() {
 
 export default function SignInPage() {
   return (
-    <Suspense fallback={<main className="min-h-screen bg-[#0B0F14]" />}>
+    <Suspense fallback={<main id="main" tabIndex={-1} className="min-h-screen bg-[#0B0F14]" />}>
       <SignInPageContent />
     </Suspense>
   );

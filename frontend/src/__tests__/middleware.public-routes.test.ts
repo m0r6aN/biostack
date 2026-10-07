@@ -1,6 +1,7 @@
 import middleware from '@/middleware';
+import { isPublicRoutePath } from '@/lib/productContract';
 import { NextRequest } from 'next/server';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 function requestFor(pathname: string, cookie?: string) {
   return new NextRequest(`https://biostack.test${pathname}`, {
@@ -9,33 +10,118 @@ function requestFor(pathname: string, cookie?: string) {
 }
 
 describe('middleware public route access', () => {
-  it.each(['/knowledge', '/knowledge/creatine', '/start', '/onboarding', '/map', '/tools/analyzer'])(
-    'allows anonymous evidence browsing at %s',
-    (pathname) => {
-      const response = middleware(requestFor(pathname));
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it.each([
+    '/knowledge', '/knowledge/creatine', '/start', '/onboarding', '/map', '/tools/analyzer',
+    '/og-image.png', '/favicon.svg', '/og-image.png?v=1', '/favicon.svg?v=1',
+  ])(
+    'allows anonymous access to public route %s',
+    async (pathname) => {
+      const response = await middleware(requestFor(pathname));
 
       expect(response.status).not.toBe(307);
       expect(response.headers.get('location')).toBeNull();
     }
   );
 
-  it.each(['/profiles', '/profiles/abc', '/compounds', '/billing', '/admin/research'])(
+  it.each(['/profiles', '/profiles/abc', '/profiles/avatar.png', '/compounds', '/billing', '/admin/research'])(
     'keeps private route %s behind sign-in',
-    (pathname) => {
-      const response = middleware(requestFor(pathname));
+    async (pathname) => {
+      const response = await middleware(requestFor(pathname));
 
       expect(response.status).toBe(307);
       expect(response.headers.get('location')).toContain('/auth/signin');
     }
   );
 
-  it.each(['/knowledge-private', '/toolshed', '/apiary']) (
-    'does not treat a near-prefix route %s as public',
-    (pathname) => {
-      const response = middleware(requestFor(pathname));
+  it.each([
+    '/knowledge-private', '/toolshed', '/apiary', '/uploads/avatar.png',
+    '/og-image.png-backup', '/favicon.svg-private', '/og-image.png/private', '/favicon.svg/private',
+  ]) (
+    'does not treat a near-prefix route %s as public — it falls through to the router',
+    async (pathname) => {
+      expect(isPublicRoutePath(pathname)).toBe(false);
 
-      expect(response.status).toBe(307);
-      expect(response.headers.get('location')).toContain('/auth/signin');
+      // Not public and not a protected app surface: the route falls through
+      // to the router, which renders the 404 page. It must never be admitted
+      // by the public allowlist, and it must not bounce visitors to sign-in
+      // as if it were an authenticated page.
+      const response = await middleware(requestFor(pathname));
+
+      expect(response.status).not.toBe(307);
+      expect(response.headers.get('location')).toBeNull();
     },
   );
+
+  it('admits a protected route only after the backend validates the cookie', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(
+      JSON.stringify({ authenticated: true, user: { id: '1' } }),
+      { status: 200, headers: { 'content-type': 'application/json' } },
+    ));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const response = await middleware(requestFor('/profiles', 'biostack_session=valid-ticket'));
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('location')).toBeNull();
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:5050/api/v1/auth/session',
+      expect.objectContaining({
+        headers: { cookie: 'biostack_session=valid-ticket' },
+        cache: 'no-store',
+      }),
+    );
+  });
+
+  it('forwards only the BioStack session cookie to backend validation', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(
+      JSON.stringify({ authenticated: true }),
+      { status: 200, headers: { 'content-type': 'application/json' } },
+    ));
+    vi.stubGlobal('fetch', fetchMock);
+
+    await middleware(requestFor(
+      '/profiles',
+      'analytics_id=do-not-forward; biostack_session=valid-ticket; preferences=private',
+    ));
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:5050/api/v1/auth/session',
+      expect.objectContaining({
+        headers: { cookie: 'biostack_session=valid-ticket' },
+      }),
+    );
+  });
+
+  it('rejects an unreadable cookie and forwards the backend cookie deletion', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(
+      JSON.stringify({ authenticated: false, user: null }),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'application/json',
+          'set-cookie': 'biostack_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; httponly',
+        },
+      },
+    )));
+
+    const response = await middleware(requestFor('/billing?plan=operator', 'biostack_session=stale-ticket'));
+
+    expect(response.status).toBe(307);
+    expect(response.headers.get('location')).toContain('callbackUrl=%2Fbilling%3Fplan%3Doperator');
+    expect(response.headers.get('location')).toContain('error=session-expired');
+    expect(response.headers.get('set-cookie')).toContain('biostack_session=;');
+  });
+
+  it('fails closed when backend session validation is unavailable', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
+
+    const response = await middleware(requestFor('/profiles', 'biostack_session=unknown-ticket'));
+
+    expect(response.status).toBe(307);
+    expect(response.headers.get('location')).toContain('error=session-unavailable');
+  });
 });

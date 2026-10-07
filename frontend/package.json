@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3043",
+    "prebuild": "node scripts/reviewed-study-design.mjs --check",
     "build": "next build",
     "start": "next start --port 3043",
     "lint": "eslint",
@@ -16,10 +17,11 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
-    "next": "^16.2.6",
+    "next": "^16.3.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -45,7 +47,8 @@
   },
   "overrides": {
     "next": {
-      "postcss": "8.5.10"
+      "postcss": "8.5.23",
+      "sharp": "0.35.4"
     }
   }
 }

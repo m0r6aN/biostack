@@ -49,6 +49,15 @@ describe('/start canonical onboarding route', () => {
 
     expect(screen.getByText('Onboarding mode: new')).toBeInTheDocument();
   });
+
+  it('wraps onboarding in the main landmark that the skip link targets', async () => {
+    render(await StartPage({}));
+
+    const main = screen.getByRole('main');
+    expect(main).toHaveAttribute('id', 'main');
+    expect(main).toHaveAttribute('tabindex', '-1');
+    expect(main).toHaveTextContent('Onboarding mode: new');
+  });
 });
 
 describe('/map redirect', () => {

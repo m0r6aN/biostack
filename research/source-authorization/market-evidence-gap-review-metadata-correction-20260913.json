@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-review-metadata-correction-receipt",
+  "authority": "none",
+  "author": "Codex",
+  "recordedAtUtc": "2026-09-13T20:13:41.177850+00:00",
+  "baseCommit": "d9133571031cfdfc7357fff21c12f3ec60143e63",
+  "scope": "Two review qualifications, two ops reasons and two conflict-summary corrections only; no scientific acceptance, hiding, retirement, replacement completion or source-family approval.",
+  "hashEncoding": "SHA256 raw bytes for files; UTF8 sorted-key compact JSON ensure_ascii true for objects; UTF8 exact text for summaries.",
+  "corrections": [
+    {
+      "path": "research/input/evidence/ligandrol.evidence.json",
+      "claimId": "ligandrol-marketing-vs-evidence-gap-001",
+      "conflictId": "ligandrol-conflict-dose-range-001",
+      "originalPacketSha256": "61961e70c532bb69d42275c08fd135766cf726293e0029a06f3f0cd4f1840415",
+      "correctedPacketSha256": "a638df391e592678ad68d30ad53e5167a673c3979ed6e1f0cdb9775c9dfca584",
+      "originalClaimSha256": "e2eea3ac775964115e461f3d67cb0dd79ed6de0e98a5fae8010b4bca28d9e44a",
+      "correctedClaimSha256": "e6bea3bf60e8f94946d7ea0f60ff992d4e25529bfe05c2b91803e3c471ec4136",
+      "originalConflictSha256": "93e435c2846018d5ef6dfce96520a55d6225079fea9800419610cc58e96fd325",
+      "correctedConflictSha256": "8ddffda64d429eee846ef27be5829ccf4324530bfee9ef5b9edd5723bbbbf0e4",
+      "originalConflictSummarySha256": "751b58fc7bd9b627191cd880c6fd3de9f32c681bab02914ed1a5479963d7ac7c",
+      "correctedConflictSummarySha256": "4989371661b982ba5fb5cfce6d819b3047eacac942ef5d41dfd95d8b6961c944",
+      "addedReviewFlag": "Offline provenance qualification 2026-09-13: the statement and prior flags are preserved historical assertions, not newly verified current-market findings. The retained records do not establish a comprehensive current trial maximum, universal absence of controlled evidence, or prevalence of the quoted marketing claims. The separately researched Basaria trial concerns healthy men and does not by itself establish a recreational-use or steroid-superiority comparison. Current statement remains review-gated; this qualification neither accepts it nor declares every omitted proposition false. No new source-family verification, replacement completion or grade decision is recorded.",
+      "addedReviewReason": "ligandrol-marketing-vs-evidence-gap-001: historical global trial-absence, trial-maximum and marketing-prevalence assertions remain unverified; corrective review qualification added 2026-09-13, without resolving the claim or its conflict.",
+      "correctedConflictSummary": "The historical comparison between quoted marketing doses and the cited trial doses does not establish a current comprehensive trial maximum or absence of controlled evidence at other doses. The wider marketing-versus-evidence comparison remains unverified.",
+      "historicalContentCarrier": "d9133571031cfdfc7357fff21c12f3ec60143e63:research/input/evidence/ligandrol.evidence.json"
+    },
+    {
+      "path": "research/input/evidence/mazdutide.evidence.json",
+      "claimId": "mazdutide-evidence-gap-gray-market-us-001",
+      "conflictId": "mazdutide-conflict-gray-market-vs-approved-use-001",
+      "originalPacketSha256": "5ec4b2d5b19ba0846b787ee8e61848872df14bceff4b7cbbeaadb8a43bb557c0",
+      "correctedPacketSha256": "e4edf04ecb9b51db3735027a9885f158f3a3b923112da16ab5c75ef1b0def8d5",
+      "originalClaimSha256": "d92fcc2222f0fa1a3a9b7c5d1d3fefd18c01e89760ede57f160ae8ee80822d94",
+      "correctedClaimSha256": "4e69564a4d96a5182a0f4473b90e592487699b74807f2ddf366e1b2d8fca18b7",
+      "originalConflictSha256": "ffcf3058877880071a313520f9413121cebb336ad8f1d6b63e4901766e63228a",
+      "correctedConflictSha256": "57d470dcc37599b64f0de374b54456fc2e2e0baf736fb490931f640395ffeba9",
+      "originalConflictSummarySha256": "3e54e8794d64aa10e272f9923121c1c6d3224e3ab1ca0219d4e96b0ce73ee898",
+      "correctedConflictSummarySha256": "8f96c2530a199a144a6afcde16d328e9b371537973a2353353de94e045f5111e",
+      "addedReviewFlag": "Offline provenance qualification 2026-09-13: the statement and prior flags are preserved historical assertions, not newly verified current regulatory or market findings. The historical DailyMed zero-result search does not establish absence of FDA approval, legality of marketing, product identity or quality, or safety. Withdraw reliance on the prior flag's inference that this search independently confirmed the no-approval/no-legally-marketed premise. The retained mechanism-review observation does not establish current US status, vendor practices or exclusive global trial coverage. Current statement remains review-gated; no new source-family verification, replacement completion or grade decision is recorded.",
+      "addedReviewReason": "mazdutide-evidence-gap-gray-market-us-001: the historical DailyMed search does not verify the current regulatory/market premise; corrective review qualification added 2026-09-13, without resolving this claim or its related market conflict.",
+      "correctedConflictSummary": "The historical comparison does not establish current US market status or equivalence between studied or regulated products and vendor-sourced products. Regulatory, provenance and applicability questions in that comparison remain unresolved.",
+      "historicalContentCarrier": "d9133571031cfdfc7357fff21c12f3ec60143e63:research/input/evidence/mazdutide.evidence.json"
+    }
+  ],
+  "queueUnchangedSha256": "0be1c667f42bb8698c261784bd3f10a955abac212cd4dff923a3bb34f8094bae"
+}

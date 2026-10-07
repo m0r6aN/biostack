@@ -1,47 +1,131 @@
-import { ContextualRecommendations } from '@/components/recommendations/ContextualRecommendations';
+import Link from 'next/link';
+import { useId, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { useProfile } from '@/lib/context';
-import {
-    getContextTagsForKnowledgeEntry,
-    getRecommendationsForKnowledgeEntry,
-    type RecommendationSurface,
-} from '@/lib/recommendations';
+import type { RecommendationSurface } from '@/lib/recommendations';
+import { toSlug } from '@/lib/research/slugs';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
 import { formatWeight } from '@/lib/utils';
+import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
+
+// Some pathway / benefit / interaction entries in the source data are short
+// tags ("cellular-energy"); others are full sentences copied from the
+// literature. A rounded-full chip only reads well for the former, so long
+// or sentence-shaped entries render as a bordered callout paragraph instead.
+const LONG_FORM_LENGTH_THRESHOLD = 40;
+const SENTENCE_PUNCTUATION = /[.!?;]/;
+
+function isLongFormEntry(value: string): boolean {
+  return value.length > LONG_FORM_LENGTH_THRESHOLD || SENTENCE_PUNCTUATION.test(value);
+}
+
+const TAG_LIST_STYLES = {
+  emerald: {
+    chip: 'text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300',
+    callout: 'rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm leading-relaxed text-emerald-100/90',
+  },
+  rose: {
+    chip: 'text-xs px-2.5 py-1 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300',
+    callout: 'rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm leading-relaxed text-rose-100/90',
+  },
+} as const;
+
+function TagList({ items, tone }: { items: string[]; tone: keyof typeof TAG_LIST_STYLES }) {
+  const chips = items.filter(item => !isLongFormEntry(item));
+  const callouts = items.filter(isLongFormEntry);
+  const styles = TAG_LIST_STYLES[tone];
+
+  return (
+    <>
+      {chips.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {chips.map((item, i) => (
+            <span key={i} className={styles.chip}>{item}</span>
+          ))}
+        </div>
+      )}
+      {callouts.length > 0 && (
+        <div className={chips.length > 0 ? 'mt-2 space-y-2' : 'space-y-2'}>
+          {callouts.map((item, i) => (
+            <p key={i} className={styles.callout}>{item}</p>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+function referenceLink(value: string): { href: string; label: string } | null {
+  try {
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    const isPubMedSearch = url.hostname === 'pubmed.ncbi.nlm.nih.gov' && url.searchParams.has('term');
+    return { href: url.href, label: isPubMedSearch ? `PubMed search: ${url.searchParams.get('term') || 'query'}` : value };
+  } catch {
+    return null;
+  }
+}
 
 interface CompoundIntelligenceCardProps {
   entry: KnowledgeEntry;
   recommendationSurface?: Exclude<RecommendationSurface, 'overlap-results'>;
+  /**
+   * Whether the visitor is signed in — only meaningful on the dossier
+   * ('knowledge-detail') surface, which offers an "Add to protocol" action
+   * for signed-in users and the standard sign-in CTA for anonymous ones.
+   */
+  isSignedIn?: boolean;
+  titleAs?: 'h1' | 'h2' | 'h3';
 }
 
 export function CompoundIntelligenceCard({
   entry,
-  recommendationSurface = 'compound-detail',
+  recommendationSurface,
+  isSignedIn = false,
+  titleAs: Heading = 'h3',
 }: CompoundIntelligenceCardProps) {
+  const studyDesign = getReviewedStudyDesign(entry.canonicalName);
+  const [showAllReferences, setShowAllReferences] = useState(false);
+  const referenceListId = useId();
   const { currentProfileId, profiles } = useProfile();
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
-  const recommendationTags = getContextTagsForKnowledgeEntry(entry);
-  const recommendations = getRecommendationsForKnowledgeEntry(entry, 3, recommendationSurface);
-
+  const slug = toSlug(entry.canonicalName);
+  // Blank benefit strings (e.g. records whose summary is not a benefit claim)
+  // must not render as empty chips under the Benefits label.
+  const benefits = entry.benefits.filter((benefit) => benefit.trim().length > 0);
+  // The side panel on /compounds shows a reduced version of this card next
+  // to a record the visitor already added — link it back to the full public
+  // dossier. The dossier itself (knowledge-detail) and the knowledge-search
+  // results (already a list of dossiers) don't need a link to themselves.
+  const showDossierLink = recommendationSurface === 'compound-detail';
+  const showAddToProtocol = recommendationSurface === 'knowledge-detail';
   return (
-    <GlassCard variant="default" className="p-6 relative overflow-hidden">
+    <GlassCard variant="default" className="p-4 sm:p-6 relative overflow-hidden break-words">
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">{entry.canonicalName}</h3>
+          <Heading className="text-lg font-semibold text-white">{entry.canonicalName}</Heading>
           {entry.aliases.length > 0 && (
             <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
+          )}
+          {showDossierLink && (
+            <Link
+              href={`/knowledge/${slug}`}
+              className="mt-2 inline-flex min-h-11 items-center text-sm text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+            >
+              Open full dossier
+            </Link>
           )}
         </div>
         <EvidenceTierBadge tier={entry.evidenceTier} />
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Classification</p>
             <p className="text-sm text-white/65">{entry.classification}</p>
@@ -55,10 +139,29 @@ export function CompoundIntelligenceCard({
 
         {entry.mechanismSummary && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Mechanism Summary</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Overview</p>
             <p className="text-sm text-white/65">{entry.mechanismSummary}</p>
           </div>
         )}
+
+        <section aria-label="Evidence and limitations" className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-2">
+          <h4 className="text-sm font-medium text-white/80">Evidence and limitations</h4>
+          {studyDesign ? (
+            <div data-testid="reviewed-study-design" className="space-y-2">
+              <p className="text-sm leading-6 text-white/65">{studyDesign.statement}</p>
+              <a href={studyDesign.citation.url} target="_blank" rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center text-sm text-cyan-300 underline underline-offset-4 [overflow-wrap:anywhere]">
+                {studyDesign.citation.displayLabel} · PMID {studyDesign.citation.pmid} (opens in new tab)
+              </a>
+              <p className="text-sm leading-6 text-white/65">{studyDesign.limitations}</p>
+            </div>
+          ) : (
+            <p className="text-sm leading-6 text-white/65">
+              Human/preclinical evidence breakdown is not available in this record.
+            </p>
+          )}
+          {entry.notes && <p className="text-sm leading-6 text-white/65">{entry.notes}</p>}
+        </section>
 
         {/* Profile context section — demographics only, no dosage adjacency */}
         {currentProfile && (
@@ -73,197 +176,109 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {/* Synergies & Blends */}
-        {(entry.pairsWellWith.length > 0 || entry.avoidWith.length > 0 || entry.compatibleBlends.length > 0) && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/5">
-            {entry.pairsWellWith.length > 0 && (
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-emerald-400/60 mb-2">Pairs Well With</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.pairsWellWith.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {entry.avoidWith.length > 0 && (
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">Avoid With</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.avoidWith.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {entry.compatibleBlends.length > 0 && (
-              <div className="md:col-span-2">
-                <p className="text-[10px] uppercase tracking-wider text-blue-400/60 mb-2">Compatible Blends (Vial)</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.compatibleBlends.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Reference data — disclaimer-first when a published range is present */}
-        {(entry.recommendedDosage || entry.frequency || entry.preferredTimeOfDay || entry.weeklyDosageSchedule.length > 0) && (
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Reference Data</p>
-            {entry.recommendedDosage && (
-              <p className="text-xs leading-5 text-white/55">
-                Reference only. Published ranges are not BioStack recommendations.
-              </p>
-            )}
-            <div className="grid grid-cols-3 gap-2 text-center">
-              {entry.recommendedDosage && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Published reference range (literature)</p>
-                  <p className="text-sm text-white font-medium">{entry.recommendedDosage}</p>
-                </div>
-              )}
-              {entry.frequency && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Frequency</p>
-                  <p className="text-sm text-white font-medium">{entry.frequency}</p>
-                </div>
-              )}
-              {entry.preferredTimeOfDay && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Time</p>
-                  <p className="text-sm text-white font-medium">{entry.preferredTimeOfDay}</p>
-                </div>
-              )}
-            </div>
-            {entry.weeklyDosageSchedule.length > 0 && (
-              <div className="text-sm text-white/60 bg-white/5 p-3 rounded-lg">
-                <p className="text-[10px] uppercase text-white/40 mb-2">Published Schedule Reference</p>
-                <ul className="space-y-1">
-                  {entry.weeklyDosageSchedule.map((step, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-blue-400" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Optimization Recommendations */}
-        {(entry.optimizationProtein || entry.optimizationCarbs || entry.optimizationSupplements || entry.optimizationSleep || entry.optimizationExercise) && (
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Optimization Guidelines</p>
-            <div className="grid grid-cols-1 gap-2">
-              {entry.optimizationProtein && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Protein</span>
-                  <span className="text-white/80">{entry.optimizationProtein}</span>
-                </div>
-              )}
-              {entry.optimizationCarbs && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Carbs</span>
-                  <span className="text-white/80">{entry.optimizationCarbs}</span>
-                </div>
-              )}
-              {entry.optimizationSupplements && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Supplements</span>
-                  <span className="text-white/80">{entry.optimizationSupplements}</span>
-                </div>
-              )}
-              {entry.optimizationExercise && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Exercise</span>
-                  <span className="text-white/80">{entry.optimizationExercise}</span>
-                </div>
-              )}
-              {entry.optimizationSleep && (
-                <div className="flex justify-between text-sm py-1">
-                  <span className="text-white/40">Sleep</span>
-                  <span className="text-white/80">{entry.optimizationSleep}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
         {entry.pathways && entry.pathways.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Pathways</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.pathways.map((pathway, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300">
-                  {pathway}
-                </span>
-              ))}
-            </div>
+            <TagList items={entry.pathways} tone="emerald" />
           </div>
         )}
 
-        {entry.benefits.length > 0 && (
+        {benefits.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.benefits.map((benefit, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300">
-                  {benefit}
-                </span>
-              ))}
-            </div>
+            <TagList items={benefits} tone="emerald" />
           </div>
         )}
 
-        {entry.drugInteractions.length > 0 && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Drug Interactions</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.drugInteractions.map((interaction, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300">
-                  {interaction}
-                </span>
-              ))}
-            </div>
+        {entry.pairsWellWith && entry.pairsWellWith.length > 0 && (
+          <div className="p-4 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 space-y-2">
+            <h4 className="text-sm font-medium text-white/80">Known synergies</h4>
+            <p className="text-xs leading-5 text-white/45">
+              Compounds commonly paired with this one in the knowledge base — pairing signals
+              for review, not individualized instructions.
+            </p>
+            <TagList items={entry.pairsWellWith} tone="emerald" />
+          </div>
+        )}
+
+        {(entry.avoidWith.length > 0 || entry.drugInteractions.length > 0) && (
+          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-4">
+            <h4 className="text-sm font-medium text-white/80">Interactions & cautions</h4>
+
+            {entry.avoidWith.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                  <HelpTip tipKey="flaggedInSourceData">Flagged in source data</HelpTip>
+                </p>
+                <TagList items={entry.avoidWith} tone="rose" />
+              </div>
+            )}
+
+            {entry.drugInteractions.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                  <HelpTip tipKey="reportedDrugInteractions">Drug interactions</HelpTip>
+                </p>
+                <TagList items={entry.drugInteractions} tone="rose" />
+              </div>
+            )}
+
+            <p className="text-xs leading-5 text-white/45">
+              These are observational flags for review, not individualized instructions.
+            </p>
           </div>
         )}
 
         {entry.sourceReferences.length > 0 && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">References</p>
-            <ul className="text-xs space-y-1">
-              {entry.sourceReferences.slice(0, 3).map((ref, i) => (
-                <li key={i} className="text-white/35">{ref}</li>
-              ))}
-              {entry.sourceReferences.length > 3 && (
-                <li className="text-white/35">+{entry.sourceReferences.length - 3} more</li>
-              )}
+          <section aria-label="Sources">
+            <h4 className="text-sm font-medium text-white/80 mb-2">Sources</h4>
+            <ul id={referenceListId} className="text-sm space-y-2">
+              {entry.sourceReferences.slice(0, showAllReferences ? undefined : 3).map((ref, i) => {
+                const link = referenceLink(ref);
+                return (
+                  <li key={i} className="min-w-0 [overflow-wrap:anywhere] text-white/65">
+                    {link ? (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex min-h-11 items-center rounded py-2 text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                        {link.label}<span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    ) : ref}
+                  </li>
+                );
+              })}
             </ul>
+            {entry.sourceReferences.length > 3 && (
+              <button type="button" aria-expanded={showAllReferences} aria-controls={referenceListId}
+                onClick={() => setShowAllReferences(value => !value)}
+                className="mt-2 min-h-11 rounded px-2 py-2 text-sm text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                {showAllReferences ? 'Show fewer sources' : `Show all ${entry.sourceReferences.length} sources`}
+              </button>
+            )}
+          </section>
+        )}
+
+
+
+        {showAddToProtocol && (
+          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-emerald-400/15 bg-emerald-500/[0.05] px-4 py-3">
+            {isSignedIn ? (
+              <Link
+                href={`/compounds?compound=${encodeURIComponent(slug)}`}
+                className="inline-flex min-h-11 items-center rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+              >
+                Add to protocol
+              </Link>
+            ) : (
+              <Link
+                href={`/auth/signin?callbackUrl=${encodeURIComponent(`/knowledge/${slug}`)}`}
+                className="inline-flex min-h-11 items-center rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+              >
+                Sign in to add to protocol
+              </Link>
+            )}
           </div>
         )}
 
-        {entry.notes && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Notes</p>
-            <p className="text-sm text-white/65">{entry.notes}</p>
-          </div>
-        )}
-
-        <ContextualRecommendations
-          recommendations={recommendations}
-          surface={recommendationSurface}
-          contextTags={recommendationTags}
-        />
       </div>
 
       <SafetyDisclaimer type="educational" />

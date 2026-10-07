@@ -1,0 +1,472 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "retired-placeholder-source-review-map",
+  "ownerDecisionReceipt": "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+  "decisionId": "C3",
+  "registrySha256": "248d8f02d9c812f524e7fa48eba3971de8de17b936537d74df15a82898445d8f",
+  "retirementEnforcement": "Both generic classes are rejected and acquisition-disabled; verified",
+  "sourceItems": 10,
+  "distinctClaims": 17,
+  "claimSourcePairs": 21,
+  "disclaimer": "Retirement applies to authorization classes, not literature. This map preserves item identity and excerpts by locator/hash without copying quote text; it does not approve, activate or register the source items.",
+  "items": [
+    {
+      "sourceId": "frontiers-thymosin-beta4-2021",
+      "retiredClass": "peer-reviewed-review",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/tb-500.evidence.json",
+          "title": "Progress on the Function and Application of Thymosin β4",
+          "publisher": "Frontiers in Endocrinology",
+          "url": "https://www.frontiersin.org/articles/10.3389/fendo.2021.767785/full",
+          "doi": "10.3389/fendo.2021.767785",
+          "pmid": null,
+          "publishedAt": "2021-12-01T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/tb-500.evidence.json",
+          "claimId": "tb500-parent-protein-evidence-boundary-001",
+          "coCitations": [
+            "wada-prohibited-list-tb500"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Review of thymosin beta-4 functions and applications",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/tb-500.evidence.json",
+          "claimId": "tb500-misinformation-boundary-001",
+          "coCitations": [],
+          "locators": [
+            {
+              "pageOrSection": "Review discussion",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "jama-spermidine-smartage-2022",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "title": "Effects of Spermidine Supplementation on Cognition and Biomarkers in Older Adults With Subjective Cognitive Decline: A Randomized Clinical Trial",
+          "publisher": "JAMA Network Open",
+          "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2792725",
+          "doi": "10.1001/jamanetworkopen.2022.13875",
+          "pmid": null,
+          "publishedAt": "2022-05-26T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "claimId": "spermidine-cognition-studied-use-001",
+          "coCitations": [
+            "pubmed-spermidine-memory-pilot-2018"
+          ],
+          "locators": []
+        },
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "claimId": "spermidine-longevity-hype-boundary-001",
+          "coCitations": [
+            "pubchem-spermidine",
+            "pubmed-spermidine-memory-pilot-2018"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Trial design and outcomes",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "jama-urolithin-a-older-adults-2022",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/urolithin-a.evidence.json",
+          "title": "Effect of Urolithin A Supplementation on Muscle Endurance and Mitochondrial Health in Older Adults: A Randomized Clinical Trial",
+          "publisher": "JAMA Network Open",
+          "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2788244",
+          "doi": "10.1001/jamanetworkopen.2021.44279",
+          "pmid": "35050355",
+          "publishedAt": "2022-01-20T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/urolithin-a.evidence.json",
+          "claimId": "urolithin-a-mitochondrial-studied-use-001",
+          "coCitations": [],
+          "locators": [
+            {
+              "pageOrSection": "Design, Setting, and Participants",
+              "quoteChars": 93,
+              "quoteSha256": "3e53dad7b851fadf5495b27d8bfee08ea72478584a14f875227f42e39af10a8b"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/urolithin-a.evidence.json",
+          "claimId": "urolithin-a-hype-boundary-001",
+          "coCitations": [
+            "pubchem-urolithin-a"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Outcomes and limitations",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "nejm-retatrutide-obesity-phase2-2023",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/retatrutide.evidence.json",
+          "title": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial",
+          "publisher": "New England Journal of Medicine",
+          "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+          "doi": "10.1056/NEJMoa2301972",
+          "pmid": null,
+          "publishedAt": "2023-06-26T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/retatrutide.evidence.json",
+          "claimId": "retatrutide-identity-ly3437943-001",
+          "coCitations": [
+            "clinicaltrials-retatrutide-nct04881760"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Article title and abstract",
+              "quoteChars": 55,
+              "quoteSha256": "9e38beb15abd221c55b7f45a1fd2fa695343f91714f8b560409b678445b14294"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/retatrutide.evidence.json",
+          "claimId": "retatrutide-phase2-obesity-studied-use-001",
+          "coCitations": [],
+          "locators": [
+            {
+              "pageOrSection": "Methods / abstract",
+              "quoteChars": 120,
+              "quoteSha256": "122715707bf4265770d198d47d082d09e3844cc8ab802459abba517005368b18"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/retatrutide.evidence.json",
+          "claimId": "retatrutide-investigational-boundary-001",
+          "coCitations": [
+            "clinicaltrials-retatrutide-nct04881760"
+          ],
+          "locators": []
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pmc-bpc157-review-2025",
+      "retiredClass": "peer-reviewed-review",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/bpc-157.evidence.json",
+          "title": "Multifunctionality and Possible Medical Application of the BPC 157 Peptide—Literature and Patent Review",
+          "publisher": "Pharmaceuticals / PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11859134/",
+          "doi": "10.3390/ph18020185",
+          "pmid": "40005999",
+          "publishedAt": "2025-02-01T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/bpc-157.evidence.json",
+          "claimId": "bpc157-preclinical-human-gap-001",
+          "coCitations": [
+            "pubmed-vasireddi-2025-orthosportsmed"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Review discussion",
+              "quoteChars": 148,
+              "quoteSha256": "89649f6cf3c60ba71c207ca9c1120e22fde6f19fa9197af6112ff40c9ac02803"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/bpc-157.evidence.json",
+          "claimId": "bpc157-misinformation-boundary-001",
+          "coCitations": [
+            "fda-bpc157-category2",
+            "statnews-bpc157-2026-02"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Review discussion of human evidence limits and accessibility",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pmc-enclomiphene-pkpd-2014",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study",
+          "publisher": "PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/",
+          "doi": null,
+          "pmid": null,
+          "publishedAt": null,
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "claimId": "enclomiphene-secondary-hypogonadism-studied-use-001",
+          "coCitations": [
+            "pmc-enclomiphene-secondary-hypogonadism-2016"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Methods",
+              "quoteChars": 52,
+              "quoteSha256": "5d78086a5d6aaaceda5a62269b7c214511f717b15eba5eceb10ffa7e271b0617"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "claimId": "enclomiphene-hormone-safety-boundary-001",
+          "coCitations": [
+            "pmc-enclomiphene-secondary-hypogonadism-2016"
+          ],
+          "locators": []
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pmc-enclomiphene-secondary-hypogonadism-2016",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "title": "Enclomiphene Citrate for the Treatment of Secondary Male Hypogonadism",
+          "publisher": "PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/",
+          "doi": null,
+          "pmid": null,
+          "publishedAt": null,
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "claimId": "enclomiphene-secondary-hypogonadism-studied-use-001",
+          "coCitations": [
+            "pmc-enclomiphene-pkpd-2014"
+          ],
+          "locators": []
+        },
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "claimId": "enclomiphene-regulatory-boundary-001",
+          "coCitations": [],
+          "locators": [
+            {
+              "pageOrSection": "Review of trials and development status",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/enclomiphene.evidence.json",
+          "claimId": "enclomiphene-hormone-safety-boundary-001",
+          "coCitations": [
+            "pmc-enclomiphene-pkpd-2014"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Trial table and safety context",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pmc-enobosarm-cancer-cachexia-2013",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/ostarine.evidence.json",
+          "title": "Effects of enobosarm on muscle wasting and physical function in patients with cancer: a double-blind, randomised controlled phase 2 trial",
+          "publisher": "Lancet Oncology / PubMed Central",
+          "url": "https://ncbi.nlm.nih.gov/pmc/articles/PMC4898053/",
+          "doi": "10.1016/S1470-2045(13)70055-X",
+          "pmid": "23499390",
+          "publishedAt": "2013-03-14T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/ostarine.evidence.json",
+          "claimId": "ostarine-enobosarm-studied-use-001",
+          "coCitations": [],
+          "locators": [
+            {
+              "pageOrSection": "Background / Methods",
+              "quoteChars": 109,
+              "quoteSha256": "480a592fc29d3cf6456f295c0a86e0a46f910ce6f8091d9ea30bb93856eb8caf"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pmc-ghk-skin-regeneration-2015",
+      "retiredClass": "peer-reviewed-review",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/ghk-cu.evidence.json",
+          "title": "GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration",
+          "publisher": "BioMed Research International / PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4508379/",
+          "doi": "10.1155/2015/648108",
+          "pmid": null,
+          "publishedAt": null,
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/ghk-cu.evidence.json",
+          "claimId": "ghk-cu-skin-regeneration-context-001",
+          "coCitations": [
+            "ctv-cuheal-trial"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Skin regeneration discussion",
+              "quoteChars": 68,
+              "quoteSha256": "e43b8b3df0c59e74722f62497494c6b78517c41bc2c2bc6ac965df95be3e0b69"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/ghk-cu.evidence.json",
+          "claimId": "ghk-cu-hype-boundary-001",
+          "coCitations": [
+            "orrick-fda-pcac-2026",
+            "pubchem-ghk-cu"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Review scope and evidence context",
+              "quoteChars": 0,
+              "quoteSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    },
+    {
+      "sourceId": "pubmed-spermidine-memory-pilot-2018",
+      "retiredClass": "peer-reviewed-paper",
+      "sourceOccurrences": [
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "title": "The effect of spermidine on memory performance in older adults at risk for dementia: A randomized controlled trial",
+          "publisher": "Cortex / PubMed",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30388439/",
+          "doi": "10.1016/j.cortex.2018.09.014",
+          "pmid": "30388439",
+          "publishedAt": "2018-09-01T00:00:00Z",
+          "accessedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "claimReferences": [
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "claimId": "spermidine-cognition-studied-use-001",
+          "coCitations": [
+            "jama-spermidine-smartage-2022"
+          ],
+          "locators": [
+            {
+              "pageOrSection": "Abstract",
+              "quoteChars": 120,
+              "quoteSha256": "51c0eff9b7379243b6fb01025785d70dad905a5fa0246cd7e51d8fb9d2dc9fff"
+            }
+          ]
+        },
+        {
+          "packetPath": "research/input/evidence/spermidine.evidence.json",
+          "claimId": "spermidine-longevity-hype-boundary-001",
+          "coCitations": [
+            "jama-spermidine-smartage-2022",
+            "pubchem-spermidine"
+          ],
+          "locators": []
+        }
+      ],
+      "rightsDisposition": "Not decided by class retirement; verify this source item separately",
+      "migrationStatus": "Per-item review map; active registry and packet provenance unchanged"
+    }
+  ]
+}

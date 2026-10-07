@@ -6,6 +6,12 @@ using Xunit;
 
 public class RelationshipPacketAuthorizerTests
 {
+    /// <summary>
+    /// Builds a registry in the shape source-registry.schema.json actually defines: the id under
+    /// <c>identity.sourceId</c> and the tier under <c>evidencePolicy.authorityTier</c>. The schema sets
+    /// <c>additionalProperties: false</c> on a source entry, so the flat shape this helper used to emit
+    /// (<c>sourceId</c>/<c>authorityTier</c> at the top level) is rejected outright by validation.
+    /// </summary>
     private static JsonNode BuildRegistry(params (string id, string tier)[] sources)
     {
         var arr = new JsonArray();
@@ -13,8 +19,15 @@ public class RelationshipPacketAuthorizerTests
         {
             arr.Add(new JsonObject
             {
-                ["sourceId"] = id,
-                ["authorityTier"] = tier,
+                ["identity"] = new JsonObject
+                {
+                    ["sourceId"] = id,
+                    ["aliases"] = new JsonArray(),
+                },
+                ["evidencePolicy"] = new JsonObject
+                {
+                    ["authorityTier"] = tier,
+                },
             });
         }
         return new JsonObject { ["sources"] = arr };

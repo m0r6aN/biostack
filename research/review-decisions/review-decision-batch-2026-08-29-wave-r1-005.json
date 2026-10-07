@@ -1,0 +1,582 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "wave-r1-2026-08-29-batch-005",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T15:36:24Z",
+    "notes": [
+      "Independent review wave R1 (15 approved-drug/supplement packets, run wf_725c2b6a-609): 5 approve-claims (tamoxifen, raloxifene, toremifene, lasofoxifene, chorionic gonadotropin), 10 request-changes with concrete fix instructions in the verdicts receipt.",
+      "Notable catches: setmelanotide April 2026 label revision added warnings the packet lacks + 46%-vs-45% LEPR responder figure error vs primary paper; oxytocin approved product is synthetic not recombinant; vitamin D3 USPSTF 2018 recommendation marked 'being updated' with Dec 2024 draft; bazedoxifene trial-N error.",
+      "Zero-blocker approve-claims (wave-005 promotion candidates): raloxifene, toremifene, lasofoxifene.",
+      "Issued under OPERATOR-DELEGATION-2026-08-28. Verdicts receipt alongside in receipts/."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "wave-r1-tamoxifen",
+      "compoundName": "Tamoxifen",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "tamoxifen-approved-indication-001",
+          "tamoxifen-warning-boxed-001",
+          "tamoxifen-contraindication-001",
+          "tamoxifen-mechanism-serm-001",
+          "tamoxifen-dose-context-001",
+          "tamoxifen-efficacy-nsabp-p1-001",
+          "tamoxifen-efficacy-atlas-extended-001",
+          "tamoxifen-evidence-gap-bodybuilding-pct-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "ATLAS trial claim (tamoxifen-efficacy-atlas-extended-001) still needs its exact percentages/rate-ratios reconciled against the primary Lancet 2013 full text (not just secondary summaries) before the specific numbers are presented publicly \u2014 direction is independently confirmed but point estimates vary by reporting-window across secondary sources.",
+          "The label-vs-JNCI numeric discrepancy on the NSABP P-1 claim (44% at 4.2-year median follow-up per label vs 49% at 69-month follow-up per JNCI, now independently favored by NCCN) should be explicitly reconciled/annotated in the claim text rather than left as two competing figures.",
+          "Structured identifiers (CAS, UNII, DrugBank, ChEMBL, RxNorm) remain unresolved per the packet's own ops.reviewReasons; these should be filled in from structured databases before public promotion.",
+          "ops.needsReview is still true and completeness is 'partial' per the packet's own metadata \u2014 a human sign-off step is still expected before promotion regardless of this review's findings."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): approve-claims.",
+        "All five fieldAuthorityRequired claims (approved-indication, boxed warning, contraindication, dose-context, and the NSABP P-1 efficacy claim) were independently confirmed against at least one source family materially different from those already cited in the packet (StatPearls, Drugs.com professional monograph, the live FDA-hosted Soltamox label PDF, and the NCCN clinical guideline).",
+        "No statements in the packet read as medical advice or use recommendations; the dose-context and PCT evidence-gap claims are explicitly and correctly hedged."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-raloxifene",
+      "compoundName": "Raloxifene",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "raloxifene-identity-identifiers-001",
+          "raloxifene-regulatory-approved-indications-001",
+          "raloxifene-warning-boxed-vte-stroke-001",
+          "raloxifene-mechanism-serm-001",
+          "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
+          "raloxifene-adverse-effect-vte-quantified-001",
+          "raloxifene-misinformation-bodybuilding-gyno-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): approve-claims.",
+        "All four fieldAuthorityRequired claims (approved indications, boxed warning, MORE-trial efficacy, MORE-trial VTE adverse effect) are independently confirmed against materially different source families (live FDA Drugs@FDA/label PDF, and two independent systematic reviews/meta-analyses for the trial-derived numbers).",
+        "Two confirmed-with-note items recommend adding pooled/systematic-review effect sizes alongside the single MORE-trial statistics already in the packet (breast cancer RR and VTE RR/OR), since pooled estimates are more moderate than the single-trial numbers currently quoted; this is a suggested enhancement, not a correction, since the existing figures are accurately attributed to the MORE trial specifically."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-clomiphene",
+      "compoundName": "Clomiphene",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "clomiphene-approved-indication-ovulatory-dysfunction-001",
+          "clomiphene-mechanism-serm-001",
+          "clomiphene-warning-ohss-visual-multiple-pregnancy-001",
+          "clomiphene-contraindications-001",
+          "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+          "clomiphene-adverse-effects-male-hypogonadism-001",
+          "clomiphene-evidence-gap-pct-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The OHSS/visual-disturbance warning claim (fieldAuthorityRequired=true) states the visual-disturbance/CRVO link as settled, but the only independent systematic review found treats it as a possible, not proven, association ('further trials are clearly needed') \u2014 soften the wording before publication.",
+          "The male-hypogonadism efficacy claim (fieldAuthorityRequired=true) omits an important durability caveat found in independent primary literature: testosterone gains from clomiphene are not shown to persist after discontinuation. Add this caveat given the claim's field-authority status.",
+          "The PCT evidence-gap claim's 'no controlled human trials' framing is already slightly stale versus a newly published 2026 comparative-outcomes PCT trial; update or explicitly address it before promotion.",
+          "Process concern: one reviewFlags entry contains packet-authored language that asserts its own review closure/authority-scope justification inline rather than routing findings through ops.reviewReasons/conflicts as the directive requires \u2014 this should be normalized to the standard reviewReasons format so future reviewers don't mistake in-band claims of completeness for actual independent verification."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "Identifiers gap flagged by the packet (CAS/UNII/RxNorm/DrugBank/ChEMBL unresolved) can be closed easily: PubChem CID 2800 (clomiphene free base) and CAS 50-41-9 / DrugBank salt entry DBSALT000490 for clomiphene citrate are both publicly available and were found in this review's searches \u2014 recommend populating externalIdentifiers before next publish.",
+        "No fieldAuthorityRequired claim is fully 'unresolved' \u2014 all four safety-critical/regulatory claims (approved-indication, OHSS/visual/multiple-pregnancy warning, contraindications, male-hypogonadism efficacy) received at least one independent-family confirmation, though two carry notes that should be incorporated as text edits, not just accepted as-is."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-toremifene",
+      "compoundName": "Toremifene",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "toremifene-regulatory-approved-indication-001",
+          "toremifene-contraindication-001",
+          "toremifene-warning-qt-prolongation-boxed-001",
+          "toremifene-mechanism-serm-001",
+          "toremifene-regulatory-crl-80mg-adt-001",
+          "toremifene-studied-use-adt-fracture-rct-001",
+          "toremifene-evidence-gap-pct-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): approve-claims.",
+        "Live re-check of openFDA drugsfda.json today reproduced the packet's product list exactly (NDA020497 Discontinued; ANDA208813 and ANDA212818 Prescription) \u2014 no drift found despite the reviewer prompt's note that FDA listings changed in April 2026; either the change doesn't affect toremifene or occurred before the packet's Aug 29 fetch.",
+        "Recommend a small wording tweak to claim toremifene-regulatory-approved-indication-001: clarify that the FDA-listed marketing status of the original brand NDA (020497) is 'Discontinued' and that current U.S. marketing of this approval is carried by the two generic ANDAs, rather than leaving 'remains an active approved NDA' potentially read as 'brand actively marketed.' This is a clarity nuance, not a factual error, so it does not by itself block promotion."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-ospemifene",
+      "compoundName": "Ospemifene",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "ospemifene-regulatory-approved-indication-001",
+          "ospemifene-regulatory-boxed-warning-001",
+          "ospemifene-contraindication-breastcancer-001",
+          "ospemifene-mechanism-serm-tissue-selective-001",
+          "ospemifene-efficacy-dyspareunia-vva-001",
+          "ospemifene-studied-use-bone-density-001",
+          "ospemifene-evidence-gap-vulvar-specific-001",
+          "ospemifene-misinformation-bone-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "fieldAuthorityRequired claim ospemifene-studied-use-bone-density-001 remains unresolved for genuine cross-family independent verification (only same-family controlled-human-study corroboration was found); per the Independent review rule this must stay review-gated -- do not promote with the bone-density claim framed as anything beyond 'exploratory, single-study, review-gated'.",
+          "The evidence-gap-vulvar-specific-001 claim and its linked conflict (ospemifene-conflict-vulvar-evidence-001) should be updated to cite the 2019 Duchesnay-affiliated vulvar-vestibular-photography RCT (Menopause 2019) before promotion, so the packet doesn't understate the state of vulvar-specific evidence.",
+          "Minor housekeeping: ops.reviewReasons states RxNorm was not resolved from a structured-database fetch; an independent RxNav/NLM lookup this session returned RxCUI 1370971 for ospemifene -- this gap is trivially closeable and should be updated rather than left as an open reviewReason."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "All three regulatory/safety-critical fieldAuthorityRequired claims tied to the FDA/DailyMed label (approved indication, boxed warning, contraindications) were independently re-verified against a LIVE DailyMed re-fetch performed today (2026-08-29, showing label v4 dated Feb 14 2025, product still actively marketed) plus a materially different source family (drugs.com professional/consumer reference) -- all confirmed accurate and current.",
+        "The efficacy claim's reviewFlag about primary RCT abstracts being blocked by bot-verification was successfully resolved this session via an alternate open-access mirror (Dove Medical Press) of the pivotal phase 3 trial, which independently corroborates the systematic review's conclusions."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-bazedoxifene",
+      "compoundName": "Bazedoxifene",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "bazedoxifene-regulatory-approved-product-001",
+          "bazedoxifene-warning-boxed-001",
+          "bazedoxifene-contraindication-001",
+          "bazedoxifene-mechanism-serm-001",
+          "bazedoxifene-efficacy-vertebral-fracture-001",
+          "bazedoxifene-adverse-effect-vte-001",
+          "bazedoxifene-evidence-gap-gray-market-serm-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Efficacy claim bazedoxifene-efficacy-vertebral-fracture-001 states an approximate trial population ('~1583 subjects') that does not match the actual pivotal 3-year fracture trial's intent-to-treat population (6847, confirmed independently via the Silverman et al. 2008 JBMR primary source) \u2014 this conflates a smaller 2-year BMD sub-study with the pivotal fracture trial and must be corrected before publication.",
+          "Primary pivotal trial (Silverman et al. 2008) was still not independently verified by the original authoring pass due to CAPTCHA blocks; this review closed that gap via an alternate route (Oxford Academic abstract page), but the packet's own sourceRefs/extractedEvidence should be updated to cite/quote it directly rather than relying solely on secondary reviews.",
+          "RxNorm, UNII, and ChEMBL external identifiers remain unresolved per ops.reviewReasons \u2014 should be filled before promotion for catalog completeness.",
+          "Nonvertebral-fracture FRAX-subgroup finding (50% RRR, n=1772, p=0.02) is now independently confirmed but still absent as a sourced claim in the packet \u2014 should be added with proper sourceRefs or explicitly left out with reasoning, not left as a bare reviewFlag."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "All five fieldAuthorityRequired claims (regulatory approval, boxed warning, contraindications, efficacy, VTE adverse effect) were checked against at least one materially different source family and none were unresolved or contradicted; only the efficacy claim needs a factual correction (population N) rather than being wrong on substance.",
+        "No instances of medical advice, use-recommendation language, or efficacy inflation were found; the packet consistently hedges dose/use text as 'not a use recommendation' and correctly declines to generalize postmenopausal trial data to the gray-market PCT/bodybuilding use case."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-lasofoxifene",
+      "compoundName": "Lasofoxifene",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "lasofoxifene-regulatory-no-current-approval-001",
+          "lasofoxifene-mechanism-serm-001",
+          "lasofoxifene-efficacy-elaine1-esr1-mbc-001",
+          "lasofoxifene-studied-use-development-status-001",
+          "lasofoxifene-evidence-gap-approval-status-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): approve-claims.",
+        "Both fieldAuthorityRequired=true claims (regulatory-no-current-approval-001 and evidence-gap-approval-status-001) were independently confirmed today against a live DailyMed search (0 results) and an independent primary company disclosure (Pfizer's own CRL press release), satisfying the directive's cross-source verification rule for safety-critical/regulatory claims.",
+        "No needs-adjustment findings: statements throughout are appropriately hedged (phase II, non-significant, investigational-only, 'not a use recommendation') and I found no medical-advice language or efficacy inflation beyond what the cited quotes support."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-somatropin",
+      "compoundName": "Somatropin",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "somatropin-approved-indications-001",
+          "somatropin-contraindications-001",
+          "somatropin-boxed-risk-warnings-001",
+          "somatropin-dose-context-adult-ghd-001",
+          "somatropin-regulatory-illegal-marketing-001",
+          "somatropin-regulatory-mortality-signal-inconclusive-001",
+          "somatropin-mechanism-001",
+          "somatropin-efficacy-athletic-performance-001",
+          "somatropin-evidence-gap-antiaging-bodybuilding-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The SAGhE mortality-signal claim and conflict record are anchored only to a 2011-2012 FDA communication; a materially relevant 2020 SAGhE cohort follow-up study (Lancet Diabetes & Endocrinology, PMID 32707116) exists and was not incorporated. Before public promotion, add this update: it is reassuring for low-risk GHD/ISS patients but flags a residual circulatory/hematological mortality signal across all risk groups that the current packet does not mention. This is a safety-critical, fieldAuthorityRequired claim and should not go out with stale sourcing when a more current, more granular independent source is readily available.",
+          "The specific 42% vs 19% acute-critical-illness mortality figure and the exact second-neoplasm/meningioma wording in the boxed-warning claim remain independently unverified (only the packet's own label re-read supports the exact figures); confirm verbatim against the current label PDF before publication, per the packet's own reviewFlag.",
+          "Confirm and annotate that Prader-Willi syndrome as an approved indication is specific to Genotropin's own FDA label rather than a somatropin-class-wide indication, since independent general drug references (Mayo Clinic) frame PWS only as a contraindication subgroup, not an indication -- to avoid the packet reading as if PWS is uniformly an approved use across all somatropin products."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "All five fieldAuthorityRequired claims are confirmed or confirmed-with-note against genuinely independent source families (structured drug databases Mayo Clinic/Drugs.com/NCBI Bookshelf, and paper-level primary literature JAMA 2005 and Lancet Diabetes & Endocrinology 2020) -- none came back needs-adjustment or unresolved, so the packet clears the bar for approve-claims on the core rule, contingent on closing the promotion blockers above.",
+        "The two non-fieldAuthorityRequired efficacy/evidence-gap claims (athletic performance, anti-aging evidence gap) were independently corroborated by a later, separate controlled human trial (2010 recreational-athletes RCT) and by the 2005 JAMA legal/efficacy paper -- these strengthen rather than undermine the packet's cautious framing."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-oxytocin",
+      "compoundName": "Oxytocin",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "oxytocin-regulatory-approved-indications-001",
+          "oxytocin-safety-obstetric-warnings-001",
+          "oxytocin-mechanism-identity-001",
+          "oxytocin-efficacy-intranasal-asd-negative-rct-001",
+          "oxytocin-safety-intranasal-adverse-events-001",
+          "oxytocin-misinformation-bonding-marketing-001",
+          "oxytocin-evidence-gap-social-behavioral-use-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Identity claim (oxytocin-mechanism-identity-001) inaccurately characterizes the approved injectable as a 'recombinant' hormone; independent FDA/DailyMed labels uniformly describe it as 'synthetic.' Correct this before promotion since it is a factual mischaracterization of manufacturing method, not a sourcing gap.",
+          "The efficacy claim and evidence-gap claim should be updated to cite the 2024 Frontiers dose-response meta-analysis (not just reference 'smaller positive proof-of-concept trials' hypothetically) so the packet doesn't read as a flatter negative than the current independent literature supports.",
+          "ops.reviewReasons item on FDA compounding/bulk-substance status should be updated to reflect that this was independently checked this review pass (oxytocin is not on the FDA 503A safety-risk list) rather than left as an unresolved open question."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "Both fieldAuthorityRequired (safety-critical) claims -- approved indications and obstetric warnings -- were independently confirmed against a materially different source family (ACOG Practice Bulletin 107 and StatPearls/NCBI Bookshelf) and hold up well; these are the packet's strongest, most defensible claims.",
+        "The conflict record (oxytocin-conflict-marketing-vs-rct-001) remains appropriately human-review-gated; independent sources sharpen but do not fully resolve the marketing-vs-evidence tension, so 'needs-human-review' is the honest status to keep, now with better citations available (2024 Frontiers meta-analysis) to hand to the reviewer."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-creatine",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "creatine-regulatory-status-001",
+          "creatine-mechanism-atp-phosphocreatine-001",
+          "creatine-efficacy-highintensity-strength-lbm-001",
+          "creatine-dose-context-loading-maintenance-001",
+          "creatine-safety-common-adverse-effects-001",
+          "creatine-monitoring-renal-function-001",
+          "creatine-misinformation-hairloss-dht-001",
+          "creatine-evidence-gap-endurance-broad-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Renal safety conflict (creatine-renal-safety-population-scope-001) remains legitimately unresolved for non-dialysis CKD/pre-existing renal impairment populations -- independent review confirms zero trials exist in that subgroup, so this fieldAuthorityRequired safety-critical claim cannot be marked resolved and must stay human-review-gated with the scope caveat intact.",
+          "creatine-misinformation-hairloss-dht-001 rests on a single industry-adjacent RCT with methodological limitations (no scalp-level DHT measurement, no genetic-predisposition screening) surfaced only by this independent review -- the claim/reviewFlags should be updated to reflect these caveats before the packet is treated as final, though the claim itself is not fieldAuthorityRequired.",
+          "creatine-safety-common-adverse-effects-001's reviewFlag calling the adverse-effect evidence 'largely anecdotal, not systematically quantified' is now factually stale given an independent 2025 systematic pharmacovigilance analysis; the packet should be updated to cite/reflect that stronger quantified evidence before promotion, since as-written it understates the strength of available safety evidence.",
+          "No independent verification was performed for the externalIdentifiers gap already flagged in ops.reviewReasons (UNII/ChEMBL unresolved); this pre-existing data gap remains open and unaddressed."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "All fieldAuthorityRequired claims (regulatory-status, dose-context, adverse-effects, renal-monitoring) were checked first per instructions; regulatory-status, dose-context, and adverse-effects claims are confirmed or confirmed-with-note and hold up; renal-monitoring is confirmed-with-note but its associated conflict is correctly and permanently review-gated, not resolvable, because no independent source (old or new) covers non-dialysis CKD patients.",
+        "No fabrication, no medical advice, and no efficacy inflation beyond quotes was found in the packet's own statement language; the 'evidence-gap' and 'misinformation-claim' entries are appropriately hedged and match the required misinformation-handling rule."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-vitamin-d3",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "vitamind3-regulatory-supplement-status-001",
+          "vitamind3-mechanism-calcium-bone-001",
+          "vitamind3-dose-context-rda-ul-001",
+          "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+          "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+          "vitamind3-evidence-gap-immune-covid-marketing-001",
+          "vitamind3-adverse-effect-hypercalcemia-toxicity-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The USPSTF fracture/falls efficacy claim (vitamind3-efficacy-fracture-falls-uspstf-negative-001) cites the 2018 recommendation as current without disclosing that USPSTF's own site marks this topic 'being updated' and that a December 2024 draft recommendation broadens the against-recommendation to include men age 60+ and adds a kidney-stone harm signal \u2014 this fieldAuthorityRequired claim must be revised before publication, not merely re-affirmed.",
+          "General packet-level gate: ops.needsReview is true and this is an expansion-batch packet requiring human sign-off per the repo's own review process before promotion, independent of the specific claim finding above."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "Regulatory claim (DailyMed label) re-verified live and is current/unchanged; FDA's April 2026 dietary-supplement modernization discussion is exploratory only and does not currently affect single-ingredient vitamin D3 classification.",
+        "Mechanism and RDA/UL claims independently corroborated via Endocrine Society guideline and Harvard Nutrition Source respectively, with only minor traceability/provenance notes."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-glutathione",
+      "compoundName": "Glutathione",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "glutathione-identity-mechanism-001",
+          "glutathione-regulatory-compounding-endotoxin-001",
+          "glutathione-adverse-effect-endotoxin-symptoms-001",
+          "glutathione-regulatory-injectable-skin-lightening-001",
+          "glutathione-regulatory-otc-unapproved-001",
+          "glutathione-efficacy-oral-whitening-rct-001",
+          "glutathione-dose-context-oral-bioavailability-001",
+          "glutathione-evidence-gap-iv-detox-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "glutathione-dose-context-oral-bioavailability-001 is a fieldAuthorityRequired (safety-critical) claim that remains unresolved: no independent A1/A2 regulator-tier source was found for the micellar-vs-standard oral glutathione bioavailability comparison, despite two independent research passes. Per the Independent Review Rule this must stay human-review-gated and cannot be promoted as confirmed.",
+          "glutathione-regulatory-compounding-endotoxin-001 needs updating before promotion: independent research found that FDA-documented endotoxin contamination in compounded glutathione injectables has recurred in 2026 (Optimal Balance Pharmacy and Victory Medical Center Pharmacy recalls, Aug 2026) \u2014 the packet currently presents this as a single 2019 event and its own reviewFlag asking to check for updates was not actually resolved with a live-source check this cycle."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "Mechanism, endotoxin-symptom, and both regulatory skin-lightening/detox-gap claims were independently confirmed (and in two cases strengthened) by materially different source families: CDC MMWR, US FDA (separate from the cited PH-FDA), an independent systematic review (Dilokthornsakul 2019), and standard peer-reviewed biochemistry literature.",
+        "No medical-advice language or efficacy inflation beyond quoted evidence was found; dose figures are consistently and correctly labeled 'not a use recommendation.'"
+      ]
+    },
+    {
+      "decisionId": "wave-r1-chorionic-gonadotropin",
+      "compoundName": "Chorionic gonadotropin (hCG)",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "hcg-regulatory-approved-indications-001",
+          "hcg-regulatory-weight-loss-not-effective-001",
+          "hcg-mechanism-lh-receptor-agonist-001",
+          "hcg-efficacy-weight-loss-negative-meta-001",
+          "hcg-off-label-pct-spermatogenesis-001",
+          "hcg-adverse-effects-fertility-use-001",
+          "hcg-misinformation-otc-weight-loss-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The packet's own ops object still marks needsReview:true and completeness:'partial' -- externalIdentifiers.pubchem and casNumber remain unresolved, and the DrugBank DB09126 pharmacodynamics section is still login-gated and unquoted; these should be closed out (or the mechanism claim's sourceRefs corrected to the independently-confirmed primary literature found in this review) before public promotion.",
+          "The conflict record (hcg-conflict-pct-marketing-vs-evidence-001) is still resolutionStatus:'needs-human-review' and should remain so through promotion -- do not auto-resolve it based on this review.",
+          "hcg-adverse-effects-fertility-use-001 (fieldAuthorityRequired) has independent confirmation only from a second FDA-family document (accessdata.fda.gov label), not yet from a professional-society guideline naming hCG explicitly in OHSS causation -- worth one more independent-source attempt (ASRM/PMID 38099867 full text) before treating that leg as fully closed, though this does not change the underlying safety facts.",
+          "hcg-regulatory-approved-indications-001 would benefit from an added note that current AUA (2025) guidance disfavors hormonal therapy generally for cryptorchidism on efficacy grounds, so the FDA-approval statement isn't read as an implicit current-best-practice endorsement."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): approve-claims.",
+        "No claim in this packet reads as medical advice or a use recommendation; dosing text is explicitly framed as label/trial context per the packet's own reviewFlags, and this was independently verified against the live FDA label -- appropriate.",
+        "No efficacy inflation beyond what the quotes support was found; the negative weight-loss meta-analysis and the small uncontrolled spermatogenesis cohort are both appropriately hedged and were not overstated."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-mecasermin",
+      "compoundName": "Mecasermin",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "mecasermin-regulatory-approved-indication-001",
+          "mecasermin-warning-hypoglycemia-001",
+          "mecasermin-contraindication-001",
+          "mecasermin-dose-context-label-001",
+          "mecasermin-mechanism-igf1-receptor-001",
+          "mecasermin-efficacy-growth-velocity-001",
+          "mecasermin-adverse-effect-profile-001",
+          "mecasermin-misinformation-bodybuilding-marketing-001",
+          "mecasermin-evidence-gap-adult-offlabel-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "ops.reviewReasons item on CAS number/ChEMBL/RxNorm identifiers remains unresolved: independent WebFetch attempts against PubChem and DrugBank were blocked by JavaScript-gated rendering, so the CAS 68562-41-4 figure circulating on secondary chemistry sites (chemicalbook, chemsrc, targetmol) still could not be confirmed against a primary structured database in this review pass. This is a data-completeness gap, not a factual error, but per the Independent review rule it must stay review-gated rather than being silently accepted -- carry it forward with the gap documented, or have a reviewer with a JS-capable browser confirm directly on pubchem.ncbi.nlm.nih.gov/compound/400 or go.drugbank.com/drugs/DB01277.",
+          "Efficacy and adverse-effect percentage figures (mecasermin-efficacy-growth-velocity-001, mecasermin-adverse-effect-profile-001) are traceable to a single reviewed trial cohort; an independent registry study corroborates direction/magnitude but not the exact percentages. Packet should add a note that these are single-cohort statistics, not a pooled estimate, before promotion.",
+          "Contraindication claim omits the 'premature infants or neonates' contraindication/warning population that an independent source (NCBI Bookshelf) lists alongside the three stated contraindications; should be added for completeness before promotion, though this is a minor omission not a misstatement."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "All four fieldAuthorityRequired regulatory/safety claims (approved indication, hypoglycemia warning, contraindications, dosing) were checked against the LIVE 2025 FDA label (021839s033lbl.pdf) as instructed and found unchanged/current as of Aug 2026 -- no April 2026 listing drift detected for this compound.",
+        "Mechanism claim independently confirmed via GeneCards/IGF1R (structured-database family), materially different from the cited systematic-review source."
+      ]
+    },
+    {
+      "decisionId": "wave-r1-setmelanotide",
+      "compoundName": "Setmelanotide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T15:36:24Z",
+      "scope": {
+        "claimIds": [
+          "setmelanotide-regulatory-approved-indications-001",
+          "setmelanotide-mechanism-mc4r-agonist-001",
+          "setmelanotide-efficacy-pomc-lepr-phase3-001",
+          "setmelanotide-safety-warnings-001",
+          "setmelanotide-adverse-effect-common-001",
+          "setmelanotide-evidence-gap-research-chemical-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r1"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "setmelanotide-safety-warnings-001 (fieldAuthorityRequired, safety-critical) omits two safety-critical warnings that the current live label (DailyMed, revised 4/2026) attaches specifically to the acquired-hypothalamic-obesity population the packet's own indications claim already covers: Acute Adrenal Insufficiency (label Section 5.5, 5% vs 0% placebo) and sodium imbalance/hyponatremia-hypernatremia in aHO patients with AVP deficiency (Section 5.6, 6% vs 2% placebo). Must be added before publication.",
+          "setmelanotide-efficacy-pomc-lepr-phase3-001 (fieldAuthorityRequired) states a 46% LEPR responder rate; the primary peer-reviewed paper's own abstract (PMID 33137293, via Europe PMC) states 45% (5 of 11). Correct the figure or explicitly reconcile the FDA press-release wording against the primary paper before promotion."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_725c2b6a-609): request-changes.",
+        "Regulatory approved-indications claim (001) was independently re-verified against the live DailyMed label (revision 4/2026, the exact update window flagged) and a Pediatric Endocrine Society summary; it is accurate and current as written.",
+        "Mechanism claim (002) independently confirmed via StatPearls/NCBI Bookshelf, a source family distinct from the PMC review and PubChem entry already cited."
+      ]
+    }
+  ]
+}

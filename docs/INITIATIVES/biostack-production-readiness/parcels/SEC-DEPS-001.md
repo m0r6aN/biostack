@@ -78,3 +78,4 @@ Stop if remediation requires a Next.js downgrade, forced audit fix, broad lockfi
 
 ## Closeout
 The security parcel is complete. After integrating KEO-64 repair `44eac22`, candidate code state `fb0ed84` passed a clean install, the full 900-test frontend suite, the production build, and the zero-vulnerability production audit with PostCSS 8.5.10.
+The security parcel is complete. Final integrated production-build acceptance remains dependent on integrating the KEO-64 repair.

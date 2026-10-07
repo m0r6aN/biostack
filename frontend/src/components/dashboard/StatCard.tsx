@@ -2,6 +2,8 @@ interface StatCardProps {
   title: string;
   value: string | number;
   unit?: string;
+  /** Accessible name for the value + unit, e.g. "Protocol score 72 out of 100". Falls back to the visible text. */
+  ariaLabel?: string;
   icon: string;
   trend?: {
     value: number;
@@ -14,6 +16,7 @@ export function StatCard({
   title,
   value,
   unit,
+  ariaLabel,
   icon,
   trend,
   color = 'emerald',
@@ -47,9 +50,12 @@ export function StatCard({
       <div className="flex items-start justify-between">
         <div className="flex-1 relative">
           <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">{title}</p>
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-2" aria-label={ariaLabel}>
             <span className="text-3xl font-semibold text-white">{value}</span>
-            {unit && <span className="text-sm text-white/40 ml-1">{unit}</span>}
+            {/* unit text (e.g. "/ 100") already carries its own leading space,
+                matching StackScoreCard's rendering of the same score suffix;
+                no extra margin here or the gap doubles up. */}
+            {unit && <span className="text-sm text-white/40">{unit}</span>}
           </div>
           {trend && (
             <p className={`text-xs mt-2 ${

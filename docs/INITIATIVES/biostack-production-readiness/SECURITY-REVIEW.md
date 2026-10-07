@@ -5,6 +5,9 @@
 **HOLD / not release-ready** for hosted remediation candidate `c96bc3b` (verified application/dependency state `fb0ed84`; review baseline `2bdb7ba`).
 
 The candidate remediates and integrates SR-01, SR-02, SR-03, SR-05, SR-06, SR-08, and SR-09. On immutable SHA `c96bc3b`, hosted backend/frontend validation, production dependency audit, production frontend build, offline verification, and current-tree Gitleaks all pass. Release remains blocked by historical secret rotation and full-history closeout (SR-04), deployed proxy identity verification (SR-07), live-environment evidence, and the broader release gates. No production secret value is reproduced in this report.
+**HOLD / not release-ready** for commit `2bdb7ba`.
+
+The current tree fails closed for production application secrets and has useful authentication, authorization, webhook-signature, ownership, and deployment-identity controls. Release remains blocked by four high-severity findings, incomplete historical secret closeout, and several medium hardening items. No production secret value is reproduced in this report.
 
 ## Scope and Method
 
@@ -52,6 +55,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **High**
 - Status: **remediated and integrated locally**
+- Status: **remediation implemented in isolated parcel; integration pending**
 - Evidence: `backend/src/BioStack.Api/Endpoints/ReceiptEndpoints.cs`, `backend/src/BioStack.Infrastructure/Governance/SpineRepository.cs`, and authenticated frontend receipt consumers.
 - Impact: unauthenticated callers can retrieve receipt metadata by URI or enumerate by subject/actor, exposing tenant, actor, subject, evidence-reference, and integrity metadata across users.
 - Required remediation: require authentication; scope non-admin reads to `ReceiptActor.User(currentUserId)`; return `404` for direct cross-user lookup; retain explicit admin investigation access.
@@ -61,6 +65,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **High**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: `backend/src/BioStack.Application/Services/ProtocolIngestionService.cs` (`LinkProtocolExtractor`).
 - Impact: an authenticated caller can submit an HTTPS URL that resolves or redirects to private/loopback/link-local infrastructure. The default client follows redirects and buffers the full response without a response-size limit, enabling internal reachability probes and memory/resource exhaustion.
 - Required remediation: resolve and reject private, loopback, link-local, multicast, and metadata-service targets on every redirect; use a dedicated client with redirect control; stream with a strict byte ceiling and content/time limits; add DNS rebinding and redirect-chain tests.
@@ -69,6 +74,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **High**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: `backend/src/BioStack.Api/Endpoints/ProviderAccessEndpoints.cs`.
 - Impact: an anonymous caller who knows an email address can learn request state/identifiers and, for a closed request, overwrite submitted attributes, clear ownership, and reopen the workflow. IP rate limiting reduces volume but does not establish authority.
 - Required remediation: return a uniform non-enumerating acknowledgement; require a verified ownership challenge before returning or mutating an existing request; make reopen an authenticated/admin or token-bound transition; preserve immutable audit history.
@@ -86,6 +92,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **Medium**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: `backend/src/BioStack.Api/Endpoints/AuthEndpoints.cs`.
 - Impact: concurrent verification requests can observe the same unconsumed challenge before persistence and each issue a valid session.
 - Required remediation: consume with a conditional database update/transaction and require exactly one affected row before issuing a session; add a concurrent replay test.
@@ -94,6 +101,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **Medium**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: `npm audit --omit=dev --audit-level=moderate` reports GHSA-qx2v-qp2m-jg93 through the Next.js dependency graph; the lockfile contains an affected nested PostCSS version.
 - Impact: crafted CSS input in an affected processing path can trigger incorrect parsing behavior. Practical exposure depends on whether untrusted CSS is processed at runtime/build time.
 - Required remediation: update the supported Next.js dependency graph or apply a reviewed package override to PostCSS `>=8.5.10`, then rebuild and rerun focused UI tests/audit.
@@ -110,6 +118,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **Medium**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: consent acceptance/gate services accept and persist the requested version, while authorization verifies acceptance exists rather than matching the server-required consent version.
 - Impact: a client may create evidence for a version that was not the currently required disclosure.
 - Required remediation: select the required consent document/version server-side, bind acceptance to its immutable hash, and require that version/hash at the gate.
@@ -118,6 +127,7 @@ This was a defensive source/configuration review with focused automated tests an
 
 - Severity: **Medium**
 - Status: **remediated and integrated locally**
+- Status: **open**
 - Evidence: backend Dockerfile does not declare a non-root runtime user.
 - Impact: a successful process compromise has unnecessary container privileges.
 - Required remediation: create/use an unprivileged runtime user, make only required paths writable, retain a read-only filesystem where possible, and verify health/startup behavior.
@@ -175,6 +185,10 @@ This was a defensive source/configuration review with focused automated tests an
 | Hosted candidate validation | Run `29283101748` passed on `c96bc3b`; backend, install, audit, frontend tests, and production build passed; Azure/image/deploy steps skipped |
 | Hosted offline verification | Run `29283101730` passed on `c96bc3b` |
 | Hosted current-tree secret scan | Run `29283101738` passed on `c96bc3b` after a narrow prose/generated-artifact allowlist |
+| Focused auth, billing, provider-access, ownership, and consent security tests | 29 passed; 4 build warnings |
+| `.NET` vulnerable package audit with transitive dependencies | No vulnerable packages reported across solution projects |
+| Frontend production dependency audit | 2 moderate findings in one PostCSS advisory chain |
+| Current-tree secret scan | One documented phrase false positive; no confirmed current secret value |
 | Pre-remediation tree secret scan | One confirmed callback secret plus the documented phrase false positive |
 | Full-history secret scan | Timed out; unverified |
 
@@ -195,6 +209,11 @@ This was a defensive source/configuration review with focused automated tests an
 - SG3 input/egress safety: **local remediation passed**; hosted/live evidence remains required.
 - SG4 secrets: **blocked** by SR-04 and incomplete full-history scan.
 - SG5 dependency/container hardening: **local remediation passed**; hosted image/workflow evidence remains required.
+- SG1 authentication/session: **blocked** by SR-05.
+- SG2 authorization/ownership: **blocked** until SEC-RECEIPT-001 integrates and SR-03 closes.
+- SG3 input/egress safety: **blocked** by SR-02.
+- SG4 secrets: **blocked** by SR-04 and incomplete full-history scan.
+- SG5 dependency/container hardening: **blocked** by SR-06 and SR-09.
 - SG6 operational controls: **blocked pending** SR-07 deployed-path verification.
 - SG7 evidence/closeout: **blocked** until remediation commits, hosted scans, rotation evidence, and retests are attached.
 

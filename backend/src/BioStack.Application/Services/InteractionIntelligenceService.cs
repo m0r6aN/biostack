@@ -27,11 +27,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
     private readonly ICompoundInteractionHintRepository _hintRepository;
     private readonly ICompoundGraphStore? _graphStore;
 
-    // Cache of the active graph artifact hash for the lifetime of this (scoped) service so pairwise
-    // graph lookups don't re-query the active artifact for every pair. Null until first resolved;
-    // _graphHashResolved guards the "no active graph" case from being re-checked.
-    private string? _activeGraphHash;
-    private bool _graphHashResolved;
+    // Cache the active artifact for the lifetime of this scoped service so graph eligibility and
+    // provenance are evaluated from the same artifact for every pair in one response.
+    private CompoundGraphArtifact? _activeGraphArtifact;
+    private bool _graphArtifactResolved;
 
     public InteractionIntelligenceService(
         IKnowledgeSource knowledgeSource,
@@ -47,22 +46,42 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         IEnumerable<string> compoundNames,
         CancellationToken cancellationToken = default)
     {
+        var entries = await ResolveEntriesAsync(compoundNames, cancellationToken);
+        return await EvaluateAsync(entries, cancellationToken);
+    }
+
+    public async Task<InteractionIntelligenceResponse> EvaluatePublicByNamesAsync(
+        IEnumerable<string> compoundNames,
+        CancellationToken cancellationToken = default)
+    {
+        var entries = await ResolveEntriesAsync(compoundNames, cancellationToken);
+
+        // The unauthenticated surface is evidence-only. It must not calculate or
+        // return individualized remove/swap scenarios.
+        return await EvaluateAsync(entries, includeScenarios: false, cancellationToken);
+    }
+
+    private async Task<List<KnowledgeEntry>> ResolveEntriesAsync(
+        IEnumerable<string> compoundNames,
+        CancellationToken cancellationToken)
+    {
         var names = compoundNames
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
 
         var entries = new List<KnowledgeEntry>();
+        var canonicalNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var name in names)
         {
             var entry = await _knowledgeSource.GetCompoundAsync(name, cancellationToken);
-            if (entry is not null)
+            if (entry is not null && canonicalNames.Add(entry.CanonicalName))
             {
                 entries.Add(entry);
             }
         }
 
-        return await EvaluateAsync(entries, cancellationToken);
+        return entries;
     }
 
     public async Task<InteractionIntelligenceResponse> EvaluateAsync(
@@ -143,6 +162,18 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .OrderBy(pathway => pathway, StringComparer.OrdinalIgnoreCase)
             .ToList();
 
+        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
+        {
+            return new InteractionResultResponse(
+                compoundA.CanonicalName,
+                compoundB.CanonicalName,
+                InteractionType.Interfering,
+                0.72d,
+                sharedPathways,
+                "Avoid-with guidance directly links these compounds.",
+                HintBacked: false);
+        }
+
         // Lane C: the reviewed compound graph is the preferred truth source. If it has an edge for
         // this pair, use it (graph-backed) instead of re-deriving from KnowledgeEntry string fields.
         var graphResult = await TryEvaluateFromGraphAsync(compoundA, compoundB, sharedPathways, cancellationToken);
@@ -162,18 +193,6 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 sharedPathways,
                 string.IsNullOrWhiteSpace(hint.Notes) ? "Known interaction pattern" : hint.Notes,
                 HintBacked: true);
-        }
-
-        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
-        {
-            return new InteractionResultResponse(
-                compoundA.CanonicalName,
-                compoundB.CanonicalName,
-                InteractionType.Interfering,
-                0.72d,
-                sharedPathways,
-                "Avoid-with guidance directly links these compounds.",
-                HintBacked: false);
         }
 
         if (HasNamedInteraction(compoundA.DrugInteractions, compoundB) || HasNamedInteraction(compoundB.DrugInteractions, compoundA))
@@ -219,10 +238,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             return new InteractionResultResponse(
                 compoundA.CanonicalName,
                 compoundB.CanonicalName,
-                InteractionType.Synergistic,
-                0.59d,
+                InteractionType.Unknown,
+                0.30d,
                 sharedPathways,
-                "Compound metadata suggests a complementary pairing.",
+                "Source data reports this pairing, but does not establish compatibility or safety.",
                 HintBacked: false);
         }
 
@@ -243,10 +262,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         return new InteractionResultResponse(
             compoundA.CanonicalName,
             compoundB.CanonicalName,
-            InteractionType.Neutral,
+            InteractionType.Unknown,
             0.30d,
             sharedPathways,
-            "No significant overlap detected from the current rule set.",
+            "The current rule set returned no interaction finding; compatibility and safety remain unknown.",
             HintBacked: false);
     }
 
@@ -261,14 +280,23 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             return null;
         }
 
-        var edge = await _graphStore.FindRelationshipAsync(
-            compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
-        if (edge is null)
+        var artifact = await GetActiveGraphArtifactAsync(cancellationToken);
+        if (artifact is null
+            || !artifact.IsActive
+            || !string.Equals(artifact.ReviewState, "reviewed", StringComparison.Ordinal))
         {
             return null;
         }
 
-        var graphHash = await GetActiveGraphHashAsync(cancellationToken);
+        var edge = await _graphStore.FindRelationshipAsync(
+            compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
+        if (edge is null
+            || edge.GraphArtifactId != artifact.Id
+            || edge.NeedsReview
+            || !string.Equals(edge.ReviewState, "reviewed", StringComparison.Ordinal))
+        {
+            return null;
+        }
 
         return new InteractionResultResponse(
             compoundA.CanonicalName,
@@ -281,24 +309,23 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 : edge.Reason!,
             HintBacked: false,
             Source: IntelligenceSource.Graph,
-            GraphArtifactHash: graphHash);
+            GraphArtifactHash: artifact.ArtifactHash);
     }
 
-    private async Task<string?> GetActiveGraphHashAsync(CancellationToken cancellationToken)
+    private async Task<CompoundGraphArtifact?> GetActiveGraphArtifactAsync(CancellationToken cancellationToken)
     {
-        if (_graphHashResolved)
+        if (_graphArtifactResolved)
         {
-            return _activeGraphHash;
+            return _activeGraphArtifact;
         }
 
         if (_graphStore is not null)
         {
-            var artifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
-            _activeGraphHash = artifact?.ArtifactHash;
+            _activeGraphArtifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
         }
 
-        _graphHashResolved = true;
-        return _activeGraphHash;
+        _graphArtifactResolved = true;
+        return _activeGraphArtifact;
     }
 
     private static InteractionType MapRelationshipTypeToInteraction(string relationshipType)
@@ -306,7 +333,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         return relationshipType switch
         {
             GraphRelationshipType.SynergizesWith => InteractionType.Synergistic,
-            GraphRelationshipType.PairsWellWith => InteractionType.Synergistic,
+            GraphRelationshipType.PairsWellWith => InteractionType.Unknown,
             GraphRelationshipType.RedundantWith => InteractionType.Redundant,
             GraphRelationshipType.ConflictsWith => InteractionType.Interfering,
             GraphRelationshipType.AvoidWith => InteractionType.Interfering,
@@ -325,7 +352,8 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 
         // Numeric confidence (e.g. "0.82") is preserved as-is when parseable.
         if (double.TryParse(confidence, System.Globalization.NumberStyles.Float,
-                System.Globalization.CultureInfo.InvariantCulture, out var numeric))
+                System.Globalization.CultureInfo.InvariantCulture, out var numeric)
+            && double.IsFinite(numeric))
         {
             return Math.Round(Math.Clamp(numeric, 0d, 1d), 2);
         }
@@ -344,14 +372,18 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
     {
         return candidates.Any(candidate =>
             string.Equals(candidate.Trim(), target.CanonicalName, StringComparison.OrdinalIgnoreCase)
-            || target.Aliases.Any(alias => string.Equals(candidate.Trim(), alias.Trim(), StringComparison.OrdinalIgnoreCase)));
+            || target.Aliases.Any(alias => alias.Any(char.IsLetter)
+                && string.Equals(candidate.Trim(), alias.Trim(), StringComparison.OrdinalIgnoreCase)));
     }
 
     private static bool HasNamedInteraction(IEnumerable<string> candidates, KnowledgeEntry target)
     {
+        // Imported numeric fragments and empty aliases are not compound names;
+        // matching them can turn unrelated notes into an interaction warning.
         return candidates.Any(candidate =>
             candidate.Contains(target.CanonicalName, StringComparison.OrdinalIgnoreCase)
-            || target.Aliases.Any(alias => candidate.Contains(alias, StringComparison.OrdinalIgnoreCase)));
+            || target.Aliases.Any(alias => alias.Any(char.IsLetter)
+                && candidate.Contains(alias, StringComparison.OrdinalIgnoreCase)));
     }
 
     private static double CalculatePathwayOverlapConfidence(KnowledgeEntry compoundA, KnowledgeEntry compoundB, int sharedPathwayCount)
@@ -381,6 +413,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             InteractionType.Complementary => $"{result.CompoundA} and {result.CompoundB} converge on the same outcome through distinct mechanisms.",
             InteractionType.Redundant => $"{result.CompoundA} and {result.CompoundB} appear to overlap enough that attribution may get muddy.",
             InteractionType.Interfering => $"{result.CompoundA} and {result.CompoundB} raise a review-first interaction signal.",
+            InteractionType.Unknown => $"{result.CompoundA} and {result.CompoundB} have insufficient evidence to establish compatibility or safety.",
             _ => $"{result.CompoundA} and {result.CompoundB} do not currently trigger a strong interaction signal."
         };
     }
@@ -546,9 +579,9 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 
         return verdict switch
         {
-            "improves" => $"Removing {removedCompound} likely improves predicted stack efficiency by about {roundedPercent:0.#}%.",
-            "worsens" => $"Removing {removedCompound} likely reduces predicted stack efficiency by about {roundedPercent:0.#}%.",
-            _ => $"Removing {removedCompound} is not predicted to materially change stack efficiency."
+            "improves" => $"A modeled scenario excluding {removedCompound} increased the predicted score by about {roundedPercent:0.#}%; this is not a recommendation to change the protocol.",
+            "worsens" => $"A modeled scenario excluding {removedCompound} reduced the predicted score by about {roundedPercent:0.#}%; this is not a recommendation to change the protocol.",
+            _ => $"A modeled scenario excluding {removedCompound} did not materially change the predicted score; this is not a recommendation to change the protocol."
         };
     }
 }
@@ -556,5 +589,6 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 public interface IInteractionIntelligenceService
 {
     Task<InteractionIntelligenceResponse> EvaluateByNamesAsync(IEnumerable<string> compoundNames, CancellationToken cancellationToken = default);
+    Task<InteractionIntelligenceResponse> EvaluatePublicByNamesAsync(IEnumerable<string> compoundNames, CancellationToken cancellationToken = default);
     Task<InteractionIntelligenceResponse> EvaluateAsync(IReadOnlyList<KnowledgeEntry> entries, CancellationToken cancellationToken = default);
 }

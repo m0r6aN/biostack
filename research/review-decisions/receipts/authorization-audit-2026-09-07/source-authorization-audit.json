@@ -1,0 +1,1325 @@
+{
+  "recordType": "source-authorization-audit",
+  "registry": "research/input/sources/pilot-source-registry.json",
+  "registrySourceCount": 30,
+  "packetCount": 78,
+  "totals": {
+    "claimsRequiringAuthority": 224,
+    "passTodaySelfAsserted": 198,
+    "passUnderRegistryBacked": 166,
+    "gapClaims": 32,
+    "distinctSelfAssertedSources": 26,
+    "placeholderJan1Dates": 0,
+    "fieldUseGaps": 2,
+    "projectedFieldUseGaps": 11
+  },
+  "bucketCounts": {
+    "B-registration-missing": {
+      "sources": 9,
+      "claimReferences": 16
+    },
+    "C-class-rights-pending": {
+      "sources": 6,
+      "claimReferences": 6
+    },
+    "D-no-registry-class": {
+      "sources": 11,
+      "claimReferences": 14
+    }
+  },
+  "buckets": {
+    "B-registration-missing": [
+      {
+        "sourceId": "fda-pcac-briefing-183584",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/183584/download",
+        "claimCount": 3,
+        "compounds": [
+          "aod-9604"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-193344-emideltide",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/193344/download",
+        "claimCount": 3,
+        "compounds": [
+          "emideltide"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-183819",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/183819/download",
+        "claimCount": 2,
+        "compounds": [
+          "cjc-1295"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-182088",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/182088/download",
+        "claimCount": 2,
+        "compounds": [
+          "ipamorelin"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-kisspeptin-182089",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/182089/download",
+        "claimCount": 2,
+        "compounds": [
+          "kisspeptin-10"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-calendar-july2026",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+        "claimCount": 1,
+        "compounds": [
+          "emideltide"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-193345",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/193345/download",
+        "claimCount": 1,
+        "compounds": [
+          "epitalon"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-2026-ibutamoren-sarcopenia",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/182087/download",
+        "claimCount": 1,
+        "compounds": [
+          "ibutamoren"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      },
+      {
+        "sourceId": "fda-pcac-briefing-193347",
+        "packetTier": "A1",
+        "publisher": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/media/193347/download",
+        "claimCount": 1,
+        "compounds": [
+          "mots-c"
+        ],
+        "inferredClass": "fda",
+        "classTier": "A1",
+        "classRights": "approved",
+        "bucket": "B-registration-missing"
+      }
+    ],
+    "C-class-rights-pending": [
+      {
+        "sourceId": "wada-prohibited-list-2026",
+        "packetTier": "A1",
+        "publisher": "World Anti-Doping Agency (WADA)",
+        "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+        "claimCount": 1,
+        "compounds": [
+          "andarine"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      },
+      {
+        "sourceId": "wada-s2-prohibited-list-drugscom",
+        "packetTier": "A2",
+        "publisher": "World Anti-Doping Agency (mirrored via Drugs.com)",
+        "url": "https://www.drugs.com/wada/s2-peptide-hormones-growth-factors-and-related-substances.html",
+        "claimCount": 1,
+        "compounds": [
+          "hexarelin"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      },
+      {
+        "sourceId": "wada-2026-prohibited-list",
+        "packetTier": "A1",
+        "publisher": "World Anti-Doping Agency (WADA)",
+        "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+        "claimCount": 1,
+        "compounds": [
+          "igf-1-lr3"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      },
+      {
+        "sourceId": "wada-2026-prohibited-list-official",
+        "packetTier": "A1",
+        "publisher": "World Anti-Doping Agency (WADA)",
+        "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+        "claimCount": 1,
+        "compounds": [
+          "s-23"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      },
+      {
+        "sourceId": "wada-s4-metabolic-modulators",
+        "packetTier": "A2",
+        "publisher": "World Anti-Doping Agency (mirrored by Drugs.com)",
+        "url": "https://www.drugs.com/wada/s4-hormone-and-metabolic-modulators.html",
+        "claimCount": 1,
+        "compounds": [
+          "stenabolic"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      },
+      {
+        "sourceId": "wada-prohibited-list-tb500",
+        "packetTier": "A1",
+        "publisher": "World Anti-Doping Agency",
+        "url": "https://www.wada-ama.org/en/prohibited-list",
+        "claimCount": 1,
+        "compounds": [
+          "tb-500"
+        ],
+        "inferredClass": "wada",
+        "classTier": "A1",
+        "classRights": "pending-human-legal",
+        "bucket": "C-class-rights-pending"
+      }
+    ],
+    "D-no-registry-class": [
+      {
+        "sourceId": "semanticscholar-nejmoa2411528",
+        "packetTier": "A2",
+        "publisher": "Semantic Scholar (Allen Institute for AI), record of NEJM publication",
+        "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa2411528",
+        "claimCount": 2,
+        "compounds": [
+          "mazdutide"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "ncbi-bookshelf-mecasermin-clinical-review",
+        "packetTier": "A2",
+        "publisher": "NCBI Bookshelf (Canadian Agency for Drugs and Technologies in Health / CADTH-sourced clinical review)",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK596664/",
+        "claimCount": 2,
+        "compounds": [
+          "mecasermin"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "nct06828055",
+        "packetTier": "A2",
+        "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
+        "url": "https://clinicaltrials.gov/study/NCT06828055",
+        "claimCount": 2,
+        "compounds": [
+          "vk2735"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "vada-prohibited-list-2026",
+        "packetTier": "A2",
+        "publisher": "Voluntary Anti-Doping Association (VADA)",
+        "url": "https://vada-testing.org/wp-content/uploads/2026/02/VADA-Prohibited-List-2026-.pdf",
+        "claimCount": 1,
+        "compounds": [
+          "hexarelin"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "nih-livertox-sarms",
+        "packetTier": "A2",
+        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases (NIH) - NCBI Bookshelf (NBK619971)",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+        "claimCount": 1,
+        "compounds": [
+          "lgd-3303"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "ctgov-nct05006885-classic",
+        "packetTier": "A2",
+        "publisher": "ClinicalTrials.gov / Altimmune, Inc.",
+        "url": "https://classic.clinicaltrials.gov/ct2/show/NCT05006885",
+        "claimCount": 1,
+        "compounds": [
+          "pemvidutide"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "ncbi-livertox-sarms",
+        "packetTier": "A2",
+        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+        "claimCount": 1,
+        "compounds": [
+          "rad-150"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "mdpi-jox-sarm-safety-review-2023",
+        "packetTier": "A2",
+        "publisher": "Journal of Xenobiotics (MDPI) — Selig DJ et al., 2023; 13(2):218-236",
+        "url": "https://www.mdpi.com/2039-4713/13/2/17",
+        "claimCount": 1,
+        "compounds": [
+          "rad-150"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "ctgov-nct06828055-results-status",
+        "packetTier": "A2",
+        "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
+        "url": "https://clinicaltrials.gov/api/v2/studies/NCT06828055?format=json",
+        "claimCount": 1,
+        "compounds": [
+          "vk2735"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "ctgov-nct07104500-arms-2026",
+        "packetTier": "A2",
+        "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
+        "url": "https://clinicaltrials.gov/api/v2/studies/NCT07104500?format=json",
+        "claimCount": 1,
+        "compounds": [
+          "vk2735"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "livertox-sarms-nbk619971",
+        "packetTier": "A2",
+        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+        "claimCount": 1,
+        "compounds": [
+          "yk-11"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
+      }
+    ]
+  },
+  "placeholderDates": [],
+  "gapClaims": [
+    {
+      "compound": "andarine",
+      "claimId": "andarine-regulatory-wada-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-prohibited-list-2026"
+      ]
+    },
+    {
+      "compound": "aod-9604",
+      "claimId": "aod9604-regulatory-pcac-recommendation-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183584"
+      ]
+    },
+    {
+      "compound": "aod-9604",
+      "claimId": "aod9604-efficacy-negative-weight-loss-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183584"
+      ]
+    },
+    {
+      "compound": "aod-9604",
+      "claimId": "aod9604-safety-human-tolerability-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183584"
+      ]
+    },
+    {
+      "compound": "cjc-1295",
+      "claimId": "cjc1295-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183819"
+      ]
+    },
+    {
+      "compound": "cjc-1295",
+      "claimId": "cjc1295-adverse-effect-phase2-death-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183819"
+      ]
+    },
+    {
+      "compound": "emideltide",
+      "claimId": "emideltide-regulatory-not-characterized-503a-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193344-emideltide",
+        "fda-pcac-calendar-july2026"
+      ]
+    },
+    {
+      "compound": "emideltide",
+      "claimId": "emideltide-warning-immunogenicity-characterization-001",
+      "claimType": "warning",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193344-emideltide"
+      ]
+    },
+    {
+      "compound": "emideltide",
+      "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193344-emideltide"
+      ]
+    },
+    {
+      "compound": "epitalon",
+      "claimId": "epitalon-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193345"
+      ]
+    },
+    {
+      "compound": "hexarelin",
+      "claimId": "hexarelin-regulatory-wada-prohibited-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-s2-prohibited-list-drugscom",
+        "vada-prohibited-list-2026"
+      ]
+    },
+    {
+      "compound": "ibutamoren",
+      "claimId": "ibutamoren-efficacy-fatfreemass-mixed-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-2026-ibutamoren-sarcopenia"
+      ]
+    },
+    {
+      "compound": "igf-1-lr3",
+      "claimId": "igf1lr3-regulatory-doping-status-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-2026-prohibited-list"
+      ]
+    },
+    {
+      "compound": "ipamorelin",
+      "claimId": "ipamorelin-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-182088"
+      ]
+    },
+    {
+      "compound": "ipamorelin",
+      "claimId": "ipamorelin-human-rct-negative-poi-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-182088"
+      ]
+    },
+    {
+      "compound": "kisspeptin-10",
+      "claimId": "kp10-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-kisspeptin-182089"
+      ]
+    },
+    {
+      "compound": "kisspeptin-10",
+      "claimId": "kp10-evidence-gap-hypogonadism-treatment-001",
+      "claimType": "evidence-gap",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-kisspeptin-182089"
+      ]
+    },
+    {
+      "compound": "lgd-3303",
+      "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "nih-livertox-sarms"
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-efficacy-glory1-weight-loss-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-safety-gi-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-efficacy-growth-velocity-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-adverse-effect-profile-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ]
+    },
+    {
+      "compound": "mots-c",
+      "claimId": "mots-c-regulatory-pcac-no-human-data-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193347"
+      ]
+    },
+    {
+      "compound": "pemvidutide",
+      "claimId": "pemvidutide-efficacy-masld-phase2-rct-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "ctgov-nct05006885-classic"
+      ]
+    },
+    {
+      "compound": "rad-150",
+      "claimId": "rad150-safety-classlevel-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "ncbi-livertox-sarms",
+        "mdpi-jox-sarm-safety-review-2023"
+      ]
+    },
+    {
+      "compound": "s-23",
+      "claimId": "s23-regulatory-wada-prohibited-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-2026-prohibited-list-official"
+      ]
+    },
+    {
+      "compound": "stenabolic",
+      "claimId": "stenabolic-regulatory-antidoping-status-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-s4-metabolic-modulators"
+      ]
+    },
+    {
+      "compound": "tb-500",
+      "claimId": "tb500-wada-prohibited-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "wada-prohibited-list-tb500"
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-regulatory-investigational-status-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "nct06828055"
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-efficacy-oral-venture-oral-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "nct06828055",
+        "ctgov-nct06828055-results-status"
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-dose-context-phase3-001",
+      "claimType": "dose-context",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "ctgov-nct07104500-arms-2026"
+      ]
+    },
+    {
+      "compound": "yk-11",
+      "claimId": "yk11-adverse-effect-liver-injury-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": true,
+      "selfAssertedSources": [
+        "livertox-sarms-nbk619971"
+      ]
+    }
+  ],
+  "fieldUseGaps": [
+    {
+      "compound": "afamelanotide",
+      "claimId": "afamelanotide-controversy-melanotan-conflation-001",
+      "claimType": "controversy",
+      "requiredField": "misinformation-monitoring",
+      "registryBackedSources": [
+        "dailymed-scenesse-label"
+      ]
+    },
+    {
+      "compound": "igf-1-lr3",
+      "claimId": "igf1lr3-identity-structure-001",
+      "claimType": "mechanism",
+      "requiredField": "mechanism",
+      "registryBackedSources": [
+        "fda-unii-srs-m9l22y19h9"
+      ]
+    }
+  ],
+  "projectedFieldUseGaps": [
+    {
+      "compound": "lgd-3303",
+      "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "nih-livertox-sarms"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-efficacy-glory1-weight-loss-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-safety-gi-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-efficacy-growth-velocity-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-adverse-effect-profile-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "pemvidutide",
+      "claimId": "pemvidutide-efficacy-masld-phase2-rct-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "ctgov-nct05006885-classic"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "rad-150",
+      "claimId": "rad150-safety-classlevel-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "ncbi-livertox-sarms",
+        "mdpi-jox-sarm-safety-review-2023"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-regulatory-investigational-status-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "nct06828055"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-efficacy-oral-venture-oral-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "nct06828055",
+        "ctgov-nct06828055-results-status"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-dose-context-phase3-001",
+      "claimType": "dose-context",
+      "requiredField": "product-specific-dosing",
+      "selfAssertedSources": [
+        "ctgov-nct07104500-arms-2026"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "yk-11",
+      "claimId": "yk11-adverse-effect-liver-injury-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "livertox-sarms-nbk619971"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    }
+  ],
+  "perPacket": [
+    {
+      "compound": "ac-262536",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "acp-105",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "afamelanotide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "amycretin",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "andarine",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "aod-9604",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "bazedoxifene",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 5,
+      "passUnderRegistryBacked": 5
+    },
+    {
+      "compound": "bpc-157",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "bremelanotide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "caffeine",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "cagrilintide",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "cardarine",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "chorionic-gonadotropin",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "cjc-1295",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "clomiphene",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "creatine",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "dulaglutide",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 5,
+      "passUnderRegistryBacked": 5
+    },
+    {
+      "compound": "elamipretide",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "emideltide",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "enclomiphene",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "epitalon",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "exenatide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "ghk-cu",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "ghrp-2",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "ghrp-6",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "glutathione",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "gonadorelin",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "gsk2881078",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "hexarelin",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "ibutamoren",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "igf-1-lr3",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "ipamorelin",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "kisspeptin-10",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "kpv",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "lasofoxifene",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "lgd-3303",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "ligandrol",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "liraglutide",
+      "claimsRequiringAuthority": 6,
+      "passTodaySelfAsserted": 6,
+      "passUnderRegistryBacked": 6
+    },
+    {
+      "compound": "ll-37",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "magnesium",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "maridebart-cafraglutide",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "mazdutide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "mecasermin",
+      "claimsRequiringAuthority": 6,
+      "passTodaySelfAsserted": 6,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "melanotan-ii",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "melatonin",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "mots-c",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "ospemifene",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "ostarine",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "oxytocin",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "peg-mgf",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "pemvidutide",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "pramlintide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "rad-150",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "raloxifene",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "retatrutide",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "s-23",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "selank",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "semaglutide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "semax",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "sermorelin",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "setmelanotide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "somatropin",
+      "claimsRequiringAuthority": 6,
+      "passTodaySelfAsserted": 6,
+      "passUnderRegistryBacked": 6
+    },
+    {
+      "compound": "spermidine",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "stenabolic",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "survodutide",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "tamoxifen",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 5,
+      "passUnderRegistryBacked": 5
+    },
+    {
+      "compound": "tb-500",
+      "claimsRequiringAuthority": 1,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "tesamorelin",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "testolone",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "testosterone-cypionate",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 3,
+      "passUnderRegistryBacked": 3
+    },
+    {
+      "compound": "thymosin-alpha-1",
+      "claimsRequiringAuthority": 3,
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "tirzepatide",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "toremifene",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "urolithin-a",
+      "claimsRequiringAuthority": 0,
+      "passTodaySelfAsserted": 0,
+      "passUnderRegistryBacked": 0
+    },
+    {
+      "compound": "vitamin-d3",
+      "claimsRequiringAuthority": 5,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
+    },
+    {
+      "compound": "vk2735",
+      "claimsRequiringAuthority": 4,
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 1
+    },
+    {
+      "compound": "vosilasarm",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 2
+    },
+    {
+      "compound": "yk-11",
+      "claimsRequiringAuthority": 2,
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
+    }
+  ]
+}

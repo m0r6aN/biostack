@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T15:26:07.361587Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "sermorelin-mechanism-ghrh-analog-001",
+  "candidateStatement": "PubChem lists a compound record titled Sermorelin under CID 16132413 with molecular formula C149H246N44O42S.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "2367ad34e27b85216a7a3a79cd69936282b11eca",
+    "path": "research/input/evidence/sermorelin.evidence.json",
+    "bytes": 27789,
+    "sha256": "d71c383ee305d24bb7640399059ba558ca55cf13a35cdc513f2d6a1f1f3d06b7"
+  },
+  "supersededClaimSha256": "092d41385eadea767eaf85021a601679c7f167411a1ecf03f7d147aa31409477",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db00010",
+      "locator": "Summary/description (page text truncated at source)",
+      "chars": 192,
+      "sha256": "62ac5c3b8fd894bd3121ca093a47991a7e6970cf7c8ab0eef1caa4221c60bb51"
+    },
+    {
+      "sourceId": "pmc-gh-secretagogues-review",
+      "locator": "Discussion of GHRH-mimetic secretagogues",
+      "chars": 105,
+      "sha256": "aa26930e66060f67251f71e14651f94310beda9326ab6b49aba1124ce3499e0a"
+    }
+  ],
+  "originalSourceRefs": [
+    "drugbank-db00010",
+    "pmc-gh-secretagogues-review",
+    "pubchem-cid-16132413"
+  ],
+  "historicalReviewFlags": [],
+  "originalClaimType": "mechanism",
+  "candidateClaimType": "identity",
+  "stableClaimIdQualification": "Historical mechanism identifier retained for audit linkage; candidate is identity only, not mechanism support.",
+  "scopeLoss": "Original GHRH mechanism, acetate relationship,29-amino-acid structure and synthetic/terminal-segment details remain unresolved. This alternative does not clear the original mechanism requirement or related issue.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "sermorelin / sermorelin acetate",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "PubChem compound record CID 16132413",
+    "useCase": "compound identity/reference data",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-cid-16132413",
+    "sourceType": "structured-database",
+    "authorityTier": "B2",
+    "title": "Sermorelin, CID 16132413",
+    "publisher": "National Center for Biotechnology Information / PubChem",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sermorelin",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T21:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-16132413",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/Sermorelin",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/16132413/property/Title,MolecularFormula/JSON",
+    "method": "Fixed-CID PubChem PUG REST Title,MolecularFormula GET; retained property projection only in this implementation.",
+    "query": {
+      "cid": 16132413,
+      "properties": [
+        "Title",
+        "MolecularFormula"
+      ]
+    },
+    "returnedProperties": [
+      {
+        "CID": 16132413,
+        "Title": "Sermorelin",
+        "MolecularFormula": "C149H246N44O42S"
+      }
+    ],
+    "supportLocator": "PUG REST fixed CID 16132413 property response: CID, Title and MolecularFormula; factual paraphrase only.",
+    "scope": "Database-node identity only; not GHRH receptor mechanism or acetate equivalence.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version returned; old access timestamp not rebound to new payload.",
+    "rightsQualification": "Existing qualified PubChem identity API; contributor origin, attribution and applicable reuse restrictions remain unresolved. No new blanket rights granted.",
+    "retrievedAtUtc": "2026-09-13T15:06:55.113573+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt/hash; retained projection not independently rehashed original transport. No new request."
+  },
+  "sourceSha256": "49c7c2022a89549446ea94f7d983680b1275335631caa6b9d78fbeea61e206e7",
+  "payloadProvenance": {
+    "bytes": 173,
+    "attribution": "Worker-reported original transport size/hash."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "retries": 0,
+    "receipt": {
+      "author": "Codex",
+      "method": "GET",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/16132413/property/Title,MolecularFormula/JSON",
+      "startedAtUtc": "2026-09-13T15:06:54.002120+00:00",
+      "completedAtUtc": "2026-09-13T15:06:55.113573+00:00",
+      "httpStatus": 200,
+      "responseBytes": 173,
+      "responseSha256": "49c7c2022a89549446ea94f7d983680b1275335631caa6b9d78fbeea61e206e7",
+      "headers": {
+        "Date": "Sun, 13 Sep 2026 15:06:56 GMT",
+        "X-Throttling-Control": "Request Count status: Green (0%), Request Time status: Green (0%), Service status: Green (10%)",
+        "Content-Type": "application/json"
+      },
+      "fault": null,
+      "requests": 1,
+      "retries": 0
+    }
+  },
+  "excerptAccounting": "Two original excerpts: one DrugBank192characters and one PMC excerpt. Separate hashes retained, no copied quote text or PMC acquisition. PubChem co-citation had no target quote.",
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/sermorelin-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/sermorelin-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/sermorelin-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/sermorelin-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/sermorelin-identity-replacement-assessment-20260913/receipts/pug-20260913T150654002120Z.json"
+  },
+  "queueAccounting": "Prepared21to22,completed0,prior-co-citation13to14 because PubChem already co-cited and actually assessed. Identity-only alternative, not mechanism completion; historical row classification and totals preserved.",
+  "remainingGates": [
+    "Original GHRH mechanism, acetate and structural/synthetic requirements remain unresolved.",
+    "Evidence-reviewer acceptance of identity-only scope and inherited Strong/high pending.",
+    "Contributor origin/rights and independent-family assessment pending; human/expert and publication controls remain."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

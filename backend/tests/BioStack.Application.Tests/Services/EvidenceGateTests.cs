@@ -302,10 +302,50 @@ public sealed class EvidenceGateTests
     // Check 8 — safety language scan
     // ---------------------------------------------------------------------------
 
+    /// <summary>
+    /// F2: "This compound is safe for long-term use" was previously rejected here as
+    /// unsafe_recommendation_language. That suppressed exactly the source-backed evidence
+    /// context the Guidance Content Contract permits under Class A — the guard could not tell
+    /// BioStack asserting safety from a cited source reporting it.
+    ///
+    /// Check 6 has already guaranteed citations by the time Check 8 runs, so attribution is
+    /// structural, not asserted. Personalized direction remains rejected regardless.
+    /// </summary>
+    [Theory]
+    [InlineData("summary",          "This compound is safe for long-term use")]
+    [InlineData("mechanismSummary", "The agent is proven to bind the target receptor")]
+    [InlineData("rationaleText",    "The review found no evidence it cures the condition")]
+    public void Evaluate_AttributedSourceClaim_IsPermitted(string key, string attributedValue)
+    {
+        var metadata = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["evidenceTier"]     = EvidenceTierCode.Mechanistic,
+            ["citations"]        = "https://example.test/study-1",
+            ["mechanismSummary"] = "Neutral mechanism description.",
+            [key]                = attributedValue,
+        };
+
+        var request = new EvidenceGateRequest(
+            ReviewState: TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            TargetCanonicalName: "compound-x",
+            IsDeterministicFixture: false,
+            SourceMetadata: metadata);
+
+        var result = _gate.Evaluate(request);
+
+        Assert.True(
+            result.IsGateOpen,
+            $"Attributed Class A evidence was blocked: {attributedValue} ({result.RejectionCode})");
+    }
+
+    // F2: Check 8 runs after Check 6, so citations are guaranteed and these fields are
+    // evaluated as source-attributed. Personalized medical direction is still rejected
+    // (below); reporting what a cited source found is now permitted Class A context
+    // (see Evaluate_AttributedSourceClaim_IsPermitted).
     [Theory]
     [InlineData("mechanismSummary", "you should take this compound daily")]
     [InlineData("rationaleText",    "you must consult your doctor")]
-    [InlineData("summary",          "This compound is safe for long-term use")]
+    [InlineData("summary",          "start at 0.5 mg and increase to 1 mg")]
     public void Evaluate_BannedPhraseInSafetyCheckedField_Rejects_WithUnsafeLanguageCode(
         string key, string bannedValue)
     {

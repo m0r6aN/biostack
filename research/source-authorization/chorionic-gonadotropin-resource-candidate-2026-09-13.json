@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T02:11:23.966446Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "hcg-mechanism-lh-receptor-agonist-001",
+  "candidateStatement": "The Organon PREGNYL label describes human chorionic gonadotropin as having action similar to pituitary luteinizing hormone (LH) and notes that it appears to have a small degree of follicle-stimulating hormone (FSH) activity.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "8634e61801a11d2a4d011909b517b81825358efa",
+    "path": "research/input/evidence/chorionic-gonadotropin.evidence.json",
+    "bytes": 21752,
+    "sha256": "0465f392824d4ffbcba1ae60b47097a91884995ad971f78ae018bdb40e8ccffd"
+  },
+  "supersededClaimSha256": "fc95bf086de859e9e95c1127d78f63567dfb58c2a83411d666d1ed873a393554",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON at the reviewed base, recursively sorted keys, compact comma/colon separators, ASCII escaping, no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db09126",
+      "locator": "DrugBank summary / indications",
+      "chars": 160,
+      "sha256": "0fad9c89ac83cee54c9965285df3ff026dd767aee8c9d70ea91b57dfb9a86431"
+    }
+  ],
+  "originalContextUnchanged": {
+    "population": null,
+    "route": null,
+    "formulation": "chorionic gonadotropin",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending acceptance; unchanged, not ratified"
+  },
+  "sourceTransition": {
+    "originalSnapshotUnchanged": {
+      "sourceId": "dailymed-pregnyl-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "PREGNYL (choriogonadotropin alfa) kit - Label",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dc604794-6dd6-43a7-85fa-2f04ed325c33",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    "originalSplSetId": "dc604794-6dd6-43a7-85fa-2f04ed325c33",
+    "newSourceId": "dailymed-pregnyl-organon-research-20260913",
+    "registrationStatus": "item-review-required; no new alias or acquisition authorization asserted",
+    "proposedScientificTier": "A1",
+    "scientificTierQualification": "A1 inherited from the existing DailyMed snapshot as a proposed scientific tier pending item/evidence review; no runtime authority conferred.",
+    "noAliasRebind": true,
+    "runtimeAuthorityGranted": false
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceRegistryRelationship": "Candidate research class only; the new packet source ID is not a registered alias.",
+    "sourceItemId": "dailymed-pregnyl-organon-research-20260913",
+    "originalSourceItemId": "dailymed-pregnyl-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e94155f-19be-4944-b197-be4edbb4faf9",
+    "splSetId": "1e94155f-19be-4944-b197-be4edbb4faf9",
+    "splDocumentId": "11f90621-6a2d-4c75-9f32-3e6180df7618",
+    "labelVersion": 11,
+    "versionObservation": "Version 11 observed in the dated September 13, 2026 worker acquisition; not indefinitely current or a proof of old retrieval content.",
+    "labeler": "Organon LLC",
+    "title": "PREGNYL (CHORIOGONADOTROPIN ALFA) KIT [ORGANON LLC]",
+    "effectiveDate": "2025-12-02",
+    "archivePublishedDate": "2025-12-04",
+    "bodyRevision": "03/2025 (previously inspected HTML)",
+    "dailyMedDatabasePublicationStampReported": "Sep 11, 2026 08:09:31PM EST",
+    "ndc": [
+      "78206-150",
+      "78206-150-01",
+      "78206-150-99",
+      "78206-151-89"
+    ],
+    "ndcCoverage": "All distinct elements bearing codeSystem 2.16.840.1.113883.6.69 in the retrieved XML; four codes, not a claim to every alternate representation or market product. Product 78206-150 and displayed packages 78206-150-01, 78206-150-99, 78206-151-89; package list corroborated in prior HTML.",
+    "sectionName": "CLINICAL PHARMACOLOGY",
+    "sectionCode": "34090-1",
+    "sectionId": "40a83fa2-48ef-4e95-ad27-2d5b2d259a35",
+    "observedSectionLocators": [
+      {
+        "sectionCode": "34089-3",
+        "sectionName": "DESCRIPTION",
+        "sectionId": "05a06aa2-2240-4d48-8b1e-5fdac93b89d6"
+      },
+      {
+        "sectionCode": "34090-1",
+        "sectionName": "CLINICAL PHARMACOLOGY",
+        "sectionId": "40a83fa2-48ef-4e95-ad27-2d5b2d259a35"
+      }
+    ],
+    "retrievedAtUtc": "2026-09-13T01:44:53.956732Z",
+    "retrievalAttribution": "Worker-reported API completion time; no new request, independent payload rehash or full-transcript verification by preparation.",
+    "acquisitionMethod": "api; existing bounded DailyMed factual-candidate research scope, no new item activation",
+    "rightsReviewStatusAtRetrieval": "Existing DailyMed qualified factual-candidate/API research approval; new packet-local item remains item-review-required, with no new item rights approval or runtime authority.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex manually applied exact lead statement and reviewed provenance; no adapter or acquisition run.",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports full XML parsed in memory only; no independent transcript certification of retention is asserted."
+  },
+  "sourceSha256": "c5844315cc10265ffdc7c69cc327714bb48c0369737f2d778cc78020ebd453a7",
+  "payloadProvenance": {
+    "bytes": 53167,
+    "historySha256": "a368b1a51a2bf5043cbbf5e9734c915e464d975808868560e0b13af9b5404e84",
+    "historyBytes": 898,
+    "attribution": "All payload hashes and sizes are worker-reported original receipt observations; no fresh retrieval or independent payload rehash."
+  },
+  "titleBodyQualification": "Both old and Organon headers use choriogonadotropin alfa; DESCRIPTION identifies urinary-derived chorionic gonadotropin. Preserve both as source metadata; do not infer recombinant manufacture, normalize away the discrepancy, or claim its cause established.",
+  "scopeRationale": "Use the exact tentative LH-like/FSH description only. Original context remains verbatim. No inferred receptor agonism, testosterone specificity, treatment outcome or dose is added. Omitted physiology is outside scope, not established false. Header/ingredient wording does not justify inferred recombinant manufacture.",
+  "dependencyDisposition": {
+    "target": "Only this target switches support to the distinct new item. All historical source snapshots, old alias URL/access date, identifiers, ops and other claims remain unchanged.",
+    "otherClaimsWithDrugBankSourceRefs": [],
+    "scope": "Reviewed-base claim references only; no packet-wide historical or production containment clearance.",
+    "drugBankAcquisition": "Remains disabled; preserved old flag is not a new acquisition instruction."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/hcg-codex-review-20260913.md",
+    "sourceTransitionReview": "research/output/gtm-activation-20260909/hcg-source-transition-implementation-options-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/chorionic-gonadotropin-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/chorionic-gonadotropin-replacement-assessment-20260913/source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/chorionic-gonadotropin-replacement-assessment-20260913/acquisition-metadata.json",
+    "historyReceipt": "research/output/gtm-activation-20260909/chorionic-gonadotropin-replacement-assessment-20260913/receipts/dailymed-20260913T014453342158Z.json",
+    "xmlReceipt": "research/output/gtm-activation-20260909/chorionic-gonadotropin-replacement-assessment-20260913/receipts/dailymed-20260913T014453731602Z.json"
+  },
+  "remainingGates": [
+    "New packet-local item registration/rights and proposed scientific A1 review remain required; no runtime authority inherited from DailyMed name, publisher or URL.",
+    "Evidence-reviewer acceptance of narrowed statement and inherited Strong/high ratings remains open.",
+    "Another DailyMed set/labeler does not establish an independent source family; required family closure remains open.",
+    "Distinct-person human acceptance and publication/promotion remain open; model preparation supplies neither.",
+    "Title/ingredient versus urinary-derived body discrepancy is preserved unresolved.",
+    "Production containment, deployment, registry/source-policy and acquisition changes are separate unperformed outcomes."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

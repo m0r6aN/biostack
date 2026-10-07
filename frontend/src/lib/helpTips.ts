@@ -17,6 +17,10 @@ export const helpTips = {
     'Two compounds may act on the same biological pathway, which can compound or complicate their combined effects.',
   mechanisticEvidence:
     'The mechanism of action is biologically understood, but direct human trial data is limited or absent.',
+  flaggedInSourceData:
+    'Combinations or contexts the source literature flags for review, drawn directly from the record.',
+  reportedDrugInteractions:
+    "Substances the source literature reports as interacting, shown with the source's own note (for example, \"review\") exactly as recorded.",
 } as const;
 
 export type HelpTipKey = keyof typeof helpTips;

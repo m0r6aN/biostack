@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "expectedSubscriptionId": {
+      "value": "909e0322-c3c0-4bce-ae53-b3d2ed735bd4"
+    },
+    "expectedResourceGroupName": {
+      "value": "biostack-rg"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "acrName": {
+      "value": "biostackmissionctrlacr"
+    },
+    "virtualNetworkName": {
+      "value": "biostack-source-acquisition-vnet"
+    },
+    "virtualNetworkAddressPrefixes": {
+      "value": [
+        "10.74.0.0/16"
+      ]
+    },
+    "infrastructureSubnetName": {
+      "value": "container-apps-infrastructure"
+    },
+    "infrastructureSubnetAddressPrefix": {
+      "value": "10.74.0.0/23"
+    },
+    "privateEndpointSubnetName": {
+      "value": "private-endpoints"
+    },
+    "privateEndpointSubnetAddressPrefix": {
+      "value": "10.74.2.0/24"
+    },
+    "containerAppsEnvironmentName": {
+      "value": "biostack-source-acquisition-env"
+    },
+    "acrPrivateEndpointName": {
+      "value": "biostackmissionctrlacr-registry-pe"
+    },
+    "acrPrivateDnsVnetLinkName": {
+      "value": "biostack-source-acquisition-vnet-link"
+    }
+  }
+}

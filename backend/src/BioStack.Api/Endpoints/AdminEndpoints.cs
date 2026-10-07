@@ -1,96 +1,34 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Application.Abstractions.ScientificResearch;
+using BioStack.Application.ScientificResearch;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
-using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
 using BioStack.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 public static class AdminEndpoints
 {
-    private const string KnowledgeIngestOverrideHeader = "X-BioStack-Admin-Override";
-    private const string KnowledgeIngestOverrideValue = "canonical-knowledge-ingest";
-
     public static void MapAdminEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/v1/admin")
             .WithTags("Admin")
             .RequireAuthorization("AdminOnly");
 
-        group.MapPost("/knowledge/ingest", async (
-            [FromBody] List<KnowledgeEntry> entries,
-            HttpRequest httpRequest,
-            [FromServices] IConfiguration configuration,
-            [FromServices] IKnowledgeSource knowledgeSource,
-            [FromServices] IMemoryCache memoryCache,
-            [FromServices] ILoggerFactory loggerFactory,
-            [FromServices] IRuntimeReceiptFactory receipts,
-            [FromServices] ICurrentUserAccessor currentUser,
-            CancellationToken ct) =>
-        {
-            var enabled = configuration.GetValue<bool>("Admin:KnowledgeIngest:Enabled");
-            if (!enabled)
-            {
-                return Results.NotFound();
-            }
-
-            if (!httpRequest.Headers.TryGetValue(KnowledgeIngestOverrideHeader, out var overrideHeader) ||
-                !string.Equals(overrideHeader.ToString(), KnowledgeIngestOverrideValue, StringComparison.Ordinal))
-            {
-                return Results.Forbid();
-            }
-
-            if (entries is null || entries.Count == 0)
-            {
-                return Results.BadRequest("No entries provided");
-            }
-
-            var evidenceRefs = entries
-                .Where(e => !string.IsNullOrWhiteSpace(e.CanonicalName))
-                .Select(e => ReceiptRefs.Compound(e.CanonicalName))
-                .Distinct(StringComparer.Ordinal)
-                .ToList();
-            if (evidenceRefs.Count == 0)
-            {
-                evidenceRefs.Add("admin-override:knowledge-ingest");
-            }
-
-            await receipts.IssueAndAppendAsync(new ReceiptContext(
-                ReceiptClass: ReceiptClass.AdminOverridePerformed,
-                SubjectUri: "admin:knowledge-ingest",
-                Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
-                EvidenceRefs: evidenceRefs,
-                Decision: "admin-override",
-                EffectStatus: "canonical-write",
-                InputHashSeed: string.Join("|", entries.Select(e => e.CanonicalName).Order(StringComparer.Ordinal))),
-                ct);
-
-            try
-            {
-                var count = await knowledgeSource.IngestBulkAsync(entries, ct);
-                memoryCache.Remove("analyzer:knowledge:aliases");
-                return Results.Ok(new { Message = $"Successfully ingested {count} compounds", Count = count });
-            }
-            catch (Exception ex)
-            {
-                loggerFactory.CreateLogger("AdminEndpoints").LogError(ex, "Knowledge ingest failed");
-                return Results.Problem("Knowledge ingestion failed. Check server logs for details.");
-            }
-        });
-
         group.MapPost("/knowledge-source-intake", async (
             [FromBody] AdminKnowledgeSourceIntakeRequest request,
             [FromServices] IKnowledgeSourceIntakeService intakeService,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
             try
             {
                 var response = await intakeService.CreateAsync(request, ct);
@@ -111,6 +49,7 @@ public static class AdminEndpoints
                         ct);
                 }
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(response);
             }
             catch (ArgumentException ex)
@@ -127,8 +66,10 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
             try
             {
                 var resolved = await resolutionService.ResolveAsync(intakeRequestId, ct);
@@ -181,6 +122,7 @@ public static class AdminEndpoints
                     InputHashSeed: $"{intakeRequestId:N}|{record.ArtifactId}|{record.SegmentSnapshotSignature}"),
                     ct);
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(new AdminTranscriptIntakeResolutionResponse(
                     IntakeRequestId: intakeRequestId,
                     SourceType: resolved.SourceReference.SourceType,
@@ -194,6 +136,10 @@ public static class AdminEndpoints
             }
             catch (Exception ex) when (ex is ITranscriptSourceMaterialProviderFailure providerFailure)
             {
+                // Provider failure is lifecycle evidence, not a successful governed effect.
+                // Preserve the failed status/reason while the successful resolution and
+                // staging path remains receipt-gated and atomic.
+                await transaction.CommitAsync(ct);
                 return Results.Ok(new AdminTranscriptIntakeResolutionResponse(
                     IntakeRequestId: intakeRequestId,
                     SourceType: "video_url",
@@ -331,6 +277,7 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
             if (string.IsNullOrWhiteSpace(artifactId))
@@ -370,6 +317,7 @@ public static class AdminEndpoints
 
             try
             {
+                await using var transaction = await db.Database.BeginTransactionAsync(ct);
                 var updatedAt = DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture);
                 var updatedRecord = await reviewStore.UpdateReviewStateAsync(
                     artifactId: record.ArtifactId,
@@ -388,6 +336,7 @@ public static class AdminEndpoints
                     InputHashSeed: $"{record.ArtifactId}|{decision.FromReviewState}|{decision.ToReviewState}|{updatedAt}"),
                     ct);
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
             }
             catch (KeyNotFoundException)
@@ -439,6 +388,7 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidatePromotionService promotionService,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
             if (string.IsNullOrWhiteSpace(artifactId))
@@ -448,6 +398,7 @@ public static class AdminEndpoints
 
             try
             {
+                await using var transaction = await db.Database.BeginTransactionAsync(ct);
                 var updatedRecord = await promotionService.ExecutePromotionAsync(artifactId, ct);
                 await receipts.IssueAndAppendAsync(new ReceiptContext(
                     ReceiptClass: ReceiptClass.SourceArtifactPromoted,
@@ -458,6 +409,7 @@ public static class AdminEndpoints
                     EffectStatus: "canonical-write",
                     InputHashSeed: $"{updatedRecord.ArtifactId}|{updatedRecord.TargetCanonicalName}|{updatedRecord.PromotedKnowledgeEntryId}"),
                     ct);
+                await transaction.CommitAsync(ct);
                 return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
             }
             catch (KeyNotFoundException)
@@ -490,6 +442,179 @@ public static class AdminEndpoints
                 return Results.NotFound();
             }
         });
+
+        // Scientific research sidecar: submit jobs and stage results into the existing
+        // non-canonical review lifecycle (never direct canonical promotion).
+        group.MapPost("/research/jobs", async (
+            [FromBody] AdminSubmitScientificResearchRequest? request,
+            [FromServices] IScientificResearchProvider researchProvider,
+            CancellationToken ct) =>
+        {
+            if (request is null || string.IsNullOrWhiteSpace(request.SubjectName))
+            {
+                return Results.BadRequest(new { Message = "subjectName is required." });
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Workflow))
+            {
+                return Results.BadRequest(new { Message = "workflow is required." });
+            }
+
+            try
+            {
+                var submit = new ScientificResearchRequest(
+                    ResearchRequestId: Guid.NewGuid().ToString("N"),
+                    ResearchSubjectType: "compound",
+                    SubjectName: request.SubjectName.Trim(),
+                    KnownIdentifiers: request.KnownIdentifiers
+                        ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
+                    Workflow: request.Workflow.Trim(),
+                    EvidenceCategories: (IReadOnlyList<string>)(request.EvidenceCategories
+                        ?? new List<string>()),
+                    SourceAllowlist: Array.Empty<string>(),
+                    MaximumSourceAgeDays: null,
+                    MaximumExecutionTime: TimeSpan.FromMinutes(10),
+                    MaximumSourceCount: 50,
+                    CorrelationId: string.IsNullOrWhiteSpace(request.CorrelationId)
+                        ? Guid.NewGuid().ToString("N")
+                        : request.CorrelationId.Trim(),
+                    RequestedByActor: "admin",
+                    Purpose: string.IsNullOrWhiteSpace(request.Purpose)
+                        ? "admin_research"
+                        : request.Purpose.Trim(),
+                    Execution: new ScientificExecutionProfile(
+                        ScientificExecutionMode.Auto,
+                        AllowGpu: true,
+                        AllowCpuFallback: true,
+                        AllowHostedFallback: false,
+                        MaximumGpuMemoryBytes: null,
+                        MaximumExecutionDuration: TimeSpan.FromMinutes(10),
+                        ApprovedModelProfile: null),
+                    DataClassification: "public_scientific",
+                    TaskClass: null,
+                    EvidenceRiskClass: EvidenceRiskClass.Medium,
+                    LocalInferencePermitted: true,
+                    HostedInferencePermitted: false,
+                    CompressionPermitted: true,
+                    CrossCheckRequired: false);
+
+                var handle = await researchProvider.SubmitAsync(submit, ct);
+                return Results.Accepted(
+                    $"/api/v1/admin/research/jobs/{handle.JobId}",
+                    new AdminScientificResearchJobResponse(
+                        handle.JobId,
+                        handle.ResearchRequestId,
+                        handle.Workflow,
+                        handle.Status.ToString(),
+                        handle.CorrelationId,
+                        handle.SubmittedAtUtc));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+        });
+
+        group.MapGet("/research/jobs/{jobId}", async (
+            string jobId,
+            [FromServices] IScientificResearchProvider researchProvider,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return Results.BadRequest(new { Message = "jobId is required." });
+            }
+
+            try
+            {
+                var status = await researchProvider.GetStatusAsync(jobId, ct);
+                return Results.Ok(new AdminScientificResearchJobResponse(
+                    status.JobId,
+                    status.ResearchRequestId,
+                    status.Workflow,
+                    status.Status.ToString(),
+                    status.CorrelationId,
+                    status.SubmittedAtUtc,
+                    status.ProgressMessage,
+                    status.Partial,
+                    status.ErrorCode,
+                    status.ErrorMessage));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex) when (ex.ErrorCode == "job_not_found")
+            {
+                return Results.NotFound(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+        });
+
+        group.MapPost("/research/jobs/{jobId}/stage", async (
+            string jobId,
+            [FromServices] IScientificResearchCandidateStagingService stagingService,
+            [FromServices] IRuntimeReceiptFactory receipts,
+            [FromServices] ICurrentUserAccessor currentUser,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return Results.BadRequest(new { Message = "jobId is required." });
+            }
+
+            try
+            {
+                var record = await stagingService.StageFromJobAsync(jobId, ct);
+                await receipts.IssueAndAppendAsync(new ReceiptContext(
+                    ReceiptClass: ReceiptClass.SourceCandidateStaged,
+                    SubjectUri: $"research-stage:{record.ArtifactId}",
+                    Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
+                    EvidenceRefs:
+                    [
+                        ReceiptRefs.StagedArtifact(record.ArtifactId),
+                        ReceiptRefs.Source(record.SourceUrl),
+                    ],
+                    Decision: "staged_pending_review",
+                    EffectStatus: "non-canonical",
+                    InputHashSeed: $"{record.ArtifactId}|{record.SegmentSnapshotSignature}"),
+                    ct);
+
+                var workflow = record.SourceMetadata.TryGetValue("workflow", out var wf) ? wf : string.Empty;
+                var partial = record.SourceMetadata.TryGetValue("partial", out var p)
+                    && string.Equals(p, "true", StringComparison.OrdinalIgnoreCase);
+
+                return Results.Ok(new AdminScientificResearchStageResponse(
+                    ArtifactId: record.ArtifactId,
+                    ReviewState: record.ReviewState,
+                    SourceType: record.SourceType,
+                    Provider: record.Provider,
+                    JobId: jobId,
+                    Workflow: workflow,
+                    Partial: partial,
+                    CreatedAtUtc: record.CreatedAtUtc));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex) when (ex.ErrorCode is "job_not_found" or "result_not_ready")
+            {
+                return Results.Json(new { Message = ex.Message, Code = ex.ErrorCode }, statusCode: StatusCodes.Status409Conflict);
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+        });
+
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(

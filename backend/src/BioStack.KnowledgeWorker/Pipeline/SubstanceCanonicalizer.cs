@@ -45,7 +45,10 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
                                       .Concat(record.Mechanism.Targets)
                                       .Distinct(StringComparer.OrdinalIgnoreCase)
                                       .ToList(),
+            // An indication explicitly marked "not-indicated" records no claimed
+            // benefit — its evidence-scoped summary must not surface as a benefit.
             Benefits          = record.Indications
+                                      .Where(i => !string.Equals(i.LabelStatus, "not-indicated", StringComparison.OrdinalIgnoreCase))
                                       .Select(i => i.BenefitSummary.Trim())
                                       .Where(s => s.Length > 0)
                                       .Distinct(StringComparer.OrdinalIgnoreCase)

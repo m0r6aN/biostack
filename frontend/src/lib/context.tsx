@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { apiClient } from './api';
 import { PersonProfile } from './types';
-import { useApiAuth } from './useApiAuth';
+import { useOptionalAuth } from './AuthProvider';
 
 interface ProfileContextType {
   currentProfileId: string | null;
@@ -20,9 +21,28 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [profiles, setProfiles] = useState<PersonProfile[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const auth = useOptionalAuth();
+  const user = auth?.user ?? null;
+  const loading = auth?.loading ?? false;
 
-  // Keep ApiClient's Bearer token synced with the NextAuth session
-  useApiAuth();
+  // Load the user's profiles once authentication resolves so the header
+  // profile picker works on every surface — previously only pages that fetched
+  // profiles themselves populated the list, leaving the dropdown empty.
+  useEffect(() => {
+    if (loading || !user) return;
+    let cancelled = false;
+    apiClient
+      .getProfiles()
+      .then((data) => {
+        if (cancelled) return;
+        setProfiles(data);
+        setCurrentProfileId((current) => current ?? data[0]?.id ?? null);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [loading, user]);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -35,8 +55,12 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   // Save to localStorage whenever currentProfileId changes
   useEffect(() => {
-    if (isHydrated && currentProfileId) {
-      localStorage.setItem('currentProfileId', currentProfileId);
+    if (isHydrated) {
+      if (currentProfileId) {
+        localStorage.setItem('currentProfileId', currentProfileId);
+      } else {
+        localStorage.removeItem('currentProfileId');
+      }
     }
   }, [currentProfileId, isHydrated]);
 

@@ -2,22 +2,26 @@
   "schemaVersion": "1.0.0",
   "recordType": "compound-evidence-packet",
   "packet": {
-    "packetId": "creatine-evidence-pilot-001",
+    "packetId": "creatine-evidence-expansion-001",
     "category": "core-supplements",
-    "agentId": "augment-research-launchpack",
-    "generatedAt": "2026-05-05T00:00:00Z",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T04:46:26Z",
     "sourceRegistryVersion": "pilot-source-registry-001"
   },
   "compound": {
     "canonicalName": "Creatine",
-    "aliases": ["Creatine monohydrate"],
-    "classification": "Supplement",
-    "compoundFamily": "Amino-acid derivative",
+    "aliases": [
+      "Creatine monohydrate",
+      "Cr",
+      "Creapure"
+    ],
+    "classification": "Dietary supplement / naturally occurring amino acid derivative",
+    "compoundFamily": "Guanidino compound (endogenous energy-metabolism substrate)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "MU72812GK0",
       "casNumber": "57-00-1",
-      "drugbank": null,
+      "drugbank": "DB00148",
       "pubchem": "586",
       "chembl": null,
       "doi": null,
@@ -26,117 +30,597 @@
   },
   "sources": [
     {
-      "sourceId": "pubchem-creatine",
-      "sourceType": "database",
-      "authorityTier": "C1",
-      "title": "PubChem Compound Summary for Creatine",
-      "publisher": "National Center for Biotechnology Information",
-      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/586",
+      "sourceId": "fda-grn-931-creatine-monohydrate",
+      "sourceType": "regulator",
+      "authorityTier": "X",
+      "title": "GRAS Notice No. GRN 000931; Creatine Monohydrate (Creapure)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/143525/download",
       "doi": null,
       "pmid": null,
       "publishedAt": null,
-      "accessedAt": "2026-05-05T00:00:00Z"
+      "accessedAt": "2026-08-29T04:46:26Z"
     },
     {
-      "sourceId": "issn-creatine-position-stand-2017",
-      "sourceType": "review",
+      "sourceId": "fda-structure-function-claims",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Notifications for Structure/Function and Related Claims in Dietary Supplement Labeling",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/food/information-industry-dietary-supplements/notifications-structurefunction-and-related-claims-dietary-supplement-labeling",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "nih-ods-exercise-athletic-performance-hp",
+      "sourceType": "government-fact-sheet",
+      "authorityTier": "C2",
+      "title": "Dietary Supplements for Exercise and Athletic Performance - Health Professional Fact Sheet",
+      "publisher": "NIH Office of Dietary Supplements",
+      "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "issn-position-stand-2017",
+      "sourceType": "professional-position-stand",
       "authorityTier": "B1",
       "title": "International Society of Sports Nutrition position stand: safety and efficacy of creatine supplementation in exercise, sport, and medicine",
-      "publisher": "Journal of the International Society of Sports Nutrition",
-      "url": "https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0173-z",
+      "publisher": "Journal of the International Society of Sports Nutrition (Kreider RB, Kalman DS, Antonio J, et al., 2017)",
+      "url": "https://link.springer.com/article/10.1186/s12970-017-0173-z",
       "doi": "10.1186/s12970-017-0173-z",
       "pmid": "28615996",
       "publishedAt": "2017-06-13T00:00:00Z",
-      "accessedAt": "2026-05-05T00:00:00Z"
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "bmc-nephrology-2025-kidney-meta",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Effect of creatine supplementation on kidney function: a systematic review and meta-analysis",
+      "publisher": "BMC Nephrology",
+      "url": "https://link.springer.com/article/10.1186/s12882-025-04558-6",
+      "doi": "10.1186/s12882-025-04558-6",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "hairloss-rct-2025-europepmc",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Does creatine cause hair loss? A 12-week randomized controlled trial",
+      "publisher": "Journal of the International Society of Sports Nutrition (via Europe PMC record, 2025)",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1080/15502783.2025.2495229&format=json&resultType=core",
+      "doi": "10.1080/15502783.2025.2495229",
+      "pmid": "40265319",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "pubchem-cid-586",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Creatine (CID 586)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Creatine",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "drugbank-db00148",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Creatine: Uses, Interactions, Mechanism of Action (DB00148)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB00148",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-creatine",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Global Substance Registration System (GSRS) substance record for Creatine, UNII MU72812GK0",
+      "publisher": "U.S. Food and Drug Administration / NIH National Center for Advancing Translational Sciences (GSRS)",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/MU72812GK0",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "jissn-2025-adverse-event-pharmacovigilance",
+      "sourceType": "paper-level-primary-literature",
+      "authorityTier": "B1",
+      "title": "Safety of creatine supplementation: analysis of the prevalence of reported side effects in clinical trials and adverse event reports",
+      "publisher": "Journal of the International Society of Sports Nutrition (Kreider RB, Gonzalez DE, Hines K, Gil A, Bonilla DA, 2025)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40198156/",
+      "doi": null,
+      "pmid": "40198156",
+      "publishedAt": "2025-09-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ahla-creatine-hairloss-critique-2025",
+      "sourceType": "professional-position-stand",
+      "authorityTier": "B2",
+      "title": "Creatine and Hair Loss: What the Latest Study Got Right and What It Missed",
+      "publisher": "American Hair Loss Association",
+      "url": "https://www.americanhairloss.org/creatine-and-hair-loss-what-the-latest-study-got-right-and-what-it-missed/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "iun-2026-kidney-meta-independent",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Impact of creatine supplementation on kidney health: a systematic review and meta-analysis",
+      "publisher": "International Urology and Nephrology (2026)",
+      "url": "https://link.springer.com/article/10.1007/s11255-026-05287-x",
+      "doi": "10.1007/s11255-026-05287-x",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "mdpi-2025-strength-power-meta",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The Effects of Creatine Supplementation on Upper- and Lower-Body Strength and Power: A Systematic Review and Meta-Analysis",
+      "publisher": "Nutrients (MDPI, 2025)",
+      "url": "https://www.mdpi.com/2072-6643/17/17/2748",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
     {
-      "claimId": "creatine-identity-pubchem-001",
-      "claimType": "identity",
-      "statement": "Creatine is a distinct compound indexed by PubChem as CID 586 and associated with CAS number 57-00-1.",
+      "claimId": "creatine-regulatory-status-001",
+      "claimType": "regulatory",
+      "statement": "Creatine (as creatine monohydrate) is not an FDA-approved drug. It is marketed in the U.S. as a dietary supplement and as a GRAS (generally recognized as safe) food ingredient under a notified GRAS submission to FDA (GRN 000931) that received an FDA 'no questions' response letter -- a notified GRAS, not an industry self-affirmation, and still not an FDA-authored safety assessment -- and structure/function claims on its labeling (e.g., supports muscle strength) do not require FDA pre-market approval. Notification is not the only post-market obligation: FDA requires that the entity making the claim hold substantiation that the statement is truthful and not misleading, that the standard disclaimer be prominently displayed in boldface type, and that the statement not claim to diagnose, mitigate, treat, cure or prevent a disease. Notification is due no later than 30 days after first marketing. These obligations are co-equal, not alternatives to one another.",
+      "context": {
+        "population": "consumers of creatine dietary supplements and creatine-fortified foods in the U.S.",
+        "route": "oral",
+        "formulation": "creatine monohydrate (e.g., Creapure) in powders, bars, drinks",
+        "useCase": "regulatory classification and labeling boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-grn-931-creatine-monohydrate",
+        "fda-structure-function-claims",
+        "nih-ods-exercise-athletic-performance-hp"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-grn-931-creatine-monohydrate",
+          "quote": "This GRAS notification is filed under the provisions of the Food and Drug Administration's regulations (Title 21 of the Code of Federal Regulations 170 Subpart E-Generally Recognized as Safe (GRAS) Notice)",
+          "pageOrSection": "Notice filing basis"
+        },
+        {
+          "sourceRef": "fda-structure-function-claims",
+          "quote": "A dietary supplement for which a truthful and non-misleading claim is made in accordance with section 403(r)(6) is not a drug solely because the label or labeling contains the claim.",
+          "pageOrSection": "Structure/function claims requirements"
+        },
+        {
+          "sourceRef": "fda-structure-function-claims",
+          "quote": "This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.",
+          "pageOrSection": "Required disclaimer text"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory-status claim; confirm no subsequent FDA action (e.g., warning letters, NDI objections) at review time",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "authority-disposition-2026-09-07: source 'fda-grn-931-creatine-monohydrate' was a manufacturer GRAS notice hosted by FDA, not an FDA-authored safety assessment; the filing is not evidence for these claims, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition.",
+        "rereview-correction-2026-09-07: the statement described GRN 000931 as an 'industry self-affirmation notice'. That is wrong: it is a notified GRAS submission to FDA that drew an FDA 'no questions' response letter. The description is corrected. The source's authorityTier stays X, because a notified GRAS with a no-questions letter is still not an FDA-authored safety assessment, and the re-anchoring requirement recorded in the authority disposition on this claim is unchanged. The 2026-09-07 re-review additionally reports the notifier as AlzChem Trostberg GmbH and the notice as closed 2020-11-12; both are recorded here and deliberately not asserted in the statement, because neither is anchored in this packet's sources or extractedEvidence.",
+        "rereview-correction-2026-09-07: the 'only subject to post-market notification' wording is corrected -- FDA's substantiation, disclaimer and disease-claim requirements are co-equal obligations, not alternatives. evidenceTier and confidence are left unchanged: the regulatory half of this claim retains genuine A1 support from the FDA structure/function page, which is registered and authorized for the regulatory field. Reviewers should note the mixed support -- the GRAS half rests on a tier X source and the NIH ODS source is C2 and unread after three failed retrievals."
+      ]
+    },
+    {
+      "claimId": "creatine-mechanism-atp-phosphocreatine-001",
+      "claimType": "mechanism",
+      "statement": "The NIH Office of Dietary Supplements describes creatine's role in supplying muscle energy through ATP generation, with phosphocreatine stores contributing at the start of intense activity.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": null,
-        "useCase": "identity resolution",
+        "formulation": "creatine / creatine monohydrate",
+        "useCase": "mechanism description",
         "doseText": null
       },
-      "evidenceTier": "Unknown",
+      "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["pubchem-creatine"],
-      "extractedEvidence": [
-        { "sourceRef": "pubchem-creatine", "quote": null, "pageOrSection": "Compound summary" }
+      "sourceRefs": [
+        "nih-ods-exercise-athletic-performance-hp"
       ],
-      "reviewFlags": []
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": null,
+          "pageOrSection": "Creatine section, first two introductory paragraphs (muscle ATP supply and phosphocreatine stores at the start of intense exercise); no performance-improvement claim adopted."
+        }
+      ],
+      "reviewFlags": [
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "rereview-correction-2026-09-07: disposition moves from unresolved to confirm. The 2026-09-07 independent re-review obtained corroboration for the phosphocreatine/ATP energy-shuttle mechanism from a different source family (StatPearls, NCBI Bookshelf NBK546624, describing the reversible creatine kinase reaction interconverting phosphocreatine and ATP), so the prior unresolved disposition on this mechanism is resolved. That corroboration lives in the re-review receipt and is deliberately not added as a source here, so the in-band support for the mechanism sentence remains the PubChem quote. Separately, the DrugBank quote attached to this claim describes creatine's tissue occurrence and urinary excretion and does not support the phosphocreatine/ATP shuttle sentence it is filed under; it is retained as an accurate record of the source but is not evidence for this mechanism. The authority disposition's requirement to re-anchor the NIH ODS support to an eligible A1/A2 source is unaffected and stays open.",
+        "replacement-candidate-prepared-2026-09-12: statement, sourceRefs and extractedEvidence replaced with a narrowed, quote-free paraphrase of the NIH Office of Dietary Supplements Creatine-section introductory paragraphs (ATP-generation/phosphocreatine-store sentences only); the phosphocreatine/ATP energy-shuttle framing, creatine-kinase enzyme identity, reversible ADP phosphate transfer, and phosphorylation-step language are removed as unsupported by that source. All three prior retained excerpts are removed: the PubChem CID 586 pharmacology-section quote (possible indirect DrugBank provenance: prior research reports DrugBank DB00148 and HSDB 7336 contributors for the current Mechanism of Action section, but the historical pharmacology-located excerpt has not been independently mapped to either; removed from this candidate, with historical attribution unresolved), the DrugBank DB00148 drug-summary quote, and the prior ODS Creatine-section quote. Full record: research/source-authorization/creatine-resource-candidate-2026-09-12.json. Status is prepared-review-required, not accepted: the authority-disposition-2026-09-07 A1/A2 re-anchor instruction on this claim stays open and is not resolved by this narrowing; evidenceTier 'Strong' and confidence 'high' are retained unchanged as inherited pending-review values, not ratified by this change; ODS method/reuse-scope reconciliation, evidence-reviewer acceptance of the narrowed statement and ratings, and containment-reach determination over the removed PubChem excerpt remain open. claimsActuallyReSourced is unaffected and stays 0."
+      ]
     },
     {
-      "claimId": "creatine-mechanism-phosphocreatine-001",
-      "claimType": "mechanism",
-      "statement": "Creatine is discussed in sports-nutrition literature primarily through its role in the creatine/phosphocreatine energy system, which supports rapid ATP resynthesis during high-intensity activity.",
-      "context": {
-        "population": "general adult sports-nutrition context",
-        "route": "oral",
-        "formulation": "creatine monohydrate",
-        "useCase": "exercise performance mechanism",
-        "doseText": null
-      },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
-      "fieldAuthorityRequired": false,
-      "sourceRefs": ["issn-creatine-position-stand-2017"],
-      "extractedEvidence": [
-        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand background and conclusions" }
-      ],
-      "reviewFlags": ["mechanism summary should be reviewed before customer-facing simplification"]
-    },
-    {
-      "claimId": "creatine-efficacy-performance-001",
+      "claimId": "creatine-efficacy-highintensity-strength-lbm-001",
       "claimType": "efficacy",
-      "statement": "A 2017 International Society of Sports Nutrition position stand describes creatine monohydrate as one of the most extensively studied sports-nutrition supplements and supports its role in high-intensity exercise and training-adaptation contexts.",
+      "statement": "In healthy, resistance-training individuals, creatine monohydrate supplementation is supported by a large controlled-trial literature (synthesized in the ISSN position stand) as the most effective ergogenic nutritional supplement currently available for increasing high-intensity/repeated-sprint exercise capacity and lean body mass gained from training; NIH's fact sheet is cited here as corroborating significant increases in strength and power for short-duration, high-intensity activity. This claim asserts nothing about endurance-type sport: the previous assertion that creatine appears ineffective for endurance exercise is withdrawn, because it rested on an NIH ODS attribution that no reviewer has been able to retrieve and that no extracted evidence in this packet supports.",
       "context": {
-        "population": "exercise and sport nutrition populations",
+        "population": "healthy adults engaged in resistance/high-intensity training",
         "route": "oral",
         "formulation": "creatine monohydrate",
-        "useCase": "high-intensity exercise and training adaptation",
+        "useCase": "exercise performance (strength, power, high-intensity intermittent exercise)",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "issn-position-stand-2017",
+        "nih-ods-exercise-athletic-performance-hp",
+        "mdpi-2025-strength-power-meta"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "issn-position-stand-2017",
+          "quote": "creatine monohydrate is the most effective ergogenic nutritional supplement currently available to athletes",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "often significantly increases strength (e.g., for bench presses) and power (e.g., for cycling)",
+          "pageOrSection": "Creatine section"
+        },
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "performance during repeated short bursts of high-intensity, intermittent activity, such as sprinting and weight lifting",
+          "pageOrSection": "Creatine section"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "Creatine plus resistance training produced small but statistically significant improvements",
+          "pageOrSection": "Results/discussion summary"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "no significant differences in handgrip strength [WMD = 4.26 kg, p = 0.10] and leg press strength [WMD = 3.129 kg, p = 0.11]",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "Benefits were most consistent in younger adults and males, while older adults and females showed smaller or non-significant changes",
+          "pageOrSection": "Results/discussion summary"
+        }
+      ],
+      "reviewFlags": [
+        "efficacy is specific to high-intensity/strength training contexts and should not be generalized to endurance performance",
+        "independent-review-2026-08-29: an independent 2025 Nutrients (MDPI) meta-analysis corroborates a real, positive strength/power effect (e.g., bench +1.43 kg, squat +5.64 kg, Wingate peak power +47.81 W) but characterizes it as small but statistically significant and heterogeneous, with no significant effect on handgrip or leg press and weaker effects in older adults/females than younger adults/males; the 'most effective ergogenic supplement...for increasing lean body mass' framing should be read as a verbatim ISSN characterization, not as evidence that effects are large or uniform across all strength measures and demographics",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "rereview-correction-2026-09-07: the statement previously asserted a negative -- that creatine appears ineffective for endurance-type sport -- attributed to the NIH ODS fact sheet, with no extracted evidence anywhere in this packet supporting it and with that source having failed retrieval in three successive reviews, leaving it unread by any reviewer. An unsourced topic is not proof of no benefit, so the negative assertion is withdrawn rather than merely flagged. The 2026-09-07 re-review further notes that the co-cited ISSN position stand points the other way (possible aerobic-capacity enhancement and interval-training benefit); that reading is recorded from the re-review, is not anchored by any quote in this packet, and is therefore likewise not asserted. Endurance efficacy is unevaluated here and must be sourced before any claim about it is made in either direction."
+      ]
+    },
+    {
+      "claimId": "creatine-dose-context-loading-maintenance-001",
+      "claimType": "dose-context",
+      "statement": "Human trial protocols summarized by NIH and the ISSN position stand commonly used a loading phase of approximately 20 g/day (5 g four times daily, or ~0.3 g/kg/day) for 5-7 days, followed by a maintenance phase of 3-5 g/day (up to 5-10 g/day in larger athletes); an alternative protocol used 3-6 g/day for 3-4 weeks without a loading phase. This describes trial dosing context only, not a use recommendation.",
+      "context": {
+        "population": "healthy adults in exercise-performance trials",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "trial dosing protocol (loading/maintenance)",
+        "doseText": "Loading: ~20 g/day (5 g x4) or 0.3 g/kg/day for 5-7 days; maintenance: 3-5 g/day (up to 5-10 g/day); alternative: 3-6 g/day for 3-4 weeks without loading (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nih-ods-exercise-athletic-performance-hp",
+        "issn-position-stand-2017"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "20 g/day creatine monohydrate in four portions of 5 g",
+          "pageOrSection": "Creatine section, dosing summary"
+        },
+        {
+          "sourceRef": "issn-position-stand-2017",
+          "quote": "ingest 5 g of creatine monohydrate (or approximately 0.3 g/kg body weight) four times daily for 5-7 days",
+          "pageOrSection": "Abstract, dosing protocol"
+        },
+        {
+          "sourceRef": "issn-position-stand-2017",
+          "quote": "creatine stores can generally be maintained by ingesting 3-5 g/day",
+          "pageOrSection": "Abstract, dosing protocol"
+        }
+      ],
+      "reviewFlags": [
+        "dose-context claim must never be presented as a use/dosing recommendation",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+      ]
+    },
+    {
+      "claimId": "creatine-safety-common-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "statement": "NIH's Office of Dietary Supplements fact sheet states creatine is considered safe for short-term use by healthy adults, and the ISSN position stand states short- and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals; NIH notes reported side effects include water-retention-related weight gain, and anecdotal reports of nausea, diarrhea and related GI distress, muscle cramps, and heat intolerance. A 2025 pharmacovigilance analysis reported no significant difference in side-effect reporting between creatine and placebo groups. Its 13.7% versus 13.2% figures are the proportion of studies reporting side effects, not the proportion of participants who experienced them; the analysis reports participant-frequency figures separately, and the 0.00072% figure is a distinct spontaneous-report denominator drawn from 28.4 million real-world adverse-event reports. These three denominators must not be conflated or presented as one tolerability rate. This analysis shares author and venue lineage with the ISSN position stand cited in this same claim, so it is direct quantification of a related evidence base rather than independent institutional corroboration.",
+      "context": {
+        "population": "healthy adults",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "general tolerability",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nih-ods-exercise-athletic-performance-hp",
+        "issn-position-stand-2017",
+        "jissn-2025-adverse-event-pharmacovigilance"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "considered safe for short-term use by healthy adults",
+          "pageOrSection": "Creatine section, safety"
+        },
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "nausea, diarrhea and related gastrointestinal distress, muscle cramps, and heat intolerance",
+          "pageOrSection": "Creatine section, safety"
+        },
+        {
+          "sourceRef": "issn-position-stand-2017",
+          "quote": "short and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "Side effects were reported in 13.2% of studies in the PLA groups and 13.7% of studies in the Cr-supplemented groups, with no significant differences",
+          "pageOrSection": "Abstract/results"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "the mention of Cr was rare (0.00072%)",
+          "pageOrSection": "Results, adverse event report analysis (28.4 million reports)"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "Cr supplementation does not increase the prevalence or frequency of side effects when compared to participants ingesting PLA",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "wave006-correction-2026-09-06: the prior in-band resolved narrative on this flag was factually wrong and is withdrawn. It described 13.7% and 13.2% as adverse-event rates for creatine and placebo participants; PMID 40198156 reports those as percentages of studies reporting side effects. The wave006 re-review recorded separately reported participant-frequency figures of 4.21% (placebo) versus 4.60% (creatine); these require verbatim extraction from the primary abstract before they may appear in any claim statement, and are deliberately not asserted here. The original 2026-08-29 concern, that the adverse-effect list was largely anecdotal/case-level and not systematically quantified, is therefore NOT resolved by this source, and this claim remains review-gated.",
+        "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance.",
+        "wave006-correction-2026-09-06: exact eligible A1/A2 support for the safety and tolerability assertions is still outstanding. Packet NIH ODS tiering conflicts with the source registry C2 policy for that publisher, and an FDA-hosted industry GRAS submission is not an FDA-authored safety assessment. No authority tier or flag was changed by this correction pass.",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "rereview-disposition-2026-09-07: evidenceTier lowered Strong -> Moderate. The 2026-08-29 pass raised this claim to Strong on the stated ground that the 2025 pharmacovigilance analysis supplied systematic quantification and independent corroboration. The 2026-09-06 correction withdrew the independence half of that ground but left the tier, leaving the claim asserting Strong beside its own flag saying the concern is not resolved. Independent re-review on 2026-09-07 confirmed the correction and identified this contradiction; the tier now matches the evidence actually claimed."
+      ]
+    },
+    {
+      "claimId": "creatine-monitoring-renal-function-001",
+      "claimType": "monitoring",
+      "statement": "A 2025 systematic review and meta-analysis found creatine supplementation is associated with a modest, transient increase in serum creatinine, which its authors attribute to metabolic turnover rather than renal impairment; that attribution is the authors' interpretation and is not by itself proof that renal injury is excluded in every population. Glomerular filtration rate findings are not uniform and must be kept distinguished by how GFR was determined: in an independent 2026 meta-analysis (26 RCTs, 1,036 participants) GFR measured by Cr-EDTA clearance showed no significant difference, while creatinine-estimated GFR was significantly lower in creatine users (MD -10.75 mL/min; P = .002). Creatinine-estimated GFR is not measured GFR, and an estimating equation driven by serum creatinine is expected to move with a creatinine rise; the significantly negative estimated-GFR result is nonetheless a reported safety signal and is stated here alongside the null measured-GFR result rather than in place of it. Elevated serum creatinine in supplement users should therefore be interpreted alongside more specific renal-function markers, and evidence in people with pre-existing kidney impairment is more limited.",
+      "context": {
+        "population": "healthy adults and mixed clinical populations studied in included trials",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "renal safety monitoring",
         "doseText": null
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": false,
-      "sourceRefs": ["issn-creatine-position-stand-2017"],
-      "extractedEvidence": [
-        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand conclusions" }
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "bmc-nephrology-2025-kidney-meta",
+        "fda-grn-931-creatine-monohydrate",
+        "iun-2026-kidney-meta-independent"
       ],
-      "reviewFlags": ["avoid converting population-level sports-nutrition evidence into personalized recommendations"]
+      "extractedEvidence": [
+        {
+          "sourceRef": "bmc-nephrology-2025-kidney-meta",
+          "quote": "Creatine supplementation is associated with a modest, transient increase in serum creatinine levels, likely due to metabolic turnover rather than renal impairment.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "bmc-nephrology-2025-kidney-meta",
+          "quote": "No significant changes were observed in GFR, suggesting preserved kidney function.",
+          "pageOrSection": "Abstract, results"
+        },
+        {
+          "sourceRef": "fda-grn-931-creatine-monohydrate",
+          "quote": "does not induce renal damage in the studied amounts and durations in individuals without prior kidney damage",
+          "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "No significant differences were detected for GFR measured by Cr-EDTA clearance (MD 5.89 mL/min; 95% CI -0.30 to 12.08; P = .06)",
+          "pageOrSection": "Results (26 RCTs, 1036 participants)"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "Only two RCTs have directly evaluated creatine supplementation in hemodialysis patients, reporting no major adverse events or electrolyte disturbances.",
+          "pageOrSection": "Results (section label UNVERIFIED: the 2026-09-07 re-review could not locate this quote in the retrieved abstract)"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "Studies investigating creatine supplementation in individuals with non-dialysis CKD (stages 1-5) remain absent from the current evidence base.",
+          "pageOrSection": "Discussion / evidence gaps (UNVERIFIED: the 2026-09-07 re-review could not locate this quote in the retrieved abstract)"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical monitoring claim",
+        "evidence base for people with pre-existing renal impairment is comparatively thin; do not extrapolate general-population safety to that group",
+        "rereview-correction-2026-09-07: the prior in-band narrative on this flag was misleading and is withdrawn. It reported that the independent 2026 meta-analysis corroborates the absence of a significant GFR change; that holds only for the Cr-EDTA clearance arm. The same analysis reports a significantly lower creatinine-based estimated GFR in creatine users (MD -10.75 mL/min; P = .002), which this packet omitted while quoting the null arm. That is selective reporting of a safety signal and is corrected in the statement, which now carries both results and keeps them distinguished by measurement method. The 2026-09-07 re-review also reports a 95% CI of -17.48 to -4.02 for that estimate; the interval is recorded here and deliberately not asserted, because it is not verbatim-anchored in this packet's extractedEvidence. The two Discussion-attributed quotes on this claim -- hemodialysis 'no major adverse events or electrolyte disturbances' (2 RCTs) and non-dialysis CKD stages 1-5 'absent from the current evidence base' -- could not be located in the retrieved abstract by that re-review; they are retained as recorded but are UNVERIFIED and must not be relied on. The population-scope gap therefore remains open and human-review-gated: do not extrapolate general-population or hemodialysis findings to non-dialysis CKD.",
+        "authority-disposition-2026-09-07: source 'fda-grn-931-creatine-monohydrate' was a manufacturer GRAS notice hosted by FDA, not an FDA-authored safety assessment; the filing is not evidence for these claims, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
+      ]
     },
     {
-      "claimId": "creatine-evidence-gap-formulation-001",
-      "claimType": "evidence-gap",
-      "statement": "BioStack should separate creatine monohydrate evidence from claims about alternate creatine salts, blends, proprietary products, and marketing-specific formulations unless those products have their own evidence.",
+      "claimId": "creatine-misinformation-hairloss-dht-001",
+      "claimType": "misinformation-claim",
+      "statement": "A popular online claim holds that creatine supplementation causes hair loss by raising DHT. A 2025 randomized, placebo-controlled 12-week trial in resistance-trained males (creatine monohydrate 5 g/day vs. placebo, n=38 completers) directly measured hormones and hair-follicle health and found no group-by-time interaction for any hormone or hair-related outcome, providing direct controlled-trial evidence against this claim; it does not, however, rule out effects at higher doses, in other populations, or over longer durations than 12 weeks. Independent clinical commentary further notes the trial used an outdated hair-assessment method, did not measure DHT activity at the scalp (the site relevant to androgenetic alopecia), and did not screen participants for genetic predisposition to hair loss -- so it does not settle the question for genetically predisposed individuals.",
       "context": {
-        "population": null,
+        "population": "resistance-trained males, ages 18-40 (n=38 completers of 45 randomized)",
         "route": "oral",
-        "formulation": "alternate formulations and proprietary blends",
-        "useCase": "evidence generalization boundary",
-        "doseText": null
+        "formulation": "creatine monohydrate, 5 g/day",
+        "useCase": "addressing online hair-loss/DHT misinformation claim",
+        "doseText": "5 g/day for 12 weeks (trial protocol; not a use recommendation)"
       },
-      "evidenceTier": "Insufficient",
+      "evidenceTier": "Moderate",
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["issn-creatine-position-stand-2017"],
-      "extractedEvidence": [
-        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand scope" }
+      "sourceRefs": [
+        "hairloss-rct-2025-europepmc",
+        "ahla-creatine-hairloss-critique-2025"
       ],
-      "reviewFlags": ["product/formulation claims need separate packet support"]
+      "extractedEvidence": [
+        {
+          "sourceRef": "hairloss-rct-2025-europepmc",
+          "quote": "Creatine is a widely used ergogenic aid that enhances muscle strength and lean mass. However, concerns have been raised about the potential role in promoting hair loss by increasing dihydrotestosterone (DHT).",
+          "pageOrSection": "Abstract, background"
+        },
+        {
+          "sourceRef": "hairloss-rct-2025-europepmc",
+          "quote": "There were no group-by-time interactions observed for any hormones or hair-related outcomes.",
+          "pageOrSection": "Abstract, results"
+        },
+        {
+          "sourceRef": "hairloss-rct-2025-europepmc",
+          "quote": "This study was the first to directly assess hair follicle health following creatine supplementation, providing strong evidence against the claim that creatine contributes to hair loss.",
+          "pageOrSection": "Abstract, conclusion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "relied on outdated hair assessment tools such as the Trichogram",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "it did not measure DHT activity at the scalp — where androgenetic alopecia actually takes place",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "omitted genetic screening for hair loss predisposition",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "several of the study's authors maintain close ties to the supplement industry, and the journal in which the study was published is the official outlet of a trade organization (ISSN) that receives financial support from supplement companies",
+          "pageOrSection": "Conflict-of-interest discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "it does not settle the question of whether creatine supplementation may accelerate hair loss in those who are genetically predisposed",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "single trial, 12-week duration, males only; not a definitive population-wide ruling-out of any hair-loss association",
+        "independent-review-2026-08-29: independent clinical commentary (American Hair Loss Association) identifies methodological limitations not previously flagged in this packet -- outdated trichogram-based hair assessment, no scalp-level DHT measurement (the tissue site relevant to androgenetic alopecia), and no genetic-predisposition screening -- and notes several trial authors' industry ties and industry-adjacent journal funding as a potential conflict of interest tempering confidence. Framing should continue to present this as suggestive, not definitive, evidence against the claim."
+      ]
+    },
+    {
+      "claimId": "creatine-evidence-gap-endurance-broad-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Online marketing and popular use often position creatine as a broadly beneficial supplement for essentially any athlete or exerciser, including endurance athletes and general wellness/cognitive use. The human evidence anchored in this packet (NIH fact sheet, ISSN position stand) specifically supports benefit for short-duration, high-intensity, intermittent exercise and resistance training. The gap is therefore one of unevaluated scope rather than of demonstrated absence of benefit: this packet holds no extracted evidence on endurance-type sport or on cognitive/wellness outcomes, and the previous assertion that NIH states creatine appears ineffective for endurance-type sport is withdrawn as unverified. Broader claims of universal athletic or cognitive benefit are not supported by the same controlled-trial base, but an unsourced topic is not evidence that no benefit exists.",
+      "context": {
+        "population": "general supplement-using public, including endurance athletes and non-strength-sport users",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "gap between broad online marketing claims and evidence scope",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nih-ods-exercise-athletic-performance-hp",
+        "issn-position-stand-2017"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-exercise-athletic-performance-hp",
+          "quote": "performance during repeated short bursts of high-intensity, intermittent activity, such as sprinting and weight lifting",
+          "pageOrSection": "Creatine section"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: distinguish narrow, well-supported use case (high-intensity/resistance exercise) from broad marketing claims covering all sport types and non-exercise wellness/cognitive uses",
+        "cognitive/anti-aging marketing claims for creatine were not evaluated in this expansion pass and should be sourced separately if added",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "rereview-correction-2026-09-07: this evidence-gap claim asserted a negative finding -- that NIH states creatine appears ineffective for endurance-type sport -- while carrying a single extracted quote, which is about high-intensity intermittent activity and says nothing about endurance. The attribution is to NIH ODS, a source that has failed retrieval in three successive reviews and is unread by any reviewer. The negative is withdrawn and the claim now states the honest position: endurance and cognitive/wellness outcomes are unevaluated in this packet, which is a scope gap, not evidence of no benefit. The 2026-09-07 re-review notes the co-cited ISSN position stand points the other way on aerobic capacity and interval training; that is recorded, unanchored here, and not asserted. Disposition remains request-changes until endurance evidence is retrieved and anchored."
+      ]
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    {
+      "conflictId": "creatine-renal-safety-population-scope-001",
+      "claimRefs": [
+        "creatine-monitoring-renal-function-001"
+      ],
+      "severity": "moderate",
+      "summary": "Renal safety data are drawn mainly from healthy individuals and mixed clinical populations, and the results are method-dependent: measured Cr-EDTA clearance showed no significant difference while creatinine-estimated GFR was significantly lower (MD -10.75 mL/min; P = .002). The earlier framing of this conflict as 'no significant GFR change' is superseded by the 2026-09-07 re-review and must not be relied on. The FDA GRAS safety conclusion is explicitly scoped to 'individuals without prior kidney damage', and that submission is a manufacturer notification, now tier X, not an FDA-authored safety assessment. Safety in people with pre-existing kidney impairment is comparatively under-studied and must not be assumed equivalent.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "creatine-pharmacovigilance-source-independence-001",
+      "claimRefs": [
+        "creatine-safety-common-adverse-effects-001"
+      ],
+      "severity": "high",
+      "summary": "The 2025 pharmacovigilance analysis (PMID 40198156) was previously described in this packet as independently corroborating the ISSN position stand tolerability conclusion. The wave006 re-review established that the two share author and venue lineage, so the analysis cannot be counted as an independent institutional source family for this claim. Independent corroboration from a different editorial family is still required.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
   "ops": {
     "completeness": "partial",
     "needsReview": true,
-    "reviewReasons": ["Pilot evidence packet has not received human review."],
-    "qualityFlags": ["pilot-input", "no-safety-canonicalization"]
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "remediation-pass-2026-08-29: UNII resolved and independently verified via the FDA/NCATS Global Substance Registration System (UNII MU72812GK0, CAS 57-00-1 confirmed matching) -- added to compound.externalIdentifiers and sources. ChEMBL ID remains unresolved: attempted the ChEMBL REST API (www.ebi.ac.uk/chembl/api/data/molecule) and the ChEMBL molecule-explorer page directly, both blocked by persistent proxy rate-limiting (HTTP 429) across repeated retries with backoff; DrugBank's identifier table remains behind an authentication wall as previously noted. ChEMBL lookup should be retried in a future pass.",
+      "Renal safety evidence for populations with pre-existing kidney impairment is thin relative to healthy-population evidence and remains review-gated. remediation-pass-2026-08-29: an independent 2026 International Urology and Nephrology meta-analysis (26 RCTs, 1,036 participants) was checked and confirms the gap is real -- zero trials exist in non-dialysis CKD (stages 1-5) patients, though a small hemodialysis-population dataset (2 RCTs) does exist with no major adverse events reported. This conflict cannot be resolved by independent sourcing and stays human-review-gated per the reviewer verdict.",
+      "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them.",
+      "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest).",
+      "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass.",
+      "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "rereview-disposition-2026-09-07: creatine-safety-common-adverse-effects-001 evidenceTier lowered Strong -> Moderate to match the withdrawn independence premise. Independent re-review also found a selective-reporting defect in creatine-monitoring-renal-function-001 (the cited 2026 meta-analysis reports a significant creatinine-based GFR reduction that the packet omits while quoting only the null Cr-EDTA arm), and escalated two endurance dispositions to request-changes; those remain open.",
+      "rereview-correction-2026-09-07: acted on the creatine findings the 2026-09-07 independent re-review left open. creatine-monitoring-renal-function-001 corrected for selective reporting -- the statement now carries both GFR results from the cited 2026 meta-analysis (the null Cr-EDTA clearance arm and the significantly lower creatinine-estimated GFR, MD -10.75 mL/min, P = .002) and keeps them distinguished by measurement method, the metabolic explanation for the creatinine rise is stated as the authors' interpretation rather than as proof, the prior in-band corroboration narrative on that claim is withdrawn, and its two Discussion-attributed quotes (hemodialysis adverse events; absence of non-dialysis CKD trials) are marked UNVERIFIED after the re-review could not locate them in the retrieved abstract. This entry also amends the 2026-08-29 renal-safety reviewReason above, which repeats that unqualified no-GFR-change framing and those two unverified figures. The same superseded framing survives in the conflicts entry creatine-renal-safety-population-scope-001, whose summary still reads 'no significant GFR change' without the measurement-method distinction; correcting that text was outside the field set this pass was permitted to change and is flagged here as still open. creatine-efficacy-highintensity-strength-lbm-001 and creatine-evidence-gap-endurance-broad-marketing-001 no longer assert that creatine is ineffective for endurance-type sport; that negative rested on an NIH ODS attribution unread by any reviewer after three failed retrievals, and both dispositions stay request-changes. creatine-regulatory-status-001 now describes GRN 000931 correctly as a notified GRAS with an FDA no-questions letter rather than an industry self-affirmation. creatine-mechanism-atp-phosphocreatine-001 moves to confirm on independent StatPearls corroboration recorded in the receipt, with a note that its DrugBank quote does not support the mechanism sentence. No evidenceTier, confidence, fieldAuthorityRequired, claimType, context, or sourceRefs value was changed, no source was added, and every disposition here remains human-review-gated."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "gras-food-ingredient-not-drug-approved",
+      "strong-human-rct-efficacy-highintensity-exercise",
+      "negative-misinformation-rct-hairloss",
+      "thin-human-evidence-renal-impairment-subgroup",
+      "remediation-pass-2026-08-29",
+      "wave006-correction-pass-2026-09-06",
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07",
+      "rereview-disposition-2026-09-07",
+      "rereview-correction-2026-09-07"
+    ]
   }
 }

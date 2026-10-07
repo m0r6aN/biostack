@@ -4,6 +4,13 @@ import { apiClient } from '@/lib/api';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 
+const FIELD_MAX_LENGTHS: Record<string, number> = {
+  name: 160,
+  email: 255,
+  organization: 200,
+  role: 120,
+};
+
 export function ProviderAccessForm() {
   const [state, setState] = useState<'idle' | 'submitting' | 'confirmed'>('idle');
   const [error, setError] = useState('');
@@ -96,7 +103,7 @@ function Field({
         name={name}
         type={type}
         required
-        maxLength={name === 'email' ? 255 : 200}
+        maxLength={FIELD_MAX_LENGTHS[name]}
         autoComplete={autoComplete}
         className="mt-2 w-full rounded-lg border border-white/12 bg-[#0f151e] px-4 py-3 text-white outline-none focus:border-emerald-300/45"
       />

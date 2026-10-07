@@ -1,0 +1,534 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "wave-r3-2026-08-29-batch-007",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T16:18:55Z",
+    "notes": [
+      "Independent review wave R3 (14 SARM-tail packets, run wf_5e2c0122-ecb): 5 approve-claims (ac-262536, ibutamoren, lgd-3303, ligandrol, stenabolic), 9 request-changes. COMPLETES THE FULL-CORPUS REVIEW: all 78 staged packets now carry independent cross-source review.",
+      "Zero-blocker approve-claims (wave-005 candidates): ac-262536, lgd-3303, stenabolic.",
+      "Live FDA SARM-class page re-verified 2026-08-29 across the cohort; no drift.",
+      "Issued under OPERATOR-DELEGATION-2026-08-28. Verdicts receipt in receipts/."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "wave-r3-ac-262536",
+      "compoundName": "AC-262536",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "ac262536-identity-classification-001",
+          "ac262536-mechanism-animal-pharmacology-001",
+          "ac262536-regulatory-not-approved-001",
+          "ac262536-warning-class-sarm-risks-001",
+          "ac262536-evidence-gap-no-human-data-001",
+          "ac262536-misinformation-marketing-vs-evidence-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): approve-claims.",
+        "Both fieldAuthorityRequired claims (regulatory-not-approved, warning-class-sarm-risks) were independently re-verified against the LIVE FDA consumer-update page as of 2026-08-29 and match verbatim; no drift since the packet's original access.",
+        "No needs-adjustment findings: no medical advice, no dosing recommendation (all doseText fields are null), and no efficacy inflation beyond what quotes support -- the misinformation-claim entry correctly reports and rebuts vendor hype rather than endorsing it."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-acp-105",
+      "compoundName": "ACP-105",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "acp105-identity-mechanism-001",
+          "acp105-mechanism-anabolic-properties-001",
+          "acp105-evidence-gap-no-human-trials-001",
+          "acp105-misinformation-marketing-dosing-001",
+          "acp105-warning-sarm-class-safety-001",
+          "acp105-regulatory-not-on-compounding-lists-001",
+          "acp105-controversy-doping-detection-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Unresolved CAS-number conflict on the fieldAuthorityRequired identity claim: the packet states CAS 899821-23-9 (matches PubChem CID 11638442 and vendor listings) with no caveat, while an independent 2025/2026 peer-reviewed toxicology paper (Archives of Toxicology, mirrored on PMC/ResearchGate) titles ACP-105 as CAS 1048998-11-3. This must be investigated and either reconciled or explicitly flagged as an open identifier discrepancy in conflicts/reviewFlags before public promotion, since a wrong CAS number on a gray-market research chemical is a real-world sourcing/safety risk.",
+          "UNII, DrugBank, and ChEMBL identifiers remain unresolved per ops.reviewReasons -- unchanged by this review and still worth closing before publication.",
+          "FDA Category 2 compounding-list absence was reconfirmed live today (2026-08-29) but the packet is correct that this must be periodically reverified going forward since the list is actively being revised (12 peptides removed in April 2026)."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "All three fieldAuthorityRequired claims (identity/regulatory status, class-level safety warning, and Category-2 compounding-list status) were independently checked against a materially different source family from their existing sourceRefs, per the directive's independent review rule.",
+        "The evidence-gap and misinformation claims hold up well: ClinicalTrials.gov search and an independent 2025/2026 toxicology paper both confirm no human trial data exist for ACP-105, so the vendor dosing/benefit claims are correctly flagged as unsupported misinformation rather than usage guidance."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-andarine",
+      "compoundName": "Andarine (S-4 / GTx-007)",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "andarine-mechanism-identity-001",
+          "andarine-regulatory-fda-unapproved-001",
+          "andarine-safety-liver-cardiovascular-001",
+          "andarine-adverse-vision-001",
+          "andarine-controversy-trial-history-001",
+          "andarine-misinformation-marketing-001",
+          "andarine-evidence-gap-efficacy-001",
+          "andarine-regulatory-wada-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The clinical-trial-history conflict (andarine-controversy-trial-history-001 / andarine-conflict-phase1-history-001) should be updated before promotion: independent evidence (GTx SEC Form S-1, and the peer-reviewed Starcevic et al. 2013 paper via Wikipedia's citation) leans toward the GTx account (Phase I trials completed, 86 volunteers, 3 sub-trials) being correct rather than the EJCP review's 'suspended, never reached Phase I' framing. The conflict summary and resolutionStatus should be revised to reflect this rather than left as a flat, evenly-weighted unresolved conflict.",
+          "The vision-adverse-effect claim (andarine-adverse-vision-001) should have its sourceRefs and evidenceTier upgraded: independent corroboration was found via a peer-reviewed doping-detection paper (Starcevic et al. 2013, Drug Testing and Analysis) cited by Wikipedia, but the primary paper itself could not be directly fetched (CAPTCHA-walled) in this pass \u2014 a human reviewer with normal browser/institutional access should pull that paper directly and cite it, upgrading the claim from 'Anecdotal/low confidence, BSCG-only' evidence.",
+          "Minor: the liver-safety claim could note that andarine does appear (per LiverTox) in some multi-agent DILI cases, even though no case names it as the sole causal agent \u2014 a small clarifying addition, not a blocking error."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "All four fieldAuthorityRequired claims (FDA unapproved-drug status, liver/cardiovascular safety, vision adverse effects, WADA prohibited status) now have at least one materially independent source family checked and support the packet's statements \u2014 none needed a fabrication-level correction.",
+        "No instance of medical advice, use-recommendation, or efficacy inflation was found in the packet's claim statements; language throughout (e.g. 'commonly cited as a reason,' 'no completed... trial was located') stays appropriately hedged and gap-honest."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-cardarine",
+      "compoundName": "Cardarine (GW501516)",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "cardarine-mechanism-ppar-delta-001",
+          "cardarine-regulatory-fda-unapproved-001",
+          "cardarine-warning-carcinogenicity-animal-001",
+          "cardarine-regulatory-international-status-001",
+          "cardarine-efficacy-human-lipid-rct-001",
+          "cardarine-misinformation-marketing-vs-evidence-001",
+          "cardarine-evidence-gap-endurance-animal-only-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "cardarine-regulatory-international-status-001 conflates TGA's independently-confirmed Schedule 10 'poisonous substance' classification (April 2018) with Health Canada's action, which independent fetching of Health Canada's own primary notice shows is only an unauthorized-product public alert/recall, not a confirmed poison-schedule classification with an April 2018 date -- statement must be split/adjusted before public promotion.",
+          "The 104-week, multi-organ carcinogenicity detail in cardarine-warning-carcinogenicity-animal-001 still rests solely on a secondary commentary (Mitchell 2019); no independent primary GSK toxicology report was locatable in this review, so this reviewFlag must remain open and human-review-gated per the directive rather than being closed."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "Minor, non-blocking nuance: cardarine-mechanism-ppar-delta-001 states clinical development was discontinued in 2007; an independent Health Canada notice dates the halt to 2006, and an independent PMC case-report paper attributes the halt specifically to intestinal adenoma in rats (found during initial clinical-phase toxicology) rather than a generic multi-organ/104-week framing. Worth a small correction/footnote but not safety-critical (claim is not fieldAuthorityRequired).",
+        "The FDA live-page re-check requested in reviewFlags was performed today (2026-08-29): both the SARMS AMERICA warning letter and the bodybuilding-fraud page remain live and unchanged in substance; no April-2026-related delisting was found for these two specific pages."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-gsk2881078",
+      "compoundName": "GSK2881078",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "gsk2881078-identity-mechanism-001",
+          "gsk2881078-efficacy-lean-mass-healthy-older-001",
+          "gsk2881078-adverse-effect-hdl-testosterone-001",
+          "gsk2881078-studied-use-copd-muscle-weakness-001",
+          "gsk2881078-regulatory-sarm-class-not-approved-001",
+          "gsk2881078-evidence-gap-gray-market-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Field-authority-required claim gsk2881078-studied-use-copd-muscle-weakness-001 remains unresolved: the sex-specific efficacy statement ('increased muscle strength in men') is still sourced only from Wikipedia, and the primary Thorax/PMC9985744 publication with quantitative leg-press/lean-mass results could not be accessed in this independent pass either (same access block the packet itself documented). This must stay human-review-gated and must not be promoted until the primary article is read and the sex-specific claim is either confirmed, corrected, or removed.",
+          "Add the LiverTox-sourced hepatic transaminase (ALT) elevation signal to the adverse-effect claim (gsk2881078-adverse-effect-hdl-testosterone-001) or its reviewFlags before publication \u2014 it is a safety-critical detail an independent source surfaced that the current claim text omits."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "Overall sourcing quality is good: the packet is honest about its own access failures (PMC/PubMed/ResearchGate bot-blocks), and my independent verification hit the exact same blocks for the Thorax COPD paper, which corroborates that the packet's stated gap is real rather than an excuse.",
+        "No fabrication or misrepresentation found. The regulatory claim correctly avoids overstating the FDA alert as GSK2881078-specific, and the efficacy/adverse-effect claims correctly avoid extrapolating healthy-volunteer pharmacodynamic findings into clinical-benefit or use-recommendation language."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-ibutamoren",
+      "compoundName": "Ibutamoren",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "ibutamoren-identity-classification-001",
+          "ibutamoren-regulatory-compounding-chf-signal-001",
+          "ibutamoren-mechanism-ghrelin-agonist-001",
+          "ibutamoren-efficacy-fatfreemass-mixed-001",
+          "ibutamoren-adverse-effect-metabolic-edema-001",
+          "ibutamoren-evidence-gap-wellness-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Correct the self-referential 'authority-support verified 2026-08-29' reviewFlag on ibutamoren-efficacy-fatfreemass-mixed-001: it cites the FDA PCAC briefing as independent corroboration, but that briefing is already in this same claim's own sourceRefs, which is a circular non-independent check under the directive's Independent Review Rule. Replace it with a genuinely independent source (e.g., the secondary-literature synthesis at PMC2757071, which reproduces the same FFM/glucose/insulin/edema figures) before treating this review issue as resolved.",
+          "conflicts[0] (CHF signal vs single-RCT tolerability) remains legitimately open: the underlying hip-fracture phase IIb trial publication was still not independently retrieved this session (only the FDA summary and PCAC briefing, both regulator-family, describe it). The PCAC briefing did yield the specific event rate (4/62 vs 1/62), which narrows the gap but does not substitute for the primary trial publication - keep this conflict human-review-gated as the packet already does.",
+          "CAS number and UNII for ibutamoren remain unresolved (DrugBank login-gated, PubChem PUG-REST blocked in this environment); keep review-gated as already disclosed rather than treating identity claim as fully closed."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): approve-claims.",
+        "Priority safety-critical/regulatory claim (Category 2 CHF signal) was re-checked against the LIVE FDA page today (2026-08-29) and against the April 2026 Category-2 revision news - ibutamoren's listing and rationale are unchanged and accurately quoted.",
+        "Mechanism claim was independently corroborated via a materially different family (FDA regulator document) than its own sourceRef (controlled-human-study), satisfying the independent-review rule cleanly."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-lgd-3303",
+      "compoundName": "LGD-3303",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "lgd3303-mechanism-ar-binding-invitro-001",
+          "lgd3303-animal-muscle-sparing-rat-001",
+          "lgd3303-identity-development-history-001",
+          "lgd3303-regulatory-fda-sarm-class-001",
+          "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
+          "lgd3303-regulatory-antidoping-sarm-class-001",
+          "lgd3303-evidence-gap-marketing-vs-human-data-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): approve-claims.",
+        "All fieldAuthorityRequired claims (FDA regulatory class, SARM-class hepatotoxicity, anti-doping/WADA class status) were independently corroborated via at least one materially different source family than their own sourceRefs \u2014 LiverTox (professional-clinical-reference) for the FDA claim, independent PubMed/PMC case reports for the hepatotoxicity claim, and the live official WADA 2025 Prohibited List PDF for the anti-doping claim \u2014 none required adjustment.",
+        "The single strongest independent find was retrieving the actual primary literature abstract (Vajda et al., PMID 19017848) via the Europe PMC REST API, which verbatim corroborates the rat muscle-sparing/tissue-selectivity claim word-for-word, resolving the packet's own flagged concern that this data came only from vendor summaries."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-ligandrol",
+      "compoundName": "Ligandrol (LGD-4033)",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "ligandrol-regulatory-unapproved-status-001",
+          "ligandrol-warning-serious-risks-001",
+          "ligandrol-mechanism-identity-001",
+          "ligandrol-efficacy-lbm-healthy-men-001",
+          "ligandrol-adverse-effect-hormone-suppression-001",
+          "ligandrol-studied-use-hip-fracture-phase2-001",
+          "ligandrol-marketing-vs-evidence-gap-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "ligandrol-studied-use-hip-fracture-phase2-001 remains sourced only to a company press release/SEC exhibit; no peer-reviewed publication of the VK5211 Phase 2 hip-fracture trial exists after 8 years -- packet should retain (not soften) its press-release-sourced caveat before public promotion.",
+          "ops.reviewReasons item on Basaria quotes should be updated: PMC full text is still CAPTCHA-blocked, but the publisher's own journal abstract (Oxford Academic, academic.oup.com) independently corroborates the quotes -- this can now be marked resolved with that citation rather than left open.",
+          "Consider adding independent LiverTox (NBK619971) citation to the safety/warning and evidence-gap claims -- it materially strengthens both with real-world LGD-4033-specific liver injury dose data (4-30 mg cases) not currently cited anywhere in the packet's source list.",
+          "No blocking defects found in currently-live regulatory status: the cited FDA warning letter and FDA consumer update page were independently re-verified live today (2026-08-29) and match packet quotes."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): approve-claims.",
+        "All fieldAuthorityRequired=true claims (regulatory-unapproved-status-001, warning-serious-risks-001) are confirmed or confirmed-with-note via genuinely independent source families (DOJ prosecution record; NIH LiverTox), satisfying the approve-claims bar on that dimension.",
+        "No needs-adjustment findings were identified: statements consistently hedge trial-derived findings as investigational/non-recommendations, do not convert animal/in vitro to human efficacy, and do not read as medical advice or use recommendations. The dose language throughout is explicitly framed as trial protocol, not a use recommendation."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-rad-150",
+      "compoundName": "RAD-150 (TLB-150 benzoate)",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "rad150-identity-benzoate-prodrug-001",
+          "rad150-evidence-gap-no-human-data-001",
+          "rad150-regulatory-unapproved-sarm-class-001",
+          "rad150-safety-classlevel-hepatotoxicity-001",
+          "rad150-misinformation-marketing-vs-evidence-001",
+          "rad150-mechanism-family-context-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Both fieldAuthorityRequired safety/regulatory claims (rad150-regulatory-unapproved-sarm-class-001 and rad150-safety-classlevel-hepatotoxicity-001) remain supported only by class-level SARM sources with no RAD-150-specific regulatory action, case report, or study located anywhere independently \u2014 per the Independent Review Rule this is an acceptable but still-unresolved gap that must stay human-review-gated, not silently promoted as compound-specific.",
+          "The regulatory claim's two sourceRefs are both FDA pages from the same publisher/source family; even though live re-fetch today confirms their content is current and unchanged, no genuinely independent regulator, professional-society, or enforcement-action source naming RAD-150/TLB-150 was found \u2014 this should be recorded as an open source-diversity gap, not treated as closed.",
+          "The misinformation claim (fieldAuthorityRequired) documents vendor dosing ranges (5-20 mg/day); confirm the final published packet keeps this text clearly labeled as non-recommendation marketing language only (the packet already does this correctly, but this must survive any downstream editing/promotion step unchanged).",
+          "No PMID/DOI/UNII/DrugBank/ChEMBL identifier could be independently resolved for RAD-150 itself, consistent with the packet's own ops.reviewReasons; this leaves the identity claim anchored entirely to vendor/structured-database listings of the same general family."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "Overall the packet is well-constructed: it correctly separates class-level SARM safety/regulatory evidence from compound-specific claims, flags marketing-vs-evidence conflicts, avoids inferring human efficacy from absent data, and contains no medical advice or use recommendations.",
+        "Independent verification today (2026-08-29) found the live FDA bodybuilding-SARMs-harm page and the live FDA Category 2 bulk-substances page unchanged from what the packet quotes, and confirmed RAD-150/TLB-150/RAD140 are not named on either. No April-2026-era update affecting this compound was found (the April 2026 FDA bulk-substances changes located were peptide-related, not SARM-related)."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-s-23",
+      "compoundName": "S-23",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "s23-mechanism-sarm-contraceptive-origin-001",
+          "s23-regulatory-unapproved-sarm-class-001",
+          "s23-regulatory-wada-prohibited-001",
+          "s23-adverse-effect-sarm-class-safety-001",
+          "s23-studied-use-human-excretion-microdose-001",
+          "s23-evidence-gap-no-human-efficacy-safety-001",
+          "s23-misinformation-marketing-vs-evidence-gap-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "s23-studied-use-human-excretion-microdose-001: the specific numeric findings quoted from Alhalabi et al. 2025 (dose levels, metabolite count, detection-window hours) were independently confirmed to exist and be topically accurate, but the exact figures were not independently re-verified against full text this session due to access walls (CAPTCHA/robots.txt on PMC and Wiley) -- recommend one more verification pass before public promotion.",
+          "s23-mechanism-sarm-contraceptive-origin-001: cite the original 2009 Endocrinology primary paper (PMID 18772237) directly rather than relying on Wikipedia as the sole source for the 'dose-dependent, reversible suppression of spermatogenesis with spontaneous recovery' detail, which was not independently reproduced this session.",
+          "CAS number (1010396-29-8) is independently confirmed across multiple chemical-vendor databases (Cayman Chemical, ChemicalBook, MedChemExpress, TargetMol, GlpBio) and should be added to externalIdentifiers rather than left null, resolving one of the open ops.reviewReasons items.",
+          "No new S-23-specific FDA action was found (confirmed via live page re-check), so the class-level-only regulatory/safety framing must remain as-is; do not let future edits imply S-23-specific FDA action exists."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "All fieldAuthorityRequired claims (regulatory-unapproved-sarm-class, regulatory-wada-prohibited, adverse-effect-sarm-class-safety) are confirmed or confirmed-with-note via genuinely independent source families -- none are unresolved.",
+        "No needs-adjustment findings: I did not find any statement in the packet that overstates efficacy, gives medical advice, or converts animal/anecdotal evidence into proven human benefit -- the packet is unusually careful about this compared to the source material it draws from (vendor marketing content is correctly quarantined into misinformation-claim/conflicts rather than stated as fact)."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-stenabolic",
+      "compoundName": "Stenabolic (SR9009)",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "stenabolic-identity-status-001",
+          "stenabolic-mechanism-reverb-agonist-001",
+          "stenabolic-evidence-gap-no-human-data-001",
+          "stenabolic-misinformation-marketed-benefits-001",
+          "stenabolic-regulatory-antidoping-status-001",
+          "stenabolic-adverse-effect-unknown-profile-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): approve-claims.",
+        "Independent re-check of the live FDA Category 2 bulk drug substances page (2026-08-29, after the April 2026 revision) confirms SR9009 remains absent from both the current and withdrawn lists.",
+        "Independent re-check of an official-adjacent 2026 WADA Prohibited List PDF mirror (distinct from the packet's Drugs.com mirror) confirms the exact S4.4 'Rev-erb\u0251 agonists, e.g. SR9009, SR9011' listing."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-testolone",
+      "compoundName": "Testolone (RAD-140)",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "testolone-mechanism-sarm-ar-agonist-001",
+          "testolone-regulatory-unapproved-new-drug-001",
+          "testolone-adverse-effect-liver-injury-case-001",
+          "testolone-studied-use-breast-cancer-trial-001",
+          "testolone-misinformation-marketing-vs-evidence-001",
+          "testolone-evidence-gap-performance-use-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The reviewFlag on claim testolone-adverse-effect-liver-injury-case-001 mischaracterizes a re-fetch of the FDA warning letter (already one of this claim's own sourceRefs) as 'independent corroboration' \u2014 this violates the directive's explicit rule that re-reading the original source does not resolve a review item. Must be corrected to cite a genuinely different-family source (e.g., the independent Ochsner Journal case report and/or NCBI LiverTox, both located and confirmatory in this review) before this claim's review status is described as resolved.",
+          "Trial-results claim (testolone-studied-use-breast-cancer-trial-001) still lacks a fetched/read primary source confirming the actual efficacy/safety results of NCT03088527; a published results paper (PMID 33513026) exists and should be fetched in full and incorporated, or the claim should stay explicitly review-gated on results specifics as it currently is.",
+          "UNII/DrugBank/PMID identifiers remain unresolved per ops.reviewReasons; not blocking on evidence quality grounds but should be completed before public promotion for identifier completeness."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "All fieldAuthorityRequired claims (regulatory unapproved-new-drug claim and the liver-injury adverse-effect claim) were independently corroborated by materially different source families (a separate FDA consumer-update page, NCBI LiverTox structured database, and an independent Ochsner Journal case report) \u2014 the underlying safety content of the packet is well-supported.",
+        "No instances of medical advice, dosing recommendations, or animal-to-human efficacy inflation were found in the packet's statements; the packet is appropriately conservative and repeatedly flags trial/case-report context as not a use recommendation, consistent with the directive."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-vosilasarm",
+      "compoundName": "Vosilasarm (RAD-140 / RAD140 / Testolone / EP0062)",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "vosilasarm-identity-naming-001",
+          "vosilasarm-mechanism-ar-agonist-001",
+          "vosilasarm-regulatory-unapproved-illegal-marketing-001",
+          "vosilasarm-studied-use-oncology-development-001",
+          "vosilasarm-efficacy-phase1-oncology-001",
+          "vosilasarm-adverse-effect-hepatotoxicity-001",
+          "vosilasarm-misinformation-bodybuilding-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Adverse-effect claim vosilasarm-adverse-effect-hepatotoxicity-001 (fieldAuthorityRequired=true) misstates the depth of published literature, saying only 'a single published case report' documents gray-market RAD-140 hepatotoxicity; independent search found multiple additional published case reports (e.g., Ochsner Journal 2022, a separate Alpha Bolic RAD-140 case) that should be added or the language corrected before this safety-critical claim is promoted.",
+          "CAS number and UNII for vosilasarm/RAD-140 remain unresolved from any source consulted (original or independent) -- externalIdentifiers.casNumber/unii should stay null/flagged rather than be presented as settled.",
+          "Live ClinicalTrials.gov status for NCT05573126 could not be independently confirmed this session either (fetch returned no usable trial data, same blocker the packet already reported) -- current recruitment/completion status for the studied-use claim remains genuinely unresolved and should stay human-review gated rather than being asserted as current.",
+          "Minor enrollment-size discrepancy (130 vs. 128 patients) between the cited Ellipses press release and other independent sources (Wikipedia/AACR abstract) for NCT05573126 should be reconciled."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "Regulatory claim (vosilasarm-regulatory-unapproved-illegal-marketing-001) was live-verified against the actual FDA.gov warning-letter page and the FDA Category 2 compounding bulk-substances page as of today (2026-08-29, page content dated 2026-04-22, i.e. post the April 2026 listings change mentioned in instructions) -- both fully support the packet's claim and resolve one of its own open reviewReasons (Category 2 absence is now confirmed rather than merely unverified).",
+        "Mechanism and misinformation/mislabeling claims were both independently corroborated by materially different source families (preclinical primary literature; independent press coverage of the underlying analytical study) with no discrepancies found."
+      ]
+    },
+    {
+      "decisionId": "wave-r3-yk-11",
+      "compoundName": "YK-11",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:18:55Z",
+      "scope": {
+        "claimIds": [
+          "yk11-regulatory-not-approved-adverse-event-001",
+          "yk11-adverse-effect-liver-injury-001",
+          "yk11-mechanism-ar-partial-agonist-myostatin-001",
+          "yk11-invitro-osteoblast-001",
+          "yk11-evidence-gap-no-human-trials-001",
+          "yk11-misinformation-marketing-gap-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "wave-r3"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Reconcile the bilirubin figure in yk11-adverse-effect-liver-injury-001: the independently located primary case report (Military Medicine, doi 10.1093/milmed/usac039) gives an initial bilirubin of 29.2 mg/dL peaking as high as 37 mg/dL, not the 36.4 mg/dL stated in the packet -- verify against LiverTox's exact wording or cite the primary report's number directly before this safety-critical claim is published.",
+          "compound.externalIdentifiers.unii is listed as null but PubChem CID 119058028 independently resolves an FDA UNII (Z9748J6B0R) for this compound -- update the identifier rather than leaving it unresolved.",
+          "ops.completeness is 'partial' and ops.needsReview is true; per the packet's own gating this expansion-batch packet is not yet cleared for publication regardless of claim-level findings.",
+          "Kanno et al. 2011 (cited via the Cayman vendor datasheet for the AR-partial-agonist/no-N/C-interaction mechanism) still has not been independently verified against the primary journal article itself -- only corroborated via a tertiary secondary source in this review pass."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent review (run wf_5e2c0122-ecb): request-changes.",
+        "All three fieldAuthorityRequired-adjacent safety/regulatory claims held up under independent-family cross-check: the FDA claim was corroborated by a separate FDA warning letter (different document, same regulator), and the liver-injury claim was traced to its likely underlying primary case report (Military Medicine) via a family the original sourceRefs did not use (paper-level primary literature vs. professional-guidance/LiverTox).",
+        "Both preclinical mechanism/target-pathway claims (Kanno 2013 follistatin/MRF paper and Yatsu 2018 osteoblast paper) were independently re-fetched directly from the publisher (J-STAGE) rather than via vendor summary or PubMed, and the packet's extracted quotes matched the primary text closely -- a genuine upgrade in evidentiary independence from the original packet."
+      ]
+    }
+  ]
+}

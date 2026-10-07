@@ -24,4 +24,5 @@ public sealed class PersonProfile
     public ICollection<ProtocolRun> ProtocolRuns { get; set; } = new List<ProtocolRun>();
     public ICollection<ProtocolPhase> ProtocolPhases { get; set; } = new List<ProtocolPhase>();
     public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>();
+    public ICollection<ProfileGoal> Goals { get; set; } = new List<ProfileGoal>();
 }

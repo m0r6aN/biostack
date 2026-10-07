@@ -6,11 +6,11 @@ describe('StackIntelligencePanel', () => {
   it('defaults to an empty helper-driven state without demo compounds', () => {
     render(<StackIntelligencePanel />);
 
-    expect(screen.getByText('Input State')).toBeInTheDocument();
+    expect(screen.getByText('Stack Check')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'List' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getAllByText('No inputs detected.')[0]).toBeInTheDocument();
-    expect(screen.getByText('Relationship analysis unavailable.')).toBeInTheDocument();
-    expect(screen.getByText('Type anything you take.')).toBeInTheDocument();
+    expect(screen.getAllByText('No stack items added yet.')[0]).toBeInTheDocument();
+    expect(screen.getByText('Need one more item for a stack finding.')).toBeInTheDocument();
+    expect(screen.getByText('Paste your stack one item per line.')).toBeInTheDocument();
     expect(screen.queryByText('BPC-157, TB-500, Creatine')).not.toBeInTheDocument();
     expect(panelContent.simple.relationshipGroups).toEqual([]);
   });
@@ -23,7 +23,7 @@ describe('StackIntelligencePanel', () => {
       />
     );
 
-    expect(screen.getAllByText('Relationship detected.')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Possible overlap found.')[0]).toBeInTheDocument();
     expect(screen.getByText('BPC-157 + TB-500')).toBeInTheDocument();
     expect(screen.getByText('tissue-repair: Educational reference only.')).toBeInTheDocument();
 

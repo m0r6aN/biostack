@@ -1,0 +1,98 @@
+b6056687319763e558a6836765401388dd1f2335 2026-09-03 08:59:13 -0400 Draft BioStack sidecar deployment charter
+e24fd62268ff233d8716fef9864449990b9f34d6 2026-09-02 12:17:43 -0400 docs(goal): triage remediation plan review
+73708c9cf84df09bced036e07f1eae718e676ee2 2026-09-02 11:44:45 -0400 docs(goal): record Gate 1 ratification request
+db0ee5e28a3c9a86ce1ca7dc85882e7932a494e7 2026-09-02 10:36:50 -0400 test(sidecar): reproduce lifecycle boundary gaps
+8fb79d4e8c8bca82a0bb646dea3a10d17591ed28 2026-09-02 09:44:34 -0400 test(interactions): reproduce audit safety gaps
+0e02fd21eaa71176845b7d1b5549781fa265087b 2026-09-02 09:44:33 -0400 test(parser): reproduce audit invariants
+1943da3297c0c2b8019c1784903b810ce6d0d87e 2026-09-02 09:44:33 -0400 test(audit): reproduce evidence provenance gaps
+7fe003bdfb4bcd7a419ca9534574cb5930950f1b 2026-09-02 09:43:57 -0400 test(audit): define algorithm reproduction parcels
+dea6899cdad48bbaa1abdc5111ed041b781473b4 2026-09-02 08:51:10 -0400 test(interactions): reproduce audit safety gaps
+631760a2aa892796fe73ae379cfa16c216cc7597 2026-09-02 08:50:30 -0400 test(audit): reproduce evidence provenance gaps
+accbe015dd37dbad4aad2a582681d43f4f7cb8a5 2026-09-02 08:50:22 -0400 test(parser): reproduce audit invariants
+f57cc913ca19e4a8dc7a4f3fd171b0d8d0d1959f 2026-08-08 10:38:43 -0400 Regenerate frontend lockfile
+97d4d6214ec869c51a790b4d3cbb75cec5e6ec04 2026-08-02 11:28:27 -0400 Degrade non-effecting safety receipts when Keon is offline.
+594ad3db7121134e6270719a390b93d1d66d0621 2026-07-28 07:00:17 -0400 WIP on main: c452cf5 chore: add valibot dependency to frontend package.json
+1f271862a302adf7b71a8211129a96f28997df58 2026-07-27 09:35:16 -0400 Fix fail-closed Keon receipt atomicity
+60d94e33faaf6e3155c3d9c53d9f4c73b1f33d25 2026-07-27 08:50:38 -0400 Fix high-severity NuGet advisory gate
+3e6778dad8f64843753aa6b1c99c7169fb7f7a2e 2026-07-27 08:32:13 -0400 On codex/nuget-high-advisory-gate-20260727: codex-nuget-high-advisory-gate-pre-rebase
+483c4eb13fba2667eddb6785556e5ffc318d7398 2026-07-27 07:04:01 -0400 WIP on main: c452cf5 chore: add valibot dependency to frontend package.json
+e68d322bac5e2ce021166bc718ef7065563532cd 2026-07-26 10:10:41 -0400 Add managed Blob source acquisition runtime
+fd61729ba15b659c5d9af593e046323a7e09acb6 2026-07-26 09:48:03 -0400 Merge remote-tracking branch 'origin/main' into blackboxai/resolve-frontend-package-lock-conflict
+9c6e9933f884ec538090aee8d9c90981877bfa58 2026-07-26 09:28:10 -0400 On blackboxai/resolve-frontend-package-lock-conflict: pre-merge stray lockfile noise
+6bc483bfdc0bc7290bd7a1e70d92c50ab30afddc 2026-07-26 07:38:08 -0400 Add durable source acquisition runtime
+4a1ef970693823209b4904df550009dd6823bc12 2026-07-25 10:18:47 -0400 Add governed offline source acquisition planning
+d0ff0e334aec548bff348b89622f845f7560d847 2026-07-25 10:18:23 -0400 Add governed offline source acquisition planning
+73eeed6f246cc6bb7b9f0b3625d6d526bd5a73ad 2026-07-25 10:14:02 -0400 Update frontend production dependencies
+d645ad12888e1d30bedeb46b4a88f7fe290d9263 2026-07-25 10:12:09 -0400 Update frontend production dependencies
+42b5a99934f9f41de10bb10ed33259bcc6871354 2026-07-25 09:40:21 -0400 WIP on main: e1a1209 docs: add BioStack Public Legal Policies document (v0.9.0-draft)
+ccb4ca18b80c53b65417b11261a2a2d9433def06 2026-07-17 16:05:26 -0400 WIP on main: 012fd5d docs: update README for clarity and structure; add product-ids documentation fix(tests): remove unnecessary project reference from test project
+462d864d0d380516305c86dab086c62835995747 2026-07-16 12:40:44 -0400 docs: bootstrap governed delivery
+84bce6012cae1fdc91353ef8edaffc701bea2cc9 2026-07-15 10:57:56 -0400 Allow explicit sandbox schema reset
+8b5ae29e46048471a78a3276b5391888c206b8bf 2026-07-13 14:16:53 -0400 WIP on claude/keo-64-release-ci: ad8792e Update git fetch command to remove depth option
+f36f26bd4f5cf45cc56bb5b64adb678bae057ebc 2026-07-13 14:05:37 -0400 fix(security): scope receipt reads to actor
+df3314c66eb53a23b5fc2070ec695706360de39d 2026-07-11 14:44:13 -0400 fix(ci): make Kompress restore reproducible
+20a2106d8ad40101211779f8d178873951238d00 2026-07-11 14:43:59 -0400 feat(calculators): promote syringe and vial visuals
+442c5faf8779c05bf2a04dd051b525d9911a6741 2026-07-11 14:37:24 -0400 fix(ci): make Kompress restore reproducible
+db8c8dbeb121cf8558d838ef59266297c4a6fd87 2026-07-06 10:19:33 -0400 WIP on worktree-frontend-readiness-remediation: 778a703 fix(frontend): plain-language nav/panel labels, fix name drift, add tooltips
+8c0ae071799ecee1e9a281611e47354715384d68 2026-07-06 10:16:20 -0400 WIP on worktree-frontend-readiness-remediation: 778a703 fix(frontend): plain-language nav/panel labels, fix name drift, add tooltips
+40f7270fa65a497bd3c7756ef7c900c560259cc7 2026-07-06 10:01:10 -0400 WIP on worktree-frontend-readiness-remediation: 1854553 feat(frontend): rewrite provider landing page for real evaluation
+2313d0b507f21d4b3dab5f26ec1cfc4a4c78f8d7 2026-07-06 09:43:24 -0400 WIP on worktree-frontend-readiness-remediation: 503d416 fix(frontend): unify free-vs-paid tier terminology across pricing/billing
+496d129aed887a6db48bb2eeebf5245b405c137a 2026-07-06 09:35:56 -0400 WIP on worktree-frontend-readiness-remediation: f8f980c fix(frontend): explain why an account is needed at save/auth moments
+f5ffedaeaa6cde10c70d167ea39e7569b4ba917d 2026-07-06 09:33:33 -0400 WIP on worktree-frontend-readiness-remediation: f8f980c fix(frontend): explain why an account is needed at save/auth moments
+9ed87fc0cadb4378240bdda000ffdaa407e137a7 2026-07-06 09:20:24 -0400 WIP on worktree-frontend-readiness-remediation: f8f980c fix(frontend): explain why an account is needed at save/auth moments
+79bd452e804707de7c0567b3cffdfa833889bfdd 2026-07-06 09:15:32 -0400 WIP on worktree-frontend-readiness-remediation: 7e7526b refactor(frontend): collapse /start, /map, /onboarding into one canonical route
+367fe3ac1e2b46d3d6124dd2f0e9dcae8f7d6eb9 2026-07-06 09:09:02 -0400 WIP on worktree-frontend-readiness-remediation: 7e7526b refactor(frontend): collapse /start, /map, /onboarding into one canonical route
+1c0f644ab08badb9848f5855db81ee4fe3085cd9 2026-07-06 08:58:40 -0400 WIP on worktree-frontend-readiness-remediation: 7cd190c fix(frontend): rename confusing "Map Stack" CTA to "Analyze My Stack"
+1f69a85c9116f7962294d2c61cfc1771291cbcfc 2026-07-06 08:50:16 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+e044dd851a26e0215f9e6ea14d2471b42aecabf2 2026-07-06 08:48:21 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+d5fcfb4e66bb44fca40b1e53ca3ebd453b0e89ae 2026-07-06 08:46:05 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+9ec8c26836b20ca8aba7fefcca870dc041adee90 2026-07-06 08:45:51 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+113af6d97e97f0bd34dd82080a3946a71ff85476 2026-07-06 08:45:36 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+6f3c8693f0aca017cec0805201c1d019112b68c1 2026-07-06 08:33:47 -0400 WIP on worktree-frontend-readiness-remediation: 1bccbcb Merge pull request #179 from m0r6aN/fix/frontend-test-cleanup
+6179bcda8e0205a2f8c6a8f972245c826805cb8d 2026-07-04 13:28:04 -0400 WIP on main: d7aa113 feat(protocol-operations): add export endpoint for operations report and update documentation
+9bf4a99ca2db084635f0ee80b6a11602860fdc0c 2026-06-29 10:57:11 -0400 On fix/remove-protocol-intelligence-runtime-leak: remediation-temp-verify
+3f0e4513cc989dc0f5911666f17b6d6b9bc6eb3a 2026-06-29 10:33:59 -0400 On feat/protocol-intelligence-evaluation-reporting: wip: protocol intelligence reporting polish before runtime leak remediation
+acc634c50598d9ef3af90d55d179fa855771f8a5 2026-06-29 10:11:30 -0400 chore(biostack): remove placeholder next steps doc
+627f6b0ee75cd32f007fb2837aa1600fc80a662d 2026-06-27 14:51:38 -0400 fix(biostack): refine protocol compound recognition defaults
+04061329fa02095fc4607ae6b44ea546e339835c 2026-06-27 13:21:37 -0400 On main: wip: honest-parsing Recognized refinement (preserved during StackReview verification)
+df0fa24db3aa479ce34cc76705cda0781ecac312 2026-06-27 10:48:10 -0400 fix(protocol-parsing): address PR #122 review comments
+0796fc1b5252c997f5fe3e03b41f781268eb222a 2026-06-27 09:22:39 -0400 feat(biostack): gate stack review deliberation outputs
+e03f57c23a638f522315af769d3485a8f7294666 2026-06-27 07:06:07 -0400 docs(plans): add Lane G directive and backend intelligence master plan
+ca4e24b2c89834d3fe092d0c7770c235e7d92f9a 2026-06-27 07:03:35 -0400 docs(plans): add Lane G directive and backend intelligence master plan
+2072c6c78509111d008ab88478f5e618793173f5 2026-06-27 06:34:38 -0400 On feat/lane-c-compound-graph: lane-h-remnants
+3abce9d42f9f12e2cdbf3573a067d9907e18e77a 2026-06-21 10:09:09 -0400 On docs/evidence-guided-protocol-intelligence: protocol-intelligence-foundation-publish-scope
+3a26572295ad0a4c5748734e7caba153940ddcf2 2026-06-12 18:49:33 -0400 WIP on worktree-analyzer-premium-redesign: 0222d97 feat(analyzer): sticky report summary bar
+1870d5ebd48adbeb47f3f48f95cf313fea56a09e 2026-06-07 14:38:00 -0400 WIP on main: 28c8ca4 feat(RR-2): add non-mutating promotion preview endpoint (#99)
+289ed8d84032964abaf5405b3543b801e4afe30c 2026-06-07 13:01:25 -0400 feat(PR15): add read-side observability filters to staged transcript candidate review list
+74a97f063bfc7d0d320cbf4e57013bef5c159696 2026-06-07 12:45:42 -0400 feat(PR14B): add promotion execution for staged transcript candidate reviews
+57a84d8e153d147387617761ee15d54ce626a089 2026-06-07 09:49:03 -0400 fix(admin): harden POST review-state endpoint (PR91 review fixes)
+ca2bd993d74ed392fe81c2021a19d074288130d6 2026-05-17 17:07:27 -0400 On feat/frontend-alpha-trust-ux: tmp: PR2 changes
+e28cae8695abb7af317e3f73df6b4770d097ab43 2026-05-17 15:39:54 -0400 test(billing): use FeatureGate.ObserverActiveCompoundLimit in tier assertion
+8b370d324817ce5a7bc41fac02fdc6c3e283a229 2026-05-17 14:48:37 -0400 On feat/analyzer-paid-gate: wip: lscache + untracked files (analyzer rebase)
+1545dde7b945b05d734913c2c07373ad01609647 2026-05-17 14:48:07 -0400 On feat/analyzer-paid-gate: wip: lscache deletions
+b4de06eb480ca8ba2c77b704629b2010443f0a61 2026-05-17 14:43:11 -0400 fix(auth): return 401/403 instead of redirecting cookie-auth challenges on /api/*
+ed73f98fe18e92f1abc628f31c526b841428b2f9 2026-05-17 14:23:06 -0400 feat(analyzer): enforce PaidIntelligence on POST /api/analyze/protocol
+aa8ab81e8089f6ef6f063949193059ecd38dc34a 2026-05-17 14:22:50 -0400 On feat/analyzer-paid-gate: wip: lscache
+225e79dfed368df59560f420b770019aa8416271 2026-05-17 14:22:19 -0400 On feat/analyzer-paid-gate: wip: PR2 frontend copy polish and lscache (unrelated to analyzer rebase)
+a61c3775c81e23cde6d0e8e18b8d0de94a553691 2026-05-17 12:30:43 -0400 fix(api-tests): remove production DbContext options config in test host
+2c80b82af88aac6b10eb08e616fcd9911e7a5652 2026-05-17 12:02:54 -0400 fix(api-tests): remove production DbContext options config in test host
+e056fcc9d998ea1dc621d8ff42e41d1771b1656c 2026-05-17 10:23:08 -0400 chore(launch): remove prescriptive soft-launch copy
+b93c7801980a998858d5172cabf4123eef04d255 2026-05-17 10:13:10 -0400 WIP on main: ced9d41 Merge branch 'main' of https://github.com/m0r6aN/biostack
+59bfd52f48e530c9dec7b6268acb80839c6da53c 2026-05-17 07:32:15 -0400 feat(protocols): add provider-ready observational summary
+0bedcf88485794532e4bfdab8d933d46b6380431 2026-05-17 07:31:10 -0400 feat(protocols): add provider-ready observational summary
+f706a31f2b4c0b41b2ad3cdff90b8fff8225b172 2026-05-17 06:48:39 -0400 WIP on main: aaf51eb fix(conversion): type narrowing, a11y improvements, and defensive comment
+55a321d9c888c9e1b166a7cd52b618273d4062c1 2026-05-17 05:21:35 -0400 WIP on main: 5ffd234 fix(vocab): align theoretical tier to mechanisticEvidence key in intel badge
+d232d5dfbedf0412e69854fe76cecae64b3c726d 2026-05-16 22:35:51 -0400 WIP on main: 696bda9 feat(vocab): wire HelpTip into both EvidenceTierBadge components
+75b23fe5ce6dd88c29367247a6d4f878917a505e 2026-05-16 21:36:58 -0400 WIP on main: f77c556 Merge branch 'main' of https://github.com/m0r6aN/biostack
+2a6fca587eff216481c7804ec8db5bdbc23d2ed1 2026-05-16 09:45:33 -0400 WIP on feat/compound-relationship-graph: 20db402 feat(research): cross-compound relationship graph artifact
+140e3b267b1daecc0d3c96808ea06d41fa2d0be6 2026-05-16 08:52:52 -0400 WIP on feat/compound-relationship-graph: 66bc885 Chore/package bump followup (#58)
+5761027a9022f912193f42938f15931365a96574 2026-05-11 07:45:21 -0400 WIP on codex/knowledge-research-supply-chain: 69ae46c fix: resolve remaining conflict markers in ToolsDecisionSurface.tsx
+445c2d1d22abba5129ba1592cd6bdd7b1507585b 2026-05-06 09:35:10 -0400 feat(calculators): add syringe and vial visual guides
+644bf469731a3f882c7c0a6a7ed56fd1a0512368 2026-05-04 07:22:33 -0400 Stack deliberation. In pgrogress
+ba48cc4ef346a3b31fd6132f2d768da76865fbe4 2026-04-22 11:33:33 -0400 fix(swap-recommendations): gate preserves_synergy on pair identity, not aggregate count
+fad698f3de23bd21f73e41a55b03a5e7b154ab0f 2026-04-21 19:59:43 -0400 refactor(swap-recommendations): sharpen candidate eligibility and reason truthfulness
+322342eca231c70a6075432ac0b78bf6374706f5 2026-04-21 19:33:28 -0400 feat(interaction-intelligence): constrained swap recommendations
+8d8b5d25542a18296bfdf396ed22b24efdd27205 2026-04-19 10:23:39 -0400 Got rid of useless content below the fold.
+452ef8241708dfb425ff4c738735cf97dfc6a38f 2026-04-19 10:05:31 -0400 Rebuild tools decision surface
+88ab422883af8f548ebe339879ce73e0e2849c30 2026-04-18 09:35:46 -0400 Finalize launch hero copy
+47d769c98d7bc666d03b0e4b5034f8fb75952c28 2026-04-17 11:24:49 -0400 Make starter onboarding beginner-friendly

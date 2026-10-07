@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified session. Claude's completed handoff reported no subagents; a generic running-task indicator was not treated as proof of another model."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "1c5e3a81c0e0f39d0ef4dffde63b627f862e2948100ee5dc4dd75be7ab4ee24f",
+  "requested_lanes": [
+    "Draft PR for source metadata, inventory and rights-review documents",
+    "Eight worker test failures triage and remaining blocker handoff"
+  ],
+  "response_status": "partial",
+  "artifacts": [
+    "https://github.com/m0r6aN/biostack/pull/288",
+    "research/source-authorization/CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md",
+    "research/source-authorization/CODEX-GTM-COLLABORATION-2026-09-08.md",
+    "research/output/codex-gtm-collaboration-20260908/worker-tests.trx",
+    "research/output/codex-gtm-collaboration-20260908/inventory-independent-review.json"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Independently rebuilt and ran 883 worker tests: 875 passed, 8 failed",
+      "Read PR #288 diff, commits and draft state with gh",
+      "Enumerated all 634 source occurrences and found 10 source IDs with metadata variants omitted by the inventory",
+      "Read exact historical registry blob at cbaed8e and verified the issued v1 SHA-256"
+    ],
+    "passed": false
+  },
+  "deviations": [
+    "Remote response completed, but acceptance remains partial because inventory metadata loss and inaccurate handoff/PR claims require remediation. Round 2 was sent after response completion.",
+    "RTK unavailable on this host; ordinary shell commands were used directly.",
+    "Claude included Codex's concurrent coordination handoff in the documentation commit; its content was independently read and preserved."
+  ],
+  "dissent": [
+    "Four failed tests assert historical inventory declarations; they do not independently evaluate valid rights approval. Keep the existing tests and binding untouched in this bounded follow-up while preserving this design disagreement.",
+    "Historical v1 registry has 13 lanes and only 7 enabled; the handoff claim that reverting it would reactivate 17 new lanes is contradicted by its exact blob.",
+    "Not all remaining work is owner-gated: inventory occurrence preservation and grouping are authorized technical tasks."
+  ]
+}

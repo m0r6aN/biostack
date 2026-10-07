@@ -1,0 +1,398 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "mots-c-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "MOTS-c",
+    "aliases": [
+      "MOTS-C",
+      "mitochondrial-derived peptide",
+      "MOTS-c acetate",
+      "Mitochondrial Open Reading Frame of the 12S rRNA-c"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Mitochondrial-derived peptide (16-amino-acid, mitochondrial-genome-encoded, AMPK-pathway regulator)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "A5CV6JFB78",
+      "casNumber": "1627580-64-6",
+      "drugbank": null,
+      "pubchem": "146675088",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-mots-c-withdrawn-nomination",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn table)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "fda-pcac-briefing-193347",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (MOTS-c free base and MOTS-c acetate evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/193347/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "reynolds-2021-natcomms-mots-c-exercise",
+      "sourceType": "peer-reviewed-study",
+      "authorityTier": "B1",
+      "title": "MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis",
+      "publisher": "Nature Communications (Reynolds JC, Lai RW, Woodhead JST, et al., 2021)",
+      "url": "https://www.nature.com/articles/s41467-020-20790-0",
+      "doi": "10.1038/s41467-020-20790-0",
+      "pmid": null,
+      "publishedAt": "2021-01-20T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-146675088",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Mots-c (CID 146675088)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Mots-c",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ajmc-pcac-peptides-vote-2026",
+      "sourceType": "trade-press",
+      "authorityTier": "C2",
+      "title": "FDA Panel Backs 6 Peptides for Compounding",
+      "publisher": "AJMC (American Journal of Managed Care)",
+      "url": "https://www.ajmc.com/view/fda-panel-backs-6-peptides-for-compounding",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "diabetology-mds-mdp-systematic-review-2024",
+      "sourceType": "peer-reviewed-study",
+      "authorityTier": "B1",
+      "title": "Systematic review of mitochondrial-derived peptides (MOTS-c and related peptides) in metabolic disease",
+      "publisher": "Diabetology & Metabolic Syndrome",
+      "url": "https://link.springer.com/article/10.1186/s13098-024-01405-w",
+      "doi": "10.1186/s13098-024-01405-w",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "clinicaltrials-nct07505745",
+      "sourceType": "clinical-trial-registry",
+      "authorityTier": "C1",
+      "title": "MOTS-c for Improving Insulin Sensitivity in Adults With Prediabetes and Overweight/Obesity (NCT07505745)",
+      "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+      "url": "https://clinicaltrials.gov/study/NCT07505745",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "gethealthspan-mots-c-dosage-protocol",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C1",
+      "title": "MOTS-C Dosage Chart: How to Actually Protocol This Mitochondrial Peptide",
+      "publisher": "Healthspan (gethealthspan.com)",
+      "url": "https://www.gethealthspan.com/research/article/mots-c-dosage-chart-protocol-guide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "mots-c-regulatory-nomination-withdrawn-001",
+      "claimType": "regulatory",
+      "statement": "MOTS-c was nominated for FDA's 503A Bulk Drug Substances list but the nomination was withdrawn; FDA's own note on the withdrawn-nominations table states it identified no human exposure data for MOTS-c via any route of administration and lacks information on whether MOTS-c would cause harm if administered to humans, while also flagging potential immunogenicity risk from peptide-related impurities.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": null,
+        "formulation": "MOTS-c (bulk substance nomination)",
+        "useCase": "compounding eligibility / regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-mots-c-withdrawn-nomination"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-mots-c-withdrawn-nomination",
+          "quote": "Compounded drugs containing MOTs-C may pose significant risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and API characterization. FDA has not identified any human exposure data on drug products containing MOTs-C administered via any route of administration. FDA lacks important information regarding any safety issues raised by MOTs-C, including whether it would cause harm if administered to humans.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, MOTs-C entry"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "withdrawn-nomination status can change; verify current table entry at review time",
+        "MOTS-c is NOT currently on the Category 2 significant-safety-risk table itself (that table lists other substances) - do not conflate with Category 2 status"
+      ]
+    },
+    {
+      "claimId": "mots-c-regulatory-pcac-no-human-data-001",
+      "claimType": "regulatory",
+      "statement": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. At the PCAC meeting on July 23, 2026, the committee voted 7-5 with 2 abstentions to recommend MOTS-c for the 503A Bulks List, overriding the staff recommendation. An advisory committee vote is not itself a legal listing decision -- FDA must still complete rulemaking before MOTS-c could be lawfully compounded under 503A -- and the staff's underlying findings on the absence of human exposure data and incomplete characterization remain unchanged by the vote.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": "injection (route under evaluation)",
+        "formulation": "MOTS-c free base and MOTS-c acetate",
+        "useCase": "regulatory evaluation for compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193347",
+        "ajmc-pcac-peptides-vote-2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193347",
+          "quote": "FDA did not identify any clinical studies or human exposure data for MOTS-c via any route of administration.",
+          "pageOrSection": "PCAC briefing document, MOTS-c evaluation section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193347",
+          "quote": "the potential for immunogenicity when administered by an injection route",
+          "pageOrSection": "PCAC briefing document, safety concerns"
+        },
+        {
+          "sourceRef": "ajmc-pcac-peptides-vote-2026",
+          "quote": "MOTS-c passed 7-5 with 2 abstentions.",
+          "pageOrSection": "Article body, PCAC July 23, 2026 meeting vote results"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "resolved 2026-08-29: PCAC committee voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing-document recommendation; statement updated accordingly and vote outcome confirmed independently via AJMC reporting of the same meeting",
+        "advisory-committee recommendation is not a final rule; FDA must complete rulemaking before any lawful 503A listing takes effect -- re-check FDA's Federal Register docket for a final rule at next review",
+        "briefing document date should be confirmed against the July 2026 PCAC meeting record"
+      ]
+    },
+    {
+      "claimId": "mots-c-mechanism-exercise-induced-ampk-001",
+      "claimType": "mechanism",
+      "statement": "MOTS-c is a 16-amino-acid peptide encoded within mitochondrial DNA (within the 12S rRNA region) that acts via AMPK-dependent signaling; in mice it regulates skeletal-muscle metabolism and nuclear genes related to metabolism and proteostasis, and endogenous MOTS-c is exercise-inducible, rising in circulation during and after acute exercise in humans.",
+      "context": {
+        "population": "sedentary healthy young male volunteers (exercise-expression sub-study, n small, mean age ~24.5 yrs)",
+        "route": "endogenous (not administered)",
+        "formulation": null,
+        "useCase": "mechanism / exercise physiology description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "reynolds-2021-natcomms-mots-c-exercise",
+        "fda-pcac-briefing-193347"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "reynolds-2021-natcomms-mots-c-exercise",
+          "quote": "In humans, exercise induces endogenous MOTS-c expression in skeletal muscle and in circulation.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "reynolds-2021-natcomms-mots-c-exercise",
+          "quote": "relative levels of circulating endogenous MOTS-c also significantly increased during (1.6-fold) and after (1.5-fold) exercise",
+          "pageOrSection": "Results, human exercise sub-study"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193347",
+          "quote": "via AMPK-dependent mechanisms",
+          "pageOrSection": "PCAC briefing document, mechanism summary"
+        }
+      ],
+      "reviewFlags": [
+        "the physical-performance and healthspan findings in this study are from mice; do not extend to claims of human efficacy"
+      ]
+    },
+    {
+      "claimId": "mots-c-evidence-gap-exogenous-human-efficacy-001",
+      "claimType": "evidence-gap",
+      "statement": "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only.",
+      "context": {
+        "population": "general population / consumers of gray-market MOTS-c products",
+        "route": "subcutaneous injection (common gray-market use)",
+        "formulation": "research-grade MOTS-c",
+        "useCase": "metabolic health, fat loss, exercise performance, anti-aging (as marketed)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-193347",
+        "reynolds-2021-natcomms-mots-c-exercise"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193347",
+          "quote": "FDA did not identify any clinical studies or human exposure data for MOTS-c via any route of administration.",
+          "pageOrSection": "PCAC briefing document, MOTS-c evaluation section"
+        },
+        {
+          "sourceRef": "reynolds-2021-natcomms-mots-c-exercise",
+          "quote": "MOTS-c can significantly enhance physical performance in young (2 mo.), middle-age (12 mo.), and old (22 mo.) mice.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor sites market MOTS-c for fat loss, exercise-mimetic effects, and anti-aging by extrapolating from mouse data and endogenous-expression data to exogenous human dosing",
+        "monitor NCT07505745 (Phase 2a) for the first controlled exogenous-administration human efficacy data"
+      ]
+    },
+    {
+      "claimId": "mots-c-studied-use-phase2a-prediabetes-trial-001",
+      "claimType": "studied-use",
+      "statement": "An investigational Phase 2a randomized, placebo-controlled trial (NCT07505745) is recruiting adults aged 18-65 with BMI 27-40 kg/m2 and documented prediabetes to receive investigational MOTS-c or matching placebo via subcutaneous injection once daily for 12 weeks alongside standardized lifestyle counseling, to evaluate improvement in insulin sensitivity; results are not yet available.",
+      "context": {
+        "population": "adults 18-65, BMI 27-40 kg/m2, prediabetes (estimated enrollment 120)",
+        "route": "subcutaneous",
+        "formulation": "investigational MOTS-c",
+        "useCase": "insulin sensitivity in prediabetes / overweight-obesity (investigational, ongoing)",
+        "doseText": "once-daily subcutaneous injection for 12 weeks (trial protocol; dose amount not specified in the registry summary reviewed; not a use recommendation)"
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "clinicaltrials-nct07505745"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clinicaltrials-nct07505745",
+          "quote": "MOTS-c for Improving Insulin Sensitivity in Adults With Prediabetes and Overweight/Obesity",
+          "pageOrSection": "Brief title"
+        }
+      ],
+      "reviewFlags": [
+        "trial is actively recruiting as of the March 2026 verification date reviewed; outcome not yet available - re-check status/results at review time",
+        "trial dose/route context must never be presented as a use recommendation",
+        "independent-review note (2026-08-29): trial details were cross-checked against an independent registry mirror (ichgcp.net/clinical-trials-registry/NCT07505745) rather than clinicaltrials.gov directly and corroborate the packet's description (Phase 2a, ages 18-65, BMI 27-40, prediabetes, subcutaneous once-daily x12 weeks, placebo-controlled, still recruiting); this mirror is still within the same 'structured database' source family as the packet's own source, not a fully independent family (no news/trade coverage of the trial was found). Flagged as a minor methodological gap, not a blocker, since the claim asserts no efficacy outcome.",
+        "authority-disposition-2026-09-07: source 'clinicaltrials-nct07505745' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+      ]
+    },
+    {
+      "claimId": "mots-c-misinformation-gray-market-dosing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c.",
+      "context": {
+        "population": "consumers of gray-market peptide products",
+        "route": "subcutaneous (as marketed)",
+        "formulation": "research-grade MOTS-c",
+        "useCase": "anti-aging / fat loss / exercise-mimetic marketing claims",
+        "doseText": "vendor-suggested self-administration protocol quoted for evidence-gap documentation only; not a use recommendation and not derived from a peer-reviewed human dosing study"
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "gethealthspan-mots-c-dosage-protocol",
+        "fda-pcac-briefing-193347"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "gethealthspan-mots-c-dosage-protocol",
+          "quote": "2.5 to 5 mg subcutaneously, three times per week",
+          "pageOrSection": "Suggested titration protocol, Weeks 1-2"
+        },
+        {
+          "sourceRef": "gethealthspan-mots-c-dosage-protocol",
+          "quote": "human body composition trials don't exist yet",
+          "pageOrSection": "Metabolic health/weight claims section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193347",
+          "quote": "FDA did not identify any clinical studies or human exposure data for MOTS-c via any route of administration.",
+          "pageOrSection": "PCAC briefing document, MOTS-c evaluation section"
+        },
+        {
+          "sourceRef": "gethealthspan-mots-c-dosage-protocol",
+          "quote": "Reynolds, J. C., Bhatt, D. L., Patel, M., et al. (2021). MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis. Nature Communications, 12(1), 470.",
+          "pageOrSection": "Citation given for the claimed 'human RCT' (single IV dose, 2 mg/kg, ~15% improvement in insulin-stimulated glucose disposal)"
+        },
+        {
+          "sourceRef": "reynolds-2021-natcomms-mots-c-exercise",
+          "quote": "Joseph C. Reynolds, Rochelle W. Lai, Jonathan S. T. Woodhead, James H. Joly, Cameron J. Mitchell, David Cameron-Smith, Ryan Lu, Pinchas Cohen, Nicholas A. Graham, Berenice A. Benayoun, Troy L. Merry, and Changhan Lee",
+          "pageOrSection": "Actual author byline of Nature Communications 12(1):470 (2021) -- no Bhatt or Patel among authors, and the paper reports no IV-dose human RCT or glucose-clamp study of any kind"
+        }
+      ],
+      "reviewFlags": [
+        "resolved 2026-08-29: the vendor's cited 'human RCT' (15% insulin-stimulated glucose disposal, single 2 mg/kg IV dose) is a fabricated/misattributed citation. Direct fetch of the actual Reynolds et al. 2021 Nature Communications 12(1):470 paper shows a different author list (no Bhatt or Patel) and no IV-dose human RCT or hyperinsulinemic-euglycemic clamp study -- its only human data is observational endogenous MOTS-c response to exercise. An independent 2024 systematic review (Diabetology & Metabolic Syndrome) likewise found zero controlled human trials of administered MOTS-c in the literature. See conflicts (mots-c-conflict-vendor-human-rct-claim-001), now resolved.",
+        "self-administration dosing content must never be reproduced as a use recommendation on BioStack"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "mots-c-conflict-vendor-human-rct-claim-001",
+      "claimRefs": [
+        "mots-c-misinformation-gray-market-dosing-001",
+        "mots-c-regulatory-pcac-no-human-data-001"
+      ],
+      "severity": "moderate",
+      "summary": "A gray-market vendor page (gethealthspan.com) asserted a human RCT found a 15% improvement in insulin-stimulated glucose disposal from a single 2 mg/kg IV dose of MOTS-c, citing 'Reynolds, Bhatt, Patel et al. (2021) Nature Communications 12(1), 470' -- while FDA's PCAC briefing document states it did not identify any clinical studies or human exposure data for MOTS-c via any route of administration. RESOLVED 2026-08-29: direct fetch of the vendor page confirms the exact fabricated citation text, and direct fetch of the actual Reynolds et al. 2021 Nature Communications paper (DOI 10.1038/s41467-020-20790-0) shows a completely different author byline (Reynolds, Lai, Woodhead, Joly, Mitchell, Cameron-Smith, Lu, Cohen, Graham, Benayoun, Merry, Lee -- no Bhatt or Patel) and no IV-dose human RCT or glucose-clamp study of any kind; its only human data is an observational measurement of endogenous MOTS-c during exercise. An independent 2024 systematic review (Diabetology & Metabolic Syndrome, DOI 10.1186/s13098-024-01405-w) separately confirms zero controlled human trials of administered/exogenous MOTS-c exist in the literature. The vendor's cited human RCT does not exist as described; the citation is fabricated/misattributed, not merely unverifiable.",
+      "resolutionStatus": "resolved"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "RESOLVED 2026-08-29: vendor-cited human RCT (15% insulin-stimulated glucose disposal improvement) confirmed as a fabricated/misattributed citation to Reynolds et al. 2021 -- see conflicts and mots-c-misinformation-gray-market-dosing-001.",
+      "RESOLVED 2026-08-29: CAS (1627580-64-6) and UNII (A5CV6JFB78) identifiers resolved via direct fetch of PubChem CID 146675088 pug_view synonym data. DrugBank and ChEMBL identifiers remain unresolved -- no DrugBank or ChEMBL entry for MOTS-c was located this session; carry forward as a gap.",
+      "NCT07505745 is actively recruiting; re-check status and results at review time.",
+      "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
+      "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
+      "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-human-exposure-data-per-fda",
+      "thin-human-evidence",
+      "gray-market-only",
+      "fabricated-vendor-citation-confirmed",
+      "pcac-committee-recommended-listing-pending-rulemaking",
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
+    ]
+  }
+}

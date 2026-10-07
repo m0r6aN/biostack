@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,12 @@ public static class BillingEndpoints
         group.MapPost("/checkout", CreateCheckout)
             .WithName("CreateBillingCheckout");
 
+        group.MapGet("/entitlements", GetEntitlements)
+            .WithName("GetBillingEntitlements");
+
+        group.MapPost("/refresh", GetEntitlements)
+            .WithName("RefreshBillingEntitlements");
+
         group.MapPost("/portal", CreatePortal)
             .WithName("CreateBillingPortal");
 
@@ -32,6 +39,23 @@ public static class BillingEndpoints
             .WithTags("Billing", "Admin")
             .RequireAuthorization("AdminOnly")
             .WithName("GetQuarantinedStripeBillingEvents");
+
+        app.MapPost("/api/v1/admin/billing/subscriptions/resync", ResyncSubscriptions)
+            .WithTags("Billing", "Admin")
+            .RequireAuthorization("AdminOnly")
+            .WithName("ResyncStripeBillingSubscriptions");
+    }
+
+    private static async Task<IResult> GetEntitlements(HttpContext http, IEntitlementService entitlementService, CancellationToken ct)
+    {
+        var entitlements = await entitlementService.GetUserEntitlementsAsync(HttpUser.GetUserId(http.User), ct);
+        return Results.Ok(entitlements);
+    }
+
+    private static async Task<IResult> ResyncSubscriptions(string? customerId, IBillingService billingService, CancellationToken ct)
+    {
+        var summary = await billingService.ResyncSubscriptionsAsync(customerId, ct);
+        return Results.Ok(summary);
     }
 
     private static async Task<IResult> GetSubscription(IBillingService billingService, CancellationToken ct)

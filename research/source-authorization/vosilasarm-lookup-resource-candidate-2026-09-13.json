@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T10:49:48.035366Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "vosilasarm-identity-naming-001",
+  "candidateStatement": "PubChem’s lookup for the name Vosilasarm returned CID 44200882.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "8af1f778c3d798717d29f3988790e1161788d35c",
+    "path": "research/input/evidence/vosilasarm.evidence.json",
+    "bytes": 33383,
+    "sha256": "051352fe5bfd114999ff3876baa828db00c83100d23df04972ac4693635a7bf5"
+  },
+  "supersededClaimSha256": "78292563b07b4cf22a977622438876c83245b5473445c4776a5cb5bfbe4bb71f",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "ncats-gsrs-vosilasarm-rad140",
+      "locator": "GSRS substance record, RAD140/Vosilasarm search result",
+      "chars": 160,
+      "sha256": "95acb7e1f71f934722b6590f62a9027150354135559e2cbd97610e833850a067"
+    },
+    {
+      "sourceId": "pubchem-cid-44200882",
+      "locator": "IUPAC Name, CID 44200882",
+      "chars": 107,
+      "sha256": "70e088fbee9284470c002ab697d2b8c2793e07a515bf657b9072181ebeaf0d15"
+    },
+    {
+      "sourceId": "drugbank-db13939",
+      "locator": "Vosilasarm (RAD140 investigational designation), DB13939",
+      "chars": 44,
+      "sha256": "54e3c4f219d7c944cc29e0c28b11b57b2a3a96628a836df23c5b6f1ae7ddda52"
+    },
+    {
+      "sourceId": "ellipses-sabcs-2022-vosilasarm",
+      "locator": "Mechanism/trial rationale",
+      "chars": 127,
+      "sha256": "71090316b9888116747bae6b9139d12539db408e0705ff577c29fbc0fe1d03c8"
+    },
+    {
+      "sourceId": "fda-warrior-labz-warning-letter-2023",
+      "locator": "Product list, unapproved new drugs",
+      "chars": 17,
+      "sha256": "f0a63dd479e291a2d3f91e19c1644f12f43321b5d0dadeb34ee5d6575e9b0bd3"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-cid-44200882",
+    "drugbank-db13939",
+    "ellipses-sabcs-2022-vosilasarm",
+    "fda-warrior-labz-warning-letter-2023",
+    "ncats-gsrs-vosilasarm-rad140"
+  ],
+  "historicalNullQuoteLocators": [],
+  "historicalReviewFlags": [
+    "remediation-2026-08-29: CAS number (1182367-47-0) and UNII (4O87Q44KNC) resolved this session via live fetch of the NCATS Global Substance Registration System (GSRS) record for VOSILASARM/RAD140 and added to externalIdentifiers; independently cross-check against CAS Common Chemistry at next review, since that site's own search interface returned 'Search failed: Unauthorized' when queried live this session and could not directly corroborate",
+    "residual minor gap: the specific WHO INN Proposed/Recommended List publication assigning 'vosilasarm' was not located this session (WHO INN List 117 predates the assignment and a more recent list was not found); treat as a minor unresolved reference gap, not a defect in the identity claim itself"
+  ],
+  "historicalFlagQualification": "Original WHO/GSRS/alias assertions remain historical and not newly verified. Only observed name lookup is supported. Removed quote text is available only in original Git history, not copied here.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "free compound",
+    "useCase": "identity/naming disambiguation",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "PubChem name-to-compound lookup",
+    "useCase": "identity/naming disambiguation",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "free compound",
+    "after": "PubChem name-to-compound lookup",
+    "rationale": "Observed name-to-node lookup, not physical formulation proof."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-cid-44200882",
+    "sourceType": "structured-database",
+    "authorityTier": "B2",
+    "title": "PubChem Compound Summary: RAD140 / Vosilasarm (CID 44200882)",
+    "publisher": "National Center for Biotechnology Information / PubChem",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Vosilasarm",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T02:21:10Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-44200882",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/44200882",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/Vosilasarm/cids/JSON?name_type=complete",
+    "method": "GET PUG REST name lookup",
+    "query": {
+      "name": "Vosilasarm",
+      "name_type": "complete"
+    },
+    "observedIdentifierList": {
+      "CID": [
+        44200882
+      ]
+    },
+    "supportLocator": "PUG REST name lookup; input Vosilasarm; name_type=complete; IdentifierList.CID=[44200882]; observed lookup behavior only.",
+    "scope": "Observed response to this exact request only; not an adjudication of chemical or nomenclature equivalence.",
+    "unknowns": [
+      "Underlying naming contributor and provenance",
+      "Whether the name-resolution relationship is independent of DrugBank or other co-cited sources",
+      "WHO INN assignment",
+      "RAD140/Testolone/EP0062 equivalence",
+      "Physical free-compound formulation"
+    ],
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "rightsReviewStatusAtRetrieval": "approved-with-record-contributor-qualifications",
+    "contributorReviewStatus": "unresolved; no claim of naming-contributor origin, redistribution of all upstream names or absence of DrugBank inputs",
+    "retrievedAtUtc": "2026-09-13T10:08:24.881518+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt/projection, no new request or independent transport-byte rehash.",
+    "matchingSemantics": "Literal name_type=complete parameter only; no matching-algorithm inference."
+  },
+  "sourceSha256": "7b9b6f305a93c757858630e244e5b76266bb082d3f6a68790ab9a5f28a2a4296",
+  "payloadProvenance": {
+    "bytes": 64,
+    "attribution": "Worker-reported original lookup transport hash/size, not rehashed from projection."
+  },
+  "requestHistory": {
+    "totalResearchRequests": 2,
+    "implementationRequests": 0,
+    "propertyRequest": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/44200882/property/Title,MolecularFormula/JSON",
+      "query": "CID44200882;Title,MolecularFormula",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T09:32:07.996150Z",
+      "requestEndUtc": "2026-09-13T09:32:08.337202Z",
+      "httpStatus": 200,
+      "bytes": 267,
+      "sha256": "e63bbd393f462a0588de75d0eee84d10ed849e61db5a3a49acd0509bc56a5269",
+      "serverDate": "Sun, 13 Sep 2026 09:32:09 GMT"
+    },
+    "lookupRequest": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/Vosilasarm/cids/JSON?name_type=complete",
+      "method": "GET",
+      "startedAtUtc": "2026-09-13T10:08:24.523039+00:00",
+      "completedAtUtc": "2026-09-13T10:08:24.881518+00:00",
+      "httpStatus": 200,
+      "responseBytes": 64,
+      "sha256": "7b9b6f305a93c757858630e244e5b76266bb082d3f6a68790ab9a5f28a2a4296"
+    }
+  },
+  "priorChemicalTitle": {
+    "returnedField": "Title",
+    "chars": 107,
+    "sha256": "70e088fbee9284470c002ab697d2b8c2793e07a515bf657b9072181ebeaf0d15",
+    "projectionPath": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/identity-properties.json",
+    "qualification": "Original returned Title equals old PubChem quote; text intentionally not duplicated here. Not a newly requested IUPACName property."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/vosilasarm-lookup-codex-review-20260913.md",
+    "detailedScope": "research/output/gtm-activation-20260909/vosilasarm-lookup-candidate-scope-20260913.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/naming-lookup-02-source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/naming-lookup-02-projection.json",
+    "priorProjection": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/identity-properties.json",
+    "initialReceipt": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/receipts/pug-20260913T093207996150Z.json",
+    "receipt": "research/output/gtm-activation-20260909/vosilasarm-identity-replacement-assessment-20260913/receipts/naming-lookup-02-20260913T100824523039Z.json"
+  },
+  "queueAccounting": "Prepared17to18/completed0/prior-co-citation12to13 because existing PubChem co-citation assessed. No independent-family closure.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Strong/high.",
+    "Naming contributor origin/rights, WHO assignment, alias equivalence and physical formulation remain unresolved.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

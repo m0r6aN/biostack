@@ -36,14 +36,14 @@ export function getEarnedSuggestion(input: EarnedSuggestionInput): EarnedSuggest
   if (hasOverlap || (hasWeakOrUnclearSignal && isPotentiallyMuddyStack(stackShape))) {
     return {
       type: 'tighten_stack',
-      title: 'Clarify the stack signal',
-      explanation: 'You may be tracking overlapping or crowded inputs, which can make the next signal harder to isolate.',
+      title: 'Reduce stack redundancy',
+      explanation: 'Overlapping or crowded items can make the next finding harder to trust.',
       reasoning: hasOverlap && hasWeakOrUnclearSignal
         ? 'Based on overlapping inputs and a weak or unclear 7-day review.'
         : hasOverlap
           ? 'Based on overlapping inputs in your current stack.'
           : 'Based on a weak or unclear 7-day review and a crowded current stack.',
-      actionLabel: 'Review stack',
+      actionLabel: 'Review findings',
     };
   }
 
@@ -60,7 +60,7 @@ export function getEarnedSuggestion(input: EarnedSuggestionInput): EarnedSuggest
   if (hasEarnedDay7Review && isNarrowlyImbalancedStack(stackShape)) {
     return {
       type: 'balance_stack',
-      title: 'Notice the stack shape',
+      title: 'Notice the stack mix',
       explanation: 'Your current stack is concentrated in one area. That may be fine; it is just context for reading future signals.',
       reasoning: 'Based on your current stack shape.',
       actionLabel: 'Not now',

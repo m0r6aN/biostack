@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { getApiBaseUrl } from './apiBase';
+import { isProtectedRoutePath } from './appRoutes';
 import { isPublicRoutePath } from './productContract';
 
 export type AuthUser = {
@@ -26,14 +27,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const redirectExpiredProtectedSession = useCallback(() => {
+  const redirectProtectedSession = useCallback((error: 'session-expired' | 'session-unavailable') => {
     const { pathname, search } = window.location;
-    if (isPublicRoutePath(pathname)) {
+    if (isPublicRoutePath(pathname) || !isProtectedRoutePath(pathname)) {
       return;
     }
 
     const callbackUrl = `${pathname}${search}`;
-    window.location.replace(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}&error=session-expired`);
+    window.location.replace(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}&error=${error}`);
   }, []);
 
   const refresh = useCallback(async () => {
@@ -47,20 +48,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           console.warn('BioStack session check failed', { status: res.status });
         }
         setUser(null);
+        redirectProtectedSession(
+          res.status === 401 || res.status === 403 ? 'session-expired' : 'session-unavailable',
+        );
         return;
       }
 
       const session = (await res.json()) as { authenticated: boolean; user: AuthUser | null };
-      setUser(session.authenticated ? session.user : null);
-      if (!session.authenticated) {
-        redirectExpiredProtectedSession();
+      const authenticatedUser = session.authenticated ? session.user : null;
+      setUser(authenticatedUser);
+      if (!authenticatedUser) {
+        redirectProtectedSession('session-expired');
       }
     } catch {
       setUser(null);
+      redirectProtectedSession('session-unavailable');
     } finally {
       setLoading(false);
     }
-  }, [redirectExpiredProtectedSession]);
+  }, [redirectProtectedSession]);
 
   const logout = useCallback(async () => {
     await fetch(`${API_URL}/api/v1/auth/logout`, {
@@ -87,4 +93,9 @@ export function useAuth() {
   }
 
   return context;
+}
+
+/** Auth state when an AuthProvider is present; undefined otherwise. */
+export function useOptionalAuth() {
+  return useContext(AuthContext);
 }

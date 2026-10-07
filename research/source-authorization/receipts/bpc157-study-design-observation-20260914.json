@@ -1,0 +1,24 @@
+{
+  "author": "Codex",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=40756949&retmode=xml&tool=BioStackEvidenceReview",
+  "method": "GET",
+  "startedAtUtc": "2026-09-14T03:11:50.469023+00:00",
+  "attempt": 2,
+  "lifetimeEFetchAttemptsIncludingThis": 2,
+  "requestBudget": 1,
+  "automaticRetries": 0,
+  "redirectsEnabled": false,
+  "responseByteLimit": 262144,
+  "socketTimeoutSeconds": 20,
+  "elapsedReadLimitSeconds": 30,
+  "httpStatus": 200,
+  "headers": {
+    "Date": "Mon, 14 Sep 2026 03:11:50 GMT",
+    "Content-Type": "text/xml; charset=UTF-8"
+  },
+  "responseBytes": 32872,
+  "responseSha256": "a1cfd29266d3b6c3b9dd19729217ba11c168d9b81687576ac16d656a703a8e4a",
+  "disposition": "citation-and-transient-study-design-only",
+  "completedAtUtc": "2026-09-14T03:11:50.875421+00:00",
+  "rawPayloadRetained": false
+}

@@ -1,0 +1,3155 @@
+{
+  "schemaVersion": "1.2.0",
+  "recordType": "source-authorization-decision-batch",
+  "generatedAt": "2026-09-08T00:00:00Z",
+  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Role assignments are unique, but one person may hold multiple roles; that overlap does not satisfy any distinct-person or independent-review requirement. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
+  "registryBinding": {
+    "schemaVersion": "2.0.0",
+    "sha256": "883a892152d7beb7a9217ca8d988404bbda81523416764c74073cc9435297e9c",
+    "registryPath": "research/input/sources/pilot-source-registry.json"
+  },
+  "owners": [
+    {
+      "roleId": "product-owner",
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
+      "assignmentStatus": "assigned"
+    },
+    {
+      "roleId": "legal-rights-approver",
+      "personName": "Johnathan Harper",
+      "assignmentStatus": "assigned"
+    },
+    {
+      "roleId": "evidence-reviewer",
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
+      "assignmentStatus": "assigned"
+    },
+    {
+      "roleId": "security-data-owner",
+      "personName": "Pradic Patel",
+      "assignmentStatus": "assigned"
+    }
+  ],
+  "productDoctrine": {
+    "status": "product-owner-confirmed",
+    "confirmedBy": "Clint Morgan",
+    "confirmedAtUtc": "2026-07-25T13:15:00Z",
+    "purpose": "Help people make the most informed decisions reasonably possible in the interest of their safety and success.",
+    "stance": "observational-educational-evidence-aware-non-prescriptive",
+    "governingPrinciple": "High risk requires more evidence, explanation, validation, review, and escalation. It does not automatically require less useful information.",
+    "allowedInformation": [
+      "Source-grounded benefits, risks, mechanisms, regulatory status, evidence quality, studied populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, monitoring considerations, contradictions, and uncertainty.",
+      "Comparative and historical protocol context, including what was studied and what remains unknown, when clearly labeled as information rather than individualized direction."
+    ],
+    "prohibitedStances": [
+      "Diagnosis, prescription, clinician impersonation, treatment-direction, or individualized commands to start, stop, increase, decrease, taper, or otherwise alter a prescribed treatment.",
+      "Guarantees of safety, efficacy, or outcomes; concealment of uncertainty or material risk; and illegal sourcing, evasion, or concealment assistance."
+    ]
+  },
+  "stageGates": {
+    "sourceActivationRequiredApprovals": [
+      "legalRights"
+    ],
+    "canonicalClaimPromotionRequiredApprovals": [
+      "evidence"
+    ],
+    "productCapabilityReviewRequiredApprovals": [
+      "product"
+    ],
+    "blanketSuppressionProhibited": true,
+    "policy": "Review applies at the relevant stage. Source activation does not authorize claim promotion or medical authority, and a pending later-stage review must not suppress useful information at an earlier authorized stage.",
+    "sourceActivationConditionalApprovals": [
+      "securityData"
+    ],
+    "securityDataTriggers": [
+      "credentials-or-restricted-access",
+      "private-or-personal-data",
+      "new-egress-or-storage-boundary",
+      "untrusted-bulk-archive-or-parser",
+      "executable-or-active-content"
+    ]
+  },
+  "sources": [
+    {
+      "sourceId": "accessdata-fda",
+      "sourceName": "FDA Drugs@FDA / accessdata",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://accessdata.fda.gov/"
+        ],
+        "observedFacts": [
+          "Category: US regulator.",
+          "Registered into the pilot registry on 2026-09-07 with 15 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 27 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use identity, regulatory, approved-indications, product-specific-dosing, contraindications-warnings, monitoring, interactions, efficacy-claims.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "identity",
+          "regulatory",
+          "approved-indications",
+          "product-specific-dosing",
+          "contraindications-warnings",
+          "monitoring",
+          "interactions",
+          "efficacy-claims"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Approved labeling and approval packages support efficacy only for the approved indication as studied in the pivotal trials the label reports; they do not support off-label or general-population efficacy.",
+          "Sponsor-submitted content inside an approval package is not an FDA-authored assessment."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+      ]
+    },
+    {
+      "sourceId": "cdc",
+      "sourceName": "Centers for Disease Control and Prevention",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.cdc.gov/"
+        ],
+        "observedFacts": [
+          "Category: US government health agency.",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 1 claims across the 78-packet corpus.",
+          "Proposed authority tier A2, authorized field use efficacy-claims, monitoring, misinformation-monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A2",
+        "authorizedFieldUse": [
+          "efficacy-claims",
+          "monitoring",
+          "misinformation-monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Population-level public-health guidance; not a product label and not individualized advice."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+      ]
+    },
+    {
+      "sourceId": "drugbank",
+      "sourceName": "DrugBank",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://go.drugbank.com/"
+        ],
+        "observedFacts": [
+          "Category: Commercially licensed database.",
+          "Registered into the pilot registry on 2026-09-07 with 24 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 30 claims across the 78-packet corpus.",
+          "Proposed authority tier C1, authorized field use identity, mechanism, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding.",
+          "Pre-existing class. PR #277 changed rights.reviewStatus from pending-human-legal to approved. That is a legal-rights decision and it was made without this approval."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "C1",
+        "authorizedFieldUse": [
+          "identity",
+          "mechanism",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Not a sole authority for dosing or safety-critical publication fields."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "transformationPipelineVersion",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "DrugBank ID"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Human-defined procedure required before activation.",
+        "retractionProcedure": "Human-defined procedure required before activation.",
+        "removalProcedure": "Human-defined procedure required before activation.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Undetermined pending review."
+        ],
+        "restrictedContent": [
+          "all-content-until-human-legal-approval"
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [
+        "credentials-or-restricted-access"
+      ],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "DRUGBANK IS THE HIGHEST LEGAL RISK IN THIS BATCH. DrugBank is commercially licensed and its academic licence expressly does not cover commercial use. Confirm which licence BioStack holds, and whether any commercial licence has been executed.",
+            "24 aliases are already cited across 30 claims in the corpus. If no commercial licence is held, confirm whether existing derived content must be removed rather than merely blocked.",
+            "The publisher's API and MCP access are currently unavailable, so acquisition is disabled; that does not resolve the licence question for content already retained."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "Detected trigger(s): credentials-or-restricted-access."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "DRUGBANK IS THE HIGHEST LEGAL RISK IN THIS BATCH. DrugBank is commercially licensed and its academic licence expressly does not cover commercial use. Confirm which licence BioStack holds, and whether any commercial licence has been executed.",
+        "24 aliases are already cited across 30 claims in the corpus. If no commercial licence is held, confirm whether existing derived content must be removed rather than merely blocked.",
+        "The publisher's API and MCP access are currently unavailable, so acquisition is disabled; that does not resolve the licence question for content already retained."
+      ]
+    },
+    {
+      "sourceId": "ema",
+      "sourceName": "European Medicines Agency",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.ema.europa.eu/"
+        ],
+        "observedFacts": [
+          "Category: Non-US regulator (EU).",
+          "Registered into the pilot registry on 2026-09-07 with 2 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 3 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use identity, regulatory, approved-indications, contraindications-warnings, monitoring, interactions, efficacy-claims.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "identity",
+          "regulatory",
+          "approved-indications",
+          "contraindications-warnings",
+          "monitoring",
+          "interactions",
+          "efficacy-claims"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "An EPAR is the EU regulator's assessment; it does not establish US regulatory status.",
+          "A regulatory record establishes regulatory status and labeled content in its own jurisdiction; it does not establish efficacy beyond the studies it reports."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+            "Confirm the EU public sector information reuse rules that apply to EMA documents."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+        "Confirm the EU public sector information reuse rules that apply to EMA documents."
+      ]
+    },
+    {
+      "sourceId": "fda-advisory-committee",
+      "sourceName": "FDA advisory-committee materials (PCAC briefings, calendars)",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.fda.gov/advisory-committees/"
+        ],
+        "observedFacts": [
+          "Category: US regulator, advisory-process material.",
+          "Registered into the pilot registry on 2026-09-07 with 10 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 37 claims across the 78-packet corpus.",
+          "Proposed authority tier C1, authorized field use regulatory.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "C1",
+        "authorizedFieldUse": [
+          "regulatory"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Briefing packages are advisory-process material compiled in part from nominator and sponsor submissions; they are NOT FDA-authored regulatory determinations and must not be used as A1/A2 regulatory authority.",
+          "A committee discussing a substance is not a finding about that substance.",
+          "Cannot support efficacy, dosing, or safety claims."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "Briefing packages embed nominator and sponsor submissions authored by third parties. Confirm those may be excerpted, or that only FDA-authored portions may be."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "Briefing packages embed nominator and sponsor submissions authored by third parties. Confirm those may be excerpted, or that only FDA-authored portions may be."
+      ]
+    },
+    {
+      "sourceId": "fda-philippines",
+      "sourceName": "Philippine FDA",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.fda.gov.ph/"
+        ],
+        "observedFacts": [
+          "Category: Non-US regulator (Philippines).",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 2 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use regulatory, misinformation-monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "regulatory",
+          "misinformation-monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "The Philippine FDA is a distinct regulator from the U.S. FDA; the shared 'FDA' name and the fda- id prefix do NOT make its advisories US regulatory authority.",
+          "Jurisdiction is not machine-enforced; a claim about US status must not cite this class."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+            "Confirm this is never conflated with the US FDA in any user-facing surface, given the shared name and the fda- identifier prefix already present in the corpus."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+        "Confirm this is never conflated with the US FDA in any user-facing surface, given the shared name and the fda- identifier prefix already present in the corpus."
+      ]
+    },
+    {
+      "sourceId": "federal-register",
+      "sourceName": "U.S. Federal Register",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.federalregister.gov/"
+        ],
+        "observedFacts": [
+          "Category: US government legal publication.",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 4 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use regulatory.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "regulatory"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Establishes what was published and when; a proposed rule is not a final rule."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+      ]
+    },
+    {
+      "sourceId": "health-canada",
+      "sourceName": "Health Canada",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://recalls-rappels.canada.ca/"
+        ],
+        "observedFacts": [
+          "Category: Non-US regulator (Canada).",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 3 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use identity, regulatory, approved-indications, contraindications-warnings.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "identity",
+          "regulatory",
+          "approved-indications",
+          "contraindications-warnings"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Canadian regulatory status does not establish US status.",
+          "A regulatory record establishes regulatory status and labeled content in its own jurisdiction; it does not establish efficacy beyond the studies it reports."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+            "Canadian government works may be subject to Crown copyright. Confirm the reuse terms."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status.",
+        "Canadian government works may be subject to Crown copyright. Confirm the reuse terms."
+      ]
+    },
+    {
+      "sourceId": "hsa-singapore",
+      "sourceName": "Health Sciences Authority (Singapore)",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.hsa.gov.sg/"
+        ],
+        "observedFacts": [
+          "Category: Non-US regulator (Singapore).",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 2 claims across the 78-packet corpus.",
+          "Proposed authority tier A1, authorized field use regulatory, misinformation-monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A1",
+        "authorizedFieldUse": [
+          "regulatory",
+          "misinformation-monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Singapore regulatory status does not establish US status.",
+          "Jurisdiction is not machine-enforced; a claim about US status must not cite this class."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "This is a non-US regulator. Confirm the reuse terms of that jurisdiction apply and that its regulatory status is never presented as US regulatory status."
+      ]
+    },
+    {
+      "sourceId": "issn-position-stands",
+      "sourceName": "International Society of Sports Nutrition Position Stands",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://jissn.biomedcentral.com/"
+        ],
+        "observedFacts": [
+          "Category: Society position stands, open-access journal.",
+          "Registered into the pilot registry on 2026-09-07 with 2 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 2 claims across the 78-packet corpus.",
+          "Proposed authority tier B1, authorized field use mechanism, efficacy-claims, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding.",
+          "Pre-existing class. PR #277 changed rights.reviewStatus from pending-human-legal to approved. That is a legal-rights decision and it was made without this approval."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B1",
+        "authorizedFieldUse": [
+          "mechanism",
+          "efficacy-claims",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Not a regulator label or individualized clinical guidance."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "transformationPipelineVersion",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "DOI",
+          "PMID"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Human-defined procedure required before activation.",
+        "retractionProcedure": "Human-defined procedure required before activation.",
+        "removalProcedure": "Human-defined procedure required before activation.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Undetermined pending review."
+        ],
+        "restrictedContent": [
+          "all-content-until-human-legal-approval"
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "ISSN position stands are published in JISSN under an open-access licence. Confirm the licence version and its attribution and derivative terms.",
+            "Confirm the society asserts no separate restriction on reproducing position-stand recommendations."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "ISSN position stands are published in JISSN under an open-access licence. Confirm the licence version and its attribution and derivative terms.",
+        "Confirm the society asserts no separate restriction on reproducing position-stand recommendations."
+      ]
+    },
+    {
+      "sourceId": "mdpi",
+      "sourceName": "MDPI journals",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.mdpi.com/"
+        ],
+        "observedFacts": [
+          "Category: Commercial open-access publisher.",
+          "Registered into the pilot registry on 2026-09-07 with 4 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 6 claims across the 78-packet corpus.",
+          "Proposed authority tier B2, authorized field use mechanism, efficacy-claims, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B2",
+        "authorizedFieldUse": [
+          "mechanism",
+          "efficacy-claims",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Editorial rigour varies substantially across MDPI titles; corroborate from a different publisher family before relying on a finding."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Licence varies per article on this platform (open access versus subscription). Confirm the per-article licence must be checked before any excerpt is retained, and who performs that check.",
+            "MDPI titles are generally CC BY. Confirm that is true for each cited article and that attribution requirements are met."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Licence varies per article on this platform (open access versus subscription). Confirm the per-article licence must be checked before any excerpt is retained, and who performs that check.",
+        "MDPI titles are generally CC BY. Confirm that is true for each cited article and that attribution requirements are met."
+      ]
+    },
+    {
+      "sourceId": "ncbi-bookshelf",
+      "sourceName": "NCBI Bookshelf (StatPearls, LiverTox)",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.ncbi.nlm.nih.gov/books/"
+        ],
+        "observedFacts": [
+          "Category: NLM curated reference.",
+          "Registered into the pilot registry on 2026-09-07 with 15 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 33 claims across the 78-packet corpus.",
+          "Proposed authority tier B1, authorized field use identity, mechanism, efficacy-claims, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B1",
+        "authorizedFieldUse": [
+          "identity",
+          "mechanism",
+          "efficacy-claims",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Tertiary clinical reference; chapters carry their own last-updated date and can be stale.",
+          "Not a product label; cannot independently support product-specific dosing or safety-critical regulatory claims."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Bookshelf licences vary per book: some titles are public domain, others carry restrictive Creative Commons terms such as CC BY-NC-ND. Confirm the licence per cited title, not per platform.",
+            "Confirm whether a non-commercial licence on any cited title conflicts with the intended commercial use."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Bookshelf licences vary per book: some titles are public domain, others carry restrictive Creative Commons terms such as CC BY-NC-ND. Confirm the licence per cited title, not per platform.",
+        "Confirm whether a non-commercial licence on any cited title conflicts with the intended commercial use."
+      ]
+    },
+    {
+      "sourceId": "nci",
+      "sourceName": "National Cancer Institute (PDQ)",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.cancer.gov/"
+        ],
+        "observedFacts": [
+          "Category: US government health agency.",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 1 claims across the 78-packet corpus.",
+          "Proposed authority tier A2, authorized field use mechanism, efficacy-claims, contraindications-warnings.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A2",
+        "authorizedFieldUse": [
+          "mechanism",
+          "efficacy-claims",
+          "contraindications-warnings"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "PDQ summaries are curated syntheses, not primary trial reports; cite the primary for exact numeric estimates."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them."
+      ]
+    },
+    {
+      "sourceId": "oxford-academic",
+      "sourceName": "Oxford Academic journals",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://academic.oup.com/"
+        ],
+        "observedFacts": [
+          "Category: Commercial publisher platform.",
+          "Registered into the pilot registry on 2026-09-07 with 11 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 19 claims across the 78-packet corpus.",
+          "Proposed authority tier B2, authorized field use mechanism, efficacy-claims, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B2",
+        "authorizedFieldUse": [
+          "mechanism",
+          "efficacy-claims",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Publisher platform covering many journals of differing rigour; assess each article."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Licence varies per article on this platform (open access versus subscription). Confirm the per-article licence must be checked before any excerpt is retained, and who performs that check.",
+            "Confirm the permitted excerpt length and whether text and data mining rights are needed for the intended use."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Licence varies per article on this platform (open access versus subscription). Confirm the per-article licence must be checked before any excerpt is retained, and who performs that check.",
+        "Confirm the permitted excerpt length and whether text and data mining rights are needed for the intended use."
+      ]
+    },
+    {
+      "sourceId": "pmc",
+      "sourceName": "PubMed Central",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://pmc.ncbi.nlm.nih.gov/"
+        ],
+        "observedFacts": [
+          "Category: NLM literature archive.",
+          "Registered into the pilot registry on 2026-09-07 with 17 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 22 claims across the 78-packet corpus.",
+          "Proposed authority tier B2, authorized field use mechanism, efficacy-claims, interactions.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B2",
+        "authorizedFieldUse": [
+          "mechanism",
+          "efficacy-claims",
+          "interactions"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "A PMC copy is the same paper as its journal version, not an independent source family.",
+          "Individual study quality varies; a single study does not establish a population conclusion."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "PMC hosts articles under many different licences, including all-rights-reserved author manuscripts. Confirm the per-article licence must be checked before any excerpt is retained.",
+            "Confirm the PMC Open Access Subset boundary and whether retrieval is limited to it."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "PMC hosts articles under many different licences, including all-rights-reserved author manuscripts. Confirm the per-article licence must be checked before any excerpt is retained.",
+        "Confirm the PMC Open Access Subset boundary and whether retrieval is limited to it."
+      ]
+    },
+    {
+      "sourceId": "semantic-scholar",
+      "sourceName": "Semantic Scholar",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.semanticscholar.org/"
+        ],
+        "observedFacts": [
+          "Category: Third-party metadata aggregator.",
+          "Registered into the pilot registry on 2026-09-07 with 2 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 5 claims across the 78-packet corpus.",
+          "Proposed authority tier C1, authorized field use identity, mechanism, efficacy-claims.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "C1",
+        "authorizedFieldUse": [
+          "identity",
+          "mechanism",
+          "efficacy-claims"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "An aggregator of bibliographic metadata; cite the underlying paper for any assertion."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [
+        "credentials-or-restricted-access"
+      ],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Semantic Scholar aggregates third-party bibliographic metadata under its own API terms. Confirm those terms permit the intended use and whether an API key is required.",
+            "Confirm that citing the aggregator is acceptable, or whether the underlying paper must always be cited instead."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "Detected trigger(s): credentials-or-restricted-access."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Semantic Scholar aggregates third-party bibliographic metadata under its own API terms. Confirm those terms permit the intended use and whether an API key is required.",
+        "Confirm that citing the aggregator is acceptable, or whether the underlying paper must always be cited instead."
+      ]
+    },
+    {
+      "sourceId": "usada",
+      "sourceName": "U.S. Anti-Doping Agency",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.usada.org/"
+        ],
+        "observedFacts": [
+          "Category: US anti-doping body (private).",
+          "Registered into the pilot registry on 2026-09-07 with 2 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 3 claims across the 78-packet corpus.",
+          "Proposed authority tier A2, authorized field use regulatory, misinformation-monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A2",
+        "authorizedFieldUse": [
+          "regulatory",
+          "misinformation-monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "Prohibited-substance status is not a statement of clinical efficacy or safety."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "USADA is a private non-profit, not a government body; its material is not public domain by default. Confirm the terms of use permit excerpting.",
+            "Confirm no trademark restriction applies to naming USADA as a source."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "USADA is a private non-profit, not a government body; its material is not public domain by default. Confirm the terms of use permit excerpting.",
+        "Confirm no trademark restriction applies to naming USADA as a source."
+      ]
+    },
+    {
+      "sourceId": "uspstf",
+      "sourceName": "U.S. Preventive Services Task Force",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.uspreventiveservicestaskforce.org/"
+        ],
+        "observedFacts": [
+          "Category: US guideline body.",
+          "Registered into the pilot registry on 2026-09-07 with 2 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 2 claims across the 78-packet corpus.",
+          "Proposed authority tier A2, authorized field use efficacy-claims, monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "A2",
+        "authorizedFieldUse": [
+          "efficacy-claims",
+          "monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "A draft recommendation is not the official position; the superseded final statement governs until the draft is finalized.",
+          "Recommendations are population- and indication-scoped and do not address treatment of diagnosed deficiency or disease."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+            "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+            "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+            "USPSTF material is produced under AHRQ. Confirm whether any attribution or endorsement restriction applies to reuse."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "Confirm the publisher's terms of use permit retrieval and retention of short cited excerpts for a commercial product, and identify the governing terms URL.",
+        "Confirm whether the material is public domain in its own jurisdiction, and whether that status carries to redistribution outside that jurisdiction.",
+        "Confirm no third-party copyrighted material embedded in these documents is redistributed with them.",
+        "USPSTF material is produced under AHRQ. Confirm whether any attribution or endorsement restriction applies to reuse."
+      ]
+    },
+    {
+      "sourceId": "vada",
+      "sourceName": "Voluntary Anti-Doping Association",
+      "decisionStatus": "selected-pending-source-activation-review",
+      "activationReady": false,
+      "documentation": {
+        "officialFirstPartyUrls": [
+          "https://www.vada-testing.org/"
+        ],
+        "observedFacts": [
+          "Category: Private testing programme.",
+          "Registered into the pilot registry on 2026-09-07 with 1 per-item aliases, each assigned by parsing the cited source's own URL host rather than by identifier prefix.",
+          "Currently referenced by 1 claims across the 78-packet corpus.",
+          "Proposed authority tier B1, authorized field use misinformation-monitoring.",
+          "NO TERMS-OF-USE REVIEW HAS BEEN PERFORMED for this lane. The rights text in the registry was written by the drafting agent as a proposal and is not a legal finding."
+        ]
+      },
+      "rights": {
+        "reviewStatus": "unreviewed",
+        "legalBasisOrLicense": "NOT ESTABLISHED. Proposed basis only; no licence or terms review has been performed by the legal-rights approver.",
+        "termsUrl": null,
+        "allowedUses": [
+          "None until this proposal is decided."
+        ],
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
+        "prohibitedUses": [
+          "Copyrighted full text beyond any reviewed licence boundary, private or personal data, uncited claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized treatment directives, and guaranteed safety or outcome claims."
+        ],
+        "redistributionConstraints": [
+          "Undetermined pending review. Attribute the publisher and link the cited record."
+        ],
+        "reviewedBy": null,
+        "verifiedAtUtc": null
+      },
+      "operations": {
+        "status": "disabled",
+        "ownerRole": "product-owner",
+        "securityOwnerRole": "security-data-owner",
+        "lastReviewedAtUtc": "2026-09-08T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": false,
+        "method": "manual-review",
+        "reviewCandidateMethod": "manual-review",
+        "hasApi": false,
+        "hasBulkExport": false,
+        "requiresAccount": false,
+        "robotsPolicyStatus": "not-reviewed",
+        "apiTermsStatus": "not-reviewed",
+        "rateLimitPolicy": "Undetermined pending review; manual low-volume retrieval only.",
+        "accessNotes": "Lane is inactive. Activation requires the legalRights approval recorded below."
+      },
+      "evidenceBoundary": {
+        "authorityTier": "B1",
+        "authorizedFieldUse": [
+          "misinformation-monitoring"
+        ],
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
+        "limitations": [
+          "A private testing programme, not a regulator or standards body."
+        ]
+      },
+      "provenance": {
+        "requiredFields": [
+          "sourceRegistryId",
+          "sourceItemId",
+          "sourceUrl",
+          "retrievedAtUtc",
+          "rightsReviewStatusAtRetrieval",
+          "humanReviewStatus"
+        ],
+        "citationIdentifierTypes": [
+          "source URL"
+        ]
+      },
+      "refresh": {
+        "mode": "disabled-until-approved",
+        "proposedCadence": "Undetermined pending review.",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Quarantine the affected fields and re-resolve them against the cited record.",
+        "retractionProcedure": "Block derived fields when the cited record is withdrawn or materially changed.",
+        "removalProcedure": "Remove stored content and derived display material while retaining identifiers and a non-content audit record.",
+        "contactRole": "product-owner"
+      },
+      "dataBoundary": {
+        "proposedPermittedContent": [
+          "Source-grounded factual and contextual information with citations and stated uncertainty."
+        ],
+        "restrictedContent": [
+          "Copyrighted full text beyond the reviewed boundary, private or personal data, uncited claims, and content outside the source context."
+        ],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      },
+      "securityDataTriggersDetected": [],
+      "approvals": {
+        "product": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Product owner ratified these publishers as usable sources in conversation on 2026-09-07. That ratification is recorded here as context; it is not, and cannot be, the legalRights approval this stage requires."
+          ]
+        },
+        "legalRights": {
+          "assigneeName": "Johnathan Harper",
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "AWAITING DECISION. This lane was activated in PR #277 and PR #281 without this approval and deactivated again in PR #285.",
+            "VADA is a private organisation. Confirm terms of use permit excerpting, and whether the organisation should be cited as a source at all given its limited standing."
+          ]
+        },
+        "evidence": {
+          "assigneeName": "Clint Morgan",
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "Not in scope for source activation. Claim promotion remains separately gated."
+          ]
+        },
+        "securityData": {
+          "assigneeName": "Pradic Patel",
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null,
+          "decidedAtUtc": null,
+          "decisionNotes": [
+            "No security assessment has been performed by the security-data owner.",
+            "No trigger detected by the drafting agent; that is not a security review."
+          ]
+        }
+      },
+      "unresolvedQuestions": [
+        "VADA is a private organisation. Confirm terms of use permit excerpting, and whether the organisation should be cited as a source at all given its limited standing."
+      ]
+    }
+  ]
+}

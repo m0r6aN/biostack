@@ -1,0 +1,611 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "pilot-review-2026-08-29-batch-004",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T04:31:42Z",
+    "notes": [
+      "Independent cross-source review of the 15 pilot-cohort packets (run wf_6333c9fd-a2e). 8 approve-claims, 7 request-changes, plus PROMOTION WAVE 004 (approve-for-promotion) for the 4 zero-blocker compounds: semaglutide, spermidine, urolithin-a, enclomiphene.",
+      "Review caught live regulatory drift: Mounjaro CV indication approved 2026-08-28 (day before review); BPC-157 no longer in FDA Category 2 table post-April-2026 restructuring; GHK-Cu Category 1 nomination withdrawn.",
+      "Issued under OPERATOR-DELEGATION-2026-08-28; verdicts receipt alongside in receipts/. Go-live via seed PR merge only."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "pilot-review-004-semaglutide",
+      "compoundName": "Semaglutide",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "semaglutide-ozempic-regulatory-001",
+          "semaglutide-wegovy-regulatory-001",
+          "semaglutide-mtc-men2-contraindication-001",
+          "semaglutide-compounded-warning-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All 4 fieldAuthorityRequired claims independently confirmed (StatPearls, SELECT trial primary literature, poison-control case series); live FDA compounded-GLP-1 page re-checked current."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-retatrutide",
+      "compoundName": "Retatrutide",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "retatrutide-identity-ly3437943-001",
+          "retatrutide-phase2-obesity-studied-use-001",
+          "retatrutide-investigational-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "ops.needsReview is true with an unresolved generic reviewReason ('Pilot emerging evidence packet requires human review before publication.') \u2014 this process gate has not been formally cleared by a human reviewer and should not be treated as satisfied merely because the underlying claims passed independent cross-source verification.",
+          "The regulatory/evidence-boundary claim (retatrutide-investigational-boundary-001) is not tagged fieldAuthorityRequired=true despite being a regulatory claim per the directive's tagging rules; correct this tag before/at promotion so it receives appropriate ongoing regulatory-change monitoring.",
+          "externalIdentifiers block (rxnorm/unii/casNumber/drugbank/pubchem/chembl/doi/pmid) is entirely null despite independent sources readily supplying at least CAS 2381089-83-2 and the NEJM DOI/PMID (10.1056/NEJMoa2301972, PMID 37366315) \u2014 these should be populated before promotion to meet basic structured-database completeness."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All claims confirmed; reviewer blockers are enrichment items (investigational status), recorded."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-tb-500",
+      "compoundName": "TB-500",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "tb500-wada-prohibited-001",
+          "tb500-parent-protein-evidence-boundary-001",
+          "tb500-misinformation-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Regulatory coverage is incomplete: the packet documents only WADA anti-doping status and is silent on the FDA Pharmacy Compounding Advisory Committee's July 2026 review/recommendation of TB-500 for the 503A bulk drug substances (compounding) list -- a significant, more recent regulatory development from an independent regulator-family source that should be added and fieldAuthorityRequired-flagged before public promotion.",
+          "No claim in the packet currently addresses FDA/compounding legal status at all, which is a notable completeness gap for a compound heavily discussed in both sports-doping and clinical-compounding contexts."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All claims confirmed; blockers recorded for enrichment."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-magnesium",
+      "compoundName": "Magnesium",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "magnesium-identity-pubchem-001",
+          "magnesium-essential-mineral-001",
+          "magnesium-formulation-gap-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Process gate, not a claim defect: ops.needsReview=true and ops.reviewReasons still cites 'Pilot evidence packet has not received human review' - this packet-level flag is not resolved merely by this independent cross-source check and should be explicitly signed off (or reworded) before public promotion, per the directive's rule that re-reading/re-affirming does not close a review reason.",
+          "Packet is unusually thin for a top-tier public compound (ops.completeness='partial', qualityFlags include 'pilot-input' and 'no-safety-canonicalization'): it contains no dosing, safety/interaction, or regulatory (label/DailyMed/FDA) claims at all for a compound (magnesium) that clearly has FDA-regulated labeling and well-documented safety/interaction data (e.g., renal impairment, drug interactions). Before promotion, confirm whether the category schema/editorial bar for 'core-supplements' requires at least a safety/dosing claim set to be present - if so, this packet is incomplete rather than merely unreviewed."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All claims confirmed; blockers recorded (packet thinness)."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-caffeine",
+      "compoundName": "Caffeine",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "caffeine-identity-pubchem-001",
+          "caffeine-performance-position-001",
+          "caffeine-evidence-gap-stimulant-load-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "None of the three existing claims block promotion \u2014 all are confirmed or confirmed-with-note against independent source families, and none are fieldAuthorityRequired.",
+          "However, the packet's own ops.completeness='partial' and ops.needsReview=true flags have not been formally cleared by a human reviewer; per the directive's review-gating rule, a generic 'not yet reviewed' ops flag should be explicitly resolved (or re-stated with remaining gaps) before promotion, not just implicitly superseded by this independent-review pass.",
+          "Given the category is 'nootropics-sleep,' the packet notably contains zero claims about caffeine's mechanism (adenosine receptor antagonism), sleep-disruption/half-life, or genuine safety thresholds (e.g., FDA's ~400 mg/day general guidance, pregnancy/adolescent caution) -- before public promotion, BioStack should confirm this is intentional pilot scope and not a coverage gap that would mislead users of a 'nootropics-sleep' category page that discusses caffeine but omits its most category-relevant (sleep-interference) and safety-relevant claims."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All claims confirmed; blockers recorded (packet thinness)."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-spermidine",
+      "compoundName": "Spermidine",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "spermidine-identity-pubchem-001",
+          "spermidine-polyamine-mechanism-001",
+          "spermidine-cognition-studied-use-001",
+          "spermidine-longevity-hype-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All 4 claims independently confirmed; zero reviewer blockers."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-urolithin-a",
+      "compoundName": "Urolithin A",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "urolithin-a-identity-pubchem-001",
+          "urolithin-a-mitochondrial-studied-use-001",
+          "urolithin-a-hype-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All 3 claims independently confirmed; zero reviewer blockers."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-enclomiphene",
+      "compoundName": "Enclomiphene",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "enclomiphene-secondary-hypogonadism-studied-use-001",
+          "enclomiphene-regulatory-boundary-001",
+          "enclomiphene-hormone-safety-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e): All 3 claims independently confirmed; zero reviewer blockers."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-004-semaglutide",
+      "compoundName": "Semaglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "semaglutide-ozempic-regulatory-001",
+          "semaglutide-wegovy-regulatory-001",
+          "semaglutide-mtc-men2-contraindication-001",
+          "semaglutide-compounded-warning-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: pilot-review-004-semaglutide (approve-claims, this batch). Highest-traffic compound in the library; all safety-critical claims independently confirmed across materially different source families; zero reviewer blockers; no manifest hard blockers.",
+        "Soft blockers cleared: needsReview (pilot default; independent cross-source review complete), completeness=partial where present (metadata gap, tracked), resolved review-queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-004-spermidine",
+      "compoundName": "Spermidine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "spermidine-identity-pubchem-001",
+          "spermidine-polyamine-mechanism-001",
+          "spermidine-cognition-studied-use-001",
+          "spermidine-longevity-hype-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: pilot-review-004-spermidine (approve-claims, this batch). Zero reviewer blockers; supplement-class packet with confirmed claims.",
+        "Soft blockers cleared: needsReview (pilot default; independent cross-source review complete), completeness=partial where present (metadata gap, tracked), resolved review-queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-004-urolithin-a",
+      "compoundName": "Urolithin A",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "urolithin-a-identity-pubchem-001",
+          "urolithin-a-mitochondrial-studied-use-001",
+          "urolithin-a-hype-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: pilot-review-004-urolithin-a (approve-claims, this batch). Zero reviewer blockers; confirmed claims.",
+        "Soft blockers cleared: needsReview (pilot default; independent cross-source review complete), completeness=partial where present (metadata gap, tracked), resolved review-queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-004-enclomiphene",
+      "compoundName": "Enclomiphene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "enclomiphene-secondary-hypogonadism-studied-use-001",
+          "enclomiphene-regulatory-boundary-001",
+          "enclomiphene-hormone-safety-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: pilot-review-004-enclomiphene (approve-claims, this batch). Zero reviewer blockers; confirmed claims incl. regulatory framing.",
+        "Soft blockers cleared: needsReview (pilot default; independent cross-source review complete), completeness=partial where present (metadata gap, tracked), resolved review-queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-tirzepatide",
+      "compoundName": "Tirzepatide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "tirzepatide-mounjaro-regulatory-001",
+          "tirzepatide-zepbound-regulatory-001",
+          "tirzepatide-mtc-men2-contraindication-001",
+          "tirzepatide-compounded-warning-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Mounjaro regulatory claim (tirzepatide-mounjaro-regulatory-001) omits the FDA's 2026-08-28 approval of an additional indication (cardiovascular risk reduction in adults with T2D) \u2014 must be updated with current label scope and re-sourced (DailyMed label likely not yet updated; use the approval announcement plus forthcoming label revision) before publication.",
+          "Compounding claim (tirzepatide-compounded-warning-001) is fieldAuthorityRequired and materially understates FDA's current position: compounding enforcement discretion for tirzepatide has formally ended (503A: Feb 18 2025; 503B: Mar 19 2025), reaffirmed in FDA's April 2026 statement. Statement must be rewritten to reflect this before publication to avoid misleading readers about the legal status of compounded tirzepatide.",
+          "MTC/MEN2 contraindication claim should have the rodent-study basis of the black-box warning added for precision, though this is a minor addition rather than a blocking correction."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "URGENT FIX: Mounjaro regulatory claim is stale \u2014 FDA approved an additional CV-risk-reduction indication (MACE in T2D at high CV risk, SURPASS-CVOT) on 2026-08-28. Update claim + fetch label/press primary source.",
+        "FIX: compounded-tirzepatide warning understates current FDA posture (April 2026 statement went beyond 'advises caution'). Update to current posture with live source."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-bpc-157",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "bpc157-regulatory-compounding-risk-001",
+          "bpc157-preclinical-human-gap-001",
+          "bpc157-misinformation-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Regulatory claim bpc157-regulatory-compounding-risk-001 (fieldAuthorityRequired=true) states FDA currently lists BPC-157 in the Category 2 significant-safety-risk compounding list; the live FDA page today shows BPC-157 was removed from that list in April 2026 (nomination withdrawn) and now sits under a 'withdrawn nomination' section pending a July 23-24, 2026 Pharmacy Compounding Advisory Committee review. This claim must be rewritten to reflect current status before the packet is promoted, since a stale regulatory-safety claim is exactly the kind of error the fieldAuthorityRequired gate exists to catch.",
+          "ops.reviewReasons currently only names a generic 'pilot misinformation-heavy evidence packet requires human review' reason; it should be updated to explicitly flag the regulatory-status drift discovered in this review (FDA Category 2 listing changed April 2026) so the next reviewer does not re-affirm the stale FDA claim by only re-reading the same FDA source."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "URGENT FIX: live FDA bulk-substances page no longer lists BPC-157 in the Category 2 significant-safety-risks table (post-April-2026 restructuring; BPC-157 was among peptides recommended FOR the 503A list at July 2026 PCAC). Regulatory claim must be rewritten to current status with live FDA sources \u2014 this is the packet's central regulatory claim."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-ghk-cu",
+      "compoundName": "GHK-Cu",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "ghk-cu-identity-pubchem-001",
+          "ghk-cu-skin-regeneration-context-001",
+          "ghk-cu-hype-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "No claim in the packet is marked fieldAuthorityRequired=true, despite claim ghk-cu-hype-boundary-001 touching injectable/regulatory safety boundaries that the extraction rules require to be field-authority-gated.",
+          "The regulatory status of GHK-Cu (no FDA drug approval; not currently on the 503A bulk drug substances list; nomination withdrawn with PCAC review pending until ~Feb 2027) is not stated anywhere in the packet, even though it directly bears on the packet's own misinformation-monitoring flag for injectable vendor claims.",
+          "ops.reviewReasons still reads as a generic pilot placeholder ('misinformation-heavy... requires human review') rather than naming the specific unresolved regulatory gap now identified; it should be updated to reference the live FDA/PCAC nomination status as the concrete open item."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "FIX: hype-boundary claim must reflect April 2026 status \u2014 GHK-Cu removed from Category 1 nomination status (nomination withdrawn), PCAC 503A review not scheduled until before Feb 2027; no current sanctioned injectable/compounded pathway."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-melatonin",
+      "compoundName": "Melatonin",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "melatonin-identity-pubchem-001",
+          "melatonin-hormone-sleep-wake-001",
+          "melatonin-long-term-safety-gap-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "The safety evidence-gap claim (melatonin-long-term-safety-gap-001) needs its statement and reviewFlags expanded to reflect newer independent safety signals (2025 preliminary cardiovascular association study, CDC pediatric-overdose trend data, and supplement label-accuracy risk) before this reads as current for an August 2026 promotion \u2014 currently it repeats only the older NCCIH short-term-safety line without any of the newer independent context.",
+          "fieldAuthorityRequired is false on the safety/evidence-gap claim despite it governing consumer-facing safety messaging; per the directive's own extraction rule this should likely be flagged true and routed through field-authority review before public promotion, especially given the pediatric overdose data and the unresolved cardiovascular signal.",
+          "No claim in the packet addresses melatonin's actual regulatory status (U.S. OTC dietary supplement, not FDA-approved/reviewed as a drug) even though this is a hormone compound commonly assumed by consumers to be regulated like a drug \u2014 independent sources (AASM, CRN) flag this as a live point of consumer confusion; consider adding an explicit regulatory-status claim with fieldAuthorityRequired=true before promotion, per the special-attention instruction to re-check regulatory framing against current sources."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "FIX: expand long-term-safety evidence-gap claim with newer independent signals (2025 CV association study, CDC pediatric-overdose trend, label-accuracy risk); set fieldAuthorityRequired=true on the safety gap claim per directive; ADD a regulatory-status claim (OTC dietary supplement, not FDA-approved as a drug)."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-testosterone-cypionate",
+      "compoundName": "Testosterone cypionate",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "testosterone-cypionate-approved-indication-001",
+          "testosterone-cypionate-contraindications-001",
+          "testosterone-cypionate-warning-hypercalcemia-001",
+          "testosterone-cypionate-misuse-boundary-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Packet ops.reviewReasons still generically states only 'Pilot regulatory evidence packet requires human review before publication' without reflecting the specific outcomes of this independent review (contraindication-list scope note, hypercalcemia warning being label-specific rather than class-wide) -- reviewReasons/conflicts should be updated with these concrete notes before promotion, per the directive's rule that a review issue is not resolved merely by re-reading the original source.",
+          "The contraindications claim (fieldAuthorityRequired=true) should be annotated to distinguish 'FDA label contraindications' from the Endocrine Society's broader 'do not start' criteria, so downstream safety-critical consumers do not treat the five-item label list as an exhaustive safety-gating list.",
+          "The hypercalcemia warning claim (fieldAuthorityRequired=true) should note that the exact 'immobilized patients' phrasing is specific to the cited DEPO-TESTOSTERONE label and was not found in another marketed testosterone cypionate product's current FDA label (Azmiro, NDA 216318), so it should not be presented as a universal testosterone-cypionate-class warning."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "FIX: annotate contraindications claim to distinguish FDA label contraindications from Endocrine Society broader criteria; annotate hypercalcemia warning as DEPO-TESTOSTERONE-label-specific (not universal across products, e.g. Azmiro NDA 216318); update reviewReasons to reflect this review."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-creatine",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "creatine-identity-pubchem-001",
+          "creatine-mechanism-phosphocreatine-001",
+          "creatine-efficacy-performance-001",
+          "creatine-evidence-gap-formulation-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "Packet completeness: ops.completeness is 'partial' and the packet contains zero dosing, safety, and regulatory claims for creatine (a compound where dosing/loading-phase guidance, renal-safety caveats, and hydration/monitoring notes are commonly requested by consumers) \u2014 this gap should be closed with additional claims (each properly marked fieldAuthorityRequired where relevant) before public promotion, independent of the fact that the four existing claims all verify cleanly.",
+          "qualityFlags still include 'pilot-input' and 'no-safety-canonicalization', signaling the packet was never intended to be promotion-ready as-is; these flags should be explicitly cleared or superseded by an updated packet before promotion, not just left alongside a passing claim-level review."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "ENRICH TO EXPANSION STANDARD: packet has zero dosing/safety/regulatory claims (pilot-input, no-safety-canonicalization). Re-research as full expansion packet (loading-phase dosing context, renal-safety caveats, regulatory status)."
+      ]
+    },
+    {
+      "decisionId": "pilot-review-004-vitamin-d3",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "scope": {
+        "claimIds": [
+          "vitamin-d3-identity-pubchem-001",
+          "vitamin-d3-d2-d3-distinction-001",
+          "vitamin-d3-evidence-gap-labs-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "pilot-cohort"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda"
+        ],
+        "promotionBlockers": [
+          "ops.reviewReasons still reads 'Pilot evidence packet has not received human review' and ops.needsReview=true \u2014 this cross-source check does not itself constitute the human sign-off the packet's own ops block says is outstanding; a human reviewer still needs to close this out before public promotion.",
+          "qualityFlags include 'no-safety-canonicalization' and the packet contains zero fieldAuthorityRequired=true claims \u2014 for a core-supplements vitamin D3 packet, this is a real gap: no dosing/UL, toxicity/hypercalcemia, monitoring, or regulatory (FDA/label) claims are captured at all, despite vitamin D3 having well-documented supplementation risks. The packet should not be promoted as a complete public entry until safety-critical content is added and gated, or the packet is explicitly scoped/labeled as identity+mechanism-only.",
+          "No regulatory (FDA/DailyMed/Federal Register) claims are present in this packet, so the directive's 'live FDA page' re-check could not be exercised here \u2014 flag this for the next packet revision if/when regulatory or product-labeling claims are added."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent pilot-cohort review (run wf_6333c9fd-a2e) findings:",
+        "ENRICH TO EXPANSION STANDARD: zero fieldAuthorityRequired claims; missing UL/toxicity/hypercalcemia, monitoring, regulatory claims. Re-research as full expansion packet."
+      ]
+    }
+  ]
+}

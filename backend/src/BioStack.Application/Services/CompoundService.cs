@@ -27,6 +27,7 @@ public sealed class CompoundService : ICompoundService
 
     public async Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default)
     {
+        var name = ValidateName(request.Name);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         await EnsureActiveCompoundLimitAsync(personId, request.Status, excludedCompoundId: null, cancellationToken);
 
@@ -34,10 +35,10 @@ public sealed class CompoundService : ICompoundService
         {
             Id = Guid.NewGuid(),
             PersonId = personId,
-            Name = request.Name,
+            Name = name,
             Category = request.Category,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
+            StartDate = ToUtc(request.StartDate),
+            EndDate = ToUtc(request.EndDate),
             Status = request.Status,
             Notes = request.Notes,
             SourceType = request.SourceType,
@@ -57,9 +58,9 @@ public sealed class CompoundService : ICompoundService
                 Id = Guid.NewGuid(),
                 PersonId = personId,
                 EventType = EventType.CompoundStarted,
-                Title = $"Started {request.Name}",
+                Title = $"Started {name}",
                 Description = request.Notes,
-                OccurredAtUtc = request.StartDate.Value,
+                OccurredAtUtc = compound.StartDate!.Value,
                 RelatedEntityId = compound.Id,
                 RelatedEntityType = "CompoundRecord"
             };
@@ -80,16 +81,17 @@ public sealed class CompoundService : ICompoundService
 
     public async Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default)
     {
+        var name = ValidateName(request.Name);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
         if (compound is null || compound.PersonId != personId)
             throw new InvalidOperationException($"Compound with ID {id} not found");
         await EnsureActiveCompoundLimitAsync(personId, request.Status, compound.Id, cancellationToken);
 
-        compound.Name = request.Name;
+        compound.Name = name;
         compound.Category = request.Category;
-        compound.StartDate = request.StartDate;
-        compound.EndDate = request.EndDate;
+        compound.StartDate = ToUtc(request.StartDate);
+        compound.EndDate = ToUtc(request.EndDate);
         compound.Status = request.Status;
         compound.Notes = request.Notes;
         compound.SourceType = request.SourceType;
@@ -103,6 +105,27 @@ public sealed class CompoundService : ICompoundService
 
         return MapToResponse(compound);
     }
+
+    // Guards against a blank or whitespace-only compound name reaching storage
+    // (e.g. an accidental Enter key mid-form). Returns the trimmed name.
+    private static string ValidateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Compound name is required.", nameof(name));
+        }
+
+        return name.Trim();
+    }
+
+    // Calendar-only values remain midnight; unspecified timestamps are interpreted
+    // as UTC so PostgreSQL timestamptz receives an explicit UTC value.
+    private static DateTime? ToUtc(DateTime? value) => value?.Kind switch
+    {
+        DateTimeKind.Unspecified => DateTime.SpecifyKind(value.Value, DateTimeKind.Utc),
+        DateTimeKind.Local => value.Value.ToUniversalTime(),
+        _ => value
+    };
 
     private async Task EnsureActiveCompoundLimitAsync(
         Guid personId,

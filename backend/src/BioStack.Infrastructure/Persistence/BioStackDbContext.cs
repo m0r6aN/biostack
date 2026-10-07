@@ -15,8 +15,11 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<AuthIdentity> AuthIdentities { get; set; }
     public DbSet<AuthChallenge> AuthChallenges { get; set; }
+    public DbSet<PasskeyCredential> PasskeyCredentials { get; set; }
+    public DbSet<PasskeyOperationChallenge> PasskeyOperationChallenges { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
+    public DbSet<ProfileGoal> ProfileGoals { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
     public DbSet<Protocol> Protocols { get; set; }
@@ -34,6 +37,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
+    public DbSet<BioStack.Domain.Governance.SpineChainCheckpoint> SpineChainCheckpoints { get; set; }
     public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
     public DbSet<StagedTranscriptCandidateReviewEntity> StagedTranscriptCandidateReviews { get; set; }
     public DbSet<CompoundGraphArtifact> CompoundGraphArtifacts { get; set; }
@@ -84,6 +88,40 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(i => i.ValueNormalized).HasMaxLength(255).IsRequired();
             entity.HasIndex(i => new { i.Type, i.ValueNormalized }).IsUnique();
             entity.HasIndex(i => i.UserId);
+            entity.HasOne(i => i.PasskeyCredential)
+                .WithOne(c => c.Identity)
+                .HasForeignKey<PasskeyCredential>(c => c.IdentityId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<PasskeyCredential>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.CredentialId).IsRequired();
+            entity.Property(c => c.PublicKey).IsRequired();
+            entity.Property(c => c.UserHandle).IsRequired();
+            entity.Property(c => c.CredentialType).HasMaxLength(32).IsRequired();
+            entity.Property(c => c.Transports).HasMaxLength(256);
+            entity.Property(c => c.DisplayName).HasMaxLength(100).IsRequired();
+            entity.HasIndex(c => c.CredentialId).IsUnique();
+            entity.HasIndex(c => c.IdentityId).IsUnique();
+        });
+
+        modelBuilder.Entity<PasskeyOperationChallenge>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.Operation).HasMaxLength(32).IsRequired();
+            entity.Property(c => c.RequestIdHash).HasMaxLength(64).IsRequired();
+            entity.Property(c => c.OptionsJson).HasColumnType("text").IsRequired();
+            entity.Property(c => c.RedirectPath).HasMaxLength(512).IsRequired();
+            entity.Property(c => c.IpAddress).HasMaxLength(128);
+            entity.HasIndex(c => c.RequestIdHash).IsUnique();
+            entity.HasIndex(c => c.ExpiresAtUtc);
+            entity.HasIndex(c => c.UserId);
+            entity.HasOne(c => c.User)
+                .WithMany(u => u.PasskeyOperationChallenges)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<AuthChallenge>(entity =>
@@ -146,6 +184,18 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(te => te.PersonProfile)
                 .HasForeignKey(te => te.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(p => p.Goals)
+                .WithOne(goal => goal.PersonProfile)
+                .HasForeignKey(goal => goal.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ProfileGoal>(entity =>
+        {
+            entity.HasKey(goal => goal.Id);
+            entity.Property(goal => goal.GoalDefinitionId).HasMaxLength(100).IsRequired();
+            entity.Property(goal => goal.CreatedAtUtc).IsRequired();
+            entity.HasIndex(goal => new { goal.ProfileId, goal.GoalDefinitionId }).IsUnique();
         });
 
         modelBuilder.Entity<CompoundRecord>(entity =>
@@ -316,6 +366,21 @@ public sealed class BioStackDbContext : DbContext
             entity.HasIndex(te => te.OccurredAtUtc);
         });
 
+        modelBuilder.Entity<CompoundInteractionHint>(entity =>
+        {
+            entity.HasKey(h => h.Id);
+            // MechanismOverlap is List<string> over a plain text column. Without
+            // an explicit converter EF maps it as a primitive collection (jsonb
+            // semantics on Postgres) and reading the existing text column throws
+            // InvalidCastException at runtime. Round-trip as a joined string on
+            // every provider, matching the other collection properties here.
+            entity.Property(h => h.MechanismOverlap).HasConversion(
+                v => v == null ? string.Empty : string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? null
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+        });
+
         modelBuilder.Entity<InteractionFlag>(entity =>
         {
             entity.HasKey(ifc => ifc.Id);
@@ -326,22 +391,6 @@ public sealed class BioStackDbContext : DbContext
                 .HasConversion(
                     v => string.Join(",", v),
                     v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList());
-        });
-
-        modelBuilder.Entity<CompoundInteractionHint>(entity =>
-        {
-            entity.HasKey(hint => hint.Id);
-            entity.Property(hint => hint.CompoundA).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.CompoundB).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.InteractionType).HasConversion<int>();
-            entity.Property(hint => hint.Strength).HasPrecision(3, 2);
-            entity.Property(hint => hint.Notes).HasMaxLength(2000);
-            entity.Property(hint => hint.MechanismOverlap).HasConversion(
-                v => v == null ? null : string.Join("|", v),
-                v => string.IsNullOrWhiteSpace(v)
-                    ? null
-                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
-            entity.HasIndex(hint => new { hint.CompoundA, hint.CompoundB }).IsUnique();
         });
 
         modelBuilder.Entity<KnowledgeEntry>(entity =>
@@ -449,9 +498,36 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.EvidenceRefsJson).IsRequired().HasDefaultValue("[]");
             entity.Property(e => e.EffectStatus).IsRequired();
             entity.Property(e => e.CreatedAt).IsRequired();
+            // F3 tamper-evidence: the chain columns and the uniqueness that keeps it linear.
+            entity.Property(e => e.SequenceNumber).IsRequired();
+            entity.Property(e => e.PreviousEntryHash).IsRequired();
+            entity.Property(e => e.EntryHash).IsRequired();
             entity.HasIndex(e => e.ReceiptUri).IsUnique();
             entity.HasIndex(e => e.SubjectUri);
             entity.HasIndex(e => e.ActorId);
+            // A sequence slot may be claimed once, which is what makes a forked chain unwritable:
+            // two concurrent appends compute the same slot and one loses at the database.
+            entity.HasIndex(e => e.SequenceNumber).IsUnique();
+            entity.HasIndex(e => e.EntryHash).IsUnique();
+            // Deliberately NOT unique. It would add nothing over unique SequenceNumber, and it
+            // cannot survive a backfill: AddColumn gives every pre-existing row the same default,
+            // so a unique constraint here fails on the second legacy row.
+            entity.HasIndex(e => e.PreviousEntryHash);
+        });
+
+        // F3+: signed chain-head checkpoints (key must not live in this database).
+        modelBuilder.Entity<BioStack.Domain.Governance.SpineChainCheckpoint>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SequenceNumber).IsRequired();
+            entity.Property(e => e.HeadEntryHash).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.CheckpointedAtUtc).IsRequired();
+            entity.Property(e => e.Source).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.SignatureAlgorithm).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Signature).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Note).HasColumnType("TEXT");
+            entity.HasIndex(e => e.SequenceNumber);
+            entity.HasIndex(e => e.CheckpointedAtUtc);
         });
 
         modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
@@ -566,6 +642,25 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(f => f.RecommendedAction).HasMaxLength(255);
             entity.Property(f => f.CreatedAtUtc).IsRequired();
             entity.HasIndex(f => f.GraphArtifactId);
+        });
+
+        modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SourceType).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.SourceUrl).HasMaxLength(2048).IsRequired();
+            entity.Property(e => e.OptionalInstructions).HasMaxLength(8000);
+            entity.Property(e => e.RequestedOutputs).HasConversion(
+                v => string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? new List<string>()
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+            entity.Property(e => e.Status).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.FailureReason).HasMaxLength(2000);
+            entity.Property(e => e.CreatedAtUtc).IsRequired();
+            entity.Property(e => e.UpdatedAtUtc);
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.CreatedAtUtc);
         });
     }
 }

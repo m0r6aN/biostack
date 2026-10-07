@@ -2,8 +2,11 @@
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { useAuth } from '@/lib/AuthProvider';
+import { isEnabled } from '@/lib/flags';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 
 // ─── Custom SVG icons ─────────────────────────────────────────────────────────
@@ -93,13 +96,13 @@ function IconCalculators() {
   );
 }
 
-function IconKnowledge() {
+// Open book — the library is the primary destination, so it gets its own
+// mark distinct from the "Compounds" tracking icon rather than reusing it.
+function IconLibrary() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <rect x="2.5" y="2" width="11" height="12" rx="1.5" />
-      <line x1="5.5" y1="5.5" x2="10.5" y2="5.5" />
-      <line x1="5.5" y1="8"   x2="10.5" y2="8" />
-      <line x1="5.5" y1="10.5" x2="8.5" y2="10.5" />
+      <path d="M8 3.75C6.9 2.95 5.2 2.5 3.5 2.5v9.75c1.7 0 3.4.45 4.5 1.25" />
+      <path d="M8 3.75c1.1-.8 2.8-1.25 4.5-1.25v9.75c-1.7 0-3.4.45-4.5 1.25V3.75Z" />
     </svg>
   );
 }
@@ -119,6 +122,16 @@ function IconBilling() {
       <rect x="2" y="3" width="12" height="10" rx="1.5" />
       <path d="M2 6h12" />
       <path d="M5 10h3" />
+    </svg>
+  );
+}
+
+function IconSecurity() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <path d="M8 1.5l5 2v3.75c0 3.1-2 5.65-5 7.25-3-1.6-5-4.15-5-7.25V3.5z" />
+      <circle cx="8" cy="7" r="1.5" />
+      <path d="M8 8.5v2" />
     </svg>
   );
 }
@@ -143,9 +156,21 @@ function IconReceipts() {
   );
 }
 
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      {direction === 'left' ? <polyline points="10,3 5,8 10,13" /> : <polyline points="6,3 11,8 6,13" />}
+    </svg>
+  );
+}
+
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
+  // The library is the primary destination — a free, public evidence
+  // reference — with tracking as the paid layer downstream. It leads the
+  // nav rather than sitting near the bottom under its old label.
+  { label: 'Library',              href: '/knowledge',        icon: <IconLibrary />,          adminOnly: false, exact: false, sublabel: 'Compounds & evidence' },
   { label: 'Dashboard',      href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
   { label: 'My Protocol',          href: '/my-protocol',      icon: <IconMyProtocol />,      adminOnly: false, exact: false },
   { label: 'Profiles',             href: '/profiles',         icon: <IconProfiles />,        adminOnly: false, exact: false },
@@ -154,9 +179,9 @@ const navItems = [
   { label: 'Check-ins',         href: '/checkins',         icon: <IconCheckins />,         adminOnly: false, exact: false },
   { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
   { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
-  { label: 'Compounds & Evidence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
   { label: 'Audit Receipts',       href: '/governance/receipts', icon: <IconReceipts />,      adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
+  { label: 'Account Security',     href: '/account/security', icon: <IconSecurity />,         adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
   { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: true,  exact: false },
 ];
@@ -164,16 +189,42 @@ const navItems = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 import { useProfile } from '@/lib/context';
+import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
+
+const SIDEBAR_NAV_ID = 'app-sidebar-nav';
 
 export function Sidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setSidebarOpen } = useProfile();
-  const { user, logout } = useAuth();
+  const [collapsed, setCollapsed] = useSidebarCollapsed();
+  const { user, loading, logout } = useAuth();
+
+  const [railLabel, setRailLabel] = useState<{ text: string; top: number; left: number } | null>(null);
+  useEffect(() => {
+    const dismiss = () => setRailLabel(null);
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') dismiss(); };
+    window.addEventListener('resize', dismiss);
+    window.addEventListener('scroll', dismiss, true);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('resize', dismiss);
+      window.removeEventListener('scroll', dismiss, true);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+  const showRailLabel = (element: HTMLElement, text: string) => {
+    if (!collapsed) return;
+    const rect = element.getBoundingClientRect();
+    setRailLabel({ text, top: Math.max(8, Math.min(rect.top, window.innerHeight - 44)), left: rect.right + 8 });
+  };
 
   const isAdmin = user?.role === 1;
 
   const visibleNavItems = navItems.filter(
-    (item) => !item.adminOnly || isAdmin
+    (item) =>
+      (!item.adminOnly || isAdmin) &&
+      // Flag-gated surfaces stay out of the nav until their flag is on.
+      (item.href !== '/governance/receipts' || isEnabled('decisionTheater'))
   );
 
   return (
@@ -188,14 +239,27 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-72 lg:w-64 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 w-72 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-[width,transform] duration-300 ease-in-out motion-reduce:transition-none lg:static lg:translate-x-0',
+          collapsed ? 'lg:w-16' : 'lg:w-64',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* ── Brand zone ────────────────────────────────────────────────────── */}
-        <div className="px-5 py-5 border-b border-white/[0.05] flex items-center justify-between">
+        <div
+          className={cn(
+            'px-5 py-5 border-b border-white/[0.05] flex items-center justify-between',
+            collapsed && 'lg:justify-center lg:px-2'
+          )}
+        >
           <Link href="/protocol-console" onClick={() => setSidebarOpen(false)} aria-label="BioStack Protocol Console home">
-            <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
+            <BioStackLogo
+              variant="horizontal"
+              theme="dark"
+              size="md"
+              animated
+              hoverable
+              wordmarkClassName={cn(collapsed && 'lg:hidden')}
+            />
           </Link>
 
           {/* Mobile close button */}
@@ -208,14 +272,38 @@ export function Sidebar() {
             </svg>
           </button>
         </div>
-        <div className="px-6 py-2">
-          <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5">
+
+        {/* ── Eyebrow + desktop collapse toggle ────────────────────────────── */}
+        <div
+          className={cn(
+            'px-6 py-2 flex items-center justify-between',
+            collapsed && 'lg:justify-center lg:px-2'
+          )}
+        >
+          <p
+            className={cn(
+              'text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5',
+              collapsed && 'lg:hidden'
+            )}
+          >
             Protocol Console
           </p>
+
+          <button
+            type="button"
+            onClick={() => { setRailLabel(null); setCollapsed(!collapsed); }}
+            aria-expanded={!collapsed}
+            aria-controls={SIDEBAR_NAV_ID}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="hidden lg:inline-flex items-center justify-center w-8 h-8 rounded-xl border border-white/5 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            <span className="sr-only">{collapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
+            <IconChevron direction={collapsed ? 'right' : 'left'} />
+          </button>
         </div>
 
         {/* ── Navigation zone ───────────────────────────────────────────────── */}
-        <nav className="flex-1 overflow-y-auto py-4 px-4 min-h-0">
+        <nav id={SIDEBAR_NAV_ID} className={cn("flex-1 overflow-y-auto py-4 px-4 min-h-0", collapsed && "lg:px-1")}>
           <div className="space-y-1">
             {visibleNavItems.map((item) => {
               const isActive =
@@ -230,8 +318,14 @@ export function Sidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
+                  aria-label={item.label}
+                  onMouseEnter={e => showRailLabel(e.currentTarget, item.label)}
+                  onMouseLeave={() => setRailLabel(null)}
+                  onFocus={e => showRailLabel(e.currentTarget, item.label)}
+                  onBlur={() => setRailLabel(null)}
                   className={cn(
-                    'group relative flex items-center gap-3.5 px-3 py-3 rounded-2xl text-[13px] font-semibold transition-all duration-200',
+                    'group relative flex items-center gap-3.5 px-3 py-3 rounded-2xl text-[13px] font-semibold transition-colors duration-200',
+                    collapsed && 'lg:justify-center lg:gap-0 lg:px-2',
                     isActive
                       ? 'text-emerald-400 bg-emerald-400/5 shadow-[inset_0_0_12px_rgba(52,211,153,0.03)]'
                       : 'text-white/40 hover:text-white/80 hover:bg-white/[0.03]'
@@ -255,15 +349,47 @@ export function Sidebar() {
                   </span>
 
                   {/* Label */}
-                  <span className="tracking-tight">{item.label}</span>
+                  <span className={cn('flex min-w-0 flex-col leading-tight', collapsed && 'lg:hidden')}>
+                    <span className="tracking-tight">{item.label}</span>
+                    {'sublabel' in item && item.sublabel && (
+                      <span className="text-[10px] font-medium text-white/25 truncate">{item.sublabel}</span>
+                    )}
+                  </span>
                 </Link>
               );
             })}
           </div>
         </nav>
 
+        {collapsed && (
+          <div className="hidden lg:flex flex-col items-center gap-2 px-1 pb-4" role="group" aria-label="Account and support">
+            <Link href="/contact" aria-label="Contact Us" title="Contact Us" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+              <span aria-hidden="true">?</span>
+            </Link>
+            {user && (
+              <>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300" role="img" title={user.displayName || user.email || 'Account'} aria-label={user.displayName || user.email || 'Account'}>
+                  {(user.displayName || user.email || 'U')[0].toUpperCase()}
+                </span>
+                <button type="button" onClick={() => void logout()} aria-label="Sign out" title="Sign out" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+                  <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" className="h-4 w-4"><path d="M6 2H3v12h3M7 8h7m-4-3 4 3-4 3" /></svg>
+                </button>
+              </>
+            )}
+            {!loading && !user && <Link href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname)}`} aria-label="Sign in" title="Sign in" className="flex h-11 w-11 items-center justify-center rounded-xl text-emerald-200 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400"><IconSecurity /></Link>}
+          </div>
+        )}
+
         {/* ── User zone ──────────────────────────────────────────────────────── */}
-        <div className="px-4 pb-4">
+        <div className={cn("px-4 pb-4", collapsed && "lg:hidden")}>
+          <Link
+            href="/contact"
+            aria-label="Contact Us"
+            title="Contact Us"
+            className="mb-3 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            Contact Us
+          </Link>
           {user && (
             <div className="p-3 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center gap-3 mb-3">
               {/* Avatar */}
@@ -294,15 +420,26 @@ export function Sidebar() {
               <button
                 onClick={() => void logout()}
                 title="Sign out"
-                className="shrink-0 p-1.5 rounded-xl hover:bg-white/5 text-white/25 hover:text-white/50 transition-colors"
+                className="shrink-0 flex items-center gap-1.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold text-white/35 transition-colors hover:bg-white/5 hover:text-white/65"
               >
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" className="w-4 h-4">
                   <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
                   <polyline points="10 11 14 8 10 5" />
                   <line x1="14" y1="8" x2="6" y2="8" />
                 </svg>
+                <span>Sign out</span>
               </button>
             </div>
+          )}
+
+          {!loading && !user && (
+            <Link
+              href={`/auth/signin?callbackUrl=${encodeURIComponent(`${pathname}`)}`}
+              onClick={() => setSidebarOpen(false)}
+              className="mb-3 flex min-h-11 items-center justify-center rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-3 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-400/15"
+            >
+              Sign in
+            </Link>
           )}
 
           {/* ── System zone ─────────────────────────────────────────────────── */}
@@ -324,6 +461,11 @@ export function Sidebar() {
           </div>
         </div>
       </aside>
+      {collapsed && railLabel && createPortal(
+        <span role="tooltip" aria-hidden="true" style={{ position: 'fixed', top: railLabel.top, left: railLabel.left }} className="pointer-events-none hidden lg:block z-[60] max-w-64 rounded-lg border border-white/10 bg-[#121923] px-2.5 py-1.5 text-xs font-medium text-white/80 shadow-lg">
+          {railLabel.text}
+        </span>, document.body
+      )}
     </>
   );
 }

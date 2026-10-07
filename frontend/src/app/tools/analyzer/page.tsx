@@ -1,12 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { AnalyzerExperience } from '@/components/tools/analyzer/AnalyzerExperience';
-import type { Metadata } from 'next';
+import { createPublicPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: 'Analyze Any Protocol | BioStack',
-  description: 'Paste, upload, scan, or link any protocol and get a parsed, scored BioStack analysis.',
-};
+export const metadata = createPublicPageMetadata({
+  title: 'Analyze a Protocol | BioStack',
+  description: 'Operator and Commander members can paste, upload, or link a protocol for a parsed, structural BioStack analysis.',
+  path: '/tools/analyzer',
+});
 
 export default function AnalyzerPage() {
   return (

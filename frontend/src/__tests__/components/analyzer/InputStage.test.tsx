@@ -122,6 +122,33 @@ describe('InputStage', () => {
     expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
   });
 
+  // Protocol-upload remediation: a safe API validation message must not be
+  // framed as a service outage.
+  it('validation-kind error shows the validation headline instead of the outage headline', () => {
+    render(
+      <InputStage
+        {...makeProps({
+          error: 'That file is too large for the analyzer right now. Keep uploads under 12 MB.',
+          errorKind: 'validation',
+        })}
+      />,
+    );
+
+    expect(screen.getByText('We could not analyze that input.')).toBeInTheDocument();
+    expect(screen.queryByText('Analysis is temporarily unavailable.')).not.toBeInTheDocument();
+    expect(screen.queryByText(/intelligence service recovers/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByText('That file is too large for the analyzer right now. Keep uploads under 12 MB.'),
+    ).toBeInTheDocument();
+  });
+
+  it('service-kind error keeps the outage framing with recovery guidance', () => {
+    render(<InputStage {...makeProps({ error: 'boom', errorKind: 'service' })} />);
+
+    expect(screen.getByText('Analysis is temporarily unavailable.')).toBeInTheDocument();
+    expect(screen.getByText(/intelligence service recovers/i)).toBeInTheDocument();
+  });
+
   it('failure card retry button calls onAnalyze', () => {
     const onAnalyze = vi.fn();
     render(<InputStage {...makeProps({ error: 'Oops', onAnalyze })} />);

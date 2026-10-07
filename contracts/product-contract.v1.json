@@ -76,6 +76,10 @@
     }
   },
   "routes": {
+    "publicAssets": [
+      "/og-image.png",
+      "/favicon.svg"
+    ],
     "publicPrefixes": [
       "/auth",
       "/api",

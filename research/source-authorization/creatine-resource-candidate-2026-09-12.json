@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-12T22:53:08Z",
+  "preparedBy": "Claude Sonnet 5, executing the reviewed Codex implementation directive (research/output/gtm-activation-20260909/creatine-codex-review-20260912.md) under Clint's September 12, 2026 owner resume",
+  "authority": "none",
+  "ownerDecision": "C1 contain-and-re-source, owner-source-decisions-2026-09-08.v1.json; resumed by research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md (September 12, 2026); this preparation step is accepted by an independent Codex review that is the controlling directive for this candidate's exact scope",
+  "status": "prepared-review-required",
+  "claimId": "creatine-mechanism-atp-phosphocreatine-001",
+  "historicalPacket": {
+    "gitRevision": "255616dacf9c932033dc11928bab55bcf383ad67",
+    "path": "research/input/evidence/creatine.evidence.json",
+    "sha256": "0c2a22eff0b818924574739dd84101d01f042367248bef9bbbe877888ce4e42d",
+    "bytes": 51838
+  },
+  "historicalReviewReceipts": [
+    "research/output/gtm-activation-20260909/creatine-replacement-research-20260912.md",
+    "research/output/gtm-activation-20260909/creatine-replacement-source-evidence-20260912.json",
+    "research/output/gtm-activation-20260909/creatine-independent-source-review-20260912.md",
+    "research/output/gtm-activation-20260909/creatine-codex-review-20260912.md",
+    "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md"
+  ],
+  "supersededClaimSha256": "f3640f31ef566f734e508b74c47803790c0a9afa015afb357c29ae99aa73b514",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON for the historical claim object, with recursively sorted object keys, compact comma/colon separators, ASCII escaping, and no trailing newline (Python json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8')).",
+  "removedExcerpts": [
+    {
+      "sourceId": "pubchem-cid-586",
+      "locator": "PubChem PUG-View compound record, pharmacology section",
+      "chars": 206,
+      "sha256": "ee3a1a9bfa1d1eb1ed2b78c1b41e3b6e69f64746e559431d357573a27b3a4e5e"
+    },
+    {
+      "sourceId": "drugbank-db00148",
+      "locator": "Drug summary / description",
+      "chars": 185,
+      "sha256": "ee33b6101e408cbb6008a4f57c0fad5d8f1270bf9ef4518bbe653a586c437ffe"
+    },
+    {
+      "sourceId": "nih-ods-exercise-athletic-performance-hp",
+      "locator": "Creatine section",
+      "chars": 99,
+      "sha256": "a47adf3cf254bd02d0056b8bda77895764039ab37afa3a654f5f90bb207c6c8b"
+    }
+  ],
+  "replacementSourceId": "nih-ods-exercise-athletic-performance-hp",
+  "sourceUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/#creatine",
+  "sourceVersion": "NIH Office of Dietary Supplements, Dietary Supplements for Exercise and Athletic Performance (Health Professional Fact Sheet), Creatine section",
+  "sourceSha256": null,
+  "rightsScope": "Attributed factual paraphrase confined to the ODS Creatine-section introductory paragraphs; zero retained excerpts. Per the controlling Codex review (finding 4), this is scientifically adequate for a narrow internal candidate, not a settled rights determination: applicable method and reuse-scope qualification remain review-required. The ODS Public Use Policy treats most site information as public domain but qualifies reproduction with the exact phrase 'provided the content has not been changed or modified' and disclaims any impression of ODS endorsement; this paraphrase does not reproduce ODS text verbatim and this record does not assert, by calling the wording factual, that the qualification is thereby satisfied or inapplicable. No adaptation licence, API entitlement, bulk-harvesting permission, model-training permission, sublicensing right, or blanket commercial licence is asserted or established by this record.",
+  "rightsEvidenceUrls": [
+    "https://ods.od.nih.gov/About/Site_Policies/",
+    "https://ods.od.nih.gov/HealthInformation/ODS_Frequently_Asked_Questions/",
+    "https://www.nih.gov/about-nih/frequently-asked-questions"
+  ],
+  "authorshipFinding": "The prior research reports DrugBank DB00148 and HSDB 7336 contributors for the current Mechanism of Action section; the historical pharmacology-located excerpt has not been mapped independently to either contributor. A section-level contributor list does not establish which contributor authored this specific excerpt, or that no PubChem-original synthesis is involved. This record states possible indirect DrugBank provenance; exact historical excerpt attribution is not independently established, and is not labeled established. No contributor content was downloaded to test this while preparing this candidate. The removed DrugBank DB00148 excerpt and the removed prior ODS excerpt carry no comparable authorship dispute; all three are removed because this candidate targets zero retained excerpts on this claim, not because every removal shares the same rationale.",
+  "contentVerification": {
+    "method": "No fresh retrieval was performed to prepare this candidate, per the implementation directive. This record relies on two independently recorded live reads of the official ODS page: the independent Codex-commissioned reviewer's 2026-09-12 read (research/output/gtm-activation-20260909/creatine-independent-source-review-20260912.md), which reports the page footer displaying 'Updated: April 1, 2024', and Claude's 2026-09-12 read-only scientific-coverage inventory of the same ODS section (research/output/gtm-activation-20260909/creatine-replacement-research-20260912.md). Neither read used the nih-ods registry's reviewed API acquisition method; confirming that the implementation-time retrieval method matches the reviewed method is an open gate below.",
+    "sectionsRead": [
+      "ODS Creatine section, introductory paragraphs (muscle-ATP-supply and phosphocreatine-store sentences)"
+    ],
+    "excludedFromStatement": [
+      "Performance-improvement claims and the enumeration of proposed improvement routes are not adopted as candidate claims; the introductory phosphocreatine-store sentence is used for the narrow energy-system description."
+    ],
+    "quoteCount": 0
+  },
+  "odsProvenance": {
+    "sourceRegistryId": "nih-ods",
+    "sourceItemId": "nih-ods-exercise-athletic-performance-hp",
+    "sourceUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/#creatine",
+    "pageTitle": "Dietary Supplements for Exercise and Athletic Performance - Health Professional Fact Sheet",
+    "section": "Creatine",
+    "pageUpdatedDate": "2024-04-01",
+    "pageUpdatedDateSource": "Displayed page footer ('Updated: April 1, 2024'), observed and reported by the independent reviewer on 2026-09-12 (creatine-independent-source-review-20260912.md). This resolves Codex review finding 3 / prior gate G3: use this displayed date, not the HTTP Last-Modified header value previously recorded (2026-09-06T22:00:59Z) in Claude's read-only assessment.",
+    "retrievedAtUtc": null,
+    "retrievalNote": "No retrievedAtUtc is recorded because no fresh retrieval was performed for this candidate; do not backdate one. The dated reads underlying this record are the independent review and Claude's assessment, both dated 2026-09-12 and cited by their report paths above.",
+    "rightsReviewStatusAtRetrieval": "approved (registry class nih-ods, verifiedAtUtc 2026-07-25T15:24:14Z); page-specific reproduction remains qualified by the ODS Public Use Policy 'not changed or modified' condition, whose application to this proposed use remains review-required",
+    "acquisitionMethodReviewed": "api",
+    "acquisitionMethodActuallyUsed": "none for this candidate (browser reads only, by the independent reviewer and by Claude's prior assessment; no API call was made)",
+    "registryTermsUrlFinding": "The registry's recorded termsUrl (https://ods.od.nih.gov/HealthInformation/ODS_Frequently_Asked_Questions/) contains no reuse, copyright, public-domain or attribution terms; the substantiating policy actually verified is https://ods.od.nih.gov/About/Site_Policies/ (Public Use Policy). This locator drift is recorded per Codex review finding 5 as a rights-owner correction item; it is not resolved by this candidate and does not block this narrow preparation.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1 (reviewer-authored paraphrase against the controlling Codex directive; no automated extraction pipeline was run)",
+    "humanReviewStatus": "pending; prepared-review-required, not accepted"
+  },
+  "dependencyDisposition": {
+    "directDrugBankClaimReference": "removed from the current mechanism candidate",
+    "drugBankSourceDefinition": "retained in sources[] as historical provenance only; authorityTier and metadata unchanged",
+    "drugBankAccession": "compound.externalIdentifiers.drugbank (DB00148) unchanged; identity metadata, not evidence",
+    "pubchemMechanismSupport": "removed as mechanism support for this claim; compound.externalIdentifiers.pubchem (586) identity use is unaffected",
+    "possibleIndirectDrugBankProvenance": "The prior research reports DrugBank DB00148 and HSDB 7336 contributors for the current Mechanism of Action section; the historical pharmacology-located excerpt has not been mapped independently to either contributor (see authorshipFinding). Removing this excerpt from the candidate makes resolving that attribution unnecessary for this narrow diff.",
+    "otherClaimsInPacket": "no other claim in this packet references drugbank-db00148 or pubchem-cid-586 as mechanism support; no blast radius beyond this one claim",
+    "containmentReach": "shared/source-rights/drugbank-containment.v1.json matches on sourceIds and hostSuffixes ['drugbank.com']; it does not by its own matchers reach an excerpt filed under pubchem-cid-586 on pubchem.ncbi.nlm.nih.gov. That aggregator-reach question is a containment-owner determination under decision C1 and is not settled or needed by this candidate, since the excerpt is removed outright."
+  },
+  "narrowFactualScope": {
+    "candidateStatement": "The NIH Office of Dietary Supplements describes creatine's role in supplying muscle energy through ATP generation, with phosphocreatine stores contributing at the start of intense activity.",
+    "hedgePreserved": true,
+    "containsDosingClinicalOrSafetyContent": false,
+    "omittedFromPriorStatement": [
+      "phosphocreatine/ATP energy-shuttle framing as a named system",
+      "creatine kinase as the catalyzing enzyme",
+      "reversible donation of a high-energy phosphate group to ADP to regenerate ATP",
+      "phosphorylation of creatine as a named reaction step",
+      "high-intensity muscle contraction stated as a mechanistic consequence"
+    ],
+    "omissionRationale": "Not supported by the ODS Creatine-section introductory paragraphs actually anchoring this candidate; omission is not an assertion that these details are false, only that this narrow candidate does not rely on them."
+  },
+  "remainingGates": [
+    "Source-item/method scope: confirm the retrieval method actually used at implementation time is the reviewed nih-ods API method, with ODS acknowledgement, third-party exclusion, field allowlist and serialized request limits; not inherited from any other source's approval.",
+    "Registry termsUrl locator drift (odsProvenance.registryTermsUrlFinding): rights-owner correction required; unresolved by this candidate.",
+    "Evidence-reviewer acceptance of the narrowed statement and of the inherited evidenceTier 'Strong' / confidence 'high' values, which this candidate leaves unchanged pending that review, not as a ratification.",
+    "Disposition of the preserved authority-disposition-2026-09-07 A1/A2 re-anchor instruction on this claim; not closed by this candidate.",
+    "Containment reach over the removed PubChem excerpt's possible indirect DrugBank provenance (dependencyDisposition.containmentReach); a containment-owner determination under decision C1, not required to resolve for this narrow diff.",
+    "Any applicable independent-family requirement for this claim remains open and unclaimed by a single-source paraphrase.",
+    "Promotion, deployment and production containment remain separate outcomes, untouched by this candidate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

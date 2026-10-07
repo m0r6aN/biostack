@@ -4,6 +4,7 @@ using System.Text.Json;
 using BioStack.Domain.Governance;
 using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Keon;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 /// <summary>
@@ -16,7 +17,11 @@ public class RuntimeReceiptFactoryTests
     private static (RuntimeReceiptFactory factory, RecordingSpine spine) Build()
     {
         var spine = new RecordingSpine();
-        var factory = new RuntimeReceiptFactory(new EchoKeonClient(), spine);
+        var factory = new RuntimeReceiptFactory(
+            new EchoKeonClient(),
+            spine,
+            new KeonRuntimeOptions(),
+            NullLogger<RuntimeReceiptFactory>.Instance);
         return (factory, spine);
     }
 
@@ -123,6 +128,32 @@ public class RuntimeReceiptFactoryTests
         Assert.Equal(h1, h2); // deterministic for the same seed
     }
 
+    [Fact]
+    public async Task IssueAndAppend_WhenRuntimeOffline_DoesNotAppendOrClaimKeonReceipt()
+    {
+        var spine = new RecordingSpine();
+        var factory = new RuntimeReceiptFactory(
+            new KeonRuntimeClientStub(new KeonRuntimeOptions { StubAllowAll = true }),
+            spine,
+            new KeonRuntimeOptions(),
+            NullLogger<RuntimeReceiptFactory>.Instance);
+        var context = new ReceiptContext(
+            ReceiptClass: ReceiptClass.ProtocolReviewCompleted,
+            SubjectUri: "protocol:offline/review",
+            Actor: ReceiptActor.User(Guid.Empty),
+            EvidenceRefs: [ReceiptRefs.Protocol(Guid.Empty)],
+            Decision: "commentary-only",
+            EffectStatus: "non-effecting",
+            InputHashSeed: "offline-seed");
+
+        var error = await Assert.ThrowsAsync<KeonRuntimeUnavailableException>(
+            () => factory.IssueAndAppendAsync(context));
+
+        Assert.Empty(spine.Appended);
+        Assert.Contains("no Decision Receipt was issued", error.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("keon://", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
     // ── Fakes ──────────────────────────────────────────────────────────────────
 
     private sealed class EchoKeonClient : IKeonRuntimeClient
@@ -135,7 +166,7 @@ public class RuntimeReceiptFactoryTests
 
         public Task<DecisionReceipt> IssueReceiptAsync(ReceiptRequest request, CancellationToken ct = default) =>
             Task.FromResult(new DecisionReceipt(
-                ReceiptUri: $"keon://receipt/test-{Guid.NewGuid():N}",
+                ReceiptUri: $"urn:biostack:test-receipt:{Guid.NewGuid():N}",
                 SubjectUri: request.SubjectUri,
                 TenantId: request.TenantId,
                 ActorId: request.ActorId,
@@ -172,5 +203,9 @@ public class RuntimeReceiptFactoryTests
 
         public Task<IReadOnlyList<SpineEntry>> GetByActorAsync(string actorId, CancellationToken ct = default) =>
             Task.FromResult<IReadOnlyList<SpineEntry>>(Appended.Where(e => e.ActorId == actorId).ToList());
+
+        // Recording double: entries are stored verbatim without chaining, so report what it holds.
+        public Task<SpineChainVerificationResult> VerifyChainAsync(CancellationToken ct = default) =>
+            Task.FromResult(SpineChainVerificationResult.Intact(Appended.Count));
     }
 }

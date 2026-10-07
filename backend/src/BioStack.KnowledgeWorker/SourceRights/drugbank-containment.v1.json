@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "drugbank-excerpt-containment-20260908",
+  "decisionReceiptPath": "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+  "decisionId": "C1",
+  "sourceClassId": "drugbank",
+  "sourceIds": [
+    "basaria-2013-jgerontol-rct",
+    "drugbank",
+    "drugbank-clomifene-citrate-salt",
+    "drugbank-db00010",
+    "drugbank-db00052",
+    "drugbank-db00107",
+    "drugbank-db00143",
+    "drugbank-db00148",
+    "drugbank-db00481",
+    "drugbank-db01276",
+    "drugbank-db01277",
+    "drugbank-db04900",
+    "drugbank-db06202",
+    "drugbank-db06401",
+    "drugbank-db06655",
+    "drugbank-db09045",
+    "drugbank-db09126",
+    "drugbank-db11653",
+    "drugbank-db13937",
+    "drugbank-db13939",
+    "drugbank-db18989",
+    "drugbank-db18998",
+    "drugbank-db19099",
+    "drugbank-db19339",
+    "drugbank-prezatide"
+  ],
+  "hostSuffixes": [
+    "drugbank.com"
+  ],
+  "releaseRule": "Remains in force until superseded by an explicit reviewed containment release; registry absence or a partial permitted-content declaration does not release excerpts."
+}

@@ -47,7 +47,7 @@ describe('AuthProvider session handling', () => {
     });
   });
 
-  it('routes an expired cookie on a near-prefix page back through sign-in', async () => {
+  it('leaves an expired cookie on a near-prefix page to the router (404), not sign-in', async () => {
     const replace = vi.fn();
     vi.stubGlobal('location', {
       pathname: '/knowledge-private',
@@ -70,13 +70,19 @@ describe('AuthProvider session handling', () => {
     );
 
     await waitFor(() => {
-      expect(replace).toHaveBeenCalledWith(
-        '/auth/signin?callbackUrl=%2Fknowledge-private&error=session-expired',
-      );
+      // Unknown paths are not sign-in-gated: the router renders the 404
+      // page, so an expired cookie must not bounce the visitor away.
+      expect(replace).not.toHaveBeenCalled();
     });
   });
 
   it('treats 401 session responses as anonymous state', async () => {
+    const replace = vi.fn();
+    vi.stubGlobal('location', {
+      pathname: '/billing',
+      search: '?plan=operator',
+      replace,
+    });
     const fetchMock = vi.fn().mockResolvedValue({
       ok: false,
       status: 401,
@@ -91,9 +97,18 @@ describe('AuthProvider session handling', () => {
 
     await waitFor(() => expect(screen.getByTestId('loading')).toHaveTextContent('ready'));
     expect(screen.getByTestId('user')).toHaveTextContent('anonymous');
+    expect(replace).toHaveBeenCalledWith(
+      '/auth/signin?callbackUrl=%2Fbilling%3Fplan%3Doperator&error=session-expired',
+    );
   });
 
   it('logs true session server errors without blocking anonymous state', async () => {
+    const replace = vi.fn();
+    vi.stubGlobal('location', {
+      pathname: '/profiles',
+      search: '',
+      replace,
+    });
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     vi.stubGlobal(
       'fetch',
@@ -112,5 +127,30 @@ describe('AuthProvider session handling', () => {
     await waitFor(() => expect(screen.getByTestId('loading')).toHaveTextContent('ready'));
     expect(screen.getByTestId('user')).toHaveTextContent('anonymous');
     expect(warn).toHaveBeenCalledWith('BioStack session check failed', expect.objectContaining({ status: 500 }));
+    expect(replace).toHaveBeenCalledWith(
+      '/auth/signin?callbackUrl=%2Fprofiles&error=session-unavailable',
+    );
+  });
+
+  it('fails closed on a protected page when the session check cannot reach the API', async () => {
+    const replace = vi.fn();
+    vi.stubGlobal('location', {
+      pathname: '/profiles',
+      search: '',
+      replace,
+    });
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
+
+    render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => {
+      expect(replace).toHaveBeenCalledWith(
+        '/auth/signin?callbackUrl=%2Fprofiles&error=session-unavailable',
+      );
+    });
   });
 });

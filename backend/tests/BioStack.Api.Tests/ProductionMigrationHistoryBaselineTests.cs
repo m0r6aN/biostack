@@ -1,4 +1,5 @@
 using BioStack.Api;
+using BioStack.Infrastructure.Persistence;
 using Xunit;
 
 namespace BioStack.Api.Tests;
@@ -59,6 +60,33 @@ public sealed class ProductionMigrationHistoryBaselineTests
         Assert.Single(missing);
         Assert.Contains("20260401000000_LegacyEnsureCreatedBaseline", applied);
         Assert.Contains(migrationIds.First(), missing);
+    }
+
+    [Fact]
+    public void FindMissingSchemaObjects_FailsClosedOnUnrepairableCriticalTypeDrift()
+    {
+        var tables = ReadRequiredValues("RequiredTables");
+        var indexes = ReadRequiredValues("RequiredIndexes");
+        var columns = ReadRequiredColumns();
+        var schemas = CriticalPostgresSchemaContract.Columns
+            .Where(column => column.IsLegacyBaselineColumn)
+            .ToDictionary(
+                column => (column.Table, column.Column),
+                column => new PostgresColumnSchema(
+                    column.RepairableLegacyUdtNames.FirstOrDefault()
+                        ?? column.ExpectedUdtNames.First(),
+                    column.IsNullable));
+        schemas[("AppUsers", "Id")] = new PostgresColumnSchema("int4", false);
+
+        var problems = ProductionMigrationHistoryBaseline.FindMissingSchemaObjects(
+            tables,
+            columns,
+            indexes,
+            schemas);
+
+        Assert.Contains(
+            problems,
+            problem => problem.StartsWith("type:AppUsers.Id=int4", StringComparison.Ordinal));
     }
 
     private static HashSet<string> ReadRequiredValues(string fieldName)

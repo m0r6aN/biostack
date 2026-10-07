@@ -1,0 +1,81 @@
+{
+  "allowlistVersion": "1.0.0",
+  "tooluniversePackageVersion": "1.4.0",
+  "installExtra": "tooluniverse",
+  "installNote": "Base package only. Do not install tooluniverse[all].",
+  "approvedSkills": [
+    "tooluniverse-chemical-compound-retrieval",
+    "tooluniverse-literature-deep-research",
+    "tooluniverse-drug-research",
+    "tooluniverse-adverse-event-detection",
+    "tooluniverse-pharmacovigilance",
+    "tooluniverse-systems-biology",
+    "tooluniverse-target-research"
+  ],
+  "workflowToSkills": {
+    "resolve_compound_identity": [
+      "tooluniverse-chemical-compound-retrieval"
+    ],
+    "research_compound_evidence": [
+      "tooluniverse-chemical-compound-retrieval",
+      "tooluniverse-literature-deep-research",
+      "tooluniverse-drug-research"
+    ],
+    "research_published_regimens": [
+      "tooluniverse-drug-research",
+      "tooluniverse-literature-deep-research"
+    ],
+    "research_adverse_events": [
+      "tooluniverse-adverse-event-detection",
+      "tooluniverse-pharmacovigilance"
+    ],
+    "research_mechanisms_and_targets": [
+      "tooluniverse-target-research",
+      "tooluniverse-drug-research"
+    ],
+    "research_pathways": [
+      "tooluniverse-systems-biology",
+      "tooluniverse-target-research"
+    ],
+    "refresh_evidence_packet": [
+      "tooluniverse-literature-deep-research",
+      "tooluniverse-drug-research",
+      "tooluniverse-adverse-event-detection"
+    ]
+  },
+  "approvedTools": [
+    "PubChem_get_CID_by_compound_name",
+    "PubChem_get_compound_properties_by_CID",
+    "PubChem_get_compound_synonyms_by_CID",
+    "ChEMBL_search_molecules",
+    "ChEMBL_get_molecule",
+    "ChEMBL_get_molecule_targets",
+    "PubMed_search_articles",
+    "PubMed_get_article",
+    "PubMed_get_related",
+    "FAERS_count_reactions_by_drug_event",
+    "UniProt_get_function_by_accession",
+    "UniProt_get_entry_by_accession",
+    "OpenTargets_get_drug_mechanisms_of_action_by_chemblId",
+    "OpenTargets_get_drug_warnings_by_chemblId"
+  ],
+  "approvedCategoriesForPreload": [
+    "pubchem",
+    "ChEMBL",
+    "pubmed",
+    "uniprot",
+    "fda_drug_adverse_event",
+    "opentarget"
+  ],
+  "prohibitedPatterns": [
+    "ExecuteAnyTool",
+    "arbitrary_code",
+    "shell",
+    "python_exec"
+  ],
+  "notes": [
+    "Skills are workflow guidance labels; only approvedTools may be executed via the adapter.",
+    "Tool names not on approvedTools must fail closed.",
+    "Expand approvedTools only with a new allowlistVersion and pin-doc update."
+  ]
+}

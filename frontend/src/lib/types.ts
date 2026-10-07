@@ -82,6 +82,21 @@ export interface ProviderAccessConfirmation {
   submittedAtUtc: string;
 }
 
+export interface ProviderAccessRequest {
+  email: string;
+  name: string;
+  organization: string;
+  role: string;
+  consent: boolean;
+  website?: string;
+}
+
+export interface ProviderAccessConfirmation {
+  requestId: string;
+  status: string;
+  submittedAtUtc: string;
+}
+
 export interface CheckIn {
   id: string;
   personId: string;
@@ -192,6 +207,29 @@ export interface InteractionResult {
   sharedPathways: string[];
   reason: string;
   hintBacked: boolean;
+}
+
+// One flagged pair with no reasoning attached — the entire shape returned for per-pair interaction
+// data to a viewer without the reviewed_relationship_graph entitlement (Operator). Owner ruling
+// 2026-09-16 (B3): pair names and severity only, no mechanism, direction, consequence, evidence
+// narrative, or source text.
+export interface InteractionPairSummary {
+  compoundA: string;
+  compoundB: string;
+  severity: null; // The current pair producer has no measured severity.
+}
+
+// Reduced projection of InteractionIntelligence returned to a viewer without the
+// reviewed_relationship_graph entitlement. Use isReducedInteractionIntelligence to distinguish it
+// from the full shape at render time.
+export interface ReducedInteractionIntelligence {
+  pairs: InteractionPairSummary[];
+}
+
+export function isReducedInteractionIntelligence(
+  value: InteractionIntelligence | ReducedInteractionIntelligence,
+): value is ReducedInteractionIntelligence {
+  return Array.isArray((value as ReducedInteractionIntelligence).pairs);
 }
 
 export interface InteractionIntelligence {
@@ -459,6 +497,27 @@ export interface ProtocolReviewCompletedEvent {
   receiptUri?: string;
 }
 
+export interface EntitlementLimits {
+  maxCompounds: number;
+}
+
+export interface EntitlementFeatures {
+  stackIntelligence: boolean;
+  fullOverlapAnalysis: boolean;
+  protocolBuilder: boolean;
+  observabilityCorrelations: boolean;
+  savedAdvancedProtocolViews: boolean;
+  affiliateSurfaces: boolean;
+}
+
+export interface Entitlements {
+  isPro: boolean;
+  plan: 'free' | 'pro' | string;
+  limits: EntitlementLimits;
+  features: EntitlementFeatures;
+  futureRoles: string[];
+}
+
 export interface ProtocolRun {
   id: string;
   protocolId: string;
@@ -527,7 +586,7 @@ export interface Protocol {
   items: ProtocolItem[];
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
+  interactionIntelligence: InteractionIntelligence | ReducedInteractionIntelligence;
   activeRun: ProtocolRun | null;
   versionDiff: ProtocolVersionDiff | null;
   actualComparison: ProtocolActualComparison | null;
@@ -558,7 +617,7 @@ export interface ProtocolVersionChange {
 export interface CurrentStackIntelligence {
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
+  interactionIntelligence: InteractionIntelligence | ReducedInteractionIntelligence;
 }
 
 export type TimelineEventType =
@@ -591,27 +650,30 @@ export interface KnowledgeEntry {
   notes: string;
   pathways: string[];
   benefits: string[];
-  pairsWellWith: string[];
+  pairsWellWith?: string[];
   avoidWith: string[];
-  compatibleBlends: string[];
-  recommendedDosage: string;
-  frequency: string;
-  preferredTimeOfDay: string;
-  weeklyDosageSchedule: string[];
+  compatibleBlends?: string[];
+  recommendedDosage?: string;
+  frequency?: string;
+  preferredTimeOfDay?: string;
+  weeklyDosageSchedule?: string[];
   drugInteractions: string[];
-  optimizationProtein: string;
-  optimizationCarbs: string;
-  optimizationSupplements: string;
-  optimizationSleep: string;
-  optimizationExercise: string;
+  optimizationProtein?: string;
+  optimizationCarbs?: string;
+  optimizationSupplements?: string;
+  optimizationSleep?: string;
+  optimizationExercise?: string;
 }
 
+// Reduced overlap responses omit all reasoning/classification fields and return severity:null.
+// Full responses retain their original fields; no type, pathway or confidence measures severity.
 export interface InteractionFlag {
   compoundNames: string[];
-  overlapType: string;
-  pathwayTag: string;
-  description: string;
-  evidenceConfidence: string;
+  severity?: null;
+  overlapType?: string;
+  pathwayTag?: string;
+  description?: string;
+  evidenceConfidence?: string;
 }
 
 export interface ProtocolAnalyzerEntry {

@@ -1,0 +1,3 @@
+namespace BioStack.Contracts.Responses;
+
+public sealed record CheckoutSessionResponse(string Url);

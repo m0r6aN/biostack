@@ -19,7 +19,8 @@ public sealed record AnalyzeProtocolResponse(
     int ParsedCompoundCount = 0,
     int RecognizedCompoundCount = 0,
     string ParseConfidence = "none",
-    bool Scored = false);
+    bool Scored = false,
+    List<EvidenceContextComparisonResponse>? EvidenceContextComparisons = null);
 
 public sealed record ProtocolIngestionArtifactResponse(
     string Kind,

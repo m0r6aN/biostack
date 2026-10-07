@@ -6,7 +6,6 @@ import type { AnalyzerGoalSelection } from '@/lib/analyzerGoals';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
-import { getMockProfileGoalIds } from '@/lib/goals';
 import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 import type { CurrentSubscription, PersonProfile, ProtocolAnalyzerInputType, ProtocolAnalyzerResult } from '@/lib/types';
 import Link from 'next/link';
@@ -23,20 +22,25 @@ import { NextSteps } from './report/NextSteps';
 import { ParsedProtocolSection } from './report/ParsedProtocolSection';
 import { ScoreHero } from './report/ScoreHero';
 import {
+  analyzerErrorPresentation,
   currentRawInput,
   exampleProtocols,
-  formatAnalyzerError,
   getScoreBand,
   getScoreInsight,
   getWhatThisMeans,
   pickOptimizedProtocol,
   recommendationCount,
 } from './analyzerView';
+import type { AnalyzerErrorKind } from './analyzerView';
 import { useAnalyzerSession } from './useAnalyzerSession';
 import type { AnalyzerContextFields } from './useAnalyzerSession';
 
 const ANALYZER_PRICING_HREF = '/pricing?intent=analyzer';
 const PAID_ANALYZER_FEATURE = 'paid_intelligence';
+const ANALYSIS_STORAGE_ERROR =
+  'This analysis could not be saved on this browser. Storage may be full or blocked. Free up space or allow site data, then try again.';
+const DRAFT_STORAGE_ERROR =
+  'The protocol draft could not be stored on this browser, so nothing was added yet. Storage may be full or blocked. Free up space or allow site data, then try again.';
 
 type AnalyzerAccess = 'checking' | 'entitled' | 'operator-required' | 'unavailable';
 
@@ -67,9 +71,17 @@ export function AnalyzerExperience() {
   const setResult = (next: ProtocolAnalyzerResult | null) => setSnapshot((s) => ({ ...s, result: next }));
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [error, setError] = useState('');
+  const [error, setErrorRaw] = useState('');
+  const [errorKind, setErrorKind] = useState<AnalyzerErrorKind>('service');
+  // Keep the failure card's headline in lockstep with its message so a safe API
+  // validation message is never framed as a "temporarily unavailable" outage.
+  const setError = (message: string, kind: AnalyzerErrorKind = 'service') => {
+    setErrorRaw(message);
+    setErrorKind(message ? kind : 'service');
+  };
   const [showSaveNotice, setShowSaveNotice] = useState(false);
   const [savedAnalysisId, setSavedAnalysisId] = useState('');
+  const [storageError, setStorageError] = useState('');
   const [showExtractedText, setShowExtractedText] = useState(false);
   const [editing, setEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -161,10 +173,16 @@ export function AnalyzerExperience() {
         return;
       }
 
-      const profileGoalIds =
-        fetched.goals && fetched.goals.length > 0
-          ? fetched.goals.map((g) => g.goalDefinitionId)
-          : getMockProfileGoalIds(fetched.id);
+      let profileGoalIds: string[];
+      try {
+        const profileGoals = await apiClient.getProfileGoals(fetched.id);
+        profileGoalIds = profileGoals.map((goal) => goal.id);
+      } catch {
+        return;
+      }
+      if (cancelled) {
+        return;
+      }
 
       const prefilled = prefillFromProfileGoals(profileGoalIds);
       if (prefilled.primaryCategory !== null) {
@@ -234,13 +252,14 @@ export function AnalyzerExperience() {
     exampleType?: keyof typeof exampleProtocols;
   }) {
     if (analyzerAccess !== 'entitled') {
-      setError('Operator or Commander access is required to run Protocol Analyzer.');
+      setError('Operator or Commander access is required to run Protocol Analyzer.', 'validation');
       return;
     }
 
     setError('');
     setShowSaveNotice(false);
     setSavedAnalysisId('');
+    setStorageError('');
 
     const { goal, secondaryGoals } = buildAnalyzerGoalPayload(
       input.goalSelection.primaryCategory,
@@ -298,7 +317,8 @@ export function AnalyzerExperience() {
         setEditing(false);
       } catch (requestError) {
         setResult(null);
-        setError(formatAnalyzerError(requestError, input.inputType));
+        const presentation = analyzerErrorPresentation(requestError, input.inputType);
+        setError(presentation.message, presentation.kind);
       }
     });
   }
@@ -323,6 +343,7 @@ export function AnalyzerExperience() {
     setError('');
     setShowSaveNotice(false);
     setSavedAnalysisId('');
+    setStorageError('');
   }
 
   function loadExample(example: keyof typeof exampleProtocols) {
@@ -337,6 +358,7 @@ export function AnalyzerExperience() {
     }));
     setError('');
     setSavedAnalysisId('');
+    setStorageError('');
 
     trackAnalyzerEvent('analyzer_example_loaded', {
       exampleType: example,
@@ -361,6 +383,14 @@ export function AnalyzerExperience() {
     setResult(null);
   }
 
+  function reportStorageFailure(message: string) {
+    // Storage threw (quota, security, unavailable). Keep the report and input
+    // untouched, drop any earlier success notice, and surface a retryable error.
+    setShowSaveNotice(false);
+    setSavedAnalysisId('');
+    setStorageError(message);
+  }
+
   function saveAnalysisLocally() {
     if (!result) {
       return;
@@ -368,14 +398,21 @@ export function AnalyzerExperience() {
 
     const { goal } = buildAnalyzerGoalPayload(goals.primaryCategory, goals.refinementGoalIds);
 
-    const analysis = saveAnalyzerAnalysis({
-      inputType: mode,
-      sourceName: result.sourceName,
-      rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
-      result,
-    });
+    let analysisId: string;
+    try {
+      analysisId = saveAnalyzerAnalysis({
+        inputType: mode,
+        sourceName: result.sourceName,
+        rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
+        result,
+      }).id;
+    } catch {
+      reportStorageFailure(ANALYSIS_STORAGE_ERROR);
+      return;
+    }
 
-    setSavedAnalysisId(analysis.id);
+    setStorageError('');
+    setSavedAnalysisId(analysisId);
     trackAnalyzerEvent('analyzer_save_clicked', {
       inputType: result.inputType,
       goal,
@@ -394,21 +431,34 @@ export function AnalyzerExperience() {
 
     const { goal } = buildAnalyzerGoalPayload(goals.primaryCategory, goals.refinementGoalIds);
 
-    const analysis = saveAnalyzerAnalysis({
-      inputType: mode,
-      sourceName: result.sourceName,
-      rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
-      result,
-    });
+    let analysisId: string;
+    try {
+      analysisId = saveAnalyzerAnalysis({
+        inputType: mode,
+        sourceName: result.sourceName,
+        rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
+        result,
+      }).id;
+    } catch {
+      reportStorageFailure(ANALYSIS_STORAGE_ERROR);
+      return;
+    }
 
-    saveAnalyzerProtocolDraft({
-      sourceAnalysisId: analysis.id,
-      goal,
-      protocol: result.protocol,
-      optimizedProtocol: optimizedProtocol?.protocol ?? result.protocol,
-    });
+    try {
+      saveAnalyzerProtocolDraft({
+        sourceAnalysisId: analysisId,
+        goal,
+        protocol: result.protocol,
+        optimizedProtocol: optimizedProtocol?.protocol ?? result.protocol,
+      });
+    } catch {
+      // The analysis entry above stays in history; only navigation is withheld.
+      reportStorageFailure(DRAFT_STORAGE_ERROR);
+      return;
+    }
 
-    setSavedAnalysisId(analysis.id);
+    setStorageError('');
+    setSavedAnalysisId(analysisId);
     setShowSaveNotice(true);
     trackAnalyzerEvent('analyzer_convert_clicked', {
       inputType: result.inputType,
@@ -452,7 +502,11 @@ export function AnalyzerExperience() {
   }
 
   return (
-    <main className={`mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8 ${result ? 'pb-40 md:pb-28' : 'pb-28'}`}>
+    <main
+      id="main"
+      tabIndex={-1}
+      className={`mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8 ${result ? 'pb-40 md:pb-28' : 'pb-28'}`}
+    >
       <section className="mb-6 border-b border-white/[0.08] pb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Protocol Analyzer</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
@@ -486,6 +540,7 @@ export function AnalyzerExperience() {
               isAuthenticated={isAuthenticated}
               isPending={isPending || analyzerAccess !== 'entitled'}
               error={error}
+              errorKind={errorKind}
               onModeChange={handleModeChange}
               onInputTextChange={setInputText}
               onLinkUrlChange={setLinkUrl}
@@ -526,6 +581,11 @@ export function AnalyzerExperience() {
             onConvert={convertToProtocol}
             onUnlockClicked={onUnlockClicked}
           />
+          {storageError && (
+            <p role="alert" className="rounded-lg border border-amber-300/20 bg-amber-300/[0.06] p-4 text-sm text-amber-50/80">
+              {storageError}
+            </p>
+          )}
         </div>
       )}
 
@@ -538,7 +598,7 @@ export function AnalyzerExperience() {
               </Link>
             ) : user ? (
               <button type="button" onClick={convertToProtocol} className="block w-full rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
-                Convert to BioStack Protocol
+                Add this stack to BioStack
               </button>
             ) : (
               <button type="button" onClick={saveAnalysisLocally} className="block w-full rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
@@ -580,11 +640,27 @@ function AnalyzerAccessNotice({
   }
 
   return (
-    <div className="mb-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] p-4 text-sm text-emerald-50/80">
+    <div className="mb-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] p-5 text-sm text-emerald-50/80">
       <p>Protocol Analyzer requires an Operator or Commander subscription.</p>
-      <Link href={isAuthenticated ? ANALYZER_PRICING_HREF : '/auth/signin?callbackUrl=/tools/analyzer'} className="mt-2 inline-block font-semibold underline underline-offset-4">
-        {isAuthenticated ? 'View Operator access' : 'Sign in to check access'}
-      </Link>
+      <ul className="mt-3 space-y-1.5 text-emerald-50/70">
+        <li>Structural scoring of any pasted, uploaded, scanned, or linked protocol</li>
+        <li>Overlap and compatibility findings across the compounds it contains</li>
+        <li>Observational alternative scenarios, ready to review or save</li>
+      </ul>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href={isAuthenticated ? ANALYZER_PRICING_HREF : '/auth/signin?callbackUrl=/tools/analyzer'}
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
+        >
+          {isAuthenticated ? 'View Operator access' : 'Sign in to continue'}
+        </Link>
+        <Link
+          href={ANALYZER_PRICING_HREF}
+          className="rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/50"
+        >
+          See plans
+        </Link>
+      </div>
     </div>
   );
 }

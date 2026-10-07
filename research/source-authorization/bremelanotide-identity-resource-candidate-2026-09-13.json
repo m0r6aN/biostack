@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T08:34:45.306364Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "bremelanotide-identity-external-ids-001",
+  "candidateStatement": "PubChem lists a compound record titled Bremelanotide under CID 9941379 with molecular formula C50H68N14O10.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "17680bcca2f7fd97c766708cec919e5d39ede439",
+    "path": "research/input/evidence/bremelanotide.evidence.json",
+    "bytes": 29058,
+    "sha256": "a776822f0241218da83f7726c9a51c21094f0d4f1c44408094343f1fcdc37a2c"
+  },
+  "supersededClaimSha256": "447d8a25b84655624503470e8533c9bbea0480d6ad06e7c709706d6c6cf7b8cb",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "pubchem-cid-9941379",
+      "locator": "Compound summary header",
+      "chars": 42,
+      "sha256": "eb78a74deb7cfc3785831efc846527466f692bea7fc31e53b075bbd1d06f94ba"
+    },
+    {
+      "sourceId": "drugbank-db11653",
+      "locator": "Identification",
+      "chars": 20,
+      "sha256": "0a265f38a048e99614a82f60009376116c52bc1859c464085a90463e0627aed7"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-6y24o4f92s",
+      "locator": "Substance record",
+      "chars": 67,
+      "sha256": "0d842e58b484f04902a3fb559a8cae031ce74d2196f3bbbae4834ae54200093b"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-cid-9941379",
+    "drugbank-db11653",
+    "fda-gsrs-unii-6y24o4f92s"
+  ],
+  "historicalNullQuoteLocators": [],
+  "historicalReviewFlags": [
+    "Remediation 2026-08-29: UNII gap closed and CAS number independently confirmed via the FDA's own Global Substance Registration System record (precision.fda.gov), a structured authority database independent of PubChem/DrugBank. UNII 6Y24O4F92S added to compound.externalIdentifiers; CAS and molecular formula both cross-verified on the same record."
+  ],
+  "historicalFlagQualification": "Prior GSRS verification remains historical and unverified in this review; no new GSRS or metabolite-lineage acceptance. Only returned CID/title/formula supported. Removed quote text is available only in original Git history, not copied here.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "bremelanotide",
+    "useCase": "compound identity/reference data",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "bremelanotide",
+    "useCase": "compound identity/reference data",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-9941379",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/9941379",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/9941379/property/Title,MolecularFormula/JSON",
+    "method": "PUG REST fixed CID properties",
+    "query": "CID9941379;Title,MolecularFormula",
+    "returnedCID": 9941379,
+    "returnedTitle": "Bremelanotide",
+    "returnedMolecularFormula": "C50H68N14O10",
+    "supportLocator": "PUG REST fixed CID 9941379 property response: CID, Title and MolecularFormula; factual paraphrase only.",
+    "scope": "Exact database node only; no CAS/UNII/DrugBank/metabolite-lineage or product equivalence verification.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version supplied by property response; no historical access-to-payload identity inferred.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubChem API identity approval; no new rights or contributor annotation reuse.",
+    "retrievedAtUtc": "2026-09-13T08:16:36.688264Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt and retained property projection; no new request or independent original transport-byte rehash."
+  },
+  "sourceSha256": "81ffac6346c2f35310e857b4888d53ed9e2b06dc56dd90b26c8f81d5c26b34d7",
+  "payloadProvenance": {
+    "bytes": 172,
+    "attribution": "Worker-reported original response hash and size; retained projection is not represented as original transport bytes."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "successfulPayloads": 1,
+    "successfulAttempt": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/9941379/property/Title,MolecularFormula/JSON",
+      "query": "CID9941379;Title,MolecularFormula",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T08:16:36.414304Z",
+      "requestEndUtc": "2026-09-13T08:16:36.688264Z",
+      "httpStatus": 200,
+      "bytes": 172,
+      "sha256": "81ffac6346c2f35310e857b4888d53ed9e2b06dc56dd90b26c8f81d5c26b34d7",
+      "serverDate": "Sun, 13 Sep 2026 08:16:37 GMT"
+    },
+    "qualification": "One original HTTP200 request; no request by this implementation."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/bremelanotide-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/bremelanotide-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/bremelanotide-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/bremelanotide-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/bremelanotide-identity-replacement-assessment-20260913/receipts/pug-20260913T081636414304Z.json"
+  },
+  "queueAccounting": "Prepared14to15, completed0; prior-co-citation assessed10to11 because PubChem already co-cited. Earlier mechanism candidate and sidecar unchanged.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Strong/high.",
+    "CAS/UNII contributor identity and product equivalence remain unresolved, not asserted by candidate.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false,
+  "originalSourceSnapshotProvenance": {
+    "gitRevision": "17680bcca2f7fd97c766708cec919e5d39ede439",
+    "path": "research/input/evidence/bremelanotide.evidence.json",
+    "sourceId": "pubchem-cid-9941379",
+    "nonTitleMetadata": {
+      "sourceId": "pubchem-cid-9941379",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Bremelanotide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    "titleChars": 42,
+    "titleSha256": "eb78a74deb7cfc3785831efc846527466f692bea7fc31e53b075bbd1d06f94ba",
+    "fullSourceSha256": "2be9d5a582e5665291a5464710ef7604ae928b83b67ebbcef3c99ab7d2265bd0",
+    "fullSourceHashEncoding": "SHA256 of UTF-8 json.dumps(source, sort_keys=True, separators=(comma,colon), ensure_ascii=True), no trailing newline.",
+    "omissionExplanation": "Original title exactly equals a removed PubChem header excerpt; title omitted here to avoid copying quote text. Full original source remains in the exact Git packet/sourceId, with all canonical source snapshot bytes unchanged."
+  }
+}

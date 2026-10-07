@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VISIBLY SYNTHETIC TEST FIXTURE. This is not copied from an NIH ODS fact sheet. -->
+<Factsheet xmlns="http://tempuri.org/factsheet.xsd">
+  <FSID>99005156</FSID>
+  <LanguageCode>en</LanguageCode>
+  <Reviewed>2026-07-01</Reviewed>
+  <URL>https://ods.od.nih.gov:443/factsheets/ImmuneFunction-HealthProfessional/</URL>
+  <Title>Dietary Supplements for Immune Function and Infectious Diseases</Title>
+  <ShortTitle>Synthetic immune function fixture</ShortTitle>
+  <Content>&lt;h2&gt;Other Ingredients&lt;/h2&gt;
+&lt;h3&gt;N-acetylcysteine and Glutathione&lt;/h3&gt;
+&lt;p&gt;Synthetic identity fixture text for glutathione.&lt;/p&gt;
+&lt;p&gt;Synthetic allowlisted &lt;em&gt;mechanism&lt;/em&gt; fixture paragraph.&lt;/p&gt;
+&lt;p&gt;Synthetic affected paragraph before &lt;a href="https://example.invalid/restricted"&gt;excluded linked words&lt;/a&gt; and after the link.&lt;/p&gt;
+&lt;img src="https://example.invalid/restricted.png" alt="excluded synthetic image" /&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td&gt;Excluded synthetic table text.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h4&gt;Efficacy&lt;/h4&gt;
+&lt;h5&gt;Synthetic studied population&lt;/h5&gt;
+&lt;p&gt;Synthetic efficacy fixture text reports an uncertain observed outcome.&lt;/p&gt;
+&lt;h4&gt;Safety&lt;/h4&gt;
+&lt;p&gt;Synthetic safety fixture text must be excluded from this adapter.&lt;/p&gt;
+&lt;h3&gt;Next synthetic ingredient&lt;/h3&gt;
+&lt;p&gt;Synthetic neighboring-section text must be excluded.&lt;/p&gt;</Content>
+  <References Count="1">
+    <EndNote>
+      <RefID>1</RefID>
+      <Reference>Excluded synthetic reference text.</Reference>
+      <PMID>00000000</PMID>
+    </EndNote>
+  </References>
+  <Disclaimer>Synthetic disclaimer fixture text.</Disclaimer>
+  <ODSLogo>https://ods.od.nih.gov/synthetic-logo.png</ODSLogo>
+</Factsheet>

@@ -1,7 +1,14 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { ProviderAccessForm } from '@/components/marketing/ProviderAccessForm';
+import { createPublicPageMetadata } from '@/lib/site';
 import Link from 'next/link';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Provider Pilot | BioStack',
+  description: 'Review the bounded provider pilot workflow for permissioned observational protocol summaries.',
+  path: '/providers',
+});
 
 const workflow = [
   'Submit contact information for the provider pilot review queue.',
@@ -69,7 +76,7 @@ export default function ProvidersPage() {
   return (
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
-      <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
         <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/72">

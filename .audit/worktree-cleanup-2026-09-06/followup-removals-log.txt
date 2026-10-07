@@ -1,0 +1,66 @@
+Follow-up removals — resolves the FAIL entries in batch1-log.txt and batch4-log.txt
+====================================================================================
+The batch logs record only the scripted loop. Six worktrees refused removal inside
+those loops and were resolved afterwards by separate commands, whose output did not
+reach the batch logs. That gap is what this file closes. Final state is independently
+verifiable in post-cleanup-verification.txt.
+
+FROM batch1-log.txt (3 FAIL entries)
+------------------------------------
+1. BioStack-keo68-billing-deeplink-sparse-025-20260726
+   Refusal: "contains modified or untracked files, use --force to delete it"
+   Cause:   checkout had been emptied; 1337 tracked files showed as deleted.
+   Evidence before forcing: HEAD 53ed0df is an ancestor of origin/main,
+            `git diff origin/main...HEAD` = 0 lines, 0 untracked files.
+   Action:  git worktree remove --force   -> removed
+
+2. BioStack-keo72
+   Refusal: "failed to delete ... Directory not empty" (admin entry already removed)
+   Cause:   Windows left ignored build artifacts behind after the tracked files went.
+   Evidence before removing: all 86 remaining files checked against
+            `git ls-tree -r origin/main` -> 86/86 present in main, 0 absent.
+   Action:  rm -rf   -> removed
+
+3. BioStack-keo84-seo-ledger-023-20260726
+   Refusal: worktree was locked; lock reason file contained the literal string
+            "initializing" (a stale lock from a `git worktree add` interrupted
+            2026-07-26, not a deliberate retention signal).
+   Evidence before forcing: HEAD is an ancestor of origin/main with a 0-line diff;
+            all 265 non-noise untracked files checked -> 265/265 present in
+            origin/main, 0 unique.
+   Action:  git worktree unlock; git worktree remove --force   -> removed
+
+FROM batch4-log.txt (5 FAIL entries)
+------------------------------------
+All five refused for the same reason: uncommitted changes present. The loop
+deliberately ran WITHOUT --force so that any unexpected dirty worktree would
+refuse rather than be silently destroyed. These five were the five predicted by
+the pre-flight check, and every one had its uncommitted work captured to
+uncommitted-patches/ BEFORE it was forced.
+
+4. .codex/worktrees/biostack-remediation-integration/BioStack  (27 staged files)
+       -> patch captured (145591 bytes) -> git worktree remove --force -> removed
+5. .codex/worktrees/biostack-remediation-p05-p06-combined/BioStack  (2 staged)
+       -> patch captured (11796 bytes)  -> git worktree remove --force -> removed
+6. .worktrees/analyzer-ux-pass  (2 modified)
+       -> patch captured (4904 bytes)   -> git worktree remove --force -> removed
+7. .worktrees/pr151-negative-fixtures  (1 modified: .serena/project.yml)
+       -> patch captured (9667 bytes)   -> git worktree remove --force -> removed
+8. .claude/worktrees/analyzer-premium-redesign  (1 untracked: frontend/pnpm-lock.yaml)
+       -> file copied to uncommitted-patches/analyzer-premium-redesign-untracked/
+          (its .patch is empty by design: an untracked file produces no diff)
+       -> git worktree remove --force reported "Directory not empty" (leftover
+          build artifacts, same Windows behaviour as keo72); branch
+          worktree-analyzer-premium-redesign confirmed intact beforehand
+       -> rm -rf   -> removed
+
+ALSO REMOVED OUTSIDE THE BATCH LOOPS
+------------------------------------
+9. BioStack-export-bundle-pr
+   Not corrupt: it failed ordinary git commands only with "dubious ownership".
+   Read via `git -c safe.directory='*'` it was clean, 0 unique patches, fully
+   upstream. Removed in the finalize step (see finalize-log.txt).
+
+TOTAL: 59 (batch1) + 7 (batch2) + 14 (batch3) + 39 (batch4) scripted removals,
+of which 8 refused and were resolved above, plus export-bundle-pr = every
+candidate accounted for.

@@ -9,6 +9,7 @@ using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
+using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -51,6 +52,7 @@ public sealed class AuthorizationEnforcementMatrixIntegrationTests : IAsyncLifet
                 });
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options =>
                         options.UseSqlite($"Data Source={_dbPath}"));
@@ -111,27 +113,68 @@ public sealed class AuthorizationEnforcementMatrixIntegrationTests : IAsyncLifet
         await UpsertSubscriptionAsync(userId, ProductTier.Commander, DateTime.UtcNow.AddDays(30));
         var commander = await _client.PostAsJsonAsync(path, request, JsonOptions);
         Assert.Equal(HttpStatusCode.Created, commander.StatusCode);
+        await using (var verificationScope = _factory.Services.CreateAsyncScope())
+        {
+            var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            Assert.Single(await db.ProtocolReviewCompletedEvents.ToListAsync());
+            Assert.Single(await db.SpineEntries
+                .Where(entry => entry.ReceiptClass == ReceiptClass.ProtocolReviewCompleted)
+                .ToListAsync());
+        }
 
         await UpsertSubscriptionAsync(userId, ProductTier.Commander, DateTime.UtcNow.AddMinutes(-1));
         var downgraded = await _client.PostAsJsonAsync(path, request, JsonOptions);
         Assert.Equal(HttpStatusCode.PaymentRequired, downgraded.StatusCode);
     }
 
-    private async Task<Guid> SignInAsync(string email)
+    [Fact]
+    public async Task ReviewCompletion_WhenReceiptFails_RollsBackReviewEventAndSpine()
     {
-        await _client.PostAsJsonAsync(
+        const string email = "review-atomic-failure@example.com";
+        var userId = await SignInAsync(email);
+        var profile = await CreateProfileAsync();
+        await CreateActiveCompoundAsync(profile.Id);
+        var protocol = await SaveProtocolAsync(profile.Id);
+        await UpsertSubscriptionAsync(userId, ProductTier.Commander, DateTime.UtcNow.AddDays(30));
+
+        await using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureServices(services => services.UseThrowingTestKeonRuntimeClient()));
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await SignInAsync(client, factory, email);
+
+        var response = await client.PostAsJsonAsync(
+            $"/api/v1/protocols/{protocol.Id}/review/complete",
+            new CompleteProtocolReviewRequest(null, "Atomic receipt failure."),
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.Empty(await db.ProtocolReviewCompletedEvents.ToListAsync());
+        Assert.Empty(await db.SpineEntries.ToListAsync());
+    }
+
+    private async Task<Guid> SignInAsync(string email)
+        => await SignInAsync(_client, _factory, email);
+
+    private static async Task<Guid> SignInAsync(
+        HttpClient client,
+        WebApplicationFactory<Program> factory,
+        string email)
+    {
+        await client.PostAsJsonAsync(
             "/api/v1/auth/start",
             new StartAuthRequest(email, "email", "/protocols"),
             JsonOptions);
-        using var inbox = await JsonDocument.ParseAsync(await _client.GetStreamAsync("/dev/auth/inbox"));
+        using var inbox = await JsonDocument.ParseAsync(await client.GetStreamAsync("/dev/auth/inbox"));
         var link = inbox.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
         var uri = new Uri(link);
-        await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
+        await client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
         Assert.Equal(
             HttpStatusCode.OK,
-            (await _client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions)).StatusCode);
+            (await client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions)).StatusCode);
 
-        using var scope = _factory.Services.CreateScope();
+        using var scope = factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         return await db.AppUsers
             .Where(user => user.Email == email)

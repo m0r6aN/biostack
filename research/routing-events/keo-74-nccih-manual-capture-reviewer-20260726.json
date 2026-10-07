@@ -1,0 +1,103 @@
+{
+  "event_id": "keo-74-nccih-manual-capture-reviewer-20260726",
+  "timestamp": "2026-07-26T16:35:04Z",
+  "task_id": "KEO-74-NCCIH-MANUAL-CAPTURE-REVIEWER-019",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used the dedicated KEO-74 worktree for a repository-only governance overlay, hash-bound receipt, documentation, and invariant tests.",
+    "Kept the canonical source-authorization decision, its schema, and the preceding transfer receipt immutable so their existing SHA-256 bindings remain verifiable."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "mutate-canonical-evidence-assignee",
+      "reason": "Sandy Morgan is the distinct NCCIH manual-capture reviewer, while Clint Morgan retains overall evidence-review ownership and the source evidence-promotion assignment."
+    },
+    {
+      "id": "invent-sandy-entra-object-id",
+      "reason": "No Sandy Morgan Entra object id was supplied. The bound schema permits name-only human assignment, so fabrication was unnecessary and prohibited."
+    },
+    {
+      "id": "live-or-runtime-validation",
+      "reason": "The authorized scope prohibited source activation, live calls, runtime mutation, Azure, Blob, database, canonical-ingest, and promotion work."
+    }
+  ],
+  "effort": "medium",
+  "context": {
+    "estimated_tokens": 6500,
+    "artifact_refs": [
+      "research/source-authorization/keo-74-nccih-manual-capture-reviewer-receipt.v1.json",
+      "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json",
+      "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "backend/tests/BioStack.KnowledgeWorker.Tests/ResearchArtifactValidatorTests.cs",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-NCCIH-MANUAL-CAPTURE-REVIEWER-019.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "governance-overlay-and-tests",
+    "governance-docs-and-binding-receipt",
+    "no-source-activation",
+    "no-live-calls",
+    "no-azure-or-blob",
+    "no-runtime-or-database",
+    "no-canonical-ingest-or-promotion",
+    "no-commit-push-or-pr"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-test",
+    "git-read"
+  ],
+  "cost": {
+    "estimated": null,
+    "actual": null,
+    "currency": "USD",
+    "confidence": "low"
+  },
+  "retry_count": 0,
+  "escalation_history": [
+    "The full KnowledgeWorker test command exceeded its 180-second command window and is recorded as blocked; no pass result is claimed.",
+    "Independent review found and drove repair of one invalid routing-event validation status; the canonical schema then validated."
+  ],
+  "outcome": "accepted",
+  "validation": [
+    {
+      "method": "Source-authorization artifact, schema representation, and reviewer-overlay receipt suite",
+      "status": "passed",
+      "evidence_ref": "36 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "NCCIH manual-review workflow suite",
+      "status": "passed",
+      "evidence_ref": "71 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Receipt SHA-256 binding verification",
+      "status": "passed",
+      "evidence_ref": "research/source-authorization/keo-74-nccih-manual-capture-reviewer-receipt.v1.json sha256 494effed949813ae62045fd746c1d275c4c9b8a45a69fed7f723547bb7fd9cbb"
+    },
+    {
+      "method": "Full KnowledgeWorker regression suite",
+      "status": "blocked",
+      "evidence_ref": "command timed out after 184069 milliseconds; no test result claimed"
+    },
+    {
+      "method": "Independent governance and separation-of-duties review",
+      "status": "passed",
+      "evidence_ref": "no blocking governance findings; canonical routing-event schema passed after status repair"
+    },
+    {
+      "method": "Whitespace and patch integrity check",
+      "status": "passed",
+      "evidence_ref": "git diff --check"
+    }
+  ]
+}

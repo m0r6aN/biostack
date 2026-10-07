@@ -1,5 +1,6 @@
 import { INTERACTION_TOKENS } from '@/styles/tokens';
-import type { InteractionIntelligence, CompoundRecord } from '@/lib/types';
+import type { InteractionIntelligence, ReducedInteractionIntelligence, CompoundRecord } from '@/lib/types';
+import { isReducedInteractionIntelligence } from '@/lib/types';
 
 export interface StackGraphNode {
   id: string;
@@ -55,10 +56,14 @@ function slugify(name: string) {
 }
 
 export function buildStackGraph(
-  intelligence: InteractionIntelligence | null,
+  intelligence: InteractionIntelligence | ReducedInteractionIntelligence | null,
   compounds: CompoundRecord[],
 ): StackGraphData {
-  if (!intelligence) return { nodes: [], edges: [] };
+  // The mechanism graph renders per-pair reason/sharedPathways/confidence — reasoning fields
+  // gated behind reviewed_relationship_graph (owner ruling 2026-09-16, B3). A viewer without that
+  // entitlement only ever gets the reduced shape here, which carries none of those fields, so
+  // there is nothing to draw a mechanism edge from.
+  if (!intelligence || isReducedInteractionIntelligence(intelligence)) return { nodes: [], edges: [] };
 
   const activeCompounds = compounds.filter((c) => c.status === 'Active');
   const positions = circleLayout(activeCompounds.length);

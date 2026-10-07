@@ -1,10 +1,7 @@
+import { getApiBaseUrl } from './apiBase';
 import {
     GOAL_DEFINITIONS,
-    getMockProfileGoalIds,
-    resolveGoalDefinitions,
-    setMockProfileGoalIds,
 } from './goals';
-import { getApiBaseUrl } from './apiBase';
 import { normalizeTimelineEvent } from './timeline';
 import {
     CalculatorResult,
@@ -50,8 +47,15 @@ import {
     SupplementPlan,
     MonitoringProtocol,
     Milestone,
+    Entitlements,
     ResourceEntry,
 } from './types';
+
+// Browser calls must stay same-origin (empty base → the Next rewrite proxies
+// /api/v1 to the backend with the session cookie attached). NEXT_PUBLIC_API_URL
+// is server-only: inlining it here sends browser fetches to the raw container
+// host, where the biostack.cc session cookie cannot travel.
+const API_URL = getApiBaseUrl();
 
 export class ApiError extends Error {
   status: number;
@@ -77,7 +81,7 @@ export class ApiError extends Error {
 
 export class ApiClient {
   private baseUrl: string;
-  constructor(baseUrl: string = getApiBaseUrl()) {
+  constructor(baseUrl: string = API_URL) {
     this.baseUrl = baseUrl;
   }
 
@@ -102,6 +106,14 @@ export class ApiClient {
         message = body.message || body.error || message;
         details = body;
       } catch {
+      }
+
+      // The consent gate answers mutations with 403 { code: 'consent_required' }.
+      // Route the visitor to the consent step, keeping their place — every
+      // mutating surface shares this gate, so handle it once here.
+      if (details?.code === 'consent_required' && typeof window !== 'undefined') {
+        const returnTo = `${window.location.pathname}${window.location.search}`;
+        window.location.assign(`/onboarding/consent?returnTo=${encodeURIComponent(returnTo)}`);
       }
 
       throw new ApiError(response.status, message, details);
@@ -167,17 +179,18 @@ export class ApiClient {
   }
 
   async updateCompound(
+    profileId: string,
     compoundId: string,
-    compound: Partial<CompoundRecord>
+    compound: Omit<CompoundRecord, 'id'>
   ): Promise<CompoundRecord> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+    return this.request(`/api/v1/profiles/${profileId}/compounds/${compoundId}`, {
       method: 'PUT',
       body: JSON.stringify(compound),
     });
   }
 
-  async deleteCompound(compoundId: string): Promise<void> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+  async deleteCompound(profileId: string, compoundId: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/compounds/${compoundId}`, {
       method: 'DELETE',
     });
   }
@@ -459,6 +472,17 @@ export class ApiClient {
     return this.request<CurrentSubscription>('/api/v1/billing/subscription');
   }
 
+  async getEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/entitlements');
+  }
+
+  async refreshEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/refresh', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+  }
+
   async createCheckoutSession(planCode: 'operator' | 'commander'): Promise<{ url: string }> {
     return this.request<{ url: string }>('/api/v1/billing/checkout', {
       method: 'POST',
@@ -482,28 +506,19 @@ export class ApiClient {
   }
 
   async getProfileGoals(profileId: string): Promise<GoalDefinition[]> {
-    try {
-      const profileGoals = await this.request<ProfileGoal[]>(
-        `/api/v1/profiles/${profileId}/goals`
-      );
-      return profileGoals
-        .map(pg => pg.goalDefinition)
-        .filter((g): g is GoalDefinition => g !== undefined);
-    } catch {
-      const ids = getMockProfileGoalIds(profileId);
-      return resolveGoalDefinitions(ids);
-    }
+    const profileGoals = await this.request<ProfileGoal[]>(
+      `/api/v1/profiles/${profileId}/goals`
+    );
+    return profileGoals
+      .map(pg => pg.goalDefinition)
+      .filter((g): g is GoalDefinition => g !== undefined);
   }
 
   async setProfileGoals(profileId: string, goalIds: string[]): Promise<void> {
-    try {
-      await this.request(`/api/v1/profiles/${profileId}/goals`, {
-        method: 'POST',
-        body: JSON.stringify({ goalIds }),
-      });
-    } catch {
-      setMockProfileGoalIds(profileId, goalIds);
-    }
+    await this.request(`/api/v1/profiles/${profileId}/goals`, {
+      method: 'POST',
+      body: JSON.stringify({ goalIds }),
+    });
   }
 
   // Receipts

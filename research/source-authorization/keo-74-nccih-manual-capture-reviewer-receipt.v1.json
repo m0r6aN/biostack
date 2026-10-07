@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "nccih-manual-capture-reviewer-authorization-receipt",
+  "receiptId": "keo-74-nccih-manual-capture-reviewer-019-20260726",
+  "decisionSource": "user-supplied-in-authorized-task",
+  "receivedAtUtc": "2026-07-26T16:27:48Z",
+  "timestampBasis": "receipt-time-not-original-decision-time",
+  "originalDecisionAtUtc": null,
+  "authorization": {
+    "sourceId": "nih-nccih",
+    "responsibilityId": "nih-nccih-manual-capture-reviewer",
+    "assignmentStatus": "assigned",
+    "operator": {
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0"
+    },
+    "distinctReviewer": {
+      "personName": "Sandy Morgan",
+      "identityBasis": "name-only-user-supplied"
+    },
+    "overallEvidenceReviewOwner": {
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0"
+    }
+  },
+  "bindings": [
+    {
+      "artifactPath": "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "sha256": "a5ad6ef136b3b7628416ea4fc516548dbf3d3fb1f0a77ff74a60e74d54968ea2"
+    },
+    {
+      "artifactPath": "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "sha256": "a9b094fc8d6ac87916cf7858124a16f8d00562ba338365d93418d0f211edf4db"
+    },
+    {
+      "artifactPath": "research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json",
+      "sha256": "bc4f1afabb8201488a8969359e88c5542c209d748208dbbb1a7265c29c9668d0"
+    }
+  ],
+  "invariants": {
+    "assignmentIsApproval": false,
+    "canonicalClaimPromotionRequiresEvidenceReview": true,
+    "nccihDistinctReviewerRequired": true,
+    "operatorReviewerIdentifiersMustDiffer": true,
+    "reviewerActionStatus": "pending",
+    "evidenceApprovalStatus": "review-required",
+    "noEntraObjectIdInventedForSandyMorgan": true,
+    "canonicalDecisionArtifactMutated": false,
+    "runtimeGuardChanged": false,
+    "noLiveOrRuntimeAuthorizationGranted": true
+  },
+  "notes": [
+    "The original reviewer-assignment decision time was not supplied. receivedAtUtc records when the authorized assignment was received, not an invented original decision time.",
+    "The bound schema permits name-only human assignment by requiring a name while leaving the Entra object id optional. Sandy Morgan's Entra object id was not supplied and is not invented.",
+    "This immutable overlay authorizes Sandy Morgan as the distinct NCCIH manual-capture reviewer. Clint Morgan retains overall evidence-review ownership and remains the NCCIH operator.",
+    "Assignment does not record a reviewer action, approve evidence, activate a source, authorize live calls, or authorize Azure, Blob, database, canonical-ingest, or promotion work.",
+    "A candidate remains fail closed until Sandy Morgan performs the review using a substantive reviewer identifier distinct from the operator identifier and all existing manual-capture checks pass."
+  ]
+}

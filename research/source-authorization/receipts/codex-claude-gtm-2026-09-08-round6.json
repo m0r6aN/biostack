@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified BioStack session."
+    },
+    {
+      "label": "Explore / Sonnet",
+      "evidence": "Claude's completed worker implementation report names a read-only Sonnet Explore lane. This is a provider-reported worker identity, not an independently observed subagent UI."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "bcd0d6e6984ed73eb89452a905a6bd8436a431bea0ae92dd4e51b3e5409660be",
+  "requested_lanes": [
+    "Replace initial worker policy with a fail-closed DrugBank-only manifest policy and real ResearchJob integration tests; correct coverage statements and record a durable quote-free replacement queue"
+  ],
+  "response_status": "complete",
+  "artifacts": [
+    "backend/src/BioStack.KnowledgeWorker/Pipeline/RestrictedExcerptPolicy.cs",
+    "backend/src/BioStack.KnowledgeWorker/BioStack.KnowledgeWorker.csproj",
+    "backend/tests/BioStack.KnowledgeWorker.Tests/RestrictedExcerptPolicyTests.cs",
+    "backend/tests/BioStack.KnowledgeWorker.Tests/ResearchJobContainmentTests.cs",
+    "research/source-authorization/drugbank-resource-queue-2026-09-08.json",
+    "research/source-authorization/DRUGBANK-CONTAINMENT-IMPLEMENTATION-2026-09-08.md",
+    "research/source-authorization/C1-CONTAINMENT-REVIEW-2026-09-08.md"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read the completed corrected Claude response and revised files",
+      "Independently rebuilt and ran the full 909-test worker suite: 901 passed, 8 failed; all 20 new containment cases passed",
+      "Compared the TRX failure names with the previous baseline: exactly the same eight",
+      "Verified embedded-resource path is inside the worker Docker context and generated from the same authoritative manifest as the frontend",
+      "Verified the shared-copy drift check accepts matching files and rejects a deliberately altered isolated copy",
+      "Independently checked the owner receipt, current corpus and no-quote scope; correction grants no acquisition/release authority"
+    ],
+    "passed": true
+  },
+  "deviations": [
+    "Codex implemented the frontend read-time/provider-boundary policy and packaging sync script in parallel. Claude noticed the generated worker copy, independently identified the external-path Docker issue, and corrected his csproj without editing the generated file.",
+    "Codex corrected a stale writer comment after Claude completed. The implementation is accepted for local worker containment, not complete C1 re-sourcing or production containment.",
+    "All eight pre-existing suite failures are preserved and disclosed; passing the new tests is not a green full suite."
+  ],
+  "dissent": [
+    "The worker report's instruction to regenerate or purge all historical output directories was overbroad. The new reader can contain responses while preserving historical files; direct copies and alternate/deployed consumers remain unverified. Codex requested read-only review of this correction.",
+    "30 claims remain queued, including two with no co-citation. Zero actually re-sourced."
+  ]
+}

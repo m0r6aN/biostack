@@ -1,5 +1,12 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Safety Boundary | BioStack',
+  description: 'Understand BioStack’s observational, educational, and non-prescriptive product boundary.',
+  path: '/safety',
+});
 
 const boundaries = [
   'BioStack does not prescribe, diagnose, or recommend compounds.',
@@ -13,7 +20,7 @@ export default function SafetyPage() {
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main className="mx-auto max-w-5xl px-5 py-12 sm:px-8 lg:py-16">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-5 py-12 sm:px-8 lg:py-16">
         <section>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">
             Safety
@@ -22,7 +29,7 @@ export default function SafetyPage() {
             BioStack is not a doctor.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
-            It is infrastructure for tracking, math, and clarity.
+            It is a library of what the research says, graded by evidence strength, with math and tracking downstream of that.
           </p>
         </section>
 
@@ -35,7 +42,7 @@ export default function SafetyPage() {
         </section>
 
         <section className="mt-10 rounded-lg border border-emerald-300/16 bg-emerald-400/[0.06] p-5">
-          <p className="text-lg font-semibold text-white">No prescriptions. No guesswork. Just structure.</p>
+          <p className="text-lg font-semibold text-white">No prescriptions. No guesswork. Just what&apos;s known.</p>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/58">
             Use BioStack to organize protocol data and calculations. Work with qualified professionals for medical decisions.
           </p>

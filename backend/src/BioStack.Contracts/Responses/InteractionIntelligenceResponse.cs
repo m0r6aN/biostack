@@ -1,6 +1,7 @@
 namespace BioStack.Contracts.Responses;
 
 using BioStack.Domain.Enums;
+using System.Text.Json.Serialization;
 
 public sealed record InteractionIntelligenceResponse(
     InteractionSummaryResponse Summary,
@@ -20,6 +21,27 @@ public sealed record InteractionSummaryResponse(
     int Synergies,
     int Redundancies,
     int Interferences
+);
+
+/// <summary>
+/// One pair signal with explicit unavailable severity and no reasoning. This is the entire
+/// shape returned for per-pair interaction data to a caller without the reviewed_relationship_graph
+/// entitlement (owner ruling 2026-09-16, B3) — no mechanism, direction, consequence, evidence
+/// narrative, or source text.
+/// </summary>
+public sealed record InteractionPairSummaryResponse(
+    string CompoundA,
+    string CompoundB,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)] string? Severity
+);
+
+/// <summary>
+/// Reduced projection of <see cref="InteractionIntelligenceResponse"/> for callers without the
+/// reviewed_relationship_graph entitlement. Carries only pair names and explicit unavailable severity — never <c>Reason</c>, <c>Message</c>, <c>Confidence</c>,
+/// <c>SharedPathways</c>, counterfactuals, or swap recommendations.
+/// </summary>
+public sealed record ReducedInteractionIntelligenceResponse(
+    List<InteractionPairSummaryResponse> Pairs
 );
 
 public sealed record ProtocolInteractionScoreResponse(

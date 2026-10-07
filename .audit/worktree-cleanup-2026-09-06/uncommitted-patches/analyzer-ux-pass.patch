@@ -1,0 +1,176 @@
+diff --git a/frontend/src/lib/api.ts b/frontend/src/lib/api.ts
+index 075fd5c..8223ac7 100644
+--- a/frontend/src/lib/api.ts
++++ b/frontend/src/lib/api.ts
+@@ -21,6 +21,7 @@ import {
+     CurrentStackIntelligence,
+     CurrentSubscription,
+     ProtocolConsolePayload,
++    ProtocolAnalyzerResult,
+     Protocol,
+     ProtocolComputationRecord,
+     ProtocolDriftSnapshot,
+@@ -323,6 +324,51 @@ export class ApiClient {
+     return data.overlaps;
+   }
+ 
++  async analyzeProtocol(payload: {
++    inputType?: 'Paste' | 'FileUpload' | 'CameraScan' | 'Link';
++    inputText?: string;
++    linkUrl?: string;
++    sourceName?: string;
++    file?: File;
++    goal?: string;
++    maxCompounds?: number;
++  }): Promise<ProtocolAnalyzerResult> {
++    if (payload.file) {
++      const formData = new FormData();
++      formData.append('inputType', payload.inputType ?? 'FileUpload');
++      formData.append('goal', payload.goal ?? '');
++      if (payload.maxCompounds) {
++        formData.append('maxCompounds', String(payload.maxCompounds));
++      }
++
++      formData.append('file', payload.file, payload.sourceName ?? payload.file.name);
++
++      const response = await fetch(`${this.baseUrl}/api/analyze/protocol`, {
++        method: 'POST',
++        body: formData,
++        credentials: 'include',
++      });
++
++      if (!response.ok) {
++        let message = `API Error: ${response.status} ${response.statusText}`;
++        try {
++          const body = await response.json();
++          message = body.message || body.error || message;
++        } catch {
++        }
++
++        throw new ApiError(response.status, message);
++      }
++
++      return response.json();
++    }
++
++    return this.request<ProtocolAnalyzerResult>('/api/analyze/protocol', {
++      method: 'POST',
++      body: JSON.stringify(payload),
++    });
++  }
++
+   // Calculators
+   async calculateReconstitution(
+     request: ReconstitutionRequest
+diff --git a/frontend/src/lib/types.ts b/frontend/src/lib/types.ts
+index cc14730..85f3925 100644
+--- a/frontend/src/lib/types.ts
++++ b/frontend/src/lib/types.ts
+@@ -597,6 +597,107 @@ export interface InteractionFlag {
+   evidenceConfidence: string;
+ }
+ 
++export interface ProtocolAnalyzerEntry {
++  compoundName: string;
++  dose: number;
++  unit: string;
++  frequency: string;
++  duration: string;
++}
++
++export interface ProtocolAnalyzerIssue {
++  type: 'redundancy' | 'overlap' | 'inefficiency' | 'excessive_compounds' | string;
++  message: string;
++  compounds: string[];
++}
++
++export interface ProtocolAnalyzerSuggestion {
++  type: 'remove' | 'swap' | 'simplify' | 'clarify' | 'maintain' | string;
++  message: string;
++  compounds: string[];
++}
++
++export interface ProtocolAnalyzerScoreExplanation {
++  baseScore: number;
++  synergy: number;
++  redundancy: number;
++  interference: number;
++}
++
++export interface ProtocolAnalyzerBlendExpansion {
++  blendName: string;
++  components: string[];
++}
++
++export interface ProtocolAnalyzerCounterfactual {
++  removedCompound: string;
++  variantScore: number;
++  deltaScore: number;
++  deltaPercent: number;
++  verdict: string;
++  recommendation: string;
++}
++
++export interface ProtocolAnalyzerSwap {
++  originalCompound: string;
++  candidateCompound: string;
++  baselineScore: number;
++  variantScore: number;
++  deltaScore: number;
++  deltaPercent: number;
++  verdict: string;
++  recommendation: string;
++  reasons: string[];
++}
++
++export interface ProtocolAnalyzerSimplifiedProtocol {
++  compounds: ProtocolAnalyzerEntry[];
++  score: number;
++  removed: string[];
++  reasons: string[];
++}
++
++export interface ProtocolAnalyzerGoalAwareOption {
++  goal: string;
++  compounds: ProtocolAnalyzerEntry[];
++  score: number;
++  reasons: string[];
++}
++
++export interface ProtocolAnalyzerCounterfactuals {
++  baselineScore: number;
++  bestRemoveOne: ProtocolAnalyzerCounterfactual[];
++  bestSwapOne: ProtocolAnalyzerSwap[];
++  bestSimplifiedProtocol: ProtocolAnalyzerSimplifiedProtocol | null;
++  goalAwareOptions: ProtocolAnalyzerGoalAwareOption[];
++}
++
++export type ProtocolAnalyzerInputType = 'Paste' | 'FileUpload' | 'CameraScan' | 'Link';
++
++export interface ProtocolAnalyzerArtifact {
++  kind: string;
++  label: string;
++  preview: string;
++}
++
++export interface ProtocolAnalyzerResult {
++  protocol: ProtocolAnalyzerEntry[];
++  score: number;
++  scoreExplanation: ProtocolAnalyzerScoreExplanation;
++  issues: ProtocolAnalyzerIssue[];
++  suggestions: ProtocolAnalyzerSuggestion[];
++  decomposedBlends: ProtocolAnalyzerBlendExpansion[];
++  unknownCompounds: string[];
++  counterfactuals: ProtocolAnalyzerCounterfactuals;
++  inputType: ProtocolAnalyzerInputType;
++  sourceName: string | null;
++  extractionWarnings: string[];
++  parserWarnings: string[];
++  lowConfidenceExtraction: boolean;
++  extractedTextPreview: string | null;
++  artifacts: ProtocolAnalyzerArtifact[];
++}
++
+ export interface CalculatorResult {
+   input: number;
+   output: number;

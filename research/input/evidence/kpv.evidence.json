@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "kpv-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "KPV",
+    "aliases": [
+      "Lys-Pro-Val",
+      "alpha-MSH(11-13)",
+      "L-Lysyl-L-prolyl-L-valine",
+      "MSH (11-13)"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Tripeptide fragment of alpha-melanocyte-stimulating hormone (C-terminal alpha-MSH fragment)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "67727-97-3",
+      "drugbank": null,
+      "pubchem": "125672",
+      "chembl": null,
+      "doi": null,
+      "pmid": "18061177"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-substances-withdrawn",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn table, KPV entry)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "crook-2008-gastro-pept1-kpv",
+      "sourceType": "primary-research-animal-invitro",
+      "authorityTier": "B1",
+      "title": "PepT1-Mediated Tripeptide KPV Uptake Reduces Intestinal Inflammation",
+      "publisher": "Gastroenterology (Dalmasso G, Charrier-Hisamuddin L, Nguyen HT, Yan Y, Sitaraman S, Merlin D; PubMed ID 18061177)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18061177/",
+      "doi": null,
+      "pmid": "18061177",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-125672",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Msh (11-13) / Lys-Pro-Val (CID 125672)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/125672",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-pcac-briefing-193346",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting — KPV (free base) and KPV acetate evaluation",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/193346/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:00:00Z"
+    },
+    {
+      "sourceId": "dalmasso-2008-ibd-murine-colitis",
+      "sourceType": "primary-research-animal",
+      "authorityTier": "B1",
+      "title": "Melanocortin-derived tripeptide KPV has anti-inflammatory potential in murine models of inflammatory bowel disease",
+      "publisher": "Inflammatory Bowel Diseases (Dalmasso G, et al., 2008; PubMed ID 18092346)",
+      "url": "https://europepmc.org/article/MED/18092346",
+      "doi": "10.1002/ibd.20334",
+      "pmid": "18092346",
+      "publishedAt": "2008-03-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:05:00Z"
+    },
+    {
+      "sourceId": "thepeptide-expert-pcac-2026",
+      "sourceType": "professional-news-regulatory-proceeding",
+      "authorityTier": "C1",
+      "title": "PCAC 2026 Regulatory Tracker — KPV Pharmacy Compounding Advisory Committee Vote",
+      "publisher": "The Peptide Expert",
+      "url": "https://thepeptide.expert/regulatory/pcac-2026",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:10:00Z"
+    },
+    {
+      "sourceId": "brainflow-kpv-guide-2026",
+      "sourceType": "vendor-marketing-content",
+      "authorityTier": "D1",
+      "title": "KPV Peptide: Benefits, Dosage, Side Effects & 2026 Status",
+      "publisher": "Brainflow (consumer peptide-marketing blog)",
+      "url": "https://brainflow.co/kpv-peptide-guide/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "kpv-identity-structure-001",
+      "claimType": "identity",
+      "statement": "KPV (Lys-Pro-Val) is the C-terminal tripeptide fragment of alpha-melanocyte-stimulating hormone (alpha-MSH(11-13)), with PubChem CID 125672, CAS number 67727-97-3, and molecular formula C16H30N4O4.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "KPV tripeptide",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-125672"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-125672",
+          "quote": "Compound Name: Msh (11-13); CID: 125672; Molecular Formula: C16H30N4O4",
+          "pageOrSection": "Compound summary header"
+        }
+      ],
+      "reviewFlags": [
+        "CAS number and IUPAC name were resolved via a PubChem-derived identifier lookup rather than a directly rendered compound page (PubChem requires JavaScript); confirm CAS 67727-97-3 against the live PubChem record at review time.",
+        "Independent chemical-registry/vendor listings (e.g., ChemicalBook, Alfa Chemistry) reportedly report the same CAS 67727-97-3 (per 2026-08-29 review pass), but these are lower-authority than a directly rendered PubChem/DrugBank record; the CAS/IUPAC confirmation against a live PubChem record remains open and should not be treated as closed by this corroboration alone."
+      ]
+    },
+    {
+      "claimId": "kpv-mechanism-pept1-nfkb-001",
+      "claimType": "mechanism",
+      "statement": "In vitro, nanomolar concentrations of KPV inhibit NF-kappaB and MAP kinase inflammatory signaling and reduce pro-inflammatory cytokine secretion in human intestinal epithelial cell lines and T cells, and KPV is taken up into cells via the peptide transporter PepT1.",
+      "context": {
+        "population": "in vitro human cell lines (Caco2-BBE, HT29-Cl.19A intestinal epithelial cells; Jurkat T cells)",
+        "route": "in vitro exposure",
+        "formulation": "KPV tripeptide, nanomolar concentrations",
+        "useCase": "anti-inflammatory mechanism research",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "crook-2008-gastro-pept1-kpv",
+        "fda-pcac-briefing-193346"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "crook-2008-gastro-pept1-kpv",
+          "quote": "Nanomolar concentrations of KPV inhibit the activation of NF-kappaB and MAP kinase inflammatory signaling pathways, and reduce pro-inflammatory cytokine secretion.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "crook-2008-gastro-pept1-kpv",
+          "quote": "This study indicates that KPV is transported into cells by PepT1 and might be a new therapeutic agent for IBD.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "The di/tripeptide transporter PepT1 has also been proposed to mediate the anti-inflammatory effects of KPV in the human intestinal epithelial cells Caco2-BBE and HT29-CL.19A",
+          "pageOrSection": "Nonclinical assessment section"
+        }
+      ],
+      "reviewFlags": [
+        "in vitro mechanism finding; must not be presented as a confirmed human mechanism of action",
+        "Independently corroborated 2026-08-29 by FDA's PCAC briefing document (fda.gov/media/193346/download), a source family distinct from the cited primary paper; FDA's document also treats this strictly as an in vitro finding (Caco2-BBE, HT29-Cl.19A, Jurkat cells) and does not extend it to animal or human mechanism data."
+      ]
+    },
+    {
+      "claimId": "kpv-studied-use-animal-colitis-001",
+      "claimType": "studied-use",
+      "statement": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); a second, independent 2008 study (Dalmasso et al., Inflammatory Bowel Diseases, PMID 18092346) corroborates similar anti-inflammatory effects of KPV in DSS-colitis and CD45RB-transfer-colitis mouse models, including significantly reduced myeloperoxidase activity and improved recovery. This is animal-model evidence only, not evidence of efficacy in humans.",
+      "context": {
+        "population": "C57BL/6 mice (DSS and TNBS chemically-induced colitis models)",
+        "route": "oral (drinking water)",
+        "formulation": "KPV tripeptide in drinking water",
+        "useCase": "preclinical inflammatory bowel disease (IBD) research",
+        "doseText": "Approximately 100 micromolar KPV in drinking water in mouse colitis models (animal-study protocol; not a human dosing recommendation)."
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "crook-2008-gastro-pept1-kpv",
+        "dalmasso-2008-ibd-murine-colitis"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "crook-2008-gastro-pept1-kpv",
+          "quote": "In vivo experiments administered KPV orally via drinking water at 100 micromolar concentration in two colitis models.",
+          "pageOrSection": "Methods/Results summary"
+        },
+        {
+          "sourceRef": "dalmasso-2008-ibd-murine-colitis",
+          "quote": "In the DSS-colitis model, treatment with KPV led to earlier recovery and significantly stronger regain of body weight. Histologically, inflammatory infiltrates were significantly reduced in KPV-treated mice, which was confirmed by the significant reduction of MPO activity in colonic tissue after KPV treatment.",
+          "pageOrSection": "Results"
+        }
+      ],
+      "reviewFlags": [
+        "animal-only efficacy signal; per directive, must not be inferred as proven human efficacy",
+        "dose context is an animal-study protocol dose and must never be presented as a human use recommendation",
+        "No FDA regulator document corroborates this claim's in vivo colitis data: FDA's PCAC briefing document (fda.gov/media/193346/download, independently re-fetched 2026-08-29) cites Dalmasso 2008 (Gastroenterology, PMID 18061177) only for in vitro PepT1 mechanism data and contains no C57BL/6, DSS-induced, or TNBS-induced colitis in vivo efficacy content; DailyMed has no KPV listing, as expected for a non-approved compound. This claimType (studied-use) is outside the directive's fieldAuthorityRequired scope.",
+        "Quantitative specifics of the cited Gastroenterology study (100 micromolar dose in drinking water) rest on that single paper and were not independently re-derived; a second, independently verified primary paper (Dalmasso et al. 2008, Inflammatory Bowel Diseases, PMID 18092346, re-fetched via Europe PMC 2026-08-29) corroborates the general DSS-colitis anti-inflammatory / myeloperoxidase-reduction finding but uses a different protocol and does not confirm the 100 micromolar figure specifically -- treat the exact dose as single-sourced pending further review."
+      ]
+    },
+    {
+      "claimId": "kpv-regulatory-nomination-withdrawn-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists KPV in the 'bulk drug substances nominated but withdrawn' table for 503A compounding evaluation, stating it has not identified any human exposure data for KPV administered via any route and lacks information on whether KPV would cause harm if administered to humans.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": "any route (none evaluated by FDA)",
+        "formulation": "compounded KPV",
+        "useCase": "503A bulk drug substance nomination review",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-withdrawn",
+        "fda-pcac-briefing-193346",
+        "thepeptide-expert-pcac-2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-withdrawn",
+          "quote": "FDA has not identified any human exposure data on drug products containing KPV administered via any route of administration. FDA lacks important information regarding any safety issues raised by KPV, including whether it would cause harm if administered to humans.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, KPV entry"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "we propose not adding KPV (free base) or KPV acetate to the 503A Bulks List",
+          "pageOrSection": "Recommendation section"
+        },
+        {
+          "sourceRef": "thepeptide-expert-pcac-2026",
+          "quote": "8 Yes, 6 No, 1 Abstain",
+          "pageOrSection": "KPV PCAC vote tracker entry, July 23-24, 2026 meeting"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "withdrawn-nomination status means KPV is not currently under active FDA 503A evaluation; confirm this has not changed at review time, since FDA revised several peptide listings in April 2026",
+        "At the July 23-24, 2026 PCAC meeting, FDA staff's briefing document (fda.gov/media/193346/download) recommended AGAINST adding KPV to the 503A Bulks List (citing inadequate physical/chemical characterization, non-standard nomenclature, unknown extent of compounding use, and no human-use data), but the committee itself voted 8 Yes / 6 No / 1 Abstain to recommend KPV's inclusion despite the staff recommendation (per thepeptide.expert PCAC tracking page, independently re-fetched and corroborated 2026-08-29). This is non-binding advisory committee input, not a final rule, and the live FDA 'bulk drug substances nominated but withdrawn' page (re-checked 2026-08-29) still lists KPV with the same withdrawn / no-human-exposure-data language quoted above -- but readers should be aware KPV is now moving toward possible active 503A consideration despite unresolved safety-data gaps."
+      ]
+    },
+    {
+      "claimId": "kpv-evidence-gap-no-human-trials-001",
+      "claimType": "evidence-gap",
+      "statement": "No completed human clinical trials of KPV have been identified; published efficacy and mechanism evidence for KPV's anti-inflammatory effects is limited to animal (mouse) colitis and dermatitis models and in vitro human cell-line experiments, leaving human efficacy and safety for gut-health, skin, and general anti-inflammatory uses unestablished despite active consumer marketing of KPV for those uses.",
+      "context": {
+        "population": "consumers of gray-market/research-labeled KPV products",
+        "route": "oral, subcutaneous, or topical (as commonly marketed)",
+        "formulation": "research-grade KPV, often combined with other peptides (e.g., GHK-Cu)",
+        "useCase": "gut health, skin/anti-inflammatory, general wellness marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-bulk-substances-withdrawn",
+        "crook-2008-gastro-pept1-kpv",
+        "brainflow-kpv-guide-2026",
+        "fda-pcac-briefing-193346"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-withdrawn",
+          "quote": "FDA has not identified any human exposure data on drug products containing KPV administered via any route of administration.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, KPV entry"
+        },
+        {
+          "sourceRef": "brainflow-kpv-guide-2026",
+          "quote": "The honest limitation is that there are zero human clinical trials for KPV as of 2026, so everything above is animal and cell data.",
+          "pageOrSection": "KPV peptide guide body text"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "No published studies were found in which non-compounded or compounded drug products containing KPV (free base) or KPV acetate were used in humans.",
+          "pageOrSection": "Human use / safety data section"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: consumer marketing positions KPV as a gut-health/skin peptide despite the absence of human trial data; even self-aware vendor content that discloses this gap should not be treated as validating the underlying marketing claims",
+        "monitor for vendor pages that omit the animal-only caveat present in the sampled source",
+        "Independently corroborated 2026-08-29 by FDA's PCAC briefing document (fda.gov/media/193346/download), a source family distinct from the cited FDA-withdrawn-table, primary paper, and vendor blog; a ClinicalTrials.gov-focused search also returned no registered trials for KPV/alpha-MSH(11-13)."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "kpv-conflict-pcac-vote-vs-staff-001",
+      "claimRefs": ["kpv-regulatory-nomination-withdrawn-001"],
+      "severity": "moderate",
+      "summary": "FDA staff's PCAC briefing document (fda.gov/media/193346/download) recommended against adding KPV to the 503A Bulks List, but the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend inclusion despite that staff recommendation and despite documented absence of human safety data; this advisory tension is material to the compound's regulatory trajectory and is not resolved by the current (unchanged) live FDA withdrawn-nomination page.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No completed human clinical trial evidence exists for KPV; all efficacy/mechanism claims rest on animal and in vitro data and should be re-checked periodically for newly published human studies.",
+      "PubChem CAS/IUPAC identifiers were resolved via an indirect lookup rather than a fully rendered PubChem compound page (PubChem requires JavaScript to render); confirm identifiers against the live PubChem record.",
+      "FDA 503A bulk-substance nomination status (withdrawn) should be reconfirmed at review time given the agency revised multiple peptide compounding listings in April 2026 and held a Pharmacy Compounding Advisory Committee meeting in July 2026.",
+      "Remediation pass 2026-08-29: the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend KPV's inclusion on the 503A Bulks List, overriding FDA staff's own recommendation against inclusion (per fda.gov/media/193346/download and thepeptide.expert regulatory tracking, both independently re-fetched 2026-08-29); this is advisory and non-binding, the live FDA withdrawn-nomination page has not changed, but this development should be monitored closely before any promotion decision.",
+      "Remediation pass 2026-08-29: animal-colitis claim (kpv-studied-use-animal-colitis-001) partially re-verified -- independent primary paper PMID 18092346 (Dalmasso et al., Inflammatory Bowel Diseases 2008) confirms DSS-colitis anti-inflammatory / myeloperoxidase-reduction findings from a materially different source family than the originally cited Gastroenterology paper; the specific 100 micromolar dose figure remains single-sourced to the Gastroenterology paper and should be reconfirmed if a further independent source becomes available.",
+      "Remediation pass 2026-08-29: PubChem CAS/IUPAC identifier verification remains genuinely unresolved because PubChem is JavaScript-gated to automated fetch tools; independent chemical-vendor listings (ChemicalBook, Alfa Chemistry) corroborate CAS 67727-97-3 but are lower-authority than a directly rendered PubChem/DrugBank record and do not close this gap.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-human-trial-evidence",
+      "animal-in-vitro-only",
+      "marketing-evidence-gap",
+      "identifier-needs-confirmation",
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
+    ]
+  }
+}

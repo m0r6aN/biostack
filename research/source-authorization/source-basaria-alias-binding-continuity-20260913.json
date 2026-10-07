@@ -1,0 +1,61 @@
+{
+  "recordType": "source-alias-mechanical-binding-continuity-record",
+  "authority": "none",
+  "recordedAtUtc": "2026-09-13T18:54:29.583789Z",
+  "timestampBasis": "mechanical-rebinding-time-not-approval-or-review-time",
+  "verificationStatus": "pending-independent-lead-verification",
+  "previousContinuity": {
+    "path": "research/source-authorization/source-alias-binding-continuity-20260913.json",
+    "sha256": "d332574cb3496f27745d1e4e7e4b125defbfd63fe95b3bf8549edb86adaa30e3"
+  },
+  "historicalRegistry": {
+    "originalPath": "research/input/sources/pilot-source-registry.json",
+    "archivePath": "research/source-authorization/snapshots/pilot-source-registry.pre-basaria-alias-20260913.json",
+    "sha256": "4702643fa1a65624e4c8f808eb57f55c3a1666b58268f2b2f1218acb59dcab6f"
+  },
+  "oldDecision": {
+    "path": "research/source-authorization/recommended-seven-source-decisions.alias-map-20260913.json",
+    "sha256": "aa138795f67e546f39c8ea55ab2a2eed64ff68de393d3417b82bd6d94f0745b7"
+  },
+  "currentRegistry": {
+    "path": "research/input/sources/pilot-source-registry.json",
+    "sha256": "aa9e5dd16c0c6743f027ec9ea4be9b8d17f30f367dc0a0e9be7e5724e452d15e"
+  },
+  "newDecision": {
+    "path": "research/source-authorization/recommended-seven-source-decisions.basaria-alias-map-20260913.json",
+    "sha256": "ab5f6487b999d8a77ecd063dbcfdd173c2af218d2f4252cc64f8ebcbd6fef896"
+  },
+  "allowedAliases": [
+    {
+      "sourceId": "pubmed",
+      "alias": "pubmed-22459616-basaria-research-20260913"
+    }
+  ],
+  "scopeFit": {
+    "pubmed": "PMID22459616/DOI10.1093/gerona/gls078 citation metadata and quote-free METHODS/RESULTS efficacy candidate under unchanged qualified API permission. No new retention or redistribution use.",
+    "fieldQualification": "Alias inherits existing mechanism/efficacy-claims/interactions class fields; not an item-specific efficacy-only grant. Contraindications-warnings remains excluded.",
+    "reviewPlan": "research/output/gtm-activation-20260909/basaria-alias-binding-plan-20260913.md"
+  },
+  "itemMappingObservation": {
+    "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
+    "sourceItemId": "pubmed-22459616-basaria-research-20260913",
+    "candidatePath": "research/source-authorization/ligandrol-basaria-efficacy-resource-candidate-2026-09-13.json",
+    "candidateSha256": "8e7d11efdfc940dc3a62f6ec15e185a3336b4eecd3bbd11b8242d9a7443b3338",
+    "originalPreparedAtUtc": "2026-09-13T17:32:22.965084Z",
+    "originalRegistrationStatus": "unmapped-research-item-no-authority",
+    "mechanicalMappingAtUtc": "2026-09-13T18:54:29.583789Z",
+    "currentStatus": "mapping-proposed-pending-checks-and-independent-lead-review",
+    "qualification": "Original unmapped observation remains historically correct and unchanged. Record mechanical verification separately after checks/review; no scientific or source-family acceptance. Same underlying Basaria paper is not independent corroboration.",
+    "sourceReceipt": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-replacement-assessment-20260913/receipts/efetch-20260913T165843668871Z.json",
+    "workerResponseSha256": "596f8906a84a25ae545fd0393b92e2942f501cff5d3a8a7b0e76f8d6031d2d10"
+  },
+  "invariants": {
+    "oldIssuedArtifactsUnchanged": true,
+    "ownersApprovalsDatesSourceScopesMethodsRightsActiveSetRetentionUnchanged": true,
+    "newRightsApproval": false,
+    "newActivation": false,
+    "newScientificAcceptance": false,
+    "recordIsRuntimeAuthorizationInput": false,
+    "candidateCountsChanged": false
+  }
+}

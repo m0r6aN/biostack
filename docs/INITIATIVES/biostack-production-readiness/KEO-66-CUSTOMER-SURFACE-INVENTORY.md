@@ -38,7 +38,7 @@ These are not safely resolvable by code inference and remain release blockers:
 1. **Legal approval:** `/terms` and `/privacy` identify themselves as non-final placeholders. A human-approved effective version is required before checkout is enabled.
 2. **Hosted billing proof:** verify configured Operator and Commander Stripe price IDs, checkout return, webhook fulfillment, subscription state, and customer portal against the deployed revision.
 3. **Hosted OCR proof:** scan a real supported image through the deployed analyzer. If OCR is not configured, remove the scan claim before release.
-4. **Purchase-intent continuity:** signed-out plan CTAs currently land at authentication without a selected-plan checkout contract. Preserve the chosen plan only after billing defines and consumes that contract; do not imply automatic checkout meanwhile.
+4. **Purchase-intent continuity:** the historical missing-contract implementation gap was addressed by PR #238 (`fa86b99`, merged July 27). The September 9 reconciliation records contract-sourced billing plan URLs, AuthProvider query preservation, one-time valid intent consumption and existing BillingPageIntent/marketing regression coverage. See `research/output/gtm-activation-20260909/codex-activation-checkpoint-20260909.md`, "Pricing-plan intent reconciliation — KEO-66". This closes that code-gap finding only; deployed Stripe checkout/lifecycle proof remains under gate 2. No new test run or live billing acceptance is claimed.
 5. **Security release gates:** KEO-65 remains authoritative for historical callback-secret rotation/invalidation, deployed proxy/rate-limit identity, and remaining go-live controls.
 
 ## Closeout rule

@@ -2,6 +2,13 @@ import { LandingHero } from '@/components/marketing/LandingHero';
 import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata, SITE_DESCRIPTION, SITE_TITLE } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  path: '/',
+});
 
 export default function HomePage() {
   const softwareSchema = {
@@ -10,14 +17,14 @@ export default function HomePage() {
     name: 'BioStack',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Web',
-    description: 'Tracking, calculator, and stack mapping infrastructure for compound protocols.',
+    description: 'A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves.',
   };
 
   return (
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main>
+      <main id="main" tabIndex={-1}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
@@ -31,7 +38,7 @@ export default function HomePage() {
               BioStack is not a doctor.
             </p>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-white/56 sm:mt-0">
-              BioStack organizes tracking, math, overlap context, and evidence references. It does not prescribe, diagnose, recommend compounds, or replace qualified medical care.
+              BioStack organizes source-graded evidence, math, overlap context, and your own records. It does not prescribe, diagnose, recommend compounds, or replace qualified medical care.
             </p>
           </div>
         </section>

@@ -21,14 +21,25 @@ Use the runner from the repository root:
 
 ```powershell
 ./tools/research/run-knowledge-research.ps1 `
-  -CandidateFile research/input/candidates/compound-candidates.json `
-  -SourceRegistryFile research/input/sources/source-registry.json `
+  -CandidateFile research/input/candidates/pilot-compound-candidates.json `
+  -SourceRegistryFile research/input/sources/pilot-source-registry.json `
   -EvidenceDirectory research/input/evidence `
   -OutputDirectory research/output/latest
 ```
 
 The runner invokes `BioStack.KnowledgeWorker` with `Worker:RunMode=Research`, which does not touch the database.
 By default it also loads research-request batches from `research/research-requests` and review decisions from `research/review-decisions` when those paths exist.
+
+## Missing-input behavior
+
+The runner never silently drops a requested input:
+
+- Any path parameter that is **passed explicitly** but does not exist is a fatal error before any build or run.
+- A **source registry is mandatory**. If the resolved `-SourceRegistryFile` does not exist, the runner refuses to run and names the registries that are actually present. A successful compile with no registry loaded must not be mistaken for authorized promotion readiness.
+- To compile deliberately without a registry, pass `-AllowMissingSourceRegistry`. The run then prints a prominent warning, writes `SOURCE-REGISTRY-MISSING.WARNING.txt` into the output directory, and records `sourceRegistryLoaded: false`.
+- Every run writes `runner-input-summary.json` into the output directory recording each input's requested path, resolved path, and status (`present`, `missing-default`, `not-requested`).
+
+The default `-SourceRegistryFile` value (`research/input/sources/source-registry.json`) intentionally still names the authorized registry, not the pilot. The pilot registry is a pilot; pointing the default at it would silently grant pilot authorization to every default run.
 
 ## Publication rule
 

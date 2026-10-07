@@ -25,6 +25,8 @@ export interface UnifiedDosingResult {
   dosePerAdministrationMg: number;
   volumePerAdministrationMl: number;
   u100UnitsPerAdministration: number;
+  shotsPerVialExact: number;
+  shotsPerVialWhole: number;
   dosePerTenthMlMcg: number;
   splitCount: number;
   administrationsPerWeek: number;
@@ -73,6 +75,7 @@ export function calculateUnifiedDosing(input: UnifiedDosingInput): UnifiedDosing
   const dailyTotalMcg = resolveDailyTotal(desiredDoseMcg, input.doseBasis, dosePerAdministrationMcg, splitCount);
   const weeklyTotalMcg = resolveWeeklyTotal(desiredDoseMcg, input.doseBasis, dailyTotalMcg);
   const volumePerAdministrationMl = dosePerAdministrationMcg / concentrationMcgPerMl;
+  const shotsPerVialExact = input.diluentVolumeMl / volumePerAdministrationMl;
 
   return {
     powderAmountMcg,
@@ -83,6 +86,8 @@ export function calculateUnifiedDosing(input: UnifiedDosingInput): UnifiedDosing
     dosePerAdministrationMg: dosePerAdministrationMcg / 1000,
     volumePerAdministrationMl,
     u100UnitsPerAdministration: volumePerAdministrationMl * 100,
+    shotsPerVialExact,
+    shotsPerVialWhole: Math.floor(shotsPerVialExact),
     dosePerTenthMlMcg: concentrationMcgPerMl / 10,
     splitCount,
     administrationsPerWeek,

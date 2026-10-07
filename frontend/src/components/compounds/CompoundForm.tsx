@@ -1,18 +1,32 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
+import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
+import { classificationsForCategory } from '@/lib/compoundCategories';
+import { toSlug } from '@/lib/research/slugs';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 interface CompoundFormProps {
   personId: string;
   onSubmit: (data: Omit<CompoundRecord, 'id'>) => Promise<void>;
   isLoading?: boolean;
+  /**
+   * A library slug (from `?compound=<slug>` on /compounds, e.g. a dossier's
+   * "Add to protocol" link) to preselect once the knowledge base loads.
+   * Minimal prefill: category + name only — this form has no richer
+   * prefill flow to build on.
+   */
+  initialCompoundSlug?: string;
 }
 
-export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProps) {
+export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlug }: CompoundFormProps) {
   const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
+  const [showAllCompounds, setShowAllCompounds] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const hasAppliedPrefillRef = useRef(false);
+  const hasUserEditedRef = useRef(false);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -21,7 +35,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
     pricePaid: '' as string | number,
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
-    status: 'Active' as const,
+    status: 'Active',
     notes: '',
     sourceType: 'Manual',
   });
@@ -31,41 +45,94 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       try {
         const compounds = await apiClient.getAllKnowledgeCompounds();
         setKnowledgeBase(compounds);
+        // One-time prefill from a library deep-link (?compound=<slug>), once
+        // the knowledge base has loaded. Guarded so it never overwrites a
+        // choice the visitor has already started making.
+        if (initialCompoundSlug && !hasAppliedPrefillRef.current && !hasUserEditedRef.current) {
+          const match = compounds.find(k => toSlug(k.canonicalName) === initialCompoundSlug);
+          if (match) {
+            hasAppliedPrefillRef.current = true;
+            setFormData(prev => ({ ...prev, category: match.classification, name: match.canonicalName }));
+          }
+        }
       } catch (err) {
         console.error('Failed to fetch knowledge base:', err);
       }
     };
     fetchKnowledge();
+    // initialCompoundSlug is only meant to apply once, right after the
+    // knowledge base first resolves — re-running this fetch on every
+    // keystroke-driven slug change isn't the intent here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const categoryClassifications = useMemo(
+    () => classificationsForCategory(formData.category),
+    [formData.category],
+  );
 
   const filteredGoals = useMemo(() => {
     if (!formData.category) return [];
     const goals = new Set<string>();
     knowledgeBase
-      .filter(k => k.classification === formData.category)
+      .filter(k => categoryClassifications.includes(k.classification))
       .forEach(k => k.benefits?.forEach(b => goals.add(b)));
-    return Array.from(goals).sort();
-  }, [knowledgeBase, formData.category]);
+    return Array.from(goals)
+      .map(value => ({ value, ...compoundGoalDisplay(value) }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [knowledgeBase, categoryClassifications]);
+
+  // Default view is the whole category, alphabetical; a selected goal only
+  // reorders matches to the front (with a marker) rather than hiding anything.
+  const categoryCompounds = useMemo(
+    () => knowledgeBase
+      .filter(k => categoryClassifications.includes(k.classification))
+      .sort((a, b) => a.canonicalName.localeCompare(b.canonicalName)),
+    [knowledgeBase, categoryClassifications],
+  );
+
+  const goalMatchCount = useMemo(() => {
+    if (!formData.goal) return 0;
+    return categoryCompounds.filter(c => c.benefits?.includes(formData.goal)).length;
+  }, [categoryCompounds, formData.goal]);
 
   const filteredCompounds = useMemo(() => {
-    if (!formData.category) return [];
-    return knowledgeBase.filter(k => {
-      const matchCategory = k.classification === formData.category;
-      const matchGoal = !formData.goal || k.benefits?.includes(formData.goal);
-      return matchCategory && matchGoal;
-    });
-  }, [knowledgeBase, formData.category, formData.goal]);
+    if (!formData.goal || goalMatchCount === 0) return categoryCompounds;
+    const matches = categoryCompounds.filter(c => c.benefits?.includes(formData.goal));
+    const rest = categoryCompounds.filter(c => !c.benefits?.includes(formData.goal));
+    return [...matches, ...rest];
+  }, [categoryCompounds, formData.goal, goalMatchCount]);
+
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key !== 'Enter') return;
+    const target = e.target as HTMLElement;
+    // Allow newlines in the notes textarea, and an explicit Enter on the
+    // submit button itself. Every other field's Enter key is swallowed so an
+    // accidental keystroke mid-form (e.g. while typing the compound name)
+    // cannot submit the record before it is complete.
+    if (target.tagName === 'TEXTAREA') return;
+    if (target instanceof HTMLButtonElement && target.type === 'submit') return;
+    e.preventDefault();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      setFormError('Enter a compound name before adding it.');
+      return;
+    }
+    setFormError(null);
     try {
       await onSubmit({
         ...formData,
+        name: trimmedName,
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
-        endDate: formData.endDate || null,
-      } as any);
-      
+        startDate: new Date(`${formData.startDate}T00:00:00Z`).toISOString(),
+        endDate: formData.endDate ? new Date(`${formData.endDate}T00:00:00Z`).toISOString() : null,
+      });
+
       setFormData({
         name: '',
         category: '',
@@ -84,7 +151,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onChangeCapture={() => { hasUserEditedRef.current = true; }} onSubmit={handleSubmit} onKeyDown={handleFormKeyDown} className="space-y-6">
       <div className="space-y-4">
         {/* 1. Category */}
         <div>
@@ -111,6 +178,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label htmlFor={`${formId}-goal`} className="block text-sm font-medium text-white/70 mb-2">2. Select a Goal</label>
           <select
             id={`${formId}-goal`}
+            aria-describedby={formData.goal && compoundGoalDisplay(formData.goal).context ? `${formId}-goal-context` : undefined}
             value={formData.goal}
             onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
             disabled={!formData.category}
@@ -118,9 +186,14 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           >
             <option value="">{formData.category ? 'Select a goal (Optional)' : 'Select category first'}</option>
             {filteredGoals.map(goal => (
-              <option key={goal} value={goal}>{goal.charAt(0).toUpperCase() + goal.slice(1)}</option>
+              <option key={goal.value} value={goal.value}>{goal.label.charAt(0).toUpperCase() + goal.label.slice(1)}</option>
             ))}
           </select>
+          {formData.goal && compoundGoalDisplay(formData.goal).context && (
+            <p id={`${formId}-goal-context`} className="mt-2 break-words text-xs leading-relaxed text-white/55">
+              {compoundGoalDisplay(formData.goal).context}
+            </p>
+          )}
         </div>
 
         {/* 3. Compound Selection */}
@@ -128,6 +201,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label htmlFor={`${formId}-compound`} className="block text-sm font-medium text-white/70 mb-2">3. Select a Compound</label>
           <select
             id={`${formId}-compound`}
+            aria-describedby={formData.goal && goalMatchCount > 0 ? `${formId}-compound-results` : undefined}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             disabled={!formData.category}
@@ -135,9 +209,17 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           >
             <option value="">{formData.category ? 'Select a compound...' : 'Select category first'}</option>
             {filteredCompounds.map(c => (
-              <option key={c.canonicalName} value={c.canonicalName}>{c.canonicalName}</option>
+              <option key={c.canonicalName} value={c.canonicalName}>
+                {formData.goal && c.benefits?.includes(formData.goal) ? `${c.canonicalName} — matches your goal` : c.canonicalName}
+              </option>
             ))}
           </select>
+          {formData.goal && goalMatchCount > 0 && (
+            <p id={`${formId}-compound-results`} className="mt-2 text-xs leading-relaxed text-white/55" role="status">
+              Compounds that match your goal are shown first in this category.
+              {' '}Goal tags are not a complete list of compounds or evidence of effectiveness.
+            </p>
+          )}
         </div>
 
         {/* 4. Optional: Search / Manual Entry */}
@@ -147,11 +229,18 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
             id={`${formId}-manual-name`}
             type="text"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, name: e.target.value });
+              if (formError) setFormError(null);
+            }}
             placeholder="Search or enter custom compound name..."
+            required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
-          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can't find your compound in the list above.</p>
+          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can&apos;t find your compound in the list above.</p>
+          {formError && (
+            <p role="alert" className="mt-2 text-xs text-red-300">{formError}</p>
+          )}
         </div>
 
         {/* 5. Optional: Source and Price */}
@@ -216,7 +305,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         <select
           id={`${formId}-status`}
           value={formData.status}
-          onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
           className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
         >
           <option value="Active">Active</option>

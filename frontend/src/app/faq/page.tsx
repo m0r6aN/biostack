@@ -1,6 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { featuredFaqs } from '@/lib/marketing';
+import { createPublicPageMetadata } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Frequently Asked Questions | BioStack',
+  description: 'Read clear answers about BioStack’s observational scope, access, privacy, and product boundaries.',
+  path: '/faq',
+});
 
 export default function FaqPage() {
   const faqSchema = {
@@ -20,7 +27,7 @@ export default function FaqPage() {
     <div className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main className="mx-auto max-w-5xl px-5 py-16 sm:px-8 lg:py-20">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-5 py-16 sm:px-8 lg:py-20">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

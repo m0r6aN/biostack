@@ -1,0 +1,18 @@
+namespace BioStack.Contracts.Responses;
+
+public sealed record EntitlementResponse(
+    bool IsPro,
+    string Plan,
+    EntitlementLimitsResponse Limits,
+    EntitlementFeaturesResponse Features,
+    string[] FutureRoles);
+
+public sealed record EntitlementLimitsResponse(int MaxCompounds);
+
+public sealed record EntitlementFeaturesResponse(
+    bool StackIntelligence,
+    bool FullOverlapAnalysis,
+    bool ProtocolBuilder,
+    bool ObservabilityCorrelations,
+    bool SavedAdvancedProtocolViews,
+    bool AffiliateSurfaces);

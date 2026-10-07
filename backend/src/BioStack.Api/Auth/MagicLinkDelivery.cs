@@ -19,6 +19,17 @@ public interface IMagicLinkDelivery
     Task SendAsync(string contact, string magicLink, string redirectPath, DateTime expiresAtUtc, CancellationToken ct);
 }
 
+/// <summary>
+/// The subject line BioStack uses for sign-in emails when no per-environment override is
+/// configured. Kept as a named constant (rather than inlined string literals) so the fallback
+/// itself — as opposed to the full send path, which needs a live SMTP/ACS connection — can be
+/// asserted directly in a unit test.
+/// </summary>
+public static class MagicLinkSubjects
+{
+    public const string Default = "BioStack Quick Login";
+}
+
 public interface IDevMagicLinkInbox
 {
     IReadOnlyCollection<DevMagicLinkMessage> Latest();
@@ -83,7 +94,7 @@ public sealed class SmtpMagicLinkDelivery : IMagicLinkDelivery
             : 587;
         var enableSsl = !bool.TryParse(_config["Smtp:EnableSsl"], out var configuredSsl) || configuredSsl;
         var fromName = _config["Smtp:FromName"] ?? "BioStack";
-        var subject = _config["Smtp:MagicLinkSubject"] ?? "Your BioStack sign-in link";
+        var subject = _config["Smtp:MagicLinkSubject"] ?? MagicLinkSubjects.Default;
 
         using var message = new MailMessage
         {
@@ -151,7 +162,7 @@ public sealed class AzureCommunicationEmailMagicLinkDelivery : IMagicLinkDeliver
             throw new InvalidOperationException("AzureCommunicationEmail:SenderAddress must be configured to send magic link emails.");
         }
 
-        var subject = _config["AzureCommunicationEmail:MagicLinkSubject"] ?? "Your BioStack sign-in link";
+        var subject = _config["AzureCommunicationEmail:MagicLinkSubject"] ?? MagicLinkSubjects.Default;
         var client = new EmailClient(connectionString);
         var content = new EmailContent(subject)
         {

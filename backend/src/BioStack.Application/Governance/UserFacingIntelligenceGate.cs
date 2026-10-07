@@ -1,6 +1,6 @@
 namespace BioStack.Application.Governance;
 
-using System.Text.RegularExpressions;
+
 using BioStack.Contracts.Responses;
 using BioStack.Infrastructure.Keon;
 using Microsoft.Extensions.Logging;
@@ -85,16 +85,7 @@ public sealed class UserFacingIntelligenceGate(
     /// <summary>Stable id of the doctrine ruleset enforced by this gate, recorded as a policy ref.</summary>
     private const string DoctrinePolicyId = "biostack-doctrine-v1";
 
-    // Patterns that mark a *request* (user input) as unsafe to act on at all — sourcing/procurement,
-    // injection/administration how-to, and dosing-instruction seeking. Output constraints are handled
-    // separately by the shared DoctrineSanitizer doctrine.
-    private static readonly Regex[] UnsafeRequestPatterns =
-    [
-        new(@"\bwhere\s+(can|do|to)\b.*\b(buy|get|order|source|purchase)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bhow\s+(do|to|can)\b.*\b(inject|administer|reconstitute|dose)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\b(buy|order|source)\b.*\b(online|vendor|supplier|gray\s*market|grey\s*market)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\binject(ion|ing)?\b.*\b(protocol|schedule|site|how)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-    ];
+
 
     private const string ConstrainedReplacement =
         "BioStack cannot present this as guidance. This is educational, observational context only — not medical advice, dosing, or instruction. Consider discussing with a qualified professional.";
@@ -221,21 +212,53 @@ public sealed class UserFacingIntelligenceGate(
             .Distinct(StringComparer.Ordinal)
             .ToList();
 
-        var receipt = await receipts.IssueAndAppendAsync(new ReceiptContext(
+        var context = new ReceiptContext(
             ReceiptClass: receiptClass,
             SubjectUri: request.SubjectUri,
             Actor: ReceiptActor.User(request.ActorUserId),
             EvidenceRefs: evidenceRefs,
             Decision: status,
-            EffectStatus: "non-effecting",
-            InputHashSeed: $"{decisionId}|{request.SubjectUri}|{string.Join(',', reasonCodes)}"), ct);
+            EffectStatus: ReceiptEffectStatus.NonEffecting,
+            InputHashSeed: $"{decisionId}|{request.SubjectUri}|{string.Join(',', reasonCodes)}");
 
-        return receipt.ReceiptUri;
+        // A provenance failure must never suppress a safety response. This receipt is
+        // non-effecting, so it degrades (unanchored / not-recorded) rather than failing closed —
+        // effect-bearing receipts still use IssueAndAppendAsync and still halt on failure.
+        // The outer catch is defence-in-depth: no receipt-layer fault may 500 a safety warning.
+        try
+        {
+            var issuance = await receipts.TryIssueAndAppendAsync(context, ct);
+
+            if (!issuance.IsAnchored)
+            {
+                logger.LogWarning(
+                    "Safety receipt degraded. Status={IssuanceStatus} OutputType={OutputType} Reason={Reason}",
+                    issuance.Status, request.OutputType, issuance.DegradationReason);
+            }
+
+            return issuance.ReceiptUri;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(
+                ex,
+                "Safety receipt issuance faulted unexpectedly; safety output preserved without a receipt. "
+                + "OutputType={OutputType} Status={Status}",
+                request.OutputType, status);
+
+            return null;
+        }
     }
 
+    /// <summary>
+    /// F6: screen the request by INTENT only. Output doctrine constrains what BioStack may
+    /// assert; running it over user input refused legitimate safety questions such as
+    /// "should I stop taking this before surgery?" (matched <c>stop taking</c>). Such questions
+    /// now flow through and receive evidence context with clinician framing, while the output
+    /// itself is still sanitized downstream.
+    /// </summary>
     internal bool IsUnsafeRequest(string requestText)
-        => sanitizer.ContainsBannedPhrase(requestText)
-           || UnsafeRequestPatterns.Any(p => p.IsMatch(requestText));
+        => DoctrineRuleset.MatchesUnsafeRequestIntent(requestText);
 
     // Severity ordering: allowed < warning < constrained < refused. Never downgrade.
     private static string Escalate(string current, string candidate)

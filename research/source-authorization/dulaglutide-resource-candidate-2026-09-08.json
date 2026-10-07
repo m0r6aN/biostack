@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-08T22:07:07.268475Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "ownerDecision": "C1 contain-and-re-source, owner-source-decisions-2026-09-08.v1.json",
+  "status": "prepared-review-required",
+  "claimId": "dulaglutide-mechanism-glp1-agonist-001",
+  "historicalPacket": {
+    "gitRevision": "c05625caf4d633e428bd89f0334029e3c58b9f67",
+    "path": "research/input/evidence/dulaglutide.evidence.json",
+    "sha256": "5e536bc80a0e292c78f1951fea0e1ea698179bb31e1377f5c2342b87007647cf"
+  },
+  "historicalReviewReceipts": [
+    "research/review-decisions/receipts/independent-review-2026-08-29-verdicts.json",
+    "research/review-decisions/review-decision-batch-2026-08-29-independent-review-001.json"
+  ],
+  "supersededClaimSha256": "9248086ec59e4d42fe75ecb7241d9f5f523842f61996ca338f627999d932c799",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON for the historical claim object, with recursively sorted object keys, compact comma/colon separators, ASCII escaping, and no trailing newline (Python json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8')).",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db09045",
+      "locator": "Indication",
+      "chars": 71,
+      "sha256": "e61f512f271efdc5c7988509180d64e6e6783fb522266f18ee7cca889056c7d9"
+    },
+    {
+      "sourceId": "wikipedia-dulaglutide",
+      "locator": "Pharmacology / mechanism of action",
+      "chars": 141,
+      "sha256": "82446765831e008377c3ad83a2398d93716937e6b12aa2fb9b1f4687894a310f"
+    }
+  ],
+  "replacementSourceId": "fda-ocp-review-bla125469-s51-2022",
+  "sourceUrl": "https://www.fda.gov/media/164321/download",
+  "sourceVersion": "FDA reference 5067311, BLA 125469/S-051, 2022, 36 pages",
+  "sourceSha256": "41227a52a5c192907ced3158c3d46b932cc7ca2b1726a1e96aaa428e4ba47a57",
+  "rightsScope": "Factual paraphrase with attribution and exact page locators; no retained excerpts, training permission, full-text licence or broader acquisition authorization.",
+  "rightsEvidenceUrls": [
+    "https://www.fda.gov/about-fda/about-website/website-policies",
+    "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=463050bd-2b1c-40f5-b3c3-0a04bb433309&version=60"
+  ],
+  "authorshipFinding": "FDA pages 6 and 7 closely match manufacturer-label sections 12.1 and 12.3 bearing Lilly copyright. Direction of copying is not established; clean agency-only authorship is not asserted. All proposed verbatim excerpts were excluded.",
+  "contentVerification": {
+    "method": "Direct download, pypdf extraction, rendered page-image inspection",
+    "pages": [
+      3,
+      6,
+      7,
+      8
+    ],
+    "usedPages": [
+      3,
+      7
+    ],
+    "quoteCount": 0
+  },
+  "dependencyDisposition": {
+    "directDrugBankClaimReference": "removed from current mechanism candidate",
+    "drugBankSourceDefinition": "retained as historical provenance only",
+    "drugBankAccession": "existing identity metadata unchanged",
+    "indicationReviewFlag": "historical DrugBank support withdrawn; independent-family gate remains open",
+    "opsReviewReason": "historical DrugBank support withdrawn; both fieldAuthorityRequired claims remain review-gated",
+    "compoundStructureMetadata": "narrowed to GLP-1 receptor agonist; unverified fusion description removed"
+  },
+  "remainingGates": [
+    "New source item registration and applicable method/scope review; do not inherit openFDA API authorization for this PDF.",
+    "Evidence-reviewer acceptance of the revised mechanism candidate, including the proposed scientific A1 tier and the narrowed pharmacological classification.",
+    "Existing independent-family requirements for safety-critical claims remain open.",
+    "Promotion, deployment and production containment remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

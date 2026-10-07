@@ -193,30 +193,90 @@ export function currentRawInput(mode: ProtocolAnalyzerInputType, inputText: stri
   return selectedFile ? `${selectedFile.name} (${selectedFile.type || 'unknown type'}, ${selectedFile.size} bytes)` : '';
 }
 
+// Which failure framing the analyzer UI should show. 'validation' means the API
+// deliberately answered 400/422 with curated, user-safe copy that is surfaced
+// verbatim; 'service' means a transient/unreachable failure where the generic
+// "temporarily unavailable" framing is the honest one.
+export type AnalyzerErrorKind = 'validation' | 'service';
+
+export type AnalyzerErrorPresentation = {
+  message: string;
+  kind: AnalyzerErrorKind;
+};
+
 export function formatAnalyzerError(error: unknown, mode: ProtocolAnalyzerInputType): string {
+  return analyzerErrorPresentation(error, mode).message;
+}
+
+export function analyzerErrorPresentation(
+  error: unknown,
+  mode: ProtocolAnalyzerInputType,
+): AnalyzerErrorPresentation {
   const message = error instanceof Error ? error.message : 'Protocol analysis failed.';
+
+  // Safe API validation errors: the analyzer endpoints deliberately phrase
+  // 400/422 responses as { message | error } copy meant for the user (e.g.
+  // "That file is too large for the analyzer right now."). api.ts already
+  // lifted that field into ApiError.message, so surface it instead of
+  // collapsing it into generic outage text. Responses without curated copy
+  // carry the synthetic "API Error: <status>" placeholder, which must not be
+  // shown to users.
+  if (
+    error instanceof ApiError &&
+    (error.status === 400 || error.status === 422) &&
+    isServerProvidedAnalyzerMessage(message)
+  ) {
+    return { message, kind: 'validation' };
+  }
+
   if (
     mode === 'CameraScan' &&
     (/ocr/i.test(message) || /image/i.test(message) || /read text/i.test(message) || /not configured/i.test(message))
   ) {
-    return 'Scan is temporarily unavailable. Upload a PDF, spreadsheet, or paste text to analyze now.';
+    return {
+      message: 'Scan is temporarily unavailable. Upload a PDF, spreadsheet, or paste text to analyze now.',
+      kind: 'service',
+    };
   }
 
   if (error instanceof ApiError) {
     if (error.status === 400 || error.status === 422) {
-      return 'BioStack could not analyze that input yet. Check the protocol text and try again.';
+      return {
+        message: 'BioStack could not analyze that input yet. Check the protocol text and try again.',
+        kind: 'service',
+      };
     }
 
     if (error.status === 404) {
-      return 'BioStack could not reach the intelligence route for this analysis. Your input is still safe. Try again in a moment.';
+      return {
+        message: 'BioStack could not reach the intelligence route for this analysis. Your input is still safe. Try again in a moment.',
+        kind: 'service',
+      };
     }
   }
 
   if (/api error|failed to fetch|network|load failed|fetch/i.test(message)) {
-    return 'BioStack could not reach the intelligence service. Your input is still safe. Try again in a moment.';
+    return {
+      message: 'BioStack could not reach the intelligence service. Your input is still safe. Try again in a moment.',
+      kind: 'service',
+    };
   }
 
-  return message || 'Analysis is temporarily unavailable. Try again in a moment.';
+  return {
+    message: message || 'Analysis is temporarily unavailable. Try again in a moment.',
+    kind: 'service',
+  };
+}
+
+function isServerProvidedAnalyzerMessage(message: string): boolean {
+  const trimmed = message.trim();
+  if (!trimmed || /^API Error:/i.test(trimmed)) {
+    return false;
+  }
+
+  // Defensive: never surface transport-level noise even if a caller threaded
+  // it through as the Error message on an ApiError-shaped object.
+  return !/failed to fetch|load failed|networkerror/i.test(trimmed);
 }
 
 export function sourceTypeLabel(result: ProtocolAnalyzerResult): string {

@@ -54,6 +54,19 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
             : KnowledgeUpsertDisposition.Updated);
     }
 
+    public Task<KnowledgeUpsertDisposition> PreviewUpsertAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)
+    {
+        var existing = _knowledgeBase.FirstOrDefault(k => k.CanonicalName == entry.CanonicalName);
+        if (existing is null)
+        {
+            return Task.FromResult(KnowledgeUpsertDisposition.Created);
+        }
+
+        return Task.FromResult(AreEquivalent(existing, entry)
+            ? KnowledgeUpsertDisposition.Unchanged
+            : KnowledgeUpsertDisposition.Updated);
+    }
+
     public Task<int> IngestBulkAsync(List<KnowledgeEntry> entries, CancellationToken cancellationToken = default)
     {
         var changed = 0;

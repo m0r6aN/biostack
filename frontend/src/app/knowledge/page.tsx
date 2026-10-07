@@ -3,36 +3,60 @@
 import { Header } from '@/components/Header';
 import { LoadingState } from '@/components/LoadingState';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
+import { EvidenceTierBadge } from '@/components/knowledge/EvidenceTierBadge';
 import { OverlapResults } from '@/components/knowledge/OverlapResults';
+import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
+import { toSlug } from '@/lib/research/slugs';
 import { InteractionFlag, KnowledgeEntry } from '@/lib/types';
-import { useState } from 'react';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
 
 export default function KnowledgePage() {
   const { user, loading: authLoading } = useAuth();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<KnowledgeEntry[]>([]);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [completedSearchQuery, setCompletedSearchQuery] = useState<string | null>(null);
 
   const [selectedCompounds, setSelectedCompounds] = useState<string[]>([]);
   const [overlapResults, setOverlapResults] = useState<InteractionFlag[]>([]);
   const [checkingOverlaps, setCheckingOverlaps] = useState(false);
   const [overlapError, setOverlapError] = useState<string | null>(null);
   const [hasCheckedOverlaps, setHasCheckedOverlaps] = useState(false);
+  const overlapRequestVersion = useRef(0);
+
+  const [library, setLibrary] = useState<KnowledgeEntry[]>([]);
+  const [libraryStatus, setLibraryStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+
+  const loadLibrary = async () => {
+    setLibraryStatus('loading');
+    try {
+      const entries = await apiClient.getAllKnowledgeCompounds();
+      setLibrary([...entries].sort((a, b) => a.canonicalName.localeCompare(b.canonicalName)));
+      setLibraryStatus('ready');
+    } catch {
+      setLibraryStatus('error');
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
+    const submittedQuery = searchQuery;
     try {
       setSearching(true);
       setSearchError(null);
+      setSearchResults([]);
+      setCompletedSearchQuery(null);
       const results = await apiClient.getAllKnowledgeCompounds();
-      const q = searchQuery.toLowerCase();
+      const q = submittedQuery.trim().toLowerCase();
       setSearchResults(
         results.filter(
           r =>
@@ -41,6 +65,7 @@ export default function KnowledgePage() {
             r.classification.toLowerCase().includes(q)
         )
       );
+      setCompletedSearchQuery(submittedQuery);
     } catch {
       setSearchError('Failed to search knowledge base');
     } finally {
@@ -53,30 +78,38 @@ export default function KnowledgePage() {
       setOverlapError('Select at least 2 compounds');
       return;
     }
+    const requestVersion = ++overlapRequestVersion.current;
     try {
       setCheckingOverlaps(true);
       setOverlapError(null);
+      setHasCheckedOverlaps(false);
+      setOverlapResults([]);
       const results = await apiClient.checkOverlap(selectedCompounds);
+      if (requestVersion !== overlapRequestVersion.current) return;
       setOverlapResults(results);
       setHasCheckedOverlaps(true);
     } catch {
-      setOverlapError('Failed to check overlaps');
+      if (requestVersion === overlapRequestVersion.current) setOverlapError('Failed to check overlaps');
     } finally {
-      setCheckingOverlaps(false);
+      if (requestVersion === overlapRequestVersion.current) setCheckingOverlaps(false);
     }
   };
 
-  const toggleCompound = (name: string) => {
-    setSelectedCompounds(prev =>
-      prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
-    );
+  const invalidateOverlap = () => {
+    overlapRequestVersion.current += 1;
+    setCheckingOverlaps(false);
+    setOverlapError(null);
     setHasCheckedOverlaps(false);
     setOverlapResults([]);
   };
 
-  if (authLoading) {
-    return null;
-  }
+  const toggleCompound = (name: string) => {
+    invalidateOverlap();
+    setSelectedCompounds(prev =>
+      prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
+    );
+  };
+
 
   return (
     <div className="w-full min-h-screen">
@@ -86,7 +119,15 @@ export default function KnowledgePage() {
         <MarketingNav />
       )}
 
-      <div className="p-8 space-y-8 max-w-5xl">
+      <KnowledgeMain className="p-8 space-y-8 max-w-5xl">
+
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">Library</p>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white">Compound library.</h1>
+          <p className="mt-3 max-w-2xl text-lg leading-8 text-white/62">
+            Every dossier is graded by evidence strength and lists its sources. Search for something specific, or browse the full library below.
+          </p>
+        </div>
 
         {/* ── Disclaimer ──────────────────────────────────────── */}
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-400/15 bg-amber-500/[0.06] text-amber-200/70 text-xs">
@@ -110,6 +151,7 @@ export default function KnowledgePage() {
               </svg>
               <input
                 type="text"
+                ref={searchInputRef}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search compounds, supplements, substances…"
@@ -126,7 +168,7 @@ export default function KnowledgePage() {
           </form>
 
           {searchError && (
-            <p className="mt-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+            <p role="alert" className="mt-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
               {searchError}
             </p>
           )}
@@ -148,11 +190,53 @@ export default function KnowledgePage() {
               />
             ))}
           </div>
-        ) : searchQuery && !searching ? (
+        ) : completedSearchQuery !== null && !searchError ? (
           <GlassCard variant="base" className="p-8 text-center">
-            <p className="text-white/40 text-sm">No results for &ldquo;{searchQuery}&rdquo;</p>
+            <p className="text-white/40 text-sm">No results for &ldquo;{completedSearchQuery}&rdquo;</p>
           </GlassCard>
         ) : null}
+
+        {/* ── Browse the library ───────────────────────────────── */}
+        <section aria-label="Browse the library">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/50 mb-4">
+            Browse the library
+          </h2>
+          {libraryStatus === 'idle' && (
+            <button
+              type="button"
+              onClick={() => void loadLibrary()}
+              className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24 focus-visible:outline-none focus-visible:ring-2"
+            >
+              Show all compounds
+            </button>
+          )}
+          {libraryStatus === 'loading' && (
+            <p className="text-sm text-white/52">Loading compound list…</p>
+          )}
+          {libraryStatus === 'error' && (
+            <p className="text-sm text-white/52">
+              The library index is temporarily unavailable. Search above still works when the knowledge API responds.
+            </p>
+          )}
+          {libraryStatus === 'ready' && (
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {library.map((entry) => (
+                <li key={entry.canonicalName}>
+                  <Link
+                    href={`/knowledge/${toSlug(entry.canonicalName)}`}
+                    className="block rounded-lg border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-emerald-300/30 focus-visible:outline-none focus-visible:ring-2"
+                  >
+                    <span className="text-sm font-semibold text-white">{entry.canonicalName}</span>
+                    <span className="mt-2 flex items-center gap-2">
+                      <EvidenceTierBadge tier={entry.evidenceTier} />
+                      <span className="text-xs text-white/45">{entry.classification}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         {/* ── Pathway Overlap Checker ──────────────────────────── */}
         <GlassCard variant="hero" className="p-6 overflow-hidden relative">
@@ -163,9 +247,38 @@ export default function KnowledgePage() {
             <div className="flex items-center gap-2.5 mb-1">
               <h2 className="text-base font-semibold text-white">Pathway Overlap Checker</h2>
             </div>
-            <p className="text-sm text-white/50 mb-5">
+            <p className="text-sm text-white/50 mb-3">
               Select two or more compounds to surface shared pathways and potential interactions.
             </p>
+            <p id="overlap-selection-guidance" className="text-sm text-white/70 mb-3" aria-live="polite">
+              {selectedCompounds.length === 0
+                ? 'Search for a compound and select it below.'
+                : selectedCompounds.length === 1
+                  ? 'Select 1 more compound to check overlaps.'
+                  : 'Ready to check selected compounds.'}
+            </p>
+            <button type="button" onClick={() => {
+              searchInputRef.current?.scrollIntoView({ behavior: 'auto', block: 'center' });
+              searchInputRef.current?.focus({ preventScroll: true });
+            }} className="mb-4 min-h-11 rounded px-2 py-2 text-sm text-amber-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+              {selectedCompounds.length ? 'Find another compound' : 'Find a compound'}
+            </button>
+
+            {selectedCompounds.length > 0 && (
+              <section aria-label="Selected compounds" className="mb-5">
+                <h3 className="text-sm font-medium text-white/80 mb-2">Selected compounds</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {selectedCompounds.map(name => (
+                    <li key={name}>
+                      <button type="button" aria-label={`Remove ${name}`} onClick={() => toggleCompound(name)}
+                        className="min-h-11 max-w-full rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200 break-words focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                        {name}<span aria-hidden="true" className="ml-2">×</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* Selection chips from search results */}
             {searchResults.length > 0 && (
@@ -176,7 +289,8 @@ export default function KnowledgePage() {
                     <button
                       key={r.canonicalName}
                       onClick={() => toggleCompound(r.canonicalName)}
-                      className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
+                      aria-pressed={selectedCompounds.includes(r.canonicalName)}
+                      className={`min-h-11 text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
                         selectedCompounds.includes(r.canonicalName)
                           ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.2)]'
                           : 'bg-white/[0.04] text-white/55 border-white/[0.08] hover:bg-white/[0.08] hover:text-white/80'
@@ -204,8 +318,7 @@ export default function KnowledgePage() {
                 <button
                   onClick={() => {
                     setSelectedCompounds([]);
-                    setHasCheckedOverlaps(false);
-                    setOverlapResults([]);
+                    invalidateOverlap();
                   }}
                   className="text-xs text-white/30 hover:text-white/60 transition-colors"
                 >
@@ -215,13 +328,14 @@ export default function KnowledgePage() {
             </div>
 
             {overlapError && (
-              <p className="mb-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+              <p role="alert" className="mb-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
                 {overlapError}
               </p>
             )}
 
             <button
               onClick={handleCheckOverlaps}
+              aria-describedby="overlap-selection-guidance"
               disabled={checkingOverlaps || selectedCompounds.length < 2}
               className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:bg-white/10 disabled:text-white/25 text-slate-950 font-semibold rounded-xl transition-all text-sm shadow-[0_0_16px_rgba(245,158,11,0.25)] hover:shadow-[0_0_24px_rgba(245,158,11,0.4)] disabled:shadow-none"
             >
@@ -252,7 +366,7 @@ export default function KnowledgePage() {
           </div>
         </GlassCard>
 
-      </div>
+      </KnowledgeMain>
 
       {!user && <MarketingFooter />}
     </div>

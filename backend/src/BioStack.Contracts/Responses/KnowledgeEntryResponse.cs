@@ -1,5 +1,6 @@
 namespace BioStack.Contracts.Responses;
 
+using System.Text.Json.Serialization;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 
@@ -14,22 +15,38 @@ public sealed record KnowledgeEntryResponse(
     string Notes,
     List<string> Pathways,
     List<string> Benefits,
+    [property: JsonIgnore]
     List<string> PairsWellWith,
     List<string> AvoidWith,
+    [property: JsonIgnore]
     List<string> CompatibleBlends,
+    [property: JsonIgnore]
     string VialCompatibility,
+    [property: JsonIgnore]
     string RecommendedDosage,
+    [property: JsonIgnore]
     string StandardDosageRange,
+    [property: JsonIgnore]
     string MaxReportedDose,
+    [property: JsonIgnore]
     string Frequency,
+    [property: JsonIgnore]
     string PreferredTimeOfDay,
+    [property: JsonIgnore]
     List<string> WeeklyDosageSchedule,
+    [property: JsonIgnore]
     List<string> IncrementalEscalationSteps,
+    [property: JsonIgnore]
     TieredDosingData? TieredDosing,
     List<string> DrugInteractions,
+    [property: JsonIgnore]
     string OptimizationProtein,
+    [property: JsonIgnore]
     string OptimizationCarbs,
+    [property: JsonIgnore]
     List<string> OptimizationSupplements,
+    [property: JsonIgnore]
     string OptimizationSleep,
+    [property: JsonIgnore]
     string OptimizationExercise
 );

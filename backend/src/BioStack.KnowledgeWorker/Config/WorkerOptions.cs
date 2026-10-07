@@ -49,6 +49,34 @@ public sealed class WorkerOptions
     public string? ScopeHint { get; set; }
 
     /// <summary>
+    /// Directory of <c>review-decision-batch-*.json</c> files consulted by
+    /// <see cref="RunMode.Refresh"/>'s promotion gate. Resolved relative to the
+    /// process's current working directory (not <c>AppContext.BaseDirectory</c>) so the
+    /// documented runbook invocation — run from the repo root — finds
+    /// <c>research/review-decisions</c> without an absolute path. Refresh fails closed
+    /// (aborts before any database connection or write) if no review-decision batch can
+    /// be loaded from each configured input (including <see cref="ReviewDecisionPath"/>), unless
+    /// <see cref="AllowUnpromoted"/> is set.
+    /// </summary>
+    public string? ReviewDecisionDirectory { get; set; } = "research/review-decisions";
+
+    /// <summary>
+    /// Optional single review-decision batch file, consulted in addition to
+    /// <see cref="ReviewDecisionDirectory"/> by Refresh's promotion gate. Same
+    /// cwd-relative resolution as <see cref="ReviewDecisionDirectory"/>.
+    /// </summary>
+    public string? ReviewDecisionPath { get; set; }
+
+    /// <summary>
+    /// Explicit dev/local override that disables Refresh's promotion gate entirely —
+    /// every schema-valid seed record is upserted regardless of review-decision status.
+    /// Refused (startup throws) unless the resolved connection string host is
+    /// a loopback address and the hosting environment is Development.
+    /// Every use is logged loudly. Never set this for a production run.
+    /// </summary>
+    public bool AllowUnpromoted { get; set; } = false;
+
+    /// <summary>
     /// Optional compound candidate batch path used by <see cref="RunMode.Research" />.
     /// </summary>
     public string? ResearchCandidateFilePath { get; set; }
@@ -102,6 +130,60 @@ public sealed class WorkerOptions
     /// Output directory for research-mode draft records, review queue, and run report.
     /// </summary>
     public string ResearchOutputDirectory { get; set; } = "ResearchOutput";
+
+    /// <summary>Exact research-request batch used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionResearchRequestPath { get; set; }
+
+    /// <summary>Exact approved source-decision batch used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionDecisionPath { get; set; }
+
+    /// <summary>Exact activated source registry used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionRegistryPath { get; set; }
+
+    /// <summary>
+    /// Caller-supplied stable cycle ID. It has no default so a restart can resume the
+    /// same cycle without accidentally suppressing a later refresh cycle.
+    /// </summary>
+    public string? SourceAcquisitionCycleId { get; set; }
+
+    /// <summary>Approved positive retention period for normalized candidate artifacts.</summary>
+    public int? SourceAcquisitionCandidateRetentionDays { get; set; }
+
+    /// <summary>Approved positive retention period for minimal acquisition receipts.</summary>
+    public int? SourceAcquisitionReceiptRetentionDays { get; set; }
+
+    /// <summary>
+    /// Artifact store for source acquisition. <c>File</c> remains the local and
+    /// test default; <c>AzureBlob</c> is the only production-supported value.
+    /// </summary>
+    public string SourceAcquisitionStorageProvider { get; set; } = "File";
+
+    /// <summary>HTTPS service endpoint, for example https://account.blob.core.windows.net.</summary>
+    public string? SourceAcquisitionBlobServiceUri { get; set; }
+
+    /// <summary>Fixed private container dedicated to source-acquisition artifacts.</summary>
+    public string? SourceAcquisitionBlobContainerName { get; set; }
+
+    /// <summary>Fixed, relative blob-name prefix. It cannot be changed by a cycle or intent.</summary>
+    public string SourceAcquisitionBlobPrefix { get; set; } = "source-acquisition";
+
+    /// <summary>
+    /// Optional client ID for the job's user-assigned managed identity. No other
+    /// credential type is accepted for the production Blob runtime.
+    /// </summary>
+    public string? SourceAcquisitionManagedIdentityClientId { get; set; }
+
+    /// <summary>Required NCBI E-utilities tool identifier; never persisted or logged.</summary>
+    public string? SourceAcquisitionPubMedTool { get; set; }
+
+    /// <summary>Required NCBI E-utilities contact; never persisted or logged.</summary>
+    public string? SourceAcquisitionPubMedContactEmail { get; set; }
+
+    /// <summary>
+    /// Unsupported fail-closed sentinel. Any configured value is rejected because the
+    /// approved PubMed lane is the no-key public API lane.
+    /// </summary>
+    public string? SourceAcquisitionPubMedApiKey { get; set; }
 
     /// <summary>
     /// Maximum independent source families to pursue automatically for partial review follow-up

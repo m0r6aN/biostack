@@ -3,34 +3,34 @@ import { LandingPathCard } from './LandingPathCard';
 
 const entryPaths = [
   {
-    label: 'Analyzer',
-    title: 'Analyze a protocol',
-    body: 'Operator and Commander members can review a pasted, uploaded, scanned, or linked stack.',
-    href: '/tools/analyzer',
+    label: 'Library',
+    title: 'Explore the evidence',
+    body: 'Browse compound dossiers with evidence tiers, sources, and mechanism summaries.',
+    href: '/knowledge',
     tone: 'cyan',
-    signal: 'Operator required',
-    action: 'Analyze',
-    path: 'analyzer',
+    signal: 'Free · public',
+    action: 'Browse',
+    path: 'library',
   },
   {
-    label: 'Starter',
-    title: 'I am getting started',
-    body: 'Set up compound tracking without rebuilding a spreadsheet.',
+    label: 'Start',
+    title: 'Start free',
+    body: 'Keep what you look up and set up your own records, guided from the first step.',
     href: '/start',
     tone: 'emerald',
-    signal: 'Guided',
+    signal: 'Free account',
     action: 'Start',
     path: 'starter',
   },
   {
-    label: 'Existing stack',
-    title: 'Analyze My Stack',
-    body: 'Review active compounds, overlap signals, and timeline context with Operator.',
+    label: 'Analyzer',
+    title: 'Analyze a protocol',
+    body: 'Review a pasted or uploaded stack against the evidence, with overlap and timeline context.',
     href: '/tools/analyzer',
     tone: 'sky',
-    signal: 'Operator access',
+    signal: 'Operator required',
     action: 'Analyze',
-    path: 'experienced',
+    path: 'analyzer',
   },
   {
     label: 'Provider',
@@ -53,6 +53,8 @@ const toneClasses = {
     'border-amber-200/24 bg-[linear-gradient(135deg,rgba(251,191,36,0.09),rgba(255,255,255,0.035))] hover:border-amber-100/52 hover:bg-amber-300/[0.1] hover:shadow-[0_18px_48px_rgba(251,191,36,0.12)] focus-visible:ring-amber-200/55',
   cyan:
     'border-cyan-200/24 bg-cyan-400/[0.075] shadow-[inset_0_0_0_1px_rgba(103,232,249,0.035),0_12px_34px_rgba(0,0,0,0.2)] hover:border-cyan-100/52 hover:bg-cyan-400/[0.12] hover:shadow-[0_18px_48px_rgba(103,232,249,0.14)] focus-visible:ring-cyan-200/55',
+  violet:
+    'border-violet-300/24 bg-violet-400/[0.09] hover:border-violet-300/50 hover:bg-violet-400/[0.14] hover:shadow-[0_18px_48px_rgba(167,139,250,0.16)] focus-visible:ring-violet-300/60',
 };
 
 const iconClasses = {
@@ -60,6 +62,7 @@ const iconClasses = {
   sky: 'border-sky-200/22 text-sky-100 group-hover:bg-sky-400/14',
   gold: 'border-amber-100/22 text-amber-100 group-hover:bg-amber-300/12',
   cyan: 'border-cyan-100/22 text-cyan-100 group-hover:bg-cyan-300/12',
+  violet: 'border-violet-300/20 text-violet-100 group-hover:bg-violet-400/14',
 };
 
 const railClasses = {
@@ -67,6 +70,7 @@ const railClasses = {
   sky: 'bg-sky-300/78 shadow-[0_0_18px_rgba(56,189,248,0.5)]',
   gold: 'bg-amber-200/72 shadow-[0_0_18px_rgba(251,191,36,0.36)]',
   cyan: 'bg-cyan-200/72 shadow-[0_0_18px_rgba(103,232,249,0.36)]',
+  violet: 'bg-violet-300/70 shadow-[0_0_18px_rgba(167,139,250,0.48)]',
 };
 
 const signalClasses = {
@@ -74,24 +78,27 @@ const signalClasses = {
   sky: 'text-sky-100/90',
   gold: 'text-amber-100/90',
   cyan: 'text-cyan-100/90',
+  violet: 'text-violet-100/90',
 };
 
 export function LandingHero() {
-  return ( 
+  return (
     <section className="border-b border-white/8">
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">
-          <p>Built for peptides, SARMs, SERMs, and beyond</p>
+          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-200/78 sm:mb-4 sm:text-xs">
+            Evidence-graded research on peptides, SARMs, SERMs, and beyond
+          </p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            What you&apos;re taking. How it&apos;s structured.<br />
-            See what it&apos;s doing.
+            No prescriptions. No guesswork.<br />
+            Just what&apos;s known.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
-            Start with clarity. Then track, compare, and observe changes over time.
+            A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves. Tracking and analysis come after.
           </p>
         </div>
 
-        <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:col-span-2 lg:grid-cols-4">
+        <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-4">
           {entryPaths.map((path) => (
             <LandingPathCard
               key={path.href}
@@ -113,13 +120,13 @@ export function LandingHero() {
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <Link
             href="/tools"
-            className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline sm:text-base"
+            className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline focus-visible:outline-none focus-visible:ring-2 sm:text-base"
           >
             Need to calculate dose volume or reconstitution? → Start here
           </Link>
           <Link
             href="/pricing"
-            className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline sm:text-base"
+            className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline focus-visible:outline-none focus-visible:ring-2 sm:text-base"
           >
             See Observer, Operator, and Commander
           </Link>

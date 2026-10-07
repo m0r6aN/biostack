@@ -10,20 +10,20 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
             See what BioStack catches
           </h2>
           <p className="mt-4 text-base leading-7 text-white/62">
-            Paste a stack and BioStack turns raw compound names into structured context: parsed items,
-            relationship checks, evidence-aware previews, and a clear upgrade path when deeper analysis is useful.
+            Explore an example list below. BioStack shows the listed items and a preview of their context; build
+            your own list through Start free, and review paid capabilities on the pricing page.
           </p>
           {!compact && (
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                href="/tools/analyzer"
-                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                href="/start"
+                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
               >
-                Analyze a stack
+                Start free
               </Link>
               <Link
                 href="/pricing"
-                className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+                className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24 focus-visible:outline-none focus-visible:ring-2"
               >
                 See what Operator unlocks
               </Link>
@@ -32,6 +32,11 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
         </div>
 
         <StackIntelligencePanel
+          contentOverrides={{
+            simple: {
+              nextAction: 'Browse the evidence library, or start free to keep a list of your own.',
+            },
+          }}
           compoundNames={['BPC-157', 'TB-500']}
           relationshipCandidates={[
             {

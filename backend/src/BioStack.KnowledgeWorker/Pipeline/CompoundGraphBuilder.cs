@@ -822,18 +822,6 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
             }
         }
 
-        if (sourceRegistry?["sources"] is JsonArray registrySources)
-        {
-            foreach (var node in registrySources)
-            {
-                if (node is not JsonObject obj) continue;
-                var id = obj["sourceId"]?.GetValue<string>();
-                if (string.Equals(id, sourceRef, StringComparison.OrdinalIgnoreCase))
-                {
-                    return obj["authorityTier"]?.GetValue<string>();
-                }
-            }
-        }
-        return null;
+        return SourceRegistryTierLookup.LookupAuthorityTier(sourceRef, sourceRegistry);
     }
 }

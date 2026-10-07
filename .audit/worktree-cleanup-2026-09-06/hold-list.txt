@@ -1,0 +1,11 @@
+C:/Users/clint/.codex/worktrees/biostack-sidecar-deployment-goal/BioStack   # live goal, Gate 1 ratified
+D:/Repos/BioStack/.worktrees/track-c-production-ops                        # unmerged Azure staging tooling
+C:/Users/clint/.codex/worktrees/biostack-test-repro-contracts/BioStack     # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-test-repro-evidence/BioStack      # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-test-repro-interaction/BioStack   # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-test-repro-outbound/BioStack      # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-test-repro-parser/BioStack        # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-test-repro-sidecar/BioStack       # diagnostic evidence
+C:/Users/clint/.codex/worktrees/biostack-remediation-q02/BioStack          # unmerged diagnostic test
+D:/Repos/BioStack-governance-p1                                            # UNRESOLVED per audit
+D:/Repos/BioStack-governed-delivery-charter                                # UNRESOLVED per audit

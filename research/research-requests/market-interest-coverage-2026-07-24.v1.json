@@ -1,0 +1,1378 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-request-batch",
+  "batch": {
+    "batchId": "market-interest-coverage-2026-07-24-v1",
+    "requesterId": "biostack-market-coverage-coordinator",
+    "requestedAt": "2026-07-24T00:00:00Z",
+    "notes": [
+      "Offline governed queue input paired one-to-one with peptide-serm-sarm-market-interest.v1.json.",
+      "Requests carry no clinical claims and grant no source, review, ingestion, or promotion authority."
+    ]
+  },
+  "requests": [
+    {
+      "requestId": "market-coverage-semaglutide-20260724",
+      "compoundName": "Semaglutide",
+      "aliases": [
+        "Ozempic",
+        "Wegovy",
+        "Rybelsus"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-tirzepatide-20260724",
+      "compoundName": "Tirzepatide",
+      "aliases": [
+        "Mounjaro",
+        "Zepbound"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-retatrutide-20260724",
+      "compoundName": "Retatrutide",
+      "aliases": [
+        "LY3437943",
+        "triple G"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-liraglutide-20260724",
+      "compoundName": "Liraglutide",
+      "aliases": [
+        "Victoza",
+        "Saxenda"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-dulaglutide-20260724",
+      "compoundName": "Dulaglutide",
+      "aliases": [
+        "Trulicity"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-exenatide-20260724",
+      "compoundName": "Exenatide",
+      "aliases": [
+        "Byetta",
+        "Bydureon"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-pramlintide-20260724",
+      "compoundName": "Pramlintide",
+      "aliases": [
+        "Symlin"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-cagrilintide-20260724",
+      "compoundName": "Cagrilintide",
+      "aliases": [
+        "Cagri"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-survodutide-20260724",
+      "compoundName": "Survodutide",
+      "aliases": [
+        "BI 456906"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-pemvidutide-20260724",
+      "compoundName": "Pemvidutide",
+      "aliases": [
+        "ALT-801"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-maridebart-cafraglutide-20260724",
+      "compoundName": "Maridebart cafraglutide",
+      "aliases": [
+        "MariTide",
+        "AMG 133"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Biologic",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-mazdutide-20260724",
+      "compoundName": "Mazdutide",
+      "aliases": [
+        "IBI362",
+        "LY3305677"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-amycretin-20260724",
+      "compoundName": "Amycretin",
+      "aliases": [
+        "NNC0487-0111"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-vk2735-20260724",
+      "compoundName": "VK2735",
+      "aliases": [],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-bpc-157-20260724",
+      "compoundName": "BPC-157",
+      "aliases": [
+        "BPC 157",
+        "BPC-157 acetate"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-tb-500-20260724",
+      "compoundName": "TB-500",
+      "aliases": [
+        "TB500",
+        "thymosin beta-4 fragment"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-cjc-1295-20260724",
+      "compoundName": "CJC-1295",
+      "aliases": [
+        "CJC-1295 DAC"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ipamorelin-20260724",
+      "compoundName": "Ipamorelin",
+      "aliases": [
+        "ipamorelin acetate"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ghk-cu-20260724",
+      "compoundName": "GHK-Cu",
+      "aliases": [
+        "copper tripeptide-1",
+        "copper peptide"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-aod-9604-20260724",
+      "compoundName": "AOD-9604",
+      "aliases": [
+        "AOD 9604",
+        "hGH fragment 176-191"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-mots-c-20260724",
+      "compoundName": "MOTS-c",
+      "aliases": [
+        "MOTS-C",
+        "mitochondrial-derived peptide"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-bremelanotide-20260724",
+      "compoundName": "Bremelanotide",
+      "aliases": [
+        "PT-141",
+        "Vyleesi"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-tesamorelin-20260724",
+      "compoundName": "Tesamorelin",
+      "aliases": [
+        "Egrifta SV",
+        "Egrifta WR"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-sermorelin-20260724",
+      "compoundName": "Sermorelin",
+      "aliases": [
+        "Geref",
+        "GRF 1-29"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-melanotan-ii-20260724",
+      "compoundName": "Melanotan II",
+      "aliases": [
+        "MT-II",
+        "Melanotan 2"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-setmelanotide-20260724",
+      "compoundName": "Setmelanotide",
+      "aliases": [
+        "Imcivree"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-elamipretide-20260724",
+      "compoundName": "Elamipretide",
+      "aliases": [
+        "Forzinity",
+        "SS-31",
+        "MTP-131",
+        "Bendavia"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-afamelanotide-20260724",
+      "compoundName": "Afamelanotide",
+      "aliases": [
+        "Scenesse",
+        "Melanotan I"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-thymosin-alpha-1-20260724",
+      "compoundName": "Thymosin alpha-1",
+      "aliases": [
+        "thymalfasin",
+        "Zadaxin"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-kpv-20260724",
+      "compoundName": "KPV",
+      "aliases": [
+        "Lys-Pro-Val",
+        "alpha-MSH(11-13)"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ll-37-20260724",
+      "compoundName": "LL-37",
+      "aliases": [
+        "cathelicidin LL-37"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ghrp-2-20260724",
+      "compoundName": "GHRP-2",
+      "aliases": [
+        "pralmorelin"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ghrp-6-20260724",
+      "compoundName": "GHRP-6",
+      "aliases": [
+        "growth hormone-releasing peptide-6"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-hexarelin-20260724",
+      "compoundName": "Hexarelin",
+      "aliases": [
+        "examorelin"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-igf-1-lr3-20260724",
+      "compoundName": "IGF-1 LR3",
+      "aliases": [
+        "Long R3 IGF-I"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-mecasermin-20260724",
+      "compoundName": "Mecasermin",
+      "aliases": [
+        "Increlex",
+        "rhIGF-1"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-peg-mgf-20260724",
+      "compoundName": "PEG-MGF",
+      "aliases": [
+        "pegylated mechano growth factor"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-semax-20260724",
+      "compoundName": "Semax",
+      "aliases": [
+        "ACTH(4-7)-PGP"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-selank-20260724",
+      "compoundName": "Selank",
+      "aliases": [
+        "TP-7"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-epitalon-20260724",
+      "compoundName": "Epitalon",
+      "aliases": [
+        "Epithalon",
+        "AEDG peptide"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-kisspeptin-10-20260724",
+      "compoundName": "Kisspeptin-10",
+      "aliases": [
+        "KP-10",
+        "metastin(45-54)"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-oxytocin-20260724",
+      "compoundName": "Oxytocin",
+      "aliases": [
+        "Pitocin"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Hormone",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-chorionic-gonadotropin-20260724",
+      "compoundName": "Chorionic gonadotropin",
+      "aliases": [
+        "hCG",
+        "Pregnyl",
+        "Novarel"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Hormone",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-somatropin-20260724",
+      "compoundName": "Somatropin",
+      "aliases": [
+        "HGH",
+        "recombinant human growth hormone"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Hormone",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-gonadorelin-20260724",
+      "compoundName": "Gonadorelin",
+      "aliases": [
+        "GnRH",
+        "Factrel"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Hormone",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-glutathione-20260724",
+      "compoundName": "Glutathione",
+      "aliases": [
+        "GSH"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-emideltide-20260724",
+      "compoundName": "Emideltide",
+      "aliases": [
+        "DSIP",
+        "delta sleep-inducing peptide"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-enclomiphene-20260724",
+      "compoundName": "Enclomiphene",
+      "aliases": [
+        "trans-clomiphene",
+        "Androxal",
+        "Enclomid"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-clomiphene-20260724",
+      "compoundName": "Clomiphene",
+      "aliases": [
+        "clomifene",
+        "Clomid"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-tamoxifen-20260724",
+      "compoundName": "Tamoxifen",
+      "aliases": [
+        "Nolvadex"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-raloxifene-20260724",
+      "compoundName": "Raloxifene",
+      "aliases": [
+        "Evista"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ospemifene-20260724",
+      "compoundName": "Ospemifene",
+      "aliases": [
+        "Osphena"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-toremifene-20260724",
+      "compoundName": "Toremifene",
+      "aliases": [
+        "Fareston"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-bazedoxifene-20260724",
+      "compoundName": "Bazedoxifene",
+      "aliases": [
+        "Duavee component"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-lasofoxifene-20260724",
+      "compoundName": "Lasofoxifene",
+      "aliases": [
+        "Fablyn"
+      ],
+      "categories": [
+        "serm-market-interest"
+      ],
+      "classification": "SERM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ostarine-20260724",
+      "compoundName": "Ostarine",
+      "aliases": [
+        "enobosarm",
+        "MK-2866",
+        "GTx-024"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ligandrol-20260724",
+      "compoundName": "Ligandrol",
+      "aliases": [
+        "LGD-4033",
+        "VK5211"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-testolone-20260724",
+      "compoundName": "Testolone",
+      "aliases": [
+        "RAD-140"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-andarine-20260724",
+      "compoundName": "Andarine",
+      "aliases": [
+        "S-4",
+        "GTx-007"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-s-23-20260724",
+      "compoundName": "S-23",
+      "aliases": [
+        "S23"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-yk-11-20260724",
+      "compoundName": "YK-11",
+      "aliases": [
+        "YK11"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-acp-105-20260724",
+      "compoundName": "ACP-105",
+      "aliases": [],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ac-262536-20260724",
+      "compoundName": "AC-262536",
+      "aliases": [],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-lgd-3303-20260724",
+      "compoundName": "LGD-3303",
+      "aliases": [],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-rad-150-20260724",
+      "compoundName": "RAD-150",
+      "aliases": [
+        "TLB-150",
+        "RAD-140 benzoate"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-gsk2881078-20260724",
+      "compoundName": "GSK2881078",
+      "aliases": [],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-vosilasarm-20260724",
+      "compoundName": "Vosilasarm",
+      "aliases": [
+        "EP0062"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-ibutamoren-20260724",
+      "compoundName": "Ibutamoren",
+      "aliases": [
+        "MK-677",
+        "MK-0677",
+        "Nutrobal"
+      ],
+      "categories": [
+        "sarm-adjacent-misclassification"
+      ],
+      "classification": "Research Compound",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-cardarine-20260724",
+      "compoundName": "Cardarine",
+      "aliases": [
+        "GW501516",
+        "GW1516",
+        "Endurobol"
+      ],
+      "categories": [
+        "sarm-adjacent-misclassification"
+      ],
+      "classification": "Research Compound",
+      "priority": "high",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    },
+    {
+      "requestId": "market-coverage-stenabolic-20260724",
+      "compoundName": "Stenabolic",
+      "aliases": [
+        "SR9009"
+      ],
+      "categories": [
+        "sarm-adjacent-misclassification"
+      ],
+      "classification": "Research Compound",
+      "priority": "normal",
+      "requesterId": "biostack-market-coverage-coordinator",
+      "requestedAt": "2026-07-24T00:00:00Z",
+      "rationale": "Queue identity and evidence-coverage work for a likely user-interest term without authorizing source acquisition or factual promotion.",
+      "notes": [
+        "Source-registry approval is required before acquisition or evidence use.",
+        "Human evidence and safety review is required before any canonical promotion."
+      ]
+    }
+  ]
+}

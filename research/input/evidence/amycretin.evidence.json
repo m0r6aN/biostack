@@ -1,0 +1,364 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "amycretin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Amycretin",
+    "aliases": [
+      "NNC0487-0111",
+      "NN9487",
+      "NN 9487"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Unimolecular dual GLP-1 receptor / amylin receptor co-agonist (investigational)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "3051672-09-1",
+      "drugbank": null,
+      "pubchem": null,
+      "chembl": null,
+      "doi": "10.1016/S0140-6736(25)01185-7",
+      "pmid": "40550231"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "wikipedia-amycretin",
+      "sourceType": "encyclopedic-reference",
+      "authorityTier": "B2",
+      "title": "Amycretin",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Amycretin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "news-medical-lancet-obesity-rct",
+      "sourceType": "science-journalism",
+      "authorityTier": "B1",
+      "title": "Amycretin delivers unprecedented weight loss in early trial for obesity treatment",
+      "publisher": "News-Medical.Net (reporting on Dahl et al., The Lancet, 2025)",
+      "url": "https://www.news-medical.net/news/20250623/Amycretin-delivers-unprecedented-weight-loss-in-early-trial-for-obesity-treatment.aspx",
+      "doi": "10.1016/S0140-6736(25)01185-7",
+      "pmid": "40550231",
+      "publishedAt": "2025-06-23T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pharmacytimes-t2d-phase2",
+      "sourceType": "science-journalism",
+      "authorityTier": "B1",
+      "title": "Amycretin Shows Significant Weight Loss, HbA1c Reductions in Type 2 Diabetes",
+      "publisher": "Pharmacy Times (reporting on Novo Nordisk phase 2 trial NCT06542874)",
+      "url": "https://www.pharmacytimes.com/view/amycretin-shows-significant-weight-loss-hba1c-reductions-in-type-2-diabetes",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "abmole-amycretin-vendor",
+      "sourceType": "vendor-product-page",
+      "authorityTier": "C2",
+      "title": "Amycretin | AbMole BioScience",
+      "publisher": "AbMole BioScience",
+      "url": "https://www.abmole.com/products/amycretin.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "peptidedeck-amycretin-consumer",
+      "sourceType": "consumer-marketing-content",
+      "authorityTier": "C2",
+      "title": "Amycretin Peptide: Weight Loss Data, Oral Form & Phase 3 Pipeline (2026)",
+      "publisher": "PeptideDeck",
+      "url": "https://www.peptidedeck.com/peptides/amycretin-peptide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "amycretin-mechanism-dual-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Amycretin is a single investigational molecule containing two covalently linked peptide analogs that act as a GLP-1 receptor agonist and an amylin receptor agonist, intended to combine appetite-regulating and metabolic effects in one unimolecular co-agonist.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "subcutaneous and oral formulations in development",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "wikipedia-amycretin",
+        "news-medical-lancet-obesity-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wikipedia-amycretin",
+          "quote": "a single molecule that operates as a GLP-1 receptor agonist and amylin receptor agonist",
+          "pageOrSection": "Overview"
+        },
+        {
+          "sourceRef": "wikipedia-amycretin",
+          "quote": "two covalently linked peptides that are analogs of GLP-1 and amylin respectively",
+          "pageOrSection": "Overview"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism sourced from a tertiary encyclopedic reference; corroborate against the primary Lancet paper or a structured database once accessible"
+      ]
+    },
+    {
+      "claimId": "amycretin-regulatory-not-approved-001",
+      "claimType": "regulatory",
+      "statement": "Amycretin has no regulatory approval anywhere and remains an investigational compound in active clinical development by Novo Nordisk (phase 1b/2a completed for subcutaneous obesity use, phase 2 completed for type 2 diabetes, phase 3 development announced); no amycretin drug product is legally marketed for human use.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "investigational subcutaneous and oral formulations",
+        "useCase": "regulatory/development status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "wikipedia-amycretin",
+        "abmole-amycretin-vendor",
+        "peptidedeck-amycretin-consumer"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wikipedia-amycretin",
+          "quote": "Phase 1b/2a completed (January 2025) for subcutaneous administration.",
+          "pageOrSection": "Development status"
+        },
+        {
+          "sourceRef": "abmole-amycretin-vendor",
+          "quote": "for research use only",
+          "pageOrSection": "Product page disclaimer"
+        },
+        {
+          "sourceRef": "peptidedeck-amycretin-consumer",
+          "quote": "As of April 30, 2026, amycretin is still in clinical development.",
+          "pageOrSection": "Status summary"
+        },
+        {
+          "sourceRef": "peptidedeck-amycretin-consumer",
+          "quote": "No amycretin product is sold yet.",
+          "pageOrSection": "Status summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "no FDA/EMA regulator-tier (A1) source was found or fetched this session; verify against an FDA or EMA page directly at review time",
+        "check whether amycretin has since been added to an FDA bulk-substances or import-alert list given ongoing 2026 PCAC scrutiny of gray-market peptides",
+        "authority-support-pass 2026-08-29: searched Drugs@FDA (accessdata.fda.gov basic search), fda.gov site search, EMA medicines database (ema.europa.eu site search), and DailyMed for 'amycretin'/'NNC0487-0111'/'NN9487' -- no listing or regulator document was found addressing amycretin's approval/investigational status. claimType 'regulatory' is in the pipeline's safety-critical set, so this stays fieldAuthorityRequired=true and remains human-review gated pending an A1/A2 source; the absence of any FDA/EMA listing is negative evidence (consistent with 'not approved') but is not itself a fetchable regulator document that can serve as an A1/A2 sourceRef."
+      ]
+    },
+    {
+      "claimId": "amycretin-efficacy-obesity-phase1b2a-001",
+      "claimType": "efficacy",
+      "statement": "In a phase 1b/2a randomised, placebo-controlled trial in adults with obesity/overweight (n=125; 101 amycretin, 24 placebo), subcutaneous amycretin produced dose-dependent weight reductions from baseline reaching 24.3% at the 60 mg maintenance dose by week 36, versus minimal change (-1.1% to +2.3%) with placebo; no weight-loss plateau was reported at the higher doses studied.",
+      "context": {
+        "population": "adults 18-55 years, BMI 27.0-39.9 kg/m^2, no major illnesses (n=125)",
+        "route": "subcutaneous",
+        "formulation": "investigational subcutaneous amycretin, multiple dose arms",
+        "useCase": "obesity/overweight, investigational (phase 1b/2a)",
+        "doseText": "trial protocol dose arms of 1.25 mg, 5 mg, 20 mg, and 60 mg maintenance doses over 20-36 weeks; not a use recommendation"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "news-medical-lancet-obesity-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "24.3%",
+          "pageOrSection": "60 mg maintenance dose, week 36 weight reduction from baseline"
+        },
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "Placebo groups showed weight changes of -1.1% (Part B), +1.9% (Part C), +2.3% (Part D), and +2.0% (Part E).",
+          "pageOrSection": "Dosing & weight loss results"
+        },
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "Phase 1b/2a randomised controlled study conducted at a single U.S. site in San Antonio, Texas between September 2023 and April 2024.",
+          "pageOrSection": "Trial design"
+        }
+      ],
+      "reviewFlags": [
+        "single small early-phase trial at one site; not yet replicated in a phase 3 population",
+        "sourced via a secondary news article summarizing The Lancet (Dahl et al. 2025, DOI 10.1016/S0140-6736(25)01185-7); fetch the primary paper directly at review time to verify exact figures",
+        "audit: placebo-figure sign corrected to match source verbatim (was inverted)",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase 1b/2a randomised, placebo-controlled trial...\"); no regulator document exists for this claim (searched: Drugs@FDA/accessdata.fda.gov, fda.gov, EMA medicines database, DailyMed for amycretin -- no approval or label exists for this investigational compound)"
+      ]
+    },
+    {
+      "claimId": "amycretin-efficacy-t2d-phase2-001",
+      "claimType": "efficacy",
+      "statement": "In a phase 2, multinational, randomized, double-blind, placebo-controlled, dose-finding trial (NCT06542874) in 448 adults with inadequately controlled type 2 diabetes (HbA1c 7.0-10.0%) on stable metformin, amycretin reduced body weight up to 14.5% (subcutaneous) and 10.1% (oral) from baseline at week 36 versus approximately 2.5-2.6% with placebo, and reduced HbA1c up to 1.8 percentage points (subcutaneous) and 1.5 percentage points (oral) versus 0.2-0.4 points with placebo.",
+      "context": {
+        "population": "adults with type 2 diabetes, HbA1c 7.0-10.0% on stable metformin (n=448)",
+        "route": "subcutaneous and oral",
+        "formulation": "investigational subcutaneous (0.4-40 mg once weekly) and oral (6-50 mg once daily) amycretin",
+        "useCase": "type 2 diabetes, investigational (phase 2)",
+        "doseText": "trial protocol dose arms; subcutaneous 0.4 mg-40 mg once weekly, oral 6 mg-50 mg once daily over 36 weeks; not a use recommendation"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pharmacytimes-t2d-phase2"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pharmacytimes-t2d-phase2",
+          "quote": "up to \u201314.5% from 99.2 kg baseline vs. \u20132.6% placebo",
+          "pageOrSection": "Weight loss results, subcutaneous"
+        },
+        {
+          "sourceRef": "pharmacytimes-t2d-phase2",
+          "quote": "up to 1.8% reduction from 7.8% baseline",
+          "pageOrSection": "HbA1c reductions, subcutaneous"
+        },
+        {
+          "sourceRef": "pharmacytimes-t2d-phase2",
+          "quote": "interventional, multinational, multicenter, randomized, parallel, double-blind, placebo-controlled, dose-finding study",
+          "pageOrSection": "Trial design"
+        }
+      ],
+      "reviewFlags": [
+        "topline/conference-style reporting via secondary news source; full peer-reviewed publication of this specific T2D trial should be located and cross-checked at review time",
+        "not yet a registration-enabling phase 3 result",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/topline trial findings at source-level attribution (\"In a phase 2, multinational... trial (NCT06542874)...\"); no regulator document exists for this claim (searched: Drugs@FDA/accessdata.fda.gov, fda.gov, EMA medicines database, DailyMed for amycretin -- no approval or label exists for this investigational compound)"
+      ]
+    },
+    {
+      "claimId": "amycretin-adverse-effects-gi-immunogenicity-001",
+      "claimType": "adverse-effect",
+      "statement": "Across early-phase trials, amycretin was associated with a high rate of gastrointestinal treatment-emergent adverse events (nausea, vomiting, diarrhea; mostly mild to moderate), dose-dependent injection-site dysaesthesia, a transient heart-rate increase of about 10 beats per minute, antidrug antibody formation in 21-29% of participants, and at least one reported case of mild gallstone pancreatitis in the phase 1b/2a obesity trial.",
+      "context": {
+        "population": "adults with obesity/overweight enrolled in the phase 1b/2a subcutaneous trial",
+        "route": "subcutaneous",
+        "formulation": "investigational subcutaneous amycretin",
+        "useCase": "safety/tolerability, investigational",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "news-medical-lancet-obesity-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "Treatment-emergent adverse events occurred in 92% of amycretin users.",
+          "pageOrSection": "Adverse events"
+        },
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "nausea (82%), vomiting (53%), diarrhea (41%), described as \u201cmostly mild to moderate.\u201d",
+          "pageOrSection": "Adverse events"
+        },
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "Transient pulse increase of approximately 10 beats per minute; antidrug antibodies in 21\u201329% of participants.",
+          "pageOrSection": "Safety signal"
+        },
+        {
+          "sourceRef": "news-medical-lancet-obesity-rct",
+          "quote": "one case of mild gallstone pancreatitis occurred",
+          "pageOrSection": "Adverse events"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "based on a single small, short-duration early-phase trial; long-term and larger-population safety data are not yet available",
+        "immunogenicity (antidrug antibody) finding warrants monitoring in any future larger trials and should be re-checked against phase 3 data when published",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed phase 1b/2a trial adverse-event findings at source-level attribution (population/route context ties directly to the phase 1b/2a obesity trial). Searched fda.gov and dailymed.nlm.nih.gov for amycretin-specific safety communications and for any FDA class warning/label covering GLP-1/amylin co-agonist adverse effects that would address this specific trial's findings -- no FDA label, MedWatch safety alert, or DailyMed entry exists for amycretin (investigational, unapproved), and no generic GLP-1-class FDA warning would genuinely support this claim's specific trial-level percentages, so no A1/A2 source can be linked without fabricating support."
+      ]
+    },
+    {
+      "claimId": "amycretin-evidence-gap-graymarket-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Amycretin is not an approved drug and no human amycretin product is legally sold, yet research-chemical vendors sell it labeled 'for research use only, cannot be used for human consumption' while consumer-facing peptide content sites publish trial weight-loss figures alongside purchase-oriented quizzes and affiliate links to compounded weight-loss alternatives; unsupervised acquisition and self-administration of vendor-sourced amycretin is not supported by any human safety or efficacy evidence and falls outside the population, dosing, and monitoring conditions studied in the clinical trials.",
+      "context": {
+        "population": "consumers of gray-market/research-chemical peptide products",
+        "route": "unsupervised self-administration (typically subcutaneous)",
+        "formulation": "unregulated research-chemical-labeled amycretin",
+        "useCase": "off-label/self-directed weight-loss use outside clinical trial supervision",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "abmole-amycretin-vendor",
+        "peptidedeck-amycretin-consumer"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "abmole-amycretin-vendor",
+          "quote": "All AbMole products are for research use only, cannot be used for human consumption",
+          "pageOrSection": "Disclaimer"
+        },
+        {
+          "sourceRef": "abmole-amycretin-vendor",
+          "quote": "We do not provide products or services to individuals",
+          "pageOrSection": "Disclaimer"
+        },
+        {
+          "sourceRef": "peptidedeck-amycretin-consumer",
+          "quote": "Any website presenting amycretin as a routine consumer medication is ahead of the actual clinical-development timeline.",
+          "pageOrSection": "Consumer caution note"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: research-use-only labeling coexists with consumer-oriented marketing and purchase funnels; monitor for vendors that drop the research-use disclaimer",
+        "no human safety or purity data exist for vendor-sourced material, which is not the same product studied in Novo Nordisk trials"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No A1-tier regulator source (FDA/EMA) was located or fetched for amycretin's regulatory status this session; confirm against an FDA or EMA page directly at review time.",
+      "PubChem CID, UNII, DrugBank, and ChEMBL identifiers could not be resolved (PubChem access was blocked by robots.txt during this session); resolve from a structured database at review time.",
+      "Primary Lancet and phase 2 T2D trial results were sourced via secondary science-journalism coverage because the publisher pages (PubMed, ScienceDirect, The Lancet) returned empty or blocked responses this session; verify exact figures against the primary publications directly.",
+      "Efficacy evidence is limited to small/early-phase trials (phase 1b/2a and phase 2); no phase 3 or long-term safety data exist yet."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "investigational-not-approved",
+      "thin-human-evidence",
+      "gray-market-marketing-gap",
+      "identifier-resolution-incomplete",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

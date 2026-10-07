@@ -80,6 +80,12 @@ public sealed class BillingService : IBillingService
         {
             Mode = "subscription",
             Customer = customerId,
+            // Without this, Stripe hides the promotion-code field entirely —
+            // discounts can never be entered at checkout.
+            AllowPromotionCodes = true,
+            // Collect a payment method only when the customer owes money now.
+            // A 100%-discounted first invoice must not force card entry.
+            PaymentMethodCollection = "if_required",
             ClientReferenceId = user.Id.ToString(),
             SuccessUrl = GetConfiguredUrl("Stripe:CheckoutSuccessUrl", "/billing?checkout=success"),
             CancelUrl = GetConfiguredUrl("Stripe:CheckoutCancelUrl", "/billing?checkout=cancelled"),
@@ -187,6 +193,26 @@ public sealed class BillingService : IBillingService
 
             receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
             receipt.FailureCode = "unknown_stripe_price";
+            receipt.AttemptCount++;
+            receipt.LastAttemptAtUtc = now;
+            receipt.ProcessedAtUtc = now;
+            await _db.SaveChangesAsync(cancellationToken);
+            return StripeWebhookProcessingResult.Quarantined;
+        }
+        catch (UnmappedStripeCustomerException)
+        {
+            receipt ??= new StripeWebhookEvent
+            {
+                Id = Guid.NewGuid(),
+                StripeEventId = stripeEvent.Id,
+                EventType = stripeEvent.Type,
+                AttemptCount = 0,
+            };
+            if (_db.Entry(receipt).State == EntityState.Detached)
+                _db.StripeWebhookEvents.Add(receipt);
+
+            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
+            receipt.FailureCode = "unmapped_app_user";
             receipt.AttemptCount++;
             receipt.LastAttemptAtUtc = now;
             receipt.ProcessedAtUtc = now;
@@ -366,6 +392,53 @@ public sealed class BillingService : IBillingService
         await _db.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<BillingResyncResponse> ResyncSubscriptionsAsync(string? customerId, CancellationToken cancellationToken = default)
+    {
+        var service = new Stripe.SubscriptionService();
+        var options = new Stripe.SubscriptionListOptions
+        {
+            Limit = 100,
+            Status = "all",
+        };
+        if (!string.IsNullOrWhiteSpace(customerId))
+            options.Customer = customerId;
+
+        var reconciled = 0;
+        var unmappedCustomerIds = new List<string>();
+        var unresolvedPriceIds = new List<string>();
+
+        string? startingAfter = null;
+        while (true)
+        {
+            options.StartingAfter = startingAfter;
+            var page = await service.ListAsync(options, cancellationToken: cancellationToken);
+
+            foreach (var subscription in page.Data)
+            {
+                try
+                {
+                    await UpsertFromStripeSubscriptionAsync(subscription, cancellationToken);
+                    reconciled++;
+                }
+                catch (UnmappedStripeCustomerException)
+                {
+                    unmappedCustomerIds.Add(subscription.CustomerId);
+                }
+                catch (UnknownStripePriceException)
+                {
+                    unresolvedPriceIds.Add(subscription.Items?.Data?.FirstOrDefault()?.Price?.Id ?? string.Empty);
+                }
+            }
+
+            if (!page.HasMore || page.Data.Count == 0)
+                break;
+
+            startingAfter = page.Data[^1].Id;
+        }
+
+        return new BillingResyncResponse(reconciled, unmappedCustomerIds, unresolvedPriceIds);
+    }
+
     private async Task UpsertFromStripeSubscriptionAsync(StripeSubscription stripeSubscription, CancellationToken cancellationToken)
     {
         var appUserId = await ResolveAppUserIdAsync(stripeSubscription, cancellationToken);
@@ -395,7 +468,7 @@ public sealed class BillingService : IBillingService
         if (existing != Guid.Empty)
             return existing;
 
-        throw new InvalidOperationException("Stripe subscription could not be mapped to an AppUser.");
+        throw new UnmappedStripeCustomerException(stripeSubscription.CustomerId);
     }
 
     private PlanDescriptor ResolvePaidPlan(string planCode)
@@ -475,6 +548,7 @@ public interface IBillingService
     Task<BillingSessionResponse> CreateCheckoutSessionAsync(string planCode, CancellationToken cancellationToken = default);
     Task<BillingSessionResponse> CreatePortalSessionAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<StripeWebhookReceiptResponse>> GetQuarantinedStripeEventsAsync(CancellationToken cancellationToken = default);
+    Task<BillingResyncResponse> ResyncSubscriptionsAsync(string? customerId, CancellationToken cancellationToken = default);
     Task<StripeWebhookProcessingResult> ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default);
     Task ReconcileSubscriptionAsync(Guid appUserId, string stripeCustomerId, string stripeSubscriptionId, string stripePriceId, string stripeStatus, DateTime? currentPeriodStartUtc, DateTime? currentPeriodEndUtc, bool cancelAtPeriodEnd, CancellationToken cancellationToken = default);
 }
@@ -489,6 +563,12 @@ public enum StripeWebhookProcessingResult
 public sealed class UnknownStripePriceException(string? priceId)
     : InvalidOperationException($"Stripe price '{priceId ?? "<missing>"}' is not present in the approved product contract configuration.");
 
+public sealed class UnmappedStripeCustomerException(string customerId)
+    : InvalidOperationException($"Stripe subscription for customer '{customerId}' could not be mapped to an AppUser.")
+{
+    public string CustomerId { get; } = customerId;
+}
+
 public sealed record StripeWebhookReceiptResponse(
     string StripeEventId,
     string EventType,
@@ -496,3 +576,8 @@ public sealed record StripeWebhookReceiptResponse(
     string? FailureCode,
     int AttemptCount,
     DateTime LastAttemptAtUtc);
+
+public sealed record BillingResyncResponse(
+    int Reconciled,
+    IReadOnlyList<string> UnmappedCustomerIds,
+    IReadOnlyList<string> UnresolvedPriceIds);

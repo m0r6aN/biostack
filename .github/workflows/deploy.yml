@@ -11,6 +11,10 @@ permissions:
   id-token: write   # required for OIDC login
   contents: read
 
+concurrency:
+  group: ${{ github.event_name != 'pull_request' && 'biostack-containerapps-deployment' || format('biostack-deploy-check-{0}', github.run_id) }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Build & Deploy
@@ -24,6 +28,15 @@ jobs:
       - name: Check authoritative product contract
         run: node scripts/sync-product-contract.mjs --check
 
+      - name: Check source-rights containment copies
+        run: node scripts/sync-source-rights.mjs --check
+
+      - name: Check reviewed study-design display package
+        run: node scripts/sync-reviewed-study-design.mjs --check
+
+      - name: Test reviewed study-design projection and packaging
+        run: node --test frontend/scripts/reviewed-study-design.test.mjs scripts/sync-reviewed-study-design.test.mjs
+
       - name: Test deployment readiness guard
         run: node --test scripts/verify-containerapp-deployment.test.mjs
 
@@ -32,6 +45,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
+
+      - name: Reject high-severity backend dependency advisories
+        working-directory: backend
+        run: dotnet restore BioStack.sln --force-evaluate -p:NuGetAudit=true -p:NuGetAuditMode=all -p:NuGetAuditLevel=high -p:WarningsAsErrors=NU1903%3BNU1904
 
       - name: Run backend tests
         working-directory: backend
@@ -47,11 +64,27 @@ jobs:
 
       - name: Install frontend deps
         working-directory: frontend
-        run: npm ci
+        # npm install, not npm ci: npm's cross-platform optional-dependency
+        # sync check rejects lockfiles that local installs accept (the
+        # "@emnapi/* missing from lock file" class of npm/cli bugs). The
+        # lockfile still pins resolutions; npm install tolerates the
+        # platform-metadata gaps while installing exactly what it contains.
+        run: npm install --no-audit --no-fund
 
       - name: Audit production frontend dependencies
         working-directory: frontend
         run: npm audit --omit=dev --audit-level=moderate
+
+      # ── Research sidecar dependency audit ────────────────────────────────────
+      - name: Audit research sidecar dependencies
+        working-directory: backend/research-sidecar
+        run: |
+          pipx install uv
+          # Audit third-party dependencies only. The sidecar itself is a local,
+          # unpublished project, so including `-e .` makes pip-audit try (and
+          # fail) to resolve biostack-research-sidecar from PyPI.
+          uv export --frozen --no-hashes --no-emit-project -o "$RUNNER_TEMP/sidecar-requirements.txt"
+          pipx run pip-audit --strict -r "$RUNNER_TEMP/sidecar-requirements.txt"
 
       - name: Run frontend tests
         working-directory: frontend

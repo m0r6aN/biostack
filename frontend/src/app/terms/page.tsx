@@ -14,7 +14,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
-      <main className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-20">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-20">
         <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-300/70">
           Legal review required
         </p>

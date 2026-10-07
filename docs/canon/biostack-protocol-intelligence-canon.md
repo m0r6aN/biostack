@@ -162,7 +162,9 @@ GLP-1 intelligence is observational and source-aware. BioStack may track:
 - Discontinuation or pause events.
 - Compounded-product and source-quality uncertainty.
 
-BioStack must not provide GLP-1 medication advice, dose changes, switching guidance, tapering instructions, compounded sourcing guidance, or product-specific directions.
+BioStack does not practice medicine and does not provide GLP-1 information on a prescriptive basis. BioStack must not select or change a dose for a user, direct switching or tapering, provide compounded sourcing guidance, or issue product-specific instructions.
+
+BioStack may present published evidence context and evidence-based comparison — including trial-reported amounts, escalation and discontinuation approaches used in cited sources, monitored parameters, and how a user-recorded entry differs from reviewed research — under the output classes and approval levels defined in the Guidance Content Contract (`docs/guidance/biostack-guidance-content-contract.v1.md`). The intent is to give users factual, source-backed material with which to make their own informed choices in consultation with a qualified clinician, rather than leaving them to follow unsourced social-media protocol advice. All such material must remain non-prescriptive, cited, and labeled with its applicability limits and uncertainty markers. Public Class B/C surfaces require ratification per that contract.
 
 ## High-Risk Warning-First Categories
 

@@ -1,0 +1,98 @@
+{
+  "event_id": "keo-84-seo-readiness-ledger-20260726",
+  "timestamp": "2026-07-26T18:06:30Z",
+  "task_id": "KEO-84-SEO-READINESS-LEDGER-001",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used a dedicated sparse worktree for the bounded public-metadata and release-evidence parcel so shared layout, metadata-route, and ledger files remain isolated from active Claude and PR #230 work.",
+    "Kept deployment, analytics, Search Console, DNS, legal copy, billing, authentication, database, Keon runtime, and production resources outside the authorized scope.",
+    "Repaired independent-review gaps by covering every sitemap route with shared page metadata and by treating uncaptured passive-production results as attributed dated observations rather than durable proof."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "reuse-stalled-full-worktree",
+      "reason": "The earlier full-worktree creation exceeded the explicit 60-second stop condition and remains outside this parcel."
+    },
+    {
+      "id": "reuse-primary-or-claude-worktree",
+      "reason": "Those paths contain active or unrelated owner work and were explicitly prohibited."
+    },
+    {
+      "id": "claim-local-runtime-validation",
+      "reason": "Two clean dependency installs timed out and a read-only external cached Vitest attempt did not complete; runtime test acceptance is therefore deferred to hosted CI."
+    }
+  ],
+  "effort": "medium",
+  "context": {
+    "estimated_tokens": 12000,
+    "artifact_refs": [
+      "frontend/src/lib/site.ts",
+      "frontend/src/app/sitemap.ts",
+      "frontend/src/app/knowledge/layout.tsx",
+      "frontend/src/__tests__/app/SeoMetadata.test.ts",
+      "docs/launch-readiness-ledger.md",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-84-SEO-READINESS-LEDGER-001.md"
+    ],
+    "data_classification": "public"
+  },
+  "permissions": [
+    "isolated-sparse-worktree-write",
+    "public-metadata-and-focused-tests",
+    "readiness-ledger-reconciliation",
+    "parcel-and-routing-evidence",
+    "no-lockfiles",
+    "no-analytics-or-tracking",
+    "no-legal-content",
+    "no-deployment-or-production-mutation",
+    "no-commit-push-or-pr"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "git-read",
+    "github-actions-read",
+    "passive-public-http",
+    "bounded-static-validation"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Exact sitemap route-set and page-metadata static assertions",
+      "status": "passed",
+      "evidence_ref": "13 sitemap routes, including /tools/analyzer, map to 13 createPublicPageMetadata exports under https://biostack.cc"
+    },
+    {
+      "method": "Routing-event JSON Schema validation",
+      "status": "passed",
+      "evidence_ref": "routing-event.schema.json accepted research/routing-events/keo-84-seo-readiness-ledger-20260726.json"
+    },
+    {
+      "method": "Whitespace and patch integrity check",
+      "status": "passed",
+      "evidence_ref": "git diff --check"
+    },
+    {
+      "method": "Focused Vitest and production build",
+      "status": "blocked",
+      "evidence_ref": "two npm ci attempts timed out after five minutes; hosted draft-PR CI required"
+    }
+  ],
+  "retry_count": 3,
+  "escalation_history": [
+    "The first full-worktree creation exceeded the explicit 60-second limit; owned processes were stopped and work resumed only after the coordinator supplied a clean sparse worktree.",
+    "Two clean npm ci attempts timed out after five minutes without changing lockfiles.",
+    "A read-only external cached Vitest attempt also did not complete; owned processes were stopped and further dependency/test retries were prohibited.",
+    "Independent review held publication for incomplete sitemap metadata coverage, weak route-set regression coverage, and unsupported passive-production wording; the bounded repository repair was applied without new live requests."
+  ],
+  "outcome": "partial"
+}

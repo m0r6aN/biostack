@@ -1,0 +1,1044 @@
+[
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "tamoxifen-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK532905/",
+        "independentSourceFamily": "paper-level primary/review literature (StatPearls) plus professional monograph (Drugs.com)",
+        "finding": "StatPearls and the Drugs.com professional monograph, and the live FDA-hosted Soltamox label PDF (accessdata.fda.gov), all independently list the same four approved uses (metastatic breast cancer in women/men, adjuvant treatment, DCIS risk reduction, and breast cancer incidence reduction in high-risk women). No live-FDA-page change found for the current listings."
+      },
+      {
+        "claimId": "tamoxifen-warning-boxed-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.drugs.com/monograph/tamoxifen.html",
+        "independentSourceFamily": "professional drug monograph (Drugs.com) and live FDA label PDF (accessdata.fda.gov)",
+        "finding": "Both the Drugs.com professional monograph and the current FDA-hosted label PDF report identical incidence figures: endometrial adenocarcinoma 2.20 vs 0.71 per 1,000 women-years, pulmonary embolism 0.75 vs 0.25 per 1,000 women-years. Numbers in the packet are exact matches."
+      },
+      {
+        "claimId": "tamoxifen-contraindication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK532905/",
+        "independentSourceFamily": "paper-level review (StatPearls) and professional monograph (Drugs.com)",
+        "finding": "Independent sources confirm hypersensitivity contraindication plus, for risk-reduction/DCIS use, concurrent warfarin/coumarin therapy and history of DVT or pulmonary embolus as contraindications, matching the packet statement."
+      },
+      {
+        "claimId": "tamoxifen-mechanism-serm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK532905/",
+        "independentSourceFamily": "paper-level review literature (StatPearls) \u2014 different family than the label+PubChem already cited",
+        "finding": "StatPearls independently describes tamoxifen as competing with estrogen for receptor binding sites in target tissue, consistent with the packet's mechanism statement; StatPearls also usefully adds the tissue-selective (bone-agonist) nuance not in the packet, which could be added as a minor enrichment but is not a correctness issue."
+      },
+      {
+        "claimId": "tamoxifen-dose-context-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www2.tri-kobe.org/nccn/guideline/breast/english/breast_risk.pdf",
+        "independentSourceFamily": "clinical guideline/professional society (NCCN)",
+        "finding": "NCCN breast cancer risk-reduction guideline independently confirms 20 mg/day for 5 years as the studied/labeled regimen and explicitly frames it as trial-protocol dosing, consistent with the packet's dose-context (non-use-recommendation) framing."
+      },
+      {
+        "claimId": "tamoxifen-efficacy-nsabp-p1-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www2.tri-kobe.org/nccn/guideline/breast/english/breast_risk.pdf",
+        "independentSourceFamily": "clinical guideline/professional society (NCCN)",
+        "finding": "NCCN guideline independently corroborates the 49% invasive breast cancer risk reduction figure (matching the primary JNCI publication cited in the packet), which helps resolve \u2014 in favor of the 49%/69-month figure as the well-established long-term result \u2014 the conflict the packet itself flagged between the label's earlier interim 44%/4.2-year figure and the JNCI's 49%/69-month figure. The endometrial cancer RR (2.53 vs label's 2.48) was not independently re-verified in this pass; both remain reasonably close and attributable to different analysis cuts. Recommend the packet's own reviewFlag/conflict note be updated to reflect that an independent guideline source favors 49% as the headline figure, rather than leaving both figures unreconciled."
+      },
+      {
+        "claimId": "tamoxifen-efficacy-atlas-extended-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://ascopost.com/issues/february-1-2013/practice-changing-atlas-study-supports-10-vs-5-years-of-tamoxifen-therapy-in-women-with-breast-cancer/",
+        "independentSourceFamily": "professional-society-affiliated secondary summary (ASCO Post) \u2014 a different source family than the Wiki Journal Club summary already cited, though still secondary rather than the primary Lancet text (which returned a 403 and could not be fetched directly in this pass)",
+        "finding": "ASCO Post independently confirms the qualitative direction of the ATLAS finding (extending tamoxifen to 10 years further reduces recurrence and mortality but increases endometrial cancer risk), but reports different point figures than the packet's Wiki-Journal-Club-sourced numbers (e.g., '25% lower recurrence' and '29% lower mortality' for the years 5-14 subset, and endometrial cumulative risk of 3.1% vs 1.6% for that same window, versus the packet's whole-trial 18.0%/20.8% and 1.80%/0.97% figures). These are plausibly different reporting cuts of the same trial (whole-trial cumulative vs. post-5-year-only subset) rather than a true contradiction, but the primary Lancet full text still needs to be consulted to reconcile which figures the packet should present. The packet's existing 'needs-human-review' conflict on this claim should remain open with this specific reconciliation task noted."
+      },
+      {
+        "claimId": "tamoxifen-evidence-gap-bodybuilding-pct-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/37951896/",
+        "independentSourceFamily": "controlled/human survey study distinct from the packet's Frontiers 2025 source \u2014 a Society for Endocrinology (SFEBES2023) conference-abstract survey of 470 men",
+        "finding": "An independent survey (Society for Endocrinology conference abstract, n=470) corroborates the evidence-gap framing: it found self-reported symptom relief from self-administered PCT but explicitly states there is 'no objective evidence of effectiveness,' and that most respondents felt PCT should be medically supervised \u2014 reinforcing rather than contradicting the packet's evidence-gap/misinformation-adjacent characterization. No independent source was found that establishes clinical efficacy for this off-label use, so the gap remains real, not merely under-researched by the packet."
+      }
+    ],
+    "compoundName": "Tamoxifen",
+    "notes": [
+      "All five fieldAuthorityRequired claims (approved-indication, boxed warning, contraindication, dose-context, and the NSABP P-1 efficacy claim) were independently confirmed against at least one source family materially different from those already cited in the packet (StatPearls, Drugs.com professional monograph, the live FDA-hosted Soltamox label PDF, and the NCCN clinical guideline).",
+      "No statements in the packet read as medical advice or use recommendations; the dose-context and PCT evidence-gap claims are explicitly and correctly hedged.",
+      "No efficacy inflation beyond quoted source support was found; the packet consistently pairs benefit figures with their corresponding risk/trade-off figures (NSABP P-1, ATLAS, PCT adverse events).",
+      "Two non-fieldAuthorityRequired claims (ATLAS extended-duration efficacy, and the NSABP P-1 44%-vs-49% discrepancy) got independent corroboration of direction/plausibility but still have exact-figure reconciliation work outstanding against primary sources (Lancet ATLAS full text was inaccessible via WebFetch \u2014 403 \u2014 in this review pass); these should stay conflict-flagged as the packet already has them, now with more specific reconciliation notes.",
+      "The packet's own ops.reviewReasons items (CAS/UNII/DrugBank/ChEMBL/RxNorm not yet resolved; DailyMed/JNCI extracted via summarization tool rather than raw HTML) are administrative/process gaps, not claim-correctness issues, and were not themselves claims requiring independent-family verification \u2014 they remain open per the packet's own flags."
+    ],
+    "promotionBlockers": [
+      "ATLAS trial claim (tamoxifen-efficacy-atlas-extended-001) still needs its exact percentages/rate-ratios reconciled against the primary Lancet 2013 full text (not just secondary summaries) before the specific numbers are presented publicly \u2014 direction is independently confirmed but point estimates vary by reporting-window across secondary sources.",
+      "The label-vs-JNCI numeric discrepancy on the NSABP P-1 claim (44% at 4.2-year median follow-up per label vs 49% at 69-month follow-up per JNCI, now independently favored by NCCN) should be explicitly reconciled/annotated in the claim text rather than left as two competing figures.",
+      "Structured identifiers (CAS, UNII, DrugBank, ChEMBL, RxNorm) remain unresolved per the packet's own ops.reviewReasons; these should be filled in from structured databases before public promotion.",
+      "ops.needsReview is still true and completeness is 'partial' per the packet's own metadata \u2014 a human sign-off step is still expected before promotion regardless of this review's findings."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "tamoxifen"
+  },
+  {
+    "compoundName": "Raloxifene",
+    "slug": "raloxifene",
+    "recommendation": "approve-claims",
+    "claimVerdicts": [
+      {
+        "claimId": "raloxifene-identity-identifiers-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://drugs.ncats.io/drug/YX9162EO3I",
+        "independentSourceFamily": "structured-authority-database (NCATS Inxight Drugs, built on FDA's Global Substance Registration System) - materially different from cited chemicalbook.com commercial supplier listing",
+        "finding": "NCATS Inxight Drugs (FDA GSRS-derived) independently confirms UNII YX9162EO3I, CAS 84449-90-1, formula C28H27NO4S for Raloxifene. This resolves the packet's own reviewFlag asking for GSRS/ChemIDplus corroboration of the chemicalbook-sourced identifiers. Note: RxNorm and ChEMBL identifiers remain unresolved (a quick search did not surface a clean RXCUI/ChEMBL ID); this is a minor, non-safety-critical gap that can stay open, not a blocker."
+      },
+      {
+        "claimId": "raloxifene-regulatory-approved-indications-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020815",
+        "independentSourceFamily": "regulator/label - live FDA Drugs@FDA database and current label PDF, independent of the DailyMed page cited",
+        "finding": "Live-checked today against Drugs@FDA (NDA 020815, still active/approved, most recent labeling supplement 2018) and the current label PDF (accessdata.fda.gov/drugsatfda_docs/label/2018/020815s034lbl.pdf), which lists exactly the two indications stated (osteoporosis treatment/prevention; invasive breast cancer risk reduction in postmenopausal women with osteoporosis or at high risk) and explicitly states EVISTA is NOT indicated to treat invasive breast cancer, reduce recurrence, or reduce noninvasive breast cancer risk. No April-2026 delisting or indication change found; approval remains current as of this review."
+      },
+      {
+        "claimId": "raloxifene-warning-boxed-vte-stroke-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/020815s034lbl.pdf",
+        "independentSourceFamily": "regulator/label - live FDA label PDF fetched directly, independent instance from the cited DailyMed setid page",
+        "finding": "Live FDA label PDF verbatim confirms the boxed warning language (increased DVT/PE risk; increased risk of death due to stroke in the RUTH-population trial) and the contraindications (active/past VTE including retinal vein thrombosis; pregnancy). Statement is accurate and unchanged as of today's live check."
+      },
+      {
+        "claimId": "raloxifene-mechanism-serm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://academic.oup.com/oncolo/article/5/5/388/6386072",
+        "independentSourceFamily": "paper-level primary/review literature (The Oncologist review), independent of the cited StatPearls professional-reference and DrugBank structured-database entries",
+        "finding": "Independent peer-reviewed review confirms raloxifene's tissue-selective SERM profile: estrogen-agonist activity in bone (increased BMD, reduced vertebral fracture in MORE) with estrogen-antagonist activity in breast and endometrium, via a distinct receptor-conformation mechanism. Matches the packet's statement."
+      },
+      {
+        "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK546167/",
+        "independentSourceFamily": "systematic review (USPSTF-commissioned AHRQ systematic review pooling multiple RCTs), independent of the single JAMA/MORE-trial primary source and the FDA label already cited",
+        "finding": "Direction and statistical significance confirmed independently, but the pooled systematic-review estimate is more moderate than the single-trial figure quoted: USPSTF review reports pooled RR 0.44 (95% CI 0.24-0.80) across 2 placebo-controlled trials for invasive breast cancer, and RR 0.33 (95% CI 0.15-0.70) for ER-positive disease \u2014 versus the packet's MORE-trial-only RR 0.24 (95% CI 0.13-0.44) and RR 0.10 for ER-positive. The packet's numbers are correctly and verifiably attributed to the MORE trial specifically, so this is not a misstatement, but reviewers should add a note that pooled/systematic-review effect sizes are smaller, so the MORE-trial number should not be read as the population-average effect."
+      },
+      {
+        "claimId": "raloxifene-adverse-effect-vte-quantified-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK76313/",
+        "independentSourceFamily": "systematic review/meta-analysis of RCTs, independent of the single JAMA/MORE-trial source and FDA label already cited",
+        "finding": "Direction and significance of the VTE signal are independently confirmed by two separate meta-analyses/systematic reviews (DARE-abstracted meta-analysis: OR 1.62, 95% CI 1.25-2.09; USPSTF systematic review: RR 1.56, 95% CI 1.11-2.60), but both pooled estimates are notably lower than the MORE-trial-only RR 3.1 (95% CI 1.5-6.2) quoted in the packet. As with the efficacy claim, the packet's number is a correctly attributed single-trial statistic, but a note should be added that pooled evidence across trials shows a smaller (though still significant) VTE risk increase than the MORE-trial figure alone suggests, so readers should not treat RR 3.1 as the definitive population risk estimate."
+      },
+      {
+        "claimId": "raloxifene-misinformation-bodybuilding-gyno-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.researchgate.net/publication/8469972_Beneficial_effects_of_raloxifen_and_Tamoxifen_in_the_treatment_of_Pubertal_Gynecomastia",
+        "independentSourceFamily": "paper-level primary literature (the actual Lawrence et al. J Pediatr 2004 study, retrieved independently rather than through the forum's secondary citation), independent of the elitefitness forum source",
+        "finding": "Independently retrieved the actual cited study (Lawrence et al., J Pediatr 2004): it is a retrospective chart review of 38 adolescent patients (mean age 14.6) with persistent pubertal gynecomastia, not a randomized or controlled trial \u2014 confirming the packet's caution that this is uncontrolled, pediatric, and non-generalizable evidence. The 91% improvement and 'no side effects' figures the forum quotes are accurately transcribed from the real study. The packet's handling (misinformation-claim classification, explicit non-generalization warnings, low confidence/anecdotal tier, no use recommendation) is appropriate and should be kept as-is; suggest only a precise label update from 'case series' to 'retrospective chart review' for accuracy. No controlled human trial of raloxifene for gynecomastia in adult AAS users was found independently either \u2014 this claim correctly remains an evidence gap, not a resolved question."
+      }
+    ],
+    "promotionBlockers": [],
+    "notes": [
+      "All four fieldAuthorityRequired claims (approved indications, boxed warning, MORE-trial efficacy, MORE-trial VTE adverse effect) are independently confirmed against materially different source families (live FDA Drugs@FDA/label PDF, and two independent systematic reviews/meta-analyses for the trial-derived numbers).",
+      "Two confirmed-with-note items recommend adding pooled/systematic-review effect sizes alongside the single MORE-trial statistics already in the packet (breast cancer RR and VTE RR/OR), since pooled estimates are more moderate than the single-trial numbers currently quoted; this is a suggested enhancement, not a correction, since the existing figures are accurately attributed to the MORE trial specifically.",
+      "No medical-advice language, efficacy inflation beyond quoted data, or unsupported use recommendations were found anywhere in the packet; the dose/context fields are already carefully hedged with 'not a use recommendation' language.",
+      "The bodybuilding/gynecomastia off-label conflict (raloxifene-conflict-vte-safety-perception-001) remains correctly human-review-gated: independent search found no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users, so the evidence-gap classification should stay as-is rather than being marked resolved.",
+      "Minor, non-blocking gap: RxNorm and ChEMBL identifiers remain unresolved in structured databases; this does not affect any fieldAuthorityRequired claim and can be closed opportunistically in a future pass.",
+      "CAS/UNII reviewFlag on the identity claim is now resolved: NCATS Inxight Drugs (FDA GSRS-based) independently corroborates the chemicalbook-sourced CAS/UNII/formula values."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "clomiphene-approved-indication-ovulatory-dysfunction-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.asrm.org/practice-guidance/practice-committee-documents/evidence-based-treatments-for-couples-with-unexplained-infertility-a-guideline-2020/",
+        "independentSourceFamily": "clinical guideline/professional society (ASRM)",
+        "finding": "ASRM guideline independently confirms clomiphene citrate as a commonly used treatment for anovulatory infertility and identifies male-partner treatment as an unmet research gap (no established male indication), corroborating the packet's statement of FDA-approved scope. Also re-fetched the live FDA-hosted label PDF and current DailyMed page today (2026-08-29): indication text, male-infertility disclaimer, and revision history (last DailyMed update Jan 31 2025) are unchanged from what the packet cites \u2014 no April-2026 listing change found that would affect this claim."
+      },
+      {
+        "claimId": "clomiphene-mechanism-serm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mdpi.com/1424-8247/17/9/1233",
+        "independentSourceFamily": "paper-level primary/review literature",
+        "finding": "Independent 2024 pharmacology review confirms clomiphene competitively blocks estrogen receptors in the hypothalamic arcuate nucleus, disrupting negative feedback and increasing pituitary LH/FSH secretion \u2014 matching the packet's mechanism statement."
+      },
+      {
+        "claimId": "clomiphene-warning-ohss-visual-multiple-pregnancy-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://karger.com/goi/article/71/2/73/152291/Association-between-Clomiphene-Citrate-and-Visual",
+        "independentSourceFamily": "systematic review (independent of the packet's cited meta-analysis)",
+        "finding": "An independent systematic review on clomiphene and visual disturbances/CRVO confirms the association reported in the label but frames it more cautiously than the packet's flat warning language: 'CC may predispose to CRVO, but further trials are clearly needed' \u2014 i.e., the causal strength is evidence-limited, not settled. OHSS and multiple-pregnancy portions were corroborated by ASRM's OHSS-prevention guideline existing as a professional-society treatment of the same risk class, but a claim-specific independent numeric confirmation (e.g., multiple-pregnancy rate) was not obtained beyond the label itself. Suggest the packet soften the visual-disturbance sub-claim to reflect 'possible/predisposing association, evidence limited' rather than presenting it as a flatly established causal warning."
+      },
+      {
+        "claimId": "clomiphene-contraindications-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://reference.medscape.com/drug/clomid-serophene-clomiphene-342752",
+        "independentSourceFamily": "structured clinical drug-reference database (Medscape)",
+        "finding": "Medscape's independent clinical reference lists the same contraindications (liver disease, undiagnosed abnormal uterine bleeding, ovarian cysts not due to PCOS, organic intracranial/pituitary lesion) and repeats the identical ovarian-tumor prolonged-use warning quoted in the packet."
+      },
+      {
+        "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/27622282/",
+        "independentSourceFamily": "controlled human study (individual trial, independent of the cited meta-analysis) plus a second independent meta-analysis (Huijben et al., Andrology 2022, onlinelibrary.wiley.com/doi/10.1111/andr.13146)",
+        "finding": "An independent primary study on late-onset hypogonadism confirms clomiphene raises testosterone during treatment, consistent with the packet's claim, but adds an important nuance the packet omits: the effect is not durable \u2014 after discontinuation, mean testosterone fell from 22.7 to 10.2 nmol/L and 78% of patients dropped below the therapeutic threshold. A second, independently-conducted meta-analysis (Huijben 2022) reaches similar testosterone-raising conclusions, reinforcing the finding is not an artifact of one review. Recommend the packet add a note that testosterone gains are not shown to persist off-treatment."
+      },
+      {
+        "claimId": "clomiphene-adverse-effects-male-hypogonadism-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mdpi.com/1424-8247/17/9/1233",
+        "independentSourceFamily": "paper-level primary/review literature",
+        "finding": "Independent review corroborates headache and estradiol elevation as recognized clomiphene side effects in male use, supporting the core adverse-event content. However, it also notes other RCTs in the broader literature assessed erectile function and found clomiphene 'did not significantly improve' IIEF/erection-hardness scores \u2014 a different question from 'decrease,' so it does not contradict the packet's narrower, correctly-scoped claim (worded as specific to the cited meta-analysis's own included trials). Flagging one process concern: the packet's own reviewFlags text for this claim contains a paragraph ('authority-flag recalibrated 2026-08-29...') that reads as the packet arguing itself out of fieldAuthorityRequired scope and asserting a completed independent search inside the flag itself rather than in ops.reviewReasons/conflicts as the directive requires \u2014 that pattern should not be used to self-certify review closure; independent verification here was performed fresh by this review, not accepted on the packet's say-so."
+      },
+      {
+        "claimId": "clomiphene-evidence-gap-pct-marketing-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41147237/ ; https://onlinelibrary.wiley.com/doi/full/10.1111/andr.70306",
+        "independentSourceFamily": "controlled human study / paper-level review (independent of the vendor source)",
+        "finding": "Independent literature (a 2026 BJU International comparative-outcomes study on PCT after short-term AAS use, and a 2026 Andrology review titled 'Clomiphene Citrate in off-Label Post-Cycle Therapy: Mechanisms, Efficacy and Diagnostic Challenges') confirms PCT with clomiphene remains framed as off-label and evidentially unsettled, supporting the packet's evidence-gap framing and its rejection of the vendor's 'safely' claim. Note: a controlled comparative-outcomes PCT study now exists (2026) that did not exist when the packet's 'no controlled human trials establish PCT-specific efficacy' line was written \u2014 full-text access was blocked (403) so its actual findings could not be confirmed, but the packet should be updated at next review to either cite this study or explicitly note it was checked and found non-conclusive, rather than continuing to state no such trials exist."
+      }
+    ],
+    "compoundName": "Clomiphene",
+    "slug": "clomiphene",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "The OHSS/visual-disturbance warning claim (fieldAuthorityRequired=true) states the visual-disturbance/CRVO link as settled, but the only independent systematic review found treats it as a possible, not proven, association ('further trials are clearly needed') \u2014 soften the wording before publication.",
+      "The male-hypogonadism efficacy claim (fieldAuthorityRequired=true) omits an important durability caveat found in independent primary literature: testosterone gains from clomiphene are not shown to persist after discontinuation. Add this caveat given the claim's field-authority status.",
+      "The PCT evidence-gap claim's 'no controlled human trials' framing is already slightly stale versus a newly published 2026 comparative-outcomes PCT trial; update or explicitly address it before promotion.",
+      "Process concern: one reviewFlags entry contains packet-authored language that asserts its own review closure/authority-scope justification inline rather than routing findings through ops.reviewReasons/conflicts as the directive requires \u2014 this should be normalized to the standard reviewReasons format so future reviewers don't mistake in-band claims of completeness for actual independent verification."
+    ],
+    "notes": [
+      "Identifiers gap flagged by the packet (CAS/UNII/RxNorm/DrugBank/ChEMBL unresolved) can be closed easily: PubChem CID 2800 (clomiphene free base) and CAS 50-41-9 / DrugBank salt entry DBSALT000490 for clomiphene citrate are both publicly available and were found in this review's searches \u2014 recommend populating externalIdentifiers before next publish.",
+      "No fieldAuthorityRequired claim is fully 'unresolved' \u2014 all four safety-critical/regulatory claims (approved-indication, OHSS/visual/multiple-pregnancy warning, contraindications, male-hypogonadism efficacy) received at least one independent-family confirmation, though two carry notes that should be incorporated as text edits, not just accepted as-is.",
+      "Live regulatory re-check performed today (2026-08-29): current DailyMed CLOMID label content matches what the packet quotes; no indication, contraindication, or warning-language change was found relative to the packet's citations.",
+      "The packet's overall conflict entry (clomiphene-conflict-male-use-status-001) accurately characterizes the tension between FDA non-approval for men, RCT evidence of a testosterone effect, and unproven vendor PCT marketing \u2014 this framing holds up under independent review and should remain review-gated as ops already states, pending the two text edits above."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "toremifene-regulatory-approved-indication-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://medlineplus.gov/druginfo/meds/a608003.html",
+        "independentSourceFamily": "consumer/clinical drug reference (NIH/NLM MedlinePlus) + live FDA structured database re-check",
+        "finding": "MedlinePlus independently confirms the approved indication (metastatic breast cancer, postmenopausal women, ER-positive/unknown) and 60 mg oral dosing. Re-querying the live openFDA drugsfda.json endpoint today reproduced the packet's exact product list (NDA020497/Kyowa Kirin = 'Discontinued' marketing status; ANDA208813/Rising and ANDA212818/MSN = 'Prescription'), so no drift since the packet's fetch was found despite the review prompt's April-2026-listings-change warning. Worth a wording nuance: the statement 'remains an active approved NDA' is accurate as to approval status, but the brand-name NDA020497 listing itself is marketed as 'Discontinued' in FDA's own database \u2014 only the generic ANDAs are currently marketed under that approval. Recommend the statement clarify that the brand is discontinued while generics referencing the same NDA remain marketed."
+      },
+      {
+        "claimId": "toremifene-contraindication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ema.europa.eu/en/news/european-medicines-agency-recommends-new-contraindication-fareston-toremifene",
+        "independentSourceFamily": "foreign regulator/professional guidance (EMA/CHMP) + MedlinePlus",
+        "finding": "EMA's CHMP recommendation (a different regulator than FDA/DailyMed) independently corroborates the same contraindication set: prolonged QT interval, uncorrected hypokalemia, clinically significant bradycardia, reduced-ejection-fraction heart failure, and symptomatic arrhythmia history. MedlinePlus (NIH consumer reference) also lists long QT syndrome and low potassium/magnesium as contraindications. No conflict found; independent sources support the statement as written."
+      },
+      {
+        "claimId": "toremifene-warning-qt-prolongation-boxed-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://medlineplus.gov/druginfo/meds/a608003.html",
+        "independentSourceFamily": "foreign regulator (EMA) + consumer/clinical drug reference (MedlinePlus)",
+        "finding": "Both EMA's CHMP safety communication and MedlinePlus independently corroborate dose/concentration-related QTc prolongation risk, the Torsade de pointes/syncope/seizure/sudden-death framing, avoidance of concomitant QT-prolonging drugs, and the need for baseline and ongoing ECG monitoring. This is safety-critical and fieldAuthorityRequired; independent confirmation from a second regulator plus a clinical reference is a solid basis to close the reviewFlag on the core warning content (the flag correctly still notes the full monitoring protocol isn't reproduced in the packet, which remains accurate and should stay as a scope note, not a defect)."
+      },
+      {
+        "claimId": "toremifene-mechanism-serm-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://go.drugbank.com/drugs/DB00539",
+        "independentSourceFamily": "structured authority database (DrugBank)",
+        "finding": "DrugBank independently classifies toremifene as 'a first generation nonsteroidal selective estrogen receptor modulator used to treat certain breast cancers,' consistent with the antiestrogenic mechanism described. DrugBank's full mechanism-of-action/pharmacodynamics text sits behind a login wall so the tissue-selective agonist/antagonist detail (e.g., bone agonism) could not be independently re-verified word-for-word, but the core SERM/antiestrogen classification is corroborated by an independent structured database distinct from both cited sources (label + Wikipedia)."
+      },
+      {
+        "claimId": "toremifene-regulatory-crl-80mg-adt-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://classic.clinicaltrials.gov/ct2/show/NCT01214291",
+        "independentSourceFamily": "structured authority database / trial registry (ClinicalTrials.gov) \u2014 independent of both the press-release account and the openFDA drugsfda listing already cited",
+        "finding": "ClinicalTrials.gov independently corroborates the CRL narrative: NCT01214291 ('Efficacy and Safety Study of Toremifene Citrate for the Reduction in the Risk of New Bone Fracture Occurrences in Men With Prostate Cancer,' GTx/Industry sponsor, Phase III, toremifene 80mg daily) was registered as the apparent confirmatory second trial, but shows 0 actual enrollment and was withdrawn in November 2013 citing cost/burden \u2014 consistent with the 80 mg ADT-fracture indication never reaching approval. This is a genuinely independent source family (trial registry) from the press release and from openFDA's product-approval database already used, and it supports rather than conflicts with the claim. The underlying CRL document text itself remains unfound in the public record (as the packet already flags), so that narrow sourcing gap should stay noted, but the claim's substance is now cross-confirmed."
+      },
+      {
+        "claimId": "toremifene-studied-use-adt-fracture-rct-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22014807/",
+        "independentSourceFamily": "paper-level primary literature (PubMed listing / Journal of Urology, ScienceDirect) \u2014 independent of the Fierce Biotech press coverage cited",
+        "finding": "Independent bibliographic search confirms the trial is real, published, and peer-reviewed: 'Toremifene to Reduce Fracture Risk in Men Receiving Androgen Deprivation Therapy for Prostate Cancer' and the companion 'Toremifene Decreases Vertebral Fractures in Men Younger Than 80 Years...' (both Journal of Urology, indexed on PubMed/ScienceDirect) \u2014 the published title itself states a fracture-reducing direction, corroborating the packet's directional claim independent of the press release. However, I could not independently re-extract the exact numeric results (50-53% relative reduction, VTE 2.4% vs 1.02%) because PubMed/PMC returned CAPTCHA challenge pages and ScienceDirect blocks WebFetch via robots.txt \u2014 the identical access barrier the packet's own authors already flagged. Per the contract, the precise statistics remain unresolved and should stay review-gated pending a fetch method that gets past PMC's bot check (e.g., manual/authenticated access); the trial's existence and directional findings are independently confirmed, but the granular percentages are not yet independently re-verified."
+      },
+      {
+        "claimId": "toremifene-evidence-gap-pct-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.anabolicsteroidforums.com/threads/toremifene-is-available-a-more-modern-serm-analogue-of-tamoxifen-clomid.141326/",
+        "independentSourceFamily": "independent web search across additional vendor/forum sources beyond the single cited vendor page",
+        "finding": "A broader independent search for controlled human studies of toremifene in AAS-using/PCT populations returned only additional vendor-marketing and bodybuilding-forum pages (steroidcycle.org, steroidal.com, pharmacomlabs.com, elitefitness.com, evolutionary.org, anabolicsteroidforums.com) and no peer-reviewed or registry trial in this population \u2014 corroborating the packet's evidence-gap conclusion. No misinformation inflation beyond what the packet already flags was found; the packet's framing (claims unsupported by direct human evidence in this population) holds up under independent search."
+      }
+    ],
+    "promotionBlockers": [],
+    "notes": [
+      "Live re-check of openFDA drugsfda.json today reproduced the packet's product list exactly (NDA020497 Discontinued; ANDA208813 and ANDA212818 Prescription) \u2014 no drift found despite the reviewer prompt's note that FDA listings changed in April 2026; either the change doesn't affect toremifene or occurred before the packet's Aug 29 fetch.",
+      "Recommend a small wording tweak to claim toremifene-regulatory-approved-indication-001: clarify that the FDA-listed marketing status of the original brand NDA (020497) is 'Discontinued' and that current U.S. marketing of this approval is carried by the two generic ANDAs, rather than leaving 'remains an active approved NDA' potentially read as 'brand actively marketed.' This is a clarity nuance, not a factual error, so it does not by itself block promotion.",
+      "The one open evidentiary gap after independent review is the exact numeric results (fracture %, p-value, VTE rates) of the original 1,389-patient toremifene ADT-fracture RCT: the trial's existence and directional findings are independently confirmed via PubMed/ScienceDirect bibliographic records, but PMC's CAPTCHA wall and ScienceDirect's robots.txt block prevented independent re-extraction of the precise statistics cited from Fierce Biotech's press summary. This matches the packet's own review flag and should remain review-gated per the contract rather than being marked resolved.",
+      "No medical-advice language, use-recommendations, or efficacy inflation beyond what the cited quotes support was found anywhere in the packet; all dose text is explicitly labeled 'not a use recommendation,' and the vendor-marketing claims are correctly captured as an evidence-gap/misinformation-adjacent item rather than validated efficacy.",
+      "All four fieldAuthorityRequired claims (approved indication, contraindication, boxed warning, and the 80mg CRL/regulatory claim) are confirmed or confirmed-with-note against genuinely independent source families (EMA, MedlinePlus, DrugBank, ClinicalTrials.gov), satisfying the approve-claims bar; no claim was found to need substantive correction."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "toremifene",
+    "compoundName": "Toremifene"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "ospemifene-regulatory-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.drugs.com/cons/ospemifene.html",
+        "independentSourceFamily": "consumer/professional drug reference (cross-checked against live DailyMed re-fetch)",
+        "finding": "Re-fetched the LIVE DailyMed page today (not just the cited 2019 FDA PDF): current label version is dated Feb 14 2025 (v4), product still actively marketed (NDA, NDC codes listed), and it still states the identical indication language for dyspareunia and vaginal dryness due to menopausal VVA. Drugs.com (a materially different, non-regulator family) independently corroborates the same indication and dosing. No overstatement found."
+      },
+      {
+        "claimId": "ospemifene-regulatory-boxed-warning-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.drugs.com/cons/ospemifene.html",
+        "independentSourceFamily": "consumer/professional drug reference",
+        "finding": "Live DailyMed re-check today confirms the boxed warning (ENDOMETRIAL CANCER and CARDIOVASCULAR DISORDERS) is still current as of the Feb 2025 label version. Drugs.com, an independent non-regulator family, separately confirms endometrial cancer risk with unopposed estrogen and elevated thromboembolic/hemorrhagic stroke rates vs. placebo. The reviewFlag asking to verify against the current DailyMed set is now resolved: statement is accurate and current."
+      },
+      {
+        "claimId": "ospemifene-contraindication-breastcancer-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.drugs.com/cons/ospemifene.html",
+        "independentSourceFamily": "consumer/professional drug reference",
+        "finding": "Independent source confirms the breast-cancer caution and other contraindications (DVT/PE history, arterial thromboembolic disease, hypersensitivity, pregnancy). Note: drugs.com characterizes the breast-cancer caution as a formal 'contraindication,' while the FDA label itself places this language under Use in Specific Populations rather than the formal Contraindications section -- the packet's own phrasing already correctly separates these ('the label separately states...'), so no change needed, just flagging the terminology nuance for anyone citing this claim downstream."
+      },
+      {
+        "claimId": "ospemifene-mechanism-serm-tissue-selective-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.dovepress.com/safety-and-efficacy-of-ospemifene-for-the-treatment-of-dyspareunia-ass-peer-reviewed-fulltext-article-CIA",
+        "independentSourceFamily": "paper-level primary/review literature",
+        "finding": "Independent peer-reviewed literature (Dove Medical Press review/trial writeup) describes ospemifene consistently as a tissue-selective SERM with agonist activity in vaginal epithelium and antagonist/neutral activity elsewhere, matching the label's framing. No independent source characterizes breast-tissue mechanism beyond what the label states, consistent with the packet's own caveat against extrapolating breast-safety conclusions from mechanism."
+      },
+      {
+        "claimId": "ospemifene-efficacy-dyspareunia-vva-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.dovepress.com/safety-and-efficacy-of-ospemifene-for-the-treatment-of-dyspareunia-ass-peer-reviewed-fulltext-article-CIA",
+        "independentSourceFamily": "controlled human study (primary phase 3 RCT, distinct from the cited systematic review)",
+        "finding": "Located and read the primary pivotal phase 3 RCT (n=826, 12 weeks) underlying the cited meta-analysis -- previously blocked by bot-verification per the packet's own reviewFlag. It independently corroborates statistically significant reductions in vaginal pH, parabasal cells, and dyspareunia severity vs. placebo at 60mg, with no endometrial hyperplasia seen. This resolves the packet's flagged gap (PMID 24679891/23361170-type primary data) with an actual primary-trial read rather than only the secondary review summary. A separate 2023 network meta-analysis (Simon et al., Menopause) also concludes ospemifene is 'efficacious, well-tolerated, and safe' relative to other VVA therapies, reinforcing the claim."
+      },
+      {
+        "claimId": "ospemifene-studied-use-bone-density-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "This is a fieldAuthorityRequired claim citing one controlled-human-study (MDPI 2022) plus the label. I found a second independent controlled-human study (Ohta et al./JBMM 2004, dose-ranging ospemifene bone-turnover-marker RCT) that directionally corroborates a bone-turnover-marker benefit (dose-dependent reductions in resorption/formation markers) without establishing fracture-risk reduction -- consistent with the packet's own hedge. However, per the contract this is the SAME source family (controlled-human-study) as the claim's existing sourceRefs, not a materially different family. I could not locate a systematic review, professional guideline, or structured database (e.g., a Cochrane/DARE-style review, or NAMS/ACOG statement) that independently addresses ospemifene's bone effects. Per the Independent review rule, this claim should stay review-gated with the gap explicitly documented rather than being marked resolved on same-family corroboration alone."
+      },
+      {
+        "claimId": "ospemifene-evidence-gap-vulvar-specific-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.prnewswire.com/news-releases/effects-of-ospemifene-on-genitourinary-health-prospective-vulvar-vestibular-photography-and-direct-assessments-in-post-menopausal-women-300862713.html",
+        "independentSourceFamily": "controlled human study (industry-sponsored phase 3 RCT using vulvar-vestibular photography, published in Menopause 2019)",
+        "finding": "The 2-patient case report's underlying premise -- that no ospemifene trial used an objective, instrument-based vulvar-specific assessment -- is accurate for the ORIGINAL 2013 approval-supporting trials (which the claim correctly scopes to), but a subsequent industry-sponsored (Duchesnay-affiliated) phase 3 RCT published in Menopause (2019) DID use vulvar-vestibular photography and reported improved vestibular tissue moisture/appearance with ospemifene. The claim as scoped ('trials underlying FDA approval') remains technically accurate, but the packet and its linked conflict entry should be updated to cite this newer study so readers aren't left thinking the vulvar-assessment gap is entirely unaddressed in the literature -- it has been partially addressed, by a single sponsor-affiliated trial, since the case report was published."
+      },
+      {
+        "claimId": "ospemifene-misinformation-bone-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/15255284/",
+        "independentSourceFamily": "controlled human study (independent bone-turnover-marker RCT)",
+        "finding": "Cross-checked against an independent bone-marker RCT (Ohta 2004) and the existing MDPI 2022 source: both show only biochemical/densitometric marker changes, explicitly with fracture-risk reduction unproven. The consumer article's phrasing ('might have positive effects... advantageous for... bone strength') does read as inflating a hedged, exploratory biochemical finding into an implied clinical benefit not supported by any source, including the two independent studies checked. The packet's misinformation flag is well-founded and should stand as written."
+      }
+    ],
+    "compoundName": "Ospemifene",
+    "slug": "ospemifene",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "fieldAuthorityRequired claim ospemifene-studied-use-bone-density-001 remains unresolved for genuine cross-family independent verification (only same-family controlled-human-study corroboration was found); per the Independent review rule this must stay review-gated -- do not promote with the bone-density claim framed as anything beyond 'exploratory, single-study, review-gated'.",
+      "The evidence-gap-vulvar-specific-001 claim and its linked conflict (ospemifene-conflict-vulvar-evidence-001) should be updated to cite the 2019 Duchesnay-affiliated vulvar-vestibular-photography RCT (Menopause 2019) before promotion, so the packet doesn't understate the state of vulvar-specific evidence.",
+      "Minor housekeeping: ops.reviewReasons states RxNorm was not resolved from a structured-database fetch; an independent RxNav/NLM lookup this session returned RxCUI 1370971 for ospemifene -- this gap is trivially closeable and should be updated rather than left as an open reviewReason."
+    ],
+    "notes": [
+      "All three regulatory/safety-critical fieldAuthorityRequired claims tied to the FDA/DailyMed label (approved indication, boxed warning, contraindications) were independently re-verified against a LIVE DailyMed re-fetch performed today (2026-08-29, showing label v4 dated Feb 14 2025, product still actively marketed) plus a materially different source family (drugs.com professional/consumer reference) -- all confirmed accurate and current.",
+      "The efficacy claim's reviewFlag about primary RCT abstracts being blocked by bot-verification was successfully resolved this session via an alternate open-access mirror (Dove Medical Press) of the pivotal phase 3 trial, which independently corroborates the systematic review's conclusions.",
+      "No instances of medical advice, use recommendations, or efficacy inflation were found in the packet's own claim statements -- the one instance of efficacy/benefit inflation identified (consumer bone-marketing framing) was already correctly flagged by the packet itself as a misinformation-claim, which independent sources support as-flagged.",
+      "The packet's overall hedging discipline is good: Strong/Limited/Anecdotal/Insufficient evidenceTiers track the underlying evidence quality accurately in every case checked."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "bazedoxifene-regulatory-approved-product-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022247",
+        "independentSourceFamily": "structured authority database (Drugs@FDA application history, distinct system from the cited DailyMed labeling text)",
+        "finding": "Live Drugs@FDA record for NDA 022247 confirms DUAVEE remains approved and active (most recent labeling supplement approved March 2024), with no standalone bazedoxifene-only US product \u2014 consistent with the claim. Note: independent 2026 consumer-pharmacy reporting (medfinder.com) describes intermittent, sometimes hard-to-find supply of DUAVEE in 2026 (not a formal FDA shortage listing, not a discontinuation) \u2014 worth a line noting real-world availability friction, but does not contradict the regulatory-approval statement itself."
+      },
+      {
+        "claimId": "bazedoxifene-warning-boxed-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.webmd.com/drugs/duavee-conjugated-estrogens-bazedoxifene",
+        "independentSourceFamily": "clinical/consumer drug reference (WebMD), independent of the cited DailyMed label",
+        "finding": "WebMD's independent consumer-drug monograph corroborates the same boxed-warning elements: no additional estrogen use, no use for cardiovascular/dementia prevention, and elevated dementia risk in women 65+, plus stroke/VTE risk \u2014 matching the label-derived claim."
+      },
+      {
+        "claimId": "bazedoxifene-contraindication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.webmd.com/drugs/duavee-conjugated-estrogens-bazedoxifene",
+        "independentSourceFamily": "clinical/consumer drug reference (WebMD)",
+        "finding": "Independently lists the same contraindicated populations (undiagnosed abnormal bleeding, breast/estrogen-dependent cancer history, active/past thromboembolic disease, hepatic impairment, pregnancy), matching the packet's DailyMed-sourced claim."
+      },
+      {
+        "claimId": "bazedoxifene-mechanism-serm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://onlinelibrary.wiley.com/doi/10.1155/2017/5064725",
+        "independentSourceFamily": "paper-level primary/review literature (Lello et al. 2017, Int J Endocrinology; also corroborated by Mitwally 2008 and Miller/Komm 2014 PubMed-indexed papers not cited in the packet)",
+        "finding": "Independent literature consistently describes bazedoxifene as a tissue-selective SERM/TSEC \u2014 antagonist in breast/endometrium, agonist in bone/lipid metabolism \u2014 matching the packet's mechanism statement with no overstatement."
+      },
+      {
+        "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://academic.oup.com/jbmr/article-abstract/23/12/1923/7599523",
+        "independentSourceFamily": "paper-level primary literature (Silverman et al. 2008, J Bone Miner Res \u2014 the actual pivotal 3-year RCT the packet's own reviewFlags said was CAPTCHA-blocked)",
+        "finding": "Independently retrieved primary-trial abstract confirms the vertebral-fracture reduction (42% relative risk reduction for bazedoxifene 20mg vs placebo, 2.3% vs 4.1% incidence) and a real posthoc nonvertebral-fracture finding (50% RRR in a FRAX/T-score-defined high-risk subgroup, n=1772, p=0.02) that the packet had flagged but omitted for lack of verification \u2014 this can now be added. However, the primary trial's intent-to-treat population was 6847 subjects, not the '~1583' figure the packet's context.population carries (that 1583 figure appears to come from a different, smaller 2-year BMD sub-study cited via StatPearls). The packet should correct context.population to reflect the actual pivotal-trial N (6847 ITT) and either add the now-verified nonvertebral-fracture subgroup result as a properly sourced claim or clearly separate it from the smaller BMD-study population it was conflated with."
+      },
+      {
+        "claimId": "bazedoxifene-adverse-effect-vte-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5728840",
+        "independentSourceFamily": "systematic review/meta-analysis (independent 2017 bazedoxifene safety meta-analysis, distinct from the cited PMC2908075 single-trial paper and the DailyMed label) plus EMA Conbriza EPAR (independent regulator document confirming VTE contraindication)",
+        "finding": "The specific per-1,000-women-years figures in the claim (from PMC2908075) are accurately quoted and consistent with EMA's own VTE-related contraindication for Conbriza. However, an independent meta-analysis pooling bazedoxifene safety data found the overall VTE risk ratio not statistically significant (RR 1.56, 95% CI 0.92-2.64, p=.10). The packet's claim is accurate as sourced but would benefit from a note that broader pooled evidence shows the VTE signal is numerically elevated but not always statistically robust across the full trial program \u2014 a nuance, not a misstatement."
+      },
+      {
+        "claimId": "bazedoxifene-evidence-gap-gray-market-serm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://vada-testing.org/wp-content/uploads/2026/02/VADA-Prohibited-List-2026-.pdf",
+        "independentSourceFamily": "structured authority/regulatory anti-doping list (2026 WADA-aligned prohibited list via VADA), independent of the cited Frontiers in Chemistry paper",
+        "finding": "Independently confirms bazedoxifene is currently listed under S4.2 Anti-Estrogenic Substances/SERMs on the 2026 prohibited list, supporting the packet's premise. The claim is appropriately framed as an evidence gap (no human PCT/gynecomastia trial data exists) rather than asserting efficacy, and correctly avoids generalizing the postmenopausal-women trial data to steroid-using men \u2014 no medical-advice or efficacy-inflation issues found."
+      }
+    ],
+    "promotionBlockers": [
+      "Efficacy claim bazedoxifene-efficacy-vertebral-fracture-001 states an approximate trial population ('~1583 subjects') that does not match the actual pivotal 3-year fracture trial's intent-to-treat population (6847, confirmed independently via the Silverman et al. 2008 JBMR primary source) \u2014 this conflates a smaller 2-year BMD sub-study with the pivotal fracture trial and must be corrected before publication.",
+      "Primary pivotal trial (Silverman et al. 2008) was still not independently verified by the original authoring pass due to CAPTCHA blocks; this review closed that gap via an alternate route (Oxford Academic abstract page), but the packet's own sourceRefs/extractedEvidence should be updated to cite/quote it directly rather than relying solely on secondary reviews.",
+      "RxNorm, UNII, and ChEMBL external identifiers remain unresolved per ops.reviewReasons \u2014 should be filled before promotion for catalog completeness.",
+      "Nonvertebral-fracture FRAX-subgroup finding (50% RRR, n=1772, p=0.02) is now independently confirmed but still absent as a sourced claim in the packet \u2014 should be added with proper sourceRefs or explicitly left out with reasoning, not left as a bare reviewFlag."
+    ],
+    "notes": [
+      "All five fieldAuthorityRequired claims (regulatory approval, boxed warning, contraindications, efficacy, VTE adverse effect) were checked against at least one materially different source family and none were unresolved or contradicted; only the efficacy claim needs a factual correction (population N) rather than being wrong on substance.",
+      "No instances of medical advice, use-recommendation language, or efficacy inflation were found; the packet consistently hedges dose/use text as 'not a use recommendation' and correctly declines to generalize postmenopausal trial data to the gray-market PCT/bodybuilding use case.",
+      "Live-FDA-page check (per directive instruction #4) found DUAVEE (NDA 022247) still actively approved as of its most recent March 2024 labeling supplement, with no 2025-2026 discontinuation action \u2014 the packet's regulatory claim holds, modulo the real-world 2026 supply-friction nuance noted above.",
+      "Independent confirmation of the WADA/anti-doping listing closes the reviewFlag concern on the gray-market evidence-gap claim; no changes needed there beyond what's already correctly hedged."
+    ],
+    "recommendation": "request-changes",
+    "slug": "bazedoxifene",
+    "compoundName": "Bazedoxifene"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "lasofoxifene-regulatory-no-current-approval-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer_receives_fda_complete_response_letter_for_lasofoxifene",
+        "independentSourceFamily": "primary company regulatory disclosure (press release) + structured DailyMed live search + professional oncology reference (hemonc.org)",
+        "finding": "Independently confirmed. Pfizer's own press release confirms the FDA Complete Response Letter was issued 16 Jan 2009 for the postmenopausal osteoporosis indication (matches packet). A live DailyMed search today (2026-08-29) returns 0 results for 'lasofoxifene' -- no current US label exists, consistent with no valid US marketing authorization. hemonc.org (independent professional oncology reference) independently corroborates EMA approval in 2009 and withdrawal/lapse in 2012. The earlier 2005 'Oporia' non-approvable episode is corroborated by a contemporaneous Medscape/PharmaTimes news item on 'Oporia (lasofoxifene) for osteoporosis' review history. A search for approval in other jurisdictions found only a 2024 Chinese IND (investigational, trial-only) clearance -- not a marketing approval -- so the packet's 'no currently valid marketing authorization anywhere' claim and the open conflict about unverified other jurisdictions both hold up; no contradicting evidence of an active approval anywhere was found."
+      },
+      {
+        "claimId": "lasofoxifene-mechanism-serm-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://hemonc.org/wiki/Lasofoxifene_(Fablyn)",
+        "independentSourceFamily": "professional oncology reference wiki (independent of DrugBank/PubChem structured-database family) + peer-reviewed cancer research article (Springer, s13058-024-01843-4)",
+        "finding": "Confirmed by an independent source family. hemonc.org states lasofoxifene 'binds to both estrogen receptor alpha and beta with high affinity, producing varying agonist and antagonist effects depending on tissue type' -- materially the same claim as the packet's DrugBank-sourced statement. A peer-reviewed Breast Cancer Research paper (Springer) independently supports ER antagonism in breast tissue specifically. Note: neither independent source explicitly re-confirmed the bone-agonist/breast-antagonist tissue-selectivity split in the same sentence as the ERalpha/ERbeta binding statement (that specific combination is best documented in the primary 2006 pharmacology literature, e.g. PMID 16845439, which could not be directly fetched due to CAPTCHA-walling during this review) -- this is a minor residual gap, not a contradiction, and the reviewFlag asking for primary-literature verification can be closed with medium-high confidence."
+      },
+      {
+        "claimId": "lasofoxifene-efficacy-elaine1-esr1-mbc-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.onclive.com/view/lasofoxifene-improves-responses-vs-fulvestrant-in-esr1-mutated-er-her2--metastatic-breast-cancer",
+        "independentSourceFamily": "independent conference/news reporting on the same controlled human trial (different family than the WUSTL institutional-repository manuscript mirror already cited)",
+        "finding": "Confirmed. OncLive's independent report of the same ELAINE 1 data reproduces HR 0.699, p=0.138 (non-significant primary endpoint), and the same top adverse events (nausea, fatigue, arthralgia, hot flush) at similar rates (~20-28%), and explicitly states 'did not produce a statistically significant improvement.' Note: OncLive expresses median PFS in months (6.04 vs 4.04) and a slightly different HR CI lower bound (0.445 vs the packet's 0.434) versus the packet's week-based figures (24.2 vs 16.2 weeks, CI 0.434-1.125) -- this is normal cross-source rounding/reporting variance between a conference readout and the final manuscript, not a substantive conflict. Independently confirmed that ELAINE 3 (phase III) has NOT yet reported results as of the SABCS December 2025 presentation (still enrolling across 218 sites/17 countries per an independent conference-summary source) -- so the packet's caveat that ELAINE 3 'had not been shown to change this packet's sourced regulatory status' remains accurate and does not need updating."
+      },
+      {
+        "claimId": "lasofoxifene-studied-use-development-status-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mdanderson.org/patients-family/diagnosis-treatment/clinical-trials/clinical-trials-index/clinical-trials-detail.ID2023-0316.html",
+        "independentSourceFamily": "controlled-human-study/trial-registry listing (MD Anderson site page derived from the ClinicalTrials.gov record), independent of the Sermonix sponsor page",
+        "finding": "Confirmed. The independent MD Anderson trial listing for the lasofoxifene+abemaciclib vs fulvestrant+abemaciclib study describes the same ELAINE-3 population (locally advanced/metastatic ER+/HER2- breast cancer with an ESR1 mutation) that the sponsor page describes, corroborating the development-status claim via ClinicalTrials.gov-sourced data as the reviewFlag requested. Note: the registry listing also lists eligibility for 'men' in addition to pre- and postmenopausal women, a detail the packet's statement omits (not incorrect, just incomplete) -- worth adding at the next revision but not a substantive misstatement."
+      },
+      {
+        "claimId": "lasofoxifene-evidence-gap-approval-status-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lasofoxifene",
+        "independentSourceFamily": "structured regulator database (DailyMed live search, independent of the EPAR/drugs.com sources already cited) + independent conference reporting confirming ELAINE 1 non-significance and ELAINE 3 still-enrolling status",
+        "finding": "Confirmed. A live DailyMed search performed today returns zero results for lasofoxifene, directly confirming (per a source family not already cited on this claim) that no current US label/marketing authorization exists. Independent OncLive reporting corroborates ELAINE 1's non-significant primary endpoint, and an independent SABCS-2025 conference summary confirms ELAINE 3 has not yet reported results (still enrolling), so the claim that phase III data 'had not been shown to change this packet's sourced regulatory status' remains accurate as of 2026-08-29."
+      }
+    ],
+    "compoundName": "Lasofoxifene",
+    "slug": "lasofoxifene",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [],
+    "notes": [
+      "Both fieldAuthorityRequired=true claims (regulatory-no-current-approval-001 and evidence-gap-approval-status-001) were independently confirmed today against a live DailyMed search (0 results) and an independent primary company disclosure (Pfizer's own CRL press release), satisfying the directive's cross-source verification rule for safety-critical/regulatory claims.",
+      "No needs-adjustment findings: statements throughout are appropriately hedged (phase II, non-significant, investigational-only, 'not a use recommendation') and I found no medical-advice language or efficacy inflation beyond what the cited quotes support.",
+      "ELAINE 3 (phase III) was independently confirmed via a SABCS December 2025 conference summary to still be enrolling (218 sites/17 countries) with no efficacy/safety results reported yet -- this closes the packet's open reviewFlag/reviewReason asking whether ELAINE 3 has superseded ELAINE 1; as of 2026-08-29 it has not, so no packet update is needed on that point.",
+      "The open conflict about unverified non-US/EU marketing authorization was checked: a search found only a 2024 Chinese IND (trial) clearance, no evidence of any current marketing approval anywhere. This is worth folding into the conflict's resolution note, but since it does not surface a contradiction, it does not block promotion; the packet's own conservative 'needs-human-review' gating on this conflict can reasonably stay in place or be closed by whoever owns that workflow step.",
+      "Minor, non-blocking notes for the next revision: (1) the ELAINE-3 registry listing also includes 'men' as eligible, which the studied-use claim's population description omits; (2) the mechanism claim's tissue-selective bone-agonist/breast-antagonist split is well supported by an independent oncology reference (hemonc.org) but the specific 2006 primary pharmacology paper (PMID 16845439) could not be fetched directly (CAPTCHA-walled) during this pass -- a future reviewer with different tooling could close this residual gap fully.",
+      "This packet's own ops.needsReview flag (true) reflects standard pre-publication human review requirements independent of this claims-verification pass; that workflow gate is separate from the approve-claims recommendation given here, which speaks only to claim-level sourcing adequacy."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "somatropin-approved-indications-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mayoclinic.org/drugs-supplements/somatropin-mammalian-derived-injection-route-subcutaneous-route/description/drg-20071668",
+        "independentSourceFamily": "structured/professional drug-information database (non-regulator)",
+        "finding": "Mayo Clinic's independent monograph confirms GHD, Turner syndrome, small-for-gestational-age, and idiopathic short stature as approved somatropin uses. It frames Prader-Willi syndrome only as a contraindication (for the obese/respiratory-impaired subgroup) rather than listing PWS as an indication, because it pools multiple brands; Genotropin's own FDA label (confirmed via search of accessdata.fda.gov label PDFs referencing 'Prader-Willi Syndrome: 0.24 mg/kg/week' dosing) does carry PWS as a labeled indication specific to that product. Net: the claim holds for Genotropin specifically; worth noting in the packet that PWS-as-indication is brand-specific, since generic/consumer somatropin references frame it differently."
+      },
+      {
+        "claimId": "somatropin-contraindications-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mayoclinic.org/drugs-supplements/somatropin-mammalian-derived-injection-route-subcutaneous-route/description/drg-20071668",
+        "independentSourceFamily": "structured/professional drug-information database (Mayo Clinic); corroborated by NCBI Bookshelf StatPearls monograph (NBK596750)",
+        "finding": "Independent consumer/professional drug references confirm active malignancy, diabetic retinopathy, closed epiphyses in children, severe illness after surgery/major medical emergency (acute critical illness), and Prader-Willi syndrome with severe obesity or breathing problems as contraindications -- matching the packet's statement essentially point for point, including the PWS obesity/respiratory-impairment qualifier."
+      },
+      {
+        "claimId": "somatropin-boxed-risk-warnings-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mayoclinic.org/drugs-supplements/somatropin-mammalian-derived-injection-route-subcutaneous-route/description/drg-20071668",
+        "independentSourceFamily": "structured/professional drug-information database (Mayo Clinic); NCBI Bookshelf StatPearls",
+        "finding": "Independent sources corroborate the general warning categories (increased intracranial pressure, monitoring for glucose intolerance) but neither independent source I could access reproduced the specific 42% vs 19% acute-critical-illness mortality figure or exact second-neoplasm/meningioma wording. This matches the packet's own reviewFlag that these specific figures were not independently re-quoted. Recommend this sub-detail stay flagged for verbatim label confirmation rather than being marked fully resolved."
+      },
+      {
+        "claimId": "somatropin-dose-context-adult-ghd-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.drugs.com/dosage/genotropin.html",
+        "independentSourceFamily": "structured drug-database (Drugs.com professional dosing reference)",
+        "finding": "Independent dosing reference confirms initial dose not more than 0.04 mg/kg/week, titration to a maximum of 0.08 mg/kg/week at 4-8 week intervals, and that Genotropin must not be given intravenously -- matching the claim's figures exactly. The packet correctly frames this as label/protocol context, not a use recommendation."
+      },
+      {
+        "claimId": "somatropin-regulatory-illegal-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.sciencedaily.com/releases/2005/11/051108084527.htm",
+        "independentSourceFamily": "paper-level primary literature (JAMA, Perls/Reisman/Olshansky 2005) reporting on FD&C Act enforcement",
+        "finding": "Independent peer-reviewed literature confirms that off-label distribution/provision of HGH for anti-aging or age-associated illness is illegal in the US under 1988/1990 FD&C Act amendments, and that only a small number of conditions are FDA-approved uses -- corroborating the packet's claim about illegal marketing and criminal exposure. Separately, the live FDA import alert page (accessdata.fda.gov/cms_ia/importalert_204.html) was re-checked today and is still active, last updated April 7, 2026, still authorizing detention without physical examination and still describing the anti-aging 'fountain of youth' marketing and criminal-violation language verbatim -- confirming currency, though this re-check of the identical cited source does not itself count as the independent-family verification (the JAMA paper serves that role)."
+      },
+      {
+        "claimId": "somatropin-regulatory-mortality-signal-inconclusive-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/32707116/",
+        "independentSourceFamily": "paper-level primary literature (SAGhE cohort follow-up, Lancet Diabetes & Endocrinology, 2020)",
+        "finding": "The packet's characterization of FDA's 2011-2012 'inconclusive' determination is accurate as a historical statement, and reviewFlags correctly note no later FDA communication was found. Independent literature search located a materially newer and more informative source not cited in the packet: a 2020 SAGhE cohort follow-up (24,232 patients, 400,000+ patient-years) finding all-cause mortality was NOT significantly increased in low-risk patients (isolated GHD/idiopathic short stature, SMR 1.1) and that elevated mortality in moderate/high-risk groups tracked underlying diagnosis rather than treatment or dose -- but also identifying a residual signal of increased cause-specific mortality from circulatory/hematological disease across all risk groups warranting continued monitoring. This is a genuine update the packet is missing; recommend adding it to the claim and conflict record rather than leaving the conflict solely anchored to 2011-2012 data. This is the single most important content gap found in this review."
+      },
+      {
+        "claimId": "somatropin-mechanism-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK596750/",
+        "independentSourceFamily": "structured clinical reference / professional monograph (NCBI Bookshelf / StatPearls)",
+        "finding": "Independent monograph confirms recombinant human GH has been used since the 1980s as replacement therapy for inadequate pituitary GH secretion, consistent with the packet's mechanism/identity statement sourced from DrugBank and the Genotropin label."
+      },
+      {
+        "claimId": "somatropin-efficacy-athletic-performance-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/20439575/",
+        "independentSourceFamily": "controlled human study (independent RCT, Annals of Internal Medicine 2010, distinct from the cited 2008 systematic review)",
+        "finding": "An independent, later RCT in recreational athletes reinforces the systematic review's conclusion: GH (alone or with testosterone) produced only modest, transient sprint-capacity gains (not maintained 6 weeks post-discontinuation) with no significant improvement in strength, endurance, or other performance measures, and lean-mass gains were attributed substantially to water retention rather than true muscle. This independently corroborates 'minimal effect on key athletic performance' language in the packet."
+      },
+      {
+        "claimId": "somatropin-evidence-gap-antiaging-bodybuilding-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.sciencedaily.com/releases/2005/11/051108084527.htm",
+        "independentSourceFamily": "paper-level primary literature (JAMA 2005) plus controlled human study evidence (Blackman 2002 GH/testosterone-in-aging trial, corroborated via search snippets)",
+        "finding": "Independent literature confirms both halves of the packet's evidence-gap framing: (1) anti-aging/off-label HGH distribution is illegal under the FD&C Act, and (2) controlled human trials of GH in healthy aging/athletic populations (Blackman 2002; Liu 2010) show modest body-composition changes without demonstrated functional/performance benefit and with attendant adverse events -- supporting the claim that popular anti-aging/performance marketing is not supported by, and is partly contradicted by, the strongest available controlled evidence."
+      }
+    ],
+    "promotionBlockers": [
+      "The SAGhE mortality-signal claim and conflict record are anchored only to a 2011-2012 FDA communication; a materially relevant 2020 SAGhE cohort follow-up study (Lancet Diabetes & Endocrinology, PMID 32707116) exists and was not incorporated. Before public promotion, add this update: it is reassuring for low-risk GHD/ISS patients but flags a residual circulatory/hematological mortality signal across all risk groups that the current packet does not mention. This is a safety-critical, fieldAuthorityRequired claim and should not go out with stale sourcing when a more current, more granular independent source is readily available.",
+      "The specific 42% vs 19% acute-critical-illness mortality figure and the exact second-neoplasm/meningioma wording in the boxed-warning claim remain independently unverified (only the packet's own label re-read supports the exact figures); confirm verbatim against the current label PDF before publication, per the packet's own reviewFlag.",
+      "Confirm and annotate that Prader-Willi syndrome as an approved indication is specific to Genotropin's own FDA label rather than a somatropin-class-wide indication, since independent general drug references (Mayo Clinic) frame PWS only as a contraindication subgroup, not an indication -- to avoid the packet reading as if PWS is uniformly an approved use across all somatropin products."
+    ],
+    "notes": [
+      "All five fieldAuthorityRequired claims are confirmed or confirmed-with-note against genuinely independent source families (structured drug databases Mayo Clinic/Drugs.com/NCBI Bookshelf, and paper-level primary literature JAMA 2005 and Lancet Diabetes & Endocrinology 2020) -- none came back needs-adjustment or unresolved, so the packet clears the bar for approve-claims on the core rule, contingent on closing the promotion blockers above.",
+      "The two non-fieldAuthorityRequired efficacy/evidence-gap claims (athletic performance, anti-aging evidence gap) were independently corroborated by a later, separate controlled human trial (2010 recreational-athletes RCT) and by the 2005 JAMA legal/efficacy paper -- these strengthen rather than undermine the packet's cautious framing.",
+      "Scanned all claim statements for medical advice, use recommendations, or efficacy inflation: none found. The packet is scrupulous about labeling dosing content as 'label/trial protocol context, not a use recommendation' and correctly declines to infer human anti-aging efficacy from animal/short-trial data, consistent with the directive's misinformation-handling rules.",
+      "The live FDA import-alert page was re-checked today (accessed 2026-08-29) and is still active as of its April 7, 2026 update, so no listing-status conflict exists for that claim -- this re-check of the identical cited URL does not itself satisfy the independent-family rule, but the JAMA 2005 paper does."
+    ],
+    "recommendation": "request-changes",
+    "slug": "somatropin",
+    "compoundName": "Somatropin"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "oxytocin-regulatory-approved-indications-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mnhospitals.org/wp-content/uploads/Portals/Documents/patientsafety/Perinatal/acog--practice_bulletin_107_2009.pdf",
+        "independentSourceFamily": "clinical-guideline/professional-society (ACOG Practice Bulletin 107), plus live re-check of the regulator label itself",
+        "finding": "Re-fetched the live DailyMed Pitocin label (updated May 6, 2026, per fetch) and it verbatim matches the packet's quotes, including the 'not indicated for elective induction of labor' language and the approved indications/dosing range -- so the claim is current. Independent professional-society source (ACOG PB107, a materially different family) corroborates the approved-use list and dosing regimens, but shows the FDA label's 'not indicated for elective induction' is manufacturer-label language, not a categorical clinical prohibition -- ACOG's own guidance permits elective induction under specific gestational-age/informed-choice criteria (consistent with post-ARRIVE-trial obstetric practice). Recommend a one-line note distinguishing 'not indicated on this label' from 'never done in practice' so the claim isn't over-read."
+      },
+      {
+        "claimId": "oxytocin-safety-obstetric-warnings-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK507848/",
+        "independentSourceFamily": "structured authority reference (StatPearls/NCBI Bookshelf) and clinical-guideline/professional-society (ACOG PB107)",
+        "finding": "Both independent sources (materially different family than the cited DailyMed label) corroborate every element of the statement: IV-only administration with hospital supervision, hypertensive episodes, uterine rupture, water intoxication with convulsions/coma/death from prolonged infusion with electrolyte-free fluids, and fetal bradycardia/CNS damage/death. StatPearls additionally notes oxytocin is classified by ISMP as one of the 12 most hazardous hospital medications and is implicated in ~50% of maternity liability claims, reinforcing rather than contradicting the safety-critical framing. This is the highest-priority (fieldAuthorityRequired) claim and it holds up cleanly."
+      },
+      {
+        "claimId": "oxytocin-mechanism-identity-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
+        "independentSourceFamily": "regulator/label (DailyMed/FDA) -- a different family than the structured databases (PubChem, DrugBank) the claim currently cites",
+        "finding": "Every current FDA/DailyMed oxytocin injection label checked (Pitocin and generic ANDA labels) describes the approved product as 'Oxytocin Injection, USP (SYNTHETIC)' -- never 'recombinant.' 'Recombinant' specifically denotes production via recombinant-DNA/cell-expression systems, which is not how this peptide is manufactured (it is chemically/solid-phase synthesized). The packet's statement hedges with 'recombinant/synthetic' but the extracted DrugBank quote asserts 'recombinant hormone' as fact. Recommend dropping 'recombinant' and stating simply 'synthetic,' per the independent regulator-label source, and flagging that DrugBank's own wording is imprecise rather than repeating it as verified fact."
+      },
+      {
+        "claimId": "oxytocin-efficacy-intranasal-asd-negative-rct-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2024.1477076/full",
+        "independentSourceFamily": "systematic-review/meta-analysis (2024, Frontiers in Psychiatry) -- a different specific review than the packet's own systematic-review source (Cai 2018, which covers adverse events, not efficacy)",
+        "finding": "Independent 2024 meta-analysis confirms the pooled/overall picture is null on social impairment and repetitive behavior at typical doses, consistent with the Sikich RCT's negative primary outcome. However, it also reports a dose-response signal: at doses of >=48 IU/day (the same target dose used in the cited Sikich trial), some analyses found a beneficial effect on social impairment and repetitive behavior, concluding higher doses 'may be more effective.' This doesn't overturn the Sikich trial's own negative finding, but it means the packet's existing reviewFlag ('smaller positive proof-of-concept trials... without explicit discussion') should be upgraded from a hypothetical caveat to a citation of this actual 2024 dose-response meta-analysis before the claim is treated as fully settled."
+      },
+      {
+        "claimId": "oxytocin-safety-intranasal-adverse-events-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://link.springer.com/article/10.1007/s00213-021-05862-3",
+        "independentSourceFamily": "controlled-human-study (RCT in older men) -- a different family than the packet's cited systematic-review (Cai 2018)",
+        "finding": "An independent RCT of chronic intranasal oxytocin in a non-ASD population (older men, 4 weeks) found adverse events 'generally mild and few in number,' with no significant difference from placebo in AE frequency, severity, or discontinuation, and no serious adverse events reported. This corroborates the tolerability conclusion in a materially different population and source family, supporting (not just repeating) the packet's claim."
+      },
+      {
+        "claimId": "oxytocin-misinformation-bonding-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2024.1477076/full",
+        "independentSourceFamily": "systematic-review/meta-analysis, cross-checked against the vendor marketing claims",
+        "finding": "The independent 2024 meta-analysis and the Sikich RCT together confirm that reliable, general pro-social/bonding effects are not established at typical use, supporting the packet's framing that vendor 'love hormone'/bonding marketing outruns the controlled human evidence. The packet appropriately labels this misinformation-claim/documentation rather than fact, and does not itself make a medical-advice statement."
+      },
+      {
+        "claimId": "oxytocin-evidence-gap-social-behavioral-use-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "structured authority database/regulator listing (FDA compounding bulk-substance list) and ClinicalTrials.gov (structured authority database) -- different families than the DailyMed/NEJM sources cited",
+        "finding": "Checked live: oxytocin does not appear on FDA's 503A bulk-drug-substance safety-risk list or its withdrawn-nominations table, closing one of the packet's open reviewReasons ('confirm at review time whether one exists') -- recommend updating ops.reviewReasons to reflect this was checked and found absent, rather than leaving it as an open gap. Separately, a ClinicalTrials.gov search confirms multiple registered/completed trials of intranasal oxytocin for bonding, social-anxiety, and psychiatric-symptom outcomes in adults, all investigational -- consistent with 'no approved product for these uses' and reinforcing rather than contradicting the claim."
+      }
+    ],
+    "promotionBlockers": [
+      "Identity claim (oxytocin-mechanism-identity-001) inaccurately characterizes the approved injectable as a 'recombinant' hormone; independent FDA/DailyMed labels uniformly describe it as 'synthetic.' Correct this before promotion since it is a factual mischaracterization of manufacturing method, not a sourcing gap.",
+      "The efficacy claim and evidence-gap claim should be updated to cite the 2024 Frontiers dose-response meta-analysis (not just reference 'smaller positive proof-of-concept trials' hypothetically) so the packet doesn't read as a flatter negative than the current independent literature supports.",
+      "ops.reviewReasons item on FDA compounding/bulk-substance status should be updated to reflect that this was independently checked this review pass (oxytocin is not on the FDA 503A safety-risk list) rather than left as an unresolved open question."
+    ],
+    "notes": [
+      "Both fieldAuthorityRequired (safety-critical) claims -- approved indications and obstetric warnings -- were independently confirmed against a materially different source family (ACOG Practice Bulletin 107 and StatPearls/NCBI Bookshelf) and hold up well; these are the packet's strongest, most defensible claims.",
+      "The conflict record (oxytocin-conflict-marketing-vs-rct-001) remains appropriately human-review-gated; independent sources sharpen but do not fully resolve the marketing-vs-evidence tension, so 'needs-human-review' is the honest status to keep, now with better citations available (2024 Frontiers meta-analysis) to hand to the reviewer.",
+      "No instance of the packet itself giving medical advice, a use recommendation, or unsupported efficacy inflation was found in its own claim statements -- the one inflation risk (vendor marketing) is correctly captured as a misinformation-claim rather than endorsed.",
+      "Reviewed under the directive's independent-review rule: for every claim, at least one materially different source family than its own sourceRefs was consulted (ACOG/StatPearls for regulator-sourced claims, an independent RCT for the meta-analysis-sourced AE claim, an independent 2024 meta-analysis for the RCT-sourced efficacy claim, and FDA compounding list / ClinicalTrials.gov for the evidence-gap claim)."
+    ],
+    "recommendation": "request-changes",
+    "slug": "oxytocin",
+    "compoundName": "Oxytocin"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "creatine-regulatory-status-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.hfpappexternal.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=931",
+        "independentSourceFamily": "regulator/label (live FDA GRAS Notice inventory page, distinct from the packet's cited PDF download and structure/function policy page)",
+        "finding": "Checked the live FDA GRAS Notices database entry (not the static PDF cited in the packet) as of 2026-08-29: GRN 931 shows FDA's 'no questions' letter closed 2020-12-03, no objection or subsequent enforcement action noted. Also checked DailyMed (a structurally different regulator-adjacent database) which lists creatine only as a component of miscellaneous homeopathic/complementary formulations, never as an approved standalone drug -- consistent with the claim that creatine is not an FDA-approved drug. Searched for FDA warning letters mentioning creatine/NDI issues; none found targeting creatine monohydrate itself (an unrelated 2026 warning letter to a supplement maker and a Philippine FDA advisory about a specific unregistered branded product turned up, neither of which changes creatine's own US regulatory status). Claim holds as stated; the reviewFlag asking to confirm no subsequent FDA action is satisfied for now but should be periodically re-checked since it is a live-status claim."
+      },
+      {
+        "claimId": "creatine-mechanism-atp-phosphocreatine-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mdpi.com/2072-6643/17/17/2748",
+        "independentSourceFamily": "systematic review / paper-level primary literature (independent of PubChem/DrugBank/NIH ODS used by the packet)",
+        "finding": "The phosphocreatine/ATP-shuttle mechanism is standard, uncontested biochemistry; independent meta-analyses and reviews of creatine's ergogenic effects (e.g., the MDPI Nutrients 2025 strength meta-analysis) all restate the same energy-shuttle mechanism as background without qualification. No conflicting mechanistic account found in any independent family. Low-risk, non-safety-critical claim; statement is accurate."
+      },
+      {
+        "claimId": "creatine-efficacy-highintensity-strength-lbm-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mdpi.com/2072-6643/17/17/2748",
+        "independentSourceFamily": "systematic review/meta-analysis (independent of the ISSN position stand and NIH ODS fact sheet cited)",
+        "finding": "An independent 2025 MDPI Nutrients systematic review/meta-analysis of creatine's effects on upper/lower body strength and power found significant but heterogeneous improvements (e.g., bench press +1.43 kg, squat +5.64 kg, Wingate peak power +47.81 W) with no significant effect on handgrip or leg press, and noted stronger effects in younger adults/males than older adults/females. This independently corroborates a real, positive high-intensity/strength effect but the magnitude is described as 'small but statistically significant' rather than uniformly large, and effects are not uniform across all strength measures or demographics. Note for the packet: consider softening 'most effective ergogenic supplement...for increasing lean body mass' framing slightly, or adding that effect sizes are modest and vary by population (age, sex) per independent meta-analytic data, rather than presenting a single uniformly strong effect."
+      },
+      {
+        "claimId": "creatine-dose-context-loading-maintenance-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mdpi.com/2075-4663/14/4/137",
+        "independentSourceFamily": "systematic review/structured dose-response analysis (independent of NIH ODS/ISSN)",
+        "finding": "Independently found (via search) an MDPI Sports 2024 structured review/dose-response analysis of creatine RCTs confirming the same standard loading (~20 g/day split doses) then maintenance (3-5 g/day) protocol appears throughout the RCT literature and additionally reports dose/duration are not associated with increased side effects -- consistent with the packet's framing that this is trial-protocol context, not a use recommendation. No conflicting dosing regimens found in independent sources."
+      },
+      {
+        "claimId": "creatine-safety-common-adverse-effects-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40198156/",
+        "independentSourceFamily": "paper-level primary literature / pharmacovigilance analysis (independent of NIH ODS and ISSN position stand)",
+        "finding": "Independently confirmed via a 2025 tandfonline/JISSN paper analyzing clinical-trial adverse-event data plus 28.4 million real-world adverse-event reports: adverse event rates for creatine (13.7%) were statistically indistinguishable from placebo (13.2%); GI issues and muscle cramps showed no significant excess when analyzed at the participant level; creatine appeared in only 0.00072% of all adverse-event reports. This independently corroborates 'safe and well tolerated' framing and even strengthens it beyond the packet's more hedged 'largely anecdotal' framing. Note: the packet's reviewFlag calling the adverse-effect list 'largely anecdotal/case-level, not systematically quantified' is now outdated -- an independent systematically-quantified analysis exists and should be added as a source/citation, and the reviewFlag language should be updated to reflect that systematic quantification is now available (this flag can be substantially resolved, not left as an open gap)."
+      },
+      {
+        "claimId": "creatine-monitoring-renal-function-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://link.springer.com/article/10.1007/s11255-026-05287-x",
+        "independentSourceFamily": "systematic review/meta-analysis (independent journal from the packet's cited BMC Nephrology review -- International Urology and Nephrology, 2026)",
+        "finding": "An independent 2026 meta-analysis (26 RCTs, 1,036 participants) in a different nephrology journal confirms the core finding: serum creatinine rises modestly (MD +0.14 mg/dL) but gold-standard GFR measurement (Cr-EDTA clearance, not creatinine-based estimation) shows no significant change (MD 5.89 mL/min, 95% CI -0.30 to 12.08, P=.06), supporting that the creatinine rise is a metabolic artifact rather than renal injury. Critically, this independent review also reports some data in hemodialysis patients (no major adverse events/electrolyte disturbances) but explicitly states NO trials exist in non-dialysis CKD patients -- confirming the packet's flagged evidence gap is real and, if anything, slightly narrower than implied (some dialysis-population data exists, but earlier-stage CKD is completely unstudied). The claim and its conflict/reviewFlag entry are both accurate; the renal-impairment gap remains genuinely unresolved and should stay review-gated, with a refinement that hemodialysis-population data does exist even though non-dialysis CKD data does not."
+      },
+      {
+        "claimId": "creatine-misinformation-hairloss-dht-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.americanhairloss.org/creatine-and-hair-loss-what-the-latest-study-got-right-and-what-it-missed/",
+        "independentSourceFamily": "professional/clinical commentary from a hair-loss specialty organization (independent of the single RCT itself, which is the packet's only sourceRef)",
+        "finding": "The packet's only sourceRef for this claim is the RCT itself (via Europe PMC) -- no independent family was used in the original packet. Independent review via the American Hair Loss Association's critique confirms the RCT's headline finding (no group-by-time interaction in hormones/hair outcomes) but adds substantive caveats not reflected in the packet: the study used outdated trichogram methodology, did not measure DHT activity at the scalp (where androgenetic alopecia actually occurs), did not screen for genetic predisposition to hair loss, and several study authors have ties to the supplement industry (published in a sports-nutrition journal with industry funding ties). The AHLA's conclusion is that the study 'does not settle the question' for genetically predisposed individuals. The packet's reviewFlag ('single trial...not a definitive population-wide ruling out') is honest and already captures the core caveat, but should be strengthened to explicitly note the absence of scalp-level DHT measurement and genetic-predisposition screening, and to flag the potential industry-funding conflict of interest as a factor tempering confidence."
+      },
+      {
+        "claimId": "creatine-evidence-gap-endurance-broad-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/36877404/",
+        "independentSourceFamily": "systematic review/meta-analysis (independent of NIH ODS/ISSN)",
+        "finding": "Independently located a 2023 Sports Medicine systematic review and meta-analysis ('Effects of Creatine Monohydrate on Endurance Performance in a Trained Population') whose cited literature affirms 'creatine supplementation per se does not enhance endurance exercise performance' in trained populations, corroborating the packet's claim that creatine's strongest evidence base does not extend to endurance sport, and supporting the evidence-gap framing versus broad marketing claims. Full abstract text could not be retrieved directly (PubMed served a CAPTCHA page and Europe PMC was rate-limited), so this is corroborated via the review's indexed content/citations rather than a full-text read; treat as adequately but not maximally verified."
+      }
+    ],
+    "compoundName": "Creatine",
+    "slug": "creatine",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "Renal safety conflict (creatine-renal-safety-population-scope-001) remains legitimately unresolved for non-dialysis CKD/pre-existing renal impairment populations -- independent review confirms zero trials exist in that subgroup, so this fieldAuthorityRequired safety-critical claim cannot be marked resolved and must stay human-review-gated with the scope caveat intact.",
+      "creatine-misinformation-hairloss-dht-001 rests on a single industry-adjacent RCT with methodological limitations (no scalp-level DHT measurement, no genetic-predisposition screening) surfaced only by this independent review -- the claim/reviewFlags should be updated to reflect these caveats before the packet is treated as final, though the claim itself is not fieldAuthorityRequired.",
+      "creatine-safety-common-adverse-effects-001's reviewFlag calling the adverse-effect evidence 'largely anecdotal, not systematically quantified' is now factually stale given an independent 2025 systematic pharmacovigilance analysis; the packet should be updated to cite/reflect that stronger quantified evidence before promotion, since as-written it understates the strength of available safety evidence.",
+      "No independent verification was performed for the externalIdentifiers gap already flagged in ops.reviewReasons (UNII/ChEMBL unresolved); this pre-existing data gap remains open and unaddressed."
+    ],
+    "notes": [
+      "All fieldAuthorityRequired claims (regulatory-status, dose-context, adverse-effects, renal-monitoring) were checked first per instructions; regulatory-status, dose-context, and adverse-effects claims are confirmed or confirmed-with-note and hold up; renal-monitoring is confirmed-with-note but its associated conflict is correctly and permanently review-gated, not resolvable, because no independent source (old or new) covers non-dialysis CKD patients.",
+      "No fabrication, no medical advice, and no efficacy inflation beyond quotes was found in the packet's own statement language; the 'evidence-gap' and 'misinformation-claim' entries are appropriately hedged and match the required misinformation-handling rule.",
+      "The efficacy claim's framing ('most effective ergogenic supplement...for increasing lean body mass') is a verbatim quote from the ISSN abstract and is appropriately attributed, but independent meta-analytic data shows effect sizes are modest and demographic-dependent -- worth a light editorial softening even though it is not a hard needs-adjustment.",
+      "Two independent-verification attempts were blocked by CAPTCHA/rate-limiting (PubMed direct fetch, Europe PMC during rate-limit window); in both cases a workable alternative independent source was found (search snippets, alternate mirror), so no claim was left fully unresolved due to tooling friction, but full-text confirmation of the endurance meta-analysis conclusion is slightly weaker than the other findings and could be strengthened with a follow-up fetch.",
+      "Overall recommendation is request-changes rather than approve-claims solely because of the three items listed in promotionBlockers -- none rise to fabrication or systemic sourcing failure, so reject is not warranted."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "vitamind3-regulatory-supplement-status-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://dsld.od.nih.gov/ingredient/Vitamin%20D3",
+        "independentSourceFamily": "structured-authority-database (NIH DSLD, distinct from the cited DailyMed regulator-label source)",
+        "finding": "Re-fetched the live DailyMed label directly: it is still active/current (last updated Dec 2025, no end date), still coded 'Category: DIETARY SUPPLEMENT / Marketing Status: Dietary Supplement', and the quoted directions text matches exactly \u2014 claim holds. Cross-checked against NIH's DSLD (a structured database family independent of DailyMed) which likewise catalogs vitamin D3 as a dietary-supplement ingredient. Note: FDA held a public meeting (March 27, 2026) exploring modernization of dietary-supplement regulation (ingredient scope, GRAS pathway) with industry comments due April 27, 2026, but as of this review no finalized rule changes single-ingredient vitamin D3's supplement classification \u2014 this is forward-looking context worth a one-line mention, not a correction."
+      },
+      {
+        "claimId": "vitamind3-mechanism-calcium-bone-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://academic.oup.com/jcem/article/96/7/1911/2833671",
+        "independentSourceFamily": "clinical guideline/professional society (Endocrine Society Clinical Practice Guideline), independent of the cited NIH ODS fact sheet and PubChem entry",
+        "finding": "The Endocrine Society guideline independently corroborates the mechanism: 1,25(OH)2D stimulates intestinal calcium absorption, and vitamin D deficiency reduces calcium/phosphorus absorption efficiency, raises PTH, and produces skeletal mineralization defects (osteomalacia/rickets) \u2014 consistent with and supportive of the packet's statement."
+      },
+      {
+        "claimId": "vitamind3-dose-context-rda-ul-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://nutritionsource.hsph.harvard.edu/vitamin-d/",
+        "independentSourceFamily": "professional guidance from an independent publisher (Harvard T.H. Chan School of Public Health Nutrition Source), separate from NIH ODS",
+        "finding": "Harvard's independent nutrition reference states identical values: RDA 600 IU (15 mcg)/day ages 19-70, 800 IU (20 mcg)/day >70, UL 4,000 IU (100 mcg)/day \u2014 matching the packet exactly. These trace to the IOM/NASEM 2010 Dietary Reference Intake report and have not been revised since; worth noting the values' 2010 provenance in the packet for full traceability, but they remain current as of Aug 2026."
+      },
+      {
+        "claimId": "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.cancer.gov/news-events/cancer-currents-blog/2018/vitamin-d-supplement-cancer-prevention",
+        "independentSourceFamily": "government science-communication source (National Institutes of Health/National Cancer Institute), independent of the cited TCTMD science-media summary",
+        "finding": "NCI's account of the same VITAL trial (~26,000 participants, median 5.3y follow-up) independently confirms: invasive cancer 6.1% (vit D) vs 6.3% (placebo), cancer deaths 1.1% vs 1.4% (not significant), no reduction in cardiovascular events despite serum 25(OH)D rising ~40% \u2014 corroborating the packet's negative-finding statement. PubMed/PMC full text remained CAPTCHA-blocked this session too (same access issue the packet flagged), but the NCI account is a materially different, authoritative independent family that resolves the substantive verification gap; the specific BMI-subgroup / hypothesis-generating framing was not separately re-confirmed but is already appropriately hedged in the packet's wording."
+      },
+      {
+        "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-combined-supplementation-primary-prevention-falls-fractures-communitydwelling-adults",
+        "independentSourceFamily": "same clinical-guideline family (USPSTF), but a distinct/newer document than the one cited \u2014 checked the live USPSTF site directly rather than re-reading the cited page",
+        "finding": "The cited 2018 USPSTF page itself now displays a banner stating the topic 'is being updated' and is being replaced. USPSTF issued a broader DRAFT recommendation (dated December 17, 2024) that CONSOLIDATES the separate 2018 fracture and falls recommendations into one: Grade D against vitamin D with-or-without calcium for fracture prevention AND against vitamin D alone for fall prevention, now covering community-dwelling postmenopausal women AND men age 60+ (broader than the packet's 'postmenopausal women / older adults' framing), and additionally documents a small increased kidney-stone risk not mentioned in the packet. As of this review the update is still in draft/update-in-progress status (not yet finalized), so the 2018 grades technically remain the official USPSTF position, but the packet must be corrected to disclose that: (a) this recommendation is under active revision, (b) a 2024 draft broadens the against-recommendation to include men age 60+, and (c) a kidney-stone harm signal has been added. Simply re-stating the 2018 language, as written, is now stale and should be flagged as such rather than presented as settled current guidance."
+      },
+      {
+        "claimId": "vitamind3-evidence-gap-immune-covid-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.medrxiv.org/content/10.1101/2025.10.24.25338314v1",
+        "independentSourceFamily": "systematic review/living evidence synthesis, independent of the cited NIH ODS fact sheet and CIDRAP news article",
+        "finding": "The broader systematic-review/meta-analysis literature on vitamin D for respiratory infections and COVID-19 (Cochrane living review lineage, 2025 living evidence synthesis, and related meta-analyses) continues to show inconsistent/uncertain benefit rather than established efficacy, consistent with the packet's 'weak, mixed, or negative' framing and its caution against treating marketing claims as proven benefit. No independent source found overturning this characterization."
+      },
+      {
+        "claimId": "vitamind3-adverse-effect-hypercalcemia-toxicity-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK557876/",
+        "independentSourceFamily": "clinical/paper-level reference (StatPearls, NCBI Bookshelf), independent of the cited NIH ODS fact sheet and DailyMed label",
+        "finding": "StatPearls independently confirms the hypercalcemia/toxicity mechanism and that toxicity arises almost exclusively from supplement over-use (not diet/sun) and confirms 4,000 IU/day as the standard upper-limit reference. Note a threshold nuance worth adding to the packet: NIH ODS's cited >125 nmol/L (>50 ng/mL) is a lower 'potential adverse effect' caution level, whereas StatPearls describes frank clinical toxicity as typically presenting above ~375 nmol/L (150 ng/mL) \u2014 these are two different severity thresholds and the packet should distinguish 'caution threshold' from 'toxicity threshold' to avoid implying the lower NIH figure itself represents frank toxicity."
+      }
+    ],
+    "promotionBlockers": [
+      "The USPSTF fracture/falls efficacy claim (vitamind3-efficacy-fracture-falls-uspstf-negative-001) cites the 2018 recommendation as current without disclosing that USPSTF's own site marks this topic 'being updated' and that a December 2024 draft recommendation broadens the against-recommendation to include men age 60+ and adds a kidney-stone harm signal \u2014 this fieldAuthorityRequired claim must be revised before publication, not merely re-affirmed.",
+      "General packet-level gate: ops.needsReview is true and this is an expansion-batch packet requiring human sign-off per the repo's own review process before promotion, independent of the specific claim finding above."
+    ],
+    "notes": [
+      "Regulatory claim (DailyMed label) re-verified live and is current/unchanged; FDA's April 2026 dietary-supplement modernization discussion is exploratory only and does not currently affect single-ingredient vitamin D3 classification.",
+      "Mechanism and RDA/UL claims independently corroborated via Endocrine Society guideline and Harvard Nutrition Source respectively, with only minor traceability/provenance notes.",
+      "VITAL trial negative finding independently corroborated via NCI's own account of the same trial, resolving the packet's flagged PubMed/PMC access gap via a different authoritative family even though direct primary-text access remained CAPTCHA-blocked.",
+      "Hypercalcemia/toxicity claim confirmed but the packet should distinguish the NIH ODS 'potential adverse effect' caution threshold (>125 nmol/L) from the StatPearls frank-toxicity threshold (>375 nmol/L) to avoid conflating the two.",
+      "No medical-advice language, efficacy inflation beyond quoted evidence, or unhedged use recommendations were found elsewhere in the packet; hedging language ('not a treatment dose recommendation', 'hypothesis-generating', 'not established benefit') is used appropriately throughout."
+    ],
+    "recommendation": "request-changes",
+    "slug": "vitamin-d3",
+    "compoundName": "Vitamin D3"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "glutathione-identity-mechanism-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4144092/",
+        "independentSourceFamily": "paper-level primary literature (peer-reviewed review)",
+        "finding": "Independent peer-reviewed literature (Frontiers/PMC 'Glutathione: new roles in redox signaling for an old antioxidant', Pharmacological Reviews on endogenous glutathione conjugates, Journal of Amino Acids review) corroborates the mechanism description: GSH as endogenous antioxidant, enzyme cofactor, xenobiotic-conjugation for excretion, and redox/disulfide regulation. Statement holds."
+      },
+      {
+        "claimId": "glutathione-regulatory-compounding-endotoxin-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/optimal-balance-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded-glutathione-200",
+        "independentSourceFamily": "regulator (FDA recall notice, distinct document/event from the cited 2019 advisory)",
+        "finding": "Direct re-fetch of the cited FDA page confirms every quoted fact verbatim (7 patients, up to 5x endotoxin limit, 'Caution: Dietary Supplement' labeling). However, independent search surfaced that the SAME contamination problem has recurred in 2026: FDA-posted voluntary recalls by Optimal Balance Pharmacy (announced ~Aug 19-20, 2026) and Victory Medical Center Pharmacy for compounded glutathione injection vials due to elevated bacterial endotoxin, with patients again reporting fever/chills/hypotension/anaphylactoid reactions across 14 states, plus a separate 2019 FDA warning specifically naming Letco Medical's glutathione powder. The packet's own reviewFlag asked to check for updates since 2019-06-07 but the claim as written reads as a closed, historical 2019 event. Needs-adjustment: add that this is not an isolated 2019 incident \u2014 endotoxin contamination in dietary-supplement-grade glutathione used for compounded sterile injectables has recurred as recently as August 2026, per FDA recall notices, and update reviewFlags/conflicts accordingly."
+      },
+      {
+        "claimId": "glutathione-adverse-effect-endotoxin-symptoms-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.cdc.gov/mmwr/preview/mmwrhtml/00055322.htm",
+        "independentSourceFamily": "public-health agency clinical report (CDC MMWR, distinct from FDA)",
+        "finding": "CDC MMWR report on pyrogenic reactions from endotoxin-contaminated IV infusions independently corroborates that endotoxin exposure produces fever, severe chills, tachycardia, and significant hypotension; the mechanism (lipopolysaccharide-induced pyrogenic/cardiovascular effects) matches. The claim's important distinction \u2014 that this is a contamination-driven toxicity, not a pharmacologic effect of glutathione itself \u2014 is accurate and should remain explicit as flagged."
+      },
+      {
+        "claimId": "glutathione-regulatory-injectable-skin-lightening-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.americanmedspa.org/news/fda-releases-consumer-update-on-injectable-skin-lightening-products/",
+        "independentSourceFamily": "regulator (US FDA consumer update, a different jurisdiction/document than the cited Philippines FDA advisory) plus systematic review",
+        "finding": "US FDA's own 2015 consumer update independently corroborates 'not approved for injectable skin lightening' and documents real enforcement action (2014 US Marshals seizure of Relumins/Tatiomax glutathione injectable kits) \u2014 materially strengthens the claim beyond a single foreign regulator. Additionally, an independent systematic review (Dilokthornsakul et al., J Cosmet Dermatol 2019, via ResearchGate) confirms the literature contains no controlled trial analysis of the IV/injectable route, supporting the 'no published clinical trials' statement. Note: cite the corroborating US FDA consumer update alongside the Philippines FDA source to broaden authority beyond one non-U.S. regulator, per the packet's own reviewFlag."
+      },
+      {
+        "claimId": "glutathione-regulatory-otc-unapproved-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/homeopathic-drug-products-guidance-fda-staff-and-industry",
+        "independentSourceFamily": "regulator guidance document (distinct from the cited DailyMed label)",
+        "finding": "Re-fetch of the DailyMed label (same source, not independent) confirms text is unchanged and the label remains live/current (last updated Feb 22, 2023). Independent FDA guidance ('Homeopathic Drug Products Guidance for FDA Staff and Industry', Dec 2022, current/Level 1 Revised) confirms the broader regulatory context: FDA uses risk-based enforcement discretion rather than pre-market approval for homeopathic drugs generally, which is consistent with why this product can be marketed unevaluated. Note for packet: cite this FDA guidance to explain *why* an unapproved homeopathic product is legally on the market, strengthening the 'illustrative example' framing already flagged."
+      },
+      {
+        "claimId": "glutathione-efficacy-oral-whitening-rct-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.researchgate.net/publication/331933515_The_clinical_effect_of_glutathione_on_skin_color_and_other_related_skin_conditions_A_systematic_review",
+        "independentSourceFamily": "systematic review (Dilokthornsakul et al., J Cosmet Dermatol 2019)",
+        "finding": "An independent systematic review corroborates the packet's characterization: oral glutathione (500 mg/day) shows skin-brightening effects limited to sun-exposed areas, with no significant effect in sun-protected areas, and the review concludes overall evidence is 'inconclusive due to quality of included studies and inconsistent findings.' This matches and reinforces the packet's 'only 2 of 6 sites significant' framing \u2014 recommend citing this systematic review to broaden the evidentiary base beyond the single Watanabe RCT."
+      },
+      {
+        "claimId": "glutathione-dose-context-oral-bioavailability-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": "https://www.dovepress.com/augmented-glutathione-absorption-from-oral-mucosa-and-its-effect-on-sk-peer-reviewed-fulltext-article-CCID",
+        "independentSourceFamily": "paper-level primary literature/narrative review (Dove Medical Press)",
+        "finding": "An independent narrative review directionally corroborates that standard oral glutathione has very poor bioavailability (cannot reach clinically beneficial serum levels even at 3 g single dose) \u2014 consistent with the packet's inference. However, per the packet's own audit lock, this claimType (dose-context) is fixed as fieldAuthorityRequired=true/safety-critical and requires an A1/A2 regulator-tier source specifically, not primary literature. Repeated searches (this pass and the packet's own prior passes) found no FDA/DailyMed or other A1/A2 document addressing this specific micellar-vs-standard oral glutathione PK comparison. Per the Independent Review Rule, this claim correctly stays human-review-gated; the gap is real and should remain documented rather than closed."
+      },
+      {
+        "claimId": "glutathione-evidence-gap-iv-detox-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.americanmedspa.org/news/fda-releases-consumer-update-on-injectable-skin-lightening-products/",
+        "independentSourceFamily": "regulator (US FDA) plus systematic review",
+        "finding": "Independently confirmed on two fronts: US FDA's 2015 consumer update states no injectable skin-lightening drugs are approved and documents unsafe/unapproved products actually seized, and the independent Dilokthornsakul 2019 systematic review confirms no controlled trials evaluate the IV/injectable route. The evidence-gap statement holds and is, if anything, further supported by ongoing 2026 FDA recalls of compounded glutathione injectables for endotoxin contamination."
+      }
+    ],
+    "promotionBlockers": [
+      "glutathione-dose-context-oral-bioavailability-001 is a fieldAuthorityRequired (safety-critical) claim that remains unresolved: no independent A1/A2 regulator-tier source was found for the micellar-vs-standard oral glutathione bioavailability comparison, despite two independent research passes. Per the Independent Review Rule this must stay human-review-gated and cannot be promoted as confirmed.",
+      "glutathione-regulatory-compounding-endotoxin-001 needs updating before promotion: independent research found that FDA-documented endotoxin contamination in compounded glutathione injectables has recurred in 2026 (Optimal Balance Pharmacy and Victory Medical Center Pharmacy recalls, Aug 2026) \u2014 the packet currently presents this as a single 2019 event and its own reviewFlag asking to check for updates was not actually resolved with a live-source check this cycle."
+    ],
+    "notes": [
+      "Mechanism, endotoxin-symptom, and both regulatory skin-lightening/detox-gap claims were independently confirmed (and in two cases strengthened) by materially different source families: CDC MMWR, US FDA (separate from the cited PH-FDA), an independent systematic review (Dilokthornsakul 2019), and standard peer-reviewed biochemistry literature.",
+      "No medical-advice language or efficacy inflation beyond quoted evidence was found; dose figures are consistently and correctly labeled 'not a use recommendation.'",
+      "PubChem CID 124886's CAS number (70-18-8) was independently re-verified via the PubChem PUG REST JSON endpoint (bypassing the JS-gated web page), closing part of the ops.reviewReasons gap; DrugBank's full pharmacology text is still behind a login wall and remains unverified \u2014 minor, non-blocking documentation gap.",
+      "The homeopathic OTC claim would be strengthened by citing FDA's Dec 2022 'Homeopathic Drug Products Guidance for FDA Staff and Industry' to explain the enforcement-discretion framework underlying the product's unapproved-but-marketed status.",
+      "The injectable skin-lightening regulatory claim would be strengthened by adding the US FDA's own 2015 consumer update (with its 2014 Flawless Beauty/Relumins-Tatiomax seizure) alongside the Philippines FDA advisory, since the packet's reviewFlag specifically asked for a U.S.-side check."
+    ],
+    "recommendation": "request-changes",
+    "slug": "glutathione",
+    "compoundName": "Glutathione"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "hcg-regulatory-approved-indications-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.auanet.org/guidelines-and-quality/guidelines/cryptorchidism-guideline",
+        "independentSourceFamily": "clinical guideline/professional society (AUA 2025 Cryptorchidism Guideline)",
+        "finding": "Original refs are DailyMed only (regulator/label family). Independently pulled the live FDA label PDF (accessdata.fda.gov, 2023 revision) which verbatim confirms the three indications and IM-only route -- consistent, not fabricated. More importantly, checked a materially different family: the AUA 2025 Cryptorchidism Guideline (professional society). It does NOT name hCG specifically, but its Guideline Statement 10 says 'Providers should not use hormonal therapy to induce testicular descent as evidence shows low response rates and lack of evidence for long-term efficacy' (Grade B) and states orchidopexy is the current U.S. standard, with hormonal therapy having 'fewer advocates.' The packet's claim is factually accurate as an FDA-approval statement, but it omits that current specialty guidance disfavors hormonal (hCG) therapy for cryptorchidism on efficacy grounds -- worth adding as a note so a reader doesn't infer current best-practice endorsement from FDA-approval status alone. No Endocrine Society hypogonadotropic-hypogonadism guideline discusses hCG either (checked JCEM 2018 Endocrine Society testosterone-therapy guideline -- silent on hCG/fertility gonadotropins), so that indication remains supported only by the label itself; flag as unresolved-by-guideline but not contradicted."
+      },
+      {
+        "claimId": "hcg-regulatory-weight-loss-not-effective-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3425177/",
+        "independentSourceFamily": "paper-level primary/review literature (Journal of Pharmacy and Bioallied Sciences, 'HCG: Yet another fraudulence')",
+        "finding": "Original refs are DailyMed + an FDA consumer update mirror (both regulator/label family). Independently verified via a different family: a peer-reviewed commentary ('HCG: Yet another fraudulence,' J Pharm Bioallied Sci 2012) and the FTC's own 2011-2016 enforcement record (FTC press releases and warning letters against 'homeopathic' HCG weight-loss marketers) both corroborate that FDA/FTC treat OTC HCG weight-loss products as illegal and unsupported. A 2026 clinical-group blog post independently found in search ('Why You Should Avoid Using HCG for Weight Loss,' Jan 2026) shows the position has not reversed as of the current date. Re-fetched the FDA consumer-update source directly and it matches the packet's quotes verbatim. Directive flagged 'verify current FDA/FTC enforcement posture at review time' -- posture is unchanged as of Aug 2026; no live-FDA-page listing change affecting this claim was found."
+      },
+      {
+        "claimId": "hcg-mechanism-lh-receptor-agonist-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5430435/",
+        "independentSourceFamily": "paper-level primary literature (Nature Scientific Reports, 2017; corroborated by Hormone Research in Paediatrics/Karger, Fanelli et al.)",
+        "finding": "Original refs (DrugBank + DailyMed label) don't actually establish the mechanism -- the DrugBank quote used is only an indications sentence, and the reviewFlags already admit the DrugBank pharmacodynamics page was login-gated. Independently confirmed via primary pharmacology literature: 'Human Luteinizing Hormone and Chorionic Gonadotropin Display Biased Agonism at the LH and LH/CG Receptors' (Sci Rep 2017) directly supports hCG acting as an LH/CG-receptor agonist, and 'Effect of Human Chorionic Gonadotropin Derivatives on Leydig Cell Function' supports the Leydig-cell testosterone-stimulation mechanism. The mechanism statement (corpus luteum/progesterone support, ovulation trigger, Leydig-cell testosterone stimulation) holds up against independent primary literature, closing the gap the packet itself flagged."
+      },
+      {
+        "claimId": "hcg-efficacy-weight-loss-negative-meta-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.nature.com/articles/ijo2011188",
+        "independentSourceFamily": "paper-level primary literature (International Journal of Obesity, 'An unfortunate resurgence of human chorionic gonadotropin use for weight loss,' 2011) plus a 2026 clinical-source restating the same conclusion",
+        "finding": "Original refs are the Lijesen 1995 meta-analysis itself plus the DailyMed label (systematic-review + regulator families). Independently searched for any newer systematic review or RCT that reverses the 1995 conclusion (directive flag: 'confirm no more recent systematic review has reversed this conclusion') -- none found. Instead found corroborating independent literature (IJO 2011 commentary, and a January 2026 clinical blog post explicitly recommending against HCG for weight loss) that treats the negative-efficacy conclusion as still current 31 years later. The packet's numeric detail (14 RCTs, 12 negative, 8/8 fat-redistribution trials negative) matches the well-known Lijesen findings and was not contradicted by any independent source found."
+      },
+      {
+        "claimId": "hcg-off-label-pct-spermatogenesis-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7076311/",
+        "independentSourceFamily": "paper-level primary/review literature (World Journal of Men's Health review, 'Management of Anabolic Steroid-Induced Infertility')",
+        "finding": "Original ref is a single 2025 retrospective cohort (n=19, controlled-human-study family). Independently checked a different review paper citing earlier primary studies: Wenker et al. 2015 (47/49 men with azoospermia/severe oligospermia showed sperm return/improvement on hCG+SERM) and Hsieh et al. 2013 (26 men on TRT+hCG, none became azoospermic, 9 pregnancies) both support the general direction that hCG helps preserve/restore spermatogenesis during or after exogenous-androgen suppression. However, that same independent review explicitly notes 'there have been no studies to document the efficacy of' the specific post-cycle-therapy protocols in question, meaning the exact quantitative findings of the packet's cited 2025 study (18.0M->146.9M TSC, 5%->58% reaching normal TMSC) remain unreplicated by an independent controlled study. The packet's own hedging (Limited tier, 'do not generalize,' 'independent confirmation... recommended') is appropriate and should NOT be upgraded; the broader mechanism/direction is corroborated, the specific effect size is not."
+      },
+      {
+        "claimId": "hcg-adverse-effects-fertility-use-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/017692s028s036s043lbl.pdf",
+        "independentSourceFamily": "regulator/label (direct FDA accessdata.fda.gov label PDF, independent of the DailyMed host) plus general reproductive-endocrinology guideline context (ASRM OHSS guideline, PMID 38099867)",
+        "finding": "Original ref is DailyMed only. Directly fetched the FDA's own accessdata.fda.gov label PDF (a different host/document than DailyMed, though same underlying regulator source) and it verbatim confirms OHSS, ovarian cyst/rupture, multiple births, and thromboembolism as labeled adverse reactions for ovulation-induction use -- no discrepancy. Attempted a materially different family (ASRM's 2023 OHSS prevention guideline, PMID 38099867) to corroborate the OHSS-hCG link from a professional-society perspective; full text was blocked by a CAPTCHA/paywall and the guideline-summary excerpt retrieved discussed OHSS risk factors (PCOS, elevated AMH, multifollicular development) without naming hCG specifically in the fetched excerpt. This is a well-established mechanism in reproductive endocrinology (hCG mimics the LH surge that triggers OHSS; GnRH-agonist triggers are preferred in high-risk patients specifically to avoid this), but I could not pull a clean, citable independent full-text guideline passage naming hCG in this session. Treat the professional-guideline leg of independent verification as not fully closed; the regulator-label leg is solid. Recommend one more attempt at ASRM/PubMed full text before final sign-off, though the underlying safety claim itself is not in doubt."
+      },
+      {
+        "claimId": "hcg-misinformation-otc-weight-loss-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ftc.gov/system/files/attachments/press-releases/ftc-charges-hcg-marketer-deceptive-advertising/fda_hcg_products_press_release_12-6-11.pdf",
+        "independentSourceFamily": "government enforcement record (FTC, distinct agency/action from the FDA label and FDA consumer-update sources already cited) plus paper-level literature (PMC3425177)",
+        "finding": "Original refs are the FDA consumer update, the Lijesen meta-analysis, and the DailyMed label. Independently found FTC's own enforcement actions/warning letters against HCG-diet marketers (FTC vs. HCG marketer deceptive-advertising case, warning letters on HCG product labeling) corroborating that regulators actively treat these OTC marketing claims as illegal/unsubstantiated, and a peer-reviewed commentary (PMC3425177) independently reaches the same 'no efficacy' conclusion. The very-low-calorie-diet risks (gallstones, electrolyte imbalance, arrhythmia) are standard VLCD risks and are consistent with independent clinical nutrition literature. Claim holds; correctly labeled misinformation-claim rather than fact."
+      }
+    ],
+    "promotionBlockers": [
+      "The packet's own ops object still marks needsReview:true and completeness:'partial' -- externalIdentifiers.pubchem and casNumber remain unresolved, and the DrugBank DB09126 pharmacodynamics section is still login-gated and unquoted; these should be closed out (or the mechanism claim's sourceRefs corrected to the independently-confirmed primary literature found in this review) before public promotion.",
+      "The conflict record (hcg-conflict-pct-marketing-vs-evidence-001) is still resolutionStatus:'needs-human-review' and should remain so through promotion -- do not auto-resolve it based on this review.",
+      "hcg-adverse-effects-fertility-use-001 (fieldAuthorityRequired) has independent confirmation only from a second FDA-family document (accessdata.fda.gov label), not yet from a professional-society guideline naming hCG explicitly in OHSS causation -- worth one more independent-source attempt (ASRM/PMID 38099867 full text) before treating that leg as fully closed, though this does not change the underlying safety facts.",
+      "hcg-regulatory-approved-indications-001 would benefit from an added note that current AUA (2025) guidance disfavors hormonal therapy generally for cryptorchidism on efficacy grounds, so the FDA-approval statement isn't read as an implicit current-best-practice endorsement."
+    ],
+    "notes": [
+      "No claim in this packet reads as medical advice or a use recommendation; dosing text is explicitly framed as label/trial context per the packet's own reviewFlags, and this was independently verified against the live FDA label -- appropriate.",
+      "No efficacy inflation beyond what the quotes support was found; the negative weight-loss meta-analysis and the small uncontrolled spermatogenesis cohort are both appropriately hedged and were not overstated.",
+      "Drug-shortage context (Pregnyl/Novarel supply shortages reported through 2026 by trade sources) surfaced during the live-FDA-page check but does not affect the approval-status or label-content claims in this packet; not a blocker, just background context.",
+      "Given the current date (2026-08-29) and the directive's note that FDA listings changed in April 2026, I specifically re-checked the live FDA label and current enforcement posture for the two regulatory claims; no discrepancy or reversal was found for either."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "chorionic-gonadotropin",
+    "compoundName": "Chorionic gonadotropin (hCG)"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "mecasermin-regulatory-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK596664/",
+        "independentSourceFamily": "systematic-review (CADTH-sourced clinical review, distinct claim-level use)",
+        "finding": "Cross-checked against the live current FDA label (accessdata.fda.gov/drugsatfda_docs/label/2025/021839s033lbl.pdf, same regulator/label family as DailyMed so not itself independent) and against the NCBI Bookshelf clinical review (used elsewhere in the packet but not cited for this claim, so independent for this claim): both state the identical indication (pediatric \u22652 yrs, severe primary IGF-1 deficiency or GH gene deletion with neutralizing anti-GH antibodies; not a GH substitute). Statement holds and matches the live 2025 label verbatim -- no listing drift found as of Aug 2026."
+      },
+      {
+        "claimId": "mecasermin-warning-hypoglycemia-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK596664/",
+        "independentSourceFamily": "systematic-review",
+        "finding": "Live FDA label (2025, 021839s033lbl.pdf) reproduces the identical hypoglycemia/seizure warning and meal-timing instruction verbatim. NCBI Bookshelf clinical review independently corroborates the warning and meal-timing directive, plus adds a dose-reduction instruction not captured in the packet (minor omission, not an inaccuracy). No conflicting current label language found."
+      },
+      {
+        "claimId": "mecasermin-contraindication-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK596664/",
+        "independentSourceFamily": "systematic-review",
+        "finding": "Live 2025 FDA label confirms the three listed contraindications verbatim. NCBI Bookshelf clinical review (independent for this claim) also lists 'premature infants or neonates' as an additional contraindication/warning population not captured in the packet statement -- worth adding for completeness, though not an error in what is currently stated."
+      },
+      {
+        "claimId": "mecasermin-dose-context-label-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/021839s033lbl.pdf",
+        "independentSourceFamily": "regulator/label (current 2025 label vs. packet's DailyMed label copy) plus NCBI Bookshelf (systematic-review, independent family) corroborating same figures",
+        "finding": "Both the live current FDA label PDF and the independent NCBI Bookshelf clinical review state the identical 0.04-0.08 mg/kg twice-daily starting dose, 0.04 mg/kg per-dose titration after 1 week tolerance, and 0.12 mg/kg twice-daily maximum, SC only. Packet's framing as 'label protocol, not a use recommendation' is appropriate and preserved. Dosing figures are current and unchanged as of 2026."
+      },
+      {
+        "claimId": "mecasermin-mechanism-igf1-receptor-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.genecards.org/cgi-bin/carddisp.pl?gene=IGF1R",
+        "independentSourceFamily": "structured-database (GeneCards/IGF1R gene entry, different family than the cited systematic-review source)",
+        "finding": "GeneCards independently confirms IGF1R shares the same receptor architecture as, and is a paralog of, the insulin receptor (INSR), and that IGF1R signaling drives cell growth/survival pathways -- consistent with the packet's mechanism statement. No overstatement found; statement is a standard, well-supported mechanism description appropriately marked non-fieldAuthorityRequired."
+      },
+      {
+        "claimId": "mecasermin-efficacy-growth-velocity-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://public-pages-files-2025.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2022.812568/text",
+        "independentSourceFamily": "paper-level primary literature (Frontiers in Endocrinology 2022, European Increlex Growth Forum Database registry -- a different cohort/source than the CADTH-sourced NCBI Bookshelf review cited)",
+        "finding": "An independent real-world registry study (213 patients, SPIGFD) confirms mecasermin produces a directionally consistent, clinically meaningful growth-velocity/height-SDS improvement in the same labeled population, though its specific numbers (e.g., height SDS -3.7 to -2.6 by T5; peak velocity 6.8-8.0 cm/yr by Tanner stage) differ from the packet's cited trial-year figures because it is a different cohort. The packet's specific numbers (2.6->8.0 cm/yr year 1; SDS -3.4->1.7) are unique to its cited trial and were not independently re-derived, but the overall efficacy direction and magnitude in this population is corroborated. Recommend noting in the packet that magnitude varies by cohort/registry rather than presenting the year-1/year-8 figures as the single definitive effect size."
+      },
+      {
+        "claimId": "mecasermin-adverse-effect-profile-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://public-pages-files-2025.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2022.812568/text",
+        "independentSourceFamily": "paper-level primary literature (independent registry cohort)",
+        "finding": "Independent registry publication states adverse events observed 'were in line with the known safety profile of rhIGF-1' but does not itself break out hypoglycemia/lipohypertrophy/tonsillar-hypertrophy percentages, so the specific 83%/47%/35%/21%/20% figures were not independently re-derived from a second dataset -- they remain traceable to the single cited clinical-review cohort. Direction (hypoglycemia, injection-site lipohypertrophy, tonsillar hypertrophy as characteristic AEs) is corroborated by the current FDA label's own listed adverse reactions. Recommend the packet note that these percentages are from one reviewed trial cohort, not a pooled/aggregate estimate across studies."
+      },
+      {
+        "claimId": "mecasermin-misinformation-bodybuilding-marketing-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://riteaid.com/peptides/igf-1-lr3",
+        "independentSourceFamily": "vendor/consumer-facing content search (independent web search across gray-market and retail peptide pages, plus absence of results in PubMed/anti-doping literature)",
+        "finding": "A broader independent search for adult/bodybuilding controlled human trial data on mecasermin/rhIGF-1 or IGF-1 analogs (including anti-doping/WADA angles) turned up no controlled human efficacy trials in healthy adults -- only other vendor/consumer pages (e.g., IGF-1 LR3 marketing) repeating similar unverified claims. This corroborates the packet's characterization that vendor marketing outpaces the evidence. The claim already appropriately flags the source-species mismatch (IGF-1 DES vs. mecasermin) and vendor-tier sourcing; no changes needed beyond what reviewFlags already state."
+      },
+      {
+        "claimId": "mecasermin-evidence-gap-adult-offlabel-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/021839s033lbl.pdf",
+        "independentSourceFamily": "regulator/label (current 2025 label, confirming no adult/off-label indication exists) plus independent web/literature search finding no adult controlled trials",
+        "finding": "Independent search (PubMed/Europe PMC/general web, anti-doping literature) found no controlled human trial data in healthy or adult populations for mecasermin outside the labeled pediatric SPIGFD/GH-antibody population, and the current 2025 FDA label confirms no adult or performance indication exists. This closes the reviewReasons item asking to confirm the evidence gap against an additional independent source family -- gap is confirmed, not merely re-asserted from the same sources."
+      }
+    ],
+    "compoundName": "Mecasermin",
+    "slug": "mecasermin",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "ops.reviewReasons item on CAS number/ChEMBL/RxNorm identifiers remains unresolved: independent WebFetch attempts against PubChem and DrugBank were blocked by JavaScript-gated rendering, so the CAS 68562-41-4 figure circulating on secondary chemistry sites (chemicalbook, chemsrc, targetmol) still could not be confirmed against a primary structured database in this review pass. This is a data-completeness gap, not a factual error, but per the Independent review rule it must stay review-gated rather than being silently accepted -- carry it forward with the gap documented, or have a reviewer with a JS-capable browser confirm directly on pubchem.ncbi.nlm.nih.gov/compound/400 or go.drugbank.com/drugs/DB01277.",
+      "Efficacy and adverse-effect percentage figures (mecasermin-efficacy-growth-velocity-001, mecasermin-adverse-effect-profile-001) are traceable to a single reviewed trial cohort; an independent registry study corroborates direction/magnitude but not the exact percentages. Packet should add a note that these are single-cohort statistics, not a pooled estimate, before promotion.",
+      "Contraindication claim omits the 'premature infants or neonates' contraindication/warning population that an independent source (NCBI Bookshelf) lists alongside the three stated contraindications; should be added for completeness before promotion, though this is a minor omission not a misstatement."
+    ],
+    "notes": [
+      "All four fieldAuthorityRequired regulatory/safety claims (approved indication, hypoglycemia warning, contraindications, dosing) were checked against the LIVE 2025 FDA label (021839s033lbl.pdf) as instructed and found unchanged/current as of Aug 2026 -- no April 2026 listing drift detected for this compound.",
+      "Mechanism claim independently confirmed via GeneCards/IGF1R (structured-database family), materially different from the cited systematic-review source.",
+      "Misinformation/evidence-gap claims were independently corroborated by broader web/literature search finding no controlled adult human trial data for mecasermin or IGF-1 analogs in athletic/aesthetic use -- the packet's framing here is accurate and appropriately cautious, no medical advice or efficacy inflation observed.",
+      "No instances of medical advice, use recommendations, or efficacy inflation beyond quoted evidence were found in the packet; the dose-context claim explicitly and correctly disclaims itself as label protocol rather than a use recommendation.",
+      "Overall sourcing is strong (A1 label + CADTH-sourced clinical review for the core claims); the packet is close to promotable but the three promotionBlockers above should be closed or explicitly re-flagged as review-gated before public library promotion."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "setmelanotide-regulatory-approved-indications-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pedsendo.org/new-meds-and-tech/new-meds-and-tech-from-dt-committee-imcivree-setmelanotide-injection/",
+        "independentSourceFamily": "clinical guideline/professional society (Pediatric Endocrine Society), cross-checked against the live DailyMed label revised 4/2026",
+        "finding": "Independently confirmed. The Pediatric Endocrine Society summary and the live DailyMed label (revision date 4/2026, matching the noted April 2026 listing change) both confirm the current approved scope exactly as stated: aHO 4+, BBS 2+, POMC/PCSK1/LEPR 2+, with polygenic obesity explicitly excluded. Statement is accurate and current."
+      },
+      {
+        "claimId": "setmelanotide-mechanism-mc4r-agonist-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK589641/",
+        "independentSourceFamily": "structured clinical reference (StatPearls/NCBI Bookshelf) \u2014 materially different from the PMC review and PubChem entry already cited",
+        "finding": "StatPearls independently confirms setmelanotide is an MC4R-pathway agonist that crosses the blood-brain barrier and reduces hyperphagia/weight by acting on the MC4R pathway, consistent with the claim's description of targeting the physiologic defect in POMC/PCSK1/LEPR deficiency."
+      },
+      {
+        "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:33137293&format=json&resultType=core",
+        "independentSourceFamily": "paper-level primary literature (Europe PMC abstract of the primary Lancet Diabetes & Endocrinology paper, PMID 33137293) \u2014 distinct from the FDA press release already cited",
+        "finding": "The primary paper's own abstract states 'Eight (80%) participants in the POMC trial and five (45%) participants in the LEPR trial achieved at least 10% weight loss' \u2014 45%, not the 46% the claim states (sourced from the FDA press-release wording, not the peer-reviewed primary paper). This closes the packet's own flagged gap ('verify against full published Lancet results') but surfaces a genuine discrepancy: change '46%' to '45% (5 of 11)' and cite the primary paper's number as authoritative over the press-release figure, or note the source-specific rounding difference explicitly."
+      },
+      {
+        "claimId": "setmelanotide-safety-warnings-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70c3ccf7-4df0-4c75-ba07-fede9970c8d9",
+        "independentSourceFamily": "professional society summary (Pediatric Endocrine Society) confirming, and live current regulator label (DailyMed, revised 4/2026) providing the detail",
+        "finding": "Priority safety-critical recheck against the live label (revised 4/2026, the exact revision the directive flagged) shows the claim is materially incomplete for the population it itself describes: the label added two new safety-critical warnings tied specifically to acquired hypothalamic obesity (aHO) patients \u2014 Section 5.5 'Acute Adrenal Insufficiency in Patients with Acquired HO' (5% of treated patients vs. 0% placebo) and Section 5.6 sodium imbalance/hyponatremia-hypernatremia in aHO patients with concomitant AVP deficiency (6% vs 2% placebo). Since claim 001 already covers the aHO indication, this omission must be fixed before promotion. Positively, this recheck also resolves the packet's open reviewFlag: no boxed warning exists on the current (4/2026) label \u2014 that flag can be closed as confirmed-absent."
+      },
+      {
+        "claimId": "setmelanotide-adverse-effect-common-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pedsendo.org/new-meds-and-tech/new-meds-and-tech-from-dt-committee-imcivree-setmelanotide-injection/",
+        "independentSourceFamily": "professional society summary (Pediatric Endocrine Society), independently listing common (\u226520%) adverse events",
+        "finding": "The common-AE list (injection site reactions, skin hyperpigmentation, headache, GI effects) is independently confirmed by the PES summary. However, the cardiovascular-neutrality and fasting-glucose-improvement sub-claims were NOT independently corroborated \u2014 neither StatPearls nor the PES summary discuss cardiovascular endpoints or fasting glucose, so per the review contract that portion should stay review-gated (unresolved) rather than presented with the same confidence as the AE list; the packet's own reviewFlag on this point remains open and accurately so."
+      },
+      {
+        "claimId": "setmelanotide-evidence-gap-research-chemical-marketing-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/gram-peptides-721806-03312026",
+        "independentSourceFamily": "regulator enforcement records (FDA Warning Letters database) \u2014 a materially different regulator sub-family from the drug label/approval-announcement sources already cited, and independent of the vendor page itself",
+        "finding": "Searched the FDA warning-letters/import-alert enforcement family directly (found unrelated 2025-2026 peptide-vendor warning letters, e.g. Gram Peptides 3/2026, usapeptidecom 2/2025) but located no warning letter or import alert naming setmelanotide research-chemical sellers specifically. This independently reconfirms the packet's own flagged gap ('no FDA import alert... located') rather than resolving it \u2014 per the contract this specific sub-item should remain review-gated/open for a future recheck, not marked resolved. The core mismatch claim (vendor citing genotype-restricted trial stats without the label's exclusions) is itself well supported by the vendor page and label text already in the packet."
+      }
+    ],
+    "compoundName": "Setmelanotide",
+    "slug": "setmelanotide",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "setmelanotide-safety-warnings-001 (fieldAuthorityRequired, safety-critical) omits two safety-critical warnings that the current live label (DailyMed, revised 4/2026) attaches specifically to the acquired-hypothalamic-obesity population the packet's own indications claim already covers: Acute Adrenal Insufficiency (label Section 5.5, 5% vs 0% placebo) and sodium imbalance/hyponatremia-hypernatremia in aHO patients with AVP deficiency (Section 5.6, 6% vs 2% placebo). Must be added before publication.",
+      "setmelanotide-efficacy-pomc-lepr-phase3-001 (fieldAuthorityRequired) states a 46% LEPR responder rate; the primary peer-reviewed paper's own abstract (PMID 33137293, via Europe PMC) states 45% (5 of 11). Correct the figure or explicitly reconcile the FDA press-release wording against the primary paper before promotion."
+    ],
+    "notes": [
+      "Regulatory approved-indications claim (001) was independently re-verified against the live DailyMed label (revision 4/2026, the exact update window flagged) and a Pediatric Endocrine Society summary; it is accurate and current as written.",
+      "Mechanism claim (002) independently confirmed via StatPearls/NCBI Bookshelf, a source family distinct from the PMC review and PubChem entry already cited.",
+      "The packet's own open reviewFlag on boxed-warning status can now be closed: independently confirmed there is still no boxed warning on the current (4/2026) IMCIVREE label.",
+      "The vendor-marketing evidence-gap claim (006) and its associated conflict entry are well supported and appropriately gated; an independent FDA warning-letter/import-alert search still found nothing setmelanotide-specific, so that particular sub-item should remain open/review-gated rather than being marked resolved.",
+      "No outright medical-advice or efficacy-inflation language was found beyond what the label itself states (e.g., the >4-hour-erection emergency-care instruction is a verbatim label warning, not added advice).",
+      "Once the two blockers above are fixed, this packet would be in good shape for promotion \u2014 sourcing discipline and fieldAuthorityRequired tagging are otherwise sound."
+    ]
+  }
+]

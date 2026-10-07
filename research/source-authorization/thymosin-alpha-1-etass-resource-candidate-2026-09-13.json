@@ -1,0 +1,334 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T16:48:38.253230Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "ta1-mechanism-tlr9-thymic-peptide-001",
+  "candidateStatement": "The study indexed as PMID 23327199 describes thymosin alpha-1 as an immunomodulatory drug.",
+  "historicalPacket": {
+    "gitRevision": "4d34d2f87905d21c4db38399c81bb185eab426b6",
+    "path": "research/input/evidence/thymosin-alpha-1.evidence.json",
+    "bytes": 26917,
+    "sha256": "52663aba6a258966dbaef7eaa8d335fa03756c37f3ddf8026c7d6c6dec26f9aa"
+  },
+  "supersededClaimSha256": "c4ab93ef86dc4732f04e80eb8d3599dabd1579684c204bae5bba1dab97e30363",
+  "supersededClaimHashEncoding": "SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no newline.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "thymalfasin",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "originalContextSha256": "735bcf1342fd03bd111e33121d33b8532c9bdf157a509f6f054b480bbbc662f1",
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "thymosin alpha-1",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "originalSourceRefs": [
+    "drugbank-db04900",
+    "superpower-thymosin-alpha-1"
+  ],
+  "originalSourceRefsSha256": "569fde6830cb3e3eb6a5fa7743cbfe2fb7b336e510339ff85abd9e68d23e5733",
+  "historicalReviewFlags": [
+    "mechanism sourced partly from a vendor-education page rather than a peer-reviewed pharmacology review; corroborate against a primary pharmacology reference at review time"
+  ],
+  "originalClaimType": "mechanism",
+  "inheritedRatings": {
+    "evidenceTier": "Moderate",
+    "confidence": "moderate",
+    "reviewStatus": "unchanged pending acceptance; actual base Moderate/moderate, not assessment Strong/high"
+  },
+  "scopeLoss": "TLR9, 28-amino-acid, synthetic/acetylated, thymic-origin and thymalfasin equivalence are unestablished by the inspected ETASS opening, not declared false. Minimal classification does not complete those broader requirements.",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db04900",
+      "locator": "Description",
+      "chars": 112,
+      "sha256": "3e96a39e943c6addbf868f45a8d1c45c4256600b18bb8dfd021f9ffc4cffa87b"
+    },
+    {
+      "sourceId": "drugbank-db04900",
+      "locator": "Drug type",
+      "chars": 46,
+      "sha256": "f1aec66fa4adb4f1a9f33b26708d81a625ba007fe15c3a2e8a77ceaa9d353ca5"
+    },
+    {
+      "sourceId": "superpower-thymosin-alpha-1",
+      "locator": "Mechanism section",
+      "chars": 148,
+      "sha256": "d0bee549fb10247d4e7c741170538ad62f761b7386f2b6e0bb33e888b23eaf23"
+    }
+  ],
+  "historicalQueueWithheldExcerpts": [
+    {
+      "pageOrSection": "Description",
+      "quoteChars": 112
+    },
+    {
+      "pageOrSection": "Drug type",
+      "quoteChars": 46
+    }
+  ],
+  "excerptAccounting": "Queue historical withheld lengths112/46 remain verbatim and are not equated to the current base packet excerpts. Actual current base has two DrugBank excerpts and one vendor excerpt, separately hashed here; no historical withheld text restored and no narrative excerpts copied.",
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubmed-etass-2013",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "The efficacy of thymosin alpha 1 for severe sepsis (ETASS): a multicenter, single-blind, randomized and controlled trial",
+    "publisher": "PubMed / U.S. National Library of Medicine",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
+    "doi": null,
+    "pmid": "23327199",
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T21:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-etass-2013",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=23327199&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "23327199",
+    "doi": "10.1186/cc11932",
+    "pmcid": "PMC4056079",
+    "issueDate": "2013-01-17",
+    "electronicArticleDate": "2013-01-17",
+    "sourceMetadata": {
+      "pmid": "23327199",
+      "title": "The efficacy of thymosin alpha 1 for severe sepsis (ETASS): a multicenter, single-blind, randomized and controlled trial.",
+      "journal": "Critical care (London, England)",
+      "issueDate": {
+        "Year": "2013",
+        "Month": "Jan",
+        "Day": "17"
+      },
+      "volume": "17",
+      "issue": "1",
+      "pages": "R8",
+      "authors": [
+        {
+          "LastName": "Wu",
+          "ForeName": "Jianfeng",
+          "Initials": "J"
+        },
+        {
+          "LastName": "Zhou",
+          "ForeName": "Lixin",
+          "Initials": "L"
+        },
+        {
+          "LastName": "Liu",
+          "ForeName": "Jiyun",
+          "Initials": "J"
+        },
+        {
+          "LastName": "Ma",
+          "ForeName": "Gang",
+          "Initials": "G"
+        },
+        {
+          "LastName": "Kou",
+          "ForeName": "Qiuye",
+          "Initials": "Q"
+        },
+        {
+          "LastName": "He",
+          "ForeName": "Zhijie",
+          "Initials": "Z"
+        },
+        {
+          "LastName": "Chen",
+          "ForeName": "Juan",
+          "Initials": "J"
+        },
+        {
+          "LastName": "Ou-Yang",
+          "ForeName": "Bin",
+          "Initials": "B"
+        },
+        {
+          "LastName": "Chen",
+          "ForeName": "Minying",
+          "Initials": "M"
+        },
+        {
+          "LastName": "Li",
+          "ForeName": "Yinan",
+          "Initials": "Y"
+        },
+        {
+          "LastName": "Wu",
+          "ForeName": "Xiaoqin",
+          "Initials": "X"
+        },
+        {
+          "LastName": "Gu",
+          "ForeName": "Baochun",
+          "Initials": "B"
+        },
+        {
+          "LastName": "Chen",
+          "ForeName": "Lei",
+          "Initials": "L"
+        },
+        {
+          "LastName": "Zou",
+          "ForeName": "Zijun",
+          "Initials": "Z"
+        },
+        {
+          "LastName": "Qiang",
+          "ForeName": "Xinhua",
+          "Initials": "X"
+        },
+        {
+          "LastName": "Chen",
+          "ForeName": "Yuanyuan",
+          "Initials": "Y"
+        },
+        {
+          "LastName": "Lin",
+          "ForeName": "Aihua",
+          "Initials": "A"
+        },
+        {
+          "LastName": "Zhang",
+          "ForeName": "Guanrong",
+          "Initials": "G"
+        },
+        {
+          "LastName": "Guan",
+          "ForeName": "Xiangdong",
+          "Initials": "X"
+        }
+      ],
+      "articleDates": [
+        {
+          "DateType": "Electronic",
+          "Year": "2013",
+          "Month": "01",
+          "Day": "17"
+        }
+      ],
+      "articleIds": [
+        {
+          "IdType": "pubmed",
+          "value": "23327199"
+        },
+        {
+          "IdType": "pmc",
+          "value": "PMC4056079"
+        },
+        {
+          "IdType": "doi",
+          "value": "10.1186/cc11932"
+        },
+        {
+          "IdType": "pii",
+          "value": "cc11932"
+        }
+      ],
+      "articleIdPath": "./PubmedArticle/PubmedData/ArticleIdList/ArticleId",
+      "commentsCorrections": [
+        {
+          "RefType": "CommentIn",
+          "RefSource": "Crit Care. 2013 Feb 20;17(1):118. doi: 10.1186/cc12490.",
+          "PMID": "23425441"
+        }
+      ],
+      "copyright": null,
+      "publicationTypes": [
+        "Journal Article",
+        "Multicenter Study",
+        "Randomized Controlled Trial",
+        "Research Support, Non-U.S. Gov't"
+      ],
+      "abstractLabels": [
+        {
+          "Label": "INTRODUCTION",
+          "NlmCategory": "BACKGROUND"
+        },
+        {
+          "Label": "METHODS",
+          "NlmCategory": "METHODS"
+        },
+        {
+          "Label": "RESULTS",
+          "NlmCategory": "RESULTS"
+        },
+        {
+          "Label": "CONCLUSIONS",
+          "NlmCategory": "CONCLUSIONS"
+        },
+        {
+          "Label": "TRIAL REGISTRATION",
+          "NlmCategory": "BACKGROUND"
+        }
+      ],
+      "receipt": "receipts/efetch-20260913T162148492588Z.json"
+    },
+    "supportLocator": "Abstract INTRODUCTION, immunomodulatory classification only; factual paraphrase.",
+    "retrievedAtUtc": "2026-09-13T16:21:48.923517+00:00",
+    "method": "Existing qualified PubMed EFetch XML; implementation uses retained metadata and worker paraphrase only.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "observationAttribution": "Original Codex research worker observed opening. Implementation and lead did not independently observe the source opening.",
+    "dateQualification": "Fresh bibliographic observations; original null DOI/publishedAt and old access timestamp remain unchanged.",
+    "tierQualification": "PubMed index C1 versus inherited study snapshot B1 and claim Moderate/moderate; no new grading or source-family acceptance.",
+    "rightsQualification": "No CopyrightInformation returned, not permission/public-domain proof. No PMC/publisher licence lookup. Existing qualified source scope does not award new reuse authority.",
+    "humanReviewStatus": "pending"
+  },
+  "sourceSha256": "25a261ee8fa26dd50f51ec3f0dfbef6e9aa5192e042d2f89bd105aef4d6a3a39",
+  "payloadProvenance": {
+    "bytes": 31781,
+    "attribution": "Original worker-reported transport hash/size; raw XML/abstract not retained or reacquired."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "retries": 0,
+    "receipt": {
+      "author": "Codex",
+      "attempt": 1,
+      "method": "GET",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=23327199&retmode=xml&tool=biostack_bounded_source_review",
+      "startedAtUtc": "2026-09-13T16:21:48.492588+00:00",
+      "completedAtUtc": "2026-09-13T16:21:48.923517+00:00",
+      "httpStatus": 200,
+      "responseBytes": 31781,
+      "responseSha256": "25a261ee8fa26dd50f51ec3f0dfbef6e9aa5192e042d2f89bd105aef4d6a3a39",
+      "headers": {
+        "Date": "Sun, 13 Sep 2026 16:21:49 GMT",
+        "Content-Type": "text/xml; charset=UTF-8",
+        "X-Ratelimit-Limit": "3",
+        "X-Ratelimit-Remaining": "2"
+      },
+      "fault": null,
+      "requestsThisScript": 1,
+      "retriesThisScript": 0
+    }
+  },
+  "studySeparation": "ETASS23327199 is a distinct publication; does not resolve TESTS39814420/erratum40447307 correction scope or reuse notice. Shared authors mean independent family cannot be inferred from separate PMID/year.",
+  "commentsQualification": "One CommentIn, not ErratumIn; scope uninspected, no linked request.",
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/thymosin-alpha-1-etass-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/thymosin-alpha-1-etass-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/thymosin-alpha-1-etass-replacement-assessment-20260913/source-evidence.json",
+    "metadata": "research/output/gtm-activation-20260909/thymosin-alpha-1-etass-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/thymosin-alpha-1-etass-replacement-assessment-20260913/receipts/efetch-20260913T162148492588Z.json"
+  },
+  "queueAccounting": "23 to24 prepared,0 completed, prior-co-citation15 unchanged: newly selected ETASS was not target co-cited; original vendor not assessed.",
+  "remainingGates": [
+    "TLR9, 28-amino-acid, synthetic/acetylated, thymic-origin and thymalfasin equivalence are unestablished by the inspected ETASS opening, not declared false. Minimal classification does not complete those broader requirements.",
+    "Evidence acceptance and inherited ratings pending.",
+    "TESTS39814420/Erratum40447307 correction and reuse questions unresolved; ETASS does not resolve these.",
+    "Shared authors (including Jianfeng Wu/Lixin Zhou) and independent family/lineage unresolved.",
+    "Human/expert review and publication gates remain; no rights or scientific approval."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

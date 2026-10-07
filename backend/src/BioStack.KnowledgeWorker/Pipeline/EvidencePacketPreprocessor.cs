@@ -9,12 +9,17 @@ public sealed record EvidencePacketPreprocessingResult(
 
 public interface IEvidencePacketPreprocessor
 {
-    EvidencePacketPreprocessingResult Preprocess(JsonNode evidencePacket);
+    /// <summary>
+    /// Preprocesses a packet. When <paramref name="sourceRegistry"/> is supplied, authority tiers are read
+    /// from the registry rather than from the packet's own assertions; when it is null the historical
+    /// self-asserted behaviour is preserved.
+    /// </summary>
+    EvidencePacketPreprocessingResult Preprocess(JsonNode evidencePacket, JsonNode? sourceRegistry = null);
 }
 
 public sealed class EvidencePacketPreprocessor : IEvidencePacketPreprocessor
 {
-    public EvidencePacketPreprocessingResult Preprocess(JsonNode evidencePacket)
+    public EvidencePacketPreprocessingResult Preprocess(JsonNode evidencePacket, JsonNode? sourceRegistry = null)
     {
         if (evidencePacket is null) throw new ArgumentNullException(nameof(evidencePacket));
 
@@ -39,8 +44,38 @@ public sealed class EvidencePacketPreprocessor : IEvidencePacketPreprocessor
                 qualityFlags.Add("unknown-source-ref");
             }
 
-            var hasAuthoritativeSupport = sourceRefs.Any(s =>
-                sourceTiers.TryGetValue(s, out var tier) && FieldAuthorityPolicy.IsAuthoritativeTier(tier));
+            // A packet's own authorityTier is an assertion, not an authorization. When a registry is
+            // supplied the registry's tier governs, and a source the registry does not know cannot
+            // confer authority no matter what the packet claims for it.
+            var hasAuthoritativeSupport = false;
+            var selfAssertedOnly = new List<string>();
+            foreach (var sourceRef in sourceRefs)
+            {
+                var packetTier = sourceTiers.TryGetValue(sourceRef, out var t) ? t : null;
+                if (sourceRegistry is null)
+                {
+                    if (FieldAuthorityPolicy.IsAuthoritativeTier(packetTier)) hasAuthoritativeSupport = true;
+                    continue;
+                }
+
+                var registryTier = SourceRegistryTierLookup.LookupAuthorityTier(sourceRef, sourceRegistry);
+                if (FieldAuthorityPolicy.IsAuthoritativeTier(registryTier))
+                {
+                    hasAuthoritativeSupport = true;
+                }
+                else if (registryTier is null && FieldAuthorityPolicy.IsAuthoritativeTier(packetTier))
+                {
+                    selfAssertedOnly.Add(sourceRef);
+                }
+            }
+
+            foreach (var sourceRef in selfAssertedOnly)
+            {
+                reviewReasons.Add(
+                    $"Claim '{claimId}' source '{sourceRef}' asserts authoritative tier '{sourceTiers[sourceRef]}' "
+                    + "but is not registered in the source registry, so it confers no authority.");
+                qualityFlags.Add("self-asserted-authority-unregistered");
+            }
 
             if (FieldAuthorityPolicy.RequiresAuthoritativeSupport(claimType, fieldAuthorityRequired)
                 && !hasAuthoritativeSupport)

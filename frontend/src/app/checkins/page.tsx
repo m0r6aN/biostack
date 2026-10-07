@@ -83,8 +83,8 @@ export default function CheckInsPage() {
       const newCheckIn = await apiClient.createCheckIn(currentProfileId!, data);
       setCheckIns([newCheckIn, ...checkIns]);
       setShowForm(false);
-    } catch {
-      setError('Failed to record check-in');
+    } catch (e) {
+      setError(e instanceof Error ? `Failed to record check-in (${e.message})` : 'Failed to record check-in');
     } finally {
       setIsSubmitting(false);
     }

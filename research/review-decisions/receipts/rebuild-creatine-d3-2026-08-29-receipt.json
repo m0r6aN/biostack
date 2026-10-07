@@ -1,0 +1,79 @@
+{
+ "research": [
+  {
+   "slug": "creatine",
+   "compound": "Creatine",
+   "path": "/home/user/evidence-run/packets/creatine.evidence.json",
+   "ok": true,
+   "sourceCount": 8,
+   "claimCount": 8,
+   "sourceFamilies": [
+    "regulator (FDA GRAS notice, FDA structure/function-claims policy)",
+    "government fact sheet (NIH ODS)",
+    "professional position stand / systematic review (ISSN 2017; BMC Nephrology 2025 meta-analysis)",
+    "controlled human RCT (2025 hair-loss/DHT trial)",
+    "structured database (PubChem CID 586, DrugBank DB00148)"
+   ],
+   "flags": [
+    "not-fda-approved-drug-dietary-supplement",
+    "gras-food-ingredient",
+    "strong-human-efficacy-highintensity-exercise",
+    "negative-misinformation-rct-hairloss-dht",
+    "thin-human-evidence-renal-impairment-subgroup",
+    "endurance-use-not-supported"
+   ],
+   "headline": "Creatine monohydrate has strong, well-replicated human evidence for high-intensity/resistance-exercise performance and is GRAS as a food ingredient (not an FDA-approved drug), with a 2025 kidney-function meta-analysis and a 2025 RCT directly rebutting the popular hair-loss/DHT claim, while renal safety in people with pre-existing kidney impairment remains comparatively under-studied."
+  },
+  {
+   "slug": "vitamin-d3",
+   "compound": "Vitamin D3",
+   "path": "/home/user/evidence-run/packets/vitamin-d3.evidence.json",
+   "ok": true,
+   "sourceCount": 6,
+   "claimCount": 7,
+   "sourceFamilies": [
+    "regulator-label (DailyMed/FDA SPL)",
+    "professional-guidance (NIH ODS, USPSTF)",
+    "controlled-human-study (VITAL trial, COVID RCT via secondary summaries)",
+    "structured-database (PubChem)"
+   ],
+   "flags": [
+    "negative-human-rct-vital-trial",
+    "uspstf-recommends-against-primary-prevention-use",
+    "thin-human-evidence-for-marketed-immune-mood-covid-claims",
+    "primary-nejm-text-inaccessible-needs-review-verification",
+    "otc-supplement-not-fda-approved-drug"
+   ],
+   "headline": "The largest RCT of high-dose vitamin D3 (VITAL, NEJM 2019) and USPSTF's own guideline both found no benefit for the primary-prevention uses (cancer, cardiovascular disease, fractures, falls) most associated with the compound, while popular online marketing for immune support, mood, and COVID protection outpaces the weak-to-negative controlled evidence for those specific claims."
+  }
+ ],
+ "audit": {
+  "overallPass": true,
+  "perPacket": [
+   {
+    "slug": "creatine",
+    "schemaValid": true,
+    "issues": [
+     "Warning (style/drift): claim creatine-safety-common-adverse-effects-001 opens with 'Creatine is considered safe for short-term use by healthy adults' \u2014 a near-verbatim paraphrase of the NIH source's own bare 'safe' language. It is population/duration-qualified (short-term, healthy adults) and directly sourced, so it is not a blocker, but it sits close to the safety-assurance pattern the audit is watching for; the follow-on ISSN quote ('safe and well-tolerated ... up to 30 g/day for 5 years') is properly dose/duration-scoped. Recommend tightening to attribute the 'safe' language explicitly to the cited source in-line (e.g. 'NIH's fact sheet states creatine is considered safe...') to remove any ambiguity that this is the packet's own assurance."
+    ]
+   },
+   {
+    "slug": "vitamin-d3",
+    "schemaValid": true,
+    "issues": [
+     "Warning (style/drift): claim vitamind3-adverse-effect-hypercalcemia-toxicity-001 embeds the product label's imperative text verbatim ('Do not exceed recommended dosage. Consult your physician before taking this product if you have vascular disease...'). This is a faithful quote of the source's required warning language (not the packet's own invented advice) and is explicitly framed as 'safety context, not a treatment protocol,' so not a blocker \u2014 but because it reads as second-person medical instruction, reviewers should confirm at sign-off that no downstream consumer-facing surface renders this claim's statement text as if it were BioStack's own advice rather than a quoted label warning.",
+     "Already self-flagged by the packet (not a new finding, confirmed correct): the VITAL-trial efficacy claim rests on a secondary media summary (TCTMD) because the primary NEJM/PMC text was inaccessible this session. Spot-checked TCTMD directly \u2014 both quotes used in the packet were located verbatim in the live article \u2014 so the claim is currently well-supported by the source actually cited, but the packet's own reviewReasons correctly keep it human-review-gated pending primary-source reconciliation."
+    ]
+   }
+  ],
+  "blockers": [],
+  "warnings": [
+   "creatine.evidence.json: 'considered safe for short-term use by healthy adults' phrasing in creatine-safety-common-adverse-effects-001 borders on unqualified safety assurance despite having population/duration context; consider more explicit source-attribution framing.",
+   "vitamin-d3.evidence.json: hypercalcemia claim quotes label imperative/second-person warning text verbatim; correctly disclaimed as label content, but worth a style pass so it cannot be mistaken for original medical advice.",
+   "Both packets rely on WebFetch of live public pages for spot-check verification rather than the exact snapshot state at the packets' stated accessedAt timestamp (2026-08-29T04:46:26Z, same day as this audit); content could theoretically have changed within that same day, though no discrepancies were found."
+  ]
+ },
+ "operatorCorrections": [
+  "creatine: 'considered safe' phrasing attributed in-line to NIH ODS per audit style recommendation."
+ ]
+}

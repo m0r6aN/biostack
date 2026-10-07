@@ -188,7 +188,7 @@ public class UserFacingIntelligenceGateTests
         {
             Issued.Add(context);
             return Task.FromResult(new DecisionReceipt(
-                ReceiptUri: $"keon://receipt/test-{Guid.NewGuid():N}",
+                ReceiptUri: $"urn:biostack:test-receipt:{Guid.NewGuid():N}",
                 SubjectUri: context.SubjectUri,
                 TenantId: context.Actor.TenantId,
                 ActorId: context.Actor.ActorId,
@@ -199,6 +199,16 @@ public class UserFacingIntelligenceGateTests
                 EvidenceRefs: context.EvidenceRefs,
                 EffectStatus: context.EffectStatus,
                 ReceiptClass: context.ReceiptClass));
+        }
+
+        // The gate routes non-effecting safety receipts through the degrading path, so this must
+        // record too or every existing assertion on Issued would silently see nothing.
+        public async Task<ReceiptIssuanceResult> TryIssueAndAppendAsync(
+            ReceiptContext context,
+            CancellationToken ct = default)
+        {
+            var receipt = await IssueAndAppendAsync(context, ct);
+            return new ReceiptIssuanceResult(ReceiptIssuanceStatus.Anchored, receipt.ReceiptUri, null);
         }
     }
 }

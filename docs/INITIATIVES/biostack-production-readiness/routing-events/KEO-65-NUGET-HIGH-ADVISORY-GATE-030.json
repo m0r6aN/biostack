@@ -1,0 +1,105 @@
+{
+  "event_id": "route-keo65-nuget-high-advisory-gate-030-complete",
+  "timestamp": "2026-07-27T08:49:16.4949075-04:00",
+  "task_id": "KEO-65-NUGET-HIGH-ADVISORY-GATE-030",
+  "event_type": "complete",
+  "selected": {
+    "kind": "model",
+    "id": "qwen2.5-coder:14b",
+    "provider": "Ollama local",
+    "execution_class": "local"
+  },
+  "rationale": [
+    "Deterministic restore, scan, build, test, YAML, JSON Schema, and diff checks produced the primary evidence.",
+    "The verified local coder was the lowest-cost capable route for a bounded independent security and correctness review of the complete staged parcel diff.",
+    "Repository content remained local and the reviewer had no filesystem-write or external-network authority."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "deterministic-tools-only",
+      "reason": "Deterministic validation proved behavior but did not replace an independent judgment review of CI semantics and scope discipline."
+    },
+    {
+      "id": "frontier-security-reviewer",
+      "reason": "The local reviewer returned PASS and every material claim was independently verified, so external data transfer and higher cost were unnecessary."
+    }
+  ],
+  "effort": "high",
+  "context": {
+    "estimated_tokens": 8000,
+    "artifact_refs": [
+      ".github/workflows/deploy.yml",
+      "backend/src/BioStack.Infrastructure/BioStack.Infrastructure.csproj",
+      "backend/src/BioStack.KnowledgeWorker/BioStack.KnowledgeWorker.csproj",
+      "docs/INITIATIVES/biostack-production-readiness/PARCELS.md",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-65-NUGET-HIGH-ADVISORY-GATE-030.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "read complete staged diff",
+    "return review findings only",
+    "no filesystem writes",
+    "loopback Ollama endpoint only"
+  ],
+  "tools_granted": [],
+  "cost": {
+    "currency": "USD",
+    "estimated": 0,
+    "actual": 0,
+    "confidence": "high"
+  },
+  "validation": [
+    {
+      "method": "10.0.9 fail-closed restore negative control",
+      "status": "passed",
+      "evidence_ref": "Exit 1 with NU1903 promoted to error"
+    },
+    {
+      "method": "10.0.10 audited restore",
+      "status": "passed",
+      "evidence_ref": "Exit 0 with direct and transitive audit enabled"
+    },
+    {
+      "method": "transitive vulnerable-package scan",
+      "status": "passed",
+      "evidence_ref": "No vulnerable packages across all BioStack.sln projects"
+    },
+    {
+      "method": "backend solution build",
+      "status": "passed",
+      "evidence_ref": "0 errors; 6 pre-existing warnings"
+    },
+    {
+      "method": "BioStack.Api.Tests",
+      "status": "passed",
+      "evidence_ref": "299 passed"
+    },
+    {
+      "method": "BioStack.KnowledgeWorker.Tests",
+      "status": "passed",
+      "evidence_ref": "866 passed"
+    },
+    {
+      "method": "workflow YAML and gate assertion",
+      "status": "passed",
+      "evidence_ref": "PyYAML parse and exact command assertion passed"
+    },
+    {
+      "method": "routing event JSON Schema",
+      "status": "passed",
+      "evidence_ref": "Draft 2020-12 validation with format checking passed"
+    },
+    {
+      "method": "bounded local Qwen staged-diff review",
+      "status": "passed",
+      "evidence_ref": "PASS"
+    }
+  ],
+  "retry_count": 2,
+  "escalation_history": [
+    "The first local review runner could not spawn the Windows RTK command shim directly; transport was corrected without invoking the model.",
+    "The second runner attempt exposed command-shell quoting incompatibility; the exact local transport was corrected and the bounded model review then completed."
+  ],
+  "outcome": "accepted"
+}

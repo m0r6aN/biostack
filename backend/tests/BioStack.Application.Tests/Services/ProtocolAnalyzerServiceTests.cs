@@ -45,6 +45,8 @@ public sealed class ProtocolAnalyzerServiceTests
             new CounterfactualEngine(interactionIntelligence, new CounterfactualCandidateService(knowledgeSource), new CounterfactualExplainerService()),
             new NullProtocolAnalysisPersistenceHook(),
             AllowAllFeatureGate(ProductTier.Operator).Object,
+            new BioStack.Application.Evidence.ProtocolEvidenceContextComparer(
+                new BioStack.Domain.Evidence.EvidenceContextComparisonService()),
             NullLogger<ProtocolAnalyzerService>.Instance);
     }
 
@@ -278,6 +280,8 @@ public sealed class ProtocolAnalyzerServiceTests
             new CounterfactualEngine(interactionIntelligence, new CounterfactualCandidateService(knowledgeSource), new CounterfactualExplainerService()),
             new NullProtocolAnalysisPersistenceHook(),
             gate.Object,
+            new BioStack.Application.Evidence.ProtocolEvidenceContextComparer(
+                new BioStack.Domain.Evidence.EvidenceContextComparisonService()),
             NullLogger<ProtocolAnalyzerService>.Instance);
 
         var ex = await Assert.ThrowsAsync<FeatureLimitExceededException>(

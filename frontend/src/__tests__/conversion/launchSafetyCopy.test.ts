@@ -28,9 +28,9 @@ const BANNED_PRESCRIPTIVE = [
 // codebase-wide grep — that is the agreed scope.
 const TOUCHED_SURFACE_COPY = [
   // LandingHero
-  "What you're taking. How it's structured.",
-  "See what it's doing.",
-  'Start with clarity. Then track, compare, and observe changes over time.',
+  'No prescriptions. No guesswork.',
+  "Just what's known.",
+  'A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves. Tracking and analysis come after.',
   // ProtocolAnalyzerExperience
   'Operator and Commander members can paste, upload, scan, or link a protocol for structural scoring and observational alternative scenarios.',
   'Compare alternatives',
@@ -53,6 +53,12 @@ const TOUCHED_SURFACE_COPY = [
   'Reference Data',
   'Published reference range (literature)',
   'Reference only. Published ranges are not BioStack recommendations.',
+  // CompoundIntelligenceCard — merged "Interactions & cautions" section (#11/#12)
+  'Interactions & cautions',
+  'Flagged in source data',
+  'Drug interactions',
+  'Combinations or contexts the source literature flags for review, drawn directly from the record.',
+  "Substances the source literature reports as interacting, shown with the source's own note (for example, \"review\") exactly as recorded.",
   // Billing — Commander
   'Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.',
   'Pattern intelligence',

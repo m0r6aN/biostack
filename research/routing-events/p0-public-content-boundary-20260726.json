@@ -1,0 +1,98 @@
+{
+  "event_id": "p0-public-content-boundary-20260726",
+  "timestamp": "2026-07-26T18:23:28Z",
+  "task_id": "P0-PUBLIC-CONTENT-BOUNDARY-REPAIR-025",
+  "event_type": "validate",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used an isolated worktree at the exact authorized origin/main commit to preserve all existing BioStack and Claude work.",
+    "Applied a narrow projection-and-rendering boundary because rewriting legacy source or live data was outside the authorized repository-only scope.",
+    "Retained observational evidence and caution signals while withholding individualized-action fields from the public surface."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "legacy-data-rewrite",
+      "reason": "A repository or live-data rewrite would require governed retention, provenance, and migration decisions not authorized by this parcel."
+    },
+    {
+      "id": "hide-all-knowledge-fields",
+      "reason": "Removing mechanism, benefits, pathways, sources, and caution observations would discard useful non-prescriptive evidence."
+    }
+  ],
+  "effort": "medium",
+  "context": {
+    "estimated_tokens": 9000,
+    "artifact_refs": [
+      "backend/src/BioStack.Application/Services/KnowledgeService.cs",
+      "backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs",
+      "backend/src/BioStack.Application/Services/ProtocolSuggestionService.cs",
+      "backend/src/BioStack.Api/Endpoints/KnowledgeEndpoints.cs",
+      "backend/src/BioStack.Contracts/Responses/KnowledgeEntryResponse.cs",
+      "backend/tests/BioStack.Api.Tests/Integration/KnowledgeEndpointsIntegrationTests.cs",
+      "frontend/src/components/knowledge/CompoundIntelligenceCard.tsx",
+      "frontend/src/components/tools/ToolsDecisionSurface.tsx",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/P0-PUBLIC-CONTENT-BOUNDARY-REPAIR-025.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "repository-read",
+    "focused-test-execution",
+    "git-read",
+    "git-write",
+    "draft-pr-publication"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-test",
+    "vitest",
+    "git-read",
+    "git-write",
+    "github"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Focused frontend public-boundary tests",
+      "status": "blocked",
+      "evidence_ref": "Hosted CI pending: isolated npm install timed out and then ended with ENOTEMPTY in worktree-only node_modules; no lockfile changed."
+    },
+    {
+      "method": "Focused backend public-boundary tests",
+      "status": "passed",
+      "evidence_ref": "20 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Knowledge endpoint public serialization and interaction-bypass tests",
+      "status": "passed",
+      "evidence_ref": "3 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Git diff whitespace and scope audit",
+      "status": "passed",
+      "evidence_ref": "git diff --check passed; no PR #230 files or lockfiles changed"
+    },
+    {
+      "method": "Independent public-boundary re-review",
+      "status": "passed",
+      "evidence_ref": "All prior blockers resolved; all 16 individualized-action DTO properties are omitted from JSON; observational evidence remains available."
+    }
+  ],
+  "retry_count": 1,
+  "escalation_history": [
+    "Initial focused application compile found an invalid test enum value; corrected EvidenceTier.Low to the existing EvidenceTier.Limited value and reran successfully.",
+    "Frontend verification deferred to hosted CI after the isolated dependency installation failed without changing the lockfile."
+  ],
+  "outcome": "partial"
+}

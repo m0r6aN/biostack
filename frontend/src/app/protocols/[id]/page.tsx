@@ -12,13 +12,38 @@ import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
+import { ScenarioComparisonCard } from '@/components/protocols/ScenarioComparisonCard';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
-import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
+import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, isReducedInteractionIntelligence } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
+
+function UpgradeBanner({ title, detail }: { title: string; detail: string }) {
+  return (
+    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">Commander</p>
+      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-white/65">{detail}</p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href="/billing"
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
+        >
+          Upgrade plan
+        </Link>
+        <Link
+          href="/pricing"
+          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
+        >
+          Compare tiers
+        </Link>
+      </div>
+    </section>
+  );
+}
 
 interface ProtocolDetailPageProps {
   params: Promise<{ id: string }>;
@@ -28,6 +53,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const { id } = use(params);
   const router = useRouter();
   const [protocol, setProtocol] = useState<Protocol | null>(null);
+  const [priorProtocol, setPriorProtocol] = useState<Protocol | null>(null);
   const [review, setReview] = useState<ProtocolReview | null>(null);
   const [patterns, setPatterns] = useState<ProtocolPatternSnapshot | null>(null);
   const [drift, setDrift] = useState<ProtocolDriftSnapshot | null>(null);
@@ -51,7 +77,10 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setError(null);
       setCommanderLockedMessage(null);
       const protocolData = await apiClient.getProtocol(id);
+      const previousVersion = protocolData.priorVersions[0] ?? null;
+      const previousProtocol = previousVersion ? await apiClient.getProtocol(previousVersion.id) : null;
       setProtocol(protocolData);
+      setPriorProtocol(previousProtocol);
 
       try {
         const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
@@ -87,7 +116,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setStarting(true);
       setError(null);
       await apiClient.startProtocolRun(id);
-      await loadProtocol();
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+        apiClient.getProtocolPatterns(id),
+        apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
+      setPatterns(patternData);
+      setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Protocol run started');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -106,7 +146,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.completeProtocolRun(protocol.activeRun.id);
-      await loadProtocol();
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+        apiClient.getProtocolPatterns(id),
+        apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
+      setPatterns(patternData);
+      setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Run marked completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -125,7 +176,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.abandonProtocolRun(protocol.activeRun.id);
-      await loadProtocol();
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+        apiClient.getProtocolPatterns(id),
+        apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
+      setPatterns(patternData);
+      setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Run marked abandoned');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -166,7 +228,16 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         protocol.actualComparison?.run?.id ?? protocol.activeRun?.id ?? null,
         'Protocol review completed from detail view.'
       );
-      await loadProtocol();
+      const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
+        apiClient.getProtocolReview(id),
+        apiClient.getProtocolPatterns(id),
+        apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
+      ]);
+      setReview(reviewData);
+      setPatterns(patternData);
+      setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Review completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -179,7 +250,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   if (error) {
     return (
       <div className="w-full">
-        <Header title="Protocol" />
+        <Header title="Tracked Stack" />
         <div className="p-8">
           <ErrorState message={error} onRetry={loadProtocol} />
         </div>
@@ -190,8 +261,8 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   return (
     <div className="w-full">
       <Header
-        title={protocol?.name ?? 'Protocol'}
-        subtitle={protocol ? `Version ${protocol.version}${protocol.isDraft ? ' draft' : ''}${protocol.isCurrentVersion ? ' · current' : ' · prior version'}` : undefined}
+        title={protocol?.name ?? 'Tracked Stack'}
+        subtitle={protocol ? `Version ${protocol.version}${protocol.isDraft ? ' draft' : ''}${protocol.isCurrentVersion ? ' · current stack' : ' · prior snapshot'}` : undefined}
         actions={
           <div className="flex flex-wrap gap-2">
             {protocol && (
@@ -234,7 +305,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                 disabled={starting || !protocol}
                 className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {starting ? 'Starting' : 'Track this protocol'}
+                {starting ? 'Starting' : 'Track this stack'}
               </button>
             )}
           </div>
@@ -266,7 +337,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
 
             <section className="grid gap-4 lg:grid-cols-[1fr_360px]">
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Lineage</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Tracked Stack History</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-1.5 text-sm font-semibold text-emerald-100">
                     v{protocol.version} {protocol.isDraft ? 'draft' : 'snapshot'}
@@ -313,7 +384,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                 <InteractionIntelligenceCard intelligence={protocol.interactionIntelligence} />
               </div>
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Compounds</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack Compounds</p>
                 <div className="mt-4 space-y-3">
                   {protocol.items.map((item) => (
                     <div key={item.id} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-4">
@@ -339,6 +410,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               </div>
             </section>
 
+            <section id="comparison" className="scroll-mt-6">
+              {!isReducedInteractionIntelligence(protocol.interactionIntelligence) && (
+                <ScenarioComparisonCard intelligence={protocol.interactionIntelligence} />
+              )}
+            </section>
+
             <section id="simulation" className="scroll-mt-6">
               <SimulationTimeline simulation={protocol.simulation} />
             </section>
@@ -355,17 +432,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               <ProtocolComparison comparison={protocol.actualComparison} />
             </section>
             <section id="review" className="scroll-mt-6">
-              {review && (
-                <div className="mb-3 flex justify-end">
-                  <button
-                    onClick={completeReview}
-                    disabled={completingReview || !review}
-                    className="rounded-lg border border-lime-400/25 bg-lime-500/10 px-4 py-2 text-sm font-semibold text-lime-100 hover:border-lime-300/45 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {completingReview ? 'Completing review' : 'Complete review'}
-                  </button>
-                </div>
-              )}
+              <div className="mb-3 flex justify-end">
+                <button
+                  onClick={completeReview}
+                  disabled={completingReview || !review}
+                  className="rounded-lg border border-lime-400/25 bg-lime-500/10 px-4 py-2 text-sm font-semibold text-lime-100 hover:border-lime-300/45 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {completingReview ? 'Completing review' : 'Complete review'}
+                </button>
+              </div>
               <ProtocolIntelligenceReview review={review} patterns={patterns} drift={drift} sequence={sequence} />
             </section>
           </>
@@ -374,29 +449,5 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         )}
       </div>
     </div>
-  );
-}
-
-function UpgradeBanner({ title, detail }: { title: string; detail: string }) {
-  return (
-    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">Commander</p>
-      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
-      <p className="mt-2 max-w-3xl text-sm leading-6 text-white/65">{detail}</p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <Link
-          href="/billing"
-          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
-        >
-          Upgrade plan
-        </Link>
-        <Link
-          href="/pricing"
-          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
-        >
-          Compare tiers
-        </Link>
-      </div>
-    </section>
   );
 }

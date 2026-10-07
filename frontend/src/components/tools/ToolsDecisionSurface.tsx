@@ -29,11 +29,12 @@ import Link from 'next/link';
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
-type BlendStatus = 'compatible' | 'caution' | 'avoid' | 'unknown';
+type OverlapStatus = 'caution' | 'avoid' | 'unknown';
 
 interface ToolsDecisionSurfaceProps {
   initialMode?: SurfaceMode;
   compactIntro?: boolean;
+  heading?: string;
 }
 
 const quickCompounds = ['BPC-157', 'TB-500', 'NAD+'];
@@ -41,6 +42,13 @@ const massUnits: MassUnit[] = ['mcg', 'mg', 'g'];
 const concentrationUnits: ConcentrationUnit[] = ['mcg/mL', 'mg/mL'];
 const conversionUnits: MassUnit[] = ['mcg', 'mg', 'g'];
 const RECENT_COMPOUNDS_KEY = 'biostack.tools.recentCompounds.v1';
+
+export const COMPOUND_OVERLAP_COPY = {
+  title: 'Review compound overlap',
+  helper: 'Add another compound to review known overlap, redundancy, and interaction signals across your stack.',
+  idle: 'Run a check to review available interaction findings.',
+  boundary: 'This does not evaluate same-vial mixing, reconstitution compatibility, or overall clinical safety.',
+} as const;
 
 const modeCopy: Record<SurfaceMode, { label: string; title: string; description: string }> = {
   dose: {
@@ -60,7 +68,7 @@ const modeCopy: Record<SurfaceMode, { label: string; title: string; description:
   },
 };
 
-export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false }: ToolsDecisionSurfaceProps) {
+export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false, heading }: ToolsDecisionSurfaceProps) {
   const { user } = useAuth();
   const { currentProfileId, profiles, setProfiles, setCurrentProfileId } = useProfile();
   const [mode, setMode] = useState<SurfaceMode>(initialMode);
@@ -69,6 +77,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
   const [conversion, setConversion] = useState({ amount: 1000, fromUnit: 'mcg' as MassUnit, toUnit: 'mg' as MassUnit });
   const [knowledge, setKnowledge] = useState<KnowledgeEntry[]>([]);
+  const [knowledgeStatus, setKnowledgeStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [stackCompounds, setStackCompounds] = useState<CompoundRecord[]>([]);
   const [recentCompounds, setRecentCompounds] = useState<string[]>([]);
   const [compatibility, setCompatibility] = useState<InteractionFlag[]>([]);
@@ -81,7 +90,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [trackState, setTrackState] = useState<'idle' | 'tracking'>('idle');
   const [mobileOpen, setMobileOpen] = useState({
     reconstitution: false,
-    blend: false,
+    overlap: false,
   });
 
   const activeProfileId = currentProfileId ?? profiles[0]?.id ?? null;
@@ -135,8 +144,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL for the entered amount` : dosing.error;
-  const blendResult = useMemo(
-    () => summarizeBlend(compatibilityState, compatibility, compound, additionalCompound, knowledge),
+  const overlapResult = useMemo(
+    () => summarizeCompoundOverlap(compatibilityState, compatibility, compound, additionalCompound, knowledge),
     [additionalCompound, compatibility, compatibilityState, compound, knowledge]
   );
   const stackInsights = useMemo(
@@ -164,7 +173,15 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         demoCompound('NAD+'),
       ]);
     }
-    void apiClient.getAllKnowledgeCompounds().then(setKnowledge).catch(() => setKnowledge([]));
+    void apiClient.getAllKnowledgeCompounds()
+      .then((entries) => {
+        setKnowledge(entries);
+        setKnowledgeStatus('ready');
+      })
+      .catch(() => {
+        setKnowledge([]);
+        setKnowledgeStatus('error');
+      });
   }, [refreshSaved]);
 
   useEffect(() => {
@@ -357,7 +374,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Start here</p>
               <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Dose it right. Mix correctly. Check compatibility.
+                {heading ?? 'Dose it right. Mix correctly. Check compatibility.'}
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
                 Free volume, concentration, unit-conversion, and compatibility calculations. No account required.
@@ -365,11 +382,27 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
           )}
 
+          {compactIntro && heading && (
+            <h1 className="text-2xl font-semibold tracking-tight text-white">{heading}</h1>
+          )}
+
+          <Link
+            href="/tools/analyzer"
+            className="group flex items-center justify-between gap-4 rounded-lg border border-violet-300/20 bg-violet-400/[0.06] px-4 py-3.5 transition-colors hover:border-violet-300/40 hover:bg-violet-400/[0.10]"
+          >
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">Protocol Analyzer</p>
+              <p className="mt-1 text-sm leading-5 text-white/70 group-hover:text-white/85">Analyze any protocol in the format you already have.</p>
+            </div>
+            <span className="text-sm font-semibold text-violet-100/80 group-hover:text-violet-100 shrink-0">Analyze →</span>
+          </Link>
+
           <CompoundChooser
             compound={compound}
             onSelect={selectCompound}
             quickCompounds={quickCompounds}
             knowledgeNames={knowledgeNames}
+            knowledgeStatus={knowledgeStatus}
             stackCompounds={stackCompounds}
             recentCompounds={recentCompounds}
             isAuthenticated={Boolean(user) || stackCompounds.length > 0}
@@ -395,7 +428,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                 <div className="grid gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
-                  <NumberWithUnitField label="Amount to calculate" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
+                  <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
@@ -439,6 +472,14 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
               <Metric label="Concentration" value={`${formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(dosing.result.concentrationMgPerMl, 4)} mg/mL`} />
             </div>
           )}
+          {mode !== 'convert' && dosing.result && (
+            <section aria-labelledby="shots-per-vial-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h3 id="shots-per-vial-title" className="text-base font-semibold text-white">Shots per vial</h3>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                There are exactly {formatNumber(dosing.result.shotsPerVialExact, 2)} shots of {formatNumber(dosing.result.u100UnitsPerAdministration, 2)} units ({formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL) in a {formatNumber(input.diluentVolumeMl)} mL vial, though practically you will get {Math.max(dosing.result.shotsPerVialWhole - 1, 0)} to {dosing.result.shotsPerVialWhole} shots depending on syringe math and vial waste.
+              </p>
+            </section>
+          )}
           {stackInsights.length > 0 && <InsightPanel title="Stack insights" items={stackInsights} />}
 
           {mode !== 'convert' && dosing.result && input.concentrationSource === 'reconstitution' && (
@@ -447,13 +488,13 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </MobileAccordion>
           )}
 
-          <MobileAccordion title="Check blend safety" open={mobileOpen.blend} onToggle={() => setMobileOpen((current) => ({ ...current, blend: !current.blend }))}>
-            <BlendSafetyPanel
+          <MobileAccordion title={COMPOUND_OVERLAP_COPY.title} open={mobileOpen.overlap} onToggle={() => setMobileOpen((current) => ({ ...current, overlap: !current.overlap }))}>
+            <CompoundOverlapPanel
               additionalCompound={additionalCompound}
               setAdditionalCompound={setAdditionalCompound}
               onCheck={() => void checkCompatibility()}
               state={compatibilityState}
-              result={blendResult}
+              result={overlapResult}
               knowledgeNames={knowledgeNames}
             />
           </MobileAccordion>
@@ -490,6 +531,7 @@ function CompoundChooser({
   onSelect,
   quickCompounds,
   knowledgeNames,
+  knowledgeStatus,
   stackCompounds,
   recentCompounds,
   isAuthenticated,
@@ -498,6 +540,7 @@ function CompoundChooser({
   onSelect: (value: string) => void;
   quickCompounds: string[];
   knowledgeNames: string[];
+  knowledgeStatus: 'loading' | 'ready' | 'error';
   stackCompounds: CompoundRecord[];
   recentCompounds: string[];
   isAuthenticated: boolean;
@@ -605,7 +648,9 @@ function CompoundChooser({
                 ))}
               </div>
             </>
-          ) : knowledgeNames.length === 0 ? (
+          ) : knowledgeStatus === 'loading' ? (
+            <p className="text-sm leading-6 text-white/52">Loading compound list…</p>
+          ) : knowledgeStatus === 'error' || knowledgeNames.length === 0 ? (
             <p className="text-sm leading-6 text-white/52">Compound search is temporarily unavailable.</p>
           ) : (
             <p className="text-sm leading-6 text-white/52">No recognized compound found. You can still submit this text as a custom compound.</p>
@@ -676,7 +721,7 @@ function InstructionList({ items }: { items: string[] }) {
   );
 }
 
-function BlendSafetyPanel({
+function CompoundOverlapPanel({
   additionalCompound,
   setAdditionalCompound,
   onCheck,
@@ -688,23 +733,24 @@ function BlendSafetyPanel({
   setAdditionalCompound: (value: string) => void;
   onCheck: () => void;
   state: string;
-  result: { status: BlendStatus; reasons: string[] };
+  result: { status: OverlapStatus; reasons: string[] };
   knowledgeNames: string[];
 }) {
   return (
     <div>
-      <p className="text-sm leading-6 text-white/52">Add another compound and check overlap, compatibility, or caution flags.</p>
+      <p className="text-sm leading-6 text-white/52">{COMPOUND_OVERLAP_COPY.helper}</p>
+      <p className="mt-2 text-xs leading-5 text-white/42">{COMPOUND_OVERLAP_COPY.boundary}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
         <label className="block">
           <span className="mb-2 block text-sm text-white/62">Additional compound</span>
-          <input list="biostack-blend-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
-          <datalist id="biostack-blend-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
+          <input list="biostack-overlap-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
+          <datalist id="biostack-overlap-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
         </label>
         <button type="button" onClick={onCheck} className="self-end rounded-lg border border-emerald-300/25 bg-emerald-400/12 px-4 py-3 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50">
           {state === 'checking' ? 'Checking...' : 'Check'}
         </button>
       </div>
-      <div className={`mt-4 rounded-lg border p-3 ${result.status === 'compatible' ? 'border-emerald-300/20 bg-emerald-500/10' : result.status === 'avoid' ? 'border-red-300/20 bg-red-500/10' : result.status === 'caution' ? 'border-amber-300/20 bg-amber-500/10' : 'border-white/10 bg-black/18'}`}>
+      <div className={`mt-4 rounded-lg border p-3 ${result.status === 'avoid' ? 'border-red-300/20 bg-red-500/10' : result.status === 'caution' ? 'border-amber-300/20 bg-amber-500/10' : 'border-white/10 bg-black/18'}`}>
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">{result.status}</p>
         <ul className="mt-2 space-y-1">
           {result.reasons.map((reason) => <li key={reason} className="text-sm leading-6 text-white/72">{reason}</li>)}
@@ -841,7 +887,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
           aria-expanded={open}
           aria-controls={open ? dialogId : undefined}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+          className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
         >
           <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
             <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-2.5a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 8 5.5Zm0-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
@@ -850,8 +896,8 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
       </span>
       {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
-        <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
+        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <select aria-label={`${label} unit`} value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
       </div>
@@ -878,21 +924,30 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
   );
 }
 
-function summarizeBlend(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: BlendStatus; reasons: string[] } {
+export function summarizeCompoundOverlap(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: OverlapStatus; reasons: string[] } {
   if (state === 'error') {
-    return { status: 'unknown', reasons: ['Compatibility data unavailable.', 'Verify against your source.'] };
+    return { status: 'unknown', reasons: ['Compatibility could not be evaluated from the available data.'] };
   }
   if (state !== 'checked') {
-    return { status: 'unknown', reasons: ['Run a check to see blend findings.'] };
+    return { status: 'unknown', reasons: [COMPOUND_OVERLAP_COPY.idle] };
   }
   if (findings.length === 0) {
     const pairNote = pairedNote(compound, additionalCompound, knowledge);
-    return { status: 'compatible', reasons: pairNote ? ['No known conflicts.', pairNote] : ['No known conflicts.'] };
+    return {
+      status: 'unknown',
+      reasons: pairNote
+        ? ['No overlap findings were returned; compatibility remains unknown.', pairNote]
+        : ['No overlap findings were returned; compatibility remains unknown.'],
+    };
   }
-  const avoid = findings.some((item) => /avoid|contra|conflict/i.test(`${item.overlapType} ${item.description}`));
+  // Neither interaction classification nor explanatory prose measures severity.
   return {
-    status: avoid ? 'avoid' : 'caution',
-    reasons: findings.slice(0, 3).map((item) => item.pathwayTag ? `Overlap in ${item.pathwayTag}.` : item.description),
+    status: 'unknown',
+    reasons: ['Severity unavailable.', ...findings.slice(0, 3).map((item) =>
+      item.pathwayTag
+        ? `Overlap in ${item.pathwayTag}.`
+        : item.description ?? `Pair signal: ${item.compoundNames.join(' + ')}.`
+    )],
   };
 }
 
@@ -903,7 +958,8 @@ function buildStackInsights(compound: string, stackCompounds: CompoundRecord[], 
   if (state === 'checking') insights.push('Checking against your stack.');
   flags.slice(0, 2).forEach((item) => {
     const other = item.compoundNames.find((name) => name.toLowerCase() !== compound.trim().toLowerCase());
-    insights.push(other ? `Overlaps with ${other} (${item.pathwayTag}).` : `Potential redundancy (${item.pathwayTag}).`);
+    const detail = item.pathwayTag?.trim() ? ` (${item.pathwayTag.trim()})` : '';
+    insights.push(other ? `Pair signal with ${other}${detail}.` : `Pair signal: ${item.compoundNames.join(' + ')}${detail}.`);
   });
   return Array.from(new Set(insights));
 }
@@ -911,8 +967,9 @@ function buildStackInsights(compound: string, stackCompounds: CompoundRecord[], 
 function pairedNote(compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): string {
   const entry = knowledge.find((item) => item.canonicalName.toLowerCase() === compound.trim().toLowerCase());
   if (!entry) return '';
-  const pair = [...entry.pairsWellWith, ...entry.compatibleBlends].find((item) => item.toLowerCase().includes(additionalCompound.trim().toLowerCase()));
-  return pair ? `Often paired for ${pair}.` : '';
+  const pair = [...(entry.pairsWellWith ?? []), ...(entry.compatibleBlends ?? [])]
+    .find((item) => item.toLowerCase().includes(additionalCompound.trim().toLowerCase()));
+  return pair ? 'Source data reports this pairing, but does not establish compatibility or safety.' : '';
 }
 
 function restoreDosingInput(inputs: Record<string, unknown>): UnifiedDosingInput {

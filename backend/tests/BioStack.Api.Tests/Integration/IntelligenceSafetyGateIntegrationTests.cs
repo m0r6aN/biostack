@@ -49,6 +49,7 @@ public class IntelligenceSafetyGateIntegrationTests : IAsyncLifetime
 
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.AddAuthorization(opts =>
                     {
                         opts.DefaultPolicy = new AuthorizationPolicyBuilder()
@@ -89,7 +90,6 @@ public class IntelligenceSafetyGateIntegrationTests : IAsyncLifetime
             UpdatedAtUtc = DateTime.UtcNow,
         });
         await db.SaveChangesAsync();
-
         var store = scope.ServiceProvider.GetRequiredService<ICompoundGraphStore>();
         await store.PublishAsync(
             new CompoundGraphArtifact

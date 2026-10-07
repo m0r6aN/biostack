@@ -35,18 +35,40 @@ public static class KnowledgeEndpoints
         return compound is null ? Results.NotFound() : Results.Ok(compound);
     }
 
-    private static async Task<IResult> CheckOverlap(OverlapCheckRequest request, IOverlapService overlapService, CancellationToken ct)
+    private static async Task<IResult> CheckOverlap(
+        OverlapCheckRequest request,
+        IOverlapService overlapService,
+        IFeatureGate featureGate,
+        CancellationToken ct)
     {
         var flags = await overlapService.CheckOverlapAsync(request, ct);
-        return Results.Ok(new { overlaps = flags });
+
+        // Owner ruling 2026-09-16, extended 2026-09-17: the public overlap-check tool is the same
+        // Observer boundary as every other per-pair interaction surface — flagged pairs and
+        // severity are public; the unsourced per-pair reasoning (Description/EvidenceConfidence)
+        // requires reviewed_relationship_graph (Operator). This endpoint carries no
+        // .RequireAuthorization(), so an anonymous caller must fail closed to the reduced shape,
+        // exactly like an authenticated Observer.
+        var hasReasoningAccess = await InteractionIntelligenceProjection.HasReasoningAccessAsync(featureGate, ct);
+        return Results.Ok(new { overlaps = InteractionIntelligenceProjection.ProjectFlags(flags, hasReasoningAccess) });
     }
 
     private static async Task<IResult> CheckInteractions(
         OverlapCheckRequest request,
         IInteractionIntelligenceService interactionIntelligenceService,
+        IFeatureGate featureGate,
         CancellationToken ct)
     {
-        var result = await interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, ct);
-        return Results.Ok(result);
+        var result = await interactionIntelligenceService.EvaluatePublicByNamesAsync(request.CompoundNames, ct);
+
+        // Owner ruling 2026-09-16, extended 2026-09-16: "The public view should definitely be the
+        // same as observed [Observer]." Routed through the single InteractionIntelligenceProjection
+        // point (same one #369 introduced for the protocol/current-stack-intelligence surfaces) —
+        // no new gate mechanism. An anonymous caller has no current-user context, so
+        // HasReasoningAccessAsync fails closed to the reduced (pair + severity only) shape. An
+        // authenticated caller holding reviewed_relationship_graph gets the full shape from this
+        // same endpoint.
+        var hasReasoningAccess = await InteractionIntelligenceProjection.HasReasoningAccessAsync(featureGate, ct);
+        return Results.Ok(InteractionIntelligenceProjection.Project(result, hasReasoningAccess));
     }
 }

@@ -1,0 +1,612 @@
+[
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "semaglutide-ozempic-regulatory-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK603723/",
+        "independentSourceFamily": "paper-level primary/review literature (NCBI Bookshelf/StatPearls)",
+        "finding": "Packet's only sourceRef is dailymed-ozempic (regulator/label family). StatPearls (NCBI Bookshelf), an independent review-literature source, confirms Ozempic is approved as adjunct to diet/exercise for glycemic control in T2DM and separately for reducing major adverse cardiovascular events in T2DM patients with established CV disease -- matching the packet statement's 'certain cardiovascular-risk contexts' language. No overstatement found; statement stays appropriately product-specific."
+      },
+      {
+        "claimId": "semaglutide-wegovy-regulatory-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.nature.com/articles/s41591-024-02996-7",
+        "independentSourceFamily": "controlled human study / primary literature (SELECT trial, NEJM/Nature Medicine)",
+        "finding": "Packet's only sourceRef is dailymed-wegovy (regulator/label family). The SELECT trial (17,604 adults with overweight/obesity + established CVD, no diabetes; 10.2% mean weight loss vs 1.5% placebo at 208 weeks; 20% MACE reduction), an independent controlled-trial/primary-literature source, substantiates both the chronic weight-management and cardiovascular-risk-reduction contexts referenced in the statement. Statement is consistent with trial data and does not overstate magnitude or population."
+      },
+      {
+        "claimId": "semaglutide-mtc-men2-contraindication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK603723/",
+        "independentSourceFamily": "paper-level primary/review literature (NCBI Bookshelf/StatPearls)",
+        "finding": "sourceRefs are both DailyMed labels (single regulator/label family). StatPearls independently confirms the MTC/MEN2 contraindication and its basis in rodent thyroid C-cell tumor data, matching the packet's statement verbatim in substance. This is the safety-critical/fieldAuthorityRequired claim given top priority; independent confirmation obtained, no discrepancy found."
+      },
+      {
+        "claimId": "semaglutide-compounded-warning-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://news.unm.edu/news/can-you-overdose-on-ozempic-or-wegovy",
+        "independentSourceFamily": "paper-level primary literature (peer-reviewed poison-control case series, JAPhA/PubMed 37392810, reported via independent secondary coverage)",
+        "finding": "sourceRef is a single FDA regulator page. Verified the FDA page is still live at that exact URL today (2026-08-29) and content matches (990 adverse event reports for compounded semaglutide as of May 31, 2026, dosing-error mechanism, salt-form concerns). Independently, a peer-reviewed poison-control-center case series (JAPhA, PMID 37392810) and related case reports corroborate that compounded semaglutide's non-prefilled, patient-self-extracted dosing format drives dosing errors and adverse events (GI distress, dehydration; no confirmed deaths), which is a materially different source family (primary clinical literature) than the FDA page. Note: the case-series literature does not itself supply the '990 reports/hospitalization' figures -- those remain sourced only to FDA -- so the specific statistic stays label/regulator-sourced even though the underlying mechanism and existence of harm is independently corroborated. Also note the packet's reviewFlags correctly separate compounded-product evidence from approved-product claims; statement does not conflate the two."
+      }
+    ],
+    "compoundName": "Semaglutide",
+    "slug": "semaglutide",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [],
+    "notes": [
+      "All four claims in this packet are fieldAuthorityRequired=true (regulatory/safety-critical/contraindication/compounding-warning), and all four now have at least one independent-family confirmation on top of their original DailyMed/FDA sourceRefs: NCBI Bookshelf/StatPearls (paper-level review) for the two indication claims and the MTC/MEN2 contraindication, and independent poison-control case-series literature for the compounded-product warning.",
+      "The packet's dailymed-ozempic, dailymed-wegovy, and fda-compounded-glp1-concerns sourceRefs all sit in the same 'regulator/label' family per the review taxonomy -- re-reading them, or fetching accessdata.fda.gov label PDFs, would NOT have counted as independent verification; StatPearls/NCBI Bookshelf and the SELECT-trial primary literature were used instead to satisfy the cross-family requirement.",
+      "The packet's FDA compounded-GLP-1 URL was re-checked against the live FDA page today (2026-08-29) and is current and accurate (990 adverse-event reports as of 2026-05-31 still shown) -- no April-2026 listing drift found for this specific claim.",
+      "No claim was found to cross into medical advice, a use recommendation, or efficacy-inflation beyond what the quoted excerpts support; all statements retain appropriately hedged, product-specific language (e.g. 'certain cardiovascular-risk contexts', 'label-specified obesity, overweight, or cardiovascular-risk populations').",
+      "One residual, non-blocking gap: the specific adverse-event COUNT (990 reports) in the compounded-semaglutide claim is still single-family (FDA)-sourced only; the independent case-series literature corroborates the mechanism and existence of harm but not that exact statistic. This does not block approval since the claim's statement does not itself cite the numeric count, but future revisions citing specific FDA statistics should still flag them as regulator-only-sourced.",
+      "The packet's own ops.reviewReasons ('Pilot regulatory evidence packet requires human review before publication') and reviewFlags ('verify latest label before publication') are satisfied by this review for the claims as currently worded; if the DailyMed label text is edited before publication, that specific edit should be re-diffed against the live label, since this review confirms substance, not byte-for-byte label text."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "tirzepatide-mounjaro-regulatory-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.prnewswire.com/news-releases/fda-approves-lillys-mounjaro-tirzepatide-to-reduce-cardiovascular-risk-in-adults-with-type-2-diabetes-302862415.html",
+        "independentSourceFamily": "regulatory/clinical news coverage of FDA action (independent of DailyMed label text)",
+        "finding": "The packet's sourceRef is DailyMed only (label family). Independent verification via press/clinical-news coverage of the live FDA action shows Mounjaro's approved indication is now BROADER than the packet states: on 2026-08-28 (one day before this review) FDA approved an ADDITIONAL indication for Mounjaro \u2014 reducing major adverse cardiovascular events (CV death, non-fatal MI, non-fatal stroke) in adults with type 2 diabetes at high CV risk, based on the SURPASS-CVOT trial \u2014 on top of the existing glycemic-control indication. The packet's statement ('indicated as an adjunct to diet and exercise to improve glycemic control ... ') is now incomplete/stale and should be updated to include the new CV-risk-reduction indication, since the packet was generated 2026-05-05, before this approval. This is exactly the kind of live-label drift the review directive flags for regulatory claims."
+      },
+      {
+        "claimId": "tirzepatide-zepbound-regulatory-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.aspconline.org/news/fda-approves-zepbound-tirzepatide-",
+        "independentSourceFamily": "professional/clinical society and press coverage of FDA action (independent of DailyMed label text)",
+        "finding": "Cross-checked against independent clinical/press coverage (Lilly investor releases, ASPC, WebMD/tctmd) rather than re-reading DailyMed. Zepbound's approved scope \u2014 chronic weight management (with reduced-calorie diet/increased activity) in adults with obesity/overweight with a weight-related condition, plus the December 2024 addition for moderate-to-severe obstructive sleep apnea in adults with obesity \u2014 matches the packet's statement. No further indication expansion (e.g., cardiovascular, MASH) was found for Zepbound as of today; the CV-risk-reduction expansion found this week applies to Mounjaro (T2D), not Zepbound. Statement holds as accurate and current."
+      },
+      {
+        "claimId": "tirzepatide-mtc-men2-contraindication-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.droracle.ai/articles/538783/what-are-the-adverse-effects-and-black-box-warnings",
+        "independentSourceFamily": "independent clinical-reference summary of the black-box warning (distinct from the DailyMed label excerpts cited)",
+        "finding": "Independent clinical-reference source corroborates the contraindication: tirzepatide carries an FDA black box warning for thyroid C-cell tumors, including medullary thyroid carcinoma, in patients with personal/family MTC history or MEN 2. Note worth adding to the packet: this warning is based on RODENT (not human) carcinogenicity studies \u2014 a nuance the current statement omits and that is relevant for a safety-critical, fieldAuthorityRequired claim (avoids implying a demonstrated human carcinogenicity signal). Recommend appending this basis to the statement or extractedEvidence."
+      },
+      {
+        "claimId": "tirzepatide-compounded-warning-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.fda.gov/drugs/drug-alerts-and-statements/fda-clarifies-policies-compounders-national-glp-1-supply-begins-stabilize",
+        "independentSourceFamily": "live FDA regulatory statement dated 2026-04-01 (materially updated/different regulator communication than the general 'FDA's Concerns with Unapproved GLP-1 Drugs' page cited, and cross-checked against independent trade/legal press: NCPA, Pharmacy Times, GoodRx)",
+        "finding": "The packet's statement is generic ('FDA advises caution ... vigilant when prescribing compounded ... products') and understates the current regulatory posture. Independent verification against FDA's own later, more specific statement (issued 2026-04-01, per the directive's note that listings changed in April 2026) shows FDA has gone well past advising caution: it determined the tirzepatide shortage was resolved (Dec 19, 2024) and formally ENDED compounding enforcement discretion for tirzepatide \u2014 Feb 18, 2025 for 503A compounders and Mar 19, 2025 for 503B outsourcing facilities. Mass/routine compounding of tirzepatide as an 'essentially a copy' product is now generally NOT permitted absent documented patient-specific necessity (with a narrow \u22644-prescriptions/month enforcement-discretion allowance). The claim should be rewritten to state that FDA compounding discretion for tirzepatide has ended (with dates) rather than only 'advises caution,' since the current statement could mislead readers into thinking compounded tirzepatide remains a routinely FDA-tolerated option similar to during the shortage period."
+      }
+    ],
+    "compoundName": "Tirzepatide",
+    "notes": [
+      "Scan for medical-advice/efficacy-inflation language: none found. The packet's four claims are descriptive (label indications, contraindication, regulatory warning) and do not recommend use, dosing, or overstate efficacy beyond what the cited label quotes support. No dosing claims present in this packet to check.",
+      "Two of four claims (both regulatory, fieldAuthorityRequired=true) are stale relative to live FDA status: Mounjaro's indication expanded on 2026-08-28 (CV risk reduction added) and FDA's compounding-discretion posture for tirzepatide hardened substantially starting Feb/Mar 2025 and was restated April 2026 \u2014 both postdate or were not reflected in this packet's 2026-05-05 generation despite the compounding source being from that era; the CV approval is brand new (1 day before this review) and could not have been anticipated at generation time, but should be caught now before publication.",
+      "The MTC/MEN2 safety-critical claim independently confirmed, with a recommended nuance (rodent-study basis) added.",
+      "sourceRegistryVersion is 'pilot-source-registry-001' and packet ops.completeness is 'partial' with needsReview=true \u2014 packet was already self-flagged as not publication-ready, consistent with findings here."
+    ],
+    "promotionBlockers": [
+      "Mounjaro regulatory claim (tirzepatide-mounjaro-regulatory-001) omits the FDA's 2026-08-28 approval of an additional indication (cardiovascular risk reduction in adults with T2D) \u2014 must be updated with current label scope and re-sourced (DailyMed label likely not yet updated; use the approval announcement plus forthcoming label revision) before publication.",
+      "Compounding claim (tirzepatide-compounded-warning-001) is fieldAuthorityRequired and materially understates FDA's current position: compounding enforcement discretion for tirzepatide has formally ended (503A: Feb 18 2025; 503B: Mar 19 2025), reaffirmed in FDA's April 2026 statement. Statement must be rewritten to reflect this before publication to avoid misleading readers about the legal status of compounded tirzepatide.",
+      "MTC/MEN2 contraindication claim should have the rodent-study basis of the black-box warning added for precision, though this is a minor addition rather than a blocking correction."
+    ],
+    "recommendation": "request-changes",
+    "slug": "tirzepatide"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "retatrutide-identity-ly3437943-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.selleckchem.com/peptide/retatrutide.html",
+        "independentSourceFamily": "structured chemical/substance database (vendor chemical registry entries citing CAS 2381089-83-2; corroborated by FDA drug-alert page naming retatrutide directly)",
+        "finding": "sourceRefs used paper (NEJM) + clinical-trial-registry (ClinicalTrials.gov) families. Independently checked against structured chemical database listings (Cayman Chemical, MedChemExpress, Selleck Chemicals) which all confirm CAS 2381089-83-2, synonym LY3437943, and GCGR/GLP-1R/GIPR triple-receptor-agonist classification. FDA's own 2026 drug-alert page ('FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss') also names retatrutide directly, consistent with the identity claim. No conflict found; statement holds and is appropriately hedged as investigational."
+      },
+      {
+        "claimId": "retatrutide-phase2-obesity-studied-use-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.tandfonline.com/doi/full/10.1080/08998280.2025.2456441",
+        "independentSourceFamily": "systematic review/meta-analysis of randomized controlled trials (independent of the single NEJM paper cited)",
+        "finding": "sourceRefs used only the single NEJM paper (paper family). Independently checked against multiple peer-reviewed systematic reviews/meta-analyses of retatrutide RCTs (Baylor Univ. Medical Center Proceedings 2025, and a separate ScienceDirect meta-analysis) that describe the same trial as randomized, double-blind, placebo-controlled, subcutaneous dosing in adults with obesity/overweight plus a weight-related condition, with body-weight change as the primary endpoint. This corroborates the packet's studied-use statement without inflating it into an efficacy or approved-use claim. No adjustment needed."
+      },
+      {
+        "claimId": "retatrutide-investigational-boundary-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/drug-alerts-and-statements/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+        "independentSourceFamily": "regulator/label (live FDA page, checked 2026-08-29; corroborated by DailyMed export-only listing)",
+        "finding": "sourceRefs used ClinicalTrials.gov (trial registry) + NEJM (paper). Live-checked against the FDA's current drug-alert page (accessed today, 2026-08-29), which states retatrutide is 'not components of FDA-approved drugs and have not been found safe and effective for any condition' and explicitly warns that retatrutide 'cannot be used in compounding under federal law,' with warning letters issued to telehealth sellers as recently as March 2026. A DailyMed listing for a 'SALKALLI' retatrutide pen exists but is marked Marketing Category: Export only (manufacturer Guangzhou Yixin Cross-border E-commerce Co., Ltd.), i.e. not a US FDA-approved product. This independently confirms the packet's investigational-boundary statement remains accurate as of today and has not been overtaken by an April-2026 regulatory change. Note: this is a regulatory/evidence-boundary claim yet fieldAuthorityRequired is set to false in the packet, which is inconsistent with the directive's rule that regulatory claims must be marked fieldAuthorityRequired=true \u2014 recommend correcting the tag even though the underlying statement is verified accurate."
+      }
+    ],
+    "compoundName": "Retatrutide",
+    "notes": [
+      "No medical advice, use recommendation, or efficacy-inflation language was found beyond what the cited quotes support; the packet is appropriately hedged throughout (e.g., explicit 'do not generalize phase 2 evidence to approved-use claims' reviewFlag).",
+      "All three claims received independent cross-family confirmation: structured chemical/substance database for identity, systematic-review/meta-analysis literature for the trial-design claim, and a live FDA regulator page + DailyMed for the investigational-boundary claim.",
+      "ops.needsReview=true and reviewReasons cite a generic 'pilot input requires human review before publication' gate. That is a process/promotion gate, not a specific evidentiary conflict, and cross-source verification does not resolve it on its own \u2014 it should remain in force until a human reviewer signs off on promotion, independent of the claim-level confirmations above.",
+      "Packet-quality gap (not a claim-content error): retatrutide-investigational-boundary-001 is a regulatory/evidence-boundary claim but is tagged fieldAuthorityRequired=false, which appears inconsistent with the directive's instruction to mark regulatory claims fieldAuthorityRequired=true. Recommend correcting the tag so this claim routes through safety/regulatory-priority review in future pipeline passes.",
+      "Given the active grey-market/compounding activity around retatrutide (FDA warning letters through March 2026, active vendor sites), the packet's existing reviewFlag calling for ongoing misinformation monitoring is well-founded and should stay active post-promotion."
+    ],
+    "promotionBlockers": [
+      "ops.needsReview is true with an unresolved generic reviewReason ('Pilot emerging evidence packet requires human review before publication.') \u2014 this process gate has not been formally cleared by a human reviewer and should not be treated as satisfied merely because the underlying claims passed independent cross-source verification.",
+      "The regulatory/evidence-boundary claim (retatrutide-investigational-boundary-001) is not tagged fieldAuthorityRequired=true despite being a regulatory claim per the directive's tagging rules; correct this tag before/at promotion so it receives appropriate ongoing regulatory-change monitoring.",
+      "externalIdentifiers block (rxnorm/unii/casNumber/drugbank/pubchem/chembl/doi/pmid) is entirely null despite independent sources readily supplying at least CAS 2381089-83-2 and the NEJM DOI/PMID (10.1056/NEJMoa2301972, PMID 37366315) \u2014 these should be populated before promotion to meet basic structured-database completeness."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "retatrutide"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "bpc157-regulatory-compounding-risk-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://djholtlaw.com/regulatory-alert-fdas-april-2026-update-on-bpc-157-and-ghk-cu/",
+        "independentSourceFamily": "regulator/label (live FDA page re-check) + secondary legal/regulatory commentary",
+        "finding": "The claim's sourceRef is the FDA bulk-substances page itself, so re-checking that same page live (a different visit, not the same cached read) plus an independent secondary confirmation was required. The LIVE FDA page today (fetched directly) does NOT list BPC-157 in the current Category 2 'significant safety risks' table; BPC-157 now appears only under 'Bulk drug substances nominated but withdrawn,' with the page's own modified-time metadata showing an April 22, 2026 update. An independent legal/regulatory-commentary source (Holt Law, corroborated by other industry blogs found in search) confirms FDA removed BPC-157 from Category 2 in April 2026 because the original nominators withdrew their nomination -- a procedural change, not new safety data -- and that FDA has scheduled a Pharmacy Compounding Advisory Committee session for July 23-24, 2026 to consider a path to approved compounding status. BPC-157 remains, in the interim, an unapproved new drug not on any approved compounding list ('regulatory limbo'), so the underlying caution is still directionally warranted, but the claim's present-tense statement ('FDA lists BPC-157 among bulk drug substances that may present significant safety risks') is now factually stale and should be rewritten to state that BPC-157 was removed from the Category 2 list in April 2026 following nomination withdrawal, remains unapproved/not on any permitted compounding list, and is subject to a pending July 2026 PCAC review -- rather than implying an active Category-2 listing."
+      },
+      {
+        "claimId": "bpc157-preclinical-human-gap-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+        "independentSourceFamily": "systematic review / paper-level primary literature (independent of the cited narrative literature-and-patent review), corroborated by structured-trial-registry information reported in journalism",
+        "finding": "An independent systematic review (Vasireddi et al., 'Emerging Use of BPC-157 in Orthopaedic Sports Medicine,' PubMed 40756949, 2025) -- a different paper from the packet's cited narrative literature/patent review -- corroborates the scarcity of human evidence: of 36 studies reviewed, only 1 was a human clinical study (a small uncontrolled retrospective case series on intra-articular knee injections, 7/12 patients reporting improvement), and the authors state explicitly 'No clinical safety data were found' and only one registered Phase I trial exists with 'unknown status since 2016.' This independently confirms the packet's evidence-gap framing and adds a sharper, citable detail: there is not just a scarcity but essentially zero controlled human safety data, and the one existing registered trial has been dormant for a decade. Recommend adding this more specific detail (no clinical safety data found; sole registered trial's status unknown since 2016) as a strengthening addition rather than a correction."
+      },
+      {
+        "claimId": "bpc157-misinformation-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.statnews.com/2026/02/03/bpc-157-peptide-science-safety-regulatory-questions/",
+        "independentSourceFamily": "independent journalistic/professional-commentary source citing clinical and regulatory experts, materially different from the cited FDA page and PMC review",
+        "finding": "STAT News (Feb 2026), an independent source not among the claim's sourceRefs, corroborates the exact pattern described: vendors and wellness influencers market BPC-157 as a transformative healing compound while a University of Utah Health physician is quoted stating it 'should not be used by humans' absent proper trials, nearly all evidence traces to one animal-research group, and a 2015 human trial was withdrawn from a public registry before external review with no peer-reviewed results ever published. A supplementary search of vendor/wellness pages (healingmaps, text2md, peptideadvisors, etc.) independently confirms the online 'proven healing peptide' framing the packet describes as needing misinformation labeling. One nuance: STAT's own regulatory framing (citing a 2023 FDA prohibition as current) is itself now stale per the April 2026 FDA update found for claim 1, which is a useful cross-check illustrating why the regulatory claim needs its own refresh, but does not undermine STAT's corroboration of the misinformation-gap claim itself."
+      }
+    ],
+    "promotionBlockers": [
+      "Regulatory claim bpc157-regulatory-compounding-risk-001 (fieldAuthorityRequired=true) states FDA currently lists BPC-157 in the Category 2 significant-safety-risk compounding list; the live FDA page today shows BPC-157 was removed from that list in April 2026 (nomination withdrawn) and now sits under a 'withdrawn nomination' section pending a July 23-24, 2026 Pharmacy Compounding Advisory Committee review. This claim must be rewritten to reflect current status before the packet is promoted, since a stale regulatory-safety claim is exactly the kind of error the fieldAuthorityRequired gate exists to catch.",
+      "ops.reviewReasons currently only names a generic 'pilot misinformation-heavy evidence packet requires human review' reason; it should be updated to explicitly flag the regulatory-status drift discovered in this review (FDA Category 2 listing changed April 2026) so the next reviewer does not re-affirm the stale FDA claim by only re-reading the same FDA source."
+    ],
+    "notes": [
+      "Independent verification was performed per source-family rules: claim 1 was checked against a live (re-fetched) FDA page plus an independent legal/regulatory commentary source; claim 2 against a separate 2025 systematic review (different paper than the cited narrative review) with corroborating trial-registry detail; claim 3 against an independent STAT News investigative piece plus a spot-check of current vendor/wellness marketing pages.",
+      "No fabrication or unsalvageable sourcing was found -- the packet's underlying quotes and characterizations are accurate as of when it was likely compiled; the issue is temporal drift on the regulatory claim (FDA page changed April 2026), which is a normal, expected finding for a compounding-substance claim in this fast-moving regulatory area and is squarely what the review process is designed to catch.",
+      "Minor completeness gap unrelated to claim accuracy: compound.externalIdentifiers are all null despite BPC-157 having findable PubChem/related entries; not a blocking issue but worth filling in during any revision pass.",
+      "The misinformation claim's extractedEvidence has a null quote (pageOrSection only) -- consider adding a short verbatim excerpt from the cited review's discussion section for stronger auditability, though this did not affect the confirmed verdict."
+    ],
+    "recommendation": "request-changes",
+    "slug": "bpc-157",
+    "compoundName": "BPC-157"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "tb500-wada-prohibited-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.bscg.org/blogs/single/tb-500-status-risks-and-bans-in-sport-and-military",
+        "independentSourceFamily": "professional/compliance-body summary (anti-doping compliance organization, corroborated by a structured drugs.com WADA-list reproduction)",
+        "finding": "Independent sources (BSCG anti-doping compliance blog; drugs.com's structured reproduction of the WADA list) both confirm thymosin beta-4/TB-500 is prohibited under WADA's peptide hormones/growth factors category, matching the claim's statement. Note: secondary sources disagree on the exact sub-code (drugs.com places it under S2.3; BSCG places it under S0), which the packet's claim does not itself specify, so this is a documentation nuance rather than a conflict with the claim as written. Separately, the packet's regulatory coverage of TB-500 is WADA-only; an FDA Pharmacy Compounding Advisory Committee (PCAC) review in July 2026 reportedly recommended TB-500 for the 503A bulk drug substances compounding list (multiple industry/legal secondary sources; FDA's own advisory-committee page confirms the meeting occurred and TB-500 was on the agenda for 'wound healing' but its raw text does not itself state the vote outcome). This is a materially newer regulatory development not reflected anywhere in the packet and worth adding before public promotion."
+      },
+      {
+        "claimId": "tb500-parent-protein-evidence-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mdpi.com/2076-3417/16/12/6202",
+        "independentSourceFamily": "systematic/scoping review (MDPI, independent of the packet's cited Frontiers review)",
+        "finding": "An independent scoping review (different review-family source than the packet's cited Frontiers 2021 article) strongly corroborates and sharpens this claim: of 80 papers reviewed, direct TB-500 human evidence was limited to a single study (in-vitro/metabolite profiling, not a clinical trial), and thymosin beta-4 (full protein) human evidence was concentrated in ocular/wound settings with no human interventional studies in tendon/ligament/muscle/bone/cartilage. This independently confirms the packet's caution against treating vendor TB-500 products as equivalent to studied thymosin beta-4 formulations."
+      },
+      {
+        "claimId": "tb500-misinformation-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.mdpi.com/2076-3417/16/12/6202",
+        "independentSourceFamily": "systematic/scoping review (MDPI, independent of the packet's cited Frontiers review)",
+        "finding": "The same independent scoping review explicitly states that 'the published literature does not match the way these peptides are often discussed in clinical, performance, or public-facing settings' and warns against extrapolating from preclinical/ocular/wound/vascular studies to unproven musculoskeletal recovery use online. This independently confirms the packet's framing that popular recovery/injury-repair claims for TB-500 outrun the human evidence and should remain an evidence-gap, not a proven-benefit claim."
+      }
+    ],
+    "compoundName": "TB-500",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [
+      "Regulatory coverage is incomplete: the packet documents only WADA anti-doping status and is silent on the FDA Pharmacy Compounding Advisory Committee's July 2026 review/recommendation of TB-500 for the 503A bulk drug substances (compounding) list -- a significant, more recent regulatory development from an independent regulator-family source that should be added and fieldAuthorityRequired-flagged before public promotion.",
+      "No claim in the packet currently addresses FDA/compounding legal status at all, which is a notable completeness gap for a compound heavily discussed in both sports-doping and clinical-compounding contexts."
+    ],
+    "notes": [
+      "All 3 claims in the packet were independently verified against a source family materially different from their own sourceRefs, per the directive's Independent review rule.",
+      "The single fieldAuthorityRequired claim (WADA regulatory status) is confirmed-with-note by an independent professional/compliance-body source; no needs-adjustment or unresolved fieldAuthorityRequired claims remain, which supports approve-claims for the claims as currently written.",
+      "The two evidence-gap/misinformation-boundary claims are not just confirmed but reinforced by an independent, more recent scoping review (MDPI 2026) that found even sparser direct human TB-500 data than the packet's own cited Frontiers review implies -- if anything the packet's caution is warranted and could be strengthened with this newer citation.",
+      "No medical advice, dosing recommendations, or efficacy inflation beyond the cited quotes was found in any claim statement; language throughout appropriately hedges human-efficacy claims and flags alias/formulation ambiguity.",
+      "Recommend the packet author add a new regulatory/fieldAuthorityRequired claim covering the FDA PCAC July 2026 TB-500 compounding recommendation (citing FDA's own advisory-committee/briefing documents as the primary sourceRef) as a follow-up before this packet moves to the public library, even though this does not block approval of the claims that already exist."
+    ],
+    "slug": "tb-500"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "ghk-cu-identity-pubchem-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://go.drugbank.com/drugs/DB11296",
+        "independentSourceFamily": "structured authority database (DrugBank) \u2014 materially different from the packet's PubChem citation",
+        "finding": "DrugBank lists GHK-Cu under the entry 'Prezatide' (DB11296), describing it as the tripeptide Gly-His-Lys that readily complexes with copper and is used in cosmetic products for skin and hair \u2014 consistent with the packet's identity claim. Multiple independent chemical-vendor catalogs (Cayman Chemical, MedKoo, GlpBio, TargetMol, Carl Roth) also list CAS 300801-03-0 for 'GHK-Cu acetate,' corroborating the CAS/identity pairing. Note: DrugBank's own CAS field was behind a login wall so the CAS number could not be cross-confirmed on that specific page \u2014 the corroboration comes from vendor chemical-safety-data listings rather than a second free structured database field. Confirmed with that caveat."
+      },
+      {
+        "claimId": "ghk-cu-skin-regeneration-context-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://ctv.veeva.com/study/topical-ghk-cu-gel-for-acute-skin-wound-healing",
+        "independentSourceFamily": "controlled human study / clinical trial registry \u2014 materially different from the packet's systematic-review (PMC) citation",
+        "finding": "Found an independently registered Phase 2 controlled human trial (CuHeal) testing topical GHK-Cu gel vs. vehicle on standardized punch-biopsy wounds in ~60 healthy adults, currently enrolling with results pending. This confirms the packet's cautious framing is accurate: GHK-Cu topical wound-healing evidence is a mix of substantial preclinical/animal data plus early-stage, not-yet-concluded human investigation \u2014 it is NOT yet backed by completed human efficacy results. The packet correctly avoids claiming proven human efficacy and correctly restricts scope to topical/cosmetic research contexts. Note for the record: cite that human trials exist but are ongoing/unconcluded, so 'substantial preclinical evidence' should not be read to imply established human efficacy."
+      },
+      {
+        "claimId": "ghk-cu-hype-boundary-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.orrick.com/en/Insights/2026/04/FDA-Announces-Removal-of-12-Peptides-from-Category-2-and-Schedules-PCAC-Meetings",
+        "independentSourceFamily": "regulator/label data (FDA 503A bulk drug substances nomination process) \u2014 materially different from the packet's review+database citations",
+        "finding": "Live regulatory source (April 2026 FDA/PCAC update) confirms GHK-Cu has NO current FDA-sanctioned pathway for injectable/compounded use: it was removed from Category 1 nomination status after its nomination was withdrawn, with PCAC review of whether to add it to the 503A bulk drug substances list not scheduled until before February 2027. In plain terms: GHK-Cu is a cosmetic-ingredient tripeptide-copper complex with no FDA drug approval and no current bulk-substance authorization for compounding \u2014 any vendor claim that injectable GHK-Cu is FDA-sanctioned or legitimately compounded under an approved bulks listing is false as of today. The packet's generic reviewFlag ('vendor injectable claims require misinformation monitoring') is directionally correct but two things need fixing: (1) this claim discusses injectable/regulatory boundary content and safety-relevant vendor claims, which per the extraction rules should be marked fieldAuthorityRequired=true \u2014 it currently is not, on any of the packet's three claims; (2) the claim should state the specific, current FDA/PCAC nomination status (not on the 503A bulks list; nomination withdrawn; PCAC review pending until ~Feb 2027) rather than leaving the regulatory gap implicit, since the directive requires regulatory content be checked against and reflect the live FDA record."
+      }
+    ],
+    "compoundName": "GHK-Cu",
+    "slug": "ghk-cu",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "No claim in the packet is marked fieldAuthorityRequired=true, despite claim ghk-cu-hype-boundary-001 touching injectable/regulatory safety boundaries that the extraction rules require to be field-authority-gated.",
+      "The regulatory status of GHK-Cu (no FDA drug approval; not currently on the 503A bulk drug substances list; nomination withdrawn with PCAC review pending until ~Feb 2027) is not stated anywhere in the packet, even though it directly bears on the packet's own misinformation-monitoring flag for injectable vendor claims.",
+      "ops.reviewReasons still reads as a generic pilot placeholder ('misinformation-heavy... requires human review') rather than naming the specific unresolved regulatory gap now identified; it should be updated to reference the live FDA/PCAC nomination status as the concrete open item."
+    ],
+    "notes": [
+      "Both non-identity claims are conservatively worded and consistent with what independent sources show: preclinical-heavy topical evidence with an ongoing-but-unconcluded human Phase 2 trial (CuHeal), and no established systemic/injectable human efficacy or regulatory sanction. No medical advice or efficacy inflation was found in the packet text itself.",
+      "The identity claim is corroborated by DrugBank (entry name 'Prezatide') and consistent vendor chemical-safety listings for CAS 300801-03-0, though the CAS field on DrugBank itself was login-gated so a second free-database CAS cross-check was not fully completed.",
+      "Recommend the next revision explicitly add a regulatory claim (fieldAuthorityRequired=true) capturing GHK-Cu's current FDA/PCAC nomination status, sourced to the live FDA 503A process rather than left as an implicit reviewFlag."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "creatine-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.chemsrc.com/en/cas/57-00-1_829426.html",
+        "independentSourceFamily": "structured chemical registry (independent of PubChem/NCBI)",
+        "finding": "Independent chemical registry data (CAS 57-00-1, formula C4H9N3O2, MW 131.13) matches PubChem CID 586's identity data. Low-stakes identity claim, not fieldAuthorityRequired; corroborated. Note: no independent source cross-referenced the CID number itself, only the CAS/formula pairing \u2014 acceptable given the trivial risk profile of this claim."
+      },
+      {
+        "claimId": "creatine-mechanism-phosphocreatine-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+        "independentSourceFamily": "regulator/authority health-professional fact sheet (NIH Office of Dietary Supplements) \u2014 materially different from the ISSN position-stand review already cited",
+        "finding": "NIH ODS independently describes the same phosphocreatine/ATP mechanism (increased PCr stores, faster PCr resynthesis, supports high-intensity ATP regeneration), corroborating the packet's mechanism statement without overstatement. The reviewFlag ('should be reviewed before customer-facing simplification') remains a reasonable standing caution but is not a defect \u2014 carry it forward as a style/simplification note rather than an unresolved gap."
+      },
+      {
+        "claimId": "creatine-efficacy-performance-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+        "independentSourceFamily": "regulator/authority health-professional fact sheet (NIH ODS) \u2014 different family from the ISSN review sourceRef",
+        "finding": "NIH ODS independently confirms creatine monohydrate is heavily studied and effective for short-duration, high-intensity, intermittent exercise (sprinting, repeated maximal-effort sets), and explicitly states it has 'little value for endurance sports.' The packet's statement is accurately scoped to 'high-intensity exercise and training-adaptation contexts' and does not claim endurance benefit, so it holds. Note for the record: the statement stays appropriately population-level (matches its own reviewFlag about not personalizing it) \u2014 no change needed, but flag to authors that any future customer-facing rendering should explicitly note the aerobic/endurance exclusion, since ODS treats that as a defining boundary of the effect."
+      },
+      {
+        "claimId": "creatine-evidence-gap-formulation-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+        "independentSourceFamily": "regulator/authority health-professional fact sheet (NIH ODS) \u2014 different family from the ISSN review sourceRef",
+        "finding": "NIH ODS independently states creatine monohydrate is 'the most widely used and studied form' and that alternative creatine salts/blends 'have not been proven to have superior ability ... for enhancing muscle creatine levels, digestibility, product stability, or safety.' This directly supports the packet's instruction to keep monohydrate evidence separate from unproven alternate-formulation/proprietary-blend claims. No adjustment needed."
+      }
+    ],
+    "compoundName": "Creatine",
+    "notes": [
+      "No claim in this packet is marked fieldAuthorityRequired=true, and the packet contains no regulatory (FDA/DailyMed/Federal Register) claim at all \u2014 so the directive's 'live FDA page' re-check does not apply to any claim actually present here; this is itself worth flagging since creatine is a dietary-supplement ingredient and BioStack's category is 'core-supplements' with no regulatory/labeling claim captured.",
+      "All four claims found independent corroboration from the NIH Office of Dietary Supplements Health Professional Fact Sheet on Exercise and Athletic Performance, a source-family (regulator/government health-authority fact sheet) materially different from the ISSN position-stand review and PubChem database already cited in the packet.",
+      "Scanned all statements for medical-advice/use-recommendation/efficacy-inflation risk: none found. Statements consistently frame creatine's role in population-level, sport-context terms ('is discussed in ... literature', 'describes ... as one of the most extensively studied', 'supports its role in') rather than issuing a recommendation to use it or a guarantee of individual benefit. The reviewFlags already present ('avoid converting population-level ... evidence into personalized recommendations', 'should be reviewed before customer-facing simplification') correctly anticipate the main risk (future downstream rendering), and are worth keeping active as authoring guardrails even though the underlying statements pass as written.",
+      "conflicts array is empty and no conflict required independent resolution in this packet.",
+      "ops.reviewReasons currently just says 'Pilot evidence packet has not received human review' \u2014 with this independent review now completed and all claims confirmed, that reason can be considered addressed for these four claims, though the packet remains non-fieldAuthorityRequired throughout, so promotion readiness hinges more on completeness (only 4 claims, no dosing/safety/regulatory claims at all for a compound as commonly discussed as creatine) than on claim accuracy."
+    ],
+    "promotionBlockers": [
+      "Packet completeness: ops.completeness is 'partial' and the packet contains zero dosing, safety, and regulatory claims for creatine (a compound where dosing/loading-phase guidance, renal-safety caveats, and hydration/monitoring notes are commonly requested by consumers) \u2014 this gap should be closed with additional claims (each properly marked fieldAuthorityRequired where relevant) before public promotion, independent of the fact that the four existing claims all verify cleanly.",
+      "qualityFlags still include 'pilot-input' and 'no-safety-canonicalization', signaling the packet was never intended to be promotion-ready as-is; these flags should be explicitly cleared or superseded by an updated packet before promotion, not just left alongside a passing claim-level review."
+    ],
+    "recommendation": "request-changes",
+    "slug": "creatine"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "melatonin-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://webbook.nist.gov/cgi/cbook.cgi?ID=C73314&Units=SI",
+        "independentSourceFamily": "structured authority database (NIST Chemistry WebBook)",
+        "finding": "Packet's only sourceRef is PubChem (database family). NIST WebBook, a materially different structured chemical database, independently confirms CAS 73-31-4 corresponds to melatonin (C13H16N2O2, synonym N-Acetyl-5-methoxytryptamine), matching the packet's identity claim. Confirmed. Note: the packet's externalIdentifiers block also asserts drugbank:'DB01065' but no claim cites or hinges on that field, so it is out of scope for claim-level verification here; a DrugBank fetch could not surface the CAS field in the fetched excerpt, so that specific cross-check is unresolved but non-blocking since no claim statement depends on it."
+      },
+      {
+        "claimId": "melatonin-hormone-sleep-wake-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK534823/",
+        "independentSourceFamily": "paper-level primary/authority literature (StatPearls/NCBI Bookshelf)",
+        "finding": "Packet cites only PubChem's description field. StatPearls (an independent peer-reviewed reference, different family from PubChem) confirms melatonin is a hormone synthesized in the pineal gland that regulates the sleep-wake cycle via MT1/MT2 receptor interaction with the suprachiasmatic nucleus. The core claim holds. Note for the record: the existing reviewFlag ('customer-facing wording should avoid overstating supplement outcomes') is well-placed \u2014 StatPearls frames this as an established regulatory mechanism (with defined receptor pharmacology) rather than the softer 'believed to play a role' hedge PubChem uses, so the claim is actually somewhat under-stated relative to independent literature, not over-stated. No statement change required, but flag stands as appropriately cautious for a consumer-facing product page."
+      },
+      {
+        "claimId": "melatonin-long-term-safety-gap-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://sleepeducation.org/new-study-raises-questions-about-long-term-melatonin-use/",
+        "independentSourceFamily": "clinical guideline/professional society (American Academy of Sleep Medicine) + controlled human study (Journal of Pineal Research systematic review/meta-analysis, PMID 34923676)",
+        "finding": "Packet cites only NIH NCCIH (agency medical-summary). Independent professional-society source (AASM/sleepeducation.org) and an independent systematic review/meta-analysis (Menczel Schrire et al. 2022, Journal of Pineal Research, on safety of higher-dose melatonin in adults) both corroborate that long-term safety data for melatonin remain limited/lacking, supporting the 'evidence-gap' framing. Note worth recording: AASM cites a 2025 preliminary (non-peer-reviewed) association-only study reporting ~90% higher heart-failure incidence in chronic (12+ month) melatonin users with insomnia, and separately flags well-documented supplement-label-accuracy problems (>71% of products deviate >10% from labeled dose) and a sharp rise in pediatric melatonin overdose cases (8,000 in 2012 to >52,000 in 2021, per CDC MMWR). None of this overturns the 'evidence-gap' verdict, but the packet's evidence-gap statement is now looking dated/incomplete for an August 2026 review: it should be expanded to (a) name the emerging cardiovascular safety signal (with the preliminary/non-causal caveat preserved), and (b) explicitly call out pediatric overdose/dosing-accuracy risk as a distinct, higher-priority safety thread, rather than leaving it folded into a generic 'pediatric claims require separate review' reviewFlag with no substantiating detail. This claim is also a candidate for fieldAuthorityRequired=true per the directive's own rule ('mark true for regulatory, safety-critical... claims') given it concerns supplement safety boundaries; the packet currently has it as false, which understates its authority-review priority."
+      }
+    ],
+    "compoundName": "Melatonin",
+    "slug": "melatonin",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "The safety evidence-gap claim (melatonin-long-term-safety-gap-001) needs its statement and reviewFlags expanded to reflect newer independent safety signals (2025 preliminary cardiovascular association study, CDC pediatric-overdose trend data, and supplement label-accuracy risk) before this reads as current for an August 2026 promotion \u2014 currently it repeats only the older NCCIH short-term-safety line without any of the newer independent context.",
+      "fieldAuthorityRequired is false on the safety/evidence-gap claim despite it governing consumer-facing safety messaging; per the directive's own extraction rule this should likely be flagged true and routed through field-authority review before public promotion, especially given the pediatric overdose data and the unresolved cardiovascular signal.",
+      "No claim in the packet addresses melatonin's actual regulatory status (U.S. OTC dietary supplement, not FDA-approved/reviewed as a drug) even though this is a hormone compound commonly assumed by consumers to be regulated like a drug \u2014 independent sources (AASM, CRN) flag this as a live point of consumer confusion; consider adding an explicit regulatory-status claim with fieldAuthorityRequired=true before promotion, per the special-attention instruction to re-check regulatory framing against current sources."
+    ],
+    "notes": [
+      "Packet is small (3 claims, identity/mechanism/evidence-gap) with no explicit regulatory, dosing, or fieldAuthorityRequired=true claims, which simplified triage but also means the directive's fieldAuthorityRequired rule for safety-critical claims does not appear to have been applied.",
+      "All three claims independently verified as directionally accurate (no fabrication or misstatement found); no claim required a 'needs-adjustment' due to false or unsupported content -- the issues found are completeness/currency gaps and a categorization gap (fieldAuthorityRequired), not factual errors.",
+      "Independent sources consulted: NIST Chemistry WebBook (structured database, distinct from PubChem), StatPearls/NCBI Bookshelf (independent peer-reviewed reference, distinct from PubChem's own description field), American Academy of Sleep Medicine sleepeducation.org (professional society), and Menczel Schrire et al. 2022 Journal of Pineal Research systematic review/meta-analysis (distinct from NCCIH agency summary).",
+      "Per the directive's independent review rule, none of these findings were resolved by re-reading the packet's own cited sources -- each verdict rests on a materially different source family.",
+      "This packet's stated generatedAt (2026-05-05) predates the newer safety literature (AASM article, semen-quality/toxicity notes in StatPearls, CDC pediatric trend data) surfaced in this review by roughly three-plus months; recommend the authoring pipeline re-run extraction on this compound rather than only patching this review's specific notes, since safety literature in this space is moving quickly."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "vitamin-d3-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.sigmaaldrich.com/US/en/product/sigma/c9756",
+        "independentSourceFamily": "structured authority database (chemical vendor/reference database, independent of PubChem)",
+        "finding": "Claim's sourceRefs use only PubChem (database family). Cross-checked CAS 67-97-0 against independent chemical reference/vendor databases (Sigma-Aldrich, ChemicalBook, Cayman Chemical, TCI) \u2014 all consistently identify CAS 67-97-0 as cholecalciferol/Vitamin D3, matching PubChem CID 5280795. No conflict found; identity claim holds."
+      },
+      {
+        "claimId": "vitamin-d3-d2-d3-distinction-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3349454/",
+        "independentSourceFamily": "systematic review / meta-analysis (Tripkovic et al. 2012, Am J Clin Nutr) \u2014 independent of the cited NIH ODS medical-summary source",
+        "finding": "Independent meta-analysis of 7 RCTs (PMC3349454) confirms D3 produces a significantly greater rise in serum 25(OH)D than D2 (weighted mean difference 15.23 nmol/L, P=0.001), supporting the packet's statement. NUANCE TO ADD: the effect was driven almost entirely by bolus dosing (50,000-300,000 IU, P=0.0002); with daily dosing (1,000-4,000 IU) the D3-vs-D2 difference was not statistically significant (P=0.10). The packet's unqualified 'D3 can increase levels more than D2' should note this dosing-regimen dependency so it isn't read as a blanket claim covering typical daily-supplement use."
+      },
+      {
+        "claimId": "vitamin-d3-evidence-gap-labs-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "This is an internal governance/scope statement (how BioStack should structure claims), not an empirical claim about the compound, so no independent source family directly confirms or refutes it. Its underlying premise \u2014 that vitamin D lab interpretation, deficiency, and toxicity (hypercalcemia) require careful, separately-gated handling rather than blanket physiology statements \u2014 is consistent with standard clinical guidance (e.g., recognized UL and toxicity concerns in professional vitamin D literature). Recording as confirmed-with-note rather than a hard 'confirmed' because it is not independently falsifiable via the source families in scope; treat the underlying safety content itself (UL, toxicity thresholds, monitoring) as still absent from this packet \u2014 see promotion blockers."
+      }
+    ],
+    "promotionBlockers": [
+      "ops.reviewReasons still reads 'Pilot evidence packet has not received human review' and ops.needsReview=true \u2014 this cross-source check does not itself constitute the human sign-off the packet's own ops block says is outstanding; a human reviewer still needs to close this out before public promotion.",
+      "qualityFlags include 'no-safety-canonicalization' and the packet contains zero fieldAuthorityRequired=true claims \u2014 for a core-supplements vitamin D3 packet, this is a real gap: no dosing/UL, toxicity/hypercalcemia, monitoring, or regulatory (FDA/label) claims are captured at all, despite vitamin D3 having well-documented supplementation risks. The packet should not be promoted as a complete public entry until safety-critical content is added and gated, or the packet is explicitly scoped/labeled as identity+mechanism-only.",
+      "No regulatory (FDA/DailyMed/Federal Register) claims are present in this packet, so the directive's 'live FDA page' re-check could not be exercised here \u2014 flag this for the next packet revision if/when regulatory or product-labeling claims are added."
+    ],
+    "notes": [
+      "Packet is small (3 claims) and narrowly scoped to identity + D2/D3 physiology comparison + an internal scope-boundary note; no dosing, safety, or regulatory claims are made, so most of the directive's safety-critical/regulatory review triggers do not apply to this version of the packet.",
+      "Claim vitamin-d3-d2-d3-distinction-001's reviewFlags already say 'avoid personalized lab or dosing interpretation' \u2014 appropriately hedged; recommend also adding the bolus-vs-daily-dosing nuance surfaced by the independent Tripkovic meta-analysis so the claim doesn't overstate D3's advantage for typical daily-dose supplement use.",
+      "No medical-advice or efficacy-inflation language was found in any of the three claim statements; all are appropriately hedged (moderate confidence, explicit scope-limiting language in the evidence-gap claim).",
+      "Recommendation is 'request-changes' primarily on completeness/process grounds (outstanding human review, absent safety-critical content for the category) rather than because any existing claim was found to be factually wrong."
+    ],
+    "recommendation": "request-changes",
+    "slug": "vitamin-d3",
+    "compoundName": "Vitamin D3"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "magnesium-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB9249642.htm",
+        "independentSourceFamily": "structured chemical registry database (ChemicalBook/CAS registry cross-reference, distinct from PubChem)",
+        "finding": "Original sourceRefs used only PubChem (database family). Cross-checked CAS 7439-95-4 against an independent structured chemical-registry source (ChemicalBook, mirroring CAS Common Chemistry data); it confirms CAS 7439-95-4 = elemental magnesium, consistent with the packet's PubChem CID 5462224 / CAS pairing. CAS Common Chemistry itself returned an 'Unauthorized' error on fetch, so that specific alternate was not usable, but the corroborating registry listing is sufficient. No conflict found."
+      },
+      {
+        "claimId": "magnesium-essential-mineral-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4455825/",
+        "independentSourceFamily": "paper-level primary/review literature (PMC, distinct from the NIH ODS medical-summary fact sheet cited)",
+        "finding": "Original sourceRefs used only the NIH ODS Health Professional Fact Sheet (medical-summary family). An independent PMC review article ('Magnesium basics') confirms magnesium is a cofactor in >300 enzymatic reactions, essential to ATP metabolism, neuromuscular function, neurotransmitter release, and metabolic regulation - materially supporting the packet's mechanism statement without overstatement. The packet's phrasing stays appropriately general (mechanism/physiology, not a treatment claim), so no adjustment needed."
+      },
+      {
+        "claimId": "magnesium-formulation-gap-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/2407766/",
+        "independentSourceFamily": "controlled human study (PubMed primary literature, distinct from the NIH ODS medical-summary fact sheet cited)",
+        "finding": "Original sourceRefs used only the NIH ODS fact sheet. An independent controlled human bioavailability study confirms magnesium salt form materially affects absorption (magnesium citrate significantly outabsorbed magnesium oxide in both in vitro solubility and in vivo urinary excretion after an oral load), directly supporting the packet's caution against generalizing across magnesium forms. Note for the record: this specific citation (magnesium citrate vs. oxide bioavailability, PMID 2407766) is a strong, more concrete independent source the packet could add if/when it develops form-specific claims, rather than relying only on the current generic 'evidence-gap' framing."
+      }
+    ],
+    "slug": "magnesium",
+    "compoundName": "Magnesium",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [
+      "Process gate, not a claim defect: ops.needsReview=true and ops.reviewReasons still cites 'Pilot evidence packet has not received human review' - this packet-level flag is not resolved merely by this independent cross-source check and should be explicitly signed off (or reworded) before public promotion, per the directive's rule that re-reading/re-affirming does not close a review reason.",
+      "Packet is unusually thin for a top-tier public compound (ops.completeness='partial', qualityFlags include 'pilot-input' and 'no-safety-canonicalization'): it contains no dosing, safety/interaction, or regulatory (label/DailyMed/FDA) claims at all for a compound (magnesium) that clearly has FDA-regulated labeling and well-documented safety/interaction data (e.g., renal impairment, drug interactions). Before promotion, confirm whether the category schema/editorial bar for 'core-supplements' requires at least a safety/dosing claim set to be present - if so, this packet is incomplete rather than merely unreviewed."
+    ],
+    "notes": [
+      "No claim in this packet is marked fieldAuthorityRequired=true (no regulatory, safety, monitoring, dosing, or formulation claims are asserted as fact) - the one formulation-adjacent claim is explicitly framed as an 'evidence-gap' caution rather than a factual formulation claim, so it correctly avoided the fieldAuthorityRequired gate.",
+      "Scanned all three statements for medical advice, use recommendations, or efficacy inflation beyond quoted/sourced content: none found. Language stays at physiology/identity/caution level and does not recommend magnesium for any condition or imply proven human efficacy from the cited sources.",
+      "Because no fieldAuthorityRequired or regulatory claims exist in this packet, the directive's live-FDA-page re-check requirement was not triggered; this should be revisited the moment any dosing, safety, or regulatory claim is added to this compound's packet.",
+      "All three claims received a materially different source family than their original sourceRefs (structured chemical registry vs. PubChem database; PMC primary/review literature vs. NIH ODS medical-summary; PubMed controlled human study vs. NIH ODS medical-summary), satisfying the independent review rule."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "caffeine-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://webbook.nist.gov/cgi/cbook.cgi?Name=caffeine&Units=SI",
+        "independentSourceFamily": "structured authority database (NIST Chemistry WebBook)",
+        "finding": "NIST WebBook, a source family materially different from PubChem, independently lists caffeine's CAS Registry Number as 58-08-2, matching the packet's statement. (DrugBank DB00201 was also attempted as a cross-check but its identifier fields were login-gated and did not return usable content; NIST WebBook alone is sufficient independent confirmation for this narrow identity claim.)"
+      },
+      {
+        "claimId": "caffeine-performance-position-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mdpi.com/2072-6643/18/12/1989",
+        "independentSourceFamily": "systematic review/meta-analysis (independent of the cited ISSN position stand)",
+        "finding": "An independent 2026 dose-response systematic review/meta-analysis (Nutrients) confirms caffeine has an ergogenic effect on aerobic exercise performance that is dose-dependent and notably heterogeneous across studies \u2014 some studies show ergolytic (negative) effects up to -3% while others show gains up to +16% \u2014 directly corroborating the packet's 'many but not all studies' framing. Note for the record: the packet's statement is a direct quote from the ISSN position stand and is accurately attributed; the independent source additionally shows the effect is dose-dependent (best at 4-6 mg/kg) and individual-response variable, which is a nuance worth adding to context but does not overturn the claim. The existing reviewFlag ('avoid personalized timing or dosing advice') remains appropriate and should stay in place since the independent source underscores dose-dependence."
+      },
+      {
+        "claimId": "caffeine-evidence-gap-stimulant-load-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
+        "independentSourceFamily": "regulator/consumer-guidance (FDA)",
+        "finding": "The live FDA consumer-update page (checked today, 2026-08-29) independently confirms the substance of this evidence-gap claim: it explicitly instructs consumers to 'consider all sources of caffeine in your diet' and lists energy/protein bars, ice cream, chewing gum, dietary supplements, and OTC medications as products that may contain added caffeine, and notes that energy-drink labels are expected to disclose total caffeine from all ingredients (e.g., guarana). This is a materially different source family (FDA regulator guidance) than the cited ISSN review, and it supports rather than merely restates the claim that caffeine must be modeled across product blends and total stimulant load. This also resolves the packet's own reviewFlag ('stimulant-load warnings require stronger authority before canonical safety output') \u2014 regulator-tier authority (FDA) now backs the underlying premise, though the claim itself remains appropriately scoped as an internal modeling/evidence-gap note rather than a safety threshold claim, so it should stay non-fieldAuthorityRequired unless BioStack later converts it into a specific numeric safety limit, which would then require FDA's quantitative guidance (400 mg/day general population; higher-risk guidance for pregnancy, adolescents, cardiovascular conditions) to be cited directly."
+      }
+    ],
+    "compoundName": "Caffeine",
+    "notes": [
+      "No claims in this packet are marked fieldAuthorityRequired=true, and none are regulatory dosing/threshold claims requiring the live-FDA-page check with the same urgency as a safety-critical claim would \u2014 but I checked the FDA consumer page anyway since claim 3's reviewFlag explicitly called for stronger authority, and it independently corroborates the claim.",
+      "All three claims independently verified against source families different from their own sourceRefs: NIST WebBook (vs. PubChem) for identity; an independent 2026 Nutrients meta-analysis (vs. the cited ISSN position-stand review) for the exercise-performance efficacy claim; and the live FDA consumer-education page (vs. the ISSN review) for the stimulant-load evidence-gap claim.",
+      "Scanned all three claim statements for medical-advice language, use-recommendations, or efficacy inflation beyond what quotes support: none found. Claim 2 is a direct, accurately-attributed quote with appropriate hedging ('many but not all studies') and already carries a reviewFlag against personalized dosing advice. Claim 3 is framed as an internal data-modeling instruction, not consumer safety advice, and does not overstate.",
+      "The packet's ops.reviewReasons currently only states 'Pilot evidence packet has not received human review' \u2014 this independent review pass supports resolving that generic gate for these three claims, though the packet remains 'partial' completeness per its own ops.completeness flag (only 3 claims for a compound with much more literature available \u2014 e.g., no claims yet on caffeine's sleep/nootropic mechanism, half-life/metabolism, or genuine safety thresholds, which is notable given the packet's category is 'nootropics-sleep').",
+      "One residual limitation: I could not independently verify the DrugBank DB00201 <-> PubChem CID 2519 cross-reference directly (go.drugbank.com required login for the identifier fields), so identity confirmation rests on NIST WebBook's CAS-number match rather than a DrugBank<->PubChem crosswalk; this is a minor, non-blocking gap since CAS 58-08-2 for caffeine is unambiguous and well-established."
+    ],
+    "promotionBlockers": [
+      "None of the three existing claims block promotion \u2014 all are confirmed or confirmed-with-note against independent source families, and none are fieldAuthorityRequired.",
+      "However, the packet's own ops.completeness='partial' and ops.needsReview=true flags have not been formally cleared by a human reviewer; per the directive's review-gating rule, a generic 'not yet reviewed' ops flag should be explicitly resolved (or re-stated with remaining gaps) before promotion, not just implicitly superseded by this independent-review pass.",
+      "Given the category is 'nootropics-sleep,' the packet notably contains zero claims about caffeine's mechanism (adenosine receptor antagonism), sleep-disruption/half-life, or genuine safety thresholds (e.g., FDA's ~400 mg/day general guidance, pregnancy/adolescent caution) -- before public promotion, BioStack should confirm this is intentional pilot scope and not a coverage gap that would mislead users of a 'nootropics-sleep' category page that discusses caffeine but omits its most category-relevant (sleep-interference) and safety-relevant claims."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "caffeine"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "spermidine-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.wikidata.org/wiki/Q418834",
+        "independentSourceFamily": "structured authority database (Wikidata, cross-checked against vendor chemical databases Sigma-Aldrich/Cayman Chemical/LGC/Fisher Scientific/SCBT)",
+        "finding": "Independent structured databases (Wikidata) and multiple independent vendor chemical registries all corroborate CID 1102 paired with CAS 124-20-9 for spermidine. No discrepancy found. Note: a Wikipedia extraction surfaced an EC/EINECS number (204-689-0) that could be mistaken for a CAS number if anyone cross-checks casually \u2014 worth flagging so no one later 'corrects' the packet's CAS using that figure."
+      },
+      {
+        "claimId": "spermidine-polyamine-mechanism-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://en.wikipedia.org/wiki/Spermidine",
+        "independentSourceFamily": "encyclopedic/structured secondary reference independent of PubChem's own description text",
+        "finding": "Spermidine's identity as a polyamine biosynthesized from putrescine (and precursor to spermine) is standard, uncontested biochemistry corroborated outside PubChem's own text. The claim correctly avoids converting this endogenous-mechanism description into a treatment claim, consistent with its reviewFlag."
+      },
+      {
+        "claimId": "spermidine-cognition-studied-use-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://journal.ppcr.org/index.php/ppcrjournal/article/view/284",
+        "independentSourceFamily": "independent narrative/mini-review of the primary RCT literature (paper-level secondary synthesis, not one of the packet's own two cited trials)",
+        "finding": "An independent mini-review of all three published human RCTs (the packet's two cited trials plus a third) found results inconsistent: two showed modest 3-month memory improvement, one found no effect at 12 months; two of three trials were judged high risk of bias; and trial doses (0.9-3.3mg/day) were noted as low relative to typical dietary intake (5-15mg/day). This independent synthesis supports the packet's cautious 'emerging and study-context-specific' framing and does not conflict with it, but the packet's empty conflicts[] array undersells how mixed/weak the underlying trial evidence actually is (a third trial exists that the packet did not cite, and bias/dosing caveats are not recorded). Recommend adding these specifics to conflicts/reviewFlags for completeness, though this is a strengthening note, not a factual correction."
+      },
+      {
+        "claimId": "spermidine-longevity-hype-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://genomics.senescence.info/drugs/drug_details.php?compound_name=Spermidine",
+        "independentSourceFamily": "structured longevity/aging authority database (DrugAge / Human Ageing Genomic Resources) \u2014 materially different from PubChem and the two clinical papers already cited",
+        "finding": "The independent DrugAge database entry shows spermidine's autophagy/longevity evidence base (Eisenberg et al. and related lifespan-extension work) is drawn exclusively from model-organism studies (yeast, worms, flies, mice), with no human lifespan/longevity outcome data cataloged. This directly corroborates the packet's position that autophagy/longevity marketing claims must be kept separate from human clinical outcomes and that current evidence does not support broad anti-aging conclusions."
+      }
+    ],
+    "compoundName": "Spermidine",
+    "slug": "spermidine",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [],
+    "notes": [
+      "No claim in this packet is marked fieldAuthorityRequired=true, and none of the four claims makes a regulatory, dosing, safety-monitoring, or formulation assertion \u2014 the packet is scoped to identity, mechanism, studied-use, and evidence-gap claims, which is an appropriate scope for an 'emerging-research' pilot category and matches the directive's fieldAuthorityRequired triggers (none apply here).",
+      "No FDA/DailyMed/Federal Register claim appears in the packet, so no live-FDA-page recheck was required by the directive's special-attention rule; for context only, an FDA GRAS notice exists for 'spermidine-rich wheat germ extract' (GRAS Notice, hfpappexternal.fda.gov) but the packet makes no regulatory-status claim that would need to cite or be checked against it.",
+      "None of the four reviewFlags read as 'unverified' or 'press-release-only' sourcing; all cite peer-reviewed papers or a structured database, so none triggered the directive's priority-verification flag beyond the standard independent check performed above.",
+      "Scanned all four statements for medical advice, use recommendations, or efficacy inflation: found none. Language throughout is hedged ('should be treated as emerging', 'should not be generalized', 'BioStack should separate marketing claims from clinical outcomes') and consistent with what the cited and independently-checked sources support.",
+      "Minor completeness gap (not a blocker): the cognition claim's conflicts[] array is empty despite independent review revealing genuinely mixed trial results (one of three RCTs found no 12-month effect) and high risk-of-bias ratings on two of three trials, plus a third published RCT not cited in the packet's sources. Recommend the authoring team add this specific texture to conflicts/reviewFlags on the next revision, but it does not change the claim's verdict since the packet already treats the evidence as emerging/non-generalizable.",
+      "ops.needsReview=true and reviewReasons flag this as pilot evidence requiring human review before publication \u2014 this flag is appropriate to retain given the compound's 'emerging-research' category status regardless of the approve-claims recommendation on the claim content itself."
+    ]
+  },
+  {
+    "compoundName": "Urolithin A",
+    "slug": "urolithin-a",
+    "recommendation": "approve-claims",
+    "claimVerdicts": [
+      {
+        "claimId": "urolithin-a-identity-pubchem-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://go.drugbank.com/drugs/DB15464",
+        "independentSourceFamily": "structured authority database (DrugBank)",
+        "finding": "DrugBank (DB15464) independently lists Urolithin A with CAS 1143-70-0, matching PubChem CID 5488186 and the packet's identity claim. Cross-checked against a materially different structured database than the cited PubChem source; identity is confirmed with no discrepancy."
+      },
+      {
+        "claimId": "urolithin-a-mitochondrial-studied-use-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2026.1834344/full",
+        "independentSourceFamily": "systematic review/meta-analysis",
+        "finding": "A 2026 Frontiers systematic review pooling 5 RCTs (236 participants) confirms the JAMA trial existed and used muscle/mitochondrial-biomarker endpoints as stated, but shows the wider RCT evidence base is 'limited and inconclusive' \u2014 the only pooled outcome (6-minute walk test) was not statistically significant (low GRADE certainty), and mitochondrial-biomarker findings are 'hypothesis-generating' rather than confirmatory. The packet's statement is appropriately hedged (moderate confidence, explicit caution against longevity claims) and not falsified, but the evidenceTier of 'Moderate' reads slightly generous next to a systematic review calling the broader evidence base low-certainty and non-reproducible across the pooled trial set. Recommend adding a note that pooled/systematic-review evidence across trials is weaker than the single-study framing implies, without needing to change the underlying statement."
+      },
+      {
+        "claimId": "urolithin-a-hype-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2026.1834344/full",
+        "independentSourceFamily": "systematic review/meta-analysis",
+        "finding": "The same independent systematic review explicitly states 'firm clinical recommendations cannot be made' and makes no longevity/anti-aging claims, directly corroborating the packet's caution that trial-endpoint evidence must be separated from broader anti-aging/lifespan claims. This claim is well-supported by an independent source family (systematic review, distinct from the packet's paper+database refs)."
+      }
+    ],
+    "promotionBlockers": [],
+    "notes": [
+      "No claim in this packet is marked fieldAuthorityRequired=true, so the approve-claims bar (all such claims confirmed/confirmed-with-note) is met vacuously; both substantive claims were independently corroborated by source families materially different from those cited (DrugBank for identity vs. the packet's PubChem cite; a 2026 systematic review for the studied-use and hype-boundary claims vs. the packet's single JAMA RCT cite).",
+      "Independent verification via a 2026 Frontiers systematic review (5 RCTs, n=236) shows the broader human evidence for Urolithin A's muscle/mitochondrial effects is low-certainty and largely non-significant when pooled \u2014 this validates rather than undermines the packet's own hype-boundary claim, but the packet's 'Moderate' evidenceTier on the studied-use claim could be tightened with this pooled context in a future revision (not required for approval).",
+      "Incidentally found during research: Urolithin A has an FDA GRAS notice (GRN 000791, Amazentis SA, filed 2018) covering use in protein shakes, cereals, bars, and yogurts at up to ~1 g/person/day, restricted to consumers 40+ and excluded from infant formula/USDA-regulated products. The packet contains no regulatory claim and none was required by the schema (classification is 'Supplement', not drug), so this is not a needs-adjustment, but the review team may want to add a regulatory/identity claim citing this GRAS notice for completeness before public promotion, since it is the kind of live-status fact the review contract flags as high priority to check.",
+      "The packet's ops.reviewReasons ('Pilot emerging evidence packet requires human review before publication') is a generic pilot-stage gate rather than a specific unresolved defect; independent review found no fabrication, no unsupported medical-advice language, and no efficacy inflation in the claim statements themselves."
+    ]
+  },
+  {
+    "slug": "testosterone-cypionate",
+    "compoundName": "Testosterone cypionate",
+    "recommendation": "request-changes",
+    "claimVerdicts": [
+      {
+        "claimId": "testosterone-cypionate-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29562364/",
+        "independentSourceFamily": "clinical guideline / professional society (Endocrine Society Clinical Practice Guideline, JCEM 2018)",
+        "finding": "Independent professional-society guideline confirms testosterone therapy is indicated for men with confirmed symptomatic testosterone deficiency (primary/secondary hypogonadism), consistent with the packet's paraphrase of the DailyMed indication. Also cross-checked against a currently-live FDA label PDF (accessdata.fda.gov, NDA 216318, for a different testosterone cypionate product, Azmiro) which independently repeats near-identical Indications and Usage language ('replacement therapy... deficiency or absence of endogenous testosterone,' primary and secondary/hypogonadotropic hypogonadism). No overstatement found; statement stays descriptive of the label rather than converting it into a use recommendation."
+      },
+      {
+        "claimId": "testosterone-cypionate-contraindications-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://academic.oup.com/jcem/article/103/5/1715/4939465",
+        "independentSourceFamily": "clinical guideline / professional society (Endocrine Society Clinical Practice Guideline)",
+        "finding": "Independent guideline corroborates the core contraindicated conditions (breast cancer, prostate cancer/palpable nodule) and adds that current clinical guidance treats several other factors (elevated hematocrit, PSA >4 ng/mL, untreated severe OSA, recent MI/stroke, uncontrolled heart failure, thrombophilia, near-term fertility plans) as reasons to withhold therapy -- a broader 'do not start' list than the label's five absolute contraindications the packet quotes. Note for the record: the packet's list is accurate to the DailyMed label but narrower than current clinical guidance; a reader could wrongly infer the label's five items are the complete safety-gating list. Recommend the packet distinguish 'FDA label contraindications' from 'additional guideline-recommended cautions.' No factual error in what is stated, hence confirmed-with-note rather than needs-adjustment."
+      },
+      {
+        "claimId": "testosterone-cypionate-warning-hypercalcemia-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21072745/",
+        "independentSourceFamily": "paper-level primary literature (case report / literature review, PubMed)",
+        "finding": "Independent primary-literature case reports document hypercalcemia associated with androgen/anabolic-steroid use and with immobilization generally (e.g., PMID 21072745 on hypercalcemia in bodybuilding steroid use; PMID 6462982, 7139419, 35787163 on immobilization hypercalcemia as a class phenomenon from increased bone resorption). These corroborate the plausibility and mechanism of the label warning but are not controlled studies specifically dosing testosterone cypionate in immobilized patients. Note: an independently fetched 2022 FDA label PDF for a different marketed testosterone cypionate product (Azmiro, NDA 216318) does NOT carry this specific 'immobilized patients' phrasing -- it only cautions on hypercalcemia in cancer patients at risk -- showing this exact warning is inconsistent across marketed testosterone cypionate labels. Packet's statement is accurate to the cited DailyMed/DEPO-TESTOSTERONE label; flag that the warning is label-specific rather than a universal class-wide fact."
+      },
+      {
+        "claimId": "testosterone-cypionate-misuse-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://nida.nih.gov/research-topics/anabolic-steroids",
+        "independentSourceFamily": "federal health authority / structured authority resource (NIDA) plus systematic reviews on AAS misuse",
+        "finding": "Independent NIDA guidance and systematic reviews (e.g., a 2025 Substance Use & Misuse meta-analysis on adverse effects of AAS abuse in athletes; a Harm Reduction Journal scoping review) confirm non-prescribed/performance-enhancement testosterone use is a well-documented, separate risk domain from labeled TRT use, supporting the packet's decision to wall this off as an evidence-gap/misuse-boundary item rather than asserting benefit. This claim appropriately avoids medical advice and avoids converting popular use into proven benefit, consistent with the directive's misinformation-handling rule. No adjustment needed."
+      }
+    ],
+    "promotionBlockers": [
+      "Packet ops.reviewReasons still generically states only 'Pilot regulatory evidence packet requires human review before publication' without reflecting the specific outcomes of this independent review (contraindication-list scope note, hypercalcemia warning being label-specific rather than class-wide) -- reviewReasons/conflicts should be updated with these concrete notes before promotion, per the directive's rule that a review issue is not resolved merely by re-reading the original source.",
+      "The contraindications claim (fieldAuthorityRequired=true) should be annotated to distinguish 'FDA label contraindications' from the Endocrine Society's broader 'do not start' criteria, so downstream safety-critical consumers do not treat the five-item label list as an exhaustive safety-gating list.",
+      "The hypercalcemia warning claim (fieldAuthorityRequired=true) should note that the exact 'immobilized patients' phrasing is specific to the cited DEPO-TESTOSTERONE label and was not found in another marketed testosterone cypionate product's current FDA label (Azmiro, NDA 216318), so it should not be presented as a universal testosterone-cypionate-class warning."
+    ],
+    "notes": [
+      "All four claims in this packet cite only one source (dailymed-depo-testosterone), so per the independent review rule every claim required a materially different family; independent families consulted were: professional society clinical guideline (Endocrine Society/JCEM via PubMed), a second regulator label (FDA accessdata.gov PDF for a different testosterone cypionate product), paper-level primary literature/case reports (PubMed/PMC), and a federal research-institute resource (NIDA) plus systematic reviews for the misuse-boundary claim.",
+      "Checked the FDA regulatory landscape for 2026 changes as instructed: found a 2025 FDA class-wide testosterone labeling change (removal of the cardiovascular boxed warning following the TRAVERSE trial and postmarket studies). This is unrelated to the four claims in this packet (indication, contraindications, hypercalcemia, misuse-boundary) and creates no conflict, but confirms labeling activity in this drug class is ongoing and ongoing re-verification of the live DailyMed setid before public promotion is warranted.",
+      "Re-fetched the exact DailyMed URL in sourceRefs (setid=735b5bf3-4464-412c-a072-1bd02f2e5380) only to confirm the packet's quotes are verbatim; this re-read does not itself count as independent verification and was not used to resolve any review flag.",
+      "No medical-advice language, efficacy inflation, or unsupported use-recommendation was found in the packet's statements; the misuse-boundary claim is appropriately framed as an evidence gap rather than guidance.",
+      "No fieldAuthorityRequired claim is unresolved -- all three (indication, contraindications, hypercalcemia) reached at least confirmed-with-note via independent sources -- so this does not meet the 'reject' bar, but the two notes above (contraindication scope, hypercalcemia label-specificity) are needs-adjustment-adjacent documentation gaps that justify request-changes rather than approve-claims."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "enclomiphene-secondary-hypogonadism-studied-use-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.news-medical.net/life-sciences/Enclomiphene-in-clinical-practice-mechanism-efficacy-and-safety-consideration.aspx",
+        "independentSourceFamily": "clinical-review (independent secondary synthesis, distinct outlet from the two PMC sourceRefs)",
+        "finding": "Independent secondary-literature review (not one of the packet's two cited PMC articles) corroborates the substance of the claim: enclomiphene raises LH/FSH and testosterone via estrogen-receptor blockade at the hypothalamic-pituitary level, and preserves sperm/spermatogenesis relative to exogenous testosterone, which suppresses gonadotropins. The claim's careful framing ('clinical studies have investigated,' not 'is proven effective') holds up and is not overstated. Note for the record: this is still evidence-tier 'Limited' work (small phase II trials from one manufacturer-linked research group), and the independent source adds that later development of enclomiphene as a standalone product was discontinued (2021) after an earlier FDA rejection (2007) for insufficient fertility-efficacy evidence \u2014 worth folding into context so 'studied' isn't read as 'validated for approval.'"
+      },
+      {
+        "claimId": "enclomiphene-regulatory-boundary-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fda.gov/media/159043/download",
+        "independentSourceFamily": "regulator (FDA Pharmacy Compounding Advisory Committee briefing document)",
+        "finding": "Checked against a live regulator-family source distinct from the packet's paper/review sourceRefs. The FDA PCAC briefing document confirms enclomiphene has no independent FDA-approved product or label; enclomiphene is only present as one isomer (62%) within the FDA-approved racemic clomiphene citrate product, and the purified enclomiphene isomer is used only via pharmacy compounding, which is exactly the boundary the packet's claim states. Independent secondary source (news-medical.net) additionally confirms enclomiphene as a standalone drug was never approved (FDA declined in 2007) and its sponsor discontinued development in 2021 \u2014 this strengthens rather than contradicts the claim. Re-checked as a live-FDA-page priority item per directive; no April 2026 listing change found that alters this status. Claim needs no wording change; it is precisely calibrated."
+      },
+      {
+        "claimId": "enclomiphene-hormone-safety-boundary-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.npra.gov.my/index.php/en/industry/more-regulations/recent-updates/449-english/safety-alerts-main/safety-alerts-2023/1527547-clomiphene-risk-of-serious-visual-disturbances-potentially-leading-to-blindness.html",
+        "independentSourceFamily": "regulator/safety-alert (national medicines regulator bulletin), triangulated with FDA PCAC briefing (fda.gov/media/159043)",
+        "finding": "Independent regulator safety-alert source confirms clomiphene-class SERMs (of which enclomiphene is the active trans-isomer) carry a documented, label-level risk of serious visual disturbance up to blindness \u2014 this validates the packet's instruction that ocular/visual review must be required before customer-facing content, which the packet stated as a boundary rather than asserting it as a proven enclomiphene-specific adverse event. The FDA PCAC briefing (independent regulator source) separately confirms thromboembolic-event and PSA-elevation considerations were raised in official review, supporting the claim's broader instruction to gate safety/monitoring/fertility content. Note: the packet is right to keep this as an evidence-gap/boundary claim rather than asserting specific enclomiphene (vs. racemic clomiphene) adverse-event rates, since ocular-risk data available independently is largely clomiphene-level, not isomer-specific \u2014 that distinction is worth stating explicitly if the claim is expanded later."
+      }
+    ],
+    "compoundName": "Enclomiphene",
+    "slug": "enclomiphene",
+    "recommendation": "approve-claims",
+    "promotionBlockers": [],
+    "notes": [
+      "Independent verification performed across three distinct source families beyond the packet's two PMC sourceRefs: (1) FDA regulator document (Pharmacy Compounding Advisory Committee briefing, fda.gov/media/159043) \u2014 checked live, no April 2026 change found; (2) national regulator safety alert (NPRA) on clomiphene-class ocular risk; (3) an independent clinical-review secondary source (news-medical.net) not among the packet's cited references, corroborating the mechanistic/efficacy claim and adding useful regulatory history (2007 FDA non-approval, 2021 discontinued development).",
+      "DrugBank (DB06735) and PubChem (CID 6420009) pages were attempted as structured-database independent sources but returned JavaScript/login-gated content and could not be used to verify anything substantive \u2014 flagging this as an access limitation, not a finding against the packet.",
+      "None of the three claims in this packet are marked fieldAuthorityRequired=true in the packet itself, despite covering regulatory and safety-boundary territory; per the directive's own extraction rules ('Mark fieldAuthorityRequired = true for regulatory, safety-critical...claims'), claims enclomiphene-regulatory-boundary-001 and enclomiphene-hormone-safety-boundary-001 arguably should have fieldAuthorityRequired=true set. This is a packet-authoring inconsistency worth flagging to the authoring agent, though it does not block promotion since ops.needsReview is already true and reviewReasons/qualityFlags correctly gate the whole packet for human review.",
+      "No medical-advice language, use recommendations, or efficacy inflation beyond quoted evidence was found in the packet's statements \u2014 all three claims are appropriately hedged ('clinical studies have investigated,' 'should not be presented as approved,' 'should require explicit safety review') and stay within the bounds of what the underlying sources support.",
+      "conflicts[] is empty and no reviewReasons remain unresolved by this round of independent checking; all three claims reached confirmed or confirmed-with-note, so the packet's own ops.needsReview=true can be cleared by a human reviewer citing this verification, or left as a formality \u2014 either is consistent with the directive."
+    ]
+  }
+]

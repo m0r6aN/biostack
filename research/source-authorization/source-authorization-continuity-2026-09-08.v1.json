@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-authorization-mechanical-continuity-record",
+  "recordedAtUtc": "2026-09-08T20:52:20Z",
+  "authority": "none",
+  "timestampBasis": "mechanical-reemission-time-not-approval-or-review-time",
+  "basis": "Unchanged historical seven-source scopes, explicit owner decision A1 for the future legal-rights-approver, and a registry update containing unsupported source declarations.",
+  "permittedDecisionDifferences": [
+    "schemaVersion",
+    "generatedAt",
+    "registryBinding.sha256",
+    "owners"
+  ],
+  "historicalBindings": [
+    {
+      "artifactPath": "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "sha256": "a5ad6ef136b3b7628416ea4fc516548dbf3d3fb1f0a77ff74a60e74d54968ea2"
+    },
+    {
+      "artifactPath": "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "sha256": "a9b094fc8d6ac87916cf7858124a16f8d00562ba338365d93418d0f211edf4db"
+    },
+    {
+      "artifactPath": "research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json",
+      "sha256": "bc4f1afabb8201488a8969359e88c5542c209d748208dbbb1a7265c29c9668d0"
+    },
+    {
+      "artifactPath": "research/source-authorization/keo-74-nccih-manual-capture-reviewer-receipt.v1.json",
+      "sha256": "494effed949813ae62045fd746c1d275c4c9b8a45a69fed7f723547bb7fd9cbb"
+    },
+    {
+      "artifactPath": "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+      "sha256": "7e07beb749c093a57565e7256b7ee63633f4a1dcc7c45659d7a630989442eb91"
+    },
+    {
+      "artifactPath": "research/source-authorization/snapshots/pilot-source-registry.2026-07-25.json",
+      "sha256": "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28"
+    }
+  ],
+  "successorBindings": [
+    {
+      "artifactPath": "research/source-authorization/recommended-seven-source-decisions.v2.json",
+      "sha256": "c027a873c4f2ad506ef38b7c43d8e2628186b19f453e5eaa7ba8e41e79fabd92"
+    },
+    {
+      "artifactPath": "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.v2.schema.json",
+      "sha256": "c134826a0830e9113d93709b10b9b04b723d75ecec76169702554bf5064f9ec1"
+    },
+    {
+      "artifactPath": "research/input/sources/pilot-source-registry.json",
+      "sha256": "71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d"
+    }
+  ],
+  "invariants": {
+    "sourceScopesUnchanged": true,
+    "historicalReviewDatesUnchanged": true,
+    "assignmentIsApproval": false,
+    "newApprovalGranted": false,
+    "newRuntimeAuthorizationGranted": false,
+    "nccihDistinctReviewerRequired": true,
+    "nccihReviewerActionStatus": "pending",
+    "evidenceApprovalStatus": "review-required"
+  },
+  "enforcement": {
+    "continuityAndHistoricalReceiptIntegrity": "CI hash and semantic comparison tests",
+    "runtime": "versioned schema validation; exact registry-byte and active-source-set checks; existing acquisition and distinct-reviewer action guards",
+    "recordIsRuntimeAuthorizationInput": false
+  }
+}

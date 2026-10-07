@@ -1,0 +1,326 @@
+{
+ "fixes": [
+  {
+   "ok": true,
+   "slug": "liraglutide",
+   "summary": "One flagged claim on the liraglutide packet (liraglutide-efficacy-scale-weight-loss-001, claimType efficacy, fieldAuthorityRequired=true) was resolved via Lane 1. Fetched the FDA-approved Saxenda label live from DailyMed this session, confirmed it independently reports statistically significant SCALE-trial weight-loss efficacy data (Clinical Studies section 14.1), and added dailymed-saxenda-label (authorityTier A1, already present in packet sources) as an additional sourceRef with a verbatim extractedEvidence quote. No claim substance, evidenceTier, or confidence was altered; a reviewFlag documents that the label's point estimates differ numerically from the CADTH-cited figures (different analysis populations/estimands) but both independently confirm statistical significance. ops.qualityFlags now includes authority-support-pass-2026-08-29; ops.needsReview remains true. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "liraglutide-efficacy-scale-weight-loss-001",
+     "lane": "a1a2-linked",
+     "newSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3946d389-0926-4f77-a708-0acb8153b143",
+     "detail": "Fetched the FDA-approved Saxenda DailyMed label live and confirmed its Clinical Studies (14.1) section independently reports statistically significant SCALE-trial placebo-adjusted weight-loss results, genuinely supporting this claim's overall finding. Added the already-cataloged A1 source dailymed-saxenda-label to sourceRefs with a verbatim quote, without altering the claim's CADTH-sourced statement, evidenceTier, or confidence; flagged the minor numeric difference between the label's and CADTH's point estimates as a corroboration nuance, not a conflict."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "exenatide",
+   "summary": "Resolved both flagged authority-support deficits on the exenatide packet. The efficacy claim (EXSCEL CV outcomes) now cites the FDA Bydureon label directly (Lane 1); the adverse-effect claim (EXSCEL safety detail) was recalibrated (Lane 2) after searching FDA/DailyMed labels found no regulator document addressing that specific comparative safety statement. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "exenatide-efficacy-exscel-cv-001",
+     "lane": "a1a2-linked",
+     "detail": "Fetched the FDA Bydureon prescribing information (accessdata.fda.gov, 2024 label) live this session; Section 14.4 (Cardiovascular Outcomes Trial) independently reports the same EXSCEL primary MACE result (HR 0.91; 95% CI 0.832-1.004; P<0.001 non-inferiority; P=0.06 superiority) as the existing NEJM/mdedge sources. Added fda-bydureon-label-2024 (already an A1 source in the packet) to sourceRefs with a verbatim extractedEvidence quote from Section 14.4.",
+     "newSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf"
+    },
+    {
+     "claimId": "exenatide-adverse-effect-exscel-safety-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'adverse-effect' is outside the pipeline's safety-critical set and the directive's fieldAuthorityRequired scope. The statement already attributes findings at study level ('In the EXSCEL trial...'). Searched FDA prescribing information (accessdata.fda.gov Bydureon label, Sections 14.4/6/5.1), DailyMed BYETTA label, and DailyMed BYDUREON BCise label live this session; found only general postmarketing pancreatitis/thyroid-C-cell warnings and a pooled-trials 0.4% pancreatitis rate, none of which report the EXSCEL-specific placebo-controlled comparison (pancreatitis, pancreatic cancer, MTC, heart-failure hospitalization) this claim states. Set fieldAuthorityRequired=false and added the required recalibration reviewFlag naming what was searched."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "pramlintide",
+   "summary": "One flagged claim (pramlintide-efficacy-t1d-rct-glycemic-weight-001, claimType efficacy). Fetched the DailyMed SymlinPen label live and found its Clinical Studies section reports related but non-matching trial data (different endpoint timepoint/trials, different HbA1c and weight figures), so linking it would misattribute a different dataset \u2014 Lane 1 ruled out. Since efficacy is outside the directive's fieldAuthorityRequired scope and the claim already attributes findings to a named 52-week RCT (Ratner 2004) corroborated by a named 2017 meta-analysis, applied Lane 2: set fieldAuthorityRequired=false and added a dated reviewFlag documenting the recalibration and the DailyMed search that came up empty. Appended authority-support-pass-2026-08-29 to ops.qualityFlags. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "pramlintide-efficacy-t1d-rct-glycemic-weight-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is outside the directive's safety-critical/fieldAuthorityRequired scope; statement already attributes findings to a named 52-week, 651-patient RCT (Ratner 2004) corroborated by a named 2017 meta-analysis (PMID 29029531). Fetched the DailyMed SymlinPen label this session (Clinical Studies 14.1 Type 1 Diabetes) and found only related, non-matching data (6-month HbA1c deltas of -0.34%/-0.32% and different per-trial weight deltas), so no regulator source genuinely supports this claim's specific 52-week/0.29%/0.34%/0.04%/0.4kg-vs-0.8kg figures. Set fieldAuthorityRequired=false and added a reviewFlag recording the search and rationale."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "tamoxifen",
+   "summary": "Resolved both flagged authority-support deficits on the tamoxifen packet. NSABP P-1 efficacy claim: linked Lane 1 (added the FDA/DailyMed A1 label as a second sourceRef with a live-fetched verbatim quote corroborating the same trial's efficacy/endometrial-cancer findings, flagging the numeric-point-estimate discrepancy for human reconciliation). ATLAS extended-duration efficacy claim: Lane 2 recalibration (fieldAuthorityRequired set false) because claimType efficacy is outside the directive's safety-critical scope, the statement already attributes findings to the specific trial, and the live-fetched DailyMed label was searched and found not to support (indeed to predate/conflict with, via NSABP B-14) the ATLAS 10-vs-5-year finding. Packet re-validated clean against schema.json; ops.needsReview stays true and ops.qualityFlags now includes authority-support-pass-2026-08-29.",
+   "perClaim": [
+    {
+     "claimId": "tamoxifen-efficacy-nsabp-p1-001",
+     "lane": "a1a2-linked",
+     "detail": "Added the FDA-approved DailyMed tamoxifen citrate label (authorityTier A1, already in the packet's sources array) as a second sourceRef, with two verbatim quotes fetched live this session from its Clinical Studies section discussing the same NSABP P-1 trial (44% invasive-breast-cancer reduction at 4.2-year follow-up; endometrial cancer RR 2.48). The label reports a different point estimate than the primary JNCI paper already cited (49% reduction at 69 months; RR 2.53) for the same trial at a different follow-up cutoff - same direction of effect, so the source genuinely corroborates the claim, but I flagged the numeric variance for human reconciliation rather than silently merging figures.",
+     "newSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f642753-9e12-433c-a0bc-ab33dac41ddf"
+    },
+    {
+     "claimId": "tamoxifen-efficacy-atlas-extended-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is 'efficacy', outside the directive's fieldAuthorityRequired scope, and the statement already attributes the finding to the specific study ('In the ATLAS randomized trial...'). Searched the DailyMed tamoxifen label live this session and fda.gov: the label contains no ATLAS trial data at all and instead cites the earlier NSABP B-14 study concluding extending therapy beyond 5 years gives no additional benefit - directly conflicting with, not supporting, ATLAS's 10-vs-5-year benefit finding. Since no A1/A2 source supports this specific claim, and linking the label would misrepresent it as backing the claim, set fieldAuthorityRequired=false and added a recalibration reviewFlag documenting the search and the conflict."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "toremifene",
+   "summary": "Resolved both flagged claims in the toremifene packet. The regulatory CRL claim (safety-critical, stays fieldAuthorityRequired=true) now carries a live-fetched A1 FDA source (openFDA drugsfda.json) confirming no 80mg toremifene product exists in FDA's database, corroborating the never-approved status; the CRL narrative detail remains sourced to press per existing reviewFlags. The studied-use Phase III fracture-trial claim was recalibrated to fieldAuthorityRequired=false with a reviewFlag documenting the FDA/DailyMed/web searches performed and finding no regulator document, since studied-use is outside the directive's safety-critical claimType set and the statement already attributes findings at study level. Packet validates against schema.json; ops.needsReview stays true and qualityFlags now includes authority-support-pass-2026-08-29.",
+   "perClaim": [
+    {
+     "claimId": "toremifene-regulatory-crl-80mg-adt-001",
+     "lane": "a1a2-linked",
+     "detail": "claimType regulatory is safety-critical, so it stays fieldAuthorityRequired=true. Added a new A1 source (FDA openFDA drugsfda.json API, fetched live this session) whose returned records show only 60mg toremifene products (NDA020497 and its ANDA generics, breast-cancer indication) exist in FDA's database and no 80mg product is present, directly supporting the claim's 'remains unapproved' determination. A verbatim quote of the JSON records was added to extractedEvidence and the sourceRef appended to sourceRefs; a reviewFlag notes the CRL-specifics still rest on Fierce Biotech press coverage since FDA does not publicly post this pre-2012 CRL.",
+     "newSourceUrl": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10"
+    },
+    {
+     "claimId": "toremifene-studied-use-adt-fracture-rct-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is not in the directive's safety-critical set, and the statement already attributes the findings to a specific named Phase III trial ('In a two-year, double-blind, placebo-controlled Phase III trial of 1,389 men...'). Searched FDA openFDA drugsfda.json (only 60mg entries, no 80mg), DailyMed drug-name search (same three 60mg products only), and general web search for an FDA advisory-committee document addressing this trial (none found) -- no regulator document exists for this never-approved 80mg indication. Set fieldAuthorityRequired=false and added the required reviewFlag naming exactly what was searched."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "clomiphene",
+   "summary": "One flagged claim (clomiphene-adverse-effects-male-hypogonadism-001, claimType adverse-effect). Confirmed via WebFetch of the DailyMed CLOMID label and an FDA.gov/accessdata.fda.gov search that no regulator source addresses this specific meta-analysis finding (21% study-drug AE rate, headache/estradiol elevation, no reported sexual-desire/erectile decline in male-hypogonadism RCTs) \u2014 the label only covers headache incidence in the female indication and separately notes testicular tumors/gynecomastia in male users, not this claim's statistics. Since adverse-effect is outside the pipeline's hard safety-critical claimType set and the claim already attributes findings to the specific meta-analysis, applied Lane 2: set fieldAuthorityRequired=false and appended a dated recalibration reviewFlag documenting the search. Added ops.qualityFlags entry \\\"authority-support-pass-2026-08-29\\\"; ops.needsReview left true. No other claim fields changed. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "clomiphene-adverse-effects-male-hypogonadism-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType adverse-effect is outside the pipeline's safety-critical set; claim already attributes the 21% AE rate, headache/estradiol findings, and absence of reported sexual-desire/erectile decline to the specific PMC meta-analysis of male-hypogonadism RCTs. Searched DailyMed CLOMID label (ADVERSE REACTIONS: headache 1.3% in female-indication trials; separately notes testicular tumors/gynecomastia in male users, but nothing on the 21% rate, estradiol elevation, or libido/erectile outcomes from hypogonadism RCTs) and FDA.gov/accessdata.fda.gov (no clomiphene-specific male-hypogonadism safety communication found) \u2014 no A1/A2 source addresses this claim. Set fieldAuthorityRequired=false and added a dated recalibration reviewFlag naming what was searched."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "bazedoxifene",
+   "summary": "One flagged claim (bazedoxifene-efficacy-vertebral-fracture-001) resolved via Lane 1: added a new A1 source (EMA Conbriza EPAR, bazedoxifene monotherapy approved in EU) with verbatim quotes fetched this session confirming significant vertebral fracture reduction vs placebo, hip-fracture efficacy not established, and matching adverse-effect profile. Packet validates against schema; ops.qualityFlags now includes authority-support-pass-2026-08-29.",
+   "perClaim": [
+    {
+     "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
+     "lane": "a1a2-linked",
+     "detail": "DailyMed DUAVEE label (already-cited A1 source) was checked first and confirmed to contain no vertebral-fracture efficacy data (only prevention-indication BMD data), so it could not support this claim. Found and fetched the EMA EPAR for Conbriza (bazedoxifene monotherapy, EU-approved), which directly documents the 3-year trial's vertebral fracture reduction (2% vs 4% new fractures), notes hip-fracture efficacy was not established, and lists matching adverse effects (hot flushes, muscle spasms, peripheral oedema, VTE contraindication). Added as new A1 source ema-conbriza-epar with four verbatim quotes in extractedEvidence and added to sourceRefs.",
+     "newSourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/conbriza"
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "lasofoxifene",
+   "summary": "One flagged claim (lasofoxifene-efficacy-elaine1-esr1-mbc-001, claimType efficacy) was recalibrated: fieldAuthorityRequired set to false since 'efficacy' is outside the directive's safety-critical/fieldAuthorityRequired scope, the statement already attributes findings to the specific ELAINE 1 phase II trial (source-level attribution), and FDA.gov/DailyMed searches this session confirmed no regulator document (label or approval) exists for lasofoxifene addressing this investigational-oncology efficacy result. A reviewFlag documenting the recalibration and the searches performed was appended; ops.qualityFlags now includes authority-support-pass-2026-08-29. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "lasofoxifene-efficacy-elaine1-esr1-mbc-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'efficacy' is not in the pipeline's safety-critical set and the statement already attributes results to the specific ELAINE 1 phase II trial (PMID 38072514) with study-level stats; searched FDA.gov (found only an unrelated Fast Track designation news item, no approval/label) and DailyMed (0 results for lasofoxifene) and found no regulator document addressing this investigational efficacy claim, so fieldAuthorityRequired was set to false with a reviewFlag recording the recalibration and searches performed."
+    }
+   ]
+  },
+  {
+   "slug": "somatropin",
+   "ok": true,
+   "summary": "Only one flagged claim for somatropin (somatropin-efficacy-athletic-performance-001, claimType efficacy). Confirmed no FDA/DailyMed document addresses GH efficacy for athletic performance (not an approved indication), so Lane 1 was impossible. Applied Lane 2: set fieldAuthorityRequired=false and added a reviewFlag recording the recalibration and the search performed. Statement already carried study-level attribution (\"A systematic review of 27 randomized controlled trials... found...\"), so no statement edit was needed. Appended authority-support-pass-2026-08-29 to ops.qualityFlags; ops.needsReview left true. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "somatropin-efficacy-athletic-performance-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is efficacy, outside the directive's fieldAuthorityRequired scope (not regulatory/safety-critical/monitoring/dosing/formulation/storage). The claim already attributes findings at study level (\"A systematic review of 27 randomized controlled trials (n=440)... found...\"). Searched FDA.gov and DailyMed for any document addressing GH efficacy for athletic performance; none exists since this is not an FDA-approved indication. Set fieldAuthorityRequired=false and added a reviewFlag documenting the recalibration and the search performed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "oxytocin",
+   "summary": "Both flagged oxytocin claims resolved via Lane 2 (flag-recalibrated): claimTypes efficacy and adverse-effect are outside the directive's safety-critical/fieldAuthorityRequired scope, statements already attribute findings to the specific study (NEJM Sikich 2021 RCT; Cai 2018 meta-analysis), and live searches this session (DailyMed label search, FDA.gov/web search) confirmed no regulator document addresses intranasal oxytocin for ASD -- only injectable Pitocin/generic oxytocin for obstetric use exists in FDA/DailyMed records. fieldAuthorityRequired set to false on both claims with reviewFlags documenting the search; ops.needsReview remains true and authority-support-pass-2026-08-29 appended to ops.qualityFlags. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "oxytocin-efficacy-intranasal-asd-negative-rct-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is not in the safety-critical set; the statement already attributes the finding to the specific NEJM Sikich 2021 phase 2 RCT. Searched FDA.gov and DailyMed for an intranasal oxytocin/ASD label -- found none (DailyMed lists only injectable Pitocin/generic oxytocin for obstetric use). fieldAuthorityRequired set to false with reviewFlag added documenting the search; no other fields changed."
+    },
+    {
+     "claimId": "oxytocin-safety-intranasal-adverse-events-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType adverse-effect is not in the safety-critical set; per directive caution, checked FDA.gov and DailyMed hard for a label addressing intranasal oxytocin AEs in ASD before recalibrating -- only injectable obstetric-use Pitocin/generic oxytocin products exist, no intranasal formulation or ASD-related label content. Statement already attributes the finding to the specific Cai 2018 meta-analysis (223 pooled RCT participants). fieldAuthorityRequired set to false with reviewFlag documenting the FDA/DailyMed search; claim substance, evidenceTier, and confidence unchanged."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "tesamorelin",
+   "summary": "One flagged claim for tesamorelin (efficacy claim citing the Stanley/Falutz JAMA 2014 RCT). Fetched the DailyMed EGRIFTA SV label live and confirmed its CLINICAL STUDIES section reports different pivotal trials (VAT treatment differences -31 and -21 cm^2) and contains no liver-fat data, so it does not support this specific study's -42 cm^2 VAT / -2.9% liver-fat findings. FDA.gov/accessdata.fda.gov searches returned only the 2010 original NDA review, predating the 2014 publication. Since efficacy is not in the safety-critical claimType set, the claim already attributes findings at study level ('In a randomized, placebo-controlled trial...'), and no regulator document addresses this specific study, applied Lane 2: set fieldAuthorityRequired to false and added a dated reviewFlag documenting the search. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "tesamorelin-efficacy-visceral-liver-fat-rct-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is 'efficacy' (not in the safety-critical set); statement already attributes findings to the specific JAMA 2014 RCT (Stanley/Falutz, PMID 25038357). Live-fetched the DailyMed EGRIFTA SV label's CLINICAL STUDIES section, which reports different pivotal trials (VAT treatment differences -31 cm^2 and -21 cm^2) and no liver-fat data \u2014 it does not cover this study's specific -42 cm^2 VAT / -2.9% liver-fat results. FDA.gov search returned only the original 2010 NDA review/label, predating the 2014 study. Set fieldAuthorityRequired=false and appended a dated reviewFlag documenting the search per Lane 2."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "thymosin-alpha-1",
+   "summary": "Both flagged claims (ta1-efficacy-sepsis-tests-negative-001, ta1-efficacy-sepsis-etass-early-001) were efficacy claims with fieldAuthorityRequired over-applied. Lane 1 was impossible: thymosin alpha-1 has no FDA-approved label or sepsis indication anywhere (confirmed via live DailyMed re-fetch showing 0 results for thymalfasin, and the packet's only FDA document addresses 503A compounding bulk-substance eligibility, not sepsis efficacy). Efficacy is outside the directive's safety-critical claimType set, and both claim statements already attribute findings at study level (TESTS and ETASS trials by name). Recalibrated both to fieldAuthorityRequired=false with a dated reviewFlag documenting the search. Set ops.qualityFlags to include authority-support-pass-2026-08-29; ops.needsReview remains true. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "ta1-efficacy-sepsis-tests-negative-001",
+     "lane": "flag-recalibrated",
+     "detail": "Efficacy claimType is outside the directive's safety-critical set; the statement already attributes findings to the specific TESTS phase 3 trial by name. No FDA/DailyMed document addresses thymosin alpha-1 sepsis efficacy (searched FDA.gov and re-fetched DailyMed this session, 0 results for thymalfasin), and no other indication is approved anywhere. Set fieldAuthorityRequired=false with a dated reviewFlag recording the search; no statement edit needed."
+    },
+    {
+     "claimId": "ta1-efficacy-sepsis-etass-early-001",
+     "lane": "flag-recalibrated",
+     "detail": "Same reasoning as the TESTS claim: efficacy claimType is out of scope for fieldAuthorityRequired, the statement already names the ETASS trial and its design, and no regulator document exists for thymosin alpha-1 sepsis use (confirmed via this session's FDA.gov and DailyMed searches). Set fieldAuthorityRequired=false with a dated reviewFlag; no statement edit needed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "semax",
+   "summary": "Resolved both flagged authority-support deficits in semax.evidence.json. The contraindication claim (safety-critical) stays gated: fetched the FDA bulk-drug-substances page (A1, addresses only immunogenicity/aggregation risk, not the label's hypersensitivity/pediatric/pregnancy/seizure contraindications), confirmed DailyMed has zero results for Semax, and confirmed no EMA/EPAR exists \u2014 no A1/A2 source supports this specific claim, so fieldAuthorityRequired stays true and a reviewFlag documents the search. The stroke-efficacy claim was recalibrated: efficacy is outside the directive's fieldAuthorityRequired scope, the statement already attributes findings at study level to the 2018 Shmonin meta-analysis, and no regulator document exists for Semax (never FDA/EMA approved) \u2014 so fieldAuthorityRequired was set to false with a reviewFlag recording the recalibration and the searches performed. ops.needsReview remains true and 'authority-support-pass-2026-08-29' was appended to ops.qualityFlags. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "semax-warnings-contraindications-001",
+     "lane": "stays-gated",
+     "detail": "Contraindication is safety-critical; searched FDA.gov (bulk drug substances withdrawn-nomination page only covers immunogenicity/aggregation risk, not the specific contraindications), DailyMed (0 results for 'semax'), and EMA/EPAR (none exists for Semax). No A1/A2 source supports this claim's specific contraindication content, so fieldAuthorityRequired remains true and a reviewFlag records the searched-but-not-found gap."
+    },
+    {
+     "claimId": "semax-human-efficacy-stroke-limited-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is outside the directive's fieldAuthorityRequired scope (regulatory/safety-critical/monitoring/dosing/formulation/storage-reconstitution only); the statement already attributes findings at study level ('A 2018 meta-analysis of Russian clinical literature identified 8 studies...'); confirmed via FDA.gov, DailyMed, and EMA/EPAR that no regulator document exists for Semax (never approved by any regulator, so no efficacy determination can exist). Set fieldAuthorityRequired=false and added a reviewFlag documenting the recalibration and searches performed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "melanotan-ii",
+   "summary": "Resolved both flagged claims on the Melanotan II packet. The adverse-effect claim was hardened with Lane 1 (added the FDA bulk-substances page as an additional A1 sourceRef with a live-refetched verbatim quote covering priapism, and documented that FDA/DailyMed have no further specific document on the flushing/nausea/appetite portion). The efficacy claim was recalibrated under Lane 2 (fieldAuthorityRequired set false, reviewFlag added) since claimType efficacy is outside the directive's safety-critical scope, the statement already attributes findings to the specific Dorr et al. 1996 trial, and no regulator document on MT-II erectile/libido efficacy exists. ops.qualityFlags now includes authority-support-pass-2026-08-29; needsReview remains true. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "mt2-adverse-effects-short-term-001",
+     "lane": "a1a2-linked",
+     "detail": "Live-refetched the FDA bulk drug substances page (fda-bulk-substances-melanotan-ii, A1) this session and confirmed its case-report summary genuinely documents priapism as an adverse event for Melanotan II, corroborating that element of the claim; added it as an additional sourceRef with a verbatim quote. Searched DailyMed (no Melanotan II label exists \u2014 unapproved) and FDA.gov for any dedicated warning on flushing/nausea/appetite specifically; none found beyond the existing case-report summary, so a reviewFlag documents that residual gap while the claim now carries independent A1 support.",
+     "newSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks"
+    },
+    {
+     "claimId": "mt2-efficacy-erection-libido-rct-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is 'efficacy', outside the directive's safety-critical/fieldAuthorityRequired scope. The statement already attributes results at study level ('In a double-blind, placebo-controlled crossover human study of 20 men...') to the Dorr et al. 1996 trial, so no wording change was needed. Searched FDA.gov (bulk drug substances page) and DailyMed for any regulator document addressing Melanotan II's erectile-function/libido efficacy \u2014 none exists, as expected for a never-approved compound. Set fieldAuthorityRequired=false and added a dated reviewFlag documenting the recalibration and the searched sources."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "cjc-1295",
+   "summary": "One flagged claim for cjc-1295 (cjc1295-efficacy-human-rct-gh-igf1-001, claimType efficacy). No regulator source addresses the specific quantitative GH/IGF-1 pharmacodynamic findings, so Lane 1 was impossible. Since efficacy is outside the safety-critical claimType set and the claim already attributes findings to the specific Teichman 2006 RCT, applied Lane 2: set fieldAuthorityRequired=false and added a reviewFlag documenting the recalibration and the FDA/DailyMed searches performed. Appended authority-support-pass-2026-08-29 to ops.qualityFlags; ops.needsReview left true. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "cjc1295-efficacy-human-rct-gh-igf1-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is not in the safety-critical set; fetched the live FDA PCAC briefing (fda.gov/media/183819/download) and confirmed it only cites Teichman et al. 2006 by name without reproducing any GH/IGF-1 fold-change or dose-response figures, and checked DailyMed for a CJC-1295 label, finding only an unrelated veterinary bulk-ingredient listing (AX Pharmaceutical, NDC 62157-251-01) with no human clinical data -- so no genuine A1/A2 source exists for this specific quantitative claim. The claim statement already attributes the findings to the specific two RCTs by name/design, so set fieldAuthorityRequired=false and added a reviewFlag recording the recalibration and the searches performed, per Lane 2."
+    }
+   ]
+  }
+ ],
+ "audit": {
+  "overallPass": true,
+  "perPacket": [
+   {
+    "slug": "liraglutide",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "exenatide",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "pramlintide",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "tamoxifen",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "toremifene",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": [
+     "Minor: openFDA drugsfda.json quote in claim toremifene-regulatory-crl-80mg-adt-001 gives sponsor_name 'MSN' for ANDA212818, while the human-facing Drugs@FDA listing shows sponsor 'Novadoz Pharmaceuticals LLC' for the same application (MSN is Novadoz's parent/manufacturer group) \u2014 cosmetic naming discrepancy only, does not affect the claim's core supported point (no 80mg toremifene product exists)."
+    ]
+   },
+   {
+    "slug": "clomiphene",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "bazedoxifene",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "lasofoxifene",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "somatropin",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "oxytocin",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "tesamorelin",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "thymosin-alpha-1",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "semax",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "melanotan-ii",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "cjc-1295",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   }
+  ],
+  "blockers": [],
+  "warnings": [
+   "toremifene: openFDA JSON quote's sponsor_name 'MSN' vs Drugs@FDA display name 'Novadoz Pharmaceuticals LLC' for ANDA212818 is a naming-source discrepancy (likely raw-API sponsor field vs public brand/subsidiary name) \u2014 worth a one-line reviewer note but does not undermine the claim, which only depends on strength/marketing-status fields (all three approved toremifene applications are 60mg; no 80mg product exists)."
+  ]
+ }
+}

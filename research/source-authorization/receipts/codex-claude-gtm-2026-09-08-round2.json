@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified session. Claude's completed handoff reported no subagents; a generic running-task indicator was not treated as proof of another model."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "2d2eaa8dbb3c1233bb32fd25edf4933eba35e6c31635d04d23e4ee81af1741c2",
+  "requested_lanes": [
+    "Preserve per-packet metadata and citation locators in the source inventory, with behavioral verification",
+    "Correct six factual claims in the rights handoff and PR while preserving worker tests and issued binding"
+  ],
+  "response_status": "complete",
+  "artifacts": [
+    "https://github.com/m0r6aN/biostack/pull/289",
+    "research/source-authorization/CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md",
+    "tools/research/build-source-inventory.py",
+    "tools/research/test_build_source_inventory.py",
+    "research/output/codex-gtm-collaboration-20260908/inventory-post-merge-verification.json",
+    "research/output/codex-gtm-collaboration-20260908/worker-tests-post-merge.trx"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read completed Claude desktop response and independently inspected draft PR #289 at bbcd3a86abac4f67f34166ad31d7d0467242ab5e",
+      "Verified script SHA-256 ab86a43ce71165629e34e38420afbb52b91146c623e1fd53650c118800be94ae and independently ran all 11 new Python tests successfully",
+      "Compared every original source occurrence and nonempty quote locator before and after main advanced: post-merge 636 occurrences and 1343 locators match",
+      "Independently rebuilt and ran the post-merge worker suite: 881 passed / 8 failed / 889 total; parsed both TRX files and verified the eight failure names are unchanged",
+      "Read corrected handoff and PR, checked historical registry hash and count arithmetic; confirmed PR #289 contains only inventory, tests and documentation changes"
+    ],
+    "passed": true
+  },
+  "deviations": [
+    "PR #288 merged through concurrent external activity before the correction commits landed. Claude opened draft follow-up PR #289; Codex did not merge or deploy.",
+    "Concurrent main changes added corpus entries and a DailyMed alias. The new registry hash is 248d8f02d9c812f524e7fa48eba3971de8de17b936537d74df15a82898445d8f; it still does not match the unchanged issued v1 binding.",
+    "Acceptance applies only to this bounded tooling/documentation remediation. Launch readiness, licences, owner decisions and authorization issuance remain unestablished.",
+    "RTK unavailable on this host; ordinary shell commands were used directly."
+  ],
+  "dissent": [
+    "Worker test design remains unresolved: Codex considers historical positive fixtures plus current-registry denial assertions a possible design; Claude favors preserving all eight failures. No worker test or issued binding was changed in this remediation.",
+    "URL grouping is technical metadata, not a legal work determination, permission grant or independent evidence count. Further grouping and rights preparation remain agent work rather than owner-only blockers."
+  ]
+}
