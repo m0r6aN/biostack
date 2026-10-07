@@ -165,11 +165,7 @@ function Assert-OnlyAuthorizedEvidenceStatus {
 }
 
 if ($ReviewerIds.Count -eq 1 -and $ReviewerIds[0].Contains(',')) {
-    [string[]]$trimmed = @()
-    foreach ($item in $ReviewerIds[0].Split(',')) {
-        $trimmed += @($item.Trim())
-    }
-    $ReviewerIds = $trimmed
+    $ReviewerIds = [string[]]@($ReviewerIds[0].Split(','))
 }
 
 Assert-True ($ReviewerIds.Count -eq 2) 'ReviewerIds must contain exactly two identities.'
