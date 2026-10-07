@@ -85,3 +85,5 @@ build/verify/documentation work to worker agents. Merges to `main` remain Gate 3
 | Date | Event |
 |---|---|
 | 2026-10-07 | Queue created; Wave 1 dispatched (6 agents); P1 closure plan + BIO-LOCAL-001 Gate 2 recorded |
+| 2026-10-07 | Wave 1 returned: PR #472 (PR10 verification green, TODO ticked); PR #473 (BIO-KEON-001/002 review-candidate specs); P1 reviews 1+2 PASS (2 minor findings); P1 verifier STOPPED on `verify-p1.ps1` runtime bug → rework authorized (`P1-REWORK-2026-10-07.md`); pairwise survey complete, remediation checklist ready |
+| 2026-10-07 | Wave 1b dispatched (4 agents): p1_repair_builder, bio_local_001_builder (docker access granted via `newgrp docker`), keon_spec_reviewer (PR #473), pairwise_remediation_shaper (BIO-PAIRWISE-001..006 naming ratified) |
