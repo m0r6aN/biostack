@@ -4,8 +4,8 @@
 
 - [x] Add frontend API proxy endpoint for `POST /api/v1/auth/start` to forward to backend auth service
 - [x] Preserve JSON payload and cookie forwarding behavior in proxy response
-- [ ] Run focused frontend build/type check to validate route compiles
-- [ ] Mark fix tasks complete after verification
+- [x] Run focused frontend build/type check to validate route compiles
+- [x] Mark fix tasks complete after verification
 
 - [x] Add configurable YouTube transcript provider options (disabled by default)
 - [x] Add MCP client abstraction interface for YouTube transcript retrieval
