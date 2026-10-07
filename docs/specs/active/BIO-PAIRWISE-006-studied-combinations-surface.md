@@ -1,24 +1,30 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-006
 title: Pairwise P5 — public studied-combinations surface
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: standard
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p5-studied-combinations-surface.md
-  - frontend/src/components/knowledge/
+  - docs/specs/active/BIO-PAIRWISE-006-studied-combinations-surface.md
+  - frontend/src/components/knowledge/CompoundIntelligenceCard.tsx
+  - frontend/src/components/knowledge/StudiedCombinations.tsx
+  - frontend/src/__tests__/components/StudiedCombinations.test.tsx
+  - frontend/src/__tests__/conversion/conversionCopy.test.ts
   - backend/src/BioStack.Contracts/
   - docs/guidance/RATIFICATION.md
 routing_class: standard-feature
-permission_profile: builder-standard
-data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P5 — Public studied-combinations surface
+# BIO-PAIRWISE-006 — Public studied-combinations surface
 
 ## Intent
 

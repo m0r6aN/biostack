@@ -1,23 +1,27 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-005
 title: Pairwise P4 — first sourced negative relationship, end to end
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: standard
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p4-first-sourced-negative-pair.md
-  - research/input/relationships/
+  - docs/specs/active/BIO-PAIRWISE-005-first-sourced-negative-pair.md
+  - research/input/relationships/pairwise-p4-first-negative.relationship.json
   - research/review-decisions/
+  - research/output/pairwise-lane-20260917/p4-authoring-and-review.md
 routing_class: implementation/standard
-permission_profile: builder-standard
-data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P4 — First sourced negative relationship, end to end
+# BIO-PAIRWISE-005 — First sourced negative relationship, end to end
 
 ## Intent
 

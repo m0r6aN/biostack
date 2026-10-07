@@ -1,23 +1,29 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-002
 title: Pairwise P1 — publishable relationship subset and public rendering ratification
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: critical
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p1-publishable-relationship-ratification.md
+  - docs/specs/active/BIO-PAIRWISE-002-publishable-relationship-ratification.md
+  - docs/guidance/pairwise-relationship-publication-contract.v1.md
   - docs/guidance/RATIFICATION.md
-  - docs/guidance/
 routing_class: architecture/risk
+verification_class: review-dependent
 permission_profile: builder-architecture
 data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P1 — Publishable relationship subset and rendering ratification
+# BIO-PAIRWISE-002 — Publishable relationship subset and rendering ratification
 
 ## Intent
 

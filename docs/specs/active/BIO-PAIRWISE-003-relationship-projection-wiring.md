@@ -1,24 +1,31 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-003
 title: Pairwise P2 — connect ratified relationship records to the knowledge projection
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: standard
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p2-relationship-projection-wiring.md
-  - backend/src/BioStack.KnowledgeWorker/Pipeline/
-  - backend/src/BioStack.Application/Services/Intelligence/
-  - backend/tests/BioStack.KnowledgeWorker.Tests/
+  - docs/specs/active/BIO-PAIRWISE-003-relationship-projection-wiring.md
+  - backend/src/BioStack.KnowledgeWorker/Pipeline/EvidencePacketSubstanceRecordCompiler.cs
+  - backend/src/BioStack.Application/Services/Intelligence/GraphIntelligenceService.cs
+  - backend/tests/BioStack.KnowledgeWorker.Tests/CompoundGraphTests.cs
+  - backend/tests/BioStack.KnowledgeWorker.Tests/RelationshipProjectionTests.cs
 routing_class: standard-feature
+verification_class: equivalence-provable
 permission_profile: builder-standard
 data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P2 — Relationship projection wiring
+# BIO-PAIRWISE-003 — Relationship projection wiring
 
 ## Intent
 
