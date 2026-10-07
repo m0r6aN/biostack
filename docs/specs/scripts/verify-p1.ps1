@@ -91,7 +91,7 @@ function Invoke-Git {
         $detail = ($result.Output -join "`n")
         throw "git $($Arguments -join ' ') failed with exit $($result.ExitCode): $detail"
     }
-    return [string[]]$result.Output
+    return ,@([string[]]$result.Output)
 }
 
 function Sort-Ordinal {
@@ -173,7 +173,7 @@ Assert-True (-not [string]::IsNullOrWhiteSpace($ReviewerIds[0])) 'ReviewerIds[0]
 Assert-True (-not [string]::IsNullOrWhiteSpace($ReviewerIds[1])) 'ReviewerIds[1] is empty.'
 Assert-True (-not [StringComparer]::Ordinal.Equals($ReviewerIds[0], $ReviewerIds[1])) 'ReviewerIds must be distinct.'
 
-$rootResult = Invoke-Git -Arguments @('rev-parse', '--show-toplevel')
+$rootResult = @(Invoke-Git -Arguments @('rev-parse', '--show-toplevel'))
 Assert-True ($rootResult.Count -eq 1) 'Unable to resolve one repository root.'
 $RepositoryRoot = [IO.Path]::GetFullPath($rootResult[0].Trim())
 Set-Location -LiteralPath $RepositoryRoot
@@ -190,7 +190,7 @@ Assert-True ([StringComparer]::OrdinalIgnoreCase.Equals($dispatchParent, $BaseCo
 
 $gateAtBase = Get-GitResult -Arguments @('cat-file', '-e', "${BaseCommit}:$GatePath")
 Assert-True ($gateAtBase.ExitCode -ne 0) 'Gate 2 record unexpectedly exists at BaseCommit.'
-$dispatchChange = Invoke-Git -Arguments @('diff', '--name-status', $BaseCommit, $DispatchCommit, '--')
+$dispatchChange = @(Invoke-Git -Arguments @('diff', '--name-status', $BaseCommit, $DispatchCommit, '--'))
 Assert-SequenceEqual -Actual $dispatchChange -Expected @("A`t$GatePath") -Label 'Dispatch-anchor sole change'
 Add-PassedCheck -Number 1 -Name 'two-anchor topology and Gate 2 addition'
 
@@ -246,9 +246,9 @@ Assert-SequenceEqual -Actual ([string[]]@($GateContract.frozenSurfaces)) -Expect
 
 $actualSpecSha = (Get-FileHash -LiteralPath (Join-Path $RepositoryRoot $SpecPath) -Algorithm SHA256).Hash
 Assert-True ([StringComparer]::OrdinalIgnoreCase.Equals($actualSpecSha, $ApprovedSpecSha256)) 'Approved P1 spec hash mismatch.'
-$dispatchGateBlob = (Invoke-Git -Arguments @('rev-parse', "${DispatchCommit}:$GatePath"))[0].Trim()
-$headGateBlob = (Invoke-Git -Arguments @('rev-parse', "HEAD:$GatePath"))[0].Trim()
-Assert-True ([StringComparer]::Ordinal.Equals($dispatchGateBlob, $headGateBlob)) 'DispatchCommit and HEAD Gate 2 blobs differ.'
+$dispatchGateBlob = (Invoke-Git -Arguments @('rev-parse', "${DispatchCommit}:$GatePath"))[0].Trim().ToLowerInvariant()
+$headGateBlob = (Invoke-Git -Arguments @('rev-parse', "HEAD:$GatePath"))[0].Trim().ToLowerInvariant()
+Assert-True ([StringComparer]::OrdinalIgnoreCase.Equals($dispatchGateBlob, $headGateBlob)) 'DispatchCommit and HEAD Gate 2 blobs differ.'
 Add-PassedCheck -Number 4 -Name 'Gate 2 machine-readable authorization contract'
 
 foreach ($path in @($AllowedBuilderSurfaces + $CoreContextTargets)) {
@@ -353,7 +353,7 @@ Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'agents-sha256.txt') -Conten
 Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'gate2-contract.json') -Content ($GateContract | ConvertTo-Json -Depth 12)
 Add-PassedCheck -Number 13 -Name 'authorized UTF-8/LF evidence bundle generation'
 
-$preSummaryStatus = Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all')
+$preSummaryStatus = @(Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all'))
 Assert-OnlyAuthorizedEvidenceStatus -StatusLines $preSummaryStatus
 Add-PassedCheck -Number 14 -Name 'committed HEAD and authorized untracked evidence only'
 
@@ -383,7 +383,7 @@ foreach ($evidenceFile in $ExpectedEvidenceFiles) {
     Assert-True (Test-Path -LiteralPath (Join-Path $resolvedEvidencePath $evidenceFile)) "Missing evidence file: $evidenceFile"
 }
 
-$finalStatus = Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all')
+$finalStatus = @(Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all'))
 Assert-OnlyAuthorizedEvidenceStatus -StatusLines $finalStatus
 
 Write-Output 'P1 verification PASS'
