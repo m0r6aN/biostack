@@ -1,34 +1,172 @@
-# BIO-LOCAL-001 — Config note (dev compose + `.env.example` review)
+# BIO-LOCAL-001 Configuration Review Note
 
-- Ticket: BIO-LOCAL-001 / Commit SHA (pinned): `e5b75e072c7f99b14ba658ec12ef6004e48a0ca4` (`e5b75e0`) / Config class: Development / Date (UTC): 2026-09-19
-- Scope: review ONLY. No compose, Dockerfile, `.env`, migration, or contract change made here (stop-and-report applies; none fired).
+**Parcel:** BIO-LOCAL-001 — Local dev-stack boot proof  
+**Review Date:** 2026-10-07  
+**Reviewer:** bio_local_001_builder  
+**Scope:** `docker-compose.dev.yml`, `.env.example`, production compose gap
 
-## 1. Dev compose review (`docker-compose.dev.yml`, 60 lines)
+## Development Compose Configuration
 
-- Services: `biostack-api-dev` (image `mcr.microsoft.com/dotnet/sdk:10.0-alpine`, ports `5000:5000` + `5001:5001`, `command: dotnet watch run … --urls http://+:5000`, `ASPNETCORE_ENVIRONMENT=Development`, `ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db`) and `biostack-ui-dev` (image `node:22-alpine`, port `3043:3043`, `command: npm install && npm run dev`, `NEXT_PUBLIC_API_URL=http://localhost:5000`).
-- `env_file: [.env]` on BOTH services; `.env` was copied verbatim from `.env.example` with blank secrets (gitignored, never committed). Dev boot succeeds with blanks because Development defaults come from `appsettings.Development.json` + compose environment.
-- Volumes: host `./backend` → `/app`, named `biostack-dev-data` → `/app/data` (SQLite file lives here, not host `backend/data/`); host `./frontend` → `/app` with anonymous `/app/node_modules` and `/app/.next` (reinstalled/rebuilt per container recreation — observed UI warmup ~60 s on fresh volume, curl exit 52 empty-reply while warming, then 200).
-- Healthchecks: API `curl -f http://localhost:5000/health` (start_period 30 s); UI `wget --spider http://localhost:3043` (start_period 60 s); UI `depends_on: biostack-api-dev condition: service_healthy` — observed ordering held (UI started only after API healthy, both boots).
-- Local-only posture: no Postgres, no Redis requirement (in-memory fallback), no SMTP/Azure (in-memory magic-link inbox when hosts blank), no Stripe live, no image pushes. Matches the directive's local-only constraint.
+### Services Defined
 
-## 2. `.env.example` review (107 lines)
+`docker-compose.dev.yml` declares two services:
 
-- Secret placeholders are BLANK by default and stay blank for dev: `DB_PASSWORD=`, `Jwt__Secret=`, `Auth__CallbackSecret=`, `AUTH_SECRET=`, `AUTH_CALLBACK_SECRET=`, `Smtp__Username/Password=`, `Stripe__SecretKey/WebhookSecret/OperatorPriceId/CommanderPriceId=`. Generation guidance (`openssl rand -hex 32`) is production-only.
-- Dev-relevant fields: `Smtp__Host=` blank → in-memory inbox; commented dev URLs (`PublicApiUrl=http://localhost:5000`, `FrontendUrl=http://localhost:3043`); OAuth/Stripe/Redis sections blank/commented (disabled). Nothing real was filled in for this proof; no credential material appears in any artifact.
-- SG-L5 (partial, local config/secrets posture): PASS for this parcel — blank/placeholder-only local config, `.env` gitignored (`.gitignore:55`), never committed, never pasted. SG-L6 (partial, no payload in logs/artifacts): PASS — transcripts contain only `Healthy` / stub-status JSON / framework log lines / UI shell structure.
+1. **biostack-api-dev**
+   - Image: `mcr.microsoft.com/dotnet/sdk:10.0-alpine`
+   - Ports: `5000:5000`, `5001:5001`
+   - Volumes: `./backend:/app` (live code), `biostack-dev-data:/app/data` (SQLite persistence)
+   - Environment: `ASPNETCORE_ENVIRONMENT=Development`, SQLite connection string
+   - Command: `dotnet watch run` (hot-reload enabled)
+   - Healthcheck: `curl -f http://localhost:5000/health` (10s interval, 10 retries, 30s start)
 
-## 3. Prod-compose gap — RECORDED as known limitation, NEVER fixed here
+2. **biostack-ui-dev**
+   - Image: `node:22-alpine`
+   - Port: `3043:3043`
+   - Volumes: `./frontend:/app` (live code), anonymous volumes for `node_modules` and `.next`
+   - Environment: `NODE_ENV=development`, `NEXT_PUBLIC_API_URL=http://localhost:5000`
+   - Command: `npm install && npm run dev`
+   - Healthcheck: `wget -q --spider http://localhost:3043` (10s interval, 10 retries, 60s start)
+   - Depends on: API service healthy
 
-- As documented in `README.md` ("Run the production-shaped local stack"): the production-shaped composition (`docker-compose.yml`, `biostack-api` service) does NOT pass `KeonRuntime__*` variables through from `.env`, and `.env.example` does not list them — so a Production-environment API cannot reach live Keon (`KeonRuntime__BaseUrl` + `KeonRuntime__LiveMode=true`) without manually adding them to the `biostack-api` `environment` block (or explicitly acknowledging ungoverned via `KeonRuntime__AllowStubInProduction=true`).
-- Consequence (by design, fail-closed in `KeonRuntimeDependencyInjection.cs`): Production startup THROWS when stubbed/unconfigured — silently serving production traffic without a governance runtime becomes a boot failure. `StubAllowAll=true` is likewise rejected in Production.
-- This gap is INTENTIONALLY left open in BIO-LOCAL-001 (out-of-scope: prod compose, image pushes, Azure/billing/email/Postgres drills; forbidden: compose/contract edits). A later parcel owns any production-compose remediation. The dev-stack claim proven here (`local` boot + stubbed-dev posture) stands independent of it.
+### Persistent Storage
 
-## 4. References asserted (all read, none modified)
+Volume `biostack-dev-data`:
+- Driver: `local`
+- Purpose: SQLite database persistence across container restarts
+- Mount point: `/app/data` inside `biostack-api-dev`
+- Database files: `biostack.db`, `biostack.db-shm`, `biostack.db-wal` (WAL mode)
+- Behavior: Persists unless explicitly removed with `docker compose down -v`
 
-- `docker-compose.dev.yml` — services/healthchecks/ports/volumes as above.
-- `README.md` § "Local development" → "Run the development stack" (line 124) — procedure proven; § "Run the production-shaped local stack" — gap source quoted in §3.
-- `backend/src/BioStack.Infrastructure/Keon/KeonRuntimeDependencyInjection.cs` (71 lines) — fail-closed wording quoted correctly in the boot-proof evidence file.
+### Environment Variables
 
-## Redaction attestation
+The dev compose reads from `.env` file (created from `.env.example`) but overrides critical paths for local development:
 
-This note contains NO secrets, tokens, credentials, PII, or health payloads — only file/line references, blank-key names, and structural config description.
+**Development Overrides:**
+- `ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db` (SQLite, not Postgres)
+- `ASPNETCORE_ENVIRONMENT=Development` (enables dev-specific configuration in `appsettings.Development.json`)
+- `NODE_ENV=development` (Next.js dev mode)
+- `NEXT_PUBLIC_API_URL=http://localhost:5000` (local API, not production URL)
+
+**File-Watcher Flags (Docker hot-reload compatibility):**
+- `DOTNET_USE_POLLING_FILE_WATCHER=1`
+- `CHOKIDAR_USEPOLLING=true`
+- `WATCHPACK_POLLING=true`
+
+## .env.example Review
+
+`.env.example` is a 230-line reference file documenting all configurable environment variables for both development and production. Key sections:
+
+### Database
+- `DB_PASSWORD`: Required for Postgres in production; dev uses in-memory default
+
+### Required Production Secrets
+- `Jwt__Secret`: Min 32 chars, signs JWT tokens
+- `Auth__CallbackSecret`: Shared secret API ↔ frontend, must match `AUTH_CALLBACK_SECRET`
+- `AUTH_SECRET`: Frontend NextAuth secret (min 32 chars)
+- All three are **blank placeholders** in `.env.example`; never committed with real values
+
+### Stripe (Required for Production Billing)
+- `Stripe__SecretKey`, `Stripe__WebhookSecret`, `Stripe__OperatorPriceId`, `Stripe__CommanderPriceId`
+- All blank in `.env.example`; must be filled for production with live-mode values
+
+### Email Delivery (Optional)
+- SMTP or Azure Communication Services Email options
+- Blank in `.env.example`; leaving blank uses in-memory magic-link inbox in dev
+
+### OAuth Providers (Optional)
+- Google, GitHub, Discord, Apple, Facebook, Instagram client IDs/secrets
+- All blank; disabled unless configured
+
+### Passkeys / WebAuthn (Fail-Closed by Default)
+- `Auth__Passkeys__Enabled=false` in `.env.example`
+- Requires HTTPS, public origin, and finalized RP ID before enabling
+
+### Keon Runtime (Not Present)
+**No `KeonRuntime__*` variables** are declared in `.env.example`. This means:
+- Development runs with `KeonRuntimeOptions` defaults: `LiveMode=false`, `BaseUrl` empty
+- The application uses `KeonRuntimeClientStub` (fail-closed stub mode)
+- The `/health/keon` endpoint returns 503 with `"mode":"Offline"` and `"message":"Keon Runtime not configured — running in stub mode"`
+
+## Production Compose Gap — Known Limitation (Not Fixed in This Parcel)
+
+### Issue
+
+`docker-compose.yml` (production compose) **does not pass through any `KeonRuntime__*` environment variables** to the `biostack-api` service.
+
+### Impact
+
+Without explicit configuration, production deployments using `docker-compose.yml` would:
+1. Run with `KeonRuntimeOptions` defaults (`LiveMode=false`, `BaseUrl` empty)
+2. Use `KeonRuntimeClientStub` instead of the live `KeonRuntimeClient`
+3. Trigger the fail-closed startup check in `KeonRuntimeDependencyInjection.cs`:
+
+   ```csharp
+   if (isProduction && !isLive && !options.AllowStubInProduction)
+   {
+       throw new InvalidOperationException(
+           "KeonRuntime is not in live mode (LiveMode=false or BaseUrl empty) in a Production "
+           + "environment. Governance receipts cannot be anchored. Configure "
+           + "KeonRuntime:BaseUrl + KeonRuntime:LiveMode=true, or set "
+           + "KeonRuntime:AllowStubInProduction=true to acknowledge running ungoverned.");
+   }
+   ```
+
+4. **Fail at startup** unless `KeonRuntime:AllowStubInProduction=true` is set (which explicitly acknowledges ungoverned operation)
+
+### Required Variables (Missing from docker-compose.yml)
+
+To run with live Keon Runtime in production, `docker-compose.yml` should pass:
+
+```yaml
+environment:
+  - KeonRuntime__LiveMode=true
+  - KeonRuntime__BaseUrl=${KEON_RUNTIME_BASE_URL:?KeonRuntime base URL must be set}
+  - KeonRuntime__BearerToken=${KEON_RUNTIME_BEARER_TOKEN:-}
+  - KeonRuntime__TimeoutMs=${KEON_RUNTIME_TIMEOUT_MS:-10000}
+```
+
+And `.env.example` should document:
+
+```bash
+# ── Keon Runtime (required for governance receipts in production) ────────────
+KEON_RUNTIME_BASE_URL=https://keon-runtime.example.com
+KEON_RUNTIME_BEARER_TOKEN=
+KEON_RUNTIME_TIMEOUT_MS=10000
+```
+
+### Status
+
+**This gap is recorded as a known limitation and is not fixed in this parcel.** Per the spec's stop-and-report rule and the scope constraint ("Read-only against product code"), this config gap is documented here for remediation in a future parcel or configuration update.
+
+The governed-delivery mandate for BIO-LOCAL-001 prohibits modifying product code, compose files, Dockerfiles, or `.env` structure. The proof demonstrates the **current state** of the stack; configuration improvements are out of scope.
+
+### Recommended Next Action
+
+A follow-on parcel (or direct coordinator action) should:
+1. Add `KeonRuntime__*` variables to `docker-compose.yml`
+2. Document them in `.env.example`
+3. Update deployment runbooks to require these values before production launch
+4. Verify the fail-closed boot check triggers correctly when they are missing
+
+## Development vs. Production Comparison
+
+| Aspect | `docker-compose.dev.yml` | `docker-compose.yml` |
+|--------|--------------------------|----------------------|
+| **Database** | SQLite in volume | Postgres service |
+| **API Image** | `dotnet/sdk:10.0-alpine` (SDK, watch mode) | Built from `backend/Dockerfile` (runtime-only) |
+| **UI Image** | `node:22-alpine` (dev server) | Built from `frontend/Dockerfile` (standalone Next.js) |
+| **Hot Reload** | Enabled (file watchers) | No (static builds) |
+| **Keon Runtime** | Stub (offline) | Stub (offline) — **gap** |
+| **Secrets Validation** | Minimal (dev defaults) | Fail-fast on missing required secrets |
+| **Environment** | `ASPNETCORE_ENVIRONMENT=Development` | `ASPNETCORE_ENVIRONMENT=Production` |
+
+Both configurations currently run Keon Runtime in stub mode. The production compose lacks the configuration to enable live mode.
+
+## Review Conclusion
+
+- `docker-compose.dev.yml` is correctly configured for local development with SQLite, hot-reload, and stubbed dependencies.
+- `.env.example` comprehensively documents all application settings but **does not include `KeonRuntime__*` variables**.
+- `docker-compose.yml` (production) **does not pass through Keon Runtime configuration**, which would cause a fail-closed boot failure in production unless `AllowStubInProduction=true` is explicitly set.
+- This configuration gap is **recorded here as a known limitation**, not fixed in this parcel per governed-delivery scope constraints.
+
+**Configuration class verified:** Development, local-only, SQLite backend, stubbed Keon Runtime (fail-closed).
