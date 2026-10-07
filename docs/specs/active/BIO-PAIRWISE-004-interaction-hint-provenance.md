@@ -1,24 +1,29 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-004
 title: Pairwise P3 — interaction hint provenance and unsourced quarantine
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: elevated
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p3-interaction-hint-provenance.md
-  - backend/src/BioStack.Domain/Entities/
+  - docs/specs/active/BIO-PAIRWISE-004-interaction-hint-provenance.md
+  - backend/src/BioStack.Domain/Entities/CompoundInteractionHint.cs
+  - backend/src/BioStack.Infrastructure/Persistence/BioStackDbContext.cs
   - backend/src/BioStack.Infrastructure/Persistence/Migrations/
-  - backend/src/BioStack.Application/
+  - backend/src/BioStack.Infrastructure/Knowledge/CompoundInteractionHintCatalog.cs
+  - backend/tests/BioStack.Api.Tests/Integration/InteractionHintQuarantineIntegrationTests.cs
 routing_class: architecture/risk
-permission_profile: builder-architecture
-data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P3 — Interaction hint provenance and quarantine
+# BIO-PAIRWISE-004 — Interaction hint provenance and quarantine
 
 ## Intent
 

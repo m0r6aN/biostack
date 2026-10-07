@@ -1,22 +1,28 @@
 ---
-ticket: KEO-TBD
+ticket: BIO-PAIRWISE-001
 title: Pairwise P0 — relationship substrate inventory and label interaction census
-status: draft
+status: review-candidate
+revision: 1
 owner: clinton.morgan
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-07
 supersedes: null
 superseded_by: null
 risk: low
+delivery_classes: [standard]
+guidance_classes: [not-applicable]
+substance_function_risk: [not-applicable]
+function_review_status: not-applicable
 surfaces:
-  - docs/specs/active/KEO-TBD-pairwise-p0-relationship-substrate-and-label-census.md
+  - docs/specs/active/BIO-PAIRWISE-001-relationship-substrate-and-label-census.md
   - research/output/pairwise-lane-20260917/
 routing_class: implementation/standard
+verification_class: report-verification
 permission_profile: reviewer-readonly
 data_classification: internal
 ---
 
-# KEO-TBD-pairwise-P0 — Relationship substrate inventory and label interaction census
+# BIO-PAIRWISE-001 — Relationship substrate inventory and label interaction census
 
 ## Intent
 
