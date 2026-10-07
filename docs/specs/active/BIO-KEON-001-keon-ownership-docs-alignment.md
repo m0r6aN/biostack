@@ -14,6 +14,11 @@ substance_function_risk: [not-applicable]
 function_review_status: not-applicable
 routing_class: documentation/standard
 data_classification: internal
+surfaces:
+  - docs/protocol-operations-offline-auditor-packet-index.md
+  - docs/architecture/protocol-operations-auditor-packet-commercialization-boundary.md
+  - backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md
+  - backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md
 ---
 
 # BIO-KEON-001 — Align verifier-kit and architecture docs to Keon ownership
@@ -38,11 +43,11 @@ Keon consolidation cycle, lanes K-1 and K-3, documentation-only positioning.
 
 ## Branch
 
-`docs/keon-k1-docs-alignment`
+**Proposed dispatch branch:** `docs/keon-k1-docs-alignment` (to be confirmed at Gate 2). **Current PR branch (shaping phase):** `docs/keon-k1-k3-shaping` (shared with K-3). K-1 and K-3 must be dispatched separately per collision risk; serialization or file-partitioning to be decided at Gate 2.
 
 ## Worktree
 
-`/home/cmorgan76/Repos/biostack-wt/keon-k1-k3-docs-alignment`
+`/home/cmorgan76/Repos/biostack-wt/keon-k1k3-fixes` (shared with K-3 during shaping phase)
 
 ## Dependencies
 
@@ -88,9 +93,8 @@ Target files for documentation updates (verified to exist and contain "offline v
 
 - `docs/protocol-operations-offline-auditor-packet-index.md` — entry-point index for auditor review; "Protocol Operations offline verification kit" positioning language.
 - `docs/architecture/protocol-operations-auditor-packet-commercialization-boundary.md` — commercialization boundary note; "offline kit" and verification SKU descriptions.
-- `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md` — verifier CLI reference (if current language implies BioStack generalized ownership).
-- `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md` — offline runbook title/intro (if applicable).
-- `docs/development/biostack-product-audit.md` — development audit notes (if applicable to offline verification positioning).
+- `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md` — verifier CLI reference; positioning language only, no code changes.
+- `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md` — offline runbook title and intro section; positioning language only.
 
 Coordinator-owned (builder must not edit): this spec, `docs/specs/INDEX.md`, `docs/specs/active/README.md`, `docs/specs/done/README.md`, TODO.md, CHARTER.md, HANDOFF documents, Gate 2 record.
 
@@ -131,7 +135,7 @@ Coordinator must resolve the partition and sequencing decision before approval.
 
 ## PR Notes
 
-- This spec shapes K-1 only; K-3 (generic-language replacement) is a separate parcel and separate PR.
+- This spec shapes K-1 only; K-3 (generic-language replacement) is a separate parcel. Both are shaped together in PR #473 but will be dispatched separately per Gate 2 decision.
 - No implementation code changes; documentation positioning only.
 - Merge is not authorized by this spec's approval. Gate 2 approval and coordinator dispatch are required.
 - The parcel may be merged only after all tests pass and an independent reviewer approves the docs alignment and constraint preservation.

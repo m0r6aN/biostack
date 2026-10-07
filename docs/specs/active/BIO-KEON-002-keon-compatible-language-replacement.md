@@ -14,6 +14,13 @@ substance_function_risk: [not-applicable]
 function_review_status: not-applicable
 routing_class: documentation/standard
 data_classification: internal
+surfaces:
+  - docs/protocol-operations-offline-auditor-packet-index.md
+  - docs/architecture/protocol-operations-auditor-packet-commercialization-boundary.md
+  - backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md
+  - backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md
+  - docs/development/biostack-product-audit.md
+  - docs/commercialization/05-glossary-architecture.md
 ---
 
 # BIO-KEON-002 — Replace duplicated generic verification language with Keon-compatible positioning
@@ -40,11 +47,11 @@ Keon consolidation cycle, lanes K-1 and K-3, documentation-only positioning.
 
 ## Branch
 
-`docs/keon-k3-language-replacement`
+**Proposed dispatch branch:** `docs/keon-k3-language-replacement` (to be confirmed at Gate 2). **Current PR branch (shaping phase):** `docs/keon-k1-k3-shaping` (shared with K-1). K-1 and K-3 must be dispatched separately per collision risk; serialization or file-partitioning to be decided at Gate 2.
 
 ## Worktree
 
-`/home/cmorgan76/Repos/biostack-wt/keon-k1-k3-docs-alignment`
+`/home/cmorgan76/Repos/biostack-wt/keon-k1k3-fixes` (shared with K-1 during shaping phase)
 
 ## Dependencies
 
@@ -99,8 +106,8 @@ Target files for generic-language replacement (verified to exist and contain rep
 - `docs/architecture/protocol-operations-auditor-packet-commercialization-boundary.md` — commercialization SKU descriptions; generic language about "offline verification", "audit support", "deterministic verification" that may apply Keon-compatible positioning.
 - `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md` — CLI reference; descriptions of "offline modes", "deterministic verification", "receipt verification" that reflect Keon-compatible pattern.
 - `backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md` — runbook; descriptions of offline workflow, air-gapped verification, receipt handling that match Keon patterns.
-- `docs/development/biostack-product-audit.md` — audit documentation; generic language about verification workflows (if applicable).
-- `docs/commercialization/05-glossary-architecture.md` — glossary terms related to offline verification, receipts, audit workflows.
+- `docs/development/biostack-product-audit.md` — audit documentation; generic language about verification workflows and offline audit trails.
+- `docs/commercialization/05-glossary-architecture.md` — glossary terms related to offline verification, receipts, audit workflows. **Examples of updates:** "offline verification kit" → "Keon-compatible offline inspection", "auditor-kit" → "Keon-compatible auditor-kit". Update only entries that describe generic verification patterns; do not update BioStack-specific CLI behavior or protocol-operation fields.
 
 Coordinator-owned (builder must not edit): this spec, `docs/specs/INDEX.md`, `docs/specs/active/README.md`, `docs/specs/done/README.md`, TODO.md, CHARTER.md, HANDOFF documents, Gate 2 record.
 
@@ -144,7 +151,7 @@ Coordinator must resolve the partition and sequencing decision before approval.
 
 ## PR Notes
 
-- This spec shapes K-3 only; K-1 (ownership positioning) is a separate parcel and separate PR.
+- This spec shapes K-3 only; K-1 (ownership positioning) is a separate parcel. Both are shaped together in PR #473 but will be dispatched separately per Gate 2 decision.
 - No implementation code changes; documentation language replacement only.
 - Merge is not authorized by this spec's approval. Gate 2 approval and coordinator dispatch are required.
 - The parcel may be merged only after all tests pass and an independent reviewer approves the language replacement and constraint preservation.
