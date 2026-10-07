@@ -1,10 +1,10 @@
-# Governed Spec Registry
-
-This is the authoritative registry for BioStack governed-delivery parcel specs. Lifecycle and ownership rules are defined in the [spec lifecycle](README.md).
-
 | Parcel | Status | Spec | Goal Charter | Delivery classes | Guidance classes | Branch/worktree | Owner | Review requirement | Closure |
 |---|---|---|---|---|---|---|---|---|---|
 | P1 | active | [P1 spec](../INITIATIVES/biostack-governed-delivery/parcels/P1.md) | [Governed-delivery charter](../INITIATIVES/biostack-governed-delivery/CHARTER.md) | standard; architecture/risk-sensitive | not-applicable | [Gate 2 branch/worktree](../INITIATIVES/biostack-governed-delivery/dispatch/P1-GATE2.md) | [p1_builder](../INITIATIVES/biostack-governed-delivery/dispatch/P1-GATE2.md) | [two independent reviewers](../INITIATIVES/biostack-governed-delivery/dispatch/P1-GATE2.md) | not-yet-closed |
+
+# Governed Spec Registry
+
+This is the authoritative registry for BioStack governed-delivery parcel specs. Lifecycle and ownership rules are defined in the [spec lifecycle](README.md).
 | BIO-ANALYZER-001 | done | [BIO-ANALYZER-001 spec](done/BIO-ANALYZER-001-upload-table-label-leak.md) | [Protocol-upload graceful-failure charter](../goals/protocol-upload-graceful-failure/CHARTER.md) | standard | not-applicable | `fix/protocol-upload-graceful-failure` @ `.worktrees/protocol-upload-graceful-failure-20261003` | [BioAnalyzer001Builder](../goals/protocol-upload-graceful-failure/GATE2.md) | [1 independent reviewer](../goals/protocol-upload-graceful-failure/GATE2.md) | [closure record](../goals/protocol-upload-graceful-failure/CLOSURE-BIO-ANALYZER-001.md) |
 | BIO-ANALYZER-002 | done | [BIO-ANALYZER-002 spec](done/BIO-ANALYZER-002-xlsx-package-robustness.md) | [Protocol-upload known-gaps charter](../goals/protocol-upload-known-gaps/CHARTER.md) | standard | not-applicable | `fix/analyzer-xlsx-package-robustness` @ `.worktrees/bio-analyzer-002-20261004` | [BioAnalyzer002Builder](../goals/protocol-upload-known-gaps/GATE2-BIO-ANALYZER-002.md) | [1 independent reviewer](../goals/protocol-upload-known-gaps/GATE2-BIO-ANALYZER-002.md) | [closure record](../goals/protocol-upload-graceful-failure/CLOSURE-BIO-ANALYZER-002.md) |
 | BIO-ANALYZER-003 | done | [BIO-ANALYZER-003 spec](done/BIO-ANALYZER-003-single-word-frequency-prose-gate.md) | [Protocol-upload known-gaps charter](../goals/protocol-upload-known-gaps/CHARTER.md) | standard | not-applicable | `fix/analyzer-single-word-frequency-gate` @ `.worktrees/bio-analyzer-003-20261004` | [BioAnalyzer003Builder](../goals/protocol-upload-known-gaps/GATE2-BIO-ANALYZER-003.md) | [1 independent reviewer](../goals/protocol-upload-known-gaps/GATE2-BIO-ANALYZER-003.md) | [closure record](../goals/protocol-upload-graceful-failure/CLOSURE-BIO-ANALYZER-003.md) |

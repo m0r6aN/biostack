@@ -165,7 +165,8 @@ function Assert-OnlyAuthorizedEvidenceStatus {
 }
 
 if ($ReviewerIds.Count -eq 1 -and $ReviewerIds[0].Contains(',')) {
-    $ReviewerIds = [string[]]@($ReviewerIds[0].Split(','))
+    $split = $ReviewerIds[0].Split(',')
+    $ReviewerIds = $split | ForEach-Object { $_.Trim() }
 }
 
 Assert-True ($ReviewerIds.Count -eq 2) 'ReviewerIds must contain exactly two identities.'
@@ -238,7 +239,32 @@ $currentBranch = (Invoke-Git -Arguments @('branch', '--show-current'))[0].Trim()
 Assert-True ([StringComparer]::Ordinal.Equals([string]$GateContract.branch, $currentBranch)) 'Gate 2 branch does not match the current branch.'
 $normalizedRoot = $RepositoryRoot.Replace('\', '/').TrimEnd('/')
 $normalizedGateWorktree = ([string]$GateContract.worktree).Replace('\', '/').TrimEnd('/')
-Assert-True ([StringComparer]::OrdinalIgnoreCase.Equals($normalizedGateWorktree, $normalizedRoot)) 'Gate 2 worktree does not match the repository root.'
+
+# R2 amendment: environment-reconciliation equivalence mapping
+# Maps frozen Gate 2 Windows literal to canonical Linux worktree
+$EnvironmentEquivalences = @{
+    'd:/repos/biostack-governance-p1' = '/home/cmorgan76/repos/biostack-wt/governance-p1'
+}
+
+# Check for equivalence matches
+$worktreeMatches = $false
+if ([StringComparer]::OrdinalIgnoreCase.Equals($normalizedGateWorktree, $normalizedRoot)) {
+    $worktreeMatches = $true
+} else {
+    foreach ($gateKey in $EnvironmentEquivalences.Keys) {
+        $normalizedKey = $gateKey.Replace('\', '/').TrimEnd('/')
+        if ([StringComparer]::OrdinalIgnoreCase.Equals($normalizedGateWorktree, $normalizedKey)) {
+            $rootLower = $normalizedRoot.ToLowerInvariant()
+            $valueLower = $EnvironmentEquivalences[$gateKey].Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+            if ([StringComparer]::OrdinalIgnoreCase.Equals($rootLower, $valueLower)) {
+                $worktreeMatches = $true
+                break
+            }
+        }
+    }
+}
+
+Assert-True $worktreeMatches 'Gate 2 worktree does not match the repository root.'
 
 Assert-SequenceEqual -Actual ([string[]]@($GateContract.reviewerIds)) -Expected $ReviewerIds -Label 'Gate 2 ordered reviewerIds'
 Assert-SequenceEqual -Actual ([string[]]@($GateContract.allowedBuilderSurfaces)) -Expected $AllowedBuilderSurfaces -Label 'Gate 2 allowedBuilderSurfaces'
