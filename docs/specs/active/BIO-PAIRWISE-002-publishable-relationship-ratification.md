@@ -12,6 +12,7 @@ risk: critical
 delivery_classes: [standard]
 guidance_classes: [not-applicable]
 substance_function_risk: [not-applicable]
+guidance_classes_rationale: "Spec ratifies policy (Guidance Content Contract v1) but does not implement guidance code or teaching materials; policy ratification per 'ratification specs do not implement' convention."
 function_review_status: not-applicable
 surfaces:
   - docs/specs/active/BIO-PAIRWISE-002-publishable-relationship-ratification.md
@@ -106,7 +107,7 @@ P5, and every later reviewer.
 - `research/protocol-intelligence/relationship-taxonomy.json`
 - `docs/guidance/biostack-guidance-content-contract.v1.md`
 - `docs/guidance/RATIFICATION.md`
-- P0 output: `research/output/pairwise-lane-20260917/`
+- P0 gate decision (D-A): schema sufficiency — RESOLVED as sufficient (2026-10-07; see COORDINATOR-DECISIONS-2026-10-07, Decision D-A).
 - The 2026-09-16 owner ruling on per-pair reasoning gating and its RATIFICATION
   entries from PRs #369, #370 and #372.
 
