@@ -96,3 +96,17 @@ Spec review REJECTed the first draft with three blockers. Rulings:
    verification where applicable, schema compliance).
 
 The fixer applies these to the spec; re-review at the new hash precedes Gate 2.
+
+## D-F — Owner rulings (2026-10-08, all "as recommended")
+
+1. **Onboarding routes:** `/start` becomes canonical; `/map` and `/onboarding` become 301
+   redirects with a mode toggle inside the canonical experience. (Unblocks the frontend polish
+   wave as BIO-FE-002.)
+2. **Production lane kickoff:** PR-PROV-001 (provider operations) + deployment-config review
+   START NOW in parallel; Stripe remains TEST-MODE until the KEO-68 runbook validates; owner
+   Clint Morgan is the named release owner for PR-REL-001. (The production initiative's
+   NO-GO/HOLD verdict is unchanged until its own gates clear with evidence.)
+3. **KEO-73/74 sourcing:** derivation-only pairs first (per D-E's split); the KEO-73/74 gate
+   review opens ONLY when a builder stops with proof of acquisition need.
+4. **Anchor mutual-binding migration (H2-AC3 residual):** DEFERRED to the production migration
+   wave (one migration window). Residual stays disclosed in the hardening register.
