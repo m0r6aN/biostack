@@ -274,6 +274,13 @@ passing, per the initiative's Contract discipline.
 - Focused backend integration test run, serial solution build (0 errors/0 warnings beyond the
   pre-existing documented baseline), and `git diff --check` all pass.
 
+## Verification
+- `dotnet test` (focused on `ProviderAccessEndpointsIntegrationTests`)
+- `dotnet build` (serial, full solution)
+- `docker compose config` (render check for `KeonRuntime__*` pass-through)
+- `git diff --name-only`
+- `git diff --check`
+
 ## Acceptance Criteria
 - Only Allowed Files change; `git diff --name-only` matches the Allowed Files list exactly.
 - `SEC-PROVIDER-001`'s non-enumeration and admin-only boundary is unchanged and its existing
