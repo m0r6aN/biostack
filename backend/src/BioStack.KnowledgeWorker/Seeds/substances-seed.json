@@ -6496,6 +6496,7 @@
       "aliases": [
         "hCG",
         "chorionic gonadotropin",
+        "chorionic-gonadotropin",
         "Pregnyl",
         "Novarel"
       ],
@@ -6784,6 +6785,22 @@
           "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Human+chorionic+gonadotropin",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-04-20T00:00:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1177",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1177",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T00:28:12Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/chorionic-gonadotropin.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/chorionic-gonadotropin.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T00:28:12Z"
         }
       ],
       "curationNotes": [
@@ -17692,143 +17709,6 @@
       "needsReview": true,
       "reviewReasons": [
         "Batch-A record (BIO-LOCAL-008) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'cardarine'; no additional evidence-packet claims were read or compiled this session.",
-        "Compiled draft requires human review before publication."
-      ],
-      "qualityFlags": [
-        "batch-a",
-        "identifier-only-citation",
-        "compiled-from-inventory-citation",
-        "no-claim-content-this-session",
-        "unknown-honest-defaults"
-      ]
-    }
-  },
-  {
-    "schemaVersion": "1.0.0",
-    "recordType": "substance",
-    "identity": {
-      "canonicalId": "chorionic-gonadotropin",
-      "canonicalName": "Chorionic gonadotropin",
-      "slug": "chorionic-gonadotropin",
-      "aliases": [],
-      "brandNames": [],
-      "synonyms": [],
-      "classification": "Other",
-      "compoundFamily": "unknown",
-      "isCombinationProduct": false,
-      "activeMoieties": [
-        "Chorionic gonadotropin"
-      ],
-      "externalIdentifiers": {
-        "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
-      }
-    },
-    "regulatory": {
-      "requiresPrescription": false,
-      "regulatoryStatus": "unknown",
-      "labelStatusByUseCase": [],
-      "jurisdiction": "unknown",
-      "approvedIndications": [],
-      "offLabelNotes": [
-        "Draft record: regulatory status has not been authoritatively established."
-      ]
-    },
-    "mechanism": {
-      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
-      "primaryMechanisms": [],
-      "pathways": [],
-      "targets": [],
-      "effectTags": [],
-      "goalTags": []
-    },
-    "formulations": [],
-    "indications": [],
-    "dosingGuidance": [],
-    "compatibility": {
-      "vialCompatibilitySummary": null,
-      "blendingRules": [],
-      "compatibleBlends": [],
-      "incompatibleBlends": [],
-      "unknownCompatibility": []
-    },
-    "safety": {
-      "contraindications": [],
-      "warnings": [],
-      "precautions": [],
-      "adverseEffects": {
-        "common": [],
-        "serious": []
-      },
-      "monitoring": []
-    },
-    "interactions": [],
-    "stackIntelligence": {
-      "pairsWellWith": [],
-      "avoidWith": [],
-      "overlapRules": [],
-      "synergyRules": [],
-      "conflictRules": [],
-      "redundancyRules": [],
-      "timingRules": []
-    },
-    "supportiveGuidance": {
-      "nutrition": [],
-      "supplements": [],
-      "sleep": [],
-      "exercise": [],
-      "applicabilityNotes": [],
-      "sources": []
-    },
-    "evidence": {
-      "overallTier": "Unknown",
-      "claimSpecificEvidence": [],
-      "evidenceGaps": [
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
-      ],
-      "controversies": []
-    },
-    "provenance": {
-      "sourceRecords": [
-        {
-          "sourceType": "internal-curation",
-          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1177",
-          "publisher": null,
-          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1177",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-08T00:28:12Z"
-        },
-        {
-          "sourceType": "internal-curation",
-          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/chorionic-gonadotropin.evidence.json:12",
-          "publisher": null,
-          "url": "research/input/evidence/chorionic-gonadotropin.evidence.json#L12",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-08T00:28:12Z"
-        }
-      ],
-      "curationNotes": [
-        "Batch-A record (BIO-LOCAL-008) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'chorionic-gonadotropin'; no additional evidence-packet claims were read or compiled this session.",
-        "Compiled draft requires human review before publication."
-      ],
-      "lastReviewedAt": null,
-      "reviewStatus": "draft"
-    },
-    "ops": {
-      "recordVersion": 1,
-      "contentHash": null,
-      "ingestionSource": "BIO-LOCAL-007-inventory:batch-a:chorionic-gonadotropin",
-      "ingestedAt": "2026-10-08T00:28:12Z",
-      "updatedAt": "2026-10-08T00:28:12Z",
-      "lastChangeType": "seed",
-      "isActive": false,
-      "completeness": "partial",
-      "needsReview": true,
-      "reviewReasons": [
-        "Batch-A record (BIO-LOCAL-008) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'chorionic-gonadotropin'; no additional evidence-packet claims were read or compiled this session.",
         "Compiled draft requires human review before publication."
       ],
       "qualityFlags": [
