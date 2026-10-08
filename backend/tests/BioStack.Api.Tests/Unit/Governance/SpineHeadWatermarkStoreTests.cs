@@ -164,4 +164,250 @@ public sealed class SpineHeadWatermarkStoreTests
 
         Assert.True(Path.IsPathRooted(path));
     }
+
+    // ── H4a: Connection String Identity Canonicalization ────────────────────────────────────
+
+    [Fact]
+    public void H4a_Postgres_connection_strings_with_different_whitespace_derive_same_path()
+    {
+        // The reviewer's probe: equivalent connection strings differing only in whitespace
+        var compactCs = "Host=pg.internal;Port=5432;Database=biostack;Username=u;Password=p";
+        var spacedCs = "Host = pg.internal ; Port = 5432 ; Database = biostack ; Username = u ; Password = p";
+
+        using var compact = new NpgsqlConnection(compactCs);
+        using var spaced = new NpgsqlConnection(spacedCs);
+
+        var pathCompact = SpineHeadWatermarkStore.ResolveDefaultPath(compact.DataSource, compactCs);
+        var pathSpaced = SpineHeadWatermarkStore.ResolveDefaultPath(spaced.DataSource, spacedCs);
+
+        Assert.Equal(pathCompact, pathSpaced);
+    }
+
+    [Fact]
+    public void H4a_Postgres_connection_strings_with_different_parameter_order_derive_same_path()
+    {
+        var orderA = "Host=pg.internal;Port=5432;Database=biostack;Username=u;Password=p";
+        var orderB = "Database=biostack;Port=5432;Host=pg.internal;Password=p;Username=u";
+
+        using var connA = new NpgsqlConnection(orderA);
+        using var connB = new NpgsqlConnection(orderB);
+
+        var pathA = SpineHeadWatermarkStore.ResolveDefaultPath(connA.DataSource, orderA);
+        var pathB = SpineHeadWatermarkStore.ResolveDefaultPath(connB.DataSource, orderB);
+
+        Assert.Equal(pathA, pathB);
+    }
+
+    [Fact]
+    public void H4a_Postgres_connection_strings_with_different_case_derive_same_path()
+    {
+        var lowerCs = "host=pg.internal;port=5432;database=biostack;username=u;password=p";
+        var mixedCs = "Host=pg.internal;Port=5432;Database=biostack;Username=u;Password=p";
+
+        using var lower = new NpgsqlConnection(lowerCs);
+        using var mixed = new NpgsqlConnection(mixedCs);
+
+        var pathLower = SpineHeadWatermarkStore.ResolveDefaultPath(lower.DataSource, lowerCs);
+        var pathMixed = SpineHeadWatermarkStore.ResolveDefaultPath(mixed.DataSource, mixedCs);
+
+        Assert.Equal(pathLower, pathMixed);
+    }
+
+    [Fact]
+    public void H4a_Postgres_genuinely_different_databases_still_derive_different_paths()
+    {
+        // Canonicalization must NOT collapse genuinely different databases
+        var csA = "Host=pg.internal;Port=5432;Database=biostack_a;Username=u;Password=p";
+        var csB = "Host=pg.internal;Port=5432;Database=biostack_b;Username=u;Password=p";
+
+        using var connA = new NpgsqlConnection(csA);
+        using var connB = new NpgsqlConnection(csB);
+
+        var pathA = SpineHeadWatermarkStore.ResolveDefaultPath(connA.DataSource, csA);
+        var pathB = SpineHeadWatermarkStore.ResolveDefaultPath(connB.DataSource, csB);
+
+        Assert.NotEqual(pathA, pathB);
+    }
+
+    [Fact]
+    public void H4a_Postgres_credentials_do_not_affect_identity()
+    {
+        // Different usernames/passwords for the same database should derive the same path
+        // (identity is about the database, not the accessor)
+        var csUserA = "Host=pg.internal;Port=5432;Database=biostack;Username=alice;Password=pass1";
+        var csUserB = "Host=pg.internal;Port=5432;Database=biostack;Username=bob;Password=pass2";
+
+        using var connA = new NpgsqlConnection(csUserA);
+        using var connB = new NpgsqlConnection(csUserB);
+
+        var pathA = SpineHeadWatermarkStore.ResolveDefaultPath(connA.DataSource, csUserA);
+        var pathB = SpineHeadWatermarkStore.ResolveDefaultPath(connB.DataSource, csUserB);
+
+        Assert.Equal(pathA, pathB);
+    }
+
+    [Fact]
+    public void H4a_Sqlite_connection_strings_with_different_whitespace_derive_same_path()
+    {
+        var compactCs = "Data Source=/tmp/test.db;Mode=ReadWriteCreate";
+        var spacedCs = "Data Source = /tmp/test.db ; Mode = ReadWriteCreate";
+
+        var pathCompact = SpineHeadWatermarkStore.ResolveDefaultPath(compactCs, compactCs);
+        var pathSpaced = SpineHeadWatermarkStore.ResolveDefaultPath(spacedCs, spacedCs);
+
+        Assert.Equal(pathCompact, pathSpaced);
+    }
+
+    // ── H4b: Symlink/TOCTOU Hardening ───────────────────────────────────────────────────────
+
+    [Fact]
+    public void H4b_TryRead_rejects_symlink_watermark_file()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), $"h4b-test-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(tempDir);
+        try
+        {
+            var realFile = Path.Combine(tempDir, "real.txt");
+            var symlinkFile = Path.Combine(tempDir, "symlink.watermark");
+            File.WriteAllText(realFile, "100|abcdef1234567890");
+
+            // Create a symlink pointing to the real file
+            if (OperatingSystem.IsWindows())
+            {
+                // Windows requires admin or developer mode for symlinks; skip if unavailable
+                try
+                {
+                    File.CreateSymbolicLink(symlinkFile, realFile);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return; // Skip test on Windows without symlink permission
+                }
+            }
+            else
+            {
+                File.CreateSymbolicLink(symlinkFile, realFile);
+            }
+
+            // TryRead should reject the symlink even though it points to valid content
+            var result = SpineHeadWatermarkStore.TryRead(symlinkFile);
+            Assert.Null(result);
+        }
+        finally
+        {
+            Directory.Delete(tempDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void H4b_Advance_rejects_symlink_watermark_file()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), $"h4b-test-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(tempDir);
+        try
+        {
+            var realFile = Path.Combine(tempDir, "real.txt");
+            var symlinkFile = Path.Combine(tempDir, "symlink.watermark");
+            File.WriteAllText(realFile, "50|initialHash");
+
+            if (OperatingSystem.IsWindows())
+            {
+                try
+                {
+                    File.CreateSymbolicLink(symlinkFile, realFile);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return; // Skip on Windows without symlink permission
+                }
+            }
+            else
+            {
+                File.CreateSymbolicLink(symlinkFile, realFile);
+            }
+
+            // Advance should silently refuse to write through the symlink
+            SpineHeadWatermarkStore.Advance(symlinkFile, 100, "newHash");
+
+            // The real file should NOT have been updated
+            var realContent = File.ReadAllText(realFile);
+            Assert.Equal("50|initialHash", realContent);
+        }
+        finally
+        {
+            Directory.Delete(tempDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void H4b_Advance_rejects_symlink_governance_directory()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), $"h4b-test-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(tempDir);
+        try
+        {
+            var realDir = Path.Combine(tempDir, "real-governance");
+            var symlinkDir = Path.Combine(tempDir, ".biostack-governance");
+            Directory.CreateDirectory(realDir);
+
+            if (OperatingSystem.IsWindows())
+            {
+                try
+                {
+                    Directory.CreateSymbolicLink(symlinkDir, realDir);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return; // Skip on Windows without symlink permission
+                }
+            }
+            else
+            {
+                Directory.CreateSymbolicLink(symlinkDir, realDir);
+            }
+
+            var watermarkPath = Path.Combine(symlinkDir, "test.watermark");
+
+            // Advance should silently refuse when the directory is a symlink
+            SpineHeadWatermarkStore.Advance(watermarkPath, 100, "testHash");
+
+            // No file should have been created in the real directory
+            var realWatermarkPath = Path.Combine(realDir, "test.watermark");
+            Assert.False(File.Exists(realWatermarkPath));
+        }
+        finally
+        {
+            Directory.Delete(tempDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void H4b_normal_watermark_operations_still_work()
+    {
+        // Ensure the symlink hardening doesn't break legitimate usage
+        var tempDir = Path.Combine(Path.GetTempPath(), $"h4b-test-{Guid.NewGuid():N}");
+        try
+        {
+            var watermarkPath = Path.Combine(tempDir, ".biostack-governance", "test.watermark");
+
+            // Normal advance should succeed
+            SpineHeadWatermarkStore.Advance(watermarkPath, 100, "hash100");
+            var read1 = SpineHeadWatermarkStore.TryRead(watermarkPath);
+            Assert.NotNull(read1);
+            Assert.Equal(100, read1.Value.SequenceNumber);
+            Assert.Equal("hash100", read1.Value.EntryHash);
+
+            // Advancing forward should succeed
+            SpineHeadWatermarkStore.Advance(watermarkPath, 200, "hash200");
+            var read2 = SpineHeadWatermarkStore.TryRead(watermarkPath);
+            Assert.NotNull(read2);
+            Assert.Equal(200, read2.Value.SequenceNumber);
+            Assert.Equal("hash200", read2.Value.EntryHash);
+        }
+        finally
+        {
+            if (Directory.Exists(tempDir))
+                Directory.Delete(tempDir, recursive: true);
+        }
+    }
 }

@@ -2,6 +2,7 @@ namespace BioStack.Infrastructure.Governance;
 
 using System.Security.Cryptography;
 using System.Text;
+using Npgsql;
 
 /// <summary>
 /// F3+ local truncation/rollback anchor (R1 remediation, default-on posture + hash comparison
@@ -134,7 +135,9 @@ public static class SpineHeadWatermarkStore
             return Path.Combine(hideDirectory, $"{ShortHash(fullPath)}.watermark");
         }
 
-        var key = string.IsNullOrEmpty(connectionString) ? dataSource ?? string.Empty : connectionString;
+        // H4a: canonicalize the connection string before hashing to prevent identity drift
+        var rawKey = string.IsNullOrEmpty(connectionString) ? dataSource ?? string.Empty : connectionString;
+        var key = CanonicalizeConnectionString(rawKey);
 
         var root = string.IsNullOrWhiteSpace(baseDirectory)
             ? Path.Combine(Path.GetTempPath(), "biostack-spine-watermarks")
@@ -155,6 +158,51 @@ public static class SpineHeadWatermarkStore
     private static string ShortHash(string value)
         => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value)))[..32].ToLowerInvariant();
 
+    /// <summary>
+    /// H4a: canonicalize connection strings before identity derivation to prevent drift.
+    /// Equivalent connection strings (differing only in whitespace, parameter order, case)
+    /// must derive the same identity. Uses provider-specific builders to normalize.
+    /// </summary>
+    private static string CanonicalizeConnectionString(string connectionString)
+    {
+        if (string.IsNullOrWhiteSpace(connectionString))
+            return string.Empty;
+
+        // Try Npgsql first (Postgres is the only production-allowed provider per Program.cs)
+        try
+        {
+            var builder = new NpgsqlConnectionStringBuilder(connectionString);
+            // Extract only identity-relevant properties in a fixed order for stable hashing.
+            // Explicitly exclude credentials/pooling/timeout — those don't affect database identity.
+            return $"npgsql:host={builder.Host};port={builder.Port};database={builder.Database}";
+        }
+        catch
+        {
+            // Not a valid Npgsql connection string; fall through to SQLite
+        }
+
+        // SQLite: normalize Data Source parameter (case-insensitive, whitespace-tolerant)
+        try
+        {
+            var builder = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder(connectionString);
+            var dataSource = builder.DataSource;
+            var mode = builder.Mode;
+            var cache = builder.Cache;
+            // Stable canonical form: normalize path separators, collapse mode/cache into deterministic order
+            var canonicalDataSource = string.IsNullOrEmpty(dataSource) ? string.Empty
+                : Path.IsPathRooted(dataSource) ? Path.GetFullPath(dataSource)
+                : dataSource;
+            return $"sqlite:datasource={canonicalDataSource};mode={mode};cache={cache}";
+        }
+        catch
+        {
+            // Not a valid SQLite connection string either; fall back to raw string
+            // (better to hash something than throw — degraded identity stability is preferable
+            // to outright failure for unknown/future providers)
+            return connectionString.Trim().ToLowerInvariant();
+        }
+    }
+
     /// <summary>The highest (sequence number, entry hash) pair this process has observed.</summary>
     public readonly record struct Watermark(long SequenceNumber, string EntryHash);
 
@@ -162,10 +210,15 @@ public static class SpineHeadWatermarkStore
     /// Read the current watermark, or <c>null</c> when disabled, missing, or unreadable.
     /// Unreadable/malformed content is treated as "no watermark yet" rather than thrown — a
     /// corrupted anchor file must not itself become a denial-of-service against a healthy chain.
+    /// H4b: rejects symlinks before reading to prevent TOCTOU attacks.
     /// </summary>
     public static Watermark? TryRead(string? path)
     {
         if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            return null;
+
+        // H4b: TOCTOU/symlink hardening — reject symlinks before trusting the path
+        if (IsSymbolicLink(path))
             return null;
 
         try
@@ -198,6 +251,7 @@ public static class SpineHeadWatermarkStore
     /// back together with the database, so "only ever advance" at least keeps a benign operation
     /// (e.g. restoring an older full-disk backup that happens to include this file) from quietly
     /// lowering the bar without the operator noticing. No-op when disabled.
+    /// H4b: rejects symlinks before writing to prevent TOCTOU attacks.
     /// </summary>
     public static void Advance(string? path, long sequenceNumber, string entryHash)
     {
@@ -212,7 +266,16 @@ public static class SpineHeadWatermarkStore
         {
             var directory = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(directory))
+            {
                 Directory.CreateDirectory(directory);
+                // H4b: reject symlinked governance directory before writing watermark
+                if (IsSymbolicLink(directory))
+                    return; // best-effort: silently skip rather than throw
+            }
+
+            // H4b: final check — reject if the watermark path itself is a symlink
+            if (File.Exists(path) && IsSymbolicLink(path))
+                return;
 
             File.WriteAllText(path, $"{sequenceNumber}|{entryHash}");
         }
@@ -224,6 +287,30 @@ public static class SpineHeadWatermarkStore
         }
         catch (UnauthorizedAccessException)
         {
+        }
+    }
+
+    /// <summary>
+    /// H4b: detect symbolic links to prevent TOCTOU attacks on the watermark anchor.
+    /// Returns true if the path exists and is a symlink, false otherwise.
+    /// </summary>
+    private static bool IsSymbolicLink(string path)
+    {
+        try
+        {
+            var info = new FileInfo(path);
+            if (!info.Exists)
+            {
+                // Check if it's a directory symlink
+                var dirInfo = new DirectoryInfo(path);
+                return dirInfo.Exists && (dirInfo.Attributes & FileAttributes.ReparsePoint) != 0;
+            }
+            return (info.Attributes & FileAttributes.ReparsePoint) != 0;
+        }
+        catch
+        {
+            // If we can't determine, err on the side of safety
+            return true;
         }
     }
 }
