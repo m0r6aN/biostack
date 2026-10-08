@@ -34,6 +34,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<KnowledgeEntry> KnowledgeEntries { get; set; }
     public DbSet<LeadCapture> LeadCaptures { get; set; }
     public DbSet<ProviderAccessRequest> ProviderAccessRequests { get; set; }
+    public DbSet<ProviderAccessAuditEntry> ProviderAccessAuditEntries { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
@@ -460,6 +461,16 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(request => request.ConsentVersion).HasMaxLength(64).IsRequired();
             entity.HasIndex(request => request.Email).IsUnique();
             entity.HasIndex(request => new { request.Status, request.Owner, request.CreatedAtUtc });
+        });
+
+        modelBuilder.Entity<ProviderAccessAuditEntry>(entity =>
+        {
+            entity.HasKey(audit => audit.Id);
+            entity.Property(audit => audit.FromStatus).HasMaxLength(32).IsRequired();
+            entity.Property(audit => audit.ToStatus).HasMaxLength(32).IsRequired();
+            entity.Property(audit => audit.FromOwner).HasMaxLength(160);
+            entity.Property(audit => audit.ToOwner).HasMaxLength(160);
+            entity.HasIndex(audit => audit.RequestId);
         });
 
         modelBuilder.Entity<Subscription>(entity =>

@@ -7,7 +7,7 @@
 | PR-AUTH-001 | Frontend/API | Integration | proposed | isolated required | TBD | high: auth boundary |
 | PR-BILL-001 | Billing | Integration | blocked | isolated required | TBD | high: billing/config |
 | PR-DATA-001 | Data/platform | Hardening | blocked | isolated required | TBD | high: migrations/ops |
-| PR-PROV-001 | Provider operations | Hardening | spec-ready (D-F(2) authorized start; see `parcels/PR-PROV-001.md`) | isolated required | TBD | medium |
+| PR-PROV-001 | Provider operations | Hardening | built, pending review (`pr_prov_001_review_2`) and owner merge acknowledgment; see `parcels/PR-PROV-001.md` and `evidence/PR-PROV-001-deployment-config-review.md` | `/home/cmorgan76/Repos/biostack-wt/pr-prov-001` | `feat/pr-prov-001-provider-ops` | medium |
 | PR-SEC-001 | Security | Release | integrated-local | `D:/Repos/BioStack-security-integration` | `codex/security-integration` | high |
 | SEC-RECEIPT-001 | Security / receipt authorization | Release hardening | integrated-local | `D:/Repos/BioStack-sec-receipts` | `codex/sec-receipt-authorization` | medium: receipt API/UI |
 | SEC-LINK-001 | Security / analyzer egress | Release hardening | integrated-local | `D:/Repos/BioStack-sec-link-analyzer` | `codex/sec-link-analyzer` | medium: analyzer/API composition |
