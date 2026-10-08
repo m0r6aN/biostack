@@ -52,6 +52,18 @@ services:
       - Smtp__MagicLinkSubject=${Smtp__MagicLinkSubject:-BioStack Quick Login}
       - AzureCommunicationEmail__ConnectionString=${AzureCommunicationEmail__ConnectionString:-}
       - AzureCommunicationEmail__SenderAddress=${AzureCommunicationEmail__SenderAddress:-}
+      # PR-PROV-001 deployment-config review: pass-through only. KeonRuntime__LiveMode is fixed
+      # at false here (not operator-overridable through this file) so this compose change cannot
+      # itself enable live mode; BaseUrl/BearerToken/TimeoutMs default to current stub-preserving
+      # values unless an operator deliberately supplies KEON_RUNTIME_* — see
+      # docs/INITIATIVES/biostack-production-readiness/evidence/PR-PROV-001-deployment-config-review.md.
+      # Enabling live mode in a real environment is GATED-1 (owner: Clint Morgan); it requires a
+      # separate, deliberate edit to this file or an environment-specific override, not a value
+      # supplied through the .env keys this parcel adds.
+      - KeonRuntime__LiveMode=false
+      - KeonRuntime__BaseUrl=${KEON_RUNTIME_BASE_URL:-}
+      - KeonRuntime__BearerToken=${KEON_RUNTIME_BEARER_TOKEN:-}
+      - KeonRuntime__TimeoutMs=${KEON_RUNTIME_TIMEOUT_MS:-5000}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s

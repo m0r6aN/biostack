@@ -168,6 +168,27 @@ builder.Services.AddCors(options =>
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    // PR-PROV-001 SG4: structured, non-PII rejection signal for the provider-access intake
+    // endpoint only, so abuse volume is observable without adding any new stored PII (no IP,
+    // email, or other request content is logged — only that a rejection occurred and when).
+    options.OnRejected = (context, cancellationToken) =>
+    {
+        if (HttpMethods.IsPost(context.HttpContext.Request.Method)
+            && string.Equals(
+                context.HttpContext.Request.Path,
+                "/api/v1/provider-access/requests",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            context.HttpContext.RequestServices
+                .GetRequiredService<ILoggerFactory>()
+                .CreateLogger("BioStack.ProviderAccess")
+                .LogWarning("ProviderAccessRateLimitRejected at {RejectedAtUtc:O}", DateTime.UtcNow);
+        }
+
+        return ValueTask.CompletedTask;
+    };
+
     options.AddPolicy("auth-start", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
             httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
