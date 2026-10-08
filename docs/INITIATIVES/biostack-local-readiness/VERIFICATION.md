@@ -31,7 +31,7 @@ Gate 3 decisions.
 | BIO-LOCAL-011 | #499 / `9947ac1` | `evidence/BIO-LOCAL-011-seed-run-proof.md` | PASS (counts re-derived 100=100) | this record |
 | BIO-LOCAL-012 (M1) | #493 | Gate 2 contract record | PASS | `closures/BIO-LOCAL-003.md` (M1 entry) |
 | BIO-LOCAL-013 (R1) | #497 | Gate 2 contract record | PASS ×2 (dual) | `closures/BIO-LOCAL-013.md` |
-| BIO-LOCAL-014 (D-D) | #500 | `evidence/BIO-LOCAL-014-identity-consolidation.md` | in flight (`bio_local_014_review_1`) | pending review return |
+| BIO-LOCAL-014 (D-D) | #500 | `evidence/BIO-LOCAL-014-identity-consolidation.md` | PASS (all 5 ACs; content preservation verified) | `closures/BIO-LOCAL-013.md` (register) + this record |
 
 Scenario, environment (always `local` + compose/service + SQLite/stub/inbox posture), exact commit, config class (Development; secrets blank/`example`), UTC time, command/procedure, result, durable artifact path/link, limitations, redaction confirmation. Template lives in each BIO-LOCAL spec's `## Verification` + `## Evidence Required`.
 
