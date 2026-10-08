@@ -181,13 +181,15 @@ public sealed class SpineChainIntegrityTests : IDisposable
     }
 
     /// <summary>
-    /// Without a configured watermark, the fundamental limit from <see
-    /// cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore"/>'s docstring holds: a
-    /// deleted tail is indistinguishable from "never advanced" using the row set alone. This
-    /// documents the unmitigated behavior rather than silently relying on it — AC4 (no overclaim).
+    /// H2 (AC1/Finding A): truncation detection is ON by default. <c>_sut</c> is built by
+    /// <see cref="SpineTestHelpers.CreateRepository"/> with no <c>WatermarkFilePath</c> set — the
+    /// "fresh install, nobody has configured anything yet" case — and the exact R1 probe (delete
+    /// trailing rows) must still fail closed because <see
+    /// cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore.ResolveDefaultPath"/> is
+    /// used automatically instead of leaving the check disabled.
     /// </summary>
     [Fact]
-    public async Task Deleting_trailing_rows_without_a_watermark_is_not_detected()
+    public async Task Deleting_trailing_rows_is_detected_by_default_with_no_watermark_configured()
     {
         await SeedChainAsync(5);
 
@@ -196,8 +198,94 @@ public sealed class SpineChainIntegrityTests : IDisposable
 
         var result = await _sut.VerifyChainAsync();
 
+        Assert.False(result.IsIntact);
+        Assert.Contains("Truncation detected", result.Reason, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// H2 (AC1/Finding A): the one remaining opt-out (<see
+    /// cref="SpineCheckpointOptions.DisableTruncationWatermark"/>) does reproduce the original R1
+    /// failure mode when an operator deliberately chooses it — but choosing it is never silent: a
+    /// <c>Warning</c> is logged naming the setting responsible, so this shows up in ordinary
+    /// operational logs rather than requiring prior knowledge to find.
+    /// </summary>
+    [Fact]
+    public async Task Explicitly_disabling_the_watermark_reproduces_R1_but_logs_a_loud_warning()
+    {
+        SpineRepository.ResetDisabledWatermarkWarningGuardForTests();
+        var warnings = new CapturingLogger<SpineRepository>();
+
+        var sut = new SpineRepository(
+            _db,
+            services: null!,
+            Microsoft.Extensions.Options.Options.Create(new SpineCheckpointOptions
+            {
+                AutoCheckpointEveryNEntries = 0,
+                CadenceMinutes = 0,
+                DisableTruncationWatermark = true,
+            }),
+            warnings);
+
+        for (var i = 0; i < 5; i++)
+            await sut.AppendAsync(MakeEntry($"keon://receipt/disabled-{i:D3}"));
+
+        await _db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM SpineEntries WHERE SequenceNumber > 2;");
+
+        var result = await sut.VerifyChainAsync();
+
         Assert.True(result.IsIntact, result.Reason);
         Assert.Equal(3L, result.EntriesVerified);
+        Assert.Contains(warnings.Messages, m =>
+            m.Contains("DISABLED", StringComparison.Ordinal)
+            && m.Contains("DisableTruncationWatermark", StringComparison.Ordinal));
+    }
+
+    /// <summary>
+    /// H2 (AC2/Finding B): the watermark previously compared only sequence numbers. A holder who
+    /// deletes the true tail entry and appends one forged replacement through the legitimate
+    /// <c>AppendAsync</c> API lands back at the same sequence number with different content —
+    /// restoring <c>observedHeadSequence == mark.SequenceNumber</c> while silently swapping out
+    /// a genuine receipt for a forged one. The watermark now also records and compares the entry
+    /// hash at that sequence, so this fails closed instead of reporting <c>IsIntact = true</c>.
+    /// </summary>
+    [Fact]
+    public async Task Delete_and_reforge_the_tail_at_the_same_sequence_is_detected()
+    {
+        var watermarkPath = Path.Combine(
+            Path.GetTempPath(), $"spine-watermark-substitution-{Guid.NewGuid():N}.txt");
+        try
+        {
+            var sut = SpineTestHelpers.CreateRepository(
+                _db,
+                new SpineCheckpointOptions
+                {
+                    AutoCheckpointEveryNEntries = 0,
+                    CadenceMinutes = 0,
+                    WatermarkFilePath = watermarkPath,
+                });
+
+            for (var i = 0; i < 5; i++)
+                await sut.AppendAsync(MakeEntry($"keon://receipt/tail-{i:D3}"));
+
+            // Reviewer's Probe 2: delete the TRUE tail entry (sequence 4), then append a forged
+            // replacement through the legitimate repository API, landing back at sequence 4 with
+            // different content.
+            await _db.Database.ExecuteSqlRawAsync(
+                "DELETE FROM SpineEntries WHERE SequenceNumber = 4;");
+            await sut.AppendAsync(MakeEntry("keon://receipt/tail-forged-004"));
+
+            var result = await sut.VerifyChainAsync();
+
+            Assert.False(result.IsIntact);
+            Assert.Contains("Tail substitution detected", result.Reason, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal("keon://receipt/tail-forged-004", result.FirstBrokenReceiptUri);
+        }
+        finally
+        {
+            if (File.Exists(watermarkPath))
+                File.Delete(watermarkPath);
+        }
     }
 
     [Fact]
