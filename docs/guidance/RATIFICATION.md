@@ -186,6 +186,39 @@ StackScore fields are outside this correction and can still convey aggregate dir
 information; this note does not claim every response field is direction-free. Existing
 source, evidence and publication gates remain in force.
 
+### Pairwise relationship publication contract v1 ratified (BIO-PAIRWISE-002)
+
+**Decided by:** Pairwise lane ratification (`BIO-PAIRWISE-002`), 2026-10-08, consuming P0's
+frozen census outputs (`research/output/pairwise-lane-20260917/p0-substrate-inventory.md`,
+`p0-label-interaction-census.md`) and the owner-delegated D-A schema-sufficiency gate decision
+(`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`).
+
+**Decision:** `docs/guidance/pairwise-relationship-publication-contract.v1.md` ratifies the
+publishable v1 subset of `relationship-packet.schema.json`'s `relationshipType` and
+`assertionClass` enums as an **allowlist**: `relationshipType` ∈ `{contraindicated, caution,
+conflict}`; `assertionClass` ∈ `{direct-evidence, authoritative-caution}`. `vendor-claim`,
+`community-signal`, and `curator-hypothesis` are named never publishable as evidence. Positive and
+synergy relationship types (`synergy`, `complementary`, `redundant`) and the two inference-typed
+assertion classes (`mechanistic-inference`, `category-inference`) are deferred, not denied. A
+five-clause checkable sourcing bar (relationshipType, assertionClass, `evidenceTier != Unknown`,
+`relationshipReviewStatus = accepted-as-evidence-backed`, ≥1 `sourceRefs` entry resolving to an
+authoritative-tier (`A1`/`A2`) source) gates publication; any single failure makes a record
+unpublishable at any tier, not demoted to a lesser one. The record states explicitly that absence
+of a relationship must never render as reassurance, and that this ratification does not loosen,
+widen, or reverse the 2026-09-16 (B3/B4/B5) per-pair reasoning entitlement gate above.
+
+**What changed:** A new ratification document only
+(`docs/guidance/pairwise-relationship-publication-contract.v1.md`). No schema edit — the frozen
+`relationship-packet.schema.json` (`backend/src/BioStack.KnowledgeWorker/Schemas/relationship-packet.schema.json`)
+is byte-unchanged. No code, DTO, projection, migration, fixture, or test is authored by this entry.
+
+**Scope note:** This ratifies which already-frozen schema field values are publishable and under
+what sourcing bar; it does not wire any producer, consumer, or rendering surface to publish them.
+Wiring a relationship record to a public surface remains separate, later work (named in the spec
+as consumed by P2, P4, P5). This entry does not authorize a new public surface and does not change
+the Guidance Content Contract's output classes (Class A–D); rendered relationship text under this
+ratification must remain Class A sourced observation per `docs/guidance/biostack-guidance-content-contract.v1.md`.
+
 ## Automated verification
 
 ```bash
