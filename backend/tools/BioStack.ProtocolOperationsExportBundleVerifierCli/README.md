@@ -3,7 +3,7 @@
 `BioStack.ProtocolOperationsExportBundleVerifierCli` is an offline verification
 tool for BioStack Protocol Operations export bundles and deterministic
 verification receipts. It is a component of the Keon-style offline verification kit,
-providing deterministic local verification of protocol-operation artifacts.
+providing Keon-compatible deterministic local verification of protocol-operation artifacts.
 
 This tool is intentionally narrow: it reads local JSON files, recomputes local
 hashes, and prints either a stable human-readable summary or deterministic
@@ -158,7 +158,7 @@ For bundle verification, success means the local bundle passed the verifier's
 offline structural checks and the locally recomputed bundle/report-export hashes
 matched the supplied hashes.
 
-For receipt verification, success means the receipt has the expected schema and
+For Keon-compatible receipt verification, success means the receipt has the expected schema and
 boundary fields, contains allowed status values, has the required hash bindings
 for its status, avoids forbidden host/path/PDF/persistence/runtime/medical
 language, and its receipt-local hashes recompute to the values in the receipt.
@@ -253,8 +253,8 @@ Release gate checklist:
 
 ## Boundary Notes
 
-- Receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
+- Keon-compatible receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
 - Receipt output is deterministic by design and excludes machine-specific or
   environment-specific values.
-- The CLI is limited to educational, observational verification of local export
+- The CLI is limited to Keon-compatible educational, observational verification of local export
   artifacts.

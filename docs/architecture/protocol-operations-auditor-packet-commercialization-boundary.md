@@ -41,9 +41,9 @@ These forbidden claims hold regardless of buyer, tier, or packaging.
 
 ## Candidate SKUs
 
-### 1. Offline Verification Kit
+### 1. Keon-compatible Offline Inspection Kit
 
-- **Included:** the verifier CLI, its documented offline workflow, the export bundle and
+- **Included:** the verifier CLI, its documented Keon-compatible offline workflow, the export bundle and
   verification receipt contracts, and `--result-json` machine output.
 - **Excluded:** bundle generation, PDF generation, persistence, any hosted service, any medical
   interpretation.
@@ -87,7 +87,7 @@ These forbidden claims hold regardless of buyer, tier, or packaging.
 
 ### 5. Enterprise Verification Support
 
-- **Included:** support for operating the offline verification kit and interpreting its
+- **Included:** support for operating the Keon-compatible offline inspection kit and interpreting its
   deterministic outputs within the buyer's own review process.
 - **Excluded:** medical advice, clinical appropriateness review, database or PDF attestation,
   runtime execution guarantees.
@@ -98,8 +98,8 @@ These forbidden claims hold regardless of buyer, tier, or packaging.
 
 ## Why this stays safe
 
-Every SKU is a wrapper around the same deterministic, supplied-artifact-only verification the
-offline kit already performs. Selling confidence in that verification does not expand what the
+Every SKU is a wrapper around the same deterministic, supplied-artifact-only Keon-compatible verification the
+Keon-compatible offline inspection kit already performs. Selling confidence in that verification does not expand what the
 kit claims, does not add a product surface, and does not introduce medical authority. The moment
 a SKU would require an affirmative forbidden claim to be worth buying, it is out of scope for this
 chain.

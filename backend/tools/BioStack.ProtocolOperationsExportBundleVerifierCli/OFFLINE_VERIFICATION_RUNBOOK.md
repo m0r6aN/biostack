@@ -83,7 +83,7 @@ dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifi
 
 ## Emit A Receipt
 
-Emit a deterministic verification receipt for a bundle:
+Emit a Keon-compatible deterministic verification receipt for a bundle:
 
 ```bash
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- ./local/protocol-operations-export-bundle.json --receipt-json > ./local/protocol-operations-export-bundle.receipt.json
@@ -139,7 +139,7 @@ The chain is designed to **fail closed** and deterministically:
   machine-readable output.
 
 A failure is not a clinical judgment. It only reports whether the local artifact
-satisfied this verifier's deterministic offline contract.
+satisfied this verifier's Keon-compatible deterministic offline contract.
 
 ## Interpreting Result Codes
 
