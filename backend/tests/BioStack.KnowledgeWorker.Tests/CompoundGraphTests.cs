@@ -362,6 +362,18 @@ public class CompoundGraphTests
         var packet = JsonNode.Parse(File.ReadAllText(
             TestPaths.FixturePath("relationship-packet.synergy-chain.sample.json")))!;
 
+        // BIO-PAIRWISE-003: the chain's "conflict" edge must also clear the P1 publication bar
+        // (relationshipReviewStatus accepted-as-evidence-backed + an A1/A2-tier source) for this
+        // curator-facing finding to keep firing on it. This proves bar enforcement does not
+        // silence the review signal that matters most: a conflict edge legitimate enough to
+        // publish. (The fixture file itself is unmodified — patched in-memory, in-surface.)
+        var conflictRel = packet["relationships"]!.AsArray()
+            .Single(r => r!["relationshipType"]!.GetValue<string>() == "conflict");
+        conflictRel!["relationshipReviewStatus"] = "accepted-as-evidence-backed";
+        var conflictSource = packet["sources"]!.AsArray()
+            .Single(s => s!["sourceId"]!.GetValue<string>() == "src-chain-rct-003");
+        conflictSource!["authorityTier"] = "A1";
+
         var graph = builder.Build(
             new JsonArray(),
             Array.Empty<JsonNode>(),

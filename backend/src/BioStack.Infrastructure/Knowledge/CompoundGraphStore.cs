@@ -4,6 +4,17 @@ using BioStack.Domain.Entities.Graph;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// Persists and reads the materialized compound graph.
+///
+/// BIO-PAIRWISE-003 note: this store persists whatever <c>CompoundGraphRelationship</c> rows it is
+/// given and reads them back unfiltered; it does not re-apply the P1 publication bar
+/// (<c>docs/guidance/pairwise-relationship-publication-contract.v1.md</c> section 3). That bar is
+/// enforced exactly once, at write time, in <c>CompoundGraphBuilder</c> -- before a relationship
+/// record ever becomes a persisted row -- per amendment PW-003-A1. Reproducing the bar here would create a
+/// second, parallel validation pipeline the spec's own Verification Plan explicitly asks reviewers
+/// to rule out.
+/// </summary>
 public sealed class CompoundGraphStore : ICompoundGraphStore
 {
     private readonly BioStackDbContext _dbContext;

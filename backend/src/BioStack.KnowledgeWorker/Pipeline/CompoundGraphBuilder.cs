@@ -21,6 +21,42 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
 {
     private const string GraphVersion = "1.0.0";
 
+    // ── P1 publication-bar vocabulary (pairwise-relationship-publication-contract.v1.md) ──────
+    // relationshipType values the ratification admits as negative/safety relationships (§1a).
+    private static readonly HashSet<string> PublishableRelationshipTypes =
+        new(StringComparer.Ordinal) { "contraindicated", "caution", "conflict" };
+
+    // assertionClass values the ratification admits as evidence, not inference/claim/signal (§2a).
+    private static readonly HashSet<string> PublishableAssertionClasses =
+        new(StringComparer.Ordinal) { "direct-evidence", "authoritative-caution" };
+
+    // Full schema enums, used only to tell "malformed" (unrecognized value) apart from "valid but
+    // fails the bar" (recognized value outside the publishable allowlist, e.g. community-signal).
+    private static readonly HashSet<string> KnownAssertionClasses = new(StringComparer.Ordinal)
+    {
+        "direct-evidence", "mechanistic-inference", "category-inference", "community-signal",
+        "vendor-claim", "authoritative-caution", "curator-hypothesis",
+    };
+
+    private static readonly HashSet<string> KnownRelationshipReviewStatuses = new(StringComparer.Ordinal)
+    {
+        "unreviewed", "review-required", "human-reviewed", "rejected", "accepted-as-signal",
+        "accepted-as-evidence-backed",
+    };
+
+    private static readonly HashSet<string> KnownEvidenceTiers = new(StringComparer.Ordinal)
+    {
+        "Strong", "Moderate", "Limited", "Anecdotal", "Insufficient", "Unknown",
+    };
+
+    private const string AcceptedAsEvidenceBacked = "accepted-as-evidence-backed";
+
+    // Authoritative-tier set clause 5 cites (FieldAuthorityPolicy.AuthoritativeTiers), restated
+    // here rather than imported to keep this file's only cross-project coupling the JSON shape it
+    // already reads — not a new assembly reference for two literal strings.
+    private static readonly HashSet<string> AuthoritativeSourceTiers =
+        new(StringComparer.OrdinalIgnoreCase) { "A1", "A2" };
+
     private readonly IRelationshipPacketAuthorizer _authorizer;
 
     public CompoundGraphBuilder(IRelationshipPacketAuthorizer authorizer)
@@ -207,14 +243,49 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
         Dictionary<string, CompoundGraphNode> nodes,
         Dictionary<string, CompoundGraphEdge> edges)
     {
+        // ── P1 publication-bar boundary (BIO-PAIRWISE-003 / amendment PW-003-A1) ──────────────
+        // This is the single point in the pipeline where a relationship record is judged against
+        // the ratified bar (docs/guidance/pairwise-relationship-publication-contract.v1.md §3).
+        // Every downstream reader (CompoundGraphPersistenceMapper, CompoundGraphStore,
+        // GraphIntelligenceService) trusts the graph this method returns and does not — and must
+        // not — re-check assertionClass / relationshipReviewStatus / sourceRefs itself. That keeps
+        // the bar enforced exactly once, per the spec's own Verification Plan question.
+        var relationshipId = ReadString(rel["relationshipId"]);
+        ValidateRelationshipShape(rel, relationshipId);
+
         var subject = ReadString(rel["subjectCompound"]);
         var obj = ReadString(rel["objectCompound"]);
         if (subject.Length == 0 || obj.Length == 0) return;
 
+        var relationshipType = ReadString(rel["relationshipType"]);
+        var assertionClass = ReadString(rel["assertionClass"]);
+        var relationshipReviewStatusForBar = ReadString(rel["relationshipReviewStatus"]);
+        var evidenceTierForBar = ReadString(rel["evidenceTier"]);
+        var sourceRefsForBar = ReadStringArray(rel["sourceRefs"]);
+
+        if (PublishableRelationshipTypes.Contains(relationshipType))
+        {
+            // relationshipType is one of the ratified negative family (contraindicated / caution /
+            // conflict) — the only family P1 governs. Every clause must hold or the record is
+            // excluded from the projection entirely: it is not downgraded, blanked, or emitted with
+            // fields nulled (spec constraint). Positive/synergy types never reach this branch —
+            // their admission is out of this parcel's scope and their existing (pre-P2) handling is
+            // unchanged below.
+            if (!SatisfiesPublicationBar(
+                    assertionClass,
+                    evidenceTierForBar,
+                    relationshipReviewStatusForBar,
+                    sourceRefsForBar,
+                    packetSources,
+                    sourceRegistry))
+            {
+                return;
+            }
+        }
+
         AddCompoundNode(nodes, subject, Array.Empty<string>());
         AddCompoundNode(nodes, obj, Array.Empty<string>());
 
-        var relationshipType = ReadString(rel["relationshipType"]);
         var edgeType = MapRelationshipType(relationshipType);
 
         var subjectSlug = Slug(subject);
@@ -222,9 +293,9 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
         var edgeId = $"relationship:{subjectSlug}:{objectSlug}:{relationshipType}";
 
         var effectDomain = ReadString(rel["effectDomain"]);
-        var evidenceTier = ReadString(rel["evidenceTier"]);
+        var evidenceTier = evidenceTierForBar;
         var confidence = ReadString(rel["confidence"]);
-        var sourceRefs = ReadStringArray(rel["sourceRefs"]);
+        var sourceRefs = sourceRefsForBar;
         var claimRefs = ReadStringArray(rel["claimRefs"]);
         var reviewFlags = ReadStringArray(rel["reviewFlags"]);
 
@@ -315,7 +386,7 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
 
         // Pre-policy needsReview: relationshipReviewStatus / resolutionStatus / packet flags.
         var resolution = ReadString(rel["resolutionStatus"]);
-        var relReview = ReadString(rel["relationshipReviewStatus"]);
+        var relReview = relationshipReviewStatusForBar;
         var pktNeedsReview =
             string.Equals(resolution, "needs-human-review", StringComparison.OrdinalIgnoreCase)
             || string.Equals(relReview, "review-required", StringComparison.OrdinalIgnoreCase);
@@ -329,6 +400,92 @@ public sealed class CompoundGraphBuilder : ICompoundGraphBuilder
 
         // De-dup: last write wins is fine because edgeId encodes the relationship triple.
         edges[enforced.EdgeId] = enforced;
+    }
+
+    // ────────────────────────────────────────────────────────────────────────
+    // P1 publication-bar enforcement
+    // ────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Fails loudly, naming the offending <c>relationshipId</c>, when a relationship record is
+    /// malformed: a required identifier is missing, or an enum-valued field carries a value this
+    /// codebase does not recognize at all. This is distinct from a record that is well-formed but
+    /// fails the evidentiary bar (<see cref="SatisfiesPublicationBar"/>) — a well-formed record
+    /// that simply does not qualify is excluded silently; a malformed one stops the pipeline rather
+    /// than being silently skipped (spec constraint: "Silent skipping is prohibited — a quietly
+    /// dropped safety record is worse than a stopped pipeline.").
+    /// </summary>
+    private static void ValidateRelationshipShape(JsonObject rel, string relationshipId)
+    {
+        if (relationshipId.Length == 0)
+        {
+            throw new InvalidOperationException(
+                "Malformed relationship record: 'relationshipId' is missing or empty. " +
+                "Refusing to process an unidentified relationship record rather than skip it silently.");
+        }
+
+        var assertionClass = ReadString(rel["assertionClass"]);
+        if (assertionClass.Length > 0 && !KnownAssertionClasses.Contains(assertionClass))
+        {
+            throw new InvalidOperationException(
+                $"Malformed relationship record '{relationshipId}': unrecognized assertionClass " +
+                $"'{assertionClass}'.");
+        }
+
+        var relationshipReviewStatus = ReadString(rel["relationshipReviewStatus"]);
+        if (relationshipReviewStatus.Length > 0 && !KnownRelationshipReviewStatuses.Contains(relationshipReviewStatus))
+        {
+            throw new InvalidOperationException(
+                $"Malformed relationship record '{relationshipId}': unrecognized relationshipReviewStatus " +
+                $"'{relationshipReviewStatus}'.");
+        }
+
+        var evidenceTier = ReadString(rel["evidenceTier"]);
+        if (evidenceTier.Length > 0 && !KnownEvidenceTiers.Contains(evidenceTier))
+        {
+            throw new InvalidOperationException(
+                $"Malformed relationship record '{relationshipId}': unrecognized evidenceTier " +
+                $"'{evidenceTier}'.");
+        }
+    }
+
+    /// <summary>
+    /// Checks the ratified publication bar (publication contract §3, clauses 2–5; clause 1 —
+    /// relationshipType — is checked by the caller before this is invoked). All clauses are an
+    /// unconditional AND: any single failure means the record is unpublishable, full stop — it is
+    /// not demoted to a lesser tier (spec constraint).
+    /// </summary>
+    private static bool SatisfiesPublicationBar(
+        string assertionClass,
+        string evidenceTier,
+        string relationshipReviewStatus,
+        IReadOnlyList<string> sourceRefs,
+        JsonArray? packetSources,
+        JsonNode? sourceRegistry)
+    {
+        // Clause 2: assertionClass must be direct-evidence or authoritative-caution.
+        if (!PublishableAssertionClasses.Contains(assertionClass)) return false;
+
+        // Clause 3: evidenceTier present and not Unknown.
+        if (evidenceTier.Length == 0 || string.Equals(evidenceTier, "Unknown", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        // Clause 4: relationshipReviewStatus must equal accepted-as-evidence-backed exactly — no
+        // other value (including human-reviewed or accepted-as-signal) is sufficient.
+        if (!string.Equals(relationshipReviewStatus, AcceptedAsEvidenceBacked, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        // Clause 5: at least one sourceRef resolves (via packet sources[] or the source registry,
+        // same resolution order the rest of the builder already uses) to an A1/A2 authority tier.
+        return sourceRefs.Any(sourceRef =>
+        {
+            var tier = LookupAuthorityTier(sourceRef, packetSources, sourceRegistry);
+            return tier is not null && AuthoritativeSourceTiers.Contains(tier);
+        });
     }
 
     // ────────────────────────────────────────────────────────────────────────
