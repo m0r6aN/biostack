@@ -34,16 +34,17 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal("none", report.Payload.Comparison.EffectAuthority);
         Assert.Equal(4, report.Payload.Comparison.CandidateCaseCount);
         Assert.Equal("1.0.0", report.Payload.CorpusInventory.SnapshotVersion);
-        Assert.Equal(57, report.Payload.CorpusInventory.SeedRecordCount);
+        Assert.Equal(100, report.Payload.CorpusInventory.SeedRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.CandidateRecordCount);
         Assert.Equal(78, report.Payload.CorpusInventory.EvidencePacketCount);
         Assert.Equal(30, report.Payload.CorpusInventory.SourceRegistryRecordCount);
-        Assert.Equal(12, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
-        Assert.Equal(45, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
-        Assert.Equal(4, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);
+        Assert.Equal(16, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
+        Assert.Equal(84, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
+        Assert.Equal(0, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(report.Payload.CorpusInventory.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, report.Payload.CorpusInventory.EvidenceWithoutCandidateCanonicalIds.Count);
-        Assert.Equal(2, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
+        // BIO-LOCAL-011: 3 identity-token collisions observed at the 100-record corpus (was 2 at 57).
+        Assert.Equal(3, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
         Assert.Empty(report.Payload.CorpusInventory.ExternalIdentifierCollisions);
         Assert.Equal(7, report.Payload.CorpusInventory.ApprovedRightsSourceCount);
         Assert.Equal(7, report.Payload.CorpusInventory.ActiveOperationsSourceCount);
