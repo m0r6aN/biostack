@@ -11,6 +11,13 @@ using BioStack.Infrastructure.Knowledge;
 /// Prefers the reviewed/materialized compound graph as the single truth source. Where the graph has
 /// no edge for a pair, the result is disclosed as fallback / unknown-evidence rather than fabricated
 /// — per canon "Unknown beats inference".
+///
+/// BIO-PAIRWISE-003 note: this service is a pure read projection over whatever
+/// <c>CompoundGraphStore</c> has persisted. It does not re-check the P1 publication bar
+/// (<c>docs/guidance/pairwise-relationship-publication-contract.v1.md</c> §3) — that bar is
+/// enforced exactly once, at write time, in <c>CompoundGraphBuilder</c> (see amendment PW-003-A1).
+/// A future caller must not add a second evidentiary check here; doing so would re-implement the
+/// bar per call site rather than trusting the single upstream boundary.
 /// </summary>
 public interface IGraphIntelligenceService
 {

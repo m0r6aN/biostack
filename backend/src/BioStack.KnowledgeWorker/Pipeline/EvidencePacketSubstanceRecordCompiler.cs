@@ -7,6 +7,17 @@ public interface IEvidencePacketSubstanceRecordCompiler
     JsonNode CompileDraft(JsonNode evidencePacket);
 }
 
+/// <summary>
+/// Compiles a draft substance record from an evidence packet (compound-level claims only — it
+/// never reads relationship packets). Per BIO-PAIRWISE-003 / D-B (code-only, no migration), this
+/// path is the NON-AUTHORITATIVE / INERT one for compound-to-compound relationship data: see the
+/// explicit inert markers at <see cref="BuildCompatibility"/> and <see cref="BuildStackIntelligence"/>
+/// below and on the <c>interactions</c> array in <see cref="CompileDraft"/>. The authoritative path
+/// is <c>research/input/relationships/</c> -&gt; <see cref="CompoundGraphBuilder"/> -&gt; the compound
+/// graph substrate (<c>CompoundGraphStore</c> / <c>GraphIntelligenceService</c>). P0 recommended the
+/// graph substrate as authoritative; this compiler's relationship-shaped fields stay hardcoded
+/// empty rather than ever being wired to a second, parallel relationship pipeline.
+/// </summary>
 public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubstanceRecordCompiler
 {
     public JsonNode CompileDraft(JsonNode evidencePacket)
@@ -41,6 +52,11 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
             ["dosingGuidance"] = new JsonArray(),
             ["compatibility"] = BuildCompatibility(),
             ["safety"] = BuildSafety(),
+            // INERT by design (BIO-PAIRWISE-003 / D-B): this compiler never reads relationship
+            // packets, so there is no input that could ever populate this array — it is not merely
+            // unused today, it is structurally incapable of being populated from this path. The
+            // authoritative relationship path is the compound graph substrate (CompoundGraphBuilder
+            // -> CompoundGraphStore -> GraphIntelligenceService), not this compiler.
             ["interactions"] = new JsonArray(),
             ["stackIntelligence"] = BuildStackIntelligence(),
             ["supportiveGuidance"] = BuildSupportiveGuidance(sourceIds),
@@ -115,6 +131,13 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
         };
     }
 
+    /// <summary>
+    /// INERT by design (BIO-PAIRWISE-003 / D-B: code-only, no migration). Every field here is a
+    /// relationship-shaped (compound-to-compound) field, and this compiler's only input is a
+    /// single-compound evidence packet — it has no relationship data to place here even in
+    /// principle. These arrays stay hardcoded empty regardless of any relationship-packet input;
+    /// the authoritative path for that data is the compound graph substrate, not this method.
+    /// </summary>
     private static JsonObject BuildCompatibility() => new()
     {
         ["vialCompatibilitySummary"] = null,
@@ -137,6 +160,13 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
         ["monitoring"] = new JsonArray(),
     };
 
+    /// <summary>
+    /// INERT by design (BIO-PAIRWISE-003 / D-B: code-only, no migration). Same rationale as
+    /// <see cref="BuildCompatibility"/>: these are all compound-to-compound relationship fields and
+    /// this compiler has no relationship-packet input to source them from. They stay hardcoded
+    /// empty; positive/synergy relationship admission into any surface remains a separate,
+    /// explicitly out-of-scope decision for a future ratification (spec constraint).
+    /// </summary>
     private static JsonObject BuildStackIntelligence() => new()
     {
         ["pairsWellWith"] = new JsonArray(),
