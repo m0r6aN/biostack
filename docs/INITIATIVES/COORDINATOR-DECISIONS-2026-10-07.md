@@ -28,6 +28,24 @@ set (target 100 total), and the 50-record gap is HELD pending future sourcing un
   frozen tests are updated to the ACTUAL counts explicitly in 011 (per D10's in-parcel rule).
 - New sourcing for the gap remains unauthorized until KEO-73/74 gates clear.
 
+## D-D — Seed identity-collision human rules (owner, 2026-10-08)
+
+The unknown-honest doctrine reserves identity collisions for human rule; the owner ruled:
+
+1. **`creatine` vs `creatine-monohydrate`: DISTINCT and cross-referenced.** Both records remain.
+   "Creatine comes in many forms" — the records are related, not identical. Cross-references added
+   in whatever fields the frozen schema supports; where it has none, the mapping is documented in
+   the consolidation evidence record (unknown-honest: no invented schema fields).
+2. **`chorionic-gonadotropin` vs `human-chorionic-gonadotropin`: SAME identity.** "Exactly the
+   same hormone; the word 'human' is just left out in some medical labels and shorthand."
+   Consolidate to ONE record; canonical = `human-chorionic-gonadotropin` (fuller standard term),
+   `chorionic-gonadotropin` recorded as a known shorthand/alias per schema capability (else
+   documented in the evidence record). Corpus total becomes 99; count-asserting tests updated
+   EXPLICITLY in the consolidation parcel.
+
+Both rules execute in BIO-LOCAL-014 (bounded seed-consolidation parcel). No other collisions are
+open (batches B/C introduced none).
+
 ## Pairwise lane decisions (coordinator, under delegated authority)
 
 ### D-A — Schema sufficiency pre-gate (BIO-PAIRWISE-002 constraint)
