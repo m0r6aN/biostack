@@ -13,28 +13,35 @@ public sealed class CorpusIdentityInventoryBuilderTests
 
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
-        Assert.Equal(57, snapshot.SeedRecordCount);
+        Assert.Equal(100, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(30, snapshot.SourceRegistryRecordCount);
-        Assert.Equal(12, snapshot.SeedCandidateOverlapCount);
-        Assert.Equal(45, snapshot.SeedOnlyCanonicalIds.Count);
-        Assert.Equal(4, snapshot.CandidateOnlyCanonicalIds.Count);
+        Assert.Equal(16, snapshot.SeedCandidateOverlapCount);
+        Assert.Equal(84, snapshot.SeedOnlyCanonicalIds.Count);
+        Assert.Equal(0, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);
         Assert.Equal(7, snapshot.ApprovedRightsSourceCount);
         Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
         Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
         Assert.Equal(2, snapshot.RegistryAuthorizedEvidencePacketCount);
-        Assert.Equal(2, snapshot.IdentityTokenCollisions.Count);
+        // BIO-LOCAL-011: 100-record corpus (57 existing + 43 batched) observed 3 identity-token
+        // collisions (was 2 at 57 records); each key's owners are now itemized explicitly
+        // (previously 2 keys shared one owners list, which no longer holds at 100 records).
+        Assert.Equal(3, snapshot.IdentityTokenCollisions.Count);
         Assert.Equal(
-            ["creatine", "creatine-monohydrate"],
+            ["chorionic-gonadotropin", "creatine", "creatine-monohydrate"],
             snapshot.IdentityTokenCollisions.Select(collision => collision.Key));
-        Assert.All(
-            snapshot.IdentityTokenCollisions,
-            collision => Assert.Equal(
-                ["candidate:creatine", "seed:creatine-monohydrate"],
-                collision.Owners));
+        Assert.Equal(
+            ["seed:chorionic-gonadotropin", "seed:human-chorionic-gonadotropin"],
+            snapshot.IdentityTokenCollisions[0].Owners);
+        Assert.Equal(
+            ["candidate:creatine", "seed:creatine", "seed:creatine-monohydrate"],
+            snapshot.IdentityTokenCollisions[1].Owners);
+        Assert.Equal(
+            ["candidate:creatine", "seed:creatine-monohydrate"],
+            snapshot.IdentityTokenCollisions[2].Owners);
         Assert.Empty(snapshot.ExternalIdentifierCollisions);
         Assert.False(snapshot.ModelInvoked);
         Assert.False(snapshot.NetworkAccessed);
