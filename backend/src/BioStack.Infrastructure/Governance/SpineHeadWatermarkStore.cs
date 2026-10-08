@@ -1,7 +1,12 @@
 namespace BioStack.Infrastructure.Governance;
 
+using System.Security.Cryptography;
+using System.Text;
+
 /// <summary>
-/// F3+ local truncation/rollback anchor (R1 remediation).
+/// F3+ local truncation/rollback anchor (R1 remediation, default-on posture + hash comparison
+/// added by H2).</summary>
+/// <remarks>
 ///
 /// The hash chain (<see cref="BioStack.Domain.Governance.SpineChain"/>) is tamper-EVIDENT for
 /// in-place edits and for gaps in the middle of the chain: <c>VerifyChainAsync</c> rehashes every
@@ -37,12 +42,45 @@ namespace BioStack.Infrastructure.Governance;
 ///     checkpoint signed with a key the holder never possesses is the only mechanism in this
 ///     module that survives the holder controlling every local file.
 ///   • It does NOT persist across moving/cloning the database to a new machine without also
-///     moving this file, and it offers no protection if it is never configured — see
-///     <see cref="SpineCheckpointOptions.WatermarkFilePath"/> (empty/unset = disabled, the
-///     default, so existing deployments see no behavior change unless an operator opts in).
-/// </summary>
+///     moving this file (or, for the default derived path, moving it alongside the database —
+///     see <see cref="ResolveDefaultPath"/>).
+///   • (H2/Finding B residual) It compares both sequence number and entry hash at the watermark's
+///     recorded sequence, which closes the exact "delete tail, append one forged replacement at
+///     the same sequence" probe. It does NOT detect a holder who deletes the tail and then
+///     replays <see cref="SpineHeadWatermarkStore.Advance"/> themselves with the forged entry's
+///     real hash (i.e. forges a consistent watermark write, not just a consistent row) — that
+///     requires the same filesystem access as editing the SQLite file, is the same "holder
+///     controls every local file" precondition already disclosed above, and remains bounded by
+///     the same external, signed checkpoint caveat (<see
+///     cref="BioStack.Domain.Governance.SpineChain.CheckpointSourceServerHmac"/>) as the rest of
+///     this local anchor.
+/// </remarks>
 public static class SpineHeadWatermarkStore
 {
+    /// <summary>
+    /// H2 (AC1, Finding A): default watermark location when an operator has not set
+    /// <see cref="SpineCheckpointOptions.WatermarkFilePath"/> explicitly, so truncation detection
+    /// is ON out of the box instead of requiring configuration first.
+    ///
+    /// For a file-backed SQLite database, the watermark is placed next to the database file
+    /// itself (<c>{dbFile}.spine-watermark</c>) — the same directory a consistent backup of the
+    /// database would already have to include, and the one piece of durable, writable storage
+    /// this process is already known to have. For an in-memory or otherwise pathless connection
+    /// (as used by this module's own test suite), there is no database file to sit beside, so the
+    /// watermark is placed in the temp directory, keyed by a hash of the full connection string —
+    /// stable for the lifetime of that connection string, and naturally isolated per distinct
+    /// in-memory database (e.g. each test's unique <c>Data Source</c>) without any coordination.
+    /// </summary>
+    public static string ResolveDefaultPath(string? dataSource, string connectionString)
+    {
+        if (!string.IsNullOrWhiteSpace(dataSource) && !dataSource.Contains("mode=memory"))
+            return dataSource + ".spine-watermark";
+
+        var key = string.IsNullOrEmpty(connectionString) ? dataSource ?? string.Empty : connectionString;
+        var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(key)))[..32].ToLowerInvariant();
+        return Path.Combine(Path.GetTempPath(), "biostack-spine-watermarks", $"{hash}.watermark");
+    }
+
     /// <summary>The highest (sequence number, entry hash) pair this process has observed.</summary>
     public readonly record struct Watermark(long SequenceNumber, string EntryHash);
 

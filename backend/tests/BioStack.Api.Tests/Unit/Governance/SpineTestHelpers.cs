@@ -7,6 +7,28 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
+/// <summary>
+/// H2 (AC1/Finding A): captures log messages so a test can assert the explicit
+/// <see cref="SpineCheckpointOptions.DisableTruncationWatermark"/> opt-out is logged loudly
+/// rather than silently taking effect.
+/// </summary>
+internal sealed class CapturingLogger<T> : Microsoft.Extensions.Logging.ILogger<T>
+{
+    public List<string> Messages { get; } = [];
+
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+
+    public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) => true;
+
+    public void Log<TState>(
+        Microsoft.Extensions.Logging.LogLevel logLevel,
+        Microsoft.Extensions.Logging.EventId eventId,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter)
+        => Messages.Add(formatter(state, exception));
+}
+
 internal static class SpineTestHelpers
 {
     public static SpineRepository CreateRepository(

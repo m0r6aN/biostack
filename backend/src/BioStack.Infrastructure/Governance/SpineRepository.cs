@@ -40,6 +40,55 @@ public sealed class SpineRepository(
     /// </summary>
     private const int MaxAppendAttempts = 5;
 
+    /// <summary>
+    /// H2/Finding A: guards the one-time, process-wide "truncation detection is explicitly
+    /// disabled" warning so opting out is loud (logged) without spamming every append/verify.
+    /// </summary>
+    private static int _disabledWatermarkWarningEmitted;
+
+    /// <summary>
+    /// Test-only seam: xUnit runs many <see cref="SpineRepository"/> instances in one process, so
+    /// the one-shot warning guard above must be resettable between tests that specifically assert
+    /// on it (<c>InternalsVisibleTo</c> scopes this to BioStack.Api.Tests; it has no production
+    /// caller).
+    /// </summary>
+    internal static void ResetDisabledWatermarkWarningGuardForTests()
+        => Interlocked.Exchange(ref _disabledWatermarkWarningEmitted, 0);
+
+    /// <summary>
+    /// H2 (AC1): resolve the effective watermark path for this call. Returns null only when an
+    /// operator has explicitly set <see cref="SpineCheckpointOptions.DisableTruncationWatermark"/>
+    /// to true — that is the sole opt-out, and it is logged loudly (once per process) rather
+    /// than silently taking effect. Otherwise an explicit <see
+    /// cref="SpineCheckpointOptions.WatermarkFilePath"/> wins; failing that, a path is derived
+    /// automatically from the database connection so detection is on by default.
+    /// </summary>
+    private string? ResolveWatermarkPath()
+    {
+        var opts = checkpointOptions.Value;
+
+        if (opts.DisableTruncationWatermark)
+        {
+            if (Interlocked.CompareExchange(ref _disabledWatermarkWarningEmitted, 1, 0) == 0)
+            {
+                logger.LogWarning(
+                    "Governed Spine truncation/rollback detection is explicitly DISABLED via "
+                    + "SpineCheckpoint:DisableTruncationWatermark=true. This is a reduced-posture "
+                    + "opt-out: a deleted tail will once again be silently accepted as an intact "
+                    + "chain (the original R1 failure mode). Unset this to restore default "
+                    + "protection.");
+            }
+
+            return null;
+        }
+
+        if (!string.IsNullOrWhiteSpace(opts.WatermarkFilePath))
+            return opts.WatermarkFilePath;
+
+        var connection = db.Database.GetDbConnection();
+        return SpineHeadWatermarkStore.ResolveDefaultPath(connection.DataSource, connection.ConnectionString);
+    }
+
     public async Task<SpineEntry> AppendAsync(SpineEntry entry, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(entry);
@@ -94,11 +143,12 @@ public sealed class SpineRepository(
             {
                 await db.SaveChangesAsync(ct);
 
-                // R1: advance the local truncation watermark (no-op unless configured). Must
-                // happen on the write path, not only during verification, so a later delete of
-                // this row has something to be caught against.
+                // R1/H2: advance the local truncation watermark (no-op only when explicitly
+                // disabled; otherwise on by default, see ResolveWatermarkPath). Must happen on
+                // the write path, not only during verification, so a later delete of this row
+                // has something to be caught against.
                 SpineHeadWatermarkStore.Advance(
-                    checkpointOptions.Value.WatermarkFilePath,
+                    ResolveWatermarkPath(),
                     withHash.SequenceNumber,
                     withHash.EntryHash);
 
@@ -189,20 +239,42 @@ public sealed class SpineRepository(
             verified++;
         }
 
-        // R1 remediation: a deleted tail leaves no gap among the surviving rows above -- the
-        // loop above cannot see it. Compare against the local watermark (disabled unless
-        // SpineCheckpoint:WatermarkFilePath is configured; see SpineHeadWatermarkStore for the
-        // precise local-vs-external distinction this is and is not proving).
+        // R1/H2 remediation: a deleted tail leaves no gap among the surviving rows above -- the
+        // loop above cannot see it. Compare against the local watermark (on by default; see
+        // ResolveWatermarkPath and SpineHeadWatermarkStore for the precise local-vs-external
+        // distinction this is and is not proving).
         var observedHeadSequence = expectedSequence - 1; // last verified sequence, -1 if empty
-        var watermark = SpineHeadWatermarkStore.TryRead(checkpointOptions.Value.WatermarkFilePath);
-        if (watermark is { } mark && mark.SequenceNumber > observedHeadSequence)
+        var watermark = SpineHeadWatermarkStore.TryRead(ResolveWatermarkPath());
+        if (watermark is { } mark)
         {
-            return SpineChainVerificationResult.Broken(
-                verified,
-                entries.Count > 0 ? entries[^1].ReceiptUri : null,
-                $"Truncation detected: the local watermark previously observed chain sequence "
-                + $"{mark.SequenceNumber}, but the chain now ends at sequence {observedHeadSequence}. "
-                + "Entries were deleted after they were written (rollback/truncation).");
+            if (mark.SequenceNumber > observedHeadSequence)
+            {
+                return SpineChainVerificationResult.Broken(
+                    verified,
+                    entries.Count > 0 ? entries[^1].ReceiptUri : null,
+                    $"Truncation detected: the local watermark previously observed chain sequence "
+                    + $"{mark.SequenceNumber}, but the chain now ends at sequence {observedHeadSequence}. "
+                    + "Entries were deleted after they were written (rollback/truncation).");
+            }
+
+            // H2/Finding B: the sequence number alone is not enough -- a holder who deletes the
+            // true tail entry and appends one forged replacement through the legitimate API
+            // restores the sequence count without advancing past it. The watermark also records
+            // the hash of the entry it last observed at that sequence, so compare that too.
+            if (mark.SequenceNumber == observedHeadSequence && entries.Count > 0)
+            {
+                var head = entries[^1];
+                if (!string.Equals(head.EntryHash, mark.EntryHash, StringComparison.Ordinal))
+                {
+                    return SpineChainVerificationResult.Broken(
+                        verified,
+                        head.ReceiptUri,
+                        $"Tail substitution detected: the chain head at sequence {observedHeadSequence} "
+                        + "does not match the local watermark's recorded hash for that sequence. "
+                        + "The original entry was deleted and replaced with different content at the "
+                        + "same position in the chain.");
+                }
+            }
         }
 
         return SpineChainVerificationResult.Intact(verified);
