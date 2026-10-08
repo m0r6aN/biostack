@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-relationship-packet",
+  "packet": {
+    "packetId": "pairwise-p4-first-negative-001",
+    "agentId": "bio_pairwise_005_builder",
+    "generatedAt": "2026-10-08T18:53:39Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "relationships": [
+    {
+      "relationshipId": "rel-tamoxifen-warfarin-001",
+      "subjectCompound": "Tamoxifen",
+      "objectCompound": "Warfarin (coumarin-type anticoagulants)",
+      "relationshipType": "contraindicated",
+      "directionality": "context-dependent",
+      "effectDomain": "anticoagulation / thromboembolic risk (indication-specific contraindication, not a universal tamoxifen interaction)",
+      "mechanismBasis": [
+        "Label-stated contraindication only; the cited label does not itself state a pharmacokinetic or pharmacodynamic mechanism for the coumarin-type anticoagulant contraindication. It lists concomitant coumarin-type anticoagulant therapy alongside tamoxifen's own thromboembolic risk profile (history of deep vein thrombosis, history of pulmonary embolus) as contraindicated for the same risk-reduction indications."
+      ],
+      "categoryBasis": [
+        "Selective estrogen receptor modulator (SERM, tamoxifen) plus coumarin-type anticoagulant (warfarin-class), restricted to tamoxifen's risk-reduction indications (reduction of breast cancer incidence in high-risk women and in women with ductal carcinoma in situ (DCIS))."
+      ],
+      "claimRefs": [
+        "research/input/evidence/tamoxifen.evidence.json#tamoxifen-contraindication-001"
+      ],
+      "sourceRefs": [
+        "dailymed-tamoxifen-citrate-label"
+      ],
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "supported",
+        "notes": "No community signal was evaluated or is claimed for this relationship. It is a directly sourced, authoritative-label contraindication (DailyMed SPL, authorityTier A1), not a community/popularity pattern."
+      },
+      "reviewFlags": [
+        "indication-specific: this contraindication applies only to tamoxifen's risk-reduction indications (DCIS / high-risk breast cancer prevention) per the cited label's own subheading scope; it must not be generalized to tamoxifen's other indications (e.g., metastatic breast cancer treatment).",
+        "verbatim-anchored text covers the drug-class term 'coumarin-type anticoagulant therapy' as stated in the 2007 Andrx tamoxifen citrate label (sourceId dailymed-tamoxifen-citrate-label). Warfarin is the prototypical and most commonly cited member of this class and is the term used in this record's objectCompound for legibility, but the single word 'warfarin' is NOT itself verbatim-anchored in this parcel's cited source text and must not be presented as an exact label quote.",
+        "the cited evidence packet separately notes (unverified, not used as evidence here) that a later-maintained Soltamox SPL revision states this contraindication using the specific drug name 'warfarin' rather than the broader 'coumarin-type' class term; that revision's text was not retrieved or verbatim-anchored by the cited evidence packet and is excluded from this record's sourceRefs accordingly (sourcing-split derivation-only discipline).",
+        "safety-critical regulatory contraindication claim; carried forward from research/input/evidence/tamoxifen.evidence.json:203-234, whose verbatim quote fragment was recorded by that packet's 2026-09-05 independent review of the cited DailyMed label (not a fetch-extraction-layer quote).",
+        "needs dual independent review (bio_pairwise_005_review_1, bio_pairwise_005_review_2) before relationshipReviewStatus may be set to accepted-as-evidence-backed. The builder does not review or self-approve its own record."
+      ],
+      "resolutionStatus": "needs-human-review",
+      "relationshipPolarity": "negative",
+      "assertionClass": "authoritative-caution",
+      "effectDirection": "negative",
+      "riskDomains": [
+        "thromboembolic-risk",
+        "anticoagulation-interaction"
+      ],
+      "contradictedByClaimRefs": null,
+      "context": {
+        "population": "Women being considered for or taking tamoxifen specifically for its risk-reduction indications (reduction in breast cancer incidence in high-risk women, and in women with ductal carcinoma in situ (DCIS)) per the cited label. This record does not establish, and the cited source does not state, that the contraindication extends to tamoxifen's other indications (e.g., metastatic breast cancer treatment).",
+        "route": "oral",
+        "formulation": "tamoxifen citrate tablet (Andrx-labeled product, SPL set id 8f642753-9e12-433c-a0bc-ab33dac41ddf, 2007) co-administered with coumarin-type anticoagulant therapy",
+        "doseContext": null,
+        "timingContext": "concomitant / concurrent use",
+        "useCase": "contraindication screening prior to prescribing tamoxifen for a risk-reduction indication in a patient who requires coumarin-type anticoagulant therapy"
+      },
+      "evidenceBasis": {
+        "directHumanEvidence": false,
+        "mechanisticEvidence": false,
+        "preclinicalEvidence": false,
+        "communitySignal": false,
+        "authoritativeSafetySignal": true,
+        "sourceFamilyCount": 1,
+        "independentSourceFamilyCount": 1
+      },
+      "relationshipReviewStatus": "review-required",
+      "sourceAuthorityMix": {
+        "authorityTiers": [
+          "A1"
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "dailymed-tamoxifen-citrate-label",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: tamoxifen citrate - Tamoxifen Citrate tablet (SPL set id 8f642753-9e12-433c-a0bc-ab33dac41ddf, displayed update April 20, 2007)",
+      "publisher": "Andrx Pharmaceuticals (labeler; an SPL is authored by the labeler, not by FDA or NLM). Hosted by DailyMed, National Library of Medicine",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f642753-9e12-433c-a0bc-ab33dac41ddf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2007-04-20T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "First sourced negative relationship record (BIO-PAIRWISE-005, parcel bio_pairwise_005_builder). Requires two independent, non-author review decisions (bio_pairwise_005_review_1, bio_pairwise_005_review_2), each decided accepted-as-evidence-backed, before relationshipReviewStatus may be set to accepted-as-evidence-backed. The builder does not review or self-approve its own record (anti-self-attestation, T9).",
+      "Promotion to the live knowledge projection and the live Refresh remain owner-only per the knowledge-promotion delivery class; this parcel performs no live Refresh and no promotion. A dry-run plan only is produced."
+    ],
+    "qualityFlags": [
+      "derivation-only",
+      "sourced-from-authorized-lane",
+      "single-pair-parcel",
+      "pending-dual-review",
+      "pending-promotion-review"
+    ]
+  }
+}
