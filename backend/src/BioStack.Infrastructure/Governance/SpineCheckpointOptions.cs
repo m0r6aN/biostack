@@ -40,18 +40,36 @@ public sealed class SpineCheckpointOptions
     /// sequence number (H2/Finding B: catches a deleted-and-reforged tail, not just a shortened
     /// one).
     ///
-    /// H2 (default-on posture): truncation detection is ON by default. When this is left unset,
-    /// <see cref="SpineRepository"/> derives a path automatically from the underlying database
-    /// connection (see <see cref="SpineHeadWatermarkStore.ResolveDefaultPath"/>) rather than
-    /// disabling the check — a fresh install gets protection without an operator having to find
-    /// and set this setting first. Set this explicitly only to override that derived location
-    /// (e.g. to point it at separate, more durable storage than the database's own directory).
+    /// H2 (default-on posture): truncation detection is ON by default for every provider this
+    /// module derives a path for (SQLite and Postgres/Npgsql — see H2-R2/Finding C). When this
+    /// is left unset, <see cref="SpineRepository"/> derives a path automatically from the
+    /// underlying database connection using provider-specific, tested rules (see
+    /// <see cref="SpineHeadWatermarkStore.ResolveDefaultPath"/> for exactly what each provider
+    /// shape resolves to) rather than disabling the check — a fresh install gets protection
+    /// without an operator having to find and set this setting first. Set this explicitly only to
+    /// override that derived location (e.g. to point it at separate, more durable storage than
+    /// the database's own directory).
     ///
     /// This is a LOCAL, same-machine anchor, not an external/off-box one: a holder who can edit
-    /// the SQLite file can also edit or delete this one. See <see cref="SpineHeadWatermarkStore"/>
-    /// for exactly what is and is not proven.
+    /// the database file can also edit or delete this one. See <see
+    /// cref="SpineHeadWatermarkStore"/> for exactly what is and is not proven — in particular,
+    /// this is detection-on-edit/truncation, NOT mutual binding: deleting this file outright is
+    /// not currently distinguishable from a database that never had it established
+    /// (H2-R2/Finding D, disclosed residual).
     /// </summary>
     public string? WatermarkFilePath { get; set; }
+
+    /// <summary>
+    /// H2-R2 (Finding C): base directory used when deriving the default watermark path for a
+    /// connection with no safe, rooted, per-database filesystem anchor to co-locate with (e.g.
+    /// Postgres/Npgsql — see <see cref="SpineHeadWatermarkStore.ResolveDefaultPath"/>). Must be
+    /// an absolute path when set; a CWD-relative value would reopen exactly the "watermark
+    /// evaporates on redeploy" gap this option exists to let an operator avoid. Defaults to the
+    /// OS temp directory (already absolute) when unset — set this to point the derived default
+    /// at storage that is actually durable across this deployment's container/VM lifecycle, which
+    /// the OS temp directory is not guaranteed to be.
+    /// </summary>
+    public string? WatermarkBaseDirectory { get; set; }
 
     /// <summary>
     /// Explicit opt-out of truncation/rollback detection (H2/Finding A). Default <c>false</c> —

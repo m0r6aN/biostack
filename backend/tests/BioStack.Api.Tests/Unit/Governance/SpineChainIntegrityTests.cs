@@ -288,6 +288,119 @@ public sealed class SpineChainIntegrityTests : IDisposable
         }
     }
 
+    /// <summary>
+    /// H2-R2 (Finding C, end-to-end): the reviewer's NEW-1 probe exercised
+    /// <c>ResolveDefaultPath</c> directly; this exercises the SAME default-path derivation through
+    /// the full <c>AppendAsync</c>/<c>VerifyChainAsync</c> flow against a REAL file-backed SQLite
+    /// database (not the in-memory shape every other test in this fixture uses) -- the shape the
+    /// shipped H2 code's own docstring claimed to support but the shipped test suite never
+    /// exercised ("428/428 is 100% UseSqlite [in-memory]", h2_review_2). Confirms the default
+    /// watermark derived for a real on-disk SQLite file still fails closed on the R1 tail-deletion
+    /// probe after the H2-R2 provider-safety fix.
+    /// </summary>
+    [Fact]
+    public async Task File_backed_sqlite_default_watermark_still_catches_trailing_delete()
+    {
+        var dbPath = Path.Combine(Path.GetTempPath(), $"spine-h2r2-{Guid.NewGuid():N}.db");
+        var watermarkHideDir = Path.Combine(Path.GetDirectoryName(dbPath)!, ".biostack-governance");
+        try
+        {
+            var options = new DbContextOptionsBuilder<BioStackDbContext>()
+                .UseSqlite($"Data Source={dbPath}")
+                .Options;
+
+            await using (var db = new BioStackDbContext(options))
+            {
+                await db.Database.EnsureCreatedAsync();
+                var sut = SpineTestHelpers.CreateRepository(db);
+
+                for (var i = 0; i < 5; i++)
+                    await sut.AppendAsync(MakeEntry($"keon://receipt/h2r2-filebacked-{i:D3}"));
+
+                // H2-R2/Finding D: the default watermark for a real file-backed database must no
+                // longer sit beside it with the old self-describing name.
+                Assert.False(File.Exists(dbPath + ".spine-watermark"));
+                Assert.True(Directory.Exists(watermarkHideDir));
+
+                await db.Database.ExecuteSqlRawAsync(
+                    "DELETE FROM SpineEntries WHERE SequenceNumber > 2;");
+
+                var result = await sut.VerifyChainAsync();
+
+                Assert.False(result.IsIntact);
+                Assert.Contains("Truncation detected", result.Reason, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        finally
+        {
+            if (File.Exists(dbPath))
+                File.Delete(dbPath);
+            if (Directory.Exists(watermarkHideDir))
+                Directory.Delete(watermarkHideDir, recursive: true);
+        }
+    }
+
+    /// <summary>
+    /// H2-R2 (Finding D, disclosed residual -- NOT a regression target, a documentation-honesty
+    /// target): reproduces the reviewer's exact NEW-2 probe (delete trailing rows AND the
+    /// colocated watermark file) against the H2-R2 relocated default path. The H2-R2 change
+    /// narrows discoverability (previous assertion: no longer visible under the old
+    /// self-describing name in the same directory listing) but, as the corrected docstrings on
+    /// <c>SpineHeadWatermarkStore</c> and <c>SpineCheckpointOptions.WatermarkFilePath</c> now say
+    /// explicitly, does NOT make deletion of the watermark file itself fail closed -- that would
+    /// require mutual binding (an independent, durable marker outside this file, which needs a
+    /// database schema change out of this module's granted surface). This test exists so that
+    /// claim stays honest and verified rather than asserted in prose alone: it asserts the
+    /// CURRENT (disclosed, not hidden) behaviour, not a silently-accepted gap.
+    /// </summary>
+    [Fact]
+    public async Task Deleting_rows_and_the_relocated_default_watermark_together_remains_a_disclosed_residual()
+    {
+        var dbPath = Path.Combine(Path.GetTempPath(), $"spine-h2r2-new2-{Guid.NewGuid():N}.db");
+        var watermarkHideDir = Path.Combine(Path.GetDirectoryName(dbPath)!, ".biostack-governance");
+        try
+        {
+            var options = new DbContextOptionsBuilder<BioStackDbContext>()
+                .UseSqlite($"Data Source={dbPath}")
+                .Options;
+
+            await using (var db = new BioStackDbContext(options))
+            {
+                await db.Database.EnsureCreatedAsync();
+                var sut = SpineTestHelpers.CreateRepository(db);
+
+                for (var i = 0; i < 5; i++)
+                    await sut.AppendAsync(MakeEntry($"keon://receipt/h2r2-new2-{i:D3}"));
+
+                // The hide directory is shared per-tempdir across every file-backed SQLite test
+                // in this fixture (it is keyed by the database's own directory, not per-test), so
+                // resolve THIS test's specific watermark file deterministically rather than
+                // assuming the directory contains exactly one entry.
+                var expectedWatermarkPath = SpineHeadWatermarkStore.ResolveDefaultPath(dbPath, $"Data Source={dbPath}");
+                Assert.True(File.Exists(expectedWatermarkPath));
+
+                await db.Database.ExecuteSqlRawAsync(
+                    "DELETE FROM SpineEntries WHERE SequenceNumber > 2;");
+                File.Delete(expectedWatermarkPath);
+
+                var result = await sut.VerifyChainAsync();
+
+                // Disclosed residual, not a silent surprise: deleting BOTH files together is
+                // indistinguishable, in-module, from a database that never had a watermark
+                // established. See the STOP-AND-REPORT residual in the H2-R2 PR description and
+                // the corrected SpineHeadWatermarkStore docstring.
+                Assert.True(result.IsIntact, result.Reason);
+            }
+        }
+        finally
+        {
+            if (File.Exists(dbPath))
+                File.Delete(dbPath);
+            if (Directory.Exists(watermarkHideDir))
+                Directory.Delete(watermarkHideDir, recursive: true);
+        }
+    }
+
     [Fact]
     public async Task Deleting_a_middle_entry_breaks_the_chain()
     {
