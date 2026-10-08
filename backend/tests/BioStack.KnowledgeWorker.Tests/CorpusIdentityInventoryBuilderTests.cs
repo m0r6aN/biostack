@@ -13,12 +13,15 @@ public sealed class CorpusIdentityInventoryBuilderTests
 
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
-        Assert.Equal(100, snapshot.SeedRecordCount);
+        // BIO-LOCAL-014: chorionic-gonadotropin consolidated into human-chorionic-gonadotropin
+        // per owner rule D-D; 100 - 1 consolidated = 99 records.
+        Assert.Equal(99, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(30, snapshot.SourceRegistryRecordCount);
         Assert.Equal(16, snapshot.SeedCandidateOverlapCount);
-        Assert.Equal(84, snapshot.SeedOnlyCanonicalIds.Count);
+        // BIO-LOCAL-014: seed-only 84 - 1 consolidated (chorionic-gonadotropin was seed-only) = 83.
+        Assert.Equal(83, snapshot.SeedOnlyCanonicalIds.Count);
         Assert.Equal(0, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);
@@ -26,22 +29,24 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
         Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
         Assert.Equal(2, snapshot.RegistryAuthorizedEvidencePacketCount);
-        // BIO-LOCAL-011: 100-record corpus (57 existing + 43 batched) observed 3 identity-token
+        // BIO-LOCAL-011: the 100-record corpus (57 existing + 43 batched) observed 3 identity-token
         // collisions (was 2 at 57 records); each key's owners are now itemized explicitly
         // (previously 2 keys shared one owners list, which no longer holds at 100 records).
-        Assert.Equal(3, snapshot.IdentityTokenCollisions.Count);
+        // BIO-LOCAL-014: the chorionic-gonadotropin token collision is resolved by consolidating
+        // chorionic-gonadotropin into human-chorionic-gonadotropin per owner rule D-D (the
+        // shorthand survives only as an alias of the single remaining record, so the token has
+        // one owning canonical ID); 3 - 1 resolved = 2 collisions. The creatine pair remains
+        // DISTINCT per owner rule D-D, so both creatine collisions are unchanged.
+        Assert.Equal(2, snapshot.IdentityTokenCollisions.Count);
         Assert.Equal(
-            ["chorionic-gonadotropin", "creatine", "creatine-monohydrate"],
+            ["creatine", "creatine-monohydrate"],
             snapshot.IdentityTokenCollisions.Select(collision => collision.Key));
         Assert.Equal(
-            ["seed:chorionic-gonadotropin", "seed:human-chorionic-gonadotropin"],
+            ["candidate:creatine", "seed:creatine", "seed:creatine-monohydrate"],
             snapshot.IdentityTokenCollisions[0].Owners);
         Assert.Equal(
-            ["candidate:creatine", "seed:creatine", "seed:creatine-monohydrate"],
-            snapshot.IdentityTokenCollisions[1].Owners);
-        Assert.Equal(
             ["candidate:creatine", "seed:creatine-monohydrate"],
-            snapshot.IdentityTokenCollisions[2].Owners);
+            snapshot.IdentityTokenCollisions[1].Owners);
         Assert.Empty(snapshot.ExternalIdentifierCollisions);
         Assert.False(snapshot.ModelInvoked);
         Assert.False(snapshot.NetworkAccessed);
