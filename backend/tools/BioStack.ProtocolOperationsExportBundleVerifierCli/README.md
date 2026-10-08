@@ -2,7 +2,8 @@
 
 `BioStack.ProtocolOperationsExportBundleVerifierCli` is an offline verification
 tool for BioStack Protocol Operations export bundles and deterministic
-verification receipts.
+verification receipts. It is a component of the Keon-style offline verification kit,
+providing deterministic local verification of protocol-operation artifacts.
 
 This tool is intentionally narrow: it reads local JSON files, recomputes local
 hashes, and prints either a stable human-readable summary or deterministic

@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The Protocol Operations offline verification chain (export bundle contract, verification
+The Keon-style offline verification chain (export bundle contract, verification
 receipt, verifier CLI, `--result-json` output, docs drilldown, release checklist, and the
 test-owned boundary/dependency guards) has matured into something an auditor, partner, or
 future customer can trust. This note records **what could be monetized later without changing

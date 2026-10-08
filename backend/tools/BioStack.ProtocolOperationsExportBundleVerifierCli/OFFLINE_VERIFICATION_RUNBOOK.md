@@ -1,7 +1,7 @@
 # Offline Verification Runbook (Clean-Checkout Reproduction)
 
 This runbook is an **internal reviewer runbook**. It explains how someone with a
-clean checkout reproduces the Protocol Operations offline verification chain on
+clean checkout reproduces the Keon-style offline verification chain on
 their own machine, using only local files and deterministic commands.
 
 It is a companion to, not a replacement for, the reference documentation:

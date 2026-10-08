@@ -1,7 +1,7 @@
 # Protocol Operations Offline Auditor Packet Index
 
 This index is the docs-only entry point for a third-party reviewer inspecting the
-Protocol Operations offline verification kit. It does not create a new product
+Keon-style offline verification kit. It does not create a new product
 surface, generate artifacts, add runtime behavior, or replace the verifier CLI,
 runbook, release checklist, smoke scripts, result-code catalog, or capstone
 guard.
@@ -12,7 +12,8 @@ Inspect these artifacts in order:
 
 1. [Verifier CLI reference](backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md)
    - Establishes the supported local-file verification modes, receipt-only mode,
-     deterministic stdout behavior, hash terminology, and explicit guarantees.
+     deterministic stdout behavior, hash terminology, and explicit guarantees for the
+     Keon-style offline verification kit.
 2. [Clean-checkout offline runbook](backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md)
    - Shows how a reviewer reproduces the offline verification chain from a clean
      checkout using local commands and supplied local JSON files.
