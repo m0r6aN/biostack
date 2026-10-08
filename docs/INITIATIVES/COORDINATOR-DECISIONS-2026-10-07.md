@@ -78,3 +78,21 @@ circumstance.**
 
 Both decisions preserve the specs' hard constraints (no in-lane schema authoring, no migration)
 while removing the pre-dispatch deadlock. Recorded for Gate 2 reference by BIO-PAIRWISE-001..006.
+
+## D-E — BIO-PAIRWISE-005 rulings (coordinator, delegated pairwise authority, 2026-10-08)
+
+Spec review REJECTed the first draft with three blockers. Rulings:
+
+1. **Sourcing discipline (F1):** derivation from already-authorized, already-cited lane sources
+   IS permitted — it is verbatim-citation derivation from existing evidence, the same doctrine as
+   D-C's corpus rule. Genuinely NEW external source acquisition invokes the KEO-73/74 gates and
+   STOPS until they clear. The spec's Constraints must state this split explicitly.
+2. **Delivery class (F2):** reclassify BIO-PAIRWISE-005 as `knowledge-promotion` — a sourced
+   negative pair reaching the public projection is a promotion surface. D14 controls apply in
+   full: dual review, source/license/provenance + evidence grade + review lifecycle + promotion
+   authority + rollback sections, and the class's stop conditions (missing source/license/review
+   state; bypassed promotion; unreviewed public claim).
+3. **Testability (F3):** Required Tests section added (sourced-pair validation, page-image
+   verification where applicable, schema compliance).
+
+The fixer applies these to the spec; re-review at the new hash precedes Gate 2.
