@@ -26,3 +26,13 @@ PR #507 (merged). Dual review:
 | H2-AC3-residual | Real mutual binding needs a schema/migration change outside the spine module | recorded; a future trust-path parcel may add it |
 
 None reopen R1/C/D. Production-enablement posture for the spine: H4 pending (documented).
+
+## H4 — DONE (2026-10-08)
+
+PR #512 (merged). Review `h4_review_1` **PASS**: H4a identity canonicalization genuine with drift
+probes now deterministic; H4b symlink/TOCTOU hardening genuine; the single residual is bounded by
+preconditions already disclosed in H2-R2's acceptance criteria. **Hardening item H4 CLOSED.**
+
+Hardening register state: H1 ✅ · H2 ✅ (H2-R2) · H4 ✅ · H2-AC3-residual deferred to the
+production migration wave (D-F(4)) · H3 (SG-L8 draft-hook) low-priority pending · H4b-bounded-residual
+disclosed. The spine's pre-production posture is clean except the noted deferrals.
