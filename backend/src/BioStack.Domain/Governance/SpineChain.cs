@@ -42,8 +42,12 @@ public sealed record SpineChainVerificationResult(
 /// link correctly, so that walk alone cannot distinguish "never advanced past entry N" from
 /// "advanced past entry N, then everything after N was deleted".
 /// <see cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore"/> closes that specific
-/// gap with a LOCAL (not external/off-box) anchor file, opt-in via
-/// <see cref="BioStack.Infrastructure.Governance.SpineCheckpointOptions.WatermarkFilePath"/> —
+/// gap with a LOCAL (not external/off-box) anchor file. As of H2, this is ON BY DEFAULT for
+/// every provider this module derives a path for (not merely opt-in) — an operator can override
+/// the derived location via
+/// <see cref="BioStack.Infrastructure.Governance.SpineCheckpointOptions.WatermarkFilePath"/> or
+/// explicitly opt OUT via <see
+/// cref="BioStack.Infrastructure.Governance.SpineCheckpointOptions.DisableTruncationWatermark"/> —
 /// see that type's docstring for precisely what is and is not proven.
 /// </summary>
 public static class SpineChain

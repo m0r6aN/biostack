@@ -61,7 +61,11 @@ public sealed class SpineRepository(
     /// to true — that is the sole opt-out, and it is logged loudly (once per process) rather
     /// than silently taking effect. Otherwise an explicit <see
     /// cref="SpineCheckpointOptions.WatermarkFilePath"/> wins; failing that, a path is derived
-    /// automatically from the database connection so detection is on by default.
+    /// automatically from the database connection, using provider-specific rules (H2-R2/Finding
+    /// C) that keep the result both unique per database/catalog and rooted/absolute regardless of
+    /// which provider's <c>DataSource</c> shape is in play — see <see
+    /// cref="SpineHeadWatermarkStore.ResolveDefaultPath"/> — so detection is on by default for
+    /// every supported provider, not only SQLite.
     /// </summary>
     private string? ResolveWatermarkPath()
     {
@@ -86,7 +90,8 @@ public sealed class SpineRepository(
             return opts.WatermarkFilePath;
 
         var connection = db.Database.GetDbConnection();
-        return SpineHeadWatermarkStore.ResolveDefaultPath(connection.DataSource, connection.ConnectionString);
+        return SpineHeadWatermarkStore.ResolveDefaultPath(
+            connection.DataSource, connection.ConnectionString, opts.WatermarkBaseDirectory);
     }
 
     public async Task<SpineEntry> AppendAsync(SpineEntry entry, CancellationToken ct = default)
