@@ -379,6 +379,11 @@ public sealed class BioStackDbContext : DbContext
                 v => string.IsNullOrWhiteSpace(v)
                     ? null
                     : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+
+            // Provenance surface (BIO-PAIRWISE-004 / PW-004-A1): additive, nullable columns.
+            // IsSourced defaults to false (unsourced) so existing rows are valid without backfill.
+            entity.Property(h => h.IsSourced).HasDefaultValue(false);
+            entity.Property(h => h.SourceReference).HasMaxLength(2048);
         });
 
         modelBuilder.Entity<InteractionFlag>(entity =>
