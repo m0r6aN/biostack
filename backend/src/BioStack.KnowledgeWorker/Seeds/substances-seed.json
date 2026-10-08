@@ -20442,5 +20442,2060 @@
         "unknown-honest-defaults"
       ]
     }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "ospemifene",
+      "canonicalName": "Ospemifene",
+      "slug": "ospemifene",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Ospemifene"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1432",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1432",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/ospemifene.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/ospemifene.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'ospemifene'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:ospemifene",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'ospemifene'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "oxytocin",
+      "canonicalName": "Oxytocin",
+      "slug": "oxytocin",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Oxytocin"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1150",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1150",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/oxytocin.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/oxytocin.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'oxytocin'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:oxytocin",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'oxytocin'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "peg-mgf",
+      "canonicalName": "PEG-MGF",
+      "slug": "peg-mgf",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "PEG-MGF"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1013",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1013",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/peg-mgf.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/peg-mgf.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'peg-mgf'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:peg-mgf",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'peg-mgf'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "pemvidutide",
+      "canonicalName": "Pemvidutide",
+      "slug": "pemvidutide",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Pemvidutide"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:266",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L266",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/pemvidutide.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/pemvidutide.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'pemvidutide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:pemvidutide",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'pemvidutide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "pramlintide",
+      "canonicalName": "Pramlintide",
+      "slug": "pramlintide",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Pramlintide"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:185",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L185",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/pramlintide.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/pramlintide.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'pramlintide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:pramlintide",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'pramlintide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "rad-150",
+      "canonicalName": "RAD-150",
+      "slug": "rad-150",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "RAD-150"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1794",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1794",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/rad-150.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/rad-150.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'rad-150'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:rad-150",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'rad-150'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "s-23",
+      "canonicalName": "S-23",
+      "slug": "s-23",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "S-23"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1660",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1660",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/s-23.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/s-23.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 's-23'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:s-23",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 's-23'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "selank",
+      "canonicalName": "Selank",
+      "slug": "selank",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Selank"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1067",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1067",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/selank.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/selank.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'selank'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:selank",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'selank'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "semax",
+      "canonicalName": "Semax",
+      "slug": "semax",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Semax"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1040",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1040",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/semax.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/semax.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'semax'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:semax",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'semax'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "setmelanotide",
+      "canonicalName": "Setmelanotide",
+      "slug": "setmelanotide",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Setmelanotide"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:709",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L709",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/setmelanotide.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/setmelanotide.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'setmelanotide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:setmelanotide",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'setmelanotide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "somatropin",
+      "canonicalName": "Somatropin",
+      "slug": "somatropin",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Somatropin"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1206",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1206",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/somatropin.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/somatropin.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'somatropin'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:somatropin",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'somatropin'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "stenabolic",
+      "canonicalName": "Stenabolic",
+      "slug": "stenabolic",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Stenabolic"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1940",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1940",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/stenabolic.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/stenabolic.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'stenabolic'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:stenabolic",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'stenabolic'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "survodutide",
+      "canonicalName": "Survodutide",
+      "slug": "survodutide",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Survodutide"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:239",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L239",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/survodutide.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/survodutide.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'survodutide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:survodutide",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'survodutide'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "vk2735",
+      "canonicalName": "VK2735",
+      "slug": "vk2735",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "VK2735"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:376",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L376",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/vk2735.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/vk2735.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'vk2735'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:vk2735",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'vk2735'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "vosilasarm",
+      "canonicalName": "Vosilasarm",
+      "slug": "vosilasarm",
+      "aliases": [],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Other",
+      "compoundFamily": "unknown",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Vosilasarm"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Unknown",
+      "claimSpecificEvidence": [],
+      "evidenceGaps": [
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1850",
+          "publisher": null,
+          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1850",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        },
+        {
+          "sourceType": "internal-curation",
+          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/vosilasarm.evidence.json:12",
+          "publisher": null,
+          "url": "research/input/evidence/vosilasarm.evidence.json#L12",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-08T10:55:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'vosilasarm'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "BIO-LOCAL-007-inventory:batch-c:vosilasarm",
+      "ingestedAt": "2026-10-08T10:55:00Z",
+      "updatedAt": "2026-10-08T10:55:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Batch-C record (BIO-LOCAL-010) compiled solely from the identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md Section 2a for 'vosilasarm'; no additional evidence-packet claims were read or compiled this session.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "batch-c",
+        "identifier-only-citation",
+        "compiled-from-inventory-citation",
+        "no-claim-content-this-session",
+        "unknown-honest-defaults"
+      ]
+    }
   }
 ]
