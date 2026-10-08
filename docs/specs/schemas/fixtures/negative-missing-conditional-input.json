@@ -1,0 +1,17 @@
+{
+  "input": {
+    "deliveryClasses": ["migration"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {}
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "stopped",
+    "stopReason": {
+      "reason": "missing-required-field",
+      "deliveryClass": "migration",
+      "field": "userDataOrProductionSchemaAffected"
+    }
+  }
+}

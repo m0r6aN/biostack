@@ -1,0 +1,120 @@
+{
+  "standard": {
+    "requiredSpecAdditions": ["objective", "surfaces", "contracts", "acceptance criteria", "tests", "rollback"],
+    "minimumChecks": ["focused tests", "lint/build as affected"],
+    "reviewers": 1,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": null,
+    "mandatoryStopConditions": ["scope/contract drift", "red check"],
+    "requiredClosureEvidence": ["checks", "review", "acceptance map", "diff"]
+  },
+  "health-boundary": {
+    "requiredSpecAdditions": [
+      "guidance class", "intended use", "claims", "evidence threshold",
+      "numeric provenance", "missingness", "red flags", "escalation",
+      "function-review status"
+    ],
+    "minimumChecks": [
+      "positive, degraded, refused, escalated fixtures",
+      "calculation boundary tests where numeric"
+    ],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": "green-dual-review-required",
+    "mandatoryStopConditions": [
+      "unsupported certainty", "prescribed-treatment direction",
+      "red-flag bypass", "provenance loss"
+    ],
+    "requiredClosureEvidence": [
+      "scientific-evidence references", "rationale fixture", "safety results",
+      "dual reviews", "human review record when triggered"
+    ]
+  },
+  "privacy": {
+    "requiredSpecAdditions": [
+      "data inventory", "purpose", "consent", "minimization",
+      "retention", "export", "deletion", "access control"
+    ],
+    "minimumChecks": ["authorization", "consent", "retention/export/deletion", "log-redaction tests"],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": null,
+    "mandatoryStopConditions": ["new sensitive field without approved lifecycle", "leakage", "consent bypass"],
+    "requiredClosureEvidence": ["data map", "test results", "migration/rollback proof", "dual reviews"]
+  },
+  "migration": {
+    "requiredSpecAdditions": [
+      "compatibility window", "forward/backward behavior", "rollback",
+      "data-loss analysis", "environment plan"
+    ],
+    "minimumChecks": ["migration", "downgrade/rollback or restore", "compatibility tests"],
+    "reviewers": {
+      "default": 1,
+      "condition": "userDataOrProductionSchemaAffected",
+      "ifTrue": 2
+    },
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": "explicit-base-and-environment-scope",
+    "mandatoryStopConditions": ["destructive or irreversible path", "unknown production state"],
+    "requiredClosureEvidence": [
+      "schema diff", "compatibility matrix",
+      "backup/restore or rollback evidence", "environment receipt"
+    ]
+  },
+  "trust-path": {
+    "requiredSpecAdditions": [
+      "trust boundary", "fail-open/closed behavior", "issuer/verifier ownership",
+      "redaction", "external contract version"
+    ],
+    "minimumChecks": ["contract fixtures", "failure-path", "tamper", "privacy-minimization tests"],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": null,
+    "mandatoryStopConditions": ["synthetic/local receipt represented as authoritative", "Keon ownership breach"],
+    "requiredClosureEvidence": ["pinned contract", "consumer compatibility", "failure evidence", "dual reviews"]
+  },
+  "provider-pilot": {
+    "requiredSpecAdditions": [
+      "pilot population", "role/consent", "permitted workflow",
+      "retention", "SLA/owner", "prohibited clinical behavior"
+    ],
+    "minimumChecks": ["role", "consent", "rate-limit", "retention/deletion", "audit tests"],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": "explicit-human-owner-acknowledgment",
+    "mandatoryStopConditions": ["clinical-workflow expansion", "missing retention/SLA owner", "consent failure"],
+    "requiredClosureEvidence": ["pilot contract", "operator ownership", "privacy evidence", "dual reviews"]
+  },
+  "legal-policy": {
+    "requiredSpecAdditions": [
+      "policy owner", "jurisdiction/scope", "version/effective date",
+      "enforcement surfaces", "approval status"
+    ],
+    "minimumChecks": ["copy-to-enforcement consistency", "version/consent linkage tests"],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": "recorded-human-approval",
+    "mandatoryStopConditions": ["unapproved policy presented as effective", "policy/enforcement mismatch"],
+    "requiredClosureEvidence": ["approved version", "owner record", "effective-date mapping", "dual reviews"]
+  },
+  "knowledge-promotion": {
+    "requiredSpecAdditions": [
+      "source/license/provenance", "evidence grade", "review lifecycle",
+      "promotion authority", "rollback"
+    ],
+    "minimumChecks": ["provenance/license/freshness", "fail-closed promotion", "canonical-write fencing tests"],
+    "reviewers": 2,
+    "dispatchEligibility": "eligible-when-named",
+    "mergeEligibility": "eligible-when-named",
+    "additionalMergeGate": null,
+    "mandatoryStopConditions": ["missing source/license/review state", "bypassed promotion", "unreviewed public claim"],
+    "requiredClosureEvidence": ["source manifest", "promotion decision", "receipts", "rollback evidence", "dual reviews"]
+  }
+}
