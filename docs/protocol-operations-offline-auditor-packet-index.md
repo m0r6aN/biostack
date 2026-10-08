@@ -36,15 +36,15 @@ Inspect these artifacts in order:
 ## What this proves
 
 - The auditor packet has a deterministic inspection order.
-- The verifier kit remains air-gapped for its verification path.
+- The verifier kit remains air-gapped for its Keon-compatible verification path.
 - The CLI verifies supplied local bundle and receipt artifacts without creating
   new export data.
 - The receipt verifier can inspect a receipt without requiring the original
-  bundle file.
+  bundle file — a Keon-compatible offline inspection pattern.
 - The clean-checkout runbook and smoke scripts point reviewers at reproducible
   local commands.
 - The stable result-code catalog gives automation a durable code surface.
-- The capstone guard keeps the integrated offline verification posture aligned.
+- The capstone guard keeps the integrated Keon-compatible offline verification posture aligned.
 
 ## What this does not prove
 
