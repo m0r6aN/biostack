@@ -221,9 +221,20 @@ ratification must remain Class A sourced observation per `docs/guidance/biostack
 
 ## Automated verification
 
+**Command-drift correction (H1-POSITIVE-CONTROL, 2026-10-08):** `EvidenceContextComparison*` tests
+live in `BioStack.Domain.Tests`, not `BioStack.Application.Tests`. The combined command below
+matches reality: 27/27 pass for the `GuidanceContentContract`/`DoctrineSanitizer` filter segment
+against `BioStack.Application.Tests.csproj`, plus 4/4 pass for `EvidenceContextComparison` against
+`BioStack.Domain.Tests.csproj` (31/31 combined, 0 failures, re-confirmed live by this parcel).
+Previously this section named a single command whose `EvidenceContextComparison` filter segment
+silently matched zero tests against `BioStack.Application.Tests.csproj` (no test-runner failure,
+no visible signal) — see `docs/INITIATIVES/biostack-local-readiness/evidence/BIO-LOCAL-005-guidance-enforcement-proof.md`
+AC1 for the original finding.
+
 ```bash
 cd backend
-dotnet test tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --filter "FullyQualifiedName~GuidanceContentContract|FullyQualifiedName~DoctrineSanitizer|FullyQualifiedName~EvidenceContextComparison"
+dotnet test tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --filter "FullyQualifiedName~GuidanceContentContract|FullyQualifiedName~DoctrineSanitizer"
+dotnet test tests/BioStack.Domain.Tests/BioStack.Domain.Tests.csproj --filter "FullyQualifiedName~EvidenceContextComparison"
 ```
 
 ## Version rule
