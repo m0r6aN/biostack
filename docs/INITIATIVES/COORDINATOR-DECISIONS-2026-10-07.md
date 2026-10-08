@@ -121,3 +121,30 @@ returns to the owner for a fresh gate with its design presented (it decides prod
 allowed-outputs). P0-C/P0-D likewise await their own gates. Class controls for P0-A in full:
 health-boundary + privacy + legal-policy + knowledge-promotion sections, dual review, and the
 human-approval conditions those classes trigger at merge.
+
+## D-H — Owner directive: Gate 3 posture + P0-B design gate opened (owner, 2026-10-08)
+
+Owner directive, verbatim (via `/foreman-line:goal resume`, 2026-10-08):
+
+> resume go-live initiative to help 1,000,000 people. gate 3 is cleared and open. On to P0-B
+> design gate — the one where we decide what the product may say. 🚀
+
+Recorded as two distinct grants:
+
+1. **Gate 3 posture — "cleared and open".** Coordinator scope reading (owner may correct):
+   Gate 3 merges with fully green chains (every deterministic check, required review, rework
+   check, acceptance-evidence item, and coordinator reproduction complete — D9's voiding
+   conditions unchanged) may proceed without per-merge stops. **Still owner-only regardless of
+   this grant:** every human-approval condition the D14 fold triggers at merge (health-boundary,
+   privacy, legal-policy, knowledge-promotion — D9's written-delegation rule); any production
+   deployment or production-readiness verdict change (D17); billing/Stripe, legal-policy
+   effectiveness, provider-pilot expansion, data deletion. At recording time zero PRs were open
+   (nothing was pending at Gate 3).
+2. **P0-B design gate OPEN.** The owner invokes the fresh gate D-G reserves to the owner — the
+   gate "where we decide what the product may say." The design is presented in
+   `docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md` (decision set D-B1..D-B6,
+   including the central canon conflict between guidance-content-contract v1.0.0 Class D
+   (prohibited) and charter D13 (allowed) and the recommended staged split). **P0-B dispatch
+   remains unauthorized** until (a) the owner's D-B1..D-B6 rulings are recorded and (b) P0-A
+   freezes canon precedence per the charter dependency spine. Gate rulings, once given, are
+   product doctrine of record and are encoded verbatim into the P0-B parcel spec.
