@@ -1,7 +1,9 @@
 using System.Text;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
 using BioStack.Api.Auth;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
@@ -28,6 +30,24 @@ using Keon.Kompress;
 using Fido2NetLib;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// M1 hardening (BIO-LOCAL-012): .env.example historically documented values with trailing
+// inline comments (e.g. "Smtp__Host=   # leave blank in dev"). Some env-file loaders do not
+// strip inline comments, so stray whitespace can survive into the bound value. Trim every
+// configuration value at this single seam, before any feature code reads builder.Configuration,
+// so a value that is only whitespace can never be mistaken for a non-blank setting (Smtp__Host
+// and equivalent inline-comment-prone keys included).
+foreach (var pair in builder.Configuration.AsEnumerable().ToList())
+{
+    if (pair.Value is not null)
+    {
+        var trimmed = pair.Value.Trim();
+        if (trimmed != pair.Value)
+        {
+            builder.Configuration[pair.Key] = trimmed;
+        }
+    }
+}
 
 // Container validation in EVERY environment (the default enables this only in Development).
 // A missing or miswired registration must fail at startup, not as a 500 on the first request
