@@ -1,0 +1,29 @@
+{
+  "input": {
+    "deliveryClasses": ["migration"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {
+      "userDataOrProductionSchemaAffected": false
+    }
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "routed",
+    "requiredSpecAdditions": [
+      "compatibility window", "forward/backward behavior", "rollback",
+      "data-loss analysis", "environment plan"
+    ],
+    "requiredChecks": ["migration", "downgrade/rollback or restore", "compatibility tests"],
+    "mandatoryStopConditions": ["destructive or irreversible path", "unknown production state"],
+    "requiredClosureEvidence": [
+      "schema diff", "compatibility matrix",
+      "backup/restore or rollback evidence", "environment receipt"
+    ],
+    "mergeGates": ["explicit-base-and-environment-scope"],
+    "reviewerCount": 1,
+    "standingAuthorizationEligible": true,
+    "recordedGuidanceClasses": [],
+    "recordedSubstanceFunctionRisk": []
+  }
+}

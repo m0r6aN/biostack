@@ -1,0 +1,39 @@
+{
+  "input": {
+    "deliveryClasses": ["health-boundary", "privacy"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {}
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "routed",
+    "requiredSpecAdditions": [
+      "guidance class", "intended use", "claims", "evidence threshold",
+      "numeric provenance", "missingness", "red flags", "escalation",
+      "function-review status",
+      "data inventory", "purpose", "consent", "minimization",
+      "retention", "export", "deletion", "access control"
+    ],
+    "requiredChecks": [
+      "positive, degraded, refused, escalated fixtures",
+      "calculation boundary tests where numeric",
+      "authorization", "consent", "retention/export/deletion", "log-redaction tests"
+    ],
+    "mandatoryStopConditions": [
+      "unsupported certainty", "prescribed-treatment direction",
+      "red-flag bypass", "provenance loss",
+      "new sensitive field without approved lifecycle", "leakage", "consent bypass"
+    ],
+    "requiredClosureEvidence": [
+      "scientific-evidence references", "rationale fixture", "safety results",
+      "dual reviews", "human review record when triggered",
+      "data map", "test results", "migration/rollback proof"
+    ],
+    "mergeGates": ["green-dual-review-required"],
+    "reviewerCount": 2,
+    "standingAuthorizationEligible": true,
+    "recordedGuidanceClasses": [],
+    "recordedSubstanceFunctionRisk": []
+  }
+}

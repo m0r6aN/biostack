@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "biostack.p2-routing-output.v1",
+  "title": "BioStack P2 routing output",
+  "description": "The output contract produced by folding a declared classification-axis label set through fold-engine.md against delivery-class-controls.json. This contract carries governance-mechanics routing data only; it makes no product allowed-output decision.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "biostack.p2-routing-output.v1"
+    },
+    "result": {
+      "enum": ["routed", "stopped"]
+    },
+    "requiredSpecAdditions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "requiredChecks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mandatoryStopConditions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "requiredClosureEvidence": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mergeGates": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reviewerCount": {
+      "type": "integer"
+    },
+    "standingAuthorizationEligible": {
+      "type": "boolean"
+    },
+    "recordedGuidanceClasses": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recordedSubstanceFunctionRisk": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stopReason": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "enum": [
+            "unknown-label",
+            "empty-required-axis",
+            "incompatible-controls",
+            "missing-required-field"
+          ]
+        }
+      },
+      "required": ["reason"],
+      "additionalProperties": true
+    }
+  },
+  "required": ["schema", "result"],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "result": { "const": "routed" } }
+      },
+      "then": {
+        "required": [
+          "requiredSpecAdditions",
+          "requiredChecks",
+          "mandatoryStopConditions",
+          "requiredClosureEvidence",
+          "mergeGates",
+          "reviewerCount",
+          "standingAuthorizationEligible",
+          "recordedGuidanceClasses",
+          "recordedSubstanceFunctionRisk"
+        ],
+        "not": { "required": ["stopReason"] }
+      }
+    },
+    {
+      "if": {
+        "properties": { "result": { "const": "stopped" } }
+      },
+      "then": {
+        "required": ["stopReason"],
+        "not": {
+          "anyOf": [
+            { "required": ["requiredSpecAdditions"] },
+            { "required": ["requiredChecks"] },
+            { "required": ["mandatoryStopConditions"] },
+            { "required": ["requiredClosureEvidence"] },
+            { "required": ["mergeGates"] },
+            { "required": ["reviewerCount"] },
+            { "required": ["standingAuthorizationEligible"] },
+            { "required": ["recordedGuidanceClasses"] },
+            { "required": ["recordedSubstanceFunctionRisk"] }
+          ]
+        }
+      }
+    }
+  ]
+}

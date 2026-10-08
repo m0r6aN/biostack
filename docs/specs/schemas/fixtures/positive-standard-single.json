@@ -1,0 +1,21 @@
+{
+  "input": {
+    "deliveryClasses": ["standard"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {}
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "routed",
+    "requiredSpecAdditions": ["objective", "surfaces", "contracts", "acceptance criteria", "tests", "rollback"],
+    "requiredChecks": ["focused tests", "lint/build as affected"],
+    "mandatoryStopConditions": ["scope/contract drift", "red check"],
+    "requiredClosureEvidence": ["checks", "review", "acceptance map", "diff"],
+    "mergeGates": [],
+    "reviewerCount": 1,
+    "standingAuthorizationEligible": true,
+    "recordedGuidanceClasses": [],
+    "recordedSubstanceFunctionRisk": []
+  }
+}

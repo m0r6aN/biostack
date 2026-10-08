@@ -1,0 +1,17 @@
+{
+  "input": {
+    "deliveryClasses": ["elevated"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {}
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "stopped",
+    "stopReason": {
+      "reason": "unknown-label",
+      "axis": "deliveryClass",
+      "label": "elevated"
+    }
+  }
+}

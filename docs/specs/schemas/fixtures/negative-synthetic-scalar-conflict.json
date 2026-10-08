@@ -1,0 +1,22 @@
+{
+  "input": {
+    "fixtureOnly": true,
+    "deliveryClasses": ["standard", "health-boundary"],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {},
+    "testOnlyScalarValues": {
+      "standard": "a",
+      "health-boundary": "b"
+    }
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "stopped",
+    "stopReason": {
+      "reason": "incompatible-controls",
+      "field": "testOnlyScalarField",
+      "conflictingValues": ["a", "b"]
+    }
+  }
+}

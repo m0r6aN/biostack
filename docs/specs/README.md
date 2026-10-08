@@ -27,3 +27,7 @@ Active specs must contain no unresolved placeholders, ambient branch or worktree
 P1 predates this registry. Its canonical approved spec remains at [the governed-delivery P1 parcel](../INITIATIVES/biostack-governed-delivery/parcels/P1.md) and is not copied or moved into `active/`. Its one-time approved active state requires the recorded spec hash, two independent PASS reviews of that hash, closed coordinator triage, and the [P1 Gate 2 record](../INITIATIVES/biostack-governed-delivery/dispatch/P1-GATE2.md). The active/done placement rule begins with P2.
 
 The initial P1 registry row remains `active` and `not-yet-closed` through merge. After merge, the coordinator alone creates the P1 closure record and changes only that row to `done` with its closure link.
+
+## Classification-axis schema and routing (P2)
+
+P2 defines the deterministic, machine-checkable risk-taxonomy and routing substrate for the three D14 classification axes: [`classification-axes.schema.json`](schemas/classification-axes.schema.json) (the closed label vocabularies, multi-label permission, and applicability metadata), [`delivery-class-controls.json`](schemas/delivery-class-controls.json) (the charter's eight-row governance overlay table as computable data), [`fold-engine.md`](schemas/fold-engine.md) (the D14 fieldwise-fold algorithm), and [`routing-output.schema.json`](schemas/routing-output.schema.json) (the fold's output contract). P2 defines composition mechanics for all three D14 axes without binding substance/function labels to product allowed outputs.

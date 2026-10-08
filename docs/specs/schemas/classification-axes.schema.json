@@ -1,0 +1,155 @@
+{
+  "schema": "biostack.risk-taxonomy.v1",
+  "axes": {
+    "deliveryClass": {
+      "multiLabel": true,
+      "labels": [
+        "standard", "health-boundary", "privacy", "migration",
+        "trust-path", "provider-pilot", "legal-policy", "knowledge-promotion"
+      ],
+      "controlSource": "delivery-class-controls.json",
+      "definitionOwner": "charter-governance-overlay-table",
+      "controlBindingStatus": "bound-at-this-parcel",
+      "applicabilityField": {
+        "standard": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "health-boundary": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "privacy": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "migration": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "trust-path": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "provider-pilot": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "legal-policy": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "knowledge-promotion": {
+          "fieldName": "deliveryClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        }
+      }
+    },
+    "productGuidanceClass": {
+      "multiLabel": true,
+      "labels": [
+        "deterministic-calculation", "curated-evidence-guidance",
+        "personalized-protocol-recommendation", "safety-escalation"
+      ],
+      "controlSource": "none",
+      "definitionOwner": "charter-product-guidance-classes",
+      "controlBindingStatus": "deferred-to-P3-B",
+      "applicabilityField": {
+        "deterministic-calculation": {
+          "fieldName": "guidanceClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "curated-evidence-guidance": {
+          "fieldName": "guidanceClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "personalized-protocol-recommendation": {
+          "fieldName": "guidanceClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        },
+        "safety-escalation": {
+          "fieldName": "guidanceClasses",
+          "determinationAuthority": "spec-author-at-shaping-time",
+          "status": "defined"
+        }
+      }
+    },
+    "substanceFunctionRisk": {
+      "multiLabel": true,
+      "labels": [
+        "ordinary", "prescription-treatment-involved", "investigational-or-unapproved",
+        "gray-market-or-identity-uncertain", "injection-or-sterile-preparation",
+        "interaction-or-contraindication-signal", "minor-or-age-uncertain",
+        "pregnancy-or-lactation", "acute-red-flag-or-emergency",
+        "controlled-or-illegal-sourcing"
+      ],
+      "controlSource": "none",
+      "definitionOwner": "charter-substance-function-vocabulary",
+      "controlBindingStatus": "deferred-to-P0-B",
+      "allowedOutputBindingStatus": "out-of-scope-for-P2",
+      "applicabilityField": {
+        "ordinary": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "prescription-treatment-involved": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "investigational-or-unapproved": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "gray-market-or-identity-uncertain": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "injection-or-sterile-preparation": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "interaction-or-contraindication-signal": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "minor-or-age-uncertain": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "pregnancy-or-lactation": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "acute-red-flag-or-emergency": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        },
+        "controlled-or-illegal-sourcing": {
+          "fieldName": "substanceFunctionRisk",
+          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
+          "status": "deferred"
+        }
+      }
+    }
+  }
+}

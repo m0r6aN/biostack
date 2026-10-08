@@ -1,0 +1,16 @@
+{
+  "input": {
+    "deliveryClasses": [],
+    "guidanceClasses": [],
+    "substanceFunctionRisk": [],
+    "conditionalInputs": {}
+  },
+  "expected": {
+    "schema": "biostack.p2-routing-output.v1",
+    "result": "stopped",
+    "stopReason": {
+      "reason": "empty-required-axis",
+      "axis": "deliveryClass"
+    }
+  }
+}
