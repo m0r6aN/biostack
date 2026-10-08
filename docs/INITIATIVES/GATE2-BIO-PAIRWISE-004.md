@@ -28,3 +28,13 @@ established (product doctrine). Required Tests per the spec (provenance-present 
 provenance-absent→quarantine fixtures minimum). If the spec's surfaces prove insufficient (the
 PW-003 lesson), STOP-AND-REPORT rather than expanding scope. Delivery: commit → push → PR vs
 `main` (Gate 3 owner's) → worktree removed.
+
+## Amendment PW-004-A1 (coordinator, 2026-10-08, after builder stop-and-report)
+
+The spec's frontmatter `surfaces` already lists `backend/src/BioStack.Infrastructure/Persistence/Migrations/`
+but its Allowed Files section omits it — an internal transcription contradiction of the same class
+as PW-003. The spec review APPROVED the migration-bearing surface. Ruling: the frontmatter governs;
+the Migrations directory is ADDED to builder surfaces, bounded to hint-provenance persistence
+fields only. Migration controls apply (charter `migration` class): forward/backward behavior +
+rollback (= revert) documented in the PR; dual review must explicitly cover the migration.
+D-B's no-migration mandate binds BIO-PAIRWISE-003 only and is not implicated here.
