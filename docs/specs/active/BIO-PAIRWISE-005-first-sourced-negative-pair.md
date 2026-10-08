@@ -13,7 +13,6 @@ delivery_classes: [knowledge-promotion]
 guidance_classes: [not-applicable]
 substance_function_risk: [not-applicable]
 function_review_status: not-applicable
-reviewers_required: 2
 surfaces:
   - docs/specs/active/BIO-PAIRWISE-005-first-sourced-negative-pair.md
   - research/input/relationships/pairwise-p4-first-negative.relationship.json
@@ -100,7 +99,10 @@ basis are stated in `p4-authoring-and-review.md`.
 through the normal `research/review-decisions/` pipeline. Reviewer 1 and
 reviewer 2 are different people, neither is the record's author, and both
 decisions are `accepted-as-evidence-backed` before the record is treated as
-promotion-eligible.
+promotion-eligible. Reviewer identity is attested in the closure evidence
+through recorded `research/review-decisions/*.json` entries whose `reviewerId`
+fields are distinct from each other and from the record's author identity; this
+identity cross-check is deterministic (T9), not merely procedural.
 
 **Promotion authority:** Promotion to the live knowledge projection and the
 live Refresh remain owner-only. This parcel produces a dry-run plan only
@@ -181,6 +183,17 @@ knowledge projection itself.
 8. **T8 — Dual review recorded.** Two review-decision entries exist in
    `research/review-decisions/`, authored by two different people, neither of
    whom is the record's author, both with `decision: accepted-as-evidence-backed`.
+9. **T9 — Review-status cross-check (anti-self-attestation).** The record's
+   `relationshipReviewStatus: accepted-as-evidence-backed` field is validated
+   against the actual `research/review-decisions/` entries: at least two
+   review-decision files exist for this relationship, each with
+   `decision: accepted-as-evidence-backed`, each authored by a distinct
+   `reviewerId`, and neither `reviewerId` equals the record's declared author
+   identity. This deterministic cross-check prevents self-attested review
+   status. Fixture: the closure evidence must demonstrate this cross-validation
+   was performed (e.g., a script or manual check recorded in
+   `p4-authoring-and-review.md` showing author identity, both reviewer
+   identities, and the count/decision values from the review-decision files).
 
 ## Out of Scope
 
@@ -225,3 +238,7 @@ Reviewer focus questions:
 - Do both independent reviews exist, come from two different people other
   than the author, and both land on `accepted-as-evidence-backed` before the
   record is treated as promotion-eligible?
+- Does the T9 cross-check demonstrate that the record's
+  `relationshipReviewStatus` field matches the actual count and decision values
+  in `research/review-decisions/`, with verifiable distinct reviewer identities,
+  or could the status have been self-attested by the author?
