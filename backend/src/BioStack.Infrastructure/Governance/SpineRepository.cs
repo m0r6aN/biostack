@@ -93,6 +93,15 @@ public sealed class SpineRepository(
             try
             {
                 await db.SaveChangesAsync(ct);
+
+                // R1: advance the local truncation watermark (no-op unless configured). Must
+                // happen on the write path, not only during verification, so a later delete of
+                // this row has something to be caught against.
+                SpineHeadWatermarkStore.Advance(
+                    checkpointOptions.Value.WatermarkFilePath,
+                    withHash.SequenceNumber,
+                    withHash.EntryHash);
+
                 await MaybeAutoCheckpointAsync(withHash.SequenceNumber, ct);
                 return withHash;
             }
@@ -178,6 +187,22 @@ public sealed class SpineRepository(
             expectedPrevious = entry.EntryHash;
             expectedSequence++;
             verified++;
+        }
+
+        // R1 remediation: a deleted tail leaves no gap among the surviving rows above -- the
+        // loop above cannot see it. Compare against the local watermark (disabled unless
+        // SpineCheckpoint:WatermarkFilePath is configured; see SpineHeadWatermarkStore for the
+        // precise local-vs-external distinction this is and is not proving).
+        var observedHeadSequence = expectedSequence - 1; // last verified sequence, -1 if empty
+        var watermark = SpineHeadWatermarkStore.TryRead(checkpointOptions.Value.WatermarkFilePath);
+        if (watermark is { } mark && mark.SequenceNumber > observedHeadSequence)
+        {
+            return SpineChainVerificationResult.Broken(
+                verified,
+                entries.Count > 0 ? entries[^1].ReceiptUri : null,
+                $"Truncation detected: the local watermark previously observed chain sequence "
+                + $"{mark.SequenceNumber}, but the chain now ends at sequence {observedHeadSequence}. "
+                + "Entries were deleted after they were written (rollback/truncation).");
         }
 
         return SpineChainVerificationResult.Intact(verified);

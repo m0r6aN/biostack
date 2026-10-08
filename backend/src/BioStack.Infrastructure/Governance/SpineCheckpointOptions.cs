@@ -30,4 +30,17 @@ public sealed class SpineCheckpointOptions
     /// head has advanced since the last checkpoint.
     /// </summary>
     public int CadenceMinutes { get; set; } = 60;
+
+    /// <summary>
+    /// R1 remediation: optional path to a local truncation/rollback watermark file (see
+    /// <see cref="SpineHeadWatermarkStore"/>). When set, <c>VerifyChainAsync</c> fails closed if
+    /// the chain's current head is behind the highest head ever observed at this path — catching
+    /// a deleted tail, which leaves no internal gap for the hash-chain walk alone to find.
+    ///
+    /// This is a LOCAL, same-machine anchor, not an external/off-box one: a holder who can edit
+    /// the SQLite file can also edit or delete this one. See <see cref="SpineHeadWatermarkStore"/>
+    /// for exactly what is and is not proven. Empty/unset (the default) = disabled, no behavior
+    /// change to existing deployments or tests.
+    /// </summary>
+    public string? WatermarkFilePath { get; set; }
 }

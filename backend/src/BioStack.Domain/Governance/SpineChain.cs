@@ -35,6 +35,16 @@ public sealed record SpineChainVerificationResult(
 /// can still rewrite the whole chain consistently. Preventing that requires anchoring the chain
 /// head somewhere the holder does not control — signed checkpoints (F3+) with a key held outside
 /// the database file, and ideally server-side export of those checkpoints.
+///
+/// R1 remediation (truncation/rollback, BIO-LOCAL-013): in-place edits and gaps in the middle of
+/// the chain are caught by <c>SpineRepository.VerifyChainAsync</c> re-walking and rehashing every
+/// surviving row. A DELETE of the chain's TAIL is a different case — the surviving rows still
+/// link correctly, so that walk alone cannot distinguish "never advanced past entry N" from
+/// "advanced past entry N, then everything after N was deleted".
+/// <see cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore"/> closes that specific
+/// gap with a LOCAL (not external/off-box) anchor file, opt-in via
+/// <see cref="BioStack.Infrastructure.Governance.SpineCheckpointOptions.WatermarkFilePath"/> —
+/// see that type's docstring for precisely what is and is not proven.
 /// </summary>
 public static class SpineChain
 {
@@ -157,7 +167,16 @@ public static class SpineChain
     }
 }
 
-/// <summary>Outcome of verifying the latest chain checkpoint against the live ledger head.</summary>
+/// <summary>
+/// Outcome of verifying the latest chain checkpoint against the live ledger head.
+/// <see cref="ChainIntact"/> reflects <c>SpineRepository.VerifyChainAsync</c>, which (as of the
+/// R1 remediation) also fails closed on tail truncation when a local watermark path is
+/// configured — see <see cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore"/>.
+/// Without that configuration, a rolled-back-to-an-earlier-genuine-checkpoint ledger can still
+/// report <see cref="IsFullyValid"/> = true; this record does not by itself prove the ledger was
+/// never truncated, only that what remains is internally consistent and (if externally anchored)
+/// correctly signed.
+/// </summary>
 public sealed record SpineCheckpointVerificationResult(
     bool ChainIntact,
     bool CheckpointPresent,
