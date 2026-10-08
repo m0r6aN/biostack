@@ -191,12 +191,16 @@ without editing it.
   identically to a literal `TBD`. This closes the loophole of copying a template into
   `docs/specs/active/` without filling it in. **Before either `noPlaceholderPatterns` regex is
   applied to any file's text, the verifier must run the pinned `placeholderNormalizationSteps`
-  pipeline (document contract 1: strip Unicode `Cf`/`Cc` format/control characters, NFKC-normalize,
-  then apply the Unicode confusables-skeleton transform) in that exact order.** This is not
-  optional or informative-only text: check 12 implements it literally, and it exists specifically
-  to defeat homoglyph substitution (e.g. Cyrillic lookalikes of `TBD`), zero-width-character
-  insertion, soft hyphens, fullwidth forms, and mathematical-alphanumeric disguises of the banned
-  literals — a disguised `TBD` is exactly as invalid as a literal one.
+  pipeline (document contract 1: strip HTML comments, strip HTML/XML tags, strip inline-code
+  backtick delimiters, strip Markdown emphasis delimiters, strip Markdown escape backslashes, strip
+  Unicode `Cf`/`Cc` format/control characters, NFKC-normalize, then apply the Unicode
+  confusables-skeleton transform) in that exact order.** This is not optional or informative-only
+  text: check 12 implements it literally, and it exists specifically to defeat homoglyph
+  substitution (e.g. Cyrillic lookalikes of `TBD`), zero-width-character insertion, soft hyphens,
+  fullwidth forms, and mathematical-alphanumeric disguises of the banned literals, **and** to
+  defeat markdown/HTML-syntax splitting of the banned literal (e.g. `T<!--x-->BD`, `` T`BD ``,
+  `T**BD**`, `T<span></span>BD`, `T\BD`) by collapsing that markup away before the literal is
+  matched — a disguised `TBD`, however disguised, is exactly as invalid as a literal one.
 - **Structural validation only (scope disclaimer).** A `"valid"`/PASS result from
   `parcel-spec.schema.json` or `verify-p3a.ps1` asserts frontmatter-key presence, closed-vocabulary
   membership, fold-live required-section resolution (including the distinct-heading and
@@ -256,6 +260,11 @@ A single JSON object with exactly these top-level keys:
   "sanctionedTemplateFillInMarker": "\\[REPLACE:[^\\]]+\\]",
   "sanctionedTemplateFillInMarkerScope": "docs/specs/templates/** only",
   "placeholderNormalizationSteps": [
+    "strip-html-comments",
+    "strip-html-tags",
+    "strip-inline-code-delimiters",
+    "strip-emphasis-markers",
+    "strip-markdown-escape-backslashes",
     "strip-unicode-category-Cf-and-Cc",
     "nfkc-normalize",
     "unicode-confusables-skeleton"
@@ -265,20 +274,47 @@ A single JSON object with exactly these top-level keys:
 
 `placeholderNormalizationSteps` is a pinned, ordered, mandatory preprocessing pipeline that the
 verifier must apply to a file's text **before** either `noPlaceholderPatterns` regex is evaluated
-(document contract 1, check 12): (1) `strip-unicode-category-Cf-and-Cc` removes every Unicode
-format character (category `Cf` — including zero-width space U+200B, zero-width non-joiner
-U+200C, zero-width joiner U+200D, soft hyphen U+00AD, and all other `Cf`/`Cc` control/format
-codepoints) with no substitution; (2) `nfkc-normalize` applies Unicode Normalization Form KC to
-the result, collapsing fullwidth forms (e.g. `ＴＢＤ`) and mathematical-alphanumeric
-lookalike blocks to their canonical ASCII equivalents; (3) `unicode-confusables-skeleton` applies
-the Unicode Technical Standard #39 confusables-skeleton transform (a deterministic, offline,
-bundled-data-table lookup — no network access) to the NFKC-normalized text, mapping
-visually-confusable codepoints from other scripts (for example Cyrillic `Т`/`В`
-look-alikes of Latin `T`/`B`) onto their skeletal Latin equivalents. Only the output of all three
-steps, applied in this exact order, is passed to `noPlaceholderPatterns`. This closes the
-homoglyph/zero-width/fullwidth disguise class (document contract 1, check 12) — literal `TBD`
-is unaffected by this pipeline (it already matches both patterns without normalization) and the
-`negative-tbd-violation.json` fixture's expected result is unchanged by this addition.
+(document contract 1, check 12), in this exact order:
+
+1. `strip-html-comments` removes every `<!--…-->` span (regex `<!--[\s\S]*?-->`, non-greedy,
+   dot-matches-newline) with no substitution, so a literal split across an HTML comment (e.g.
+   `T<!-- spacer -->BD`) collapses back to contiguous text.
+2. `strip-html-tags` removes every HTML/XML-style tag, opening or closing, with or without
+   attributes (regex `</?[a-zA-Z][a-zA-Z0-9]*(?:\s[^>]*)?>`), leaving any text between tags
+   intact, so a literal split by an empty element (e.g. `T<span></span>BD`) collapses to
+   contiguous text.
+3. `strip-inline-code-delimiters` removes every run of one or more consecutive backtick
+   characters (regex `` `+ ``) used as Markdown inline-code-span delimiters, leaving any text
+   between them intact, so a literal split by an empty or populated code span (e.g. `` T``BD ``
+   or `` T`B`D ``) collapses to contiguous text.
+4. `strip-emphasis-markers` removes every `*` and `_` character used as Markdown emphasis
+   delimiters, so a literal split by bold/italic markup (e.g. `T**BD**`, `T_BD_`) collapses to
+   contiguous text.
+5. `strip-markdown-escape-backslashes` removes every literal backslash (`\`) character — the
+   Markdown escape convention is a backslash immediately preceding a character to force it to be
+   read literally, and stripping the backslash collapses the escape to the escaped character
+   — so a literal split by a stray escape backslash (e.g. `T\BD`) collapses to contiguous
+   text.
+6. `strip-unicode-category-Cf-and-Cc` removes every Unicode format character (category `Cf` —
+   including zero-width space U+200B, zero-width non-joiner U+200C, zero-width joiner U+200D,
+   soft hyphen U+00AD, and all other `Cf`/`Cc` control/format codepoints) with no substitution.
+7. `nfkc-normalize` applies Unicode Normalization Form KC to the result, collapsing fullwidth
+   forms (e.g. `ＴＢＤ`) and mathematical-alphanumeric lookalike blocks to their
+   canonical ASCII equivalents.
+8. `unicode-confusables-skeleton` applies the Unicode Technical Standard #39 confusables-skeleton
+   transform (a deterministic, offline, bundled-data-table lookup — no network access) to the
+   NFKC-normalized text, mapping visually-confusable codepoints from other scripts (for example
+   Cyrillic `Т`/`В` look-alikes of Latin `T`/`B`) onto their skeletal Latin equivalents.
+
+Steps 1–5 are pure-ASCII, deterministic, regex-based markup-stripping (no Markdown/HTML
+rendering engine is invoked) and run first so that any markup-mediated splitting of the banned
+literal (HTML comments, HTML/XML tags, inline-code backtick spans, emphasis `*`/`_` markers, and
+escape backslashes) collapses to the plain literal before the Unicode-disguise steps 6–8 run.
+Only the output of all eight steps, applied in this exact order, is passed to
+`noPlaceholderPatterns`. This closes both the homoglyph/zero-width/fullwidth disguise class and
+the markdown/HTML-syntax-splitting disguise class (document contract 1, check 12) — literal
+`TBD` is unaffected by this pipeline (it already matches both patterns without normalization) and
+the `negative-tbd-violation.json` fixture's expected result is unchanged by this addition.
 
 `specShapes.*.pathPattern` deterministically selects which shape rule applies to a given file path
 (no content sniffing): a file under `docs/INITIATIVES/*/parcels/*.md` is `coordinator-parcel`
@@ -556,8 +592,10 @@ ad hoc `TBD` cells — see "Carry-over"); `Review requirement` = `2 independent 
   exception:** no file under this parcel's surfaces outside `docs/specs/templates/**` contains the
   sanctioned marker or any of the banned placeholder patterns **after** the pinned
   `placeholderNormalizationSteps` pipeline is applied (catching homoglyph, zero-width, soft-hyphen,
-  fullwidth, and mathematical-alphanumeric disguises, not only the literal ASCII form); files under
-  `docs/specs/templates/**` contain only the sanctioned marker as their incomplete-value syntax.
+  fullwidth, and mathematical-alphanumeric disguises, and markdown/HTML-syntax-splitting disguises
+  via HTML comments, HTML/XML tags, inline-code backtick spans, emphasis markers, and escape
+  backslashes — not only the literal ASCII form); files under `docs/specs/templates/**` contain
+  only the sanctioned marker as their incomplete-value syntax.
 - **AC-P3A-07 — Real-spec compatibility, not reconciliation:** `REAL-SPEC-COMPATIBILITY-SET.md`
   has exactly one row per the 26-file P2 census set, every row's `parcel-spec.schema.json result`
   and `Reason` are independently and actually derived (not copied from P2), and no inspected spec
@@ -669,15 +707,19 @@ dependencies, and must exit nonzero on any failure:
     match document contract 9 exactly.
 12. For every file changed or added by this parcel, first apply the pinned
     `placeholderNormalizationSteps` pipeline (document contract 1) to its text, in order: (a) strip
-    all Unicode category `Cf` and `Cc` characters (zero-width space/non-joiner/joiner, soft hyphen,
-    and all other format/control codepoints); (b) NFKC-normalize the result (collapsing fullwidth
-    and mathematical-alphanumeric forms to ASCII); (c) apply the Unicode confusables-skeleton
-    transform (UTS #39) to the NFKC-normalized text. Only then search the normalized text for
-    `(?im)(^\s*(TBD|TODO|FIXME)\s*[:|\-])|(\{\{[^}]+\}\})` and, independently,
-    `(?i)\b(TBD|TODO|FIXME)\b`; require zero matches in every file — this is the check that
-    makes homoglyph (e.g. Cyrillic lookalikes), zero-width-character, soft-hyphen, fullwidth, and
-    mathematical-alphanumeric disguises of `TBD`/`TODO`/`FIXME` fail identically to the literal
-    form; separately search every file **not** under `docs/specs/templates/` for
+    HTML comments (`<!--...-->`); (b) strip HTML/XML tags; (c) strip inline-code backtick
+    delimiters; (d) strip Markdown emphasis delimiters (`*`, `_`); (e) strip Markdown escape
+    backslashes (`\`); (f) strip all Unicode category `Cf` and `Cc` characters (zero-width
+    space/non-joiner/joiner, soft hyphen, and all other format/control codepoints); (g)
+    NFKC-normalize the result (collapsing fullwidth and mathematical-alphanumeric forms to ASCII);
+    (h) apply the Unicode confusables-skeleton transform (UTS #39) to the result. Only then search
+    the normalized text for `(?im)(^\s*(TBD|TODO|FIXME)\s*[:|\-])|(\{\{[^}]+\}\})` and,
+    independently, `(?i)\b(TBD|TODO|FIXME)\b`; require zero matches in every file — this is
+    the check that makes homoglyph (e.g. Cyrillic lookalikes), zero-width-character, soft-hyphen,
+    fullwidth, and mathematical-alphanumeric disguises, **and** markdown/HTML-syntax-splitting
+    disguises (HTML comments, tags, inline-code spans, emphasis markers, escape backslashes), of
+    `TBD`/`TODO`/`FIXME` fail identically to the literal form; separately search every file **not**
+    under `docs/specs/templates/` for
     `\[REPLACE:[^\]]+\]` (on the normalized text); require zero matches there (AC-P3A-06); require
     every file under `docs/specs/templates/` to contain at least one `[REPLACE: ...]` occurrence (a
     template with none would be suspiciously over-filled, not genuinely a scaffold).
