@@ -42,13 +42,20 @@ P2 both carried).
 ## Objective
 
 Define BioStack's **generic, extensible, machine-checkable parcel-spec schema**: a contract every
-future parcel spec and ticket-level spec validates against, with required-section obligations
-**composed live from P2's `delivery-class-controls.json`** (never hardcoded or copy-pasted into
-P3-A's own files), an explicit, enforceable no-`TBD` rule, a conforming template for each of the
-charter's eight delivery classes, and three named, closed-vocabulary extension points so that a
-future delivery class, a future domain-overlay binding (P3-B, P0-B), or a future per-class
-template can extend this substrate through a bounded, additive mechanic without requiring P3-A's
-own files to be redesigned.
+future parcel spec and ticket-level spec is *defined* to validate against, with required-section
+obligations **composed live from P2's `delivery-class-controls.json`** (never hardcoded or
+copy-pasted into P3-A's own files), an explicit, enforceable no-`TBD` rule, a conforming template
+for each of the charter's eight delivery classes, and three named, closed-vocabulary extension
+points so that a future delivery class, a future domain-overlay binding (P3-B, P0-B), or a future
+per-class template can extend this substrate through a bounded, additive mechanic without
+requiring P3-A's own files to be redesigned. **Scope of what P3-A actually ships (reusability
+correction):** this parcel ships the contract and a self-check verifier (`verify-p3a.ps1`) scoped
+to this parcel's own 27 surfaces — it is not yet a general `validate <path>` entrypoint any other
+BIO-* ticket or future parcel spec can invoke directly; that reusable invocation path is P4's
+general-linter deliverable (see Stop Conditions). Until P4 ships, "every future parcel spec...
+validates against" means *is defined to be checked against this contract*, not *is mechanically
+invoked through a shared tool today* — the same scope P2's own `verify-p2.ps1` already carries for
+its own surfaces.
 
 P3-A is schema, template, and extension-point mechanics only. It composes P2's axis and
 control-fold substrate; it does not redefine, duplicate, or fork any control content P2 already
@@ -182,7 +189,24 @@ without editing it.
   `[REPLACE: <short instruction>]` as their only permitted incomplete-value syntax. This marker is
   invalid everywhere else; a spec outside `docs/specs/templates/**` containing it fails validation
   identically to a literal `TBD`. This closes the loophole of copying a template into
-  `docs/specs/active/` without filling it in.
+  `docs/specs/active/` without filling it in. **Before either `noPlaceholderPatterns` regex is
+  applied to any file's text, the verifier must run the pinned `placeholderNormalizationSteps`
+  pipeline (document contract 1: strip Unicode `Cf`/`Cc` format/control characters, NFKC-normalize,
+  then apply the Unicode confusables-skeleton transform) in that exact order.** This is not
+  optional or informative-only text: check 12 implements it literally, and it exists specifically
+  to defeat homoglyph substitution (e.g. Cyrillic lookalikes of `TBD`), zero-width-character
+  insertion, soft hyphens, fullwidth forms, and mathematical-alphanumeric disguises of the banned
+  literals — a disguised `TBD` is exactly as invalid as a literal one.
+- **Structural validation only (scope disclaimer).** A `"valid"`/PASS result from
+  `parcel-spec.schema.json` or `verify-p3a.ps1` asserts frontmatter-key presence, closed-vocabulary
+  membership, fold-live required-section resolution (including the distinct-heading and
+  token-count-bound constraints in document contract 2), and placeholder absence **only**. It does
+  not assert, and must never be read or cited as asserting, that a section's content is
+  substantive, correct, non-duplicative, or product-accurate — verifying content truth remains
+  human reviewer judgment at Gate review (dual review, charter D8). No deliverable, acceptance
+  criterion, check, or evidence artifact in this parcel may be represented to a future automation
+  consumer (a P4 linter, CI gate, or coordinator) as certifying content quality; it certifies
+  structure and declared-contract conformance only.
 - **Real-corpus compatibility, not reconciliation.** `parcel-spec.schema.json` must validate
   cleanly, deterministically, and without crashing against every file already enumerated by P2's
   `AXIS-REGRESSION-MAP.md` (the full `docs/specs/active/`/`docs/specs/done/` corpus at a pinned
@@ -205,7 +229,7 @@ A single JSON object with exactly these top-level keys:
       "pathPattern": "docs/INITIATIVES/*/parcels/*.md",
       "idFrontmatterKey": "parcel_id",
       "requiresLeadingYamlFrontmatter": true,
-      "appliesFrom": "P3-A-forward; P1.md and P2.md predate this convention and are frozen, not retrofitted"
+      "appliesFrom": "P3-B.md-forward; P1.md, P2.md, and P3-A.md itself predate this convention and are frozen, not retrofitted"
     },
     "ticket-spec": {
       "pathPattern": "docs/specs/active/*.md|docs/specs/done/*.md",
@@ -230,9 +254,31 @@ A single JSON object with exactly these top-level keys:
     "(?i)\\b(TBD|TODO|FIXME)\\b"
   ],
   "sanctionedTemplateFillInMarker": "\\[REPLACE:[^\\]]+\\]",
-  "sanctionedTemplateFillInMarkerScope": "docs/specs/templates/** only"
+  "sanctionedTemplateFillInMarkerScope": "docs/specs/templates/** only",
+  "placeholderNormalizationSteps": [
+    "strip-unicode-category-Cf-and-Cc",
+    "nfkc-normalize",
+    "unicode-confusables-skeleton"
+  ]
 }
 ```
+
+`placeholderNormalizationSteps` is a pinned, ordered, mandatory preprocessing pipeline that the
+verifier must apply to a file's text **before** either `noPlaceholderPatterns` regex is evaluated
+(document contract 1, check 12): (1) `strip-unicode-category-Cf-and-Cc` removes every Unicode
+format character (category `Cf` — including zero-width space U+200B, zero-width non-joiner
+U+200C, zero-width joiner U+200D, soft hyphen U+00AD, and all other `Cf`/`Cc` control/format
+codepoints) with no substitution; (2) `nfkc-normalize` applies Unicode Normalization Form KC to
+the result, collapsing fullwidth forms (e.g. `ＴＢＤ`) and mathematical-alphanumeric
+lookalike blocks to their canonical ASCII equivalents; (3) `unicode-confusables-skeleton` applies
+the Unicode Technical Standard #39 confusables-skeleton transform (a deterministic, offline,
+bundled-data-table lookup — no network access) to the NFKC-normalized text, mapping
+visually-confusable codepoints from other scripts (for example Cyrillic `Т`/`В`
+look-alikes of Latin `T`/`B`) onto their skeletal Latin equivalents. Only the output of all three
+steps, applied in this exact order, is passed to `noPlaceholderPatterns`. This closes the
+homoglyph/zero-width/fullwidth disguise class (document contract 1, check 12) — literal `TBD`
+is unaffected by this pipeline (it already matches both patterns without normalization) and the
+`negative-tbd-violation.json` fixture's expected result is unchanged by this addition.
 
 `specShapes.*.pathPattern` deterministically selects which shape rule applies to a given file path
 (no content sniffing): a file under `docs/INITIATIVES/*/parcels/*.md` is `coordinator-parcel`
@@ -280,6 +326,34 @@ heading named "Deterministic verification"; `missingness`, satisfied by "Missing
 cross-reads `delivery-class-controls.json` at run time and fails if the map's term column is not
 exactly the live union set (extra, missing, or misspelled terms are each a named failure).
 
+**Anti-heading-soup constraints (mandatory, evaluated together with the matching rule above, not
+as an optional refinement):** a contiguous-token-subsequence match alone is not sufficient to mark
+a required term `satisfied: true`. Both of the following must also hold for a given term/heading
+pair, deterministically, from the document's actual ATX heading set:
+
+1. **Distinct-heading-per-term.** Each required term for a spec's declared, folded class set must
+   resolve to its own distinct heading *occurrence* (identified by position in document order, not
+   by text) — no single heading occurrence may be counted as satisfying more than one required
+   term. The resolver assigns headings to terms via a one-to-one bipartite match (each heading used
+   at most once); if the only headings that textually match a given term are already consumed by
+   other terms' matches, that term resolves `satisfied: false`.
+2. **Heading-length bound.** A candidate heading's own normalized token count (after the lowercase/
+   `/`-and-`-`-to-space/whitespace-collapse/trailing-`s`-strip normalization above) must not exceed
+   the matched term's (or matched alias's) normalized token count by more than 4 tokens, and must
+   never exceed 10 normalized tokens in total, whichever bound is smaller. A heading that
+   concatenates many unrelated required terms into one oversized line (the heading-soup exploit:
+   e.g. `## Objective Surfaces Contracts Acceptance Criteria Tests Rollback Summary` for a
+   6-term/≤2-token-per-term class) exceeds this bound and therefore cannot satisfy *any* term
+   through it — it is deterministically disqualified as a candidate before the one-to-one match
+   in constraint 1 is attempted, not merely de-duplicated after the fact.
+
+A real, honestly authored multi-section document (one short, on-topic heading per required term)
+satisfies both constraints trivially; a single polluted heading line satisfies neither. A term that
+fails either constraint resolves `satisfied: false` and the containing document fails with reason
+`missing-required-section` naming that term, exactly as a genuinely absent heading would —
+there is no separate reason code for a heading-soup failure, because from the schema's perspective
+it *is* a missing required section (the apparent heading does not count as any term's heading).
+
 ### 3. `docs/specs/schemas/EXTENSION-POINTS.md`
 
 Declares exactly three named, closed-vocabulary extension points, each with an "Exact mechanic"
@@ -295,7 +369,15 @@ touch:
   `requiredSpecAdditions` term the new class introduces must be appended, additively, as one new
   row in `SECTION-HEADING-MAP.md` — this is the one sanctioned, bounded edit this extension point
   permits to an otherwise-frozen P3-A file, and it is additive-only (no existing row may be
-  removed, renamed, or reordered).
+  removed, renamed, or reordered). This subsection must pin, verbatim, the sentence: "A newly
+  appended `SECTION-HEADING-MAP.md` row's normalized term (same normalization as document contract
+  2, including the anti-heading-soup constraints) must not duplicate any term already present in
+  the live `requiredSpecAdditions` union, and no existing row may be removed, renamed, value-
+  mutated, or reordered by this mechanic; the amending parcel's own deterministic verifier must
+  assert this append-only, non-duplicating invariant as a named check, failing
+  `extension-point-not-additive` on violation."
+  (check 7 asserts this exact sentence is present, byte-for-byte, as a pinned obligation, not
+  unchecked prose.)
 - **`domain-overlay-insertion`** — the single named seam where a thin domain overlay (D2), such as
   P3-B's future guidance-class/substance-function-risk capability binding, attaches without
   redesigning `parcel-spec.schema.json`. Mechanic: `parcel-spec.schema.json` declares a reserved,
@@ -305,7 +387,15 @@ touch:
   additional required-section term, but may not alter any other key already present. A spec that
   declares a reference to an extension-section key **not present** in this registry fails
   validation with the named error `unknown-extension-point` — this is the mechanic the
-  `negative-unknown-extension-point` fixture proves.
+  `negative-unknown-extension-point` fixture proves. This subsection must pin, verbatim, the
+  sentence: "A newly appended `extensionSections` key's normalized form (same normalization as
+  `SECTION-HEADING-MAP.md`) must not equal any term already present in the live
+  `requiredSpecAdditions` union at append time, nor equal any other `extensionSections` key; no
+  existing `extensionSections` key may be removed, renamed, or value-mutated by any future append;
+  and the appending parcel's own deterministic verifier must assert this disjointness-and-
+  non-removal invariant as a named check, failing `extension-point-not-additive` on violation."
+  (check 7 asserts this exact sentence is present, byte-for-byte, as a pinned obligation every
+  future consuming parcel inherits, not merely descriptive prose that could be silently ignored.)
 - **`template-set-extension`** — the mechanic for adding a new per-delivery-class template.
   Mechanic: a new file named exactly `docs/specs/templates/parcel-template.<label>.md`, where
   `<label>` must already exist in `classification-axes.schema.json`'s `deliveryClass.labels` at
@@ -442,27 +532,32 @@ ad hoc `TBD` cells — see "Carry-over"); `Review requirement` = `2 independent 
 - **AC-P3A-01 — Schema shape correctness:** `parcel-spec.schema.json` declares exactly the two
   spec shapes, the common required-frontmatter-key list, the closed `status` vocabulary, the five
   P2-source pointers, the `fold-live` required-section derivation, the two placeholder patterns,
-  and the sanctioned template fill-in marker and its scope, exactly as pinned above.
+  the pinned `placeholderNormalizationSteps` pipeline, and the sanctioned template fill-in marker
+  and its scope, exactly as pinned above.
 - **AC-P3A-02 — Live composition, not duplication:** `SECTION-HEADING-MAP.md`'s term column is,
   at verification time, byte-for-byte the live union of every `requiredSpecAdditions` entry in
   `delivery-class-controls.json`; no P3-A file contains a `requiredSpecAdditions`,
   `minimumChecks`, `mandatoryStopConditions`, `requiredClosureEvidence`, or `reviewers` key copied
   from `delivery-class-controls.json`.
 - **AC-P3A-03 — Extension-point mechanics:** `EXTENSION-POINTS.md` defines exactly the three named
-  extension points, each with an exact, bounded mechanic and the non-binding verbatim sentence; the
-  schema file's `extensionSections` registry object is present and empty at this parcel's shipped
-  hash.
+  extension points, each with an exact, bounded mechanic, the non-binding verbatim sentence, and
+  (for `delivery-class-extension`/`domain-overlay-insertion`) the pinned append-only/disjointness
+  invariant sentence (document contract 3, check 7); the schema file's `extensionSections` registry
+  object is present and empty at this parcel's shipped hash.
 - **AC-P3A-04 — Template conformance, one per delivery class:** all eight templates exist, each
   independently resolves to `"valid"` against `parcel-spec.schema.json` once fill-in markers are
   substituted, and each template's declared `delivery_classes` fold resolves every
-  `requiredSpecAdditions` term for that one class to a satisfied heading.
+  `requiredSpecAdditions` term for that one class to a **distinct, length-bounded** satisfied
+  heading (document contract 2's anti-heading-soup constraints, check 8).
 - **AC-P3A-05 — Fixture proof, including violation and extension cases:** all twelve `fixtures/p3a`
   fixtures parse, and the verifier's embedded fold-live resolver reproduces every fixture's
   `expected` result and (when invalid) `reason` exactly from its `input`.
-- **AC-P3A-06 — No `TBD` anywhere, with the sole sanctioned exception:** no file under this
-  parcel's surfaces outside `docs/specs/templates/**` contains the sanctioned marker or any of the
-  banned placeholder patterns; files under `docs/specs/templates/**` contain only the sanctioned
-  marker as their incomplete-value syntax.
+- **AC-P3A-06 — No `TBD` anywhere, including disguised forms, with the sole sanctioned
+  exception:** no file under this parcel's surfaces outside `docs/specs/templates/**` contains the
+  sanctioned marker or any of the banned placeholder patterns **after** the pinned
+  `placeholderNormalizationSteps` pipeline is applied (catching homoglyph, zero-width, soft-hyphen,
+  fullwidth, and mathematical-alphanumeric disguises, not only the literal ASCII form); files under
+  `docs/specs/templates/**` contain only the sanctioned marker as their incomplete-value syntax.
 - **AC-P3A-07 — Real-spec compatibility, not reconciliation:** `REAL-SPEC-COMPATIBILITY-SET.md`
   has exactly one row per the 26-file P2 census set, every row's `parcel-spec.schema.json result`
   and `Reason` are independently and actually derived (not copied from P2), and no inspected spec
@@ -479,9 +574,9 @@ ad hoc `TBD` cells — see "Carry-over"); `Review requirement` = `2 independent 
   with zero removed lines and zero column changes, using `coordinator-assigns-at-gate-2` (not
   `TBD`) in the branch/worktree and owner cells; the `README.md` diff is exactly one appended
   section with zero removed lines.
-- **AC-P3A-11 — Carry-over satisfied:** both review-2 low-amendment items identified in
-  "Carry-over" below have a named, evidenced disposition inside this parcel's own deliverables
-  (not a bare restatement).
+- **AC-P3A-11 — Carry-over satisfied:** all three items identified in "Carry-over" below (the two
+  review-2 low-amendment items plus the self-identified coordinator-parcel-shape testing gap) have
+  a named, evidenced disposition inside this parcel's own deliverables (not a bare restatement).
 
 ## Deterministic verification
 
@@ -526,7 +621,14 @@ dependencies, and must exit nonzero on any failure:
    `Canonical alias(es)` cell and `Source` equal to the literal `delivery-class-controls.json`.
 7. Parse `EXTENSION-POINTS.md`; require exactly the three named extension-point headings and each
    one's non-binding verbatim sentence to appear at least once; require `parcel-spec.schema.json`'s
-   `extensionSections` key to be present and equal to an empty object `{}`.
+   `extensionSections` key to be present and equal to an empty object `{}`. Additionally require
+   `delivery-class-extension`'s subsection to contain, byte-for-byte, the pinned
+   append-only/non-duplicating invariant sentence, and `domain-overlay-insertion`'s subsection to
+   contain, byte-for-byte, the pinned disjointness-and-non-removal invariant sentence, exactly as
+   both are quoted in document contract 3 — making the additive-only extension-point promise a
+   pinned, parseable, string-matched check (`extension-point-obligation-missing` on absence) rather
+   than unchecked prose, even though `extensionSections` itself is empty at this parcel's shipped
+   hash and so has no append to evaluate yet.
 8. For each of the eight template files: parse YAML frontmatter and Markdown headings; require the
    nine common frontmatter keys plus `parcel_id` to be present; require `delivery_classes` to
    equal an array containing exactly that one class; require `guidance_classes` and
@@ -534,15 +636,22 @@ dependencies, and must exit nonzero on any failure:
    `\[REPLACE:[^\]]+\]` occurrence with the literal `filled`; re-parse the substituted document;
    run the fold-live resolver (reading `fold-engine.md`'s algorithm against
    `delivery-class-controls.json` for that one declared class) and require every resulting
-   `requiredSpecAdditions` term to resolve `satisfied: true` against `SECTION-HEADING-MAP.md`;
-   require zero remaining occurrence of `TBD`/`TODO`/`FIXME`/`{{`/`[REPLACE:` in the substituted
-   document.
+   `requiredSpecAdditions` term to resolve `satisfied: true` against `SECTION-HEADING-MAP.md`,
+   applying the distinct-heading-per-term and heading-length-bound anti-heading-soup constraints
+   from document contract 2 (a term that only resolves via a heading already consumed by another
+   term, or via a heading exceeding the length bound, resolves `satisfied: false` and fails the
+   check); require zero remaining occurrence of `TBD`/`TODO`/`FIXME`/`{{`/`[REPLACE:` in the
+   substituted document, applying the `placeholderNormalizationSteps` pipeline (document contract
+   1) before scanning.
 9. For each of the twelve `fixtures/p3a/*.json` fixtures: parse JSON; require exactly the keys
    `input`/`expected`; for the eight positive fixtures, resolve `input.specPath` to the real
-   template file (re-running the same substitution and fold-live resolution as check 8) and
-   require `expected.result` to equal `"valid"`; for the three negative fixtures, run the
-   validator directly against the inlined `syntheticSpec` and require `expected.result` to equal
-   `"invalid"` with the pinned `expected.reason` value exactly as named in document contract 6.
+   template file (re-running the same substitution and fold-live resolution as check 8, including
+   its anti-heading-soup and placeholder-normalization sub-constraints) and require
+   `expected.result` to equal `"valid"`; for the three negative fixtures, run the validator
+   directly against the inlined `syntheticSpec` — applying the same `placeholderNormalizationSteps`
+   pipeline and anti-heading-soup constraints the resolver uses everywhere else — and require
+   `expected.result` to equal `"invalid"` with the pinned `expected.reason` value exactly as named
+   in document contract 6.
 10. Parse `REAL-SPEC-COMPATIBILITY-SET.md`; require the header row to equal the exact six-column
     header pinned in document contract 7; require the row count to equal
     `(git ls-files docs/specs/active docs/specs/done | at BaseCommit).Count - 2`; for every `.md`
@@ -558,13 +667,20 @@ dependencies, and must exit nonzero on any failure:
     `TBD`) in both the branch/worktree and owner cells. Require the `README.md` diff to remove zero
     lines, add one contiguous block, and require the added section's heading and four links to
     match document contract 9 exactly.
-12. Search every file changed or added by this parcel for
+12. For every file changed or added by this parcel, first apply the pinned
+    `placeholderNormalizationSteps` pipeline (document contract 1) to its text, in order: (a) strip
+    all Unicode category `Cf` and `Cc` characters (zero-width space/non-joiner/joiner, soft hyphen,
+    and all other format/control codepoints); (b) NFKC-normalize the result (collapsing fullwidth
+    and mathematical-alphanumeric forms to ASCII); (c) apply the Unicode confusables-skeleton
+    transform (UTS #39) to the NFKC-normalized text. Only then search the normalized text for
     `(?im)(^\s*(TBD|TODO|FIXME)\s*[:|\-])|(\{\{[^}]+\}\})` and, independently,
-    `(?i)\b(TBD|TODO|FIXME)\b`; require zero matches in every file; separately search every file
-    **not** under `docs/specs/templates/` for `\[REPLACE:[^\]]+\]`; require zero matches there
-    (AC-P3A-06); require every file under `docs/specs/templates/` to contain at least one
-    `[REPLACE: ...]` occurrence (a template with none would be suspiciously over-filled, not
-    genuinely a scaffold).
+    `(?i)\b(TBD|TODO|FIXME)\b`; require zero matches in every file — this is the check that
+    makes homoglyph (e.g. Cyrillic lookalikes), zero-width-character, soft-hyphen, fullwidth, and
+    mathematical-alphanumeric disguises of `TBD`/`TODO`/`FIXME` fail identically to the literal
+    form; separately search every file **not** under `docs/specs/templates/` for
+    `\[REPLACE:[^\]]+\]` (on the normalized text); require zero matches there (AC-P3A-06); require
+    every file under `docs/specs/templates/` to contain at least one `[REPLACE: ...]` occurrence (a
+    template with none would be suspiciously over-filled, not genuinely a scaffold).
 13. Require `EvidenceDirectory`, resolved against the repository root, to equal
     `<repo>/artifacts/p3a-verification`; create it; write UTF-8/LF `changed-files.txt`,
     `schema-check.json`, `heading-map-check.json`, `extension-points-check.json`,
@@ -675,6 +791,23 @@ Both items are satisfied by naming and evidencing the gap inside P3-A's own read
 — neither requires, nor is permitted, an edit to any frozen surface (`INDEX.md`'s existing rows,
 or any existing active/done spec).
 
+3. **Self-identified gap: the `coordinator-parcel` shape is specified but exercised by no fixture
+   or compatibility-set row in this parcel.** All twelve `fixtures/p3a/*.json` fixtures are
+   `ticket-spec`-shape-adjacent synthetics or template-derived (also destined to become
+   `coordinator-parcel`-shape files once used, but not themselves parsed as one in this parcel's
+   own fixture set), and `REAL-SPEC-COMPATIBILITY-SET.md`'s 26-row real-corpus pass is scoped
+   exactly to `docs/specs/active`/`docs/specs/done` (`ticket-spec` shape only), per P2's
+   `AXIS-REGRESSION-MAP.md` lineage — it never runs the schema against an actual
+   `docs/INITIATIVES/*/parcels/*.md` file. Per the corrected `appliesFrom` value (document contract
+   1: `coordinator-parcel` binds `P3-B.md`-forward; `P1.md`, `P2.md`, and `P3-A.md` itself all
+   predate and are exempt from the convention), no conforming `coordinator-parcel`-shape file can
+   exist yet for this parcel to test against — `P3-B.md` will be the first. This is named here,
+   explicitly, as an accepted, bounded, carry-forward gap rather than a silent omission: **P3-B's
+   own dispatch must either (a) include a fixture or compatibility-set row exercising the
+   `coordinator-parcel` branch against its own conforming spec file, or (b) explicitly re-affirm
+   this gap's continuation with a named reason**, and this obligation is also recorded in Stop
+   Conditions below so a future coordinator cannot silently skip it.
+
 ## Stop conditions
 
 Stop and return to the coordinator if:
@@ -691,6 +824,8 @@ Stop and return to the coordinator if:
 - A branch, worktree, base commit, spec hash, owner, or reviewer assignment is ambiguous.
 - Any deterministic check fails twice, a frozen contract must change, a reviewer finds an
   out-of-scope effect, or the standing-authorization tripwire above fires.
+- P3-B's shaping does not name, per Carry-over item 3 above, how it discharges or continues the
+  untested `coordinator-parcel`-shape gap.
 
 ## Rollback
 
