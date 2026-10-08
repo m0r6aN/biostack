@@ -110,3 +110,14 @@ The fixer applies these to the spec; re-review at the new hash precedes Gate 2.
    review opens ONLY when a builder stops with proof of acquisition need.
 4. **Anchor mutual-binding migration (H2-AC3 residual):** DEFERRED to the production migration
    wave (one migration window). Residual stays disclosed in the hardening register.
+
+## D-G — P0-A authorization (owner, 2026-10-08: "P0-A authorized")
+
+The owner explicitly authorizes **P0-A (Product Doctrine Recovery: canon precedence and
+contradiction inventory)** ONLY — the charter grants no standing authorization for P0, so this is
+the required explicit human gate for P0-A's shaping → review → dispatch chain. Scope bound to the
+analytical inventory (read-only against product behavior). **P0-B remains UNAUTHORIZED** and
+returns to the owner for a fresh gate with its design presented (it decides product
+allowed-outputs). P0-C/P0-D likewise await their own gates. Class controls for P0-A in full:
+health-boundary + privacy + legal-policy + knowledge-promotion sections, dual review, and the
+human-approval conditions those classes trigger at merge.
