@@ -48,7 +48,12 @@ public static class CompoundInteractionHintCatalog
                 Strength = hint.Strength,
                 MechanismOverlap = hint.MechanismOverlap is null ? null : new List<string>(hint.MechanismOverlap),
                 Notes = hint.Notes,
-                CreatedAtUtc = hint.CreatedAtUtc
+                CreatedAtUtc = hint.CreatedAtUtc,
+                // These fourteen hand-authored rows carry no citation of any kind (2026-09-17 owner
+                // ratification). Explicitly unsourced / quarantined from public rendering and never
+                // counted as evidence, even though the discriminator already defaults to false.
+                IsSourced = false,
+                SourceReference = null
             }, cancellationToken);
         }
 
