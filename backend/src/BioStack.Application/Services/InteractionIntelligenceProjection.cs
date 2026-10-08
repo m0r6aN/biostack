@@ -88,8 +88,9 @@ public static class InteractionIntelligenceProjection
         {
             return await featureGate.IsEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, cancellationToken);
         }
-        catch
+        catch (Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine($"HasReasoningAccessAsync: reviewed_relationship_graph entitlement check failed; failing closed (no access). {ex.GetType().Name}: {ex.Message}");
             return false;
         }
     }
