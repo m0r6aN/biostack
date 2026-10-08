@@ -134,6 +134,72 @@ public sealed class SpineChainIntegrityTests : IDisposable
         Assert.Equal("keon://receipt/chain-000", result.FirstBrokenReceiptUri);
     }
 
+    /// <summary>
+    /// R1 regression test (BIO-LOCAL-013): the exact probe from
+    /// <c>bio_local_004_retro_reviewer_2</c> — deleting the TRAILING rows of an otherwise-intact
+    /// chain previously rolled verification back to a stale-but-genuine state and
+    /// <c>IsIntact</c>/<c>IsFullyValid</c> still reported true, because the surviving rows still
+    /// link correctly and the sequence-continuity walk only notices gaps in the middle of the
+    /// chain. With a watermark path configured, the local anchor remembers the chain reached
+    /// sequence 4 before the deletion, so the truncated 0..2 chain now fails closed.
+    /// </summary>
+    [Fact]
+    public async Task Deleting_trailing_rows_after_watermark_is_detected_as_truncation()
+    {
+        var watermarkPath = Path.Combine(
+            Path.GetTempPath(), $"spine-watermark-{Guid.NewGuid():N}.txt");
+        try
+        {
+            var sut = SpineTestHelpers.CreateRepository(
+                _db,
+                new SpineCheckpointOptions
+                {
+                    AutoCheckpointEveryNEntries = 0,
+                    CadenceMinutes = 0,
+                    WatermarkFilePath = watermarkPath,
+                });
+
+            for (var i = 0; i < 5; i++)
+                await sut.AppendAsync(MakeEntry($"keon://receipt/rollback-{i:D3}"));
+
+            // The reviewer's exact probe: delete the trailing rows directly against the SQLite
+            // file, the way someone with a SQLite browser would — not through the repository.
+            await _db.Database.ExecuteSqlRawAsync(
+                "DELETE FROM SpineEntries WHERE SequenceNumber > 2;");
+
+            var result = await sut.VerifyChainAsync();
+
+            Assert.False(result.IsIntact);
+            Assert.Contains("Truncation detected", result.Reason, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("sequence 4", result.Reason, StringComparison.OrdinalIgnoreCase);
+        }
+        finally
+        {
+            if (File.Exists(watermarkPath))
+                File.Delete(watermarkPath);
+        }
+    }
+
+    /// <summary>
+    /// Without a configured watermark, the fundamental limit from <see
+    /// cref="BioStack.Infrastructure.Governance.SpineHeadWatermarkStore"/>'s docstring holds: a
+    /// deleted tail is indistinguishable from "never advanced" using the row set alone. This
+    /// documents the unmitigated behavior rather than silently relying on it — AC4 (no overclaim).
+    /// </summary>
+    [Fact]
+    public async Task Deleting_trailing_rows_without_a_watermark_is_not_detected()
+    {
+        await SeedChainAsync(5);
+
+        await _db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM SpineEntries WHERE SequenceNumber > 2;");
+
+        var result = await _sut.VerifyChainAsync();
+
+        Assert.True(result.IsIntact, result.Reason);
+        Assert.Equal(3L, result.EntriesVerified);
+    }
+
     [Fact]
     public async Task Deleting_a_middle_entry_breaks_the_chain()
     {

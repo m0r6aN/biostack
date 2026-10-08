@@ -85,6 +85,58 @@ public sealed class SpineCheckpointTests : IDisposable
         Assert.False(result.IsFullyValid);
     }
 
+    /// <summary>
+    /// R1 regression test (BIO-LOCAL-013), at the level the finding was actually reported at:
+    /// <c>bio_local_004_retro_reviewer_2</c> found that deleting trailing Spine rows rolled
+    /// verification back to a stale-but-genuine checkpoint and <c>IsFullyValid</c> still reported
+    /// true. Here: checkpoint at sequence 1, two more (uncheckpointed) entries appended, then the
+    /// trailing rows deleted back down to the checkpoint. Previously this returned
+    /// <c>IsFullyValid = true</c> (checkpoint head still matched the surviving row at its own
+    /// sequence). With a watermark path configured it now fails closed via <c>ChainIntact</c>.
+    /// </summary>
+    [Fact]
+    public async Task Rollback_to_a_stale_checkpoint_via_trailing_delete_is_detected_with_watermark()
+    {
+        var watermarkPath = Path.Combine(
+            Path.GetTempPath(), $"spine-watermark-cp-{Guid.NewGuid():N}.txt");
+        try
+        {
+            var (spine, checkpoints) = SpineTestHelpers.CreateWithCheckpoints(
+                _db,
+                new SpineCheckpointOptions
+                {
+                    SigningKey = "unit-test-signing-key-not-for-production",
+                    AutoCheckpointEveryNEntries = 0,
+                    CadenceMinutes = 0,
+                    WatermarkFilePath = watermarkPath,
+                });
+
+            await spine.AppendAsync(MakeEntry("keon://receipt/rollback-cp-0"));
+            await spine.AppendAsync(MakeEntry("keon://receipt/rollback-cp-1"));
+            await checkpoints.CreateCheckpointAsync("stale-anchor");
+
+            // Ledger keeps moving after the checkpoint — a normal, legitimate state.
+            await spine.AppendAsync(MakeEntry("keon://receipt/rollback-cp-2"));
+            await spine.AppendAsync(MakeEntry("keon://receipt/rollback-cp-3"));
+
+            // The attack: roll back to the checkpointed state by deleting everything after it,
+            // directly against the SQLite file.
+            await _db.Database.ExecuteSqlRawAsync(
+                "DELETE FROM SpineEntries WHERE SequenceNumber > 1;");
+
+            var result = await checkpoints.VerifyLatestAsync();
+
+            Assert.False(result.ChainIntact);
+            Assert.False(result.IsFullyValid);
+            Assert.Contains("Truncation detected", result.Reason, StringComparison.OrdinalIgnoreCase);
+        }
+        finally
+        {
+            if (File.Exists(watermarkPath))
+                File.Delete(watermarkPath);
+        }
+    }
+
     [Fact]
     public async Task Signature_fails_when_signing_key_differs()
     {
