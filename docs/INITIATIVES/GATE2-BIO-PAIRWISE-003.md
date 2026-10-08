@@ -26,3 +26,18 @@ re-ratification); wiring must make the authoritative relationship path project t
 outputs and mark the non-authoritative path inert per D-B. Required Tests = wiring assertions +
 inert-path assertions (run + record). Unknown-honest discipline: no invented data. Delivery:
 commit → push → PR vs `main` (Gate 3 owner's) → worktree removed.
+
+## Amendment PW-003-A1 (coordinator, 2026-10-08, after builder stop-and-report)
+
+The builder proved AC2/AC3 unenforceable from the listed surfaces: boundary enforcement of
+`assertionClass` / `relationshipReviewStatus` / `relationshipId` / malformed-input handling lives
+in `CompoundGraphBuilder.cs`, which the Allowed Files exclude; re-implementing from the read side
+would build a second, parallel validation pipeline — contradicting the spec's own Verification
+Plan question ("enforced once at the boundary"). Ruling:
+
+1. `backend/src/**/CompoundGraphBuilder.cs` is ADDED to the builder surfaces (`ResearchJob.cs`
+   only if the builder proves it unavoidable). The spec's ACs are unchanged — the surface list was
+   under-specified, not the requirements.
+2. D-B remains fully honorable: code-only, no migration, no schema change.
+3. The eventual review MUST explicitly cover the added file.
+4. The builder's empty retained branch may be reused.
