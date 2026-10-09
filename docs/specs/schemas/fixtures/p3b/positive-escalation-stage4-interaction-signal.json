@@ -1,0 +1,41 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Positive fixture \u2014 stage-4 residual-membership preemptionStage resolution for interaction-or-contraindication-signal's D\u2192E escalating C3 cell",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["health-boundary"],
+        "guidance_classes": ["personalized-protocol-recommendation"],
+        "substance_function_risk": ["interaction-or-contraindication-signal"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/positive-escalation-stage4-interaction-signal.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "personalized-protocol-recommendation",
+            "label": "interaction-or-contraindication-signal",
+            "behavior": "degraded-escalates-on-strong-signal",
+            "publiclyEnabled": false
+          }
+        ],
+        "numeric_provenance": ["source-studied"],
+        "missingness": {
+          "requiredInputs": ["concurrent-substances"],
+          "rungApplied": {
+            "concurrent-substances": "rung-2-degrade-naming-missingness"
+          }
+        },
+        "escalation": {
+          "preemptionStage": 4,
+          "outputType": "safety-escalation"
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

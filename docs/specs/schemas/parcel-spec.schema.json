@@ -42,5 +42,21 @@
     "nfkc-normalize",
     "unicode-confusables-skeleton"
   ],
-  "extensionSections": {}
+  "extensionSections": {
+    "product-capability-safety-overlay": {
+      "addedBy": "P3-B",
+      "appliesToShapes": ["coordinator-parcel", "ticket-spec"],
+      "bindsProductSemantics": false,
+      "contractSource": "docs/specs/schemas/product-capability-safety-contract.json",
+      "fieldMapSource": "docs/specs/schemas/CAPABILITY-FIELD-MAP.md",
+      "boundFrontmatterKeys": [
+        "function_review_status",
+        "function_review_owner",
+        "capability_claim",
+        "numeric_provenance",
+        "missingness",
+        "escalation"
+      ]
+    }
+  }
 }

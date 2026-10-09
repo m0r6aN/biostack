@@ -1,0 +1,37 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture \u2014 deterministic-calculation claim present, numeric_provenance key absent",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["standard"],
+        "guidance_classes": ["deterministic-calculation"],
+        "substance_function_risk": ["ordinary"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/negative-numeric-provenance-missing.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "deterministic-calculation",
+            "label": "ordinary",
+            "behavior": "allowed"
+          }
+        ],
+        "missingness": {
+          "requiredInputs": ["user-entered-value"],
+          "rungApplied": {
+            "user-entered-value": "rung-1-refuse-invalid"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key",
+    "field": "numeric_provenance"
+  }
+}

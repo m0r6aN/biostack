@@ -1,0 +1,23 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture \u2014 guidance_classes non-empty, capability_claim key absent",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["standard"],
+        "guidance_classes": ["curated-evidence-guidance"],
+        "substance_function_risk": [],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/negative-capability-claim-missing.json"],
+        "function_review_status": "unreviewed"
+      }
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key",
+    "field": "capability_claim"
+  }
+}
