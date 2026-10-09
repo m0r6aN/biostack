@@ -190,7 +190,7 @@
       "locked": false,
       "applicabilityCriterion": {
         "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `gray-market-or-identity-uncertain` and its D-B2 calibration text (identity/purity uncertainty surfaced; potency-dependent math refused when identity/concentration unverified)",
-        "test": "True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins."
+        "test": "True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins, in which case output is blocked outright with no evidence shown."
       },
       "behavior": {
         "C1": { "value": "degraded", "scope": null },
