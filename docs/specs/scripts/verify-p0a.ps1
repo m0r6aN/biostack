@@ -117,7 +117,7 @@ function Read-RepoFile {
 }
 
 function Write-Utf8Lf {
-    param([Parameter(Mandatory = $true)][string]$Path, [Parameter(Mandatory = $true)][string]$Content)
+    param([Parameter(Mandatory = $true)][string]$Path, [Parameter(Mandatory = $true)][AllowEmptyString()][string]$Content)
     $normalized = $Content -replace "`r`n", "`n"
     $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
     [IO.File]::WriteAllText($Path, $normalized, $utf8NoBom)
@@ -147,33 +147,26 @@ Add-PassedCheck -Name 'required-sources-present-at-BaseCommit' -Detail "20 requi
 
 $headCommit = (@(Invoke-Git -Arguments @('rev-parse', 'HEAD')))[0].Trim()
 
-# Committed-history scope (closes p0a_impl_review_2 F4, explicit-pin branch of the amendment):
-# a literal `$BaseCommit...HEAD` diff is correct only while HEAD's history since BaseCommit
-# belongs entirely to this delivery. In practice, `BaseCommit` is pinned once, at the parcel's
-# Gate 2 dispatch anchor, and reused by every later re-verification of the same parcel family
-# (including this remediation) -- so once *other*, unrelated initiatives land further commits on
-# the shared default branch in between, a literal `$BaseCommit...HEAD` diff would also pick up
-# their legitimately out-of-surface files (for example a sibling parcel's own spec, or a
-# coordinator decision-ledger entry), which is not a fencing violation by *this* delivery. The
-# fencing-relevant base is therefore explicitly pinned to the merge-base of HEAD and this
-# worktree's upstream tracking branch (the point this delivery's own commits diverge from the
-# shared default branch) when an upstream is configured, falling back to the literal `BaseCommit`
-# otherwise (for example a detached-HEAD or no-upstream evidence run). Every other check in this
-# script (required-source presence, seed-regression, citation resolution, quotation-content
-# verification) continues to use the literal `$BaseCommit` unchanged -- only this check's
-# committed-history diff scope is pinned differently, and that pin is recorded in the evidence
-# bundle below (`fencingBaseCommit`) so it is never a silent, undocumented substitution.
-$upstreamProbe = Get-GitResult -Arguments @('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}')
-if ($upstreamProbe.ExitCode -eq 0 -and $upstreamProbe.Output.Count -gt 0 -and $upstreamProbe.Output[0].Trim()) {
-    $mergeBaseProbe = Get-GitResult -Arguments @('merge-base', 'HEAD', '@{u}')
-} else {
-    $mergeBaseProbe = [pscustomobject]@{ ExitCode = 1; Output = @() }
-}
-if ($mergeBaseProbe.ExitCode -eq 0 -and $mergeBaseProbe.Output.Count -gt 0 -and $mergeBaseProbe.Output[0].Trim()) {
-    $fencingBaseCommit = $mergeBaseProbe.Output[0].Trim()
-} else {
-    $fencingBaseCommit = $BaseCommit
-}
+# Committed-history scope (closes p0a_impl_review_2 F4; re-pinned per p0a_reverify_2's
+# reverify2-F1 finding and the P3-A closure's option-(b) carry-forward rule -- "check-3-style
+# allow-lists must tolerate a named, pinned set of out-of-scope coordinator paths, never an
+# open-ended tolerance". A dynamically computed fencing base (for example the merge-base of HEAD
+# and this worktree's upstream tracking ref) converges with HEAD once this branch is pushed and
+# not yet diverged again, collapsing the committed-history diff to an empty set and defeating the
+# check's purpose silently (and, combined with zero untracked/working-tree changes, crashing the
+# evidence-bundle write below on an empty `-Content`). The fencing-relevant base is therefore the
+# literal, pinned `$BaseCommit` (the parcel's Gate 2 dispatch anchor) unconditionally -- identical
+# to every other check in this script -- with no dynamic substitution. Because `BaseCommit` is
+# pinned once and reused across every later re-verification of this parcel family, other
+# initiatives' commits that land on the shared default branch in between (a sibling parcel's own
+# spec, a coordinator decision-ledger entry) are not a fencing violation by *this* delivery; those
+# specific, named paths are tolerated below via a pinned, closed list -- never an open-ended
+# pattern -- and any other out-of-surface path still fails the check.
+[string[]]$PinnedOutOfScopeCommittedPaths = @(
+    'docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md',
+    'docs/INITIATIVES/biostack-governed-delivery/parcels/P0-B.md'
+)
+$fencingBaseCommit = $BaseCommit
 
 $diffNames = @(Invoke-Git -Arguments @('diff', '--name-only', "$fencingBaseCommit...HEAD"))
 $untracked = @(Invoke-Git -Arguments @('ls-files', '--others', '--exclude-standard'))
@@ -184,12 +177,12 @@ $untracked = @(Invoke-Git -Arguments @('ls-files', '--others', '--exclude-standa
 # committed-history diff and the untracked-file list gives full working-tree coverage, not
 # merely committed-only scope.
 $workingTreeDirty = @(Invoke-Git -Arguments @('diff', '--name-only', 'HEAD'))
-$allChanged = @($diffNames + $untracked + $workingTreeDirty | Where-Object { $_ -and ($_ -notlike 'artifacts/p0a-verification/*') } | Select-Object -Unique)
+$allChanged = @($diffNames + $untracked + $workingTreeDirty | Where-Object { $_ -and ($_ -notlike 'artifacts/p0a-verification/*') -and ($PinnedOutOfScopeCommittedPaths -notcontains $_) } | Select-Object -Unique)
 
 foreach ($path in $allChanged) {
     Assert-True ($AllowedSurfaces -contains $path) "canonical-write-fencing-violation: $path is outside the allowed-surfaces list."
 }
-Add-PassedCheck -Name 'canonical-write-fencing-violation (absence)' -Detail "$($allChanged.Count) changed path(s) (committed history since pinned fencing base $fencingBaseCommit + working-tree staged/unstaged + untracked), all inside allowed surfaces"
+Add-PassedCheck -Name 'canonical-write-fencing-violation (absence)' -Detail "$($allChanged.Count) changed path(s) (committed history since literal pinned BaseCommit $fencingBaseCommit, minus $($PinnedOutOfScopeCommittedPaths.Count) pinned out-of-scope coordinator path(s), + working-tree staged/unstaged + untracked), all inside allowed surfaces"
 
 # ---------------------------------------------------------------------------
 # Check 3: no-placeholder -- TBD/TODO/FIXME/{{ absent from every file this parcel creates/modifies
@@ -602,6 +595,27 @@ function ConvertTo-NormalizedQuoteText {
     $t = $t -replace '\s+', ' '
     return $t.Trim()
 }
+
+# Structural-block splitting (closes p0a_reverify_2 reverify2-F2): normalizing the *entire* file
+# into one flat, whitespace-collapsed string lets a spliced quotation join the tail of one
+# paragraph or list to the head of the next, structurally unrelated, paragraph or list -- the
+# normalized string carries no record of a blank-line (paragraph/list) boundary the real source
+# document uses to separate distinct claims (for example a `BioStack may:` list and the following
+# `BioStack must not:` list). To close this while still honoring the legitimate case the
+# whitespace/bullet normalization exists for -- a quotation spanning more than one bullet line
+# *within the same list* (no intervening blank line) -- the cited file's raw text is first split
+# into blocks on blank-line boundaries (one or more blank lines, `(?:\r?\n\s*\r?\n)+`), each block
+# is normalized independently, and a quoted segment must appear as a contiguous substring
+# *within a single block's* normalized text. A segment that only exists by concatenating the tail
+# of one block with the head of the next no longer matches -- it must be reproduced using an
+# explicit "..." ellipsis (handled by the caller's own segment-splitting) if the inventory author
+# genuinely intends to join two structurally separate spans.
+function ConvertTo-NormalizedQuoteBlocks {
+    param([Parameter(Mandatory = $true)][string]$Text)
+    $normalizedText = $Text -replace "`r`n", "`n"
+    $rawBlocks = [regex]::Split($normalizedText, '(?:\n\s*\n)+')
+    return [string[]]@($rawBlocks | ForEach-Object { ConvertTo-NormalizedQuoteText -Text $_ } | Where-Object { $_.Length -gt 0 })
+}
 $NormalizedFileContentCache = @{}
 function Get-NormalizedSourceFileContent {
     param([Parameter(Mandatory = $true)][string]$Path)
@@ -610,7 +624,7 @@ function Get-NormalizedSourceFileContent {
         if ($null -eq $raw) {
             $NormalizedFileContentCache[$Path] = $null
         } else {
-            $NormalizedFileContentCache[$Path] = ConvertTo-NormalizedQuoteText -Text $raw
+            $NormalizedFileContentCache[$Path] = ConvertTo-NormalizedQuoteBlocks -Text $raw
         }
     }
     return $NormalizedFileContentCache[$Path]
@@ -680,9 +694,12 @@ foreach ($ciId in $parsedRows.Keys) {
             foreach ($segment in $segments) {
                 $quotesVerifiedCount++
                 $normalizedSegment = ConvertTo-NormalizedQuoteText -Text $segment
-                $matched = $fileContent.Contains($normalizedSegment)
+                # Matched within a single structural block only (see ConvertTo-NormalizedQuoteBlocks
+                # above) -- never across a paragraph/list-boundary splice.
+                $matched = [bool]($fileContent | Where-Object { $_.Contains($normalizedSegment) } | Select-Object -First 1)
                 if (-not $matched -and $normalizedSegment.EndsWith(',')) {
-                    $matched = $fileContent.Contains($normalizedSegment.TrimEnd(',', ' ').Trim())
+                    $trimmedSegment = $normalizedSegment.TrimEnd(',', ' ').Trim()
+                    $matched = [bool]($fileContent | Where-Object { $_.Contains($trimmedSegment) } | Select-Object -First 1)
                 }
                 if (-not $matched) {
                     $quoteMismatches.Add("${ciId}.${fieldName}: quoted segment not found (modulo whitespace/bullet/bold normalization) in '$currentPath': '$segment'") | Out-Null
@@ -727,7 +744,8 @@ $trackedEvidence = Get-GitResult -Arguments @('ls-files', '--error-unmatch', '--
 Assert-True ($trackedEvidence.ExitCode -ne 0) 'artifacts/p0a-verification must be untracked.'
 [IO.Directory]::CreateDirectory($resolvedEvidencePath) | Out-Null
 
-Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'changed-files.txt') -Content ($allChanged -join "`n")
+$changedFilesContent = if ($allChanged.Count -gt 0) { $allChanged -join "`n" } else { '(none)' }
+Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'changed-files.txt') -Content $changedFilesContent
 
 $summary = [ordered]@{
     schema            = 'biostack.p0a-verification-summary.v1'
