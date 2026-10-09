@@ -1,0 +1,31 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture — unknown extension-section reference",
+        "status": "review-candidate",
+        "owner": "fixture-owner",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["standard"],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": ["docs/specs/schemas/fixtures/p3a/negative-unknown-extension-point.json"],
+        "extension_section": "pricing-tier-overlay"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance Criteria",
+        "## Tests",
+        "## Rollback"
+      ],
+      "body": "This synthetic spec's body is fully filled in with real prose for every required section and contains no placeholder marker of any kind."
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "unknown-extension-point"
+  }
+}

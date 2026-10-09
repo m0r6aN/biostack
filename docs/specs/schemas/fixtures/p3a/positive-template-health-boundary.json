@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.health-boundary.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

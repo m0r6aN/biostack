@@ -1,0 +1,29 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture — missing owner frontmatter key",
+        "status": "review-candidate",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["standard"],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": ["docs/specs/schemas/fixtures/p3a/negative-missing-required-field.json"]
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance Criteria",
+        "## Tests",
+        "## Rollback"
+      ],
+      "body": "This synthetic spec's body is fully filled in with real prose for every required section and contains no placeholder marker of any kind."
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.knowledge-promotion.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}
