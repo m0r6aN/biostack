@@ -168,3 +168,25 @@ is now **frozen as P0-B's normative design input** and will be encoded verbatim 
 parcel spec. **P0-B dispatch remains gated** on P0-A freezing canon precedence (charter
 dependency spine); the §2 canon conflict is resolved in substance by D-B1(c), and P0-A's
 contradiction inventory records its disposition by this ruling.
+
+## D-J — P0-B definitional amendment: operational definition of "dose-context" (coordinator, 2026-10-09)
+
+Spec-gap contingency (loop-directive rule: any spec gap becomes a ratified amendment committed
+alone before code). P0-B re-review (`p0b_re_review_2` F1) found that the owner-ruled cell
+`pregnancy-or-lactation` × C1 = `R (dose-context)` was made machine-checkable without the term
+"dose-context" ever being operationally defined in canon. This amendment pins the definition
+**mechanically and conservatively — it does not change any ruled cell, row, or rule** (the
+reviewers byte-verified the matrix; that remains frozen). Owner may override; override reopens
+only this definition.
+
+> **Dose-context output.** An output is in dose context if and only if any value it presents or
+> derives is a **compound amount or an amount-derived quantity**: a dose or target amount,
+> concentration, reconstitution/dilution volume, split or load amount, per-administration or
+> per-period amount, cumulative amount, or a syringe-unit rendering of any of these. The five
+> D-B3 numeric-provenance origins attach exactly to these values. Outputs carrying no
+> compound-amount value (e.g., calendar/interval arithmetic over non-amount quantities) are not
+> dose-context. The guidance-contract v1.0.0 term "public dosing-context UX" denotes user-facing
+> surfaces that render dose-context outputs, and therefore gates identically.
+
+This definition is transcribed verbatim into the P0-B contract spec (amendment commit alone,
+before any P0-B implementation code).
