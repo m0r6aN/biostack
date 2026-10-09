@@ -1,0 +1,40 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Positive fixture \u2014 guidanceClass: safety-escalation end-to-end binding (R2-F1 remediation coverage)",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["health-boundary"],
+        "guidance_classes": ["safety-escalation"],
+        "substance_function_risk": ["controlled-or-illegal-sourcing"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/positive-safety-escalation-binding.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "safety-escalation",
+            "label": "controlled-or-illegal-sourcing",
+            "behavior": "escalated",
+            "escalationRule": 2
+          }
+        ],
+        "missingness": {
+          "requiredInputs": ["sourcing-context"],
+          "rungApplied": {
+            "sourcing-context": "rung-1-refuse-invalid"
+          }
+        },
+        "escalation": {
+          "preemptionStage": 2,
+          "outputType": "safety-escalation"
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "valid"
+  }
+}
