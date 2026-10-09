@@ -214,3 +214,17 @@ Constraint (fails safe; owner may override — override reopens only this rule):
 This is procedurally conservative — it cannot make the product say more than the owner ruled; it
 can only stop rank-mechanics from silently saying more. Transcribed into the P0-A artifacts by
 the remediation builder; recorded here as the amendment of record.
+
+## D-L — Coordinator ratification: P3-B 17th-path deviation (2026-10-09)
+
+`p3b_builder` (PR #533) needed the P3-B spec file, which was reviewed (`7b3225c`, APPROVE) but not
+yet merged to `main` at its BaseCommit. It carried the file in **byte-identical** (independently
+byte-verified by both implementation reviewers: identical to `git show 7b3225c:...`) as a
+disclosed 17th changed path — instead of stopping per the spec's Stop Conditions. Both reviewers
+flagged the process deviation (R1-F1 / R2-F2, MAJOR-process). Ratified as follows: (1) the
+deviation is **accepted-as-documented** — content is reviewed canon at the reviewed hash, zero
+semantic drift, and the spec subsequently merged unchanged (#532); (2) the process failure is
+**acknowledged**: builders must STOP on surface-count/deviation conflicts, not self-reconcile —
+recorded as a standing dispatch note for all future parcels (Gate 2 records already carry
+STOP-AND-REPORT language; enforcement emphasis added); (3) no product allowed-output consequence
+exists. Owner may override.
