@@ -1,0 +1,38 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture \u2014 personalized-protocol-recommendation entry claims publiclyEnabled true against the live false enablement state",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["health-boundary"],
+        "guidance_classes": ["personalized-protocol-recommendation"],
+        "substance_function_risk": ["ordinary"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/negative-premature-public-enablement-claim.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "personalized-protocol-recommendation",
+            "label": "ordinary",
+            "behavior": "allowed",
+            "publiclyEnabled": true
+          }
+        ],
+        "numeric_provenance": ["biostack-recommended"],
+        "missingness": {
+          "requiredInputs": ["user-declared-goal"],
+          "rungApplied": {
+            "user-declared-goal": "rung-2-degrade-naming-missingness"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "premature-public-enablement-claim"
+  }
+}

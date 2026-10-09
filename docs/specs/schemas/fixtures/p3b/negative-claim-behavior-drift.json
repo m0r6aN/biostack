@@ -1,0 +1,37 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture \u2014 capability_claim.behavior drifts from the live frozen-contract cell value",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["health-boundary"],
+        "guidance_classes": ["curated-evidence-guidance"],
+        "substance_function_risk": ["pregnancy-or-lactation"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/negative-claim-behavior-drift.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "curated-evidence-guidance",
+            "label": "pregnancy-or-lactation",
+            "behavior": "allowed"
+          }
+        ],
+        "missingness": {
+          "requiredInputs": ["pregnancy-or-lactation-status"],
+          "rungApplied": {
+            "pregnancy-or-lactation-status": "rung-2-refuse-safety-material"
+          },
+          "safetyMaterialInputs": ["pregnancy-or-lactation-status"]
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "capability-claim-drift"
+  }
+}

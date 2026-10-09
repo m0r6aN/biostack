@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/INITIATIVES/biostack-governed-delivery/parcels/P3-B.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture \u2014 acute-red-flag-or-emergency label present, escalation key absent",
+        "status": "review-candidate",
+        "owner": "coordinator-assigns-at-gate-2",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["health-boundary"],
+        "guidance_classes": ["curated-evidence-guidance"],
+        "substance_function_risk": ["acute-red-flag-or-emergency"],
+        "surfaces": ["docs/specs/schemas/fixtures/p3b/negative-escalation-missing.json"],
+        "function_review_status": "review-required",
+        "function_review_owner": "coordinator-assigns-at-gate-2",
+        "capability_claim": [
+          {
+            "guidanceClass": "curated-evidence-guidance",
+            "label": "acute-red-flag-or-emergency",
+            "behavior": "refused"
+          }
+        ],
+        "missingness": {
+          "requiredInputs": ["declared-symptoms"],
+          "rungApplied": {
+            "declared-symptoms": "rung-2-refuse-safety-material"
+          },
+          "safetyMaterialInputs": ["declared-symptoms"]
+        }
+      }
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key",
+    "field": "escalation"
+  }
+}

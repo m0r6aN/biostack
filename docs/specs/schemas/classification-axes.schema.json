@@ -59,9 +59,9 @@
         "deterministic-calculation", "curated-evidence-guidance",
         "personalized-protocol-recommendation", "safety-escalation"
       ],
-      "controlSource": "none",
+      "controlSource": "docs/specs/schemas/CAPABILITY-FIELD-MAP.md",
       "definitionOwner": "charter-product-guidance-classes",
-      "controlBindingStatus": "deferred-to-P3-B",
+      "controlBindingStatus": "bound-at-this-parcel",
       "applicabilityField": {
         "deterministic-calculation": {
           "fieldName": "guidanceClasses",
