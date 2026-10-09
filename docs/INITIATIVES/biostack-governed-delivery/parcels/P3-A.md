@@ -32,12 +32,23 @@ P2 both carried).
   and closed; P3-A is next on the dependency spine
   (`... -> P1 -> P2 -> P3-A -> P0-A -> ...`) and is covered by the charter's P1-P7 standing
   authorization.
-- Reconciled shaping base anchor: `main@6f46310a6113fae60805feeb65cac50d6b847ba3` (the commit that
-  closed P2).
+- Reconciled shaping base anchor **as observed at this shaping time**: `main@6f46310a6113fae60805feeb65cac50d6b847ba3`
+  (the commit that closed P2). This literal SHA is cited for lineage traceability only and is
+  **not** presented as the current `BaseCommit` — `main` has continued to advance since this
+  shaping pass (including further spec-corpus and coordinator activity unrelated to this parcel),
+  so this literal must never be read, cited, or dispatched as if it were still current.
 - P3-A uses P2's **single-anchor dispatch model**: the registry (`docs/specs/README.md`,
   `docs/specs/INDEX.md`) and the schema substrate P3-A composes already exist after P2, so the
   coordinator creates and commits the Gate 2 record before the builder branch starts, and the
-  builder branch/worktree starts at that exact commit (`BaseCommit` below is that single anchor).
+  builder branch/worktree starts at that exact commit. **`BaseCommit` is pinned at Gate 2 record
+  creation time, not at this spec's shaping/approval time**: the coordinator re-resolves the
+  registry/P2-substrate HEAD at the moment the Gate 2 record is written (the commit the isolated
+  builder worktree actually starts from), records that freshly re-verified SHA as `BaseCommit` in
+  the Gate 2 record (see "Gate 2 builder handoff requirements" below), and the real-spec
+  compatibility set (document contract 7) is scoped to whatever `docs/specs/active`/
+  `docs/specs/done` file set exists at that re-pinned `BaseCommit` — not to the file set that
+  existed at `6f46310a6113fae60805feeb65cac50d6b847ba3`, which this parcel's checks never cite as
+  `BaseCommit` and never treat as current.
 
 ## Objective
 
@@ -192,15 +203,29 @@ without editing it.
   `docs/specs/active/` without filling it in. **Before either `noPlaceholderPatterns` regex is
   applied to any file's text, the verifier must run the pinned `placeholderNormalizationSteps`
   pipeline (document contract 1: strip HTML comments, strip HTML/XML tags, strip inline-code
-  backtick delimiters, strip Markdown emphasis delimiters, strip Markdown escape backslashes, strip
-  Unicode `Cf`/`Cc` format/control characters, NFKC-normalize, then apply the Unicode
-  confusables-skeleton transform) in that exact order.** This is not optional or informative-only
-  text: check 12 implements it literally, and it exists specifically to defeat homoglyph
-  substitution (e.g. Cyrillic lookalikes of `TBD`), zero-width-character insertion, soft hyphens,
-  fullwidth forms, and mathematical-alphanumeric disguises of the banned literals, **and** to
-  defeat markdown/HTML-syntax splitting of the banned literal (e.g. `T<!--x-->BD`, `` T`BD ``,
-  `T**BD**`, `T<span></span>BD`, `T\BD`) by collapsing that markup away before the literal is
-  matched — a disguised `TBD`, however disguised, is exactly as invalid as a literal one.
+  backtick delimiters, strip paired Markdown emphasis delimiters, strip punctuation-adjacent
+  Markdown escape backslashes, decode HTML5 character references, strip Unicode `Cf`/`Cc`
+  format/control characters, NFKC-normalize, then apply the Unicode confusables-skeleton
+  transform) in that exact order.** Check 12 implements this pipeline literally; it exists to
+  defeat homoglyph substitution (e.g. Cyrillic lookalikes of `TBD`), zero-width-character
+  insertion, soft hyphens, fullwidth forms, and mathematical-alphanumeric disguises of the banned
+  literals, and to defeat markdown/HTML-syntax splitting of the banned literal (e.g.
+  `T<!--x-->BD`, `` T`BD ``, `T**BD**`, `T<span></span>BD`) and HTML-character-reference splitting
+  (e.g. `T&#66;D`, `T&#x42;D`) by collapsing that markup and those references away before the
+  literal is matched. **Scope of this claim (what is fixture-proven, not merely pinned):**
+  `negative-tbd-violation.json` (document contract 6) proves the literal case and one
+  markup-splitting case and the HTML-character-reference-splitting case are each caught; no
+  fixture in this parcel independently exercises every individual homoglyph, zero-width,
+  fullwidth, or mathematical-alphanumeric disguise. The pipeline steps themselves remain a pinned,
+  mandatory obligation — check 12 fails any file where the normalized text still matches
+  `noPlaceholderPatterns`, regardless of disguise class — but a reviewer evaluating this
+  parcel's deterministic proof should read "defeats disguise class X" as "the corresponding
+  pipeline step is pinned, applied to every file, and its literal/markup-splitting/
+  entity-splitting behavior is fixture-proven against this parcel's own deliverables," not as an
+  independent adversarial-corpus proof of UTS #39 confusables-table fidelity, which remains a
+  structural (implementation/code-review-time) obligation on the verifier rather than a
+  spec-level fixture claim, consistent with the "Structural validation only" scope disclaimer
+  below.
 - **Structural validation only (scope disclaimer).** A `"valid"`/PASS result from
   `parcel-spec.schema.json` or `verify-p3a.ps1` asserts frontmatter-key presence, closed-vocabulary
   membership, fold-live required-section resolution (including the distinct-heading and
@@ -223,7 +248,7 @@ without editing it.
 
 ### 1. `docs/specs/schemas/parcel-spec.schema.json`
 
-A single JSON object with exactly these top-level keys:
+A single JSON object with exactly these 15 top-level keys:
 
 ```json
 {
@@ -265,10 +290,12 @@ A single JSON object with exactly these top-level keys:
     "strip-inline-code-delimiters",
     "strip-emphasis-markers",
     "strip-markdown-escape-backslashes",
+    "decode-html-entities",
     "strip-unicode-category-Cf-and-Cc",
     "nfkc-normalize",
     "unicode-confusables-skeleton"
-  ]
+  ],
+  "extensionSections": {}
 }
 ```
 
@@ -287,34 +314,61 @@ verifier must apply to a file's text **before** either `noPlaceholderPatterns` r
    characters (regex `` `+ ``) used as Markdown inline-code-span delimiters, leaving any text
    between them intact, so a literal split by an empty or populated code span (e.g. `` T``BD ``
    or `` T`B`D ``) collapses to contiguous text.
-4. `strip-emphasis-markers` removes every `*` and `_` character used as Markdown emphasis
-   delimiters, so a literal split by bold/italic markup (e.g. `T**BD**`, `T_BD_`) collapses to
-   contiguous text.
-5. `strip-markdown-escape-backslashes` removes every literal backslash (`\`) character — the
-   Markdown escape convention is a backslash immediately preceding a character to force it to be
-   read literally, and stripping the backslash collapses the escape to the escaped character
-   — so a literal split by a stray escape backslash (e.g. `T\BD`) collapses to contiguous
-   text.
-6. `strip-unicode-category-Cf-and-Cc` removes every Unicode format character (category `Cf` —
+4. `strip-emphasis-markers` removes every `*` and `_` character that is part of a **paired**
+   Markdown emphasis run — a `*`/`_` run matched by a corresponding closing run of the same
+   character on the same line (regex-paired, e.g. `\*{1,3}[^*]+\*{1,3}` / `_{1,3}[^_]+_{1,3}`) —
+   leaving any unpaired, stray `*`/`_` character untouched, so a literal split by genuine
+   bold/italic markup (e.g. `T**BD**`, `T_BD_`) still collapses to contiguous text, while an
+   unrelated unpaired underscore or asterisk elsewhere in the same file (e.g. inside a code
+   identifier or file path fragment) is left alone and cannot manufacture a false match by
+   accidental adjacency.
+5. `strip-markdown-escape-backslashes` removes every literal backslash (`\`) character that is
+   **immediately followed by ASCII punctuation** (regex `\\(?=[!-/:-@\[-\`{-~])`) — the
+   Markdown escape convention is a backslash immediately preceding a punctuation character to
+   force it to be read literally, and stripping only that paired backslash collapses the escape
+   to the escaped character, so a literal split by a stray escape backslash immediately before a
+   letter-adjacent punctuation boundary (e.g. `T\BD` has no punctuation after the backslash and is
+   therefore **not** altered by this narrowed step; the in-scope disguise shape is a backslash
+   placed before punctuation flanking the split, e.g. `T\.BD` collapsing the escaped `.`) still
+   collapses as intended, while a backslash with no following punctuation (an ordinary Windows-
+   path-style or prose backslash elsewhere in a real corpus file) is left untouched and cannot
+   manufacture a false match.
+6. `decode-html-entities` decodes every HTML5 named, decimal (`&#NN;`), and hexadecimal
+   (`&#xNN;`) character reference to its literal Unicode codepoint, using the standard HTML5
+   entity-decode table applied deterministically and offline (no network access), so that a
+   literal split by an HTML character reference naming or encoding one of its letters (e.g.
+   `T&#66;D`, `T&#x42;D`) collapses to contiguous text before the Unicode-disguise steps run; an
+   entity reference that does not decode to an ASCII letter (e.g. `&amp;`, `&nbsp;`) decodes to
+   its own literal character exactly as HTML5 defines and is otherwise inert to this pipeline.
+7. `strip-unicode-category-Cf-and-Cc` removes every Unicode format character (category `Cf` —
    including zero-width space U+200B, zero-width non-joiner U+200C, zero-width joiner U+200D,
    soft hyphen U+00AD, and all other `Cf`/`Cc` control/format codepoints) with no substitution.
-7. `nfkc-normalize` applies Unicode Normalization Form KC to the result, collapsing fullwidth
+8. `nfkc-normalize` applies Unicode Normalization Form KC to the result, collapsing fullwidth
    forms (e.g. `ＴＢＤ`) and mathematical-alphanumeric lookalike blocks to their
    canonical ASCII equivalents.
-8. `unicode-confusables-skeleton` applies the Unicode Technical Standard #39 confusables-skeleton
+9. `unicode-confusables-skeleton` applies the Unicode Technical Standard #39 confusables-skeleton
    transform (a deterministic, offline, bundled-data-table lookup — no network access) to the
    NFKC-normalized text, mapping visually-confusable codepoints from other scripts (for example
    Cyrillic `Т`/`В` look-alikes of Latin `T`/`B`) onto their skeletal Latin equivalents.
 
-Steps 1–5 are pure-ASCII, deterministic, regex-based markup-stripping (no Markdown/HTML
-rendering engine is invoked) and run first so that any markup-mediated splitting of the banned
-literal (HTML comments, HTML/XML tags, inline-code backtick spans, emphasis `*`/`_` markers, and
-escape backslashes) collapses to the plain literal before the Unicode-disguise steps 6–8 run.
-Only the output of all eight steps, applied in this exact order, is passed to
-`noPlaceholderPatterns`. This closes both the homoglyph/zero-width/fullwidth disguise class and
-the markdown/HTML-syntax-splitting disguise class (document contract 1, check 12) — literal
-`TBD` is unaffected by this pipeline (it already matches both patterns without normalization) and
-the `negative-tbd-violation.json` fixture's expected result is unchanged by this addition.
+Steps 1–6 are deterministic, offline, regex/table-based markup- and reference-collapsing passes
+(no Markdown/HTML rendering engine is invoked, and the entity-decode table in step 6 requires no
+network access) and run first so that any markup- or character-reference-mediated splitting of the
+banned literal (HTML comments, HTML/XML tags, inline-code backtick spans, paired emphasis `*`/`_`
+markers, punctuation-adjacent escape backslashes, and HTML character references) collapses to the
+plain literal before the Unicode-disguise steps 7–9 run. Steps 4 and 5 are deliberately scoped to
+**plausible placeholder-disguise context** (a paired emphasis run, or a backslash immediately
+before ASCII punctuation) rather than unconditional global character deletion, so that an
+unrelated `*`/`_`/`\` occurrence elsewhere in a real corpus file cannot manufacture a false
+`placeholder-violation` by accidental adjacency; `REAL-SPEC-COMPATIBILITY-SET.md`'s `Reason`
+column (document contract 7) therefore reflects a genuine disguised-or-literal match, not a
+normalization artifact. Only the output of all nine steps, applied in this exact order, is passed
+to `noPlaceholderPatterns`. This closes the homoglyph/zero-width/fullwidth disguise class, the
+markdown/HTML-syntax-splitting disguise class, and the HTML-character-reference-splitting
+disguise class (document contract 1, check 12) — literal `TBD` is unaffected by this pipeline (it
+already matches both patterns without normalization), and the `negative-tbd-violation.json`
+fixture (document contract 6) is extended, not merely left unchanged, to additionally prove the
+entity-splitting disguise case this addition introduces.
 
 `specShapes.*.pathPattern` deterministically selects which shape rule applies to a given file path
 (no content sniffing): a file under `docs/INITIATIVES/*/parcels/*.md` is `coordinator-parcel`
@@ -322,10 +376,11 @@ shape; a file under `docs/specs/active/*.md` or `docs/specs/done/*.md` is `ticke
 other path given to the validator is `unrecognized-shape` and fails deterministically rather than
 guessing.
 
-`requiredFrontmatterKeysCommonToBothShapes` uses exactly the snake_case keys P2's
-`classification-axes.schema.json` already pins as the authoritative frontmatter-key mapping for
-`delivery_classes`/`guidance_classes`/`substance_function_risk` (document contract 1 of P2's
-spec) — P3-A reuses that mapping verbatim rather than redeclaring it.
+`requiredFrontmatterKeysCommonToBothShapes` uses exactly the snake_case keys P2's spec (document
+contract 1 of `parcels/P2.md`) already pins as the authoritative camelCase-to-snake_case
+correspondence for the fold-input keys `classification-axes.schema.json` itself declares in
+camelCase (`deliveryClasses`/`guidanceClasses`/`substanceFunctionRisk`) — P3-A reuses that
+prose mapping verbatim rather than redeclaring it.
 
 `requiredSectionDerivation: "fold-live"` means: at validation time, read the spec's declared
 `delivery_classes` array, run it through `fold-engine.md`'s `union-set` resolution against
@@ -371,8 +426,20 @@ pair, deterministically, from the document's actual ATX heading set:
    resolve to its own distinct heading *occurrence* (identified by position in document order, not
    by text) — no single heading occurrence may be counted as satisfying more than one required
    term. The resolver assigns headings to terms via a one-to-one bipartite match (each heading used
-   at most once); if the only headings that textually match a given term are already consumed by
-   other terms' matches, that term resolves `satisfied: false`.
+   at most once), computed by this **pinned, deterministic resolution** (not merely an existence
+   property of *some* maximum matching — the identity of the reported satisfied/unsatisfied term
+   set and the specific heading attributed to each term must be identical between any two
+   independent, correct implementations of this document contract): process required terms in the
+   fixed order they appear in the live `requiredSpecAdditions` union for the spec's declared,
+   folded class set (the same deterministic order document contract 1's fold-live derivation
+   already produces); for each term in that order, assign it the lexicographically least (by
+   normalized heading text, ties broken by earlier document-order position) still-unconsumed
+   candidate heading occurrence that textually matches it, per the matching rule above; a term
+   with no remaining unconsumed matching candidate at its turn resolves `satisfied: false`. This
+   greedy-by-fixed-term-order, lexicographically-least-candidate assignment is the one resolution
+   every conformant implementation (this parcel's own `verify-p3a.ps1` and any future reimplementer,
+   e.g. P4's general linter) must produce identically for the same input, so `Reason` (document
+   contract 7, check 10) is reproducible across implementations, not implementation-defined.
 2. **Heading-length bound.** A candidate heading's own normalized token count (after the lowercase/
    `/`-and-`-`-to-space/whitespace-collapse/trailing-`s`-strip normalization above) must not exceed
    the matched term's (or matched alias's) normalized token count by more than 4 tokens, and must
@@ -414,16 +481,29 @@ touch:
   `extension-point-not-additive` on violation."
   (check 7 asserts this exact sentence is present, byte-for-byte, as a pinned obligation, not
   unchecked prose.)
-- **`domain-overlay-insertion`** — the single named seam where a thin domain overlay (D2), such as
-  P3-B's future guidance-class/substance-function-risk capability binding, attaches without
-  redesigning `parcel-spec.schema.json`. Mechanic: `parcel-spec.schema.json` declares a reserved,
-  currently-empty closed registry object `extensionSections: {}` (present in the schema file as an
-  explicit empty object, not a `TBD`). A future parcel operating under its own approved spec may
-  append a new named key to this object (for example a guidance-class label) binding it to an
-  additional required-section term, but may not alter any other key already present. A spec that
-  declares a reference to an extension-section key **not present** in this registry fails
-  validation with the named error `unknown-extension-point` — this is the mechanic the
-  `negative-unknown-extension-point` fixture proves. This subsection must pin, verbatim, the
+- **`domain-overlay-insertion`** — the single named seam where a thin domain overlay (D2) attaches
+  without redesigning `parcel-spec.schema.json`; which future parcel(s) use this seam, and for
+  what purpose, is determined entirely by that future parcel's own approved spec, not by this one.
+  Mechanic: `parcel-spec.schema.json` declares a reserved, currently-empty closed registry object
+  `extensionSections: {}` (present in the schema file as an explicit empty object, not a `TBD`). A
+  future parcel operating under its own approved spec may append a new named key to this object
+  (for example a generic, non-product-semantic delivery-class-adjacent label, to be named and
+  defined entirely by that future parcel's own approved spec — not a product capability, claim,
+  guidance-class, or substance/function-risk binding, which remains P3-B/P0-B's exclusive
+  territory per this parcel's own Frozen-surfaces and Hard-constraints sections) binding it to an
+  additional required-section term, but may not alter any other key already present. **Non-binding
+  topology note:** the one-key-to-one-required-section-term shape just described is this
+  extension point's minimal, illustrative default only, not a structural ceiling this parcel
+  freezes. A future parcel's own approved spec may extend or redesign the internal shape of what
+  an `extensionSections` key binds to (for example binding one key to more than one
+  required-section term, or to a conditional or cross-axis rule) without that redesign being
+  treated as a violation of this parcel's additive-only, frozen-surface guarantee for
+  `EXTENSION-POINTS.md` — the guarantee this parcel freezes is the *existence* of the
+  `extensionSections` seam and the disjointness/non-removal invariant below, not the internal
+  shape of a future binding. A spec that declares a reference to an extension-section key **not
+  present** in this registry fails validation with the named error `unknown-extension-point` —
+  this is the mechanic the `negative-unknown-extension-point` fixture proves. This subsection must
+  pin, verbatim, the
   sentence: "A newly appended `extensionSections` key's normalized form (same normalization as
   `SECTION-HEADING-MAP.md`) must not equal any term already present in the live
   `requiredSpecAdditions` union at append time, nor equal any other `extensionSections` key; no
@@ -460,10 +540,20 @@ that one delivery class. Each template:
   example the `standard` template has headings satisfying `objective`, `surfaces`, `contracts`,
   `acceptance criteria`, `tests`, and `rollback`), each heading's body containing instructive prose
   plus a `[REPLACE: ...]` marker for the author to fill in, never a blank heading and never `TBD`.
-- Contains one additional `## Extension points used` section, pre-filled to the literal sentence
-  "None." for all eight templates (no template presupposes a domain-overlay or future-class
-  extension; a spec author adds that section's content only if a later parcel's approved spec
-  requires it).
+  **Deterministic content-quality floor (check 8):** each such heading's body, after every
+  `[REPLACE:[^\]]+]` span is removed, must contain at least 8 whitespace-delimited word tokens of
+  prose — a heading whose entire body is the `[REPLACE: ...]` marker and nothing else fails this
+  floor. This is a deterministic, mechanically checkable lower bound on "instructive prose," not a
+  content-truth judgment (the "Structural validation only" scope disclaimer in Hard constraints
+  still applies to whether the 8+ words are substantively correct — only their presence and count
+  are checked).
+- Contains one additional `## Extension points used` heading, literal text exactly `## Extension
+  points used`, whose body is the literal sentence "None." and nothing else, for all eight
+  templates (no template presupposes a domain-overlay or future-class extension; a spec author
+  adds that section's content only if a later parcel's approved spec requires it). **Deterministic
+  check (check 8):** the verifier requires this exact heading text to be present in each template
+  and its body, after trimming leading/trailing whitespace, to equal the literal string `None.`
+  exactly — any other body content, or the heading's absence, fails check 8.
 - Is, once every `[REPLACE: ...]` marker is replaced with concrete values, a fully conforming
   `parcel-spec.schema.json` instance for its one declared class — this is the basis for the eight
   `positive-template-<class>.json` fixtures below, which the verifier derives mechanically from
@@ -498,8 +588,12 @@ separate throwaway Markdown file under an active/done-like path). `expected` car
   verifier with a short deterministic literal (for example the literal string `filled`) before
   validation, so the fixture proves the template's *structure* is conforming independent of a
   human author's specific word choices; `expected.result` is `"valid"`.
-- `negative-tbd-violation.json`: a `syntheticSpec` whose body contains the literal substring `TBD`
-  outside any sanctioned-marker scope; `expected.result` is `"invalid"`,
+- `negative-tbd-violation.json`: a `syntheticSpec` whose body contains two independent cases, each
+  of which alone would already fail validation: (1) the literal substring `TBD` outside any
+  sanctioned-marker scope, and (2) a second, separate occurrence disguised as an HTML character
+  reference (e.g. `T&#66;D`), proving the `decode-html-entities` normalization step (document
+  contract 1) actually collapses an entity-split disguise before the placeholder patterns are
+  evaluated, not merely that the pipeline step is pinned; `expected.result` is `"invalid"`,
   `expected.reason` is `"placeholder-violation"`.
 - `negative-missing-required-field.json`: a `syntheticSpec` whose `frontmatter` omits `owner`;
   `expected.result` is `"invalid"`, `expected.reason` is `"missing-required-frontmatter-key"`,
@@ -558,9 +652,15 @@ removed, reordered, or reworded.
 `INDEX.md` gets exactly one appended row, in the existing ten-column order, for `P3-A`: `Status` =
 `review-candidate`; `Spec` links this file; `Goal Charter` links the charter; `Delivery classes` =
 `standard; architecture`; `Guidance classes` = `not-applicable`; `Branch/worktree` and `Owner` both
-use the literal closed status value `coordinator-assigns-at-gate-2` (the same literal P2's own row
-used, continuing the practice P2 itself started instead of repeating the registry's pre-existing
-ad hoc `TBD` cells — see "Carry-over"); `Review requirement` = `2 independent reviewers`;
+use the literal closed status value `coordinator-assigns-at-gate-2` (the literal `parcels/P2.md`
+itself declared, at its own dispatch time, that its `INDEX.md` row would carry — see
+`parcels/P2.md` document contract 9, lines 392-394 and 527 — as a dispatch-time registry-cell
+convention instead of repeating the registry's pre-existing ad hoc `TBD` cells; the current,
+closed `docs/specs/INDEX.md` P2 row no longer carries this literal, because P2's Gate 2 record
+later resolved it to the real branch/worktree and owner links once those identities were assigned
+— continuing this same practice means P3-A's new row is expected to be similarly superseded by
+real links once this parcel's own Gate 2 record is created, not that the literal remains
+permanently in the registry; see "Carry-over"); `Review requirement` = `2 independent reviewers`;
 `Closure` = `not-yet-closed`. No existing row may change.
 
 ## Acceptance criteria
@@ -582,9 +682,12 @@ ad hoc `TBD` cells — see "Carry-over"); `Review requirement` = `2 independent 
   object is present and empty at this parcel's shipped hash.
 - **AC-P3A-04 — Template conformance, one per delivery class:** all eight templates exist, each
   independently resolves to `"valid"` against `parcel-spec.schema.json` once fill-in markers are
-  substituted, and each template's declared `delivery_classes` fold resolves every
+  substituted, each template's declared `delivery_classes` fold resolves every
   `requiredSpecAdditions` term for that one class to a **distinct, length-bounded** satisfied
-  heading (document contract 2's anti-heading-soup constraints, check 8).
+  heading (document contract 2's anti-heading-soup constraints, check 8), each required heading's
+  pre-substitution body meets the 8-word deterministic content-quality floor, and the literal
+  `## Extension points used` heading with body exactly `None.` is present (document contract 4's
+  deterministic content-quality checks, check 8).
 - **AC-P3A-05 — Fixture proof, including violation and extension cases:** all twelve `fixtures/p3a`
   fixtures parse, and the verifier's embedded fold-live resolver reproduces every fixture's
   `expected` result and (when invalid) `reason` exactly from its `input`.
@@ -646,21 +749,27 @@ dependencies, and must exit nonzero on any failure:
    `contracts`, `.github`, and every path returned by
    `git ls-files docs/specs/active docs/specs/done` at `BaseCommit` excluding the two README
    files.
-5. Parse `parcel-spec.schema.json`; require exactly the top-level keys pinned in document contract
-   1; require `specShapes` to have exactly the two named shapes with their pinned `pathPattern`/
-   `idFrontmatterKey` values; require `requiredFrontmatterKeysCommonToBothShapes` to equal the
-   pinned nine-key array in order; require `statusClosedVocabulary` to equal the pinned four-value
-   array in order; require the five `*Source` keys to equal their pinned literal paths; require
-   `noPlaceholderPatterns` to equal the pinned two-pattern array; require
-   `sanctionedTemplateFillInMarker` and its scope to equal the pinned literals.
+5. Parse `parcel-spec.schema.json`; require exactly the 15 top-level keys pinned in document
+   contract 1 (no more, no fewer); require `specShapes` to have exactly the two named shapes with
+   their pinned `pathPattern`/`idFrontmatterKey` values; require
+   `requiredFrontmatterKeysCommonToBothShapes` to equal the pinned nine-key array in order; require
+   `statusClosedVocabulary` to equal the pinned four-value array in order; require the five
+   `*Source` keys to equal their pinned literal paths; require `noPlaceholderPatterns` to equal the
+   pinned two-pattern array; require `sanctionedTemplateFillInMarker` and its scope to equal the
+   pinned literals; require `placeholderNormalizationSteps` to equal the pinned nine-step array in
+   order; require the `extensionSections` key's **value**, not merely its presence, to equal an
+   empty object `{}` exactly — this is the value-level assertion that resolves the 14-vs-15-key
+   contradiction: check 5 alone, against the 15-key list, is the single place this parcel asserts
+   both `extensionSections`'s presence and its value; check 7 below does not re-assert presence.
 6. Parse `delivery-class-controls.json` (read-only); compute the live union of every
    `requiredSpecAdditions` array; parse `SECTION-HEADING-MAP.md`'s table; require its term column,
    as a set, to equal that live union exactly (AC-P3A-02); require every row to have a non-empty
    `Canonical alias(es)` cell and `Source` equal to the literal `delivery-class-controls.json`.
 7. Parse `EXTENSION-POINTS.md`; require exactly the three named extension-point headings and each
-   one's non-binding verbatim sentence to appear at least once; require `parcel-spec.schema.json`'s
-   `extensionSections` key to be present and equal to an empty object `{}`. Additionally require
-   `delivery-class-extension`'s subsection to contain, byte-for-byte, the pinned
+   one's non-binding verbatim sentence to appear at least once (`parcel-spec.schema.json`'s
+   `extensionSections` key's presence and `{}` value are already asserted by check 5; this check
+   does not re-assert them). Additionally require `delivery-class-extension`'s subsection to
+   contain, byte-for-byte, the pinned
    append-only/non-duplicating invariant sentence, and `domain-overlay-insertion`'s subsection to
    contain, byte-for-byte, the pinned disjointness-and-non-removal invariant sentence, exactly as
    both are quoted in document contract 3 — making the additive-only extension-point promise a
@@ -680,7 +789,14 @@ dependencies, and must exit nonzero on any failure:
    term, or via a heading exceeding the length bound, resolves `satisfied: false` and fails the
    check); require zero remaining occurrence of `TBD`/`TODO`/`FIXME`/`{{`/`[REPLACE:` in the
    substituted document, applying the `placeholderNormalizationSteps` pipeline (document contract
-   1) before scanning.
+   1) before scanning; on the **pre-substitution** document (before the `filled`-literal
+   substitution above), for each required heading located by the fold-live resolver, remove every
+   `\[REPLACE:[^\]]+\]` span from that heading's body text and require at least 8 remaining
+   whitespace-delimited word tokens (document contract 4's deterministic content-quality floor;
+   fewer than 8 fails `template-content-floor-not-met` naming the heading); require a heading with
+   literal text exactly `## Extension points used` to be present and its body, trimmed of leading/
+   trailing whitespace, to equal exactly the literal string `None.` (absence or any other body
+   content fails `extension-points-used-section-missing-or-malformed`).
 9. For each of the twelve `fixtures/p3a/*.json` fixtures: parse JSON; require exactly the keys
    `input`/`expected`; for the eight positive fixtures, resolve `input.specPath` to the real
    template file (re-running the same substitution and fold-live resolution as check 8, including
@@ -708,18 +824,21 @@ dependencies, and must exit nonzero on any failure:
 12. For every file changed or added by this parcel, first apply the pinned
     `placeholderNormalizationSteps` pipeline (document contract 1) to its text, in order: (a) strip
     HTML comments (`<!--...-->`); (b) strip HTML/XML tags; (c) strip inline-code backtick
-    delimiters; (d) strip Markdown emphasis delimiters (`*`, `_`); (e) strip Markdown escape
-    backslashes (`\`); (f) strip all Unicode category `Cf` and `Cc` characters (zero-width
-    space/non-joiner/joiner, soft hyphen, and all other format/control codepoints); (g)
-    NFKC-normalize the result (collapsing fullwidth and mathematical-alphanumeric forms to ASCII);
-    (h) apply the Unicode confusables-skeleton transform (UTS #39) to the result. Only then search
-    the normalized text for `(?im)(^\s*(TBD|TODO|FIXME)\s*[:|\-])|(\{\{[^}]+\}\})` and,
+    delimiters; (d) strip paired Markdown emphasis delimiters (`*`, `_`); (e) strip
+    punctuation-adjacent Markdown escape backslashes (`\` immediately followed by ASCII
+    punctuation); (f) decode HTML5 named/decimal/hexadecimal character references; (g) strip all
+    Unicode category `Cf` and `Cc` characters (zero-width space/non-joiner/joiner, soft hyphen, and
+    all other format/control codepoints); (h) NFKC-normalize the result (collapsing fullwidth and
+    mathematical-alphanumeric forms to ASCII); (i) apply the Unicode confusables-skeleton transform
+    (UTS #39) to the result. Only then search the normalized text for
+    `(?im)(^\s*(TBD|TODO|FIXME)\s*[:|\-])|(\{\{[^}]+\}\})` and,
     independently, `(?i)\b(TBD|TODO|FIXME)\b`; require zero matches in every file — this is
     the check that makes homoglyph (e.g. Cyrillic lookalikes), zero-width-character, soft-hyphen,
     fullwidth, and mathematical-alphanumeric disguises, **and** markdown/HTML-syntax-splitting
-    disguises (HTML comments, tags, inline-code spans, emphasis markers, escape backslashes), of
-    `TBD`/`TODO`/`FIXME` fail identically to the literal form; separately search every file **not**
-    under `docs/specs/templates/` for
+    disguises (HTML comments, tags, inline-code spans, paired emphasis markers,
+    punctuation-adjacent escape backslashes), **and** HTML-character-reference-splitting disguises,
+    of `TBD`/`TODO`/`FIXME` fail identically to the literal form; separately search every file
+    **not** under `docs/specs/templates/` for
     `\[REPLACE:[^\]]+\]` (on the normalized text); require zero matches there (AC-P3A-06); require
     every file under `docs/specs/templates/` to contain at least one `[REPLACE: ...]` occurrence (a
     template with none would be suspiciously over-filled, not genuinely a scaffold).
@@ -885,6 +1004,13 @@ permission envelope, the deterministic verification command with both identities
 realized, the evidence destination `artifacts/p3a-verification`, and the two reviewers. Like P2,
 P3-A's Gate 2 record is created out-of-band before the dispatch anchor and is not part of the
 builder's diff — the registry and composed substrate P3-A depends on already exist.
+
+**`BaseCommit` is pinned at the moment the coordinator writes this Gate 2 record, not at this
+spec's shaping/approval time.** The coordinator re-verifies the registry/P2-substrate HEAD at
+Gate 2 record creation and records that commit's full 40-character SHA as `BaseCommit`; the
+`main@6f46310a6113fae60805feeb65cac50d6b847ba3` literal in "Lineage and dependencies" above is a
+shaping-time observation, not a stale-but-current `BaseCommit` value, and must not be copied into
+the Gate 2 record without first re-verifying it is still the registry/P2-substrate HEAD.
 
 Step 0 is mandatory: before editing, the builder restates the objective, allowed and forbidden
 surfaces, frozen contracts, acceptance criteria, branch/worktree/base, checks, evidence, and stop
