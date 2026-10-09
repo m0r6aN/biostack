@@ -61,7 +61,7 @@ points so that a future delivery class, a future domain-overlay binding (P3-B, P
 per-class template can extend this substrate through a bounded, additive mechanic without
 requiring P3-A's own files to be redesigned. **Scope of what P3-A actually ships (reusability
 correction):** this parcel ships the contract and a self-check verifier (`verify-p3a.ps1`) scoped
-to this parcel's own 27 surfaces — it is not yet a general `validate <path>` entrypoint any other
+to this parcel's own 28 surfaces — it is not yet a general `validate <path>` entrypoint any other
 BIO-* ticket or future parcel spec can invoke directly; that reusable invocation path is P4's
 general-linter deliverable (see Stop Conditions). Until P4 ships, "every future parcel spec...
 validates against" means *is defined to be checked against this contract*, not *is mechanically
@@ -94,8 +94,9 @@ active/done spec's frontmatter or body.
    `parcel-spec.schema.json` once its sanctioned fill-in markers are replaced.
 5. `docs/specs/templates/README.md` — how to choose a template, declare multiple delivery classes
    (multi-label composition via the fold), and use the domain-overlay extension point.
-6. Twelve fixtures under `docs/specs/schemas/fixtures/p3a/`: eight positive per-class
-   template-derived fixtures, one no-`TBD` violation, one missing-required-field case, one
+6. Thirteen fixtures under `docs/specs/schemas/fixtures/p3a/`: eight positive per-class
+   template-derived fixtures, two independently dispositive no-`TBD` violation cases (one literal,
+   one HTML-entity-disguised — see document contract 6), one missing-required-field case, one
    unknown-extension-point case, and the real-spec compatibility-set manifest.
 7. `docs/specs/scripts/verify-p3a.ps1` — the parcel-specific deterministic verifier, including the
    embedded live fold-and-heading-match implementation.
@@ -129,14 +130,15 @@ The builder may create or modify only:
 18. `docs/specs/schemas/fixtures/p3a/positive-template-provider-pilot.json` — new.
 19. `docs/specs/schemas/fixtures/p3a/positive-template-legal-policy.json` — new.
 20. `docs/specs/schemas/fixtures/p3a/positive-template-knowledge-promotion.json` — new.
-21. `docs/specs/schemas/fixtures/p3a/negative-tbd-violation.json` — new.
-22. `docs/specs/schemas/fixtures/p3a/negative-missing-required-field.json` — new.
-23. `docs/specs/schemas/fixtures/p3a/negative-unknown-extension-point.json` — new.
-24. `docs/specs/schemas/fixtures/p3a/REAL-SPEC-COMPATIBILITY-SET.md` — new.
-25. `docs/specs/scripts/verify-p3a.ps1` — new.
-26. `docs/specs/README.md` — modified. Exactly one appended section (zero removed or reordered
+21. `docs/specs/schemas/fixtures/p3a/negative-tbd-violation-literal.json` — new.
+22. `docs/specs/schemas/fixtures/p3a/negative-tbd-violation-entity-disguised.json` — new.
+23. `docs/specs/schemas/fixtures/p3a/negative-missing-required-field.json` — new.
+24. `docs/specs/schemas/fixtures/p3a/negative-unknown-extension-point.json` — new.
+25. `docs/specs/schemas/fixtures/p3a/REAL-SPEC-COMPATIBILITY-SET.md` — new.
+26. `docs/specs/scripts/verify-p3a.ps1` — new.
+27. `docs/specs/README.md` — modified. Exactly one appended section (zero removed or reordered
     lines).
-27. `docs/specs/INDEX.md` — modified. Exactly one appended table row for `P3-A`, in the existing
+28. `docs/specs/INDEX.md` — modified. Exactly one appended table row for `P3-A`, in the existing
     column order, with zero removed lines, zero column changes, and zero edits to any other row.
 
 No other path may change. In particular, the builder must not edit any file under
@@ -213,10 +215,17 @@ without editing it.
   `T<!--x-->BD`, `` T`BD ``, `T**BD**`, `T<span></span>BD`) and HTML-character-reference splitting
   (e.g. `T&#66;D`, `T&#x42;D`) by collapsing that markup and those references away before the
   literal is matched. **Scope of this claim (what is fixture-proven, not merely pinned):**
-  `negative-tbd-violation.json` (document contract 6) proves the literal case and one
-  markup-splitting case and the HTML-character-reference-splitting case are each caught; no
-  fixture in this parcel independently exercises every individual homoglyph, zero-width,
-  fullwidth, or mathematical-alphanumeric disguise. The pipeline steps themselves remain a pinned,
+  `negative-tbd-violation-literal.json` and `negative-tbd-violation-entity-disguised.json`
+  (document contract 6) are each independently dispositive, single-violation fixtures: the first
+  proves the literal case alone is caught, and the second proves the HTML-character-reference-
+  splitting case alone is caught (a validator whose `decode-html-entities` step is a no-op passes
+  the first fixture and fails only the second, isolating exactly which pipeline step regressed).
+  No fixture in this parcel independently exercises the markdown/HTML-syntax-splitting disguise
+  classes (HTML comments, HTML/XML tags, inline-code backtick spans, paired emphasis markers,
+  escape backslashes) or every individual homoglyph, zero-width, fullwidth, or
+  mathematical-alphanumeric disguise, in isolation — those pipeline steps (document contract 1,
+  steps 1-5 and 7-9) remain pinned, mandatory obligations enforced by check 12 against every file
+  this parcel ships, not independently fixture-proven. The pipeline steps themselves remain a pinned,
   mandatory obligation — check 12 fails any file where the normalized text still matches
   `noPlaceholderPatterns`, regardless of disguise class — but a reviewer evaluating this
   parcel's deterministic proof should read "defeats disguise class X" as "the corresponding
@@ -366,9 +375,11 @@ normalization artifact. Only the output of all nine steps, applied in this exact
 to `noPlaceholderPatterns`. This closes the homoglyph/zero-width/fullwidth disguise class, the
 markdown/HTML-syntax-splitting disguise class, and the HTML-character-reference-splitting
 disguise class (document contract 1, check 12) — literal `TBD` is unaffected by this pipeline (it
-already matches both patterns without normalization), and the `negative-tbd-violation.json`
-fixture (document contract 6) is extended, not merely left unchanged, to additionally prove the
-entity-splitting disguise case this addition introduces.
+already matches both patterns without normalization), and a dedicated
+`negative-tbd-violation-entity-disguised.json` fixture (document contract 6), containing only the
+entity-disguised occurrence and no co-located literal `TBD`, is added — not folded into the
+existing literal-case fixture — so that it alone, independently, proves the entity-splitting
+disguise case this addition introduces.
 
 `specShapes.*.pathPattern` deterministically selects which shape rule applies to a given file path
 (no content sniffing): a file under `docs/INITIATIVES/*/parcels/*.md` is `coordinator-parcel`
@@ -429,17 +440,23 @@ pair, deterministically, from the document's actual ATX heading set:
    at most once), computed by this **pinned, deterministic resolution** (not merely an existence
    property of *some* maximum matching — the identity of the reported satisfied/unsatisfied term
    set and the specific heading attributed to each term must be identical between any two
-   independent, correct implementations of this document contract): process required terms in the
-   fixed order they appear in the live `requiredSpecAdditions` union for the spec's declared,
-   folded class set (the same deterministic order document contract 1's fold-live derivation
-   already produces); for each term in that order, assign it the lexicographically least (by
-   normalized heading text, ties broken by earlier document-order position) still-unconsumed
-   candidate heading occurrence that textually matches it, per the matching rule above; a term
-   with no remaining unconsumed matching candidate at its turn resolves `satisfied: false`. This
-   greedy-by-fixed-term-order, lexicographically-least-candidate assignment is the one resolution
-   every conformant implementation (this parcel's own `verify-p3a.ps1` and any future reimplementer,
-   e.g. P4's general linter) must produce identically for the same input, so `Reason` (document
-   contract 7, check 10) is reproducible across implementations, not implementation-defined.
+   independent, correct implementations of this document contract): process required terms in
+   strict ordinal (byte-value) lexicographic ascending order of the live, deduplicated
+   `requiredSpecAdditions` union's term strings for the spec's declared, folded class set — not
+   `delivery_classes` declaration order, not `delivery-class-controls.json`'s key order, and not
+   any other insertion-dependent order; this ordinal-lexicographic sort of the union's own term
+   strings is the one textually pinned iteration rule this document contract defines, independent
+   of how `fold-engine.md`'s internal `union-set` construction happens to iterate (document
+   contract 1's fold-live derivation obtains the union's *membership*, not its processing order;
+   this document contract alone pins the order). For each term in that ordinal-lexicographic
+   order, assign it the lexicographically least (by normalized heading text, ties broken by
+   earlier document-order position) still-unconsumed candidate heading occurrence that textually
+   matches it, per the matching rule above; a term with no remaining unconsumed matching candidate
+   at its turn resolves `satisfied: false`. This greedy-by-ordinal-lexicographic-term-order,
+   lexicographically-least-candidate assignment is the one resolution every conformant
+   implementation (this parcel's own `verify-p3a.ps1` and any future reimplementer, e.g. P4's
+   general linter) must produce identically for the same input, so `Reason` (document contract 7,
+   check 10) is reproducible across implementations, not implementation-defined.
 2. **Heading-length bound.** A candidate heading's own normalized token count (after the lowercase/
    `/`-and-`-`-to-space/whitespace-collapse/trailing-`s`-strip normalization above) must not exceed
    the matched term's (or matched alias's) normalized token count by more than 4 tokens, and must
@@ -570,31 +587,48 @@ under this schema (P3-A pass-through stance, same as P2); and how to reference t
 under `docs/specs/templates/` other than the nine listed deliverables (eight class templates plus
 this README) may be added by this parcel.
 
-### 6. Twelve fixtures under `docs/specs/schemas/fixtures/p3a/`
+### 6. Thirteen fixtures under `docs/specs/schemas/fixtures/p3a/`
 
 Each JSON fixture has exactly the keys `input` and `expected`, matching P2's fixture shape
 convention. `input` carries `specPath` (a path string; for the eight positive fixtures, the actual
 path of the corresponding template file in this parcel's own deliverables — the verifier reads
 that real file rather than an inlined copy, so the fixture and the template can never silently
-diverge), or, for the three negative fixtures, an inlined `syntheticSpec` object with
+diverge), or, for the four negative fixtures, an inlined `syntheticSpec` object with
 `frontmatter` and `headings` keys standing in for a file (so the negative cases do not require a
 separate throwaway Markdown file under an active/done-like path). `expected` carries `result`
 (`"valid"` or `"invalid"`), and, when `"invalid"`, a `reason` naming exactly one of
 `missing-required-frontmatter-key`, `unknown-label`, `empty-required-axis`,
 `missing-required-section`, `placeholder-violation`, or `unknown-extension-point`.
 
+**Independently dispositive negative fixtures (mandatory design rule):** each negative fixture's
+`syntheticSpec` must contain **exactly one** violation — never two or more co-located violations
+in the same `syntheticSpec` — so that `expected.result`/`expected.reason` is attributable to that
+one fixture's one named mechanism alone. A validator with a correctly implemented mechanism passes
+the fixture; a validator with a no-op or missing implementation of that one mechanism fails it;
+no fixture's pass/fail outcome may be explainable by any other mechanism also present in the same
+`syntheticSpec`. The two no-`TBD` fixtures below apply this rule to split what would otherwise be
+a single, non-dispositive multi-violation fixture into two single-violation fixtures.
+
 - `positive-template-<class>.json` (eight files, one per delivery class): `input.specPath` points
   at that class's template file with every `[REPLACE: ...]` marker mechanically substituted by the
   verifier with a short deterministic literal (for example the literal string `filled`) before
   validation, so the fixture proves the template's *structure* is conforming independent of a
   human author's specific word choices; `expected.result` is `"valid"`.
-- `negative-tbd-violation.json`: a `syntheticSpec` whose body contains two independent cases, each
-  of which alone would already fail validation: (1) the literal substring `TBD` outside any
-  sanctioned-marker scope, and (2) a second, separate occurrence disguised as an HTML character
-  reference (e.g. `T&#66;D`), proving the `decode-html-entities` normalization step (document
-  contract 1) actually collapses an entity-split disguise before the placeholder patterns are
-  evaluated, not merely that the pipeline step is pinned; `expected.result` is `"invalid"`,
-  `expected.reason` is `"placeholder-violation"`.
+- `negative-tbd-violation-literal.json`: a `syntheticSpec` whose body contains the literal
+  substring `TBD` outside any sanctioned-marker scope, and **no other** placeholder-pattern
+  occurrence anywhere in the `syntheticSpec` (in particular, no HTML-entity-disguised or other
+  disguised occurrence); `expected.result` is `"invalid"`, `expected.reason` is
+  `"placeholder-violation"`. This fixture alone proves the literal-match path independent of any
+  normalization step.
+- `negative-tbd-violation-entity-disguised.json`: a `syntheticSpec` whose body contains **only**
+  a single occurrence of `TBD` disguised as an HTML character reference (e.g. `T&#66;D`), and **no
+  co-located literal `TBD`** anywhere else in the `syntheticSpec`; `expected.result` is
+  `"invalid"`, `expected.reason` is `"placeholder-violation"`. Because this is the fixture's
+  **only** violation, a validator whose `decode-html-entities` normalization step (document
+  contract 1) is a no-op or absent cannot find any literal `TBD` to fall back on and therefore
+  fails this fixture — making the fixture independently dispositive proof that the
+  `decode-html-entities` step actually runs and actually collapses the entity-split disguise,
+  not merely that the pipeline step is pinned in `placeholderNormalizationSteps`.
 - `negative-missing-required-field.json`: a `syntheticSpec` whose `frontmatter` omits `owner`;
   `expected.result` is `"invalid"`, `expected.reason` is `"missing-required-frontmatter-key"`,
   naming `owner`.
@@ -607,9 +641,16 @@ separate throwaway Markdown file under an active/done-like path). `expected` car
 
 A Markdown document with exactly one table, header `Spec file | Shape | AXIS-REGRESSION-MAP
 disposition | parcel-spec.schema.json result | Reason | Agreement`, and exactly one data row for
-every file returned by `git ls-files docs/specs/active docs/specs/done` at `BaseCommit`, excluding
-the two README files — the identical 26-file set P2's `AXIS-REGRESSION-MAP.md` already enumerates
-at the same `BaseCommit` lineage. For each row:
+every file path that appears as a `Spec file` row in P2's **frozen**
+`docs/specs/schemas/AXIS-REGRESSION-MAP.md` (26 files, fixed by that file's own shipped content at
+its own pinned `BaseCommit` lineage) — not a live `git ls-files docs/specs/active docs/specs/done`
+query at this parcel's own `BaseCommit`. The row set is bound to the frozen P2 census, not to
+whatever the live `docs/specs/active`/`docs/specs/done` directory listing happens to contain at
+verification time: corpus growth after P2's `BaseCommit` (for example a new ticket spec added to
+`docs/specs/active/` after P2 closed) adds no row to this file and does not change the row count,
+and a file removed from the live corpus after P2's `BaseCommit` does not remove its row either —
+the set is exactly, and only, P2's own frozen enumeration, so this file's row count and content
+cannot be falsified by ordinary corpus growth. For each row:
 
 - `Shape` is `ticket-spec` for every `.md` file and `n/a (non-spec artifact)` for the two
   `*.shaping-result.json` files (which are excluded from schema validation entirely, exactly as
@@ -635,8 +676,9 @@ as `verify-p1.ps1`/`verify-p2.ps1`: scope-and-frozen-surface checks (surface enu
 byte-identity); schema shape-correctness checks on `parcel-spec.schema.json`,
 `SECTION-HEADING-MAP.md` (including the live term-set cross-check against
 `delivery-class-controls.json`), and `EXTENSION-POINTS.md`; a fold-live required-section resolver
-reused identically across all twelve `fixtures/p3a/` fixtures and the 26-row real-spec
-compatibility pass; a placeholder scan scoped exactly as the hard constraints section specifies;
+reused identically across all thirteen `fixtures/p3a/` fixtures and the frozen-P2-census real-spec
+compatibility pass (26 rows, bound to `AXIS-REGRESSION-MAP.md`'s own enumeration); a placeholder
+scan scoped exactly as the hard constraints section specifies;
 and the standard evidence-bundle and clean-tree checks. The full, numbered check list is specified
 exactly in "Deterministic verification" below.
 
@@ -654,7 +696,7 @@ removed, reordered, or reworded.
 `standard; architecture`; `Guidance classes` = `not-applicable`; `Branch/worktree` and `Owner` both
 use the literal closed status value `coordinator-assigns-at-gate-2` (the literal `parcels/P2.md`
 itself declared, at its own dispatch time, that its `INDEX.md` row would carry — see
-`parcels/P2.md` document contract 9, lines 392-394 and 527 — as a dispatch-time registry-cell
+`parcels/P2.md` document contract 8, lines 392-394 and 527 — as a dispatch-time registry-cell
 convention instead of repeating the registry's pre-existing ad hoc `TBD` cells; the current,
 closed `docs/specs/INDEX.md` P2 row no longer carries this literal, because P2's Gate 2 record
 later resolved it to the real branch/worktree and owner links once those identities were assigned
@@ -688,25 +730,36 @@ permanently in the registry; see "Carry-over"); `Review requirement` = `2 indepe
   pre-substitution body meets the 8-word deterministic content-quality floor, and the literal
   `## Extension points used` heading with body exactly `None.` is present (document contract 4's
   deterministic content-quality checks, check 8).
-- **AC-P3A-05 — Fixture proof, including violation and extension cases:** all twelve `fixtures/p3a`
-  fixtures parse, and the verifier's embedded fold-live resolver reproduces every fixture's
-  `expected` result and (when invalid) `reason` exactly from its `input`.
+- **AC-P3A-05 — Fixture proof, including violation and extension cases:** all thirteen
+  `fixtures/p3a` fixtures parse, and the verifier's embedded fold-live resolver reproduces every
+  fixture's `expected` result and (when invalid) `reason` exactly from its `input`.
 - **AC-P3A-06 — No `TBD` anywhere, including disguised forms, with the sole sanctioned
   exception:** no file under this parcel's surfaces outside `docs/specs/templates/**` contains the
   sanctioned marker or any of the banned placeholder patterns **after** the pinned
-  `placeholderNormalizationSteps` pipeline is applied (catching homoglyph, zero-width, soft-hyphen,
-  fullwidth, and mathematical-alphanumeric disguises, and markdown/HTML-syntax-splitting disguises
-  via HTML comments, HTML/XML tags, inline-code backtick spans, emphasis markers, and escape
-  backslashes — not only the literal ASCII form); files under `docs/specs/templates/**` contain
-  only the sanctioned marker as their incomplete-value syntax.
+  `placeholderNormalizationSteps` pipeline is applied — not only the literal ASCII form, but also
+  the literal and HTML-character-reference-splitting disguise cases, which are the only two
+  disguise classes this parcel's own fixtures independently prove (document contract 6,
+  `negative-tbd-violation-literal.json` / `negative-tbd-violation-entity-disguised.json`). The
+  pipeline additionally pins, as a mandatory structural obligation enforced by check 12 against
+  every file this parcel ships (but not independently fixture-proven in isolation; see the Hard
+  constraints "Scope of this claim" disclaimer), normalization steps for homoglyph, zero-width,
+  soft-hyphen, fullwidth, and mathematical-alphanumeric disguises, and for
+  markdown/HTML-syntax-splitting disguises via HTML comments, HTML/XML tags, inline-code backtick
+  spans, emphasis markers, and escape backslashes — this acceptance criterion's coverage claim is
+  therefore scoped to the fixture-proven literal and entity-reference-splitting cases, not to an
+  independent adversarial-corpus proof of every disguise class the pipeline structurally defends
+  against; files under `docs/specs/templates/**` contain only the sanctioned marker as their
+  incomplete-value syntax.
 - **AC-P3A-07 — Real-spec compatibility, not reconciliation:** `REAL-SPEC-COMPATIBILITY-SET.md`
-  has exactly one row per the 26-file P2 census set, every row's `parcel-spec.schema.json result`
-  and `Reason` are independently and actually derived (not copied from P2), and no inspected spec
-  is edited.
+  has exactly one row per file enumerated in P2's frozen `AXIS-REGRESSION-MAP.md` (26 files, fixed
+  by that file's own shipped content — not re-derived from a live `git ls-files` listing of
+  `docs/specs/active`/`docs/specs/done`, so later corpus growth cannot change this row set or
+  falsify this criterion), every row's `parcel-spec.schema.json result` and `Reason` are
+  independently and actually derived (not copied from P2), and no inspected spec is edited.
 - **AC-P3A-08 — No product capability semantics:** no file under this parcel's surfaces assigns
   meaning, claim, evidence, or allowed/degraded/refused/escalated behavior to any guidance-class or
   substance/function-risk label.
-- **AC-P3A-09 — Scope integrity:** the changed-file set equals exactly the 27 allowed surfaces;
+- **AC-P3A-09 — Scope integrity:** the changed-file set equals exactly the 28 allowed surfaces;
   every frozen surface (charter, plan-review, every closed P1/P2 artifact, all five P2 schema/
   fold/routing/regression files and P2's own fixtures, `CORE-CONTEXT.md`, `active/README.md`,
   `done/README.md`, every existing active/done spec, `AGENTS.md`, production-readiness tree,
@@ -721,7 +774,7 @@ permanently in the registry; see "Carry-over"); `Review requirement` = `2 indepe
 
 ## Deterministic verification
 
-Run from the coordinator-named isolated P3-A worktree after committing all 27 deliverables:
+Run from the coordinator-named isolated P3-A worktree after committing all 28 deliverables:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File docs/specs/scripts/verify-p3a.ps1 `
@@ -739,7 +792,7 @@ dependencies, and must exit nonzero on any failure:
    `git merge-base --is-ancestor BaseCommit HEAD`.
 2. Run `git diff --check "$BaseCommit...HEAD"`; require exit `0`.
 3. Read `git diff --name-only "$BaseCommit...HEAD" --`; require the changed set to equal exactly
-   the 27 allowed surfaces listed in this spec, sorted ordinally — no more, no fewer.
+   the 28 allowed surfaces listed in this spec, sorted ordinally — no more, no fewer.
 4. Require `git diff --quiet "$BaseCommit...HEAD" --` to exit `0` for each of: the charter path,
    the plan-review path, `parcels/P1.md`, `parcels/P2.md`, `dispatch/P1-GATE2.md`,
    `closures/P1.md`, `closures/P2.md`, the five P2 schema/fold/routing/regression-map files, every
@@ -797,24 +850,32 @@ dependencies, and must exit nonzero on any failure:
    literal text exactly `## Extension points used` to be present and its body, trimmed of leading/
    trailing whitespace, to equal exactly the literal string `None.` (absence or any other body
    content fails `extension-points-used-section-missing-or-malformed`).
-9. For each of the twelve `fixtures/p3a/*.json` fixtures: parse JSON; require exactly the keys
+9. For each of the thirteen `fixtures/p3a/*.json` fixtures: parse JSON; require exactly the keys
    `input`/`expected`; for the eight positive fixtures, resolve `input.specPath` to the real
    template file (re-running the same substitution and fold-live resolution as check 8, including
    its anti-heading-soup and placeholder-normalization sub-constraints) and require
-   `expected.result` to equal `"valid"`; for the three negative fixtures, run the validator
+   `expected.result` to equal `"valid"`; for the four negative fixtures, run the validator
    directly against the inlined `syntheticSpec` — applying the same `placeholderNormalizationSteps`
    pipeline and anti-heading-soup constraints the resolver uses everywhere else — and require
    `expected.result` to equal `"invalid"` with the pinned `expected.reason` value exactly as named
-   in document contract 6.
+   in document contract 6; additionally, for `negative-tbd-violation-literal.json` and
+   `negative-tbd-violation-entity-disguised.json` specifically, require each `syntheticSpec`'s body
+   to contain exactly one placeholder-pattern-matching occurrence after normalization (never two
+   or more), failing `fixture-not-independently-dispositive` if either fixture's body contains any
+   second occurrence — enforcing document contract 6's independently-dispositive-fixture design
+   rule as a named, checked invariant rather than unchecked prose.
 10. Parse `REAL-SPEC-COMPATIBILITY-SET.md`; require the header row to equal the exact six-column
-    header pinned in document contract 7; require the row count to equal
-    `(git ls-files docs/specs/active docs/specs/done | at BaseCommit).Count - 2`; for every `.md`
-    row, actually run the validator against the real file at `BaseCommit` and require the recorded
-    `parcel-spec.schema.json result`/`Reason` to equal what the validator independently produces
-    (not merely present); require every `*.shaping-result.json` row to record `Shape` =
-    `n/a (non-spec artifact)` and all remaining columns `n/a`; require the `Agreement` column to be
-    correctly computed per the rule in document contract 7 for every row (independent
-    recomputation, not copied from the file).
+    header pinned in document contract 7; require the row set's `Spec file` column, as a set, to
+    equal exactly the set of `Spec file` values in P2's frozen `docs/specs/schemas/
+    AXIS-REGRESSION-MAP.md` (read live from that frozen file, 26 rows as of P2's shipped content —
+    not re-derived from `git ls-files docs/specs/active docs/specs/done`, which may return a
+    different, larger set at this parcel's own `BaseCommit` and is irrelevant to this check); for
+    every `.md` row, actually run the validator against the real file at `BaseCommit` and require
+    the recorded `parcel-spec.schema.json result`/`Reason` to equal what the validator
+    independently produces (not merely present); require every `*.shaping-result.json` row to
+    record `Shape` = `n/a (non-spec artifact)` and all remaining columns `n/a`; require the
+    `Agreement` column to be correctly computed per the rule in document contract 7 for every row
+    (independent recomputation, not copied from the file).
 11. Require the `INDEX.md` diff to add exactly one line matching `^\| P3-A \|` and remove zero
     lines; parse the added row and require its ten cells to equal exactly the pinned values in
     document contract 9, specifically asserting the literal `coordinator-assigns-at-gate-2` (not
@@ -867,9 +928,9 @@ warning-only acceptance.
 | AC-P3A-02 | `heading-map-check.json` |
 | AC-P3A-03 | `extension-points-check.json` |
 | AC-P3A-04 | `template-check.json` |
-| AC-P3A-05 | `fixture-results.json` (all twelve fixtures) |
+| AC-P3A-05 | `fixture-results.json` (all thirteen fixtures) |
 | AC-P3A-06 | placeholder-scan output (two P2-style patterns plus the template-marker scope checks) |
-| AC-P3A-07 | `compatibility-set-check.json` (all 26 rows) |
+| AC-P3A-07 | `compatibility-set-check.json` (all 26 rows, bound to `AXIS-REGRESSION-MAP.md`'s frozen enumeration) |
 | AC-P3A-08 | `schema-check.json`/`extension-points-check.json` plus reviewer scan |
 | AC-P3A-09 | `changed-files.txt` plus frozen-path quiet-diff result |
 | AC-P3A-10 | `changed-files.txt` plus bounded-diff result for `INDEX.md`/`README.md` |
@@ -953,10 +1014,10 @@ Both items are satisfied by naming and evidencing the gap inside P3-A's own read
 or any existing active/done spec).
 
 3. **Self-identified gap: the `coordinator-parcel` shape is specified but exercised by no fixture
-   or compatibility-set row in this parcel.** All twelve `fixtures/p3a/*.json` fixtures are
+   or compatibility-set row in this parcel.** All thirteen `fixtures/p3a/*.json` fixtures are
    `ticket-spec`-shape-adjacent synthetics or template-derived (also destined to become
    `coordinator-parcel`-shape files once used, but not themselves parsed as one in this parcel's
-   own fixture set), and `REAL-SPEC-COMPATIBILITY-SET.md`'s 26-row real-corpus pass is scoped
+   own fixture set), and `REAL-SPEC-COMPATIBILITY-SET.md`'s 26-row frozen-P2-census pass is scoped
    exactly to `docs/specs/active`/`docs/specs/done` (`ticket-spec` shape only), per P2's
    `AXIS-REGRESSION-MAP.md` lineage — it never runs the schema against an actual
    `docs/INITIATIVES/*/parcels/*.md` file. Per the corrected `appliesFrom` value (document contract
@@ -999,7 +1060,7 @@ untracked files.
 
 The coordinator writes the Gate 2 record before builder dispatch, naming: the approved spec path
 and SHA-256, the single `BaseCommit` dispatch anchor SHA, the isolated branch, the isolated
-worktree path starting at that anchor, the builder identity, the 27 builder-editable surfaces, the
+worktree path starting at that anchor, the builder identity, the 28 builder-editable surfaces, the
 permission envelope, the deterministic verification command with both identities and `BaseCommit`
 realized, the evidence destination `artifacts/p3a-verification`, and the two reviewers. Like P2,
 P3-A's Gate 2 record is created out-of-band before the dispatch anchor and is not part of the
