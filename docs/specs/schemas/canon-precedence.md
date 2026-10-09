@@ -161,6 +161,33 @@ document-level rank to be usable as stated.
 
 ---
 
+## 4a. Directional-application constraint (D-K, coordinator, 2026-10-09)
+
+Triggered by `p0a_impl_review_2` finding F1 (BLOCKER-candidate): mechanically applying this
+manifest's total order to still-open rows CI-002/CI-005 (CHARTER.md's broad "may" list versus the
+narrower safety prohibitions in `docs/canon/biostack-protocol-intelligence-canon.md` and
+`docs/product/knowledge-engine-capability-map.md`) resolves document authority in favor of the
+more permissive text, and nothing in this manifest warned against treating that as license to
+weaken a safety prohibition. The coordinator ruled Decision D-K
+(`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`, `## D-K` heading) to close this gap.
+Transcribed here verbatim, unedited, as this manifest's binding application constraint:
+
+> The precedence manifest answers **document authority order only**. Where the mechanically
+> resolved order favors a more permissive text over a narrower safety prohibition, the
+> prohibition **stands unchanged** until an explicit owner ruling supersedes it. Such rows route
+> to the owner through P0-D's disposition process; a P0-D builder must never weaken a safety
+> prohibition by rank alone. This is consistent with the charter's must-not list, D12's principle
+> (controls calibrate useful guidance; they do not license weakened safety), and D-I's staged-split
+> posture, all of which are already the owner's ruled doctrine.
+
+This constraint is fails-safe and owner-overridable (an override reopens only this rule, not any
+rank or any `CI-NNN` disposition). It governs the application of section 3's `compare(A, B)`
+function wherever its outcome would otherwise be read as resolving, weakening, or superseding a
+narrower safety prohibition in favor of a higher-ranked but more permissive document — `compare`
+itself is unchanged; this constraint bounds how its result may be used.
+
+---
+
 ## 5. Extension rule
 
 A future document not yet in this registry is placed by applying the same three-property test
