@@ -36,7 +36,7 @@ gate (Coordinator Decisions D-G, below).
     `908FAA5999526DE76CC7E21B6753D41BC8BDB9F29C5F1717A504D9103E4CA7AE`. The file grew between the
     two anchors by two further owner-dated entries: **D-H** ("Owner directive: Gate 3 posture +
     P0-B design gate opened," `## D-H` heading, lines 125-150) and **D-I** ("P0-B design gate
-    RULED," `## D-I` heading, lines 152-169) — both now load-bearing for this parcel (see
+    RULED," `## D-I` heading, lines 152-170) — both now load-bearing for this parcel (see
     "Required source list" items 12-13 and the D-I cross-reference on CI-001 in "Seed findings,"
     below).
   - **D-G entry text anchor** — the section headed `## D-G — P0-A authorization (owner,
@@ -374,7 +374,7 @@ failure (see Deterministic verification, `seed-regression` check).
 | CI-001 | Personalized numerical dose/reconstitution/schedule recommendations | CHARTER.md ratified doctrine, "BioStack may": *"Originate evidence-bounded numerical recommendations, including dose targets, reconstitution choices, and schedules, when the applicable capability contract permits it. Such outputs are recommendations, not prescriptions, and must carry numeric provenance, rationale, evidence applicability, uncertainty, risk controls, and escalation behavior... Perform deterministic reconstitution, concentration, dose, split, volume, and syringe-unit calculations"*; D13: *"BioStack may originate profile-aware dose, reconstitution, schedule, and support recommendations when the function contract, evidence, provenance, validation, uncertainty, and escalation requirements are satisfied. This does not authorize diagnosis, prescribing, clinician impersonation, or unsupervised alteration of prescribed treatment."* | `docs/canon/biostack-protocol-intelligence-canon.md` "Observational-Only Boundary", `must not`: *"Give clinical dosing instructions... Recommend starting, stopping, tapering, combining, escalating, or substituting substances"*; `README.md` "Safety and compliance boundary": *"does not provide clinical diagnosis, prescribing, medical dosing recommendations, individualized dosing... start/stop/taper/escalation advice"*; `docs/guidance/biostack-guidance-content-contract.v1.md` Class D: *"Selecting the correct dose for a person"* and *"Personalized titration schedules"* are **Prohibited** | contradictory | resolved-by-owner-ruling | P0-D1 |
 | CI-002 | Protocol-builder flows for high-risk substance categories | CHARTER.md ratified doctrine, "BioStack may": *"Design and compare protocol options, including compounds, combinations, sequencing, timing, frequency, schedules"* | `docs/canon/biostack-protocol-intelligence-canon.md`, `must not`: *"Design SARM cycles. Design SERM recovery protocols. Provide post-cycle therapy instructions... Create protocol-builder flows for SARMs, SERMs, investigational peptides, gray-market compounds, or other high-risk substances."* | contradictory | fix | P0-D1 |
 | CI-003 | Syringe-visualization versus a blanket injection-instruction prohibition | CHARTER.md ratified doctrine: *"show what a selected value looks like on the syringe"* | `docs/canon/biostack-protocol-intelligence-canon.md`, `must not`: *"Give injection instructions."* | contradictory | fix | P0-D2 |
-| CI-004 | Profile-aware recommendation language versus Class C/D's explicit ceiling | CHARTER.md ratified doctrine: *"Make educated, profile-aware recommendations using relevant factors such as age, weight, goals, prior experience, current protocol, medications, conditions, tolerance, symptoms, biomarkers, diet, activity, and longitudinal observations."* | `docs/guidance/biostack-guidance-content-contract.v1.md` Class C: *"Must not morph into 'you should start at X.'"*; Class D: *"Declaring an amount safe for the user,"* *"Declaring a protocol appropriate for the user"* — both **Prohibited** | contradictory | fix | P0-D2 |
+| CI-004 | Profile-aware recommendation language versus Class C/D's explicit ceiling | CHARTER.md ratified doctrine: *"Make educated, profile-aware recommendations using relevant factors such as age, weight, goals, prior experience, current protocol, medications, conditions, tolerance, symptoms, biomarkers, diet, activity, and longitudinal observations."* | `docs/guidance/biostack-guidance-content-contract.v1.md` Class C: *"Must not morph into “you should start at X.”"*; Class D: *"Declaring an amount safe for the user,"* *"Declaring a protocol appropriate for the user"* — both **Prohibited** | contradictory | fix | P0-D2 |
 | CI-005 | Capability map's independent prohibition list versus CHARTER.md `may` list | `docs/product/knowledge-engine-capability-map.md`: *"It does not authorize medical authority, diagnosis, prescribing, individualized dosing, treatment planning, start/stop/taper/escalation instructions, cycles, PCT, injection instructions, or sourcing guidance."* | CHARTER.md ratified doctrine `may` list (same spans cited in CI-001/CI-002/CI-003) | contradictory | fix | P0-D3 |
 | CI-006 | Warning-first framing versus "more evidence, not less information" governing principle | CHARTER.md governing principle: *"High risk requires more evidence, explanation, validation, review, and escalation. It does not automatically require less useful information."* | `docs/canon/biostack-protocol-intelligence-canon.md`: *"Warning-first for high-risk categories: high-risk substances are surfaced through risk, regulatory, and observability context before any benefit framing."* | consistent | not-applicable | not-applicable |
 | CI-007 | Privacy/data-custody claim moratorium | README.md: *"`/privacy` and `/terms` are stubs pending approved policy. No data-custody, storage-location, or privacy guarantee may be claimed on any public surface until they are approved."* | (no contradicting source found in the required list; catalogued because it is an explicit, dated legal-policy claim-moratorium other canon must not silently violate) | consistent | not-applicable | not-applicable |
@@ -443,18 +443,32 @@ settled.
   2. **Unreadable** — the path exists at `BaseCommit` but the filesystem denies read access at
      dispatch time (a hard OS-level read failure, not a parsing difficulty, format objection, or
      judgment call).
-  3. **Outside this worktree's checkout** — the path is named in the Required source list but
-     this dispatch worktree's checkout does not contain it at `BaseCommit` (for example, a
-     submodule or sparse-checkout exclusion), independent of whether the file exists elsewhere in
-     the repository's history.
+  3. **Outside this worktree's checkout** — the path is named in the Required source list,
+     `git cat-file -e <BaseCommit>:<path>` **succeeds** (the path is a tracked entry in the
+     pinned commit's tree, ruling out condition 1), and a direct filesystem read of that same
+     `<path>` inside this dispatch worktree **fails** with a hard OS-level read error (for
+     example, a submodule gitlink not checked out, or a sparse-checkout cone exclusion) — the
+     same tree-present-but-unreadable-here combination that distinguishes "excluded from this
+     checkout" from both condition 1 (absent from the commit entirely) and a genuinely readable
+     file (which would fail this condition's second test), independent of whether the file exists
+     elsewhere in the repository's history.
   A row marked `unreviewable` must name which of these three conditions applies and cite the exact
-  evidence that proves it in `SOURCE-MANIFEST.md`'s reason field (for example, the failing `git
-  cat-file -e` invocation or the OS error text) — a vague reason ("not reviewed," "out of
-  scope," "deprioritized") fails validation, and so does marking a file `unreviewable` without
-  this evidence. `unreviewable-claim-verified` (Deterministic verification, below) independently
-  re-checks every such claim against the filesystem at `BaseCommit` and fails closed if the named
-  file is, in fact, present and readable. A required source missing entirely from the Source
-  Manifest (neither read nor recorded `unreviewable`) fails validation.
+  evidence that proves it in `SOURCE-MANIFEST.md`'s reason field, together with the pinned
+  `BaseCommit` SHA: for condition 1, the failing `git cat-file -e <BaseCommit>:<path>` invocation's
+  exact exit status/error text; for condition 2, the OS-level read error text; for condition 3,
+  **both** the successful `git cat-file -e <BaseCommit>:<path>` invocation's output (proving tree
+  presence) **and** the exact OS-level read error text from the failed worktree filesystem read
+  (proving checkout absence) — a vague reason ("not reviewed," "out of scope," "deprioritized")
+  fails validation, and so does marking a file `unreviewable` without this evidence. Recording the
+  `BaseCommit` SHA alongside the quoted git/OS error text makes every `unreviewable` claim,
+  including condition 3, independently reproducible by re-running the same two commands against
+  that pinned commit, not merely asserted. `unreviewable-claim-verified` (Deterministic
+  verification, below) independently re-checks every such claim, by replaying exactly this
+  evidence, against the filesystem at `BaseCommit` and fails closed if the named file is, in fact,
+  present and readable (or, for condition 3 specifically, if the `git cat-file -e` step itself
+  fails — that is condition 1, not condition 3, and is also a fail-closed mismatch). A required
+  source missing entirely from the Source Manifest (neither read nor recorded `unreviewable`)
+  fails validation.
 - **Red flags:** if a cataloged contradiction itself implicates the `acute-red-flag-or-emergency`
   or `controlled-or-illegal-sourcing` substance/function-risk labels (for example, a canon
   disagreement about whether BioStack may ever direct sourcing, or about escalation during a
@@ -628,7 +642,13 @@ builder stops without editing it.
 - **Real-corpus grounding, not synthetic examples.** Every `CI-NNN` row's quotations must be
   verifiably present, verbatim, in the cited file at the cited location at the pinned
   `BaseCommit`. A quotation that does not match the source file byte-for-byte (modulo leading/
-  trailing whitespace) fails validation.
+  trailing whitespace) fails validation. The straight double quotation marks (`"`) this spec uses
+  as its own citation delimiter (opening/closing a quoted span) are not part of the quoted content
+  and are exempt from the byte-for-byte test; any quotation mark that appears *inside* a cited
+  span is source content and must reproduce the source's exact glyph (curly “/” or
+  ‘/’ vs. straight "/'), with no typographic normalization permitted there.
+  `seed-regression` (Deterministic verification, below) carries this same exact-glyph floor
+  forward for the ten seed rows.
 
 ## Deterministic verification
 
@@ -697,9 +717,14 @@ Additional, parcel-specific deterministic checks `verify-p0a.ps1` must implement
   with a valid `consistent`/`contradictory`/`unreviewable` status and a reviewable citation or
   reason.
 - `unreviewable-claim-verified` — for every `SOURCE-MANIFEST.md` row marked `unreviewable`, the
-  verifier independently re-checks the named condition (deleted/unreadable/outside-checkout, per
-  Health-boundary "Missingness," above) against the filesystem at `BaseCommit` and fails closed
-  (`false-unreviewable-claim`) if the named file is, in fact, present and readable at `BaseCommit`
+  verifier independently re-checks the named condition against `BaseCommit` by replaying the
+  recorded evidence: for condition 1 (deleted), re-runs `git cat-file -e <BaseCommit>:<path>` and
+  fails closed unless it fails identically; for condition 2 (unreadable), re-attempts the
+  filesystem read and fails closed unless it fails identically; for condition 3 (outside this
+  worktree's checkout), re-runs **both** `git cat-file -e <BaseCommit>:<path>` (must succeed) and
+  the filesystem read (must fail) and fails closed (`false-unreviewable-claim`) unless exactly that
+  pairing holds — a `git cat-file -e` failure under a condition-3 claim is a condition-1/condition-3
+  mismatch, and a successful filesystem read under any condition is a `false-unreviewable-claim`
   — a bypass-prevention check, not a courtesy re-read.
 - `corpus-coverage-matrix-complete` — every combinatorial pair of required sources (including
   items 12-13) has a recorded `compared-contradictory`/`compared-consistent`/`scope-disjoint`
