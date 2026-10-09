@@ -1,6 +1,10 @@
 # P0-B Design Gate — What the Product May Say
 
-Status: **OPEN — awaiting owner rulings (D-B1..D-B6 below)**
+Status: **RULED (2026-10-08)** — owner: "D-B1: c · D-B2–D-B6: as recommended" (recorded verbatim
+in Coordinator Decisions **D-I**). The matrix below is **frozen as P0-B's normative design
+input** and will be encoded verbatim in the P0-B parcel spec after P0-A freezes canon
+precedence. The v2.0.0 re-ratification required by D-B1(c) before public enablement of
+`biostack-recommended` origination remains a separate owner event.
 
 Coordinator presentation for the owner's fresh P0-B gate, as required by Coordinator Decision
 **D-G** ("P0-B ... returns to the owner for a fresh gate **with its design presented** (it decides

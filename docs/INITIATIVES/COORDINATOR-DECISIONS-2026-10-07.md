@@ -148,3 +148,23 @@ Recorded as two distinct grants:
    remains unauthorized** until (a) the owner's D-B1..D-B6 rulings are recorded and (b) P0-A
    freezes canon precedence per the charter dependency spine. Gate rulings, once given, are
    product doctrine of record and are encoded verbatim into the P0-B parcel spec.
+
+## D-I — P0-B design gate RULED (owner, 2026-10-08: "D-B1: c · D-B2–D-B6: as recommended")
+
+The owner rules on the design presented in
+`docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md`:
+
+1. **D-B1 = (c) staged split.** Deterministic math on user-entered values + guidance-contract
+   v1.0.0 Class A/B/C surfaces are the product's current posture. `biostack-recommended`
+   origination (dose targets, schedules, profile-aware picks) is defined in the P0-B contract but
+   publicly enabled only after guidance-content-contract **v2.0.0** re-ratification +
+   `legal_product_ratification` — a separate owner event.
+2. **D-B2–D-B6 = as recommended.** The per-label behavior matrix (D-B2), fail-closed numeric
+   provenance rules (D-B3), missing-input ladder (D-B4), function-review/public-enablement rules
+   (D-B5), and escalation semantics (D-B6) are adopted exactly as presented.
+
+No locked §1 item is changed; no charter amendment is required. Effects: the D-B1..D-B6 matrix
+is now **frozen as P0-B's normative design input** and will be encoded verbatim in the P0-B
+parcel spec. **P0-B dispatch remains gated** on P0-A freezing canon precedence (charter
+dependency spine); the §2 canon conflict is resolved in substance by D-B1(c), and P0-A's
+contradiction inventory records its disposition by this ruling.
