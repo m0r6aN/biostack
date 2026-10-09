@@ -22,10 +22,33 @@ gate (Coordinator Decisions D-G, below).
 - Governed-delivery charter SHA-256:
   `4CD390D631487DA8E97509205A186F242C4A83B762FFFA894BEEC8A21F4EFE22` (unchanged since P1, P2, and
   P3-A shaping; re-verified at this shaping time).
-- Owner-authorization ledger SHA-256 (`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`):
-  `EE506C3B54FB57ABD09BBB5180CD704AABCA3EB73875B7E760EF84B538863D47`, specifically its **D-G**
-  entry, quoted here verbatim because it is this parcel's sole standing-authorization source (the
-  charter itself grants P0 no standing authorization):
+- Owner-authorization ledger (`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`) is an
+  **append-only, living log, not a frozen artifact** — a single whole-file hash is not a durable
+  authorization anchor for it (the prior spec hash pinned to `EE506C3B54FB57ABD09BBB5180CD704AABCA3EB73875B7E760EF84B538863D47`
+  was correct at its own shaping anchor but is stale today, because the ledger has since grown by
+  two further owner-dated entries). This rework instead anchors on the entry's own text span plus
+  two dated whole-file hashes, so growth is visible rather than silently invalidating:
+  - **Shaping-time whole-file hash** (`main@32280aa2219100e20520a275d19af2fbdd1f32be`, verified by
+    `git show 32280aa2219100e20520a275d19af2fbdd1f32be:docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md | sha256sum`):
+    `EE506C3B54FB57ABD09BBB5180CD704AABCA3EB73875B7E760EF84B538863D47`.
+  - **Current whole-file hash** (this rework's shaping anchor, verified by direct
+    `sha256sum docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`):
+    `908FAA5999526DE76CC7E21B6753D41BC8BDB9F29C5F1717A504D9103E4CA7AE`. The file grew between the
+    two anchors by two further owner-dated entries: **D-H** ("Owner directive: Gate 3 posture +
+    P0-B design gate opened," `## D-H` heading, lines 125-150) and **D-I** ("P0-B design gate
+    RULED," `## D-I` heading, lines 152-169) — both now load-bearing for this parcel (see
+    "Required source list" items 12-13 and the D-I cross-reference on CI-001 in "Seed findings,"
+    below).
+  - **D-G entry text anchor** — the section headed `## D-G — P0-A authorization (owner,
+    2026-10-08: "P0-A authorized")` (lines 114-123 at both anchors above; the entry's own text has
+    not changed between them, only later entries were appended after it). The actual proof of the
+    D-G quotation below is the SHA-256 of exactly that heading-to-next-heading span —
+    `sed -n '114,123p' docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md | sha256sum` —
+    which is `3D46AC19AEF9A0F553239B6EC984E90216286C72918FFB2AA04EFA81B90BC4F9` at both anchors. A
+    reviewer re-verifies this span-hash directly, independent of how much the whole file has grown
+    since, which is why it — not the whole-file hash — is this parcel's sole standing-authorization
+    anchor. D-G's text, quoted here verbatim because it is this parcel's sole standing-authorization
+    source (the charter itself grants P0 no standing authorization):
 
   > D-G — P0-A authorization (owner, 2026-10-08: "P0-A authorized")
   >
@@ -38,30 +61,49 @@ gate (Coordinator Decisions D-G, below).
   > health-boundary + privacy + legal-policy + knowledge-promotion sections, dual review, and the
   > human-approval conditions those classes trigger at merge.
 
+  D-H and D-I do not change or withdraw D-G's grant (P0-A's authorization stands unmodified); they
+  record two further, later owner rulings this parcel's Required source list and seed findings
+  must account for (D-H opens the P0-B design gate; D-I rules on it, resolving in substance the
+  same conflict CI-001 catalogues — see below).
 - Closed plan review: `docs/INITIATIVES/biostack-governed-delivery/PLAN-REVIEW.md`, SHA-256
   `FBE40053DAE9508AC498B1331D2AED565A4BB68025CA24E07E0DC7BB69E8E256`.
 - Closed P1 spec: `docs/INITIATIVES/biostack-governed-delivery/parcels/P1.md` — closure status
   `DONE` (`docs/INITIATIVES/biostack-governed-delivery/closures/P1.md`).
-- P2 spec (`docs/INITIATIVES/biostack-governed-delivery/parcels/P2.md`) and P3-A spec
-  (`docs/INITIATIVES/biostack-governed-delivery/parcels/P3-A.md`) are, at this shaping anchor
-  (`main@32280aa2219100e20520a275d19af2fbdd1f32be`), still recorded `review-candidate` in
-  `docs/specs/INDEX.md`, not yet merged or closed. The charter's dependency spine reads
+- P2 spec (`docs/INITIATIVES/biostack-governed-delivery/parcels/P2.md`) is `done`/closed:
+  `docs/specs/INDEX.md`'s current P2 row reads `done`, and its closure record
+  (`docs/INITIATIVES/biostack-governed-delivery/closures/P2.md`, 2026-10-08) records a completed
+  dual-review PASS chain and Gate 3 merge (PR #505). P3-A spec
+  (`docs/INITIATIVES/biostack-governed-delivery/parcels/P3-A.md`) remains `REVIEW CANDIDATE` per
+  its own file header and has **no row at all** in `docs/specs/INDEX.md` — absent, not
+  `review-candidate` there (`grep -n "P3-A" docs/specs/INDEX.md` returns no match, at the prior
+  shaping anchor or today). The charter's dependency spine reads
   `... -> P1 -> P2 -> P3-A -> P0-A -> ...`. **D-G authorizes this parcel's shaping → review →
   dispatch chain on its own terms; it does not waive the charter's dependency spine.** This spec
   may therefore be shaped and reviewed now (exactly as D-G scopes), but its **dispatch** (Gate 2)
-  additionally requires P2 and P3-A to reach merged, closed status first, because P0-A's own
-  deterministic verification posture (see "Deterministic verification" below) depends on P2's
-  frozen `classification-axes.schema.json`/`delivery-class-controls.json` content remaining stable
-  at the version this spec cites, and because P3-A's no-`TBD`/placeholder rule and generic
-  parcel-spec shape are the structural contract this spec already follows by precedent. This is
-  recorded as an explicit dispatch precondition, not silently assumed; the coordinator stops and
-  does not dispatch P0-A until P2 and P3-A close.
-- Reconciled shaping base anchor: `main@32280aa2219100e20520a275d19af2fbdd1f32be`.
+  additionally requires P3-A to reach merged, closed status (P2's own precondition is already
+  satisfied), because P0-A's own deterministic verification posture (see "Deterministic
+  verification" below) depends on P2's frozen
+  `classification-axes.schema.json`/`delivery-class-controls.json` content remaining stable at the
+  version this spec cites, and because P3-A's no-`TBD`/placeholder rule and generic parcel-spec
+  shape are the structural contract this spec already follows by precedent. This is recorded as an
+  explicit dispatch precondition, not silently assumed; the coordinator stops and does not dispatch
+  P0-A until P3-A closes.
+- Original shaping base anchor: `main@32280aa2219100e20520a275d19af2fbdd1f32be` (this parcel's
+  first-shaped hash, `50C22F74569C2453952B56E372E40BFC159162B0DE56C583C1FDC6CA93E0BC10`, was
+  reviewed against this anchor and rejected by both dual-review findings above).
+- Reconciled shaping base anchor for this rework: `main@a25a658eee2b1cf6b58dc59a2b28f5876312264a`
+  (`git merge-base --is-ancestor 32280aa2219100e20520a275d19af2fbdd1f32be HEAD` confirms the
+  original anchor is an ancestor of this one). This later anchor is the commit every hash,
+  citation, and lineage claim in this rework (D-H/D-I, the current ledger hash, P2's `done`
+  closure, `P0-B-DESIGN-GATE.md`'s existence) was re-verified against. Neither anchor is
+  `BaseCommit` (see "BaseCommit (defined term)" below) — both are only the commits this spec's own
+  text was shaped and re-verified against, across its two review cycles.
 
 ## Authorization boundary (restated, because this is the load-bearing fact of this spec)
 
-- **Authorized now:** P0-A shaping, dual independent review, and (after P2/P3-A close and triage
-  closes) dispatch of exactly the analytical inventory described below.
+- **Authorized now:** P0-A shaping, dual independent review, and (after P3-A closes — P2 has
+  already closed — and triage closes) dispatch of exactly the analytical inventory described
+  below.
 - **Not authorized by this spec or by D-G:** P0-B (Product Capability and Safety Contract,
   including per-label applicability and allowed/degraded/refused/escalated product behavior),
   P0-C (policy fixtures), and every P0-D reconciliation subparcel. Each returns to the owner for
@@ -69,6 +111,22 @@ gate (Coordinator Decisions D-G, below).
 - **Merge is the owner's decision.** A green Gate 2 dispatch, green deterministic checks, and two
   PASS reviews make this parcel mergeable; they do not make it merged. Gate 3 (merge) is reserved
   to the owner, consistent with D-G's "human-approval conditions those classes trigger at merge."
+
+## BaseCommit (defined term)
+
+`BaseCommit` is the single commit SHA this parcel's builder pins at **Gate 2 dispatch** — it is
+**not** either shaping anchor named above (`main@32280aa2219100e20520a275d19af2fbdd1f32be`,
+superseded, or `main@a25a658eee2b1cf6b58dc59a2b28f5876312264a`, this rework's own anchor), because
+both predate P3-A's close and therefore cannot themselves be the commit real-corpus citations are
+verified against at dispatch time. The coordinator's Gate 2 dispatch record (made only once the
+"P3-A must reach merged, closed status first" precondition above clears) names the exact
+`BaseCommit` SHA. Every clause in this spec that reads "at `BaseCommit`" — "Real-corpus grounding"
+(Hard constraints), the `canonical-write-fencing-violation`/`unresolvable-citation` check, the
+Health-boundary "Missingness" rule, and `unreviewable-claim-verified` (Deterministic verification)
+— binds to that one pinned commit for the whole of this parcel's dispatch: the builder does not
+re-pin it mid-dispatch, and a citation verified against any other commit (including either shaping
+anchor above) does not satisfy these checks. This mirrors how P2 and P3-A each bind a single
+`BaseCommit` dispatch anchor in their own Gate 2 builder handoff requirements.
 
 ## Objective
 
@@ -84,9 +142,18 @@ conflict deterministically, without re-litigating authority order each time:
 2. **Contradiction inventory** — an exhaustive, citation-backed catalogue of every inconsistency
    this parcel's required source list (below) contains, each row naming its exact sources (file +
    section/heading or line range + quoted text), the conflict's class-axis tags (from P2's closed
-   vocabularies), and a proposed disposition (`fix`, `accept-as-documented`, or `informational`)
-   for a later P0-D subparcel to execute. P0-A proposes dispositions; it never executes one, and a
-   proposed disposition is not itself a reconciliation.
+   vocabularies), and a proposed disposition (`fix`, `accept-as-documented`, `informational`, or
+   `resolved-by-owner-ruling`) for a later P0-D subparcel to execute (or, for
+   `resolved-by-owner-ruling` rows, to encode an already-ruled resolution into the canon of
+   record). P0-A proposes dispositions; it never executes one, and a proposed disposition is not
+   itself a reconciliation. "Exhaustive" is a best-effort, reviewer-checked claim, not a
+   verifier-provable one — no script can prove the negative "no contradiction was missed"; the two
+   independent reviewers are the actual backstop against silent narrowing. To make *coverage* (as
+   distinct from exhaustiveness of *findings*) checkable rather than merely asserted, the builder
+   also produces a **corpus-coverage matrix** (deliverable 2, required document contract 4, below)
+   recording, for every pair of required sources, whether they were explicitly compared and with
+   what outcome; `corpus-coverage-matrix-complete` (Deterministic verification) fails if any
+   required-source pair has no recorded comparison outcome at all.
 
 P0-A is read-only against product behavior: it changes no runtime code, no product contract, no
 guidance-content-contract class, no canon document, and no existing spec. It produces new,
@@ -102,9 +169,10 @@ worktree's checkout).
 
 1. `docs/INITIATIVES/biostack-governed-delivery/CHARTER.md` — the ratified product doctrine
    (`may`/`must not` lists, the four product guidance classes, the closed substance/function-risk
-   vocabulary, D1-D18) — the most recent, most explicit ratification event in the corpus, and
-   therefore a **candidate for top precedence rank** (see "Precedence manifest" below for why this
-   is a reasoned rank, not an assumption).
+   vocabulary, D1-D18). Its own text carries no internal, dated ratification event (the lineage
+   phrase "the developer's product-purpose correction and explicit `100% Ratified` decision"
+   names no date in the document itself); its precedence rank is determined by the dated-evidence
+   rule in "Precedence manifest" below, not assumed here.
 2. `docs/specs/INDEX.md` and `docs/specs/README.md` (the governed spec lifecycle) — procedural
    canon on how specs are ranked, registered, and closed; narrower in scope than product doctrine
    but itself a source of possible procedural contradiction (for example a spec's declared status
@@ -133,10 +201,24 @@ worktree's checkout).
 11. `docs/INITIATIVES/biostack-local-readiness/FINAL-HANDOFF.md` — the claim-discipline precedent
     ("No public, revenue, deployment, or privacy claim below exceeds the evidence") this parcel's
     own claim-cataloguing method should be measured against.
+12. `docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md` — the owner-authorization ledger (see
+    "Lineage and dependencies" above for its anchor and the D-G/D-H/D-I entries). It now carries
+    **D-G** (this parcel's own authorization), **D-H** (P0-B design gate opened), and **D-I**
+    (P0-B design gate RULED — D-B1(c) staged split, which resolves CI-001's headline conflict in
+    substance; see "Seed findings," CI-001, below).
+13. `docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md` — the decision package D-H
+    opened and D-I ruled on. Its §2 ("The central conflict this gate must resolve") states, in the
+    same terms CI-001 catalogues, the guidance-content-contract v1.0.0 Class D prohibition versus
+    charter D13's "may," and its D-B1 table records the owner's staged-split resolution this
+    parcel's seed findings cross-reference.
 
 Sources 1-2 are governance/procedural canon; 3-9 are product-doctrine canon; 10-11 are
 narrower-scope precedent the inventory uses to test whether product-doctrine contradictions have
-already propagated into parcel-level specs and closure records.
+already propagated into parcel-level specs and closure records; 12-13 are owner-decision/
+design-gate records — procedural rulings about other canon, not canon ratification events
+themselves (see "Precedence manifest," classification guidance for borderline document types,
+below) — read and cross-referenced by the contradiction inventory but not entered into the
+precedence registry.
 
 ## Precedence manifest (deliverable 1)
 
@@ -151,15 +233,42 @@ in this exact priority so the result is deterministic rather than a subjective r
    Fully ratified," "100% Ratified," or equivalent recorded sign-off naming who ratified it and
    when) outranks a document with no recorded ratification event.
 2. **Recency of ratification** — among documents with a ratification event, the later-dated event
-   outranks the earlier one. The charter's ratified product doctrine (lineage: "the developer's
-   product-purpose correction and explicit `100% Ratified` decision") is, at this shaping time, the
-   most recent ratification event touching product-doctrine scope found in the required source
-   list, which is why it provisionally ranks first — not because it is the charter, but because it
-   is the newest ratified correction. If a future ratification event postdates it, the manifest's
-   tie-break rule (below) requires re-ranking, not silent charter precedence.
+   outranks the earlier one. This rule is applied against the registry's actual dated evidence, not
+   pre-judged here: `CHARTER.md`'s own text carries no internal, dated ratification event (only the
+   undated lineage phrase "the developer's product-purpose correction and explicit `100%
+   Ratified` decision"; `git log -1 --format=%ad -- CHARTER.md` shows its last file touch, not a
+   ratification date, and is not itself a ratification-event citation), while
+   `docs/guidance/biostack-guidance-content-contract.v1.md` carries an explicit, dated, named-owner
+   event ("Fully ratified | 2026-08-02 (Clint Morgan — all gates passed; no remaining
+   blockers)"). This spec does not assert which of the two therefore ranks first under rule 2 — the
+   builder applies rule 2 to the registry's actual dated evidence and records, in
+   `canon-precedence.md`'s table, the specific dated ratification record each document's rank rests
+   on. A rank assigned under this rule without naming the dated event it is based on fails
+   `precedence-manifest-totality` (below); an undated document is ranked only under rule 1 (no
+   recorded event) or rule 3 (scope breadth), never rule 2.
 3. **Scope breadth** — among documents tied on both (1) and (2) (for example, two sources with no
    recorded ratification event at all), the document whose stated scope is product-wide outranks
    one whose stated scope is a single feature, pipeline, or parcel.
+
+**Classification guidance for borderline document types** (so two builders converge on the same
+registry inputs, not just the same comparison function): a **Coordinator Decisions ledger entry**
+(for example `COORDINATOR-DECISIONS-2026-10-07.md`'s D-G/D-H/D-I) is a **procedural authorization
+or ruling record**, not itself a product-doctrine ratification event under property (1) — it
+records who authorized or ruled on something and when, but none of D-G/D-H/D-I states a "Status:
+Fully ratified" or equivalent doctrine sign-off for itself. It is classified `no ratification
+event` for precedence purposes, the same as an undated document, and is **not** entered into the
+precedence registry at all — its content is read and cross-referenced by the contradiction
+inventory instead (see Required source list items 12-13 and CI-001's cross-reference, below),
+because it names which existing registry document's position the owner has ruled on, not because
+the ruling record itself outranks or is ranked against a canon document. A **design-gate decision
+package** (for example `P0-B-DESIGN-GATE.md`) is classified the same way: a decision-presentation
+and ruling record, excluded from the registry, read and cross-referenced by the contradiction
+inventory. Any other borderline document the builder's corpus read turns up is classified by the
+same test: does the document's **own text** state a dated, named-owner ratification/sign-off event
+for itself (property 1 applies, entered in the registry), or does it only record a decision,
+authorization, or ruling **about** other documents (classified `no ratification event`, excluded
+from the registry, and instead cross-referenced from the contradiction inventory, exactly as
+`COORDINATOR-DECISIONS-2026-10-07.md` and `P0-B-DESIGN-GATE.md` are here)?
 
 Any two documents tied on all three properties are **not** resolved by this parcel; P0-A records
 them as a tied pair requiring an explicit owner or P0-D1 ruling (mirroring the D-D/D-C
@@ -176,9 +285,12 @@ A single Markdown document containing, in this exact order:
    owner, or "none recorded") | Stated scope | Precedence note`, covering every document in the
    required source list plus every additional canon document the builder's corpus read turns up
    (`docs/guidance/RATIFICATION.md`, `docs/guidance/GOVERNANCE-ENFORCEMENT-FINDINGS.md`,
-   `docs/legal/*` if present and readable, etc.). Rank is a dense integer (no gaps); two documents
-   may share a rank **only** when the tie-break rule above has been applied and the tie is
-   recorded as open per the paragraph above — a shared rank is never silent.
+   `docs/legal/*` if present and readable, etc.) **except** required source list items 12-13
+   (`COORDINATOR-DECISIONS-2026-10-07.md`, `P0-B-DESIGN-GATE.md`), which the "Classification
+   guidance for borderline document types" paragraph above excludes from the registry as
+   procedural ruling records, not ratification events. Rank is a dense integer (no gaps); two
+   documents may share a rank **only** when the tie-break rule above has been applied and the tie
+   is recorded as open per the paragraph above — a shared rank is never silent.
 3. **A comparison function definition**: given any two documents both present in the registry,
    state the exact lookup (`compare(A, B) -> {A-outranks-B | B-outranks-A | open-tie, ruling-ref}`)
    and prove by construction that it is total over the registry (every registered pair resolves to
@@ -210,7 +322,7 @@ these fields)
 | `guidance_class_tags` | zero or more labels from `productGuidanceClass.labels`, or `not-applicable` |
 | `substance_function_risk_tags` | zero or more labels from `substanceFunctionRisk.labels`, or `not-applicable` |
 | `status` | exactly one of `contradictory`, `consistent` (recorded as a non-conflict row so the corpus-coverage count is auditable — see Acceptance criteria), or `unreviewable` |
-| `proposed_disposition` | exactly one of `fix`, `accept-as-documented`, `informational` — required for every `contradictory` row; `not-applicable` for `consistent`/`unreviewable` rows |
+| `proposed_disposition` | exactly one of `fix`, `accept-as-documented`, `informational`, or `resolved-by-owner-ruling` (an owner ruling already on record resolves this conflict in substance; the row cites the ruling and does not re-propose a disposition a later P0-D subparcel would decide) — required for every `contradictory` row; `not-applicable` for `consistent`/`unreviewable` rows |
 | `handoff_target` | which future P0-D subparcel (`P0-D1` core doctrine/ADR, `P0-D2` evidence methodology/guardrails, `P0-D3` product contract/README/marketing/provider copy, `P0-D4` enforcement/regression tests) would execute the disposition, or `not-applicable` |
 
 `status: contradictory` requires `proposed_disposition != not-applicable`. A row violating this
@@ -222,9 +334,12 @@ pairing fails validation (see Deterministic verification).
    the row schema above, the disposition vocabulary's exact meaning (`fix` = a later P0-D subparcel
    should change a canon document's text; `accept-as-documented` = the apparent tension is
    intentional/acceptable and should be cross-referenced rather than removed; `informational` = not
-   a true conflict, recorded for completeness), the corpus-coverage method (how the builder proves
-   every required source was actually read, not sampled), and the explicit statement that this
-   parcel proposes dispositions and never executes one.
+   a true conflict, recorded for completeness; `resolved-by-owner-ruling` = an owner ruling already
+   on record — for example a Coordinator Decisions ledger entry or a ruled design-gate decision
+   package — resolves the conflict in substance, so no P0-D execution is proposed, only a citation
+   to the ruling that already governs it), the corpus-coverage method (how the builder proves every
+   required source was actually read, not sampled), and the explicit statement that this parcel
+   proposes dispositions and never executes one.
 2. `docs/INITIATIVES/biostack-governed-delivery/parcels/P0-A-inventory/SOURCE-MANIFEST.md` — one
    row per required source (and any additional sources the builder's read turns up), each marked
    `consistent` (fully read; no contradiction found against any other catalogued source),
@@ -233,18 +348,30 @@ pairing fails validation (see Deterministic verification).
 3. `docs/INITIATIVES/biostack-governed-delivery/parcels/P0-A-inventory/CONTRADICTION-INVENTORY.md`
    — every `CI-NNN` row, in a single table or one table per topic cluster, using the row schema
    above exactly.
+4. `docs/INITIATIVES/biostack-governed-delivery/parcels/P0-A-inventory/CORPUS-COVERAGE-MATRIX.md`
+   — one row per **combinatorial pair** of required sources (`n choose 2` over the Required
+   source list items read into the corpus, items 12-13 included since they are read even though
+   excluded from the precedence registry), each marked `compared-contradictory` (cites the
+   `CI-NNN` row the pair produced), `compared-consistent` (cites the `CI-NNN` row, or the
+   `SOURCE-MANIFEST.md` entry, the pair's comparison was recorded under), or `scope-disjoint` (a
+   one-sentence reason the two sources could not plausibly conflict — for example, disjoint
+   subject matter). No pair may be silently absent; `corpus-coverage-matrix-complete` (below)
+   fails closed on any missing pair.
 
 ### Seed findings (shaping-time evidence — mandatory floor, not the full inventory)
 
 These rows were identified during this spec's corpus read. They are evidence that the method
 above is workable and non-trivial; the builder's inventory **must** carry every one of them
 forward (verified, not merely copied) and extend coverage to the rest of the required source list.
-Removing, softening, or silently merging any of these rows without a named reason is a verifier
+CI-001 additionally demonstrates the `resolved-by-owner-ruling` disposition (see the paragraph
+following the table) — reserved for a conflict an existing owner ruling already addresses in
+substance, distinct from `fix` (still open, awaiting P0-D execution). Removing, softening, or
+silently merging any of these rows without a named reason is a verifier
 failure (see Deterministic verification, `seed-regression` check).
 
 | id | topic | source_a | source_b | status | proposed_disposition | handoff_target |
 |---|---|---|---|---|---|---|
-| CI-001 | Personalized numerical dose/reconstitution/schedule recommendations | CHARTER.md ratified doctrine, "BioStack may": *"Originate evidence-bounded numerical recommendations, including dose targets, reconstitution choices, and schedules... Perform deterministic reconstitution, concentration, dose, split, volume, and syringe-unit calculations"*; D13: *"Personalized numerical guidance is allowed."* | `docs/canon/biostack-protocol-intelligence-canon.md` "Observational-Only Boundary", `must not`: *"Give clinical dosing instructions... Recommend starting, stopping, tapering, combining, escalating, or substituting substances"*; `README.md` "Safety and compliance boundary": *"does not provide clinical diagnosis, prescribing, medical dosing recommendations, individualized dosing... start/stop/taper/escalation advice"*; `docs/guidance/biostack-guidance-content-contract.v1.md` Class D: *"Selecting the correct dose for a person"* and *"Personalized titration schedules"* are **Prohibited** | contradictory | fix | P0-D1 |
+| CI-001 | Personalized numerical dose/reconstitution/schedule recommendations | CHARTER.md ratified doctrine, "BioStack may": *"Originate evidence-bounded numerical recommendations, including dose targets, reconstitution choices, and schedules, when the applicable capability contract permits it. Such outputs are recommendations, not prescriptions, and must carry numeric provenance, rationale, evidence applicability, uncertainty, risk controls, and escalation behavior... Perform deterministic reconstitution, concentration, dose, split, volume, and syringe-unit calculations"*; D13: *"BioStack may originate profile-aware dose, reconstitution, schedule, and support recommendations when the function contract, evidence, provenance, validation, uncertainty, and escalation requirements are satisfied. This does not authorize diagnosis, prescribing, clinician impersonation, or unsupervised alteration of prescribed treatment."* | `docs/canon/biostack-protocol-intelligence-canon.md` "Observational-Only Boundary", `must not`: *"Give clinical dosing instructions... Recommend starting, stopping, tapering, combining, escalating, or substituting substances"*; `README.md` "Safety and compliance boundary": *"does not provide clinical diagnosis, prescribing, medical dosing recommendations, individualized dosing... start/stop/taper/escalation advice"*; `docs/guidance/biostack-guidance-content-contract.v1.md` Class D: *"Selecting the correct dose for a person"* and *"Personalized titration schedules"* are **Prohibited** | contradictory | resolved-by-owner-ruling | P0-D1 |
 | CI-002 | Protocol-builder flows for high-risk substance categories | CHARTER.md ratified doctrine, "BioStack may": *"Design and compare protocol options, including compounds, combinations, sequencing, timing, frequency, schedules"* | `docs/canon/biostack-protocol-intelligence-canon.md`, `must not`: *"Design SARM cycles. Design SERM recovery protocols. Provide post-cycle therapy instructions... Create protocol-builder flows for SARMs, SERMs, investigational peptides, gray-market compounds, or other high-risk substances."* | contradictory | fix | P0-D1 |
 | CI-003 | Syringe-visualization versus a blanket injection-instruction prohibition | CHARTER.md ratified doctrine: *"show what a selected value looks like on the syringe"* | `docs/canon/biostack-protocol-intelligence-canon.md`, `must not`: *"Give injection instructions."* | contradictory | fix | P0-D2 |
 | CI-004 | Profile-aware recommendation language versus Class C/D's explicit ceiling | CHARTER.md ratified doctrine: *"Make educated, profile-aware recommendations using relevant factors such as age, weight, goals, prior experience, current protocol, medications, conditions, tolerance, symptoms, biomarkers, diet, activity, and longitudinal observations."* | `docs/guidance/biostack-guidance-content-contract.v1.md` Class C: *"Must not morph into 'you should start at X.'"*; Class D: *"Declaring an amount safe for the user,"* *"Declaring a protocol appropriate for the user"* — both **Prohibited** | contradictory | fix | P0-D2 |
@@ -262,6 +389,31 @@ demonstrates the `unreviewable` outcome distinct from both: a claim exists, but 
 determine consistency or contradiction without a function-review assignment that does not yet
 exist — recording that gap *is* the finding, and it is explicitly not this parcel's job to assign
 one (that crosses into legal-policy adjudication, which D-G does not authorize).
+
+CI-001 carries `proposed_disposition: resolved-by-owner-ruling` rather than `fix`: Coordinator
+Decision **D-I** (`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md`, `## D-I` heading, lines
+152-169) rules **D-B1 = (c) staged split** on exactly this conflict, which
+`docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md` §2 ("The central conflict this
+gate must resolve," lines 56-76) states in the same terms CI-001 catalogues (guidance-content-
+contract v1.0.0 Class D prohibition versus charter D13's "may"). D-I states explicitly: *"the §2
+canon conflict is resolved in substance by D-B1(c), and P0-A's contradiction inventory records its
+disposition by this ruling."* D-B1(c)'s resolution (`P0-B-DESIGN-GATE.md` D-B1 table): deterministic
+math on user-entered values plus Class A/B/C surfaces are the product's current posture now;
+`biostack-recommended` origination — the dosing/schedule/reconstitution-target behavior CI-001
+names — is defined in the P0-B contract but remains publicly gated behind guidance-content-contract
+**v2.0.0** re-ratification, a separate future owner event. This row keeps `status: contradictory`
+because the underlying canon texts still disagree on their own terms — the ruling settles which
+posture governs the product now; it amends neither document's text, and guidance-content-contract
+v1.0.0's Class D prohibition remains written exactly as quoted above. `handoff_target: P0-D1`
+therefore names the subparcel that encodes this already-ruled resolution into the frozen
+canon-of-record, not one that re-adjudicates it. CI-002, CI-004, and CI-005 bear on the same
+headline conflict at narrower scope (protocol-builder flows for high-risk categories,
+profile-aware recommendation language, and the capability map's prohibition list, respectively);
+each is cross-referenced to D-I here but keeps `proposed_disposition: fix`, because D-I's ruling
+addresses the headline dose/reconstitution/schedule-origination question (D-B1) and does not by
+its own text resolve these narrower prohibitions — a later P0-D1 builder must still confirm each
+narrower text is brought into line with the D-B1(c) posture, not merely assume it is already
+settled.
 
 ## Mandatory class sections (D14 fieldwise union of all four declared delivery classes)
 
@@ -284,9 +436,24 @@ one (that crosses into legal-policy adjudication, which D-G does not authorize).
   `biostack-recommended`, `deterministically-derived`). This is stated explicitly rather than
   silently omitted, because the health-boundary class requires the field to be addressed one way
   or the other.
-- **Missingness:** if a required source (above) is deleted, unreadable, or outside the worktree at
-  dispatch time, the builder records it `unreviewable` in `SOURCE-MANIFEST.md` with the exact
-  reason and does not guess its content. A required source missing entirely from the Source
+- **Missingness:** `unreviewable` is reserved for exactly three deterministic, independently
+  verifiable conditions — no other reason qualifies:
+  1. **Deleted** — the path does not exist at `BaseCommit` (`git cat-file -e
+     <BaseCommit>:<path>` fails).
+  2. **Unreadable** — the path exists at `BaseCommit` but the filesystem denies read access at
+     dispatch time (a hard OS-level read failure, not a parsing difficulty, format objection, or
+     judgment call).
+  3. **Outside this worktree's checkout** — the path is named in the Required source list but
+     this dispatch worktree's checkout does not contain it at `BaseCommit` (for example, a
+     submodule or sparse-checkout exclusion), independent of whether the file exists elsewhere in
+     the repository's history.
+  A row marked `unreviewable` must name which of these three conditions applies and cite the exact
+  evidence that proves it in `SOURCE-MANIFEST.md`'s reason field (for example, the failing `git
+  cat-file -e` invocation or the OS error text) — a vague reason ("not reviewed," "out of
+  scope," "deprioritized") fails validation, and so does marking a file `unreviewable` without
+  this evidence. `unreviewable-claim-verified` (Deterministic verification, below) independently
+  re-checks every such claim against the filesystem at `BaseCommit` and fails closed if the named
+  file is, in fact, present and readable. A required source missing entirely from the Source
   Manifest (neither read nor recorded `unreviewable`) fails validation.
 - **Red flags:** if a cataloged contradiction itself implicates the `acute-red-flag-or-emergency`
   or `controlled-or-illegal-sourcing` substance/function-risk labels (for example, a canon
@@ -394,13 +561,23 @@ The builder (at a future, separately gated dispatch) may create or modify only:
    new. States the privacy data-classification of this parcel's own artifacts (see Privacy section
    above) and the grep-based method the verifier uses to prove zero personal-data tokens are
    present.
-6. `docs/specs/scripts/verify-p0a.ps1` — new. The deterministic verifier (see below).
-7. `docs/specs/README.md` — modified. Exactly one appended section (`## Canon precedence and
+6. `docs/INITIATIVES/biostack-governed-delivery/parcels/P0-A-inventory/CORPUS-COVERAGE-MATRIX.md`
+   — new. The checkable corpus-coverage exhaustiveness record (see "Deterministic verification,"
+   `corpus-coverage-matrix-complete`).
+7. `docs/specs/scripts/verify-p0a.ps1` — new. The deterministic verifier (see below).
+8. `docs/specs/README.md` — modified. Exactly one appended section (`## Canon precedence and
    contradiction inventory (P0-A)`), zero removed or reordered lines.
-8. `docs/specs/INDEX.md` — modified. Exactly one appended table row for `P0-A`, in the existing
+9. `docs/specs/INDEX.md` — modified. Exactly one appended table row for `P0-A`, in the existing
    column order, zero removed lines, zero other-row changes, using the closed-vocabulary registry
-   cell literal `coordinator-assigns-at-gate-2` (P3-A's precedent) rather than an ad hoc `TBD`
-   cell.
+   cell literal `coordinator-assigns-at-gate-2` for the `Branch/worktree`/`Owner` cells at dispatch
+   (P2's realized precedent: P2.md's own document contract 8 and acceptance criterion 12 define
+   and pin this literal, and P2's `docs/specs/INDEX.md` row carried it verbatim while `P2` was
+   `review-candidate`; `verify-p2.ps1` lines 642-643 still assert it as P2's historical Gate-2-time
+   contract. P2's *current*, closed/`done` `docs/specs/INDEX.md` row has since replaced that
+   placeholder with real branch/owner links, per its Gate 3 closure — the same lifecycle transition
+   this parcel's own row will undergo at its own eventual closure. P3-A describes the literal only
+   as a planned future usage in its own spec text and has no `docs/specs/INDEX.md` row of its own
+   yet) rather than an ad hoc `TBD` cell.
 
 No other path may change.
 
@@ -469,6 +646,27 @@ as a named, deterministic, scriptable check inside `docs/specs/scripts/verify-p0
 | copy-to-enforcement consistency; version/consent linkage tests (legal-policy) | every legal/regulatory canon statement catalogued in `CONTRADICTION-INVENTORY.md` or `SOURCE-MANIFEST.md` carries a D15-vocabulary function-review status exactly as found in its source, never `reviewed` when the source itself does not say `reviewed` | fails `invented-review-status` if any catalogued status is stricter than its source states |
 | provenance/license/freshness; fail-closed promotion; canonical-write fencing tests (knowledge-promotion) | diff this parcel's commit against the allowed-surfaces list (above); any path outside that list is a fencing violation; every `CI-NNN`/manifest row's citation resolves to a real file+location at `BaseCommit` | fails `canonical-write-fencing-violation` or `unresolvable-citation` |
 
+### `mandatoryStopConditions` fold (per class, mirroring the `minimumChecks` table above)
+
+Per D14, each of the four declared classes' `mandatoryStopConditions`
+(`docs/specs/schemas/delivery-class-controls.json`) is folded and mapped explicitly to this
+parcel's own tripwire language, the same rigor already applied to `minimumChecks` above:
+
+| Class | `mandatoryStopConditions` entry | P0-A tripwire mapping |
+|---|---|---|
+| health-boundary | `unsupported certainty` | "Stop conditions," bullet 1 ("Any artifact would state, imply, or could reasonably be read as stating a product allowed-output...") — an unsupported-certainty product claim is exactly that drift. |
+| health-boundary | `prescribed-treatment direction` | "Stop conditions," bullet 1 — directing alteration of prescribed treatment is a product allowed-output/behavior statement, this parcel's clearest tripwire. |
+| health-boundary | `red-flag bypass` | Health-boundary "Red flags" rule (`priority: P0-D1-first` flag on any row implicating `acute-red-flag-or-emergency`/`controlled-or-illegal-sourcing`) plus "Stop conditions," bullet 7 (P0-B/P0-C/P0-D referenced as if already authorized) — bypassing the flag or the authorization boundary is a stop. |
+| health-boundary | `provenance loss` | Hard constraints, "Real-corpus grounding" (every quotation verified byte-for-byte at `BaseCommit`) plus "Stop conditions," bullet 3 ("A required source is missing, unreadable, or its content at `BaseCommit` cannot be verified") — provenance loss of a citation is exactly that stop. |
+| privacy | `new sensitive field without approved lifecycle` | `not-applicable` as a fresh occurrence — the Privacy section asserts zero personal data and no new field of any kind; if a builder's read nonetheless discovers one, "Stop conditions," bullet 5 ("Any personal-data token is found in a draft artifact") applies. |
+| privacy | `leakage` | "Stop conditions," bullet 5, and the Privacy section's own named "leakage" mandatory stop (Privacy, "Data classification of the inventory artifacts themselves"). |
+| privacy | `consent bypass` | `not-applicable` — Privacy, "Consent" states no consent basis is ever implicated; stated explicitly rather than silently omitted. |
+| legal-policy | `unapproved policy presented as effective` | Hard constraints, "No product allowed-output decision," plus Legal-policy "Cataloguing discipline" (never upgrades a status to `reviewed`) — presenting an unapproved policy as effective would itself be an unauthorized product/claim statement and is covered by "Stop conditions," bullet 1. |
+| legal-policy | `policy/enforcement mismatch` | Legal-policy "Enforcement surfaces: none" plus `no-unattributed-claim` — any enforcement mismatch found inside canon is catalogued as a `CI-NNN` row, never asserted as settled; "Stop conditions," bullet 2 ("A `proposed_disposition` would itself require a charter amendment...") covers the case where resolving it would require more than a catalogue entry. |
+| knowledge-promotion | `missing source/license/review state` | "Stop conditions," bullet 3, and `source-manifest-completeness`/the `unreviewable` evidence discipline (Health-boundary "Missingness," above). |
+| knowledge-promotion | `bypassed promotion` | Knowledge-promotion "Promotion authority" (P0-A promotes nothing; zero writes outside allowed surfaces) plus `canonical-write-fencing-violation`. |
+| knowledge-promotion | `unreviewed public claim` | Health-boundary "Function-review status" (P0-A never upgrades a found status to `reviewed`) plus `invented-review-status`. |
+
 Additional, parcel-specific deterministic checks `verify-p0a.ps1` must implement:
 
 - `precedence-manifest-totality` — for every pair of documents in `canon-precedence.md`'s
@@ -488,12 +686,24 @@ Additional, parcel-specific deterministic checks `verify-p0a.ps1` must implement
   corresponding closed vocabulary in `docs/specs/schemas/classification-axes.schema.json`, read
   live (not copied), exactly as P2/P3-A already require elsewhere.
 - `seed-regression` — every `CI-001` through `CI-010` row above is present in the shipped
-  `CONTRADICTION-INVENTORY.md`, byte-for-byte unchanged in its `source_a`/`source_b` quotations
-  (the builder may add detail but may not remove or soften a seed finding without a named,
+  `CONTRADICTION-INVENTORY.md`, byte-for-byte unchanged in its `source_a`/`source_b` quotations as
+  they read in **this** spec version (CI-001's `source_a` quotations were extended, with a named
+  reason, during this spec's dual-review rework to restore the charter's conditional clause and
+  D13's closing sentence — see CI-001's row and the paragraph following the seed table; that
+  extension is the new byte-for-byte floor, not the prior spec hash's shorter quotation) (the
+  builder may add further detail but may not remove or soften a seed finding without a named,
   reviewed reason recorded alongside it).
 - `source-manifest-completeness` — every required source (above) appears in `SOURCE-MANIFEST.md`
   with a valid `consistent`/`contradictory`/`unreviewable` status and a reviewable citation or
   reason.
+- `unreviewable-claim-verified` — for every `SOURCE-MANIFEST.md` row marked `unreviewable`, the
+  verifier independently re-checks the named condition (deleted/unreadable/outside-checkout, per
+  Health-boundary "Missingness," above) against the filesystem at `BaseCommit` and fails closed
+  (`false-unreviewable-claim`) if the named file is, in fact, present and readable at `BaseCommit`
+  — a bypass-prevention check, not a courtesy re-read.
+- `corpus-coverage-matrix-complete` — every combinatorial pair of required sources (including
+  items 12-13) has a recorded `compared-contradictory`/`compared-consistent`/`scope-disjoint`
+  outcome in `CORPUS-COVERAGE-MATRIX.md`; any missing pair fails this check.
 - `no-unattributed-claim` — no sentence in any artifact asserts a product rule in BioStack's own
   voice without an accompanying citation to a specific canon document.
 
@@ -503,14 +713,21 @@ Additional, parcel-specific deterministic checks `verify-p0a.ps1` must implement
    `precedence-manifest-totality` and `precedence-rank-density` checks both pass.
 2. The inventory (`CONTRADICTION-INVENTORY.md` + `SOURCE-MANIFEST.md`) covers one hundred percent
    of the required source list with a valid status for each, and `source-manifest-completeness`
-   passes.
-3. `seed-regression` passes: all ten seed findings above are present, unweakened.
-4. Every `contradictory` row names a `proposed_disposition` and a `handoff_target`; every
-   `consistent`/`unreviewable` row names `not-applicable` for both — `row-schema-conformance`
-   passes.
+   and `unreviewable-claim-verified` (no `false-unreviewable-claim`) both pass. The
+   `CORPUS-COVERAGE-MATRIX.md` records an outcome for every combinatorial pair of required
+   sources, and `corpus-coverage-matrix-complete` passes — the checkable floor for coverage;
+   "exhaustive" findings beyond that floor remain a best-effort, reviewer-checked claim (see
+   Objective, deliverable 2).
+3. `seed-regression` passes: all ten seed findings above are present, unweakened relative to this
+   spec version's own text (see `seed-regression`'s definition for the CI-001 extension this
+   rework made).
+4. Every `contradictory` row names a `proposed_disposition` (including `resolved-by-owner-ruling`
+   where an owner ruling already governs the conflict, cited by name) and a `handoff_target`;
+   every `consistent`/`unreviewable` row names `not-applicable` for both —
+   `row-schema-conformance` passes.
 5. `class-axis-vocabulary-conformance`, `no-placeholder`, `canonical-write-fencing-violation`
-   absence, `unresolvable-citation` absence, `personal-data-token-found` absence, and
-   `invented-review-status` absence all pass.
+   absence, `unresolvable-citation` absence, `personal-data-token-found` absence,
+   `invented-review-status` absence, and `false-unreviewable-claim` absence all pass.
 6. `DATA-CLASSIFICATION.md` states the `internal-engineering, non-personal, pre-publication`
    classification and the grep method used to prove it; the method is re-runnable by a reviewer.
 7. `docs/specs/README.md` carries exactly one appended section and zero other diffs; `docs/specs/
