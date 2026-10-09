@@ -1,0 +1,313 @@
+{
+  "schema": "biostack.product-capability-safety-contract.v1",
+  "contractVersion": "1.0.0",
+  "normativeInputs": {
+    "designGateDecisionPackage": {
+      "path": "docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md",
+      "sha256AtBaseCommit": "34928AC8C54FE8AF9CB7B3A01D36820FE435F2ADF4F02F56C20E7CF548D57F5B",
+      "role": "sole source for every [RULED — verbatim] clause this contract transcribes (section 3, D-B1..D-B6)"
+    },
+    "coordinatorDecisionsLedger": {
+      "path": "docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md",
+      "sha256AtBaseCommit": "4B960CF2C5E84F5631996FDE46AF67CC984A498A864FBD53140CEAE2547574CA",
+      "loadBearingAnchors": [
+        "D-G (lines 114-123)",
+        "D-H (lines 125-150)",
+        "D-I (lines 152-169) — the P0-B design-gate ruling: \"D-B1: c · D-B2–D-B6: as recommended\"",
+        "D-J — operational definition of \"dose-context\", transcribed verbatim into this contract's qualified-cell scope semantics",
+        "D-K — precedence-manifest directional-application constraint, carried as context only: rank mechanics never license weakening a safety prohibition"
+      ],
+      "note": "the whole-file hash above is a freshness check at BaseCommit, not this contract's sole standing-authorization anchor; the load-bearing anchors are the named entry text spans"
+    },
+    "governedDeliveryCharter": {
+      "path": "docs/INITIATIVES/biostack-governed-delivery/CHARTER.md",
+      "sha256AtBaseCommit": "4CD390D631487DA8E97509205A186F242C4A83B762FFFA894BEEC8A21F4EFE22",
+      "role": "ratified product doctrine: may/must-not lists, the four product guidance classes, the closed substance/function-risk vocabulary, and D12-D16"
+    },
+    "guidanceContentContractV1": {
+      "path": "docs/guidance/biostack-guidance-content-contract.v1.md",
+      "sha256AtBaseCommit": "60729197B1609AB489B921AE6A9840C1DA485CBA6F9B4B1A5CA6BD0FE4E8291F",
+      "role": "still-governing Class A/B/C/D taxonomy, copy-guard terms, warning/uncertainty markers, and approval-level vocabulary, reused verbatim for the now posture"
+    },
+    "classificationAxesSchema": {
+      "path": "docs/specs/schemas/classification-axes.schema.json",
+      "sha256AtBaseCommit": "49F9FCFA18AF08202069812BA74BEBD0ADF1A836ADC62DA2E5063CAC80FA0A14",
+      "role": "P2 substrate this parcel binds: the substanceFunctionRisk axis's ten closed labels and their deferred applicabilityField entries, which this parcel's \"labels\" object defines"
+    },
+    "deliveryClassControlsSchema": {
+      "path": "docs/specs/schemas/delivery-class-controls.json",
+      "sha256AtBaseCommit": "E1E545CC01D1EC316FC3F137E80792ABAC1F5D071BD09E15C8B5C804B536B068",
+      "role": "P2 substrate this parcel's Deterministic verification folds against: the four declared classes' minimumChecks/mandatoryStopConditions/additionalMergeGate union"
+    }
+  },
+  "enablementState": {
+    "biostackRecommendedOrigination": {
+      "definedInContract": true,
+      "publiclyEnabled": false,
+      "currentPosture": "deterministic-math-on-user-entered-values-plus-guidance-contract-v1.0.0-class-A-B-C",
+      "governingGuidanceContractVersion": "1.0.0",
+      "requiredGuidanceContractVersionForPublicEnablement": "2.0.0",
+      "requiredApprovalLevelForPublicEnablement": "legal_product_ratification",
+      "publicEnablementEvent": "not-yet-occurred-separate-future-owner-event",
+      "rulingReference": "COORDINATOR-DECISIONS-2026-10-07.md#D-I"
+    }
+  },
+  "preemptionOrder": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B2\", the paragraph following the per-label table (lines 115-119)",
+    "stages": [
+      {
+        "stage": 1,
+        "labels": ["acute-red-flag-or-emergency"],
+        "role": "preempts ordinary guidance"
+      },
+      {
+        "stage": 2,
+        "labels": ["controlled-or-illegal-sourcing"],
+        "role": "suppresses sourcing, evasion, and concealment assistance (surface-scoped)"
+      },
+      {
+        "stage": 3,
+        "labels": ["minor-or-age-uncertain", "pregnancy-or-lactation", "prescription-treatment-involved"],
+        "role": "refusal-cap labels",
+        "scopeNote": "prescription-treatment-involved applies for the prescribed treatment only"
+      },
+      {
+        "stage": 4,
+        "labels": [],
+        "role": "calibrating labels union their obligations"
+      }
+    ],
+    "compositionNote": "\"Most restrictive wins\" only on a genuine scalar conflict; no label erases another's obligations."
+  },
+  "numericProvenance": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B3\" (lines 121-131)",
+    "lockedOrigins": [
+      "user-entered",
+      "label-or-prescription-transcribed",
+      "source-studied",
+      "biostack-recommended",
+      "deterministically-derived"
+    ],
+    "rules": [
+      "Every displayed number carries a machine-readable origin from the five locked values and a visible origin marker on dosing-context surfaces.",
+      "`biostack-recommended` values additionally require rationale, evidence applicability, uncertainty, and risk controls rendered alongside — never as bare numbers.",
+      "No prefilled or recommended value may render in a neutral-arithmetic frame (e.g., inside a calculator input without its provenance marker).",
+      "Missing provenance → the numeric output is refused (fail-closed), not downgraded."
+    ]
+  },
+  "missingInputLadder": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B4\" (lines 133-140)",
+    "rungs": [
+      "Arithmetic on declared inputs: refuse silently-invalid math (units, plausibility bounds, decimal-error flags per Class B); never guess an input.",
+      "Recommendation origination (post-v2.0.0): required-input set is function-declared; any missing required input → degraded output naming the missingness, or refusal when the missingness is safety-material (age, pregnancy status, identity/concentration, prescribed-treatment scope).",
+      "`PARTIAL_PACKET` / `OUTSIDE_REVIEWED_CONTEXT` markers fire per the v1.0.0 marker vocabulary (`docs/guidance/biostack-guidance-content-contract.v1.md`, \"Required warning and uncertainty language\" table — reused by reference, not re-defined)."
+    ]
+  },
+  "functionReviewStatus": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B5\" (lines 142-150)",
+    "rules": [
+      "`unreviewed` functions are internal staging only (mirrors `automated_candidate`) — never public-facing output.",
+      "Public dosing-context UX requires `legal_product_ratification` against the governing contract version (existing v1.0.0 rule, preserved).",
+      "`review-required` names the human owner and blocks public enablement until `reviewed`.",
+      "Class-triggered merge approvals (health-boundary, privacy, legal-policy, knowledge-promotion) continue to fire regardless of any standing Gate 3 authorization (D14 fold, D9)."
+    ]
+  },
+  "escalationSemantics": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B6\" (lines 152-161)",
+    "rules": [
+      "`acute-red-flag-or-emergency`: output stops ordinary guidance immediately; surfaces urgent professional/emergency language; suppresses calculators and dose context.",
+      "`prescription-treatment-involved`: alteration-of-treatment surfaces refuse; the professional-involvement template escalates; evidence comparison remains available.",
+      "Escalation is a distinct output type (class `safety-escalation`), never a footnote on an otherwise ordinary recommendation.",
+      "Escalation language is drawn from approved templates (v1.0.0 approval levels: high-impact safety wording requires `clinical_safety_copy_review`)."
+    ]
+  },
+  "cellSemantics": {
+    "ruledBasis": "[RULED — verbatim] P0-B-DESIGN-GATE.md §3, \"D-B2\", opening sentence (lines 95-96)",
+    "allowed": "A — allowed",
+    "degraded": "D — degraded (allowed with mandatory evidence/explanation/validation additions)",
+    "refused": "R — refused",
+    "escalated": "E — escalate (stop ordinary output, surface escalation)"
+  },
+  "doseContextDefinition": {
+    "ruledBasis": "[RULED — verbatim] Coordinator Decision D-J (COORDINATOR-DECISIONS-2026-10-07.md#D-J)",
+    "text": "An output is in dose context if and only if any value it presents or derives is a compound amount or an amount-derived quantity: a dose or target amount, concentration, reconstitution/dilution volume, split or load amount, per-administration or per-period amount, cumulative amount, or a syringe-unit rendering of any of these. The five D-B3 numeric-provenance origins attach exactly to these values. Outputs carrying no compound-amount value (e.g., calendar/interval arithmetic over non-amount quantities) are not dose-context. The guidance-contract v1.0.0 term \"public dosing-context UX\" denotes user-facing surfaces that render dose-context outputs, and therefore gates identically.",
+    "governsScopeValue": "dose-context-only",
+    "appliesToCell": "pregnancy-or-lactation.C1"
+  },
+  "precedenceDirectionalConstraint": {
+    "ruledBasis": "Coordinator Decision D-K (COORDINATOR-DECISIONS-2026-10-07.md#D-K), carried as context — not a D-B1..D-B6 clause",
+    "text": "The precedence manifest answers document authority order only. Where the mechanically resolved order favors a more permissive text over a narrower safety prohibition, the prohibition stands unchanged until an explicit owner ruling supersedes it. Such rows route to the owner through P0-D's disposition process; a P0-D builder must never weaken a safety prohibition by rank alone.",
+    "effectOnThisContract": "none of this contract's ruled matrix, preemption order, or locked-label behavior is weakened, softened, or made conditional by any precedence-rank argument; D-K is transcribed here solely so a reader of this contract cannot cite rank mechanics as license to do so"
+  },
+  "applicabilityCriterionDeferralRule": {
+    "basis": "[RULED — verbatim] P0-B.md, \"Per-label applicability criteria,\" closing paragraph",
+    "text": "A criterion that cannot be evaluated deterministically from a function's own declared fields at invocation time (for example, an undeclared capability-contract field a later function needs) defers to that function's own missing-input ladder behavior (missingInputLadder, rule 2) — it never causes this contract itself to guess an applicability determination."
+  },
+  "labels": {
+    "ordinary": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes `ordinary` as the residual label (D14 multi-label composition; D-B2 table row `ordinary`)",
+        "test": "True when none of the other nine labels' tests below are true for this invocation."
+      },
+      "behavior": {
+        "C1": { "value": "allowed", "scope": null },
+        "C2": { "value": "allowed", "scope": null },
+        "C3": { "value": "allowed", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "none beyond base contract"
+    },
+    "prescription-treatment-involved": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `prescription-treatment-involved` and its D-B2 calibration text (\"discuss with prescriber\" template; comparison to reviewed evidence allowed)",
+        "test": "True when a declared input or output names a substance/treatment that the function's own capability contract, or a `label-or-prescription-transcribed` input, marks prescription-status, or the user has declared it as a currently prescribed/clinician-directed treatment."
+      },
+      "behavior": {
+        "C1": { "value": "degraded", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "refused", "scope": "prescribed-treatment-only" }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "no alteration directives; \"discuss with prescriber\" template; comparison to reviewed evidence allowed"
+    },
+    "investigational-or-unapproved": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `investigational-or-unapproved` and its D-B2 calibration text (`EVIDENCE_LIMITED`/`EVIDENCE_CASE_REPORT` markers; no \"established\" framing)",
+        "test": "True when the cited evidence source's own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. Deterministic threshold: an output with zero cited evidence sources for the declared use is out-of-scope for this criterion (not vacuously true) and instead defers to that function's own missing-input ladder behavior (missingInputLadder, rule 2) — this criterion only attaches once at least one evidence source is actually cited and its regulatory-status field is read."
+      },
+      "behavior": {
+        "C1": { "value": "allowed", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "degraded", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "`EVIDENCE_LIMITED`/`EVIDENCE_CASE_REPORT` markers; no \"established\" framing; mandatory monitoring + uncertainty blocks"
+    },
+    "gray-market-or-identity-uncertain": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `gray-market-or-identity-uncertain` and its D-B2 calibration text (identity/purity uncertainty surfaced; potency-dependent math refused when identity/concentration unverified)",
+        "test": "True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins."
+      },
+      "behavior": {
+        "C1": { "value": "degraded", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "degraded", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "identity/purity uncertainty surfaced; potency-dependent math refused when identity/concentration unverified (missing-input rule)"
+    },
+    "injection-or-sterile-preparation": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `injection-or-sterile-preparation` and its D-B2 calibration text (sterility/prep safety context section required)",
+        "test": "True when the function's declared output type or route is injection, reconstitution, or any sterile-preparation step."
+      },
+      "behavior": {
+        "C1": { "value": "allowed", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "degraded", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "sterility/prep safety context section required; refusal when sterility inputs missing"
+    },
+    "interaction-or-contraindication-signal": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `interaction-or-contraindication-signal` and its D-B2 calibration text (conflict disclosure mandatory; escalate on strong signal)",
+        "test": "True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is function-declared, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s triggering criterion set. That same function-declared algorithm also carries the function's own declared strength grading — exactly the quantity the C3 cell's D→E strong-signal escalation names as \"the function's own declared evidence-source match threshold\": base applicability (does a record match at all) and the D→E upgrade (is the matched record's signal strong) are the matching-vs-grading components of one function-declared matching specification, not two independently defined specifications."
+      },
+      "behavior": {
+        "C1": { "value": "allowed", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": {
+          "value": "degraded-escalates-on-strong-signal",
+          "scope": null,
+          "note": "encodes the D-B2 table's literal `D→E` cell: the calibration column's \"escalate on strong signal\" text is the deterministic trigger — a strong interaction/contraindication signal (per the function's own declared evidence-source match threshold) upgrades this cell from `degraded` to `escalated` at evaluation time; the static value here is the floor, not the ceiling, for this one cell. Not a fifth behavior literal."
+        }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "conflict disclosure mandatory (never hidden); \"review before proceeding\" Class C template; escalate on strong signal"
+    },
+    "minor-or-age-uncertain": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `minor-or-age-uncertain` and its D-B2 calibration text (age-dependent inputs refused; `POPULATION_MISMATCH` markers)",
+        "test": "True when the user's declared age is below the function's declared minimum-age threshold, or age is a function-declared required input and is missing or unverified."
+      },
+      "behavior": {
+        "C1": { "value": "degraded", "scope": null },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "refused", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "age-dependent inputs refused; `POPULATION_MISMATCH` markers; professional escalation language"
+    },
+    "pregnancy-or-lactation": {
+      "locked": false,
+      "applicabilityCriterion": {
+        "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `pregnancy-or-lactation` and its D-B2 calibration text (no \"proceed anyway\" framing; mandatory professional escalation)",
+        "test": "True when the user has declared current pregnancy or lactation status, or that status is a function-declared required input and is missing/unverified for a function whose substance or output carries a source-labeled pregnancy/lactation signal."
+      },
+      "behavior": {
+        "C1": {
+          "value": "refused",
+          "scope": "dose-context-only",
+          "note": "scope normatively defined by Coordinator Decision D-J (see `doseContextDefinition`, above); encodes the D-B2 table's literal `R (dose-context)` cell"
+        },
+        "C2": { "value": "degraded", "scope": null },
+        "C3": { "value": "refused", "scope": null }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "no \"proceed anyway\" framing; mandatory professional escalation"
+    },
+    "acute-red-flag-or-emergency": {
+      "locked": true,
+      "applicabilityCriterion": {
+        "basis": "[RULED — verbatim, LOCKED] P0-B-DESIGN-GATE.md §1 (locked, not open at this gate) and the D-B2 table's `acute-red-flag-or-emergency` row",
+        "test": "LOCKED. True when declared symptoms, vitals, or context match any function-declared red-flag/emergency criterion; the triggering criterion set is itself function-declared (per D15's function-specific-review model), not invented by this contract."
+      },
+      "behavior": {
+        "C1": { "value": "refused", "scope": null },
+        "C2": { "value": "refused", "scope": null },
+        "C3": {
+          "value": "refused-and-escalated",
+          "scope": null,
+          "compositeOf": ["refused", "escalated"],
+          "note": "encodes the D-B2 table's literal `R` + `E` cell for `acute-red-flag-or-emergency` C3: composes D-B6 rule 1 (ordinary guidance stops immediately; calculators and dose context suppressed — a refusal of ordinary output) with D-B6 rule 3 (escalation is a distinct output type, class `safety-escalation`). Not a fifth behavior literal; mirrors the same composite-cell encoding discipline the D→E cell uses for `interaction-or-contraindication-signal` C3."
+        }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "LOCKED — preempts ordinary guidance; urgent professional/emergency language"
+    },
+    "controlled-or-illegal-sourcing": {
+      "locked": true,
+      "applicabilityCriterion": {
+        "basis": "[RULED — verbatim, LOCKED] P0-B-DESIGN-GATE.md §1 (locked, not open at this gate) and the D-B2 table's `controlled-or-illegal-sourcing` row",
+        "test": "LOCKED. True whenever the declared request or context seeks sourcing, acquisition, legal/regulatory evasion, or concealment of a controlled-or-illegal substance or its acquisition — evaluated against the request/context, never against the mere mention of a controlled substance's evidence content."
+      },
+      "behavior": {
+        "C1": {
+          "value": "allowed",
+          "scope": null,
+          "footnote": "Except any surface that would source, evade, or conceal — those are refused with no fallback."
+        },
+        "C2": {
+          "value": "allowed",
+          "scope": null,
+          "footnote": "Except any surface that would source, evade, or conceal — those are refused with no fallback."
+        },
+        "C3": {
+          "value": "allowed",
+          "scope": null,
+          "footnote": "Except any surface that would source, evade, or conceal — those are refused with no fallback."
+        }
+      },
+      "enablementGatesC3": true,
+      "calibrationRequired": "LOCKED — suppresses sourcing/evasion/concealment surfaces only; evidence content unaffected"
+    }
+  }
+}

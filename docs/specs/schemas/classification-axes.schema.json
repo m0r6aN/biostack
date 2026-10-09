@@ -96,58 +96,58 @@
       ],
       "controlSource": "none",
       "definitionOwner": "charter-substance-function-vocabulary",
-      "controlBindingStatus": "deferred-to-P0-B",
-      "allowedOutputBindingStatus": "out-of-scope-for-P2",
+      "controlBindingStatus": "bound-at-this-parcel",
+      "allowedOutputBindingStatus": "bound-at-P0-B",
       "applicabilityField": {
         "ordinary": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "prescription-treatment-involved": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "investigational-or-unapproved": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "gray-market-or-identity-uncertain": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "injection-or-sterile-preparation": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "interaction-or-contraindication-signal": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "minor-or-age-uncertain": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "pregnancy-or-lactation": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "acute-red-flag-or-emergency": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         },
         "controlled-or-illegal-sourcing": {
           "fieldName": "substanceFunctionRisk",
-          "determinationAuthority": "deferred-to-P0-B-deterministic-criteria",
-          "status": "deferred"
+          "determinationAuthority": "defined-by-product-capability-safety-contract-v1.0.0",
+          "status": "defined"
         }
       }
     }
