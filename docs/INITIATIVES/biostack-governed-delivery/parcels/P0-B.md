@@ -70,7 +70,8 @@ STOP-AND-REPORT to the owner, not a design choice this parcel or its builder may
 - Design-gate decision package SHA-256:
   `34928AC8C54FE8AF9CB7B3A01D36820FE435F2ADF4F02F56C20E7CF548D57F5B`
   (`docs/INITIATIVES/biostack-governed-delivery/P0-B-DESIGN-GATE.md`, verified by direct
-  `sha256sum` at this shaping time). This document's §1-§6 (lines 23-215) is the **entire
+  `sha256sum` at this shaping time). This document's §1-§6 (lines 23-207, the file's actual full
+  extent — re-verified by direct `wc -l` against the live, hash-matched file) is the **entire
   normative design input** this spec's Deliverables section transcribes; "Deliverables," below,
   cites exact section headings and line ranges for every clause it carries forward.
 - Guidance-content-contract v1.0.0 SHA-256:
@@ -287,7 +288,8 @@ below):
    its field values fails `enablement-field-fidelity` (Deterministic verification) and is a hard
    stop (see "Hard constraints").
 4. `"preemptionOrder"` — **[RULED — verbatim]**, transcribing `P0-B-DESIGN-GATE.md` §3, "D-B2,"
-   the paragraph following the per-label table (lines 117-120): *"Multi-label composition follows
+   the paragraph following the per-label table (lines 115-119, re-verified directly against the
+   live, hash-matched design-gate file): *"Multi-label composition follows
    D14's fieldwise fold with this preemption order: `acute-red-flag-or-emergency` →
    `controlled-or-illegal-sourcing` (surface-scoped) → refusal-cap labels
    (`minor-or-age-uncertain`, `pregnancy-or-lactation`, `prescription-treatment-involved` for the
@@ -352,7 +354,7 @@ below):
      charter's own declared order: `deterministic-calculation`, `curated-evidence-guidance`,
      `personalized-protocol-recommendation`, `safety-escalation`), each value one of
      `"allowed"`/`"degraded"`/`"refused"`/`"escalated"`, transcribed **[RULED — verbatim]** from
-     `P0-B-DESIGN-GATE.md` §3, "D-B2" table (lines 99-115) — see "Per-label behavior matrix,"
+     `P0-B-DESIGN-GATE.md` §3, "D-B2" table (lines 100-113) — see "Per-label behavior matrix,"
      below, for the full table reproduced in this spec's own text as the required-content floor.
      Per D-B1(c), every `C3` cell in the table below is **additionally** gated by
      `enablementState.biostackRecommendedOrigination.publiclyEnabled`: while `false`, no `C3`
@@ -360,9 +362,41 @@ below):
      table records the *designed* behavior, the enablement flag records whether it may *ship*
      publicly yet. This gating relationship is itself `"enablementGatesC3": true` on every label
      object, not asserted once globally, so a partial or future per-label carve-out cannot silently
-     bypass it.
+     bypass it. Where this label's `P0-B-DESIGN-GATE.md` §3 "D-B2" table cell carries a
+     parenthetical scope qualifier (for example `pregnancy-or-lactation`'s `C1` cell, `R
+     (dose-context)`, or `prescription-treatment-involved`'s `C3` cell, `R (for the prescribed
+     treatment)`), the cell's object value additionally carries a `"scope"` string field holding
+     that qualifier in machine-readable form (`"dose-context-only"` and
+     `"prescribed-treatment-only"` respectively for these two cells; `null` or omitted for every
+     unqualified cell) — **[RULED — verbatim, structurally encoded]**, because the qualifier
+     itself is part of the ruled table's cell value, not optional commentary, and so must be
+     checkable with the same rigor as the bare letter.
    - `"calibrationRequired"` — **[RULED — verbatim]**, the exact "Calibration required" cell text
-     from the D-B2 table for this label.
+     from the D-B2 table for this label. Every `"behavior"` value above is defined in terms of the
+     shared, top-level `"cellSemantics"` object (Deliverables item 10, below), not re-defined per
+     label.
+10. `"cellSemantics"` — **[RULED — verbatim]**, the normative, cross-cutting definition of the
+    four per-cell behavior literals every `"behavior"` value (item 9, above) and the "Per-label
+    behavior matrix" table (below) use, transcribed from `P0-B-DESIGN-GATE.md` §3, "D-B2," the
+    sentence opening the section (lines 95-96): *"Cell values: **A** = allowed, **D** = degraded
+    (allowed with mandatory evidence/explanation/validation additions), **R** = refused, **E** =
+    escalate (stop ordinary output, surface escalation)."* Declared once, at this contract's top
+    level, as:
+    ```json
+    {
+      "allowed": "A — allowed",
+      "degraded": "D — degraded (allowed with mandatory evidence/explanation/validation additions)",
+      "refused": "R — refused",
+      "escalated": "E — escalate (stop ordinary output, surface escalation)"
+    }
+    ```
+    A `"degraded"` cell's "mandatory evidence/explanation/validation additions" is a structural
+    obligation of the literal itself, not satisfied by a cosmetic reduction (for example, a bare
+    disclaimer sentence with no evidence, explanation, or validation content added) — this is the
+    operative content `matrix-fidelity`'s `cell-semantics-fidelity` check (Deterministic
+    verification, below) verifies is present and unweakened, independent of each label's own
+    `"calibrationRequired"` free text, which is label-specific detail layered on top of this
+    shared, generic rule, not a substitute for it.
 
 ### Per-label behavior matrix (required content floor — transcribed verbatim from
 `P0-B-DESIGN-GATE.md` §3, "D-B2," lines 93-120; the builder's JSON/Markdown artifacts must carry
@@ -372,7 +406,11 @@ Guidance-class order: **C1** `deterministic-calculation`, **C2** `curated-eviden
 **C3** `personalized-protocol-recommendation` (gated by `enablementState`, see above), **C4** is
 not a column here because `safety-escalation` is itself the escalated output type D-B6 defines,
 not a fourth behavior column on the other three classes — cells read **A** = allowed, **D** =
-degraded, **R** = refused, **E** = escalate.
+degraded, **R** = refused, **E** = escalate, using the shared, normative `"cellSemantics"`
+definitions (Deliverables item 10, above), transcribed here in full exactly as
+`P0-B-DESIGN-GATE.md` lines 95-96 defines them: *"**D** = degraded (allowed with mandatory
+evidence/explanation/validation additions)... **E** = escalate (stop ordinary output,
+surface escalation)."*
 
 | Label | C1 | C2 | C3 (post-v2.0.0) | Calibration required |
 |---|---|---|---|---|
@@ -408,10 +446,10 @@ criteria may be true simultaneously (multi-label, per D14); `ordinary` is the re
 |---|---|
 | `ordinary` | True when none of the other nine labels' tests below are true for this invocation. |
 | `prescription-treatment-involved` | True when a declared input or output names a substance/treatment that the function's own capability contract, or a `label-or-prescription-transcribed` input, marks prescription-status, or the user has declared it as a currently prescribed/clinician-directed treatment. |
-| `investigational-or-unapproved` | True when the cited evidence source's own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. |
+| `investigational-or-unapproved` | True when the cited evidence source's own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. Deterministic threshold: an output with **zero cited evidence sources** for the declared use is **out-of-scope** for this criterion (not vacuously true) and instead defers to that function's own missing-input ladder behavior (`missingInputLadder`, rule 2), the same deferral pattern this table's closing paragraph already states for any criterion a function's own declared fields cannot evaluate — this criterion only attaches once at least one evidence source is actually cited and its regulatory-status field is read. |
 | `gray-market-or-identity-uncertain` | True when a required identity/concentration/manufacturing-source provenance field (per `numericProvenance` and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins. |
 | `injection-or-sterile-preparation` | True when the function's declared output type or route is injection, reconstitution, or any sterile-preparation step. |
-| `interaction-or-contraindication-signal` | True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. |
+| `interaction-or-contraindication-signal` | True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic threshold: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is **function-declared**, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s "triggering criterion set is itself function-declared," below — and the function's own declared match threshold is the same threshold this table's `C3` cell's `D→E` strong-signal escalation ("Per-label behavior matrix," above) already names as "the function's own declared evidence-source match threshold"; base applicability and the `D→E` upgrade therefore share one function-declared threshold, not two independently defined ones. |
 | `minor-or-age-uncertain` | True when the user's declared age is below the function's declared minimum-age threshold, or age is a function-declared required input and is missing or unverified. |
 | `pregnancy-or-lactation` | True when the user has declared current pregnancy or lactation status, or that status is a function-declared required input and is missing/unverified for a function whose substance or output carries a source-labeled pregnancy/lactation signal. |
 | `acute-red-flag-or-emergency` | **LOCKED.** True when declared symptoms, vitals, or context match any function-declared red-flag/emergency criterion; the triggering criterion set is itself function-declared (per D15's function-specific-review model), not invented by this contract. |
@@ -670,6 +708,28 @@ scriptable check inside `docs/specs/scripts/verify-p0b.ps1`:
 | copy-to-enforcement consistency; version/consent linkage tests (legal-policy) | every reference to `biostack-recommended` origination or any `C3` cell is paired with its `enablementState` gate; no sentence asserts public Class D/C3 availability today | fails `enablement-field-fidelity` on any unpaired or contradicted reference |
 | provenance/license/freshness; fail-closed promotion; canonical-write fencing tests (knowledge-promotion) | diff this parcel's commit against the allowed-surfaces list; any path outside that list is a fencing violation; every `[RULED — verbatim]` citation resolves to a real file+location at `BaseCommit` | fails `canonical-write-fencing-violation` or `unresolvable-citation` |
 
+### `mandatoryStopConditions` fold (per class, mirroring the `minimumChecks` table above)
+
+Per D14 ("Controls compose field by field: union required sections, checks, stop conditions, and
+evidence"), each of the four declared classes' `mandatoryStopConditions`
+(`docs/specs/schemas/delivery-class-controls.json`) is folded and mapped explicitly to this
+parcel's own "Stop conditions" tripwires, the same rigor already applied to `minimumChecks` above:
+
+| Class | `mandatoryStopConditions` entry | P0-B tripwire mapping |
+|---|---|---|
+| health-boundary | `unsupported certainty` | "Stop conditions," the dedicated bullet beginning "A disputed `[OPERATIONALIZED — bounded]` criterion ... asserts a certainty level the cited evidence source does not support." |
+| health-boundary | `prescribed-treatment direction` | "Stop conditions," the dedicated bullet beginning "Any artifact text directs ... alteration of a prescribed treatment." |
+| health-boundary | `red-flag bypass` | "Stop conditions," the locked-label bullet ("A locked label ... would have its charter-locked preemption/suppression behavior altered, softened, or made conditional") — bypassing the red-flag preemption is exactly that alteration. |
+| health-boundary | `provenance loss` | Hard constraints, "Real-corpus grounding" (every quotation verified byte-for-byte at `BaseCommit`) plus "Stop conditions," the required-source bullet ("A required normative-input source is missing, unreadable, or its content at `BaseCommit` cannot be verified"). |
+| privacy | `new sensitive field without approved lifecycle` | `not-applicable` as a fresh occurrence — the Privacy section asserts zero personal data and no new field of any kind; if a builder's read nonetheless discovers one, "Stop conditions," the personal-data-token bullet applies. |
+| privacy | `leakage` | "Stop conditions," the personal-data-token bullet, and the Privacy section's own named "leakage" mandatory stop (Privacy, "Data classification of this parcel's own artifacts"). |
+| privacy | `consent bypass` | `not-applicable` — Privacy, "Consent" states no consent basis is ever implicated (no personal data is processed); stated explicitly rather than silently omitted. |
+| legal-policy | `unapproved policy presented as effective` | "Stop conditions," the `biostack-recommended`-publicly-available bullet, plus Legal-policy "Cataloguing discipline" (which names this exact mandatory stop verbatim). |
+| legal-policy | `policy/enforcement mismatch` | "Stop conditions," the dedicated bullet beginning "Any artifact's stated 'Enforcement surfaces: none, at this parcel' posture ... is contradicted." |
+| knowledge-promotion | `missing source/license/review state` | "Stop conditions," the required-source bullet, and Knowledge-promotion "Source/license/provenance" plus `source-availability-verified`/the `unreviewable` evidence discipline (Health-boundary "Missingness," above). |
+| knowledge-promotion | `bypassed promotion` | "Stop conditions," the dedicated bullet beginning "A write to `classification-axes.schema.json`'s ... fields occurs for any label this parcel's own ... has not itself fully defined," plus Knowledge-promotion "Promotion authority" and `canonical-write-fencing-violation`. |
+| knowledge-promotion | `unreviewed public claim` | Deliverables item 7, `"functionReviewStatus"` rule 1 (`unreviewed` functions are internal staging only, never public-facing output) plus "Stop conditions," the `biostack-recommended`-publicly-available bullet — presenting an unreviewed function's output as public-safe is exactly that bullet's overclaim. |
+
 Additional, parcel-specific deterministic checks `verify-p0b.ps1` must implement:
 
 - `matrix-fidelity` — `product-capability-safety-contract.json` and `.md` never diverge in
@@ -682,6 +742,15 @@ Additional, parcel-specific deterministic checks `verify-p0b.ps1` must implement
 - `enablement-field-fidelity` — `enablementState.biostackRecommendedOrigination.publiclyEnabled`
   is the literal boolean `false`; every other field in that object matches this spec's required
   JSON fragment exactly; no file states or implies public availability today.
+- `cell-semantics-fidelity` — the top-level `"cellSemantics"` object (Deliverables item 10) is
+  present in both artifacts and matches `P0-B-DESIGN-GATE.md` lines 95-96 byte-for-byte for all
+  four literals, including the `"degraded"` and `"escalated"` operative parentheticals (not just
+  the bare letter key); fails if either parenthetical is dropped, shortened, or paraphrased.
+- `qualified-cell-scope-present` — every per-label behavior cell whose ruled-table value carries a
+  parenthetical scope qualifier (`pregnancy-or-lactation` `C1`; `prescription-treatment-involved`
+  `C3`) carries a corresponding, non-null `"scope"` string field in the JSON artifact; fails
+  `qualified-cell-scope-present` if either qualifier's cell lacks it, or if any unqualified cell's
+  `"scope"` field is non-null.
 - `unbounded-operationalization` — every `"applicabilityCriterion"` cites a traceable basis (label
   name and/or D-B2 calibration text); a criterion with no cited basis, or one that introduces a
   product-behavior decision beyond detection (for example, smuggling an allowed/refused rule into
@@ -721,8 +790,9 @@ Additional, parcel-specific deterministic checks `verify-p0b.ps1` must implement
 5. `unbounded-operationalization`, `missing-behavior-state-coverage` absence,
    `unexpected-numeric-surface` absence, `personal-data-token-found` absence,
    `canonical-write-fencing-violation` absence, `unresolvable-citation` absence,
-   `axis-binding-diff-scoped`, `source-availability-verified`, `no-placeholder`, and
-   `no-unattributed-claim` all pass.
+   `axis-binding-diff-scoped`, `source-availability-verified`, `no-placeholder`,
+   `no-unattributed-claim`, `cell-semantics-fidelity`, and `qualified-cell-scope-present` all
+   pass.
 6. `docs/specs/schemas/classification-axes.schema.json`'s diff touches only the exact fields named
    in "Exact allowed surfaces," item 3, confirmed both by `axis-binding-diff-scoped` and by direct
    diff review (not solely a verifier-script claim).
@@ -778,6 +848,23 @@ The builder, reviewers, or coordinator stop and return to the owner when:
 - Two reviewers disagree and the coordinator cannot reproduce and resolve the disputed fact against
   `P0-B-DESIGN-GATE.md`'s cited text.
 - Any personal-data token is found in a draft artifact.
+- A disputed `[OPERATIONALIZED — bounded]` criterion, `"calibrationRequired"` text, or escalation
+  language asserts a certainty level the cited evidence source does not support (`unsupported
+  certainty`, folded from `delivery-class-controls.json`'s health-boundary
+  `mandatoryStopConditions` — see the `mandatoryStopConditions` fold table, "Deterministic
+  verification," below).
+- Any artifact text directs, or could reasonably be read as directing, alteration of a prescribed
+  treatment, rather than confining itself to the ruled no-alteration-directive /
+  professional-involvement / evidence-comparison template (`prescribed-treatment direction`,
+  folded from the same source).
+- Any artifact's stated "Enforcement surfaces: none, at this parcel" posture (Legal-policy, above)
+  is contradicted by language implying this contract already enforces, governs, or is enforced
+  against a live product surface (`policy/enforcement mismatch`, folded from the same source).
+- A write to `classification-axes.schema.json`'s `"determinationAuthority"`/`"status"` fields
+  occurs for any label this parcel's own `product-capability-safety-contract.json` has not itself
+  fully defined (`"locked"`, `"applicabilityCriterion"`, `"behavior"`, and `"calibrationRequired"`
+  all populated) — the schema binding names a completed result, it never precedes one
+  (`bypassed promotion`, folded from the same source).
 - P3-A or P0-A have not reached merged/closed status by the time dispatch (Gate 2) would occur (see
   "Authorization boundary" dispatch precondition).
 - A proposed matrix change or applicability-criterion change would itself amount to a charter
