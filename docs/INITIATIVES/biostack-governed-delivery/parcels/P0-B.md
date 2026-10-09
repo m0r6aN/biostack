@@ -330,7 +330,7 @@ below):
    4. Class-triggered merge approvals (health-boundary, privacy, legal-policy, knowledge-promotion)
       continue to fire regardless of any standing Gate 3 authorization (D14 fold, D9).
 8. `"escalationSemantics"` — **[RULED — verbatim]**, transcribing `P0-B-DESIGN-GATE.md` §3, "D-B6"
-   (lines 152-163), the four numbered rules verbatim:
+   (lines 152-161), the four numbered rules verbatim:
    1. `acute-red-flag-or-emergency`: output stops ordinary guidance immediately; surfaces urgent
       professional/emergency language; suppresses calculators and dose context.
    2. `prescription-treatment-involved`: alteration-of-treatment surfaces refuse; the professional-
@@ -370,7 +370,27 @@ below):
      `"prescribed-treatment-only"` respectively for these two cells; `null` or omitted for every
      unqualified cell) — **[RULED — verbatim, structurally encoded]**, because the qualifier
      itself is part of the ruled table's cell value, not optional commentary, and so must be
-     checkable with the same rigor as the bare letter.
+     checkable with the same rigor as the bare letter. The `"dose-context-only"` scope value (and
+     therefore the `qualified-cell-scope-present` check's semantics for that value, Deterministic
+     verification, below) is normatively defined by **Coordinator Decision D-J**
+     (`docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md#D-J`), transcribed here
+     **[RULED — verbatim]**, mechanically and conservatively, and changing no ruled cell, row, or
+     rule — it only pins the previously-undefined term "dose-context" the owner-ruled
+     `pregnancy-or-lactation` × `C1` = `R (dose-context)` cell already used:
+
+     > **Dose-context output.** An output is in dose context if and only if any value it presents
+     > or derives is a **compound amount or an amount-derived quantity**: a dose or target
+     > amount, concentration, reconstitution/dilution volume, split or load amount,
+     > per-administration or per-period amount, cumulative amount, or a syringe-unit rendering of
+     > any of these. The five D-B3 numeric-provenance origins attach exactly to these values.
+     > Outputs carrying no compound-amount value (e.g., calendar/interval arithmetic over
+     > non-amount quantities) are not dose-context. The guidance-contract v1.0.0 term "public
+     > dosing-context UX" denotes user-facing surfaces that render dose-context outputs, and
+     > therefore gates identically.
+
+     A value is `"dose-context-only"`-scoped if and only if it is dose-context per this
+     definition; the `qualified-cell-scope-present` check (Deterministic verification, below)
+     evaluates the `pregnancy-or-lactation` `C1` cell's `"scope"` field against exactly this test.
    - `"calibrationRequired"` — **[RULED — verbatim]**, the exact "Calibration required" cell text
      from the D-B2 table for this label. Every `"behavior"` value above is defined in terms of the
      shared, top-level `"cellSemantics"` object (Deliverables item 10, below), not re-defined per
@@ -399,7 +419,7 @@ below):
     shared, generic rule, not a substitute for it.
 
 ### Per-label behavior matrix (required content floor — transcribed verbatim from
-`P0-B-DESIGN-GATE.md` §3, "D-B2," lines 93-120; the builder's JSON/Markdown artifacts must carry
+`P0-B-DESIGN-GATE.md` §3, "D-B2," lines 93-119; the builder's JSON/Markdown artifacts must carry
 every row forward unweakened, exactly as `seed-regression` does for P0-A's seed findings)
 
 Guidance-class order: **C1** `deterministic-calculation`, **C2** `curated-evidence-guidance`,
@@ -449,7 +469,7 @@ criteria may be true simultaneously (multi-label, per D14); `ordinary` is the re
 | `investigational-or-unapproved` | True when the cited evidence source's own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. Deterministic threshold: an output with **zero cited evidence sources** for the declared use is **out-of-scope** for this criterion (not vacuously true) and instead defers to that function's own missing-input ladder behavior (`missingInputLadder`, rule 2), the same deferral pattern this table's closing paragraph already states for any criterion a function's own declared fields cannot evaluate — this criterion only attaches once at least one evidence source is actually cited and its regulatory-status field is read. |
 | `gray-market-or-identity-uncertain` | True when a required identity/concentration/manufacturing-source provenance field (per `numericProvenance` and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins. |
 | `injection-or-sterile-preparation` | True when the function's declared output type or route is injection, reconstitution, or any sterile-preparation step. |
-| `interaction-or-contraindication-signal` | True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic threshold: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is **function-declared**, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s "triggering criterion set is itself function-declared," below — and the function's own declared match threshold is the same threshold this table's `C3` cell's `D→E` strong-signal escalation ("Per-label behavior matrix," above) already names as "the function's own declared evidence-source match threshold"; base applicability and the `D→E` upgrade therefore share one function-declared threshold, not two independently defined ones. |
+| `interaction-or-contraindication-signal` | True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is **function-declared**, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s "triggering criterion set is itself function-declared," below. That same function-declared algorithm also carries the function's own declared strength grading — exactly the quantity this table's `C3` cell's `D→E` strong-signal escalation ("Per-label behavior matrix," above) names as "the function's own declared evidence-source match threshold": base applicability (does a record match at all) and the `D→E` upgrade (is the matched record's signal strong) are therefore the matching-vs-grading components of one function-declared matching specification, not two independently defined, unrelated specifications. |
 | `minor-or-age-uncertain` | True when the user's declared age is below the function's declared minimum-age threshold, or age is a function-declared required input and is missing or unverified. |
 | `pregnancy-or-lactation` | True when the user has declared current pregnancy or lactation status, or that status is a function-declared required input and is missing/unverified for a function whose substance or output carries a source-labeled pregnancy/lactation signal. |
 | `acute-red-flag-or-emergency` | **LOCKED.** True when declared symptoms, vitals, or context match any function-declared red-flag/emergency criterion; the triggering criterion set is itself function-declared (per D15's function-specific-review model), not invented by this contract. |
