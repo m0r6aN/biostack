@@ -36,7 +36,7 @@ gate (Coordinator Decisions D-G, below).
     `908FAA5999526DE76CC7E21B6753D41BC8BDB9F29C5F1717A504D9103E4CA7AE`. The file grew between the
     two anchors by two further owner-dated entries: **D-H** ("Owner directive: Gate 3 posture +
     P0-B design gate opened," `## D-H` heading, lines 125-150) and **D-I** ("P0-B design gate
-    RULED," `## D-I` heading, lines 152-169) — both now load-bearing for this parcel (see
+    RULED," `## D-I` heading, lines 152-170) — both now load-bearing for this parcel (see
     "Required source list" items 12-13 and the D-I cross-reference on CI-001 in "Seed findings,"
     below).
   - **D-G entry text anchor** — the section headed `## D-G — P0-A authorization (owner,
