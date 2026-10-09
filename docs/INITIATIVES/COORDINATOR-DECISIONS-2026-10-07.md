@@ -190,3 +190,27 @@ only this definition.
 
 This definition is transcribed verbatim into the P0-B contract spec (amendment commit alone,
 before any P0-B implementation code).
+
+## D-K — Precedence-manifest directional application constraint (coordinator, 2026-10-09)
+
+Triggered by P0-A implementation review (`p0a_impl_review_2` F1, BLOCKER-candidate; severity
+reproduced as a real interpretive hazard): the manifest's total order, mechanically applied to
+still-open rows CI-002/CI-005 (CHARTER.md's broad "may" list vs the narrower safety prohibitions
+in `docs/canon/biostack-protocol-intelligence-canon.md` and
+`docs/product/knowledge-engine-capability-map.md`), resolves authority in favor of the more
+permissive text — and no artifact warned against treating that as license to weaken a safety
+prohibition.
+
+Constraint (fails safe; owner may override — override reopens only this rule):
+
+> The precedence manifest answers **document authority order only**. Where the mechanically
+> resolved order favors a more permissive text over a narrower safety prohibition, the
+> prohibition **stands unchanged** until an explicit owner ruling supersedes it. Such rows route
+> to the owner through P0-D's disposition process; a P0-D builder must never weaken a safety
+> prohibition by rank alone. This is consistent with the charter's must-not list, D12's principle
+> (controls calibrate useful guidance; they do not license weakened safety), and D-I's staged-split
+> posture, all of which are already the owner's ruled doctrine.
+
+This is procedurally conservative — it cannot make the product say more than the owner ruled; it
+can only stop rank-mechanics from silently saying more. Transcribed into the P0-A artifacts by
+the remediation builder; recorded here as the amendment of record.
