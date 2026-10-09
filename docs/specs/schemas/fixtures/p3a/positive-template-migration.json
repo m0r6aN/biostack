@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.migration.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

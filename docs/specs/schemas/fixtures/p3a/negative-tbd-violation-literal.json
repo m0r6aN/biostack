@@ -1,0 +1,30 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "frontmatter": {
+        "title": "Negative fixture — literal unresolved-placeholder marker",
+        "status": "review-candidate",
+        "owner": "fixture-owner",
+        "created": "2026-10-09",
+        "updated": "2026-10-09",
+        "delivery_classes": ["standard"],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": ["docs/specs/schemas/fixtures/p3a/negative-tbd-violation-literal.json"]
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance Criteria",
+        "## Tests",
+        "## Rollback"
+      ],
+      "body": "This synthetic spec's body is otherwise fully filled in with real prose for every required section, except this one sentence, which is: TBD"
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "placeholder-violation"
+  }
+}

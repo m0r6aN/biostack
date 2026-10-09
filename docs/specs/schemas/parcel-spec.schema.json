@@ -1,0 +1,46 @@
+{
+  "schema": "biostack.parcel-spec.v1",
+  "specShapes": {
+    "coordinator-parcel": {
+      "pathPattern": "docs/INITIATIVES/*/parcels/*.md",
+      "idFrontmatterKey": "parcel_id",
+      "requiresLeadingYamlFrontmatter": true,
+      "appliesFrom": "P3-B.md-forward; P1.md, P2.md, and P3-A.md itself predate this convention and are frozen, not retrofitted"
+    },
+    "ticket-spec": {
+      "pathPattern": "docs/specs/active/*.md|docs/specs/done/*.md",
+      "idFrontmatterKey": "ticket",
+      "requiresLeadingYamlFrontmatter": true,
+      "appliesFrom": "already the existing convention; unchanged by P3-A"
+    }
+  },
+  "requiredFrontmatterKeysCommonToBothShapes": [
+    "title", "status", "owner", "created", "updated",
+    "delivery_classes", "guidance_classes", "substance_function_risk", "surfaces"
+  ],
+  "statusClosedVocabulary": ["review-candidate", "active", "done", "superseded"],
+  "axisSource": "docs/specs/schemas/classification-axes.schema.json",
+  "controlSource": "docs/specs/schemas/delivery-class-controls.json",
+  "foldEngineSource": "docs/specs/schemas/fold-engine.md",
+  "sectionHeadingMapSource": "docs/specs/schemas/SECTION-HEADING-MAP.md",
+  "extensionPointsSource": "docs/specs/schemas/EXTENSION-POINTS.md",
+  "requiredSectionDerivation": "fold-live",
+  "noPlaceholderPatterns": [
+    "(?im)(^\\s*(TBD|TODO|FIXME)\\s*[:|\\-])|(\\{\\{[^}]+\\}\\})",
+    "(?i)\\b(TBD|TODO|FIXME)\\b"
+  ],
+  "sanctionedTemplateFillInMarker": "\\[REPLACE:[^\\]]+\\]",
+  "sanctionedTemplateFillInMarkerScope": "docs/specs/templates/** only",
+  "placeholderNormalizationSteps": [
+    "strip-html-comments",
+    "strip-html-tags",
+    "strip-inline-code-delimiters",
+    "strip-emphasis-markers",
+    "strip-markdown-escape-backslashes",
+    "decode-html-entities",
+    "strip-unicode-category-Cf-and-Cc",
+    "nfkc-normalize",
+    "unicode-confusables-skeleton"
+  ],
+  "extensionSections": {}
+}

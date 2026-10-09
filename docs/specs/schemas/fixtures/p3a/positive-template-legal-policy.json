@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.legal-policy.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

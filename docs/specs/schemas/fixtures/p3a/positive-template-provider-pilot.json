@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.provider-pilot.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

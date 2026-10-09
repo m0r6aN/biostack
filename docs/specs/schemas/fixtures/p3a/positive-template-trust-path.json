@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.trust-path.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}

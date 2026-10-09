@@ -1,0 +1,8 @@
+{
+  "input": {
+    "specPath": "docs/specs/templates/parcel-template.privacy.md"
+  },
+  "expected": {
+    "result": "valid"
+  }
+}
