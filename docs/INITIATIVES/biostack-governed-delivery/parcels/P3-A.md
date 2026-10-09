@@ -685,9 +685,9 @@ exactly in "Deterministic verification" below.
 ### 9. `docs/specs/README.md` and `docs/specs/INDEX.md` amendments
 
 `README.md` gets exactly one appended section titled `## Parcel-spec schema, templates, and
-extension points (P3-A)`, linking `../schemas/parcel-spec.schema.json`,
-`../schemas/SECTION-HEADING-MAP.md`, `../schemas/EXTENSION-POINTS.md`, and
-`../templates/README.md`, and stating in one sentence that P3-A composes P2's axis/fold substrate
+extension points (P3-A)`, linking `schemas/parcel-spec.schema.json`,
+`schemas/SECTION-HEADING-MAP.md`, `schemas/EXTENSION-POINTS.md`, and
+`templates/README.md`, and stating in one sentence that P3-A composes P2's axis/fold substrate
 into a generic spec contract and invents no product capability semantics. No existing line may be
 removed, reordered, or reworded.
 
