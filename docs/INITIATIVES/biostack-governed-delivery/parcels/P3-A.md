@@ -850,7 +850,8 @@ dependencies, and must exit nonzero on any failure:
    literal text exactly `## Extension points used` to be present and its body, trimmed of leading/
    trailing whitespace, to equal exactly the literal string `None.` (absence or any other body
    content fails `extension-points-used-section-missing-or-malformed`).
-9. For each of the thirteen `fixtures/p3a/*.json` fixtures: parse JSON; require exactly the keys
+9. For each of the twelve `fixtures/p3a/*.json` fixtures (the eight positive and four negative
+   JSON fixtures; `REAL-SPEC-COMPATIBILITY-SET.md` is handled separately by check 10): parse JSON; require exactly the keys
    `input`/`expected`; for the eight positive fixtures, resolve `input.specPath` to the real
    template file (re-running the same substitution and fold-live resolution as check 8, including
    its anti-heading-soup and placeholder-normalization sub-constraints) and require
@@ -928,7 +929,7 @@ warning-only acceptance.
 | AC-P3A-02 | `heading-map-check.json` |
 | AC-P3A-03 | `extension-points-check.json` |
 | AC-P3A-04 | `template-check.json` |
-| AC-P3A-05 | `fixture-results.json` (all thirteen fixtures) |
+| AC-P3A-05 | `fixture-results.json` (all twelve `.json` fixtures) |
 | AC-P3A-06 | placeholder-scan output (two P2-style patterns plus the template-marker scope checks) |
 | AC-P3A-07 | `compatibility-set-check.json` (all 26 rows, bound to `AXIS-REGRESSION-MAP.md`'s frozen enumeration) |
 | AC-P3A-08 | `schema-check.json`/`extension-points-check.json` plus reviewer scan |
@@ -1014,7 +1015,7 @@ Both items are satisfied by naming and evidencing the gap inside P3-A's own read
 or any existing active/done spec).
 
 3. **Self-identified gap: the `coordinator-parcel` shape is specified but exercised by no fixture
-   or compatibility-set row in this parcel.** All thirteen `fixtures/p3a/*.json` fixtures are
+   or compatibility-set row in this parcel.** All twelve `fixtures/p3a/*.json` fixtures are
    `ticket-spec`-shape-adjacent synthetics or template-derived (also destined to become
    `coordinator-parcel`-shape files once used, but not themselves parsed as one in this parcel's
    own fixture set), and `REAL-SPEC-COMPATIBILITY-SET.md`'s 26-row frozen-P2-census pass is scoped
