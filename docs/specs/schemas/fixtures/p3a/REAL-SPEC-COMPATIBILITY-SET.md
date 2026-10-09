@@ -34,6 +34,14 @@ correctly named, evidenced finding, not a validator defect.
    satisfying the `standard` class's `contracts` term), so `Agreement` for that row is
    `flagged-for-human-review`, not `consistent` — a disagreement P2's frontmatter-only census could
    never have surfaced, exactly the gap this carry-over item names.
+3. **Self-identified gap: the `coordinator-parcel` shape is specified but exercised by no fixture
+   or compatibility-set row in this parcel.** No `coordinator-parcel`-shape file can exist yet to
+   test against: per document contract 1's corrected `appliesFrom`, the convention binds
+   `P3-B.md`-forward, and `P1.md`, `P2.md`, and `P3-A.md` itself predate and are exempt from it.
+   This file's frozen-P2-census pass above is, and remains, scoped exactly to `ticket-spec` shape
+   (`docs/specs/active`/`docs/specs/done`), per P2's `AXIS-REGRESSION-MAP.md` lineage.
+
+This gap is not discharged by this remediation parcel: **P3-B's own dispatch must either (a) include a fixture or compatibility-set row exercising the `coordinator-parcel` branch against its own conforming spec file, or (b) explicitly re-affirm this gap's continuation with a named reason.**
 
 ## Compatibility table
 

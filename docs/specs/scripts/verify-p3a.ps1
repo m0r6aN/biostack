@@ -309,6 +309,12 @@ function Get-RequiredUnion {
 
 function Resolve-RequiredSections {
     # Returns @{ Unsatisfied = string[]; Assignment = hashtable term->headingIndex }
+    # Per document contract 2's alias rule (R2-F3), a term is satisfied by any
+    # heading matching either the term's own normalized tokens OR any
+    # normalized `Canonical alias(es)` phrase for that term, as populated into
+    # $script:HeadingMapAliasMap from SECTION-HEADING-MAP.md (check 6). If no
+    # alias map has been populated yet (or a term has no row), the term is its
+    # own sole candidate phrase, preserving prior behavior.
     param([string[]]$Terms, [string[]]$Headings)
     $termsSorted = Sort-Ordinal -Values $Terms
     $consumed = New-Object 'System.Collections.Generic.HashSet[int]'
@@ -318,23 +324,39 @@ function Resolve-RequiredSections {
     for ($i = 0; $i -lt $Headings.Count; $i++) { $headingToks += ,(ConvertTo-NormalizedTokens -Text $Headings[$i]) }
 
     foreach ($term in $termsSorted) {
-        $termToks = ConvertTo-NormalizedTokens -Text $term
-        $termLen = $termToks.Count
+        $phrases = New-Object 'System.Collections.Generic.List[string]'
+        $phrases.Add($term) | Out-Null
+        if ($null -ne $script:HeadingMapAliasMap -and $script:HeadingMapAliasMap.ContainsKey($term)) {
+            foreach ($alias in $script:HeadingMapAliasMap[$term]) {
+                if (-not [string]::IsNullOrWhiteSpace($alias) -and -not $phrases.Contains($alias)) {
+                    $phrases.Add($alias) | Out-Null
+                }
+            }
+        }
+        $candidatePhraseToks = New-Object 'System.Collections.Generic.List[object]'
+        foreach ($p in $phrases) {
+            $pt = ConvertTo-NormalizedTokens -Text $p
+            if ($pt.Count -gt 0) { $candidatePhraseToks.Add($pt) | Out-Null }
+        }
         $bestIdx = -1
         $bestKey = $null
         for ($idx = 0; $idx -lt $Headings.Count; $idx++) {
             if ($consumed.Contains($idx)) { continue }
             $hToks = $headingToks[$idx]
-            if ($hToks.Count -gt ($termLen + 4)) { continue }
             if ($hToks.Count -gt 10) { continue }
             $found = $false
-            if ($termLen -eq 0) { continue }
-            for ($start = 0; $start -le ($hToks.Count - $termLen); $start++) {
-                $match = $true
-                for ($k = 0; $k -lt $termLen; $k++) {
-                    if ($hToks[$start + $k] -ne $termToks[$k]) { $match = $false; break }
+            foreach ($phraseToks in $candidatePhraseToks) {
+                $phraseLen = $phraseToks.Count
+                if ($phraseLen -eq 0) { continue }
+                if ($hToks.Count -gt ($phraseLen + 4)) { continue }
+                for ($start = 0; $start -le ($hToks.Count - $phraseLen); $start++) {
+                    $match = $true
+                    for ($k = 0; $k -lt $phraseLen; $k++) {
+                        if ($hToks[$start + $k] -ne $phraseToks[$k]) { $match = $false; break }
+                    }
+                    if ($match) { $found = $true; break }
                 }
-                if ($match) { $found = $true; break }
+                if ($found) { break }
             }
             if (-not $found) { continue }
             $normalizedHeadingText = [string]::Join(' ', $hToks)
@@ -362,6 +384,12 @@ function Resolve-RequiredSections {
 # Minimal, deterministic, offline confusables-skeleton table (UTS #39-style)
 # covering common Latin-lookalike Cyrillic/Greek codepoints. Applied after
 # NFKC normalization as the final pipeline step.
+#
+# Scope disclosure (R2-F5, accept-as-documented): this table is intentionally
+# bounded to the common Latin-lookalike Cyrillic/Greek codepoints enumerated
+# below, not a full UTS #39 confusables database; it is a deterministic,
+# offline approximation sufficient for the placeholder-evasion cases this
+# parcel's own fixtures exercise, not a general-purpose confusables defense.
 $script:ConfusablesMap = @{
     [char]0x0410 = 'A'; [char]0x0430 = 'a'; [char]0x0412 = 'B'; [char]0x0415 = 'E'; [char]0x0435 = 'e'
     [char]0x041A = 'K'; [char]0x043A = 'k'; [char]0x041C = 'M'; [char]0x041D = 'H'; [char]0x041E = 'O'
@@ -530,9 +558,14 @@ Assert-SequenceEqual -Actual $ActualChanges -Expected $ExpectedChanges -Label 'B
 Add-PassedCheck -Number 3 -Name 'exact changed-file set equals the 28 allowed surfaces'
 
 # Check 4
-[string[]]$RegressionSpecPaths = @(Invoke-Git -Arguments @('ls-files', 'docs/specs/active', 'docs/specs/done')) |
+# Census is computed frozen at BaseCommit (git ls-tree against BaseCommit), not
+# from the current working tree/HEAD (git ls-files), so that a hypothetical
+# deletion of a frozen path between BaseCommit and HEAD is still enumerated
+# here and therefore still caught by the per-path `git diff --quiet` loop
+# below (R2-F4).
+[string[]]$RegressionSpecPaths = @(Invoke-Git -Arguments @('ls-tree', '-r', '--name-only', $BaseCommit, '--', 'docs/specs/active', 'docs/specs/done')) |
     Where-Object { $_ -ne 'docs/specs/active/README.md' -and $_ -ne 'docs/specs/done/README.md' }
-[string[]]$P2FixturePaths = @(Invoke-Git -Arguments @('ls-files', 'docs/specs/schemas/fixtures')) |
+[string[]]$P2FixturePaths = @(Invoke-Git -Arguments @('ls-tree', '-r', '--name-only', $BaseCommit, '--', 'docs/specs/schemas/fixtures')) |
     Where-Object { -not $_.StartsWith('docs/specs/schemas/fixtures/p3a/') }
 [string[]]$AllFrozenPaths = @($StaticFrozenPaths + $RegressionSpecPaths + $P2FixturePaths)
 foreach ($path in $AllFrozenPaths) {
@@ -599,12 +632,18 @@ $HeadingMapText = [IO.File]::ReadAllText($HeadingMapPath)
 $HeadingMapLines = $HeadingMapText -split "`r?`n"
 $mapRows = @($HeadingMapLines | Where-Object { $_.StartsWith('| ') -and -not $_.StartsWith('| Control term') -and -not $_.StartsWith('|---') })
 $mapTerms = New-Object 'System.Collections.Generic.List[string]'
+# R2-F3: populate the term -> canonical-alias(es) map consulted by
+# Resolve-RequiredSections (document contract 2's alias rule), not just the
+# term column used for the live-union cross-check below.
+$script:HeadingMapAliasMap = @{}
 foreach ($row in $mapRows) {
     $cells = $row.Trim().Trim('|').Split('|') | ForEach-Object { $_.Trim() }
     Assert-True ($cells.Count -eq 3) "SECTION-HEADING-MAP.md malformed row: $row"
     Assert-True (-not [string]::IsNullOrWhiteSpace($cells[1])) "SECTION-HEADING-MAP.md row has empty Canonical alias(es): $row"
     Assert-True ([StringComparer]::Ordinal.Equals($cells[2], 'delivery-class-controls.json')) "SECTION-HEADING-MAP.md row has wrong Source: $row"
     $mapTerms.Add($cells[0]) | Out-Null
+    [string[]]$aliases = @($cells[1] -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
+    $script:HeadingMapAliasMap[$cells[0]] = $aliases
 }
 [string[]]$MapTermsSorted = Sort-Ordinal -Values $mapTerms.ToArray()
 Assert-SequenceEqual -Actual $MapTermsSorted -Expected $LiveUnionSorted -Label 'SECTION-HEADING-MAP.md term column vs live requiredSpecAdditions union'
@@ -618,15 +657,31 @@ foreach ($h in $RequiredExtHeadings) {
     Assert-True ($ExtPointsText.Contains($h)) "EXTENSION-POINTS.md missing required heading: $h"
 }
 [string]$NonBindingSentence = 'This extension point adds no required section, check, reviewer weight, standing-authorization change, or stop condition by existing; it only becomes active when a future parcel''s own approved spec uses it.'
-$nonBindingCount = ([regex]::Matches($ExtPointsText, [regex]::Escape($NonBindingSentence))).Count
-Assert-True ($nonBindingCount -ge 3) 'EXTENSION-POINTS.md must contain the non-binding sentence at least once per extension point (>=3 total).'
-
 [string]$AppendOnlySentence = 'A newly appended `SECTION-HEADING-MAP.md` row''s normalized term (same normalization as document contract 2, including the anti-heading-soup constraints) must not duplicate any term already present in the live `requiredSpecAdditions` union, and no existing row may be removed, renamed, value-mutated, or reordered by this mechanic; the amending parcel''s own deterministic verifier must assert this append-only, non-duplicating invariant as a named check, failing `extension-point-not-additive` on violation.'
-Assert-True ($ExtPointsText.Contains($AppendOnlySentence)) 'EXTENSION-POINTS.md missing the pinned delivery-class-extension append-only invariant sentence.'
-
 [string]$DisjointnessSentence = 'A newly appended `extensionSections` key''s normalized form (same normalization as `SECTION-HEADING-MAP.md`) must not equal any term already present in the live `requiredSpecAdditions` union at append time, nor equal any other `extensionSections` key; no existing `extensionSections` key may be removed, renamed, or value-mutated by any future append; and the appending parcel''s own deterministic verifier must assert this disjointness-and-non-removal invariant as a named check, failing `extension-point-not-additive` on violation.'
-Assert-True ($ExtPointsText.Contains($DisjointnessSentence)) 'EXTENSION-POINTS.md missing the pinned domain-overlay-insertion disjointness invariant sentence.'
-Add-PassedCheck -Number 7 -Name 'EXTENSION-POINTS.md exact mechanics and pinned sentences (AC-P3A-03)'
+
+# R2-F2: pinned-sentence assertions are scoped per subsection (not a
+# whole-file `.Contains`), so a sentence present anywhere in the file but
+# outside its own named extension point's subsection does not satisfy this
+# check (the adversarial "sentence anywhere" exploit must fail).
+$ExtPointsSections = Get-HeadingSections -Body $ExtPointsText
+function Get-ExtensionPointSection {
+    param([string]$NameNeedle)
+    return ($ExtPointsSections | Where-Object { $_.Text.Contains($NameNeedle) } | Select-Object -First 1)
+}
+$DeliveryClassExtSection = Get-ExtensionPointSection -NameNeedle 'delivery-class-extension'
+$DomainOverlaySection = Get-ExtensionPointSection -NameNeedle 'domain-overlay-insertion'
+$TemplateSetExtSection = Get-ExtensionPointSection -NameNeedle 'template-set-extension'
+Assert-True ($null -ne $DeliveryClassExtSection) 'EXTENSION-POINTS.md missing the delivery-class-extension subsection.'
+Assert-True ($null -ne $DomainOverlaySection) 'EXTENSION-POINTS.md missing the domain-overlay-insertion subsection.'
+Assert-True ($null -ne $TemplateSetExtSection) 'EXTENSION-POINTS.md missing the template-set-extension subsection.'
+
+foreach ($extSection in @($DeliveryClassExtSection, $DomainOverlaySection, $TemplateSetExtSection)) {
+    Assert-True ($extSection.Body.Contains($NonBindingSentence)) "EXTENSION-POINTS.md subsection '$($extSection.Text)' missing the pinned non-binding sentence within its own subsection."
+}
+Assert-True ($DeliveryClassExtSection.Body.Contains($AppendOnlySentence)) 'EXTENSION-POINTS.md missing the pinned delivery-class-extension append-only invariant sentence within its own subsection.'
+Assert-True ($DomainOverlaySection.Body.Contains($DisjointnessSentence)) 'EXTENSION-POINTS.md missing the pinned domain-overlay-insertion disjointness invariant sentence within its own subsection.'
+Add-PassedCheck -Number 7 -Name 'EXTENSION-POINTS.md exact mechanics and pinned sentences, scoped per subsection (AC-P3A-03)'
 
 # ---------------------------------------------------------------------------
 # Check 8: eight per-delivery-class templates
@@ -819,7 +874,16 @@ foreach ($entry in $FrozenCensus) {
     Assert-True ([StringComparer]::Ordinal.Equals($recorded.Agreement, $expectedAgreement)) "$path Agreement mismatch. Expected $expectedAgreement, got $($recorded.Agreement)."
     $CompatCheckResults.Add([ordered]@{ path = $path; pass = $true }) | Out-Null
 }
-Add-PassedCheck -Number 10 -Name 'REAL-SPEC-COMPATIBILITY-SET.md frozen-P2-census compatibility pass (AC-P3A-07/11)'
+
+# R1-F1: carry-over-item-3 disposition. No `coordinator-parcel`-shape fixture
+# or compatibility-set row exists in this parcel (per document contract 1's
+# `appliesFrom`, that shape binds P3-B.md-forward); this is not silently
+# omitted but must be named, in the chosen allowed file, as an explicit,
+# bounded carry-forward obligation that a future dispatch discharges or
+# re-affirms.
+[string]$CarryOverItem3Sentence = 'This gap is not discharged by this remediation parcel: **P3-B''s own dispatch must either (a) include a fixture or compatibility-set row exercising the `coordinator-parcel` branch against its own conforming spec file, or (b) explicitly re-affirm this gap''s continuation with a named reason.**'
+Assert-True ($CompatSetText.Contains($CarryOverItem3Sentence)) 'REAL-SPEC-COMPATIBILITY-SET.md missing the pinned carry-over-item-3 (coordinator-parcel shape) disposition sentence.'
+Add-PassedCheck -Number 10 -Name 'REAL-SPEC-COMPATIBILITY-SET.md frozen-P2-census compatibility pass incl. carry-over-item-3 disposition (AC-P3A-07/11)'
 
 # ---------------------------------------------------------------------------
 # Check 11: INDEX.md / README.md bounded amendments
@@ -839,8 +903,18 @@ $p3aCells = $p3aRowMatch.Value.Trim().Trim('|').Split('|') | ForEach-Object { $_
 Assert-True ($p3aCells.Count -eq 10) 'INDEX.md P3-A row must have exactly ten cells.'
 Assert-True ([StringComparer]::Ordinal.Equals($p3aCells[0], 'P3-A')) 'INDEX.md P3-A row Parcel cell mismatch.'
 Assert-True ([StringComparer]::Ordinal.Equals($p3aCells[1], 'review-candidate')) 'INDEX.md P3-A row Status cell mismatch.'
-Assert-True ($p3aCells[2] -match '^\[P3-A[^\]]*\]\(.+\)$') 'INDEX.md P3-A row Spec cell must be a link to this file.'
-Assert-True ($p3aCells[3] -match '^\[[^\]]*charter[^\]]*\]\(.+\)$') 'INDEX.md P3-A row Goal Charter cell must be a link target naming the charter.'
+# R2-F1: resolve the Spec/Goal Charter cells' hrefs to the pinned literal
+# paths via captured regex groups, not merely assert shape (the adversarial
+# bogus-href exploit, e.g. a syntactically valid markdown link pointing
+# somewhere else, must fail).
+[string]$PinnedP3ASpecHref = '../INITIATIVES/biostack-governed-delivery/parcels/P3-A.md'
+[string]$PinnedP3ACharterHref = '../INITIATIVES/biostack-governed-delivery/CHARTER.md'
+$p3aSpecCellMatch = [regex]::Match($p3aCells[2], '^\[P3-A[^\]]*\]\(([^)]+)\)$')
+Assert-True $p3aSpecCellMatch.Success 'INDEX.md P3-A row Spec cell must be a markdown link to this file.'
+Assert-True ([StringComparer]::Ordinal.Equals($p3aSpecCellMatch.Groups[1].Value, $PinnedP3ASpecHref)) "INDEX.md P3-A row Spec cell href must equal '$PinnedP3ASpecHref' exactly, got '$($p3aSpecCellMatch.Groups[1].Value)'."
+$p3aCharterCellMatch = [regex]::Match($p3aCells[3], '^\[[^\]]*charter[^\]]*\]\(([^)]+)\)$')
+Assert-True $p3aCharterCellMatch.Success 'INDEX.md P3-A row Goal Charter cell must be a markdown link target naming the charter.'
+Assert-True ([StringComparer]::Ordinal.Equals($p3aCharterCellMatch.Groups[1].Value, $PinnedP3ACharterHref)) "INDEX.md P3-A row Goal Charter cell href must equal '$PinnedP3ACharterHref' exactly, got '$($p3aCharterCellMatch.Groups[1].Value)'."
 Assert-True ([StringComparer]::Ordinal.Equals($p3aCells[4], 'standard; architecture')) 'INDEX.md P3-A row Delivery classes cell mismatch.'
 Assert-True ([StringComparer]::Ordinal.Equals($p3aCells[5], 'not-applicable')) 'INDEX.md P3-A row Guidance classes cell mismatch.'
 Assert-True ([StringComparer]::Ordinal.Equals($p3aCells[6], 'coordinator-assigns-at-gate-2')) 'INDEX.md P3-A row Branch/worktree cell mismatch.'
@@ -853,7 +927,7 @@ $removedReadmeLines = @($readmeUnifiedDiff | Where-Object { $_.StartsWith('-') -
 Assert-True ($removedReadmeLines.Count -eq 0) 'README.md diff must remove zero lines.'
 $readmeHeadText = [IO.File]::ReadAllText((Join-Path $RepositoryRoot 'docs/specs/README.md'))
 Assert-True ($readmeHeadText.Contains('## Parcel-spec schema, templates, and extension points (P3-A)')) 'README.md missing required P3-A section heading.'
-foreach ($link in @('../schemas/parcel-spec.schema.json', '../schemas/SECTION-HEADING-MAP.md', '../schemas/EXTENSION-POINTS.md', '../templates/README.md')) {
+foreach ($link in @('schemas/parcel-spec.schema.json', 'schemas/SECTION-HEADING-MAP.md', 'schemas/EXTENSION-POINTS.md', 'templates/README.md')) {
     Assert-True ($readmeHeadText.Contains($link)) "README.md P3-A section missing link to $link."
 }
 Assert-True ($readmeHeadText.Contains('P3-A composes P2''s axis/fold substrate into a generic spec contract and invents no product capability semantics.')) 'README.md missing required P3-A scope sentence.'
