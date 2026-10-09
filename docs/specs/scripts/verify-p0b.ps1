@@ -664,6 +664,258 @@ Assert-True ((-not $contractJsonText.Contains('missing provenance is degraded'))
 Add-PassedCheck -Name 'numeric-provenance-fail-closed-fixture' -Detail 'D-B3 rule 4 (missing provenance => fail-closed refusal, not downgrade) verified verbatim; no weaker alternate framing found in either artifact'
 
 # ---------------------------------------------------------------------------
+# Check 18: dual-reviewer-sign-off-required (F4 remediation) -- check 10's own text names
+# "the required dual reviewer sign-off (two distinct reviewer IDs ... checked elsewhere in this
+# script)" as the compensating control for citation-content accuracy. Prior to this check, that
+# control did not exist: -ReviewerIds was only echoed into the evidence summary. This makes the
+# claim true: at least two distinct, non-empty reviewer IDs are mechanically required, or the
+# script fails closed before any evidence is written.
+# ---------------------------------------------------------------------------
+
+$distinctReviewerIds = @($ReviewerIds | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | ForEach-Object { $_.Trim() } | Select-Object -Unique)
+Assert-True ($distinctReviewerIds.Count -ge 2) "dual-reviewer-sign-off-required: -ReviewerIds must carry at least two distinct, non-empty reviewer IDs (required dual independent review per P0-B.md / D14 fold); found $($distinctReviewerIds.Count) distinct non-empty ID(s)."
+Add-PassedCheck -Name 'dual-reviewer-sign-off-required' -Detail "$($distinctReviewerIds.Count) distinct non-empty reviewer ID(s) supplied; a single-reviewer run now fails closed instead of passing 17/17"
+
+# ---------------------------------------------------------------------------
+# Check 19: normative-text-byte-pin (F1/F2/F3 remediation) -- every normative text block in BOTH
+# artifacts is compared, independently, against its ground-truth source, with no vocabulary
+# matching: whitespace/markdown-emphasis-insensitive but content-exact ("squashed" comparison),
+# the same ground-truth-diff discipline check 11 already applies to the D-B2 matrix, extended to
+# every other ruled/pinned text block named in p0b_reverify_2:
+#   (a) the D-B2 footnote text (matrix cells themselves are check 11's job already)
+#   (b) D-B3..D-B6 rule/rung sentences, each array item, JSON and the .md's own prose, both
+#       independently diffed against P0-B-DESIGN-GATE.md section 3 (not against each other)
+#   (c) preemptionOrder stage-label membership/order + compositionNote text
+#   (d) doseContextDefinition.text (D-J) against COORDINATOR-DECISIONS-2026-10-07.md ## D-J
+#   (e) every applicabilityCriterion.test pinned formulaic sentence, byte-exact in the JSON and
+#       content-exact in the .md's own "Per-label applicability criteria" table row -- this is
+#       the control that closes F1/T4i/T4c/T4d/T4g/T4f directly: ANY edit to a pinned sentence
+#       (an appended clause, a comma-merged behavior clause, a narrowed criterion, a lowercase-
+#       initial follow-on sentence) changes the squashed/literal content and fails this check,
+#       regardless of wording, citation tags, or sentence-boundary tricks.
+#   (f) enablementState literals, including the .md's own embedded JSON snippet (not just the
+#       JSON artifact, already covered field-by-field by check 7)
+# This check performs NO content editing of any matrix cell, rule wording, or enablement
+# semantics -- it only pins what is already shipped against its ruled/ruling source.
+# ---------------------------------------------------------------------------
+
+function Get-Squashed {
+    param([Parameter(Mandatory = $true)][AllowEmptyString()][string]$Text)
+    $t = $Text -replace '[*>`¹]', ''
+    $t = $t -replace '\s+', ''
+    return $t
+}
+
+function Get-BoundedSection {
+    param(
+        [Parameter(Mandatory = $true)][string]$Content,
+        [Parameter(Mandatory = $true)][string]$StartMarker,
+        [string]$EndMarker
+    )
+    $startIdx = $Content.IndexOf($StartMarker)
+    Assert-True ($startIdx -ge 0) "normative-text-byte-pin: start marker not found: '$StartMarker'."
+    if ($EndMarker) {
+        $endIdx = $Content.IndexOf($EndMarker, $startIdx + $StartMarker.Length)
+        Assert-True ($endIdx -gt $startIdx) "normative-text-byte-pin: end marker not found after start marker '$StartMarker': '$EndMarker'."
+        return $Content.Substring($startIdx, $endIdx - $startIdx)
+    }
+    return $Content.Substring($startIdx)
+}
+
+function Get-NumberedItems {
+    param([Parameter(Mandatory = $true)][AllowEmptyString()][string]$SectionText)
+    $lines = $SectionText -split "`n"
+    $items = New-Object 'System.Collections.Generic.List[string]'
+    $current = $null
+    foreach ($line in $lines) {
+        if ($line -match '^\s*\d+\.\s+(.*)$') {
+            if ($null -ne $current) { $items.Add($current.Trim()) }
+            $current = $Matches[1]
+        } elseif ($null -ne $current) {
+            if ($line.Trim() -eq '') {
+                $items.Add($current.Trim())
+                $current = $null
+            } else {
+                $current = $current + ' ' + $line.Trim()
+            }
+        }
+    }
+    if ($null -ne $current) { $items.Add($current.Trim()) }
+    return $items.ToArray()
+}
+
+# -- (a) D-B2 footnote --
+$designGateB2Section = Get-BoundedSection -Content $designGateContent -StartMarker '### D-B2' -EndMarker '### D-B3'
+$footnoteMatch = [regex]::Match($designGateB2Section, '(?m)^¹\s+(.+)$')
+Assert-True ($footnoteMatch.Success) 'normative-text-byte-pin: D-B2 footnote (leading ¹) not found in P0-B-DESIGN-GATE.md.'
+$expectedFootnoteSquashed = Get-Squashed -Text $footnoteMatch.Groups[1].Value
+$sourcingLabelObj = $labelsObj.'controlled-or-illegal-sourcing'.behavior
+foreach ($cellName in @('C1', 'C2', 'C3')) {
+    $actualFootnote = [string]$sourcingLabelObj.$cellName.footnote
+    Assert-True ((Get-Squashed -Text $actualFootnote) -eq $expectedFootnoteSquashed) "normative-text-byte-pin: controlled-or-illegal-sourcing.$cellName.footnote diverges from the D-B2 footnote in P0-B-DESIGN-GATE.md.`nExpected (squashed): $expectedFootnoteSquashed`nFound (squashed):    $(Get-Squashed -Text $actualFootnote)"
+}
+Assert-True ((Get-Squashed -Text $contractMdContent) -match [regex]::Escape($expectedFootnoteSquashed)) 'normative-text-byte-pin: the Markdown artifact does not reproduce the D-B2 footnote text content.'
+
+# -- (b) D-B3..D-B6 rule/rung sentences: JSON array and the .md's own prose, each independently
+#        diffed against P0-B-DESIGN-GATE.md section 3 --
+# Known, already-shipped OPERATIONALIZED citation addenda: a handful of ruled sentences are
+# legitimately extended (in BOTH artifacts, consistently) with a trailing citation/reference
+# parenthetical that replaces the ruled sentence's own closing period. These are pinned here
+# exactly as shipped -- this is not an open door for new unpinned text: any OTHER addition, or
+# any change to this exact addendum text, still fails the comparison below.
+$RuleTailAddenda = @{
+    'D-B4 (missingInputLadder.rungs):2' = ' (`docs/guidance/biostack-guidance-content-contract.v1.md`, "Required warning and uncertainty language" table — reused by reference, not re-defined).'
+}
+
+$ruledListSpecs = @(
+    @{ Name = 'D-B3 (numericProvenance.rules)'; DgStart = '### D-B3'; DgEnd = '### D-B4'; JsonArray = @($contract.numericProvenance.rules); MdStart = '## Numeric provenance (D-B3)'; MdEnd = '## Missing-input ladder (D-B4)' },
+    @{ Name = 'D-B4 (missingInputLadder.rungs)'; DgStart = '### D-B4'; DgEnd = '### D-B5'; JsonArray = @($contract.missingInputLadder.rungs); MdStart = '## Missing-input ladder (D-B4)'; MdEnd = '## Function-review status (D-B5)' },
+    @{ Name = 'D-B5 (functionReviewStatus.rules)'; DgStart = '### D-B5'; DgEnd = '### D-B6'; JsonArray = @($contract.functionReviewStatus.rules); MdStart = '## Function-review status (D-B5)'; MdEnd = '## Escalation semantics (D-B6)' },
+    @{ Name = 'D-B6 (escalationSemantics.rules)'; DgStart = '### D-B6'; DgEnd = '## 4. Ruling format'; JsonArray = @($contract.escalationSemantics.rules); MdStart = '## Escalation semantics (D-B6)'; MdEnd = '## Cell semantics' }
+)
+foreach ($spec in $ruledListSpecs) {
+    $dgSection = Get-BoundedSection -Content $designGateContent -StartMarker $spec.DgStart -EndMarker $spec.DgEnd
+    $groundTruthItems = Get-NumberedItems -SectionText $dgSection
+    Assert-True ($groundTruthItems.Count -gt 0) "normative-text-byte-pin: no numbered ground-truth items parsed for $($spec.Name) from P0-B-DESIGN-GATE.md."
+    Assert-True ($spec.JsonArray.Count -eq $groundTruthItems.Count) "normative-text-byte-pin: $($spec.Name) expected $($groundTruthItems.Count) rule(s) (ground truth), found $($spec.JsonArray.Count) in the JSON artifact."
+    for ($i = 0; $i -lt $groundTruthItems.Count; $i++) {
+        $itemKey = "$($spec.Name):$i"
+        $expectedRaw = $groundTruthItems[$i]
+        if ($RuleTailAddenda.ContainsKey($itemKey)) { $expectedRaw = $expectedRaw.TrimEnd('.') + $RuleTailAddenda[$itemKey] }
+        $expectedSquashed = Get-Squashed -Text $expectedRaw
+        $actualSquashed = Get-Squashed -Text ([string]$spec.JsonArray[$i])
+        Assert-True ($actualSquashed -eq $expectedSquashed) "normative-text-byte-pin: $($spec.Name) rule $($i + 1) diverges from P0-B-DESIGN-GATE.md (content-exact, whitespace/markdown-emphasis-insensitive comparison).`nExpected (squashed): $expectedSquashed`nFound (squashed):    $actualSquashed"
+    }
+    $mdSection = Get-BoundedSection -Content $contractMdContent -StartMarker $spec.MdStart -EndMarker $spec.MdEnd
+    $mdItems = Get-NumberedItems -SectionText $mdSection
+    Assert-True ($mdItems.Count -eq $groundTruthItems.Count) "normative-text-byte-pin: $($spec.Name) -- the Markdown artifact's own prose carries $($mdItems.Count) numbered item(s), expected $($groundTruthItems.Count) (ground truth) -- the .md's own transcription has drifted structurally."
+    for ($i = 0; $i -lt $groundTruthItems.Count; $i++) {
+        $itemKey = "$($spec.Name):$i"
+        $expectedRaw = $groundTruthItems[$i]
+        if ($RuleTailAddenda.ContainsKey($itemKey)) { $expectedRaw = $expectedRaw.TrimEnd('.') + $RuleTailAddenda[$itemKey] }
+        $expectedSquashed = Get-Squashed -Text $expectedRaw
+        $mdSquashed = Get-Squashed -Text $mdItems[$i]
+        Assert-True ($mdSquashed -eq $expectedSquashed) "normative-text-byte-pin: $($spec.Name) rule $($i + 1) -- the Markdown artifact's OWN prose diverges from P0-B-DESIGN-GATE.md (ground truth), independent of the JSON artifact's own value.`nExpected (squashed): $expectedSquashed`nFound in .md (squashed): $mdSquashed"
+    }
+}
+
+# -- (c) preemptionOrder stage-label membership/order + compositionNote --
+[hashtable]$expectedStageLabels = @{
+    1 = @('acute-red-flag-or-emergency')
+    2 = @('controlled-or-illegal-sourcing')
+    3 = @('minor-or-age-uncertain', 'pregnancy-or-lactation', 'prescription-treatment-involved')
+    4 = @()
+}
+$actualStages = @($contract.preemptionOrder.stages)
+Assert-True ($actualStages.Count -eq 4) "normative-text-byte-pin: preemptionOrder.stages expected exactly 4 stages, found $($actualStages.Count)."
+foreach ($stageObj in $actualStages) {
+    $stageNum = [int]$stageObj.stage
+    Assert-True ($expectedStageLabels.ContainsKey($stageNum)) "normative-text-byte-pin: preemptionOrder.stages carries an unrecognized stage number '$stageNum'."
+    $actualLabels = @($stageObj.labels)
+    $expLabels = @($expectedStageLabels[$stageNum])
+    Assert-True ($actualLabels.Count -eq $expLabels.Count) "normative-text-byte-pin: preemptionOrder stage $stageNum expected $($expLabels.Count) label(s) (ground truth: P0-B-DESIGN-GATE.md §3 D-B2 preemption paragraph), found $($actualLabels.Count)."
+    for ($i = 0; $i -lt $expLabels.Count; $i++) {
+        Assert-True ($actualLabels[$i] -eq $expLabels[$i]) "normative-text-byte-pin: preemptionOrder stage $stageNum label at index $i expected '$($expLabels[$i])' (ground truth), found '$($actualLabels[$i])' -- a label may not be demoted, promoted, added, or removed from its ruled stage."
+    }
+}
+$compositionNoteMatch = [regex]::Match($designGateB2Section, '(?s)"Most restrictive wins".*?no label erases another''s obligations\.')
+Assert-True ($compositionNoteMatch.Success) 'normative-text-byte-pin: could not locate the compositionNote ground-truth sentence in P0-B-DESIGN-GATE.md §3 D-B2.'
+$expectedCompositionSquashed = Get-Squashed -Text $compositionNoteMatch.Value
+Assert-True ((Get-Squashed -Text ([string]$contract.preemptionOrder.compositionNote)) -eq $expectedCompositionSquashed) "normative-text-byte-pin: preemptionOrder.compositionNote diverges from P0-B-DESIGN-GATE.md §3 D-B2's ruled sentence (content-exact comparison) -- this is the exact control that closes the label-erasure-license rewrite (T3e).`nExpected (squashed): $expectedCompositionSquashed`nFound (squashed):    $(Get-Squashed -Text ([string]$contract.preemptionOrder.compositionNote))"
+$mdCompositionMatch = [regex]::Match($contractMdContent, '(?s)`compositionNote`:.*?no\s+label\s+erases\s+another''s\s+obligations\.')
+Assert-True ($mdCompositionMatch.Success) 'normative-text-byte-pin: could not locate the `compositionNote` sentence in the Markdown artifact.'
+Assert-True ((Get-Squashed -Text $mdCompositionMatch.Value) -match [regex]::Escape($expectedCompositionSquashed)) "normative-text-byte-pin: the Markdown artifact's own compositionNote prose diverges from P0-B-DESIGN-GATE.md §3 D-B2's ruled sentence.`nExpected to contain (squashed): $expectedCompositionSquashed`nFound (squashed):               $(Get-Squashed -Text $mdCompositionMatch.Value)"
+
+# -- (d) doseContextDefinition.text (D-J) --
+$coordinatorDecisionsContent = Read-RepoFile -Path 'docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md'
+$dJSection = Get-BoundedSection -Content $coordinatorDecisionsContent -StartMarker '## D-J' -EndMarker '## D-K'
+$dJBlockquoteLines = @(($dJSection -split "`n") | Where-Object { $_ -match '^>' } | ForEach-Object { $_ -replace '^>\s?', '' })
+Assert-True ($dJBlockquoteLines.Count -gt 0) 'normative-text-byte-pin: no blockquote lines found under ## D-J in COORDINATOR-DECISIONS-2026-10-07.md.'
+$dJBlockquoteText = ($dJBlockquoteLines -join ' ') -replace '^\s*\*\*Dose-context output\.\*\*\s*', ''
+$expectedDJSquashed = Get-Squashed -Text $dJBlockquoteText
+Assert-True ((Get-Squashed -Text ([string]$contract.doseContextDefinition.text)) -eq $expectedDJSquashed) "normative-text-byte-pin: doseContextDefinition.text diverges from Coordinator Decision D-J (content-exact comparison) -- this is the exact control that closes the narrowed dose-context-scope rewrite (T3f).`nExpected (squashed): $expectedDJSquashed`nFound (squashed):    $(Get-Squashed -Text ([string]$contract.doseContextDefinition.text))"
+$mdDJSection = Get-BoundedSection -Content $contractMdContent -StartMarker '## Dose-context definition (D-J)' -EndMarker '## Precedence directional constraint'
+$mdDJBlockquoteLines = @(($mdDJSection -split "`n") | Where-Object { $_ -match '^>' } | ForEach-Object { $_ -replace '^>\s?', '' })
+Assert-True ($mdDJBlockquoteLines.Count -gt 0) 'normative-text-byte-pin: no blockquote lines found under the Markdown artifact''s Dose-context definition (D-J) section.'
+$mdDJBlockquoteText = ($mdDJBlockquoteLines -join ' ') -replace '^\s*\*\*Dose-context output\.\*\*\s*', ''
+Assert-True ((Get-Squashed -Text $mdDJBlockquoteText) -eq $expectedDJSquashed) "normative-text-byte-pin: the Markdown artifact's own Dose-context definition (D-J) prose diverges from Coordinator Decision D-J (ground truth), independent of the JSON artifact's own value.`nExpected (squashed): $expectedDJSquashed`nFound in .md (squashed): $(Get-Squashed -Text $mdDJBlockquoteText)"
+
+# -- (e) every applicabilityCriterion.test pinned formulaic sentence --
+# Ground-truth strings pinned at this parcel's authoring commit (the OPERATIONALIZED criteria this
+# parcel itself authors; see the [OPERATIONALIZED -- bounded] marker on each). Pinning these means
+# ANY edit -- an appended clause, a comma-merged behavior clause smuggled into the pinned sentence
+# (the exact T4i/T4c evasion form), a lowercase-initial follow-on sentence (T4d), or a narrowed
+# criterion (T4f) -- changes this exact content and fails this check, regardless of wording,
+# citation tags, or sentence-boundary tricks. This is deliberately NOT a sentence-structure or
+# vocabulary rule like check 10 -- it is a direct byte-exact pin of the whole field.
+([ordered]@{
+    'ordinary'                                = 'True when none of the other nine labels'' tests below are true for this invocation.'
+    'prescription-treatment-involved'        = 'True when a declared input or output names a substance/treatment that the function''s own capability contract, or a `label-or-prescription-transcribed` input, marks prescription-status, or the user has declared it as a currently prescribed/clinician-directed treatment.'
+    'investigational-or-unapproved'          = 'True when the cited evidence source''s own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. Deterministic threshold: an output with zero cited evidence sources for the declared use is out-of-scope for this criterion (not vacuously true) and instead defers to that function''s own missing-input ladder behavior (missingInputLadder, rule 2) — this criterion only attaches once at least one evidence source is actually cited and its regulatory-status field is read. [cite: D-B4.rule2]'
+    'gray-market-or-identity-uncertain'       = 'True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function''s declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins.'
+    'injection-or-sterile-preparation'        = 'True when the function''s declared output type or route is injection, reconstitution, or any sterile-preparation step.'
+    'interaction-or-contraindication-signal'  = 'True when a matching interaction/contraindication record exists in the cited evidence source for the user''s declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is function-declared, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`''s triggering criterion set [cite: D-B2.interaction-or-contraindication-signal.C2]. That same function-declared algorithm also carries the function''s own declared strength grading — exactly the quantity the C3 cell''s D→E strong-signal escalation [cite: D-B2.interaction-or-contraindication-signal.C3] names as "the function''s own declared evidence-source match threshold": base applicability (does a record match at all) and the D→E upgrade (is the matched record''s signal strong) are the matching-vs-grading components of one function-declared matching specification, not two independently defined specifications.'
+    'minor-or-age-uncertain'                  = 'True when the user''s declared age is below the function''s declared minimum-age threshold, or age is a function-declared required input and is missing or unverified.'
+    'pregnancy-or-lactation'                  = 'True when the user has declared current pregnancy or lactation status, or that status is a function-declared required input and is missing/unverified for a function whose substance or output carries a source-labeled pregnancy/lactation signal.'
+    'acute-red-flag-or-emergency'             = 'LOCKED. True when declared symptoms, vitals, or context match any function-declared red-flag/emergency criterion; the triggering criterion set is itself function-declared (per D15''s function-specific-review model), not invented by this contract.'
+    'controlled-or-illegal-sourcing'          = 'LOCKED. True whenever the declared request or context seeks sourcing, acquisition, legal/regulatory evasion, or concealment of a controlled-or-illegal substance or its acquisition — evaluated against the request/context, never against the mere mention of a controlled substance''s evidence content.'
+}).GetEnumerator() | ForEach-Object {
+    $lblName = $_.Key
+    $expectedTest = $_.Value
+    $actualTest = [string]$labelsObj.$lblName.applicabilityCriterion.test
+    Assert-True ($actualTest -eq $expectedTest) "normative-text-byte-pin: $lblName applicabilityCriterion.test diverges byte-for-byte from its pinned formulaic sentence -- this is the control that closes F1/F3 (T4i/T4c/T4d/T4g/T4f): any edit, including a comma-merged behavior clause or a narrowed criterion, fails here regardless of citation tags or wording.`nExpected: $expectedTest`nFound:    $actualTest"
+}
+$mdCriteriaRows = @{}
+foreach ($m in [regex]::Matches($contractMdContent, '(?m)^\|\s*`([a-z0-9-]+)`\s*\|\s*([^|\r\n]+?)\s*\|\s*$')) {
+    $lbl = $m.Groups[1].Value
+    if (($SubstanceFunctionRiskLabels -contains $lbl) -and (-not $mdCriteriaRows.ContainsKey($lbl))) {
+        $mdCriteriaRows[$lbl] = $m.Groups[2].Value
+    }
+}
+# The Markdown table's own prose is independently authored (not required to be byte-identical
+# to the JSON field's wording for every label -- two of the ten rows carry pre-existing,
+# substantively-equivalent-but-not-identical phrasing from this parcel's original authoring),
+# so each row is pinned against ITS OWN already-shipped ground truth, not against the JSON
+# field. This still closes T4g: any edit to the .md table row content (appended clause,
+# comma-merged behavior clause, narrowed criterion) changes the squashed content and fails.
+$ExpectedMdCriteriaRows = [ordered]@{
+    'ordinary'                               = 'True when none of the other nine labels'' tests below are true for this invocation.'
+    'prescription-treatment-involved'        = 'True when a declared input or output names a substance/treatment that the function''s own capability contract, or a `label-or-prescription-transcribed` input, marks prescription-status, or the user has declared it as a currently prescribed/clinician-directed treatment.'
+    'investigational-or-unapproved'          = 'True when the cited evidence source''s own regulatory-status field states investigational, unapproved, or off-label for the declared use, or no approved-use record exists in the evidence source for the declared use. Deterministic threshold: an output with **zero cited evidence sources** for the declared use is **out-of-scope** for this criterion (not vacuously true) and instead defers to that function''s own missing-input ladder behavior (`missingInputLadder`, rule 2) — this criterion only attaches once at least one evidence source is actually cited and its regulatory-status field is read. `[cite: D-B4.rule2]`'
+    'gray-market-or-identity-uncertain'      = 'True when a required identity/concentration/manufacturing-source provenance field (per `numericProvenance` and the function''s declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins.'
+    'injection-or-sterile-preparation'       = 'True when the function''s declared output type or route is injection, reconstitution, or any sterile-preparation step.'
+    'interaction-or-contraindication-signal' = 'True when a matching interaction/contraindication record exists in the cited evidence source for the user''s declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is **function-declared**, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`''s "triggering criterion set is itself function-declared," below `[cite: D-B2.interaction-or-contraindication-signal.C2]`. That same function-declared algorithm also carries the function''s own declared strength grading — exactly the quantity this table''s `C3` cell''s `D→E` strong-signal escalation `[cite: D-B2.interaction-or-contraindication-signal.C3]` names as "the function''s own declared evidence-source match threshold": base applicability (does a record match at all) and the `D→E` upgrade (is the matched record''s signal strong) are therefore the matching-vs-grading components of one function-declared matching specification, not two independently defined, unrelated specifications.'
+    'minor-or-age-uncertain'                 = 'True when the user''s declared age is below the function''s declared minimum-age threshold, or age is a function-declared required input and is missing or unverified.'
+    'pregnancy-or-lactation'                 = 'True when the user has declared current pregnancy or lactation status, or that status is a function-declared required input and is missing/unverified for a function whose substance or output carries a source-labeled pregnancy/lactation signal.'
+    'acute-red-flag-or-emergency'            = '**LOCKED.** True when declared symptoms, vitals, or context match any function-declared red-flag/emergency criterion; the triggering criterion set is itself function-declared (per D15''s function-specific-review model), not invented by this contract.'
+    'controlled-or-illegal-sourcing'         = '**LOCKED.** True whenever the declared request or context seeks sourcing, acquisition, legal/regulatory evasion, or concealment of a controlled-or-illegal substance or its acquisition — evaluated against the request/context, never against the mere mention of a controlled substance''s evidence content.'
+}
+foreach ($lblName in $jsonLabelNames) {
+    Assert-True ($mdCriteriaRows.ContainsKey($lblName)) "normative-text-byte-pin: the Markdown artifact's `"Per-label applicability criteria`" table has no row for '$lblName'."
+    $expectedSquashed = Get-Squashed -Text ([string]$ExpectedMdCriteriaRows[$lblName])
+    $mdSquashed = Get-Squashed -Text $mdCriteriaRows[$lblName]
+    Assert-True ($mdSquashed -eq $expectedSquashed) "normative-text-byte-pin: the Markdown artifact's OWN `"Per-label applicability criteria`" table row for '$lblName' diverges from its pinned ground truth (content-exact comparison) -- closes the .md-only clause-smuggling evasion (T4g).`nExpected (squashed): $expectedSquashed`nFound in .md (squashed): $mdSquashed"
+}
+
+# -- (f) enablementState literals, including the .md's own embedded JSON snippet --
+$mdEnablementSnippetMatch = [regex]::Match($contractMdContent, '(?s)```json\s*\{.*?"biostackRecommendedOrigination":\s*(\{.*?\})\s*\}\s*```')
+Assert-True ($mdEnablementSnippetMatch.Success) 'normative-text-byte-pin: could not locate the embedded enablementState JSON snippet in the Markdown artifact.'
+$mdEnablementObj = $mdEnablementSnippetMatch.Groups[1].Value | ConvertFrom-Json -Depth 10
+[string[]]$EnablementLiteralFields = @(
+    'definedInContract', 'publiclyEnabled', 'currentPosture', 'governingGuidanceContractVersion',
+    'requiredGuidanceContractVersionForPublicEnablement', 'requiredApprovalLevelForPublicEnablement',
+    'publicEnablementEvent', 'rulingReference'
+)
+foreach ($field in $EnablementLiteralFields) {
+    $jsonVal = $enablement.$field
+    $mdVal = $mdEnablementObj.$field
+    Assert-True ([string]$jsonVal -eq [string]$mdVal) "normative-text-byte-pin: enablementState.biostackRecommendedOrigination.$field diverges between the JSON artifact ('$jsonVal') and the Markdown artifact's own embedded JSON snippet ('$mdVal')."
+}
+Assert-True ($mdEnablementObj.publiclyEnabled -eq $false) "normative-text-byte-pin: the Markdown artifact's own embedded JSON snippet does not carry the literal boolean publiclyEnabled: false."
+
+Add-PassedCheck -Name 'normative-text-byte-pin' -Detail 'byte/content-exact (whitespace- and markdown-emphasis-insensitive) comparison of every normative text block in BOTH artifacts against ground truth, independently: D-B2 footnote; D-B3..D-B6 rule/rung sentences (JSON array and the .md''s own prose, each diffed against P0-B-DESIGN-GATE.md, not against each other); preemptionOrder stage-label membership/order; compositionNote (JSON and .md); doseContextDefinition.text / D-J (JSON and .md); every applicabilityCriterion.test pinned formulaic sentence byte-exact in JSON plus content-exact in the .md''s own criteria table; enablementState literals cross-checked against the .md''s own embedded JSON snippet. No matrix cell, rule wording, or enablement semantic was changed by this check -- it only pins what already ships.'
+
+# ---------------------------------------------------------------------------
 # Evidence bundle
 # ---------------------------------------------------------------------------
 
