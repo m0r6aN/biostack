@@ -224,7 +224,26 @@ Assert-True ($enablement.requiredApprovalLevelForPublicEnablement -eq 'legal_pro
 Assert-True ($enablement.publicEnablementEvent -eq 'not-yet-occurred-separate-future-owner-event') 'enablement-field-fidelity: publicEnablementEvent mismatch.'
 Assert-True ($enablement.rulingReference -eq 'COORDINATOR-DECISIONS-2026-10-07.md#D-I') 'enablement-field-fidelity: rulingReference mismatch.'
 
-# No sentence anywhere in the two artifacts may assert public Class D/C3 availability today.
+# Provenance-trace / allow-list model (R2-F3; replaces a bare forbidden-phrase blocklist, which is
+# evadable by any additive free-text key/sentence that never uses one of the listed phrases).
+# `enablementState.biostackRecommendedOrigination` is a CLOSED object: exactly the eight fields
+# this contract defines, and no other key, may exist on it. Any additive key -- regardless of its
+# wording -- is uncited, unauthorized content and fails this check outright; nothing needs to
+# match a specific forbidden phrase for the check to catch it.
+[string[]]$AllowedEnablementStateKeys = @(
+    'definedInContract', 'publiclyEnabled', 'currentPosture', 'governingGuidanceContractVersion',
+    'requiredGuidanceContractVersionForPublicEnablement', 'requiredApprovalLevelForPublicEnablement',
+    'publicEnablementEvent', 'rulingReference'
+)
+$enablementActualKeys = @($enablement.PSObject.Properties.Name)
+foreach ($k in $enablementActualKeys) {
+    Assert-True ($AllowedEnablementStateKeys -contains $k) "enablement-field-fidelity: enablementState.biostackRecommendedOrigination carries an additive key '$k' not on the closed allow-list -- uncited behavior-affecting content (e.g. an availability claim smuggled in via a new field) is not permitted, regardless of its wording."
+}
+Assert-True ($enablementActualKeys.Count -eq $AllowedEnablementStateKeys.Count) "enablement-field-fidelity: enablementState.biostackRecommendedOrigination expected exactly $($AllowedEnablementStateKeys.Count) fields, found $($enablementActualKeys.Count)."
+
+# Defense-in-depth: no sentence anywhere in the two artifacts may assert public Class D/C3
+# availability today (retained as a secondary net; the closed-object check above is the primary,
+# non-lexical control that actually closes the demonstrated evasion).
 [string[]]$ForbiddenAvailabilityPhrases = @(
     'publiclyEnabled": true',
     'publiclyEnabled is true',
@@ -283,8 +302,23 @@ foreach ($lblName in $jsonLabelNames) {
 Add-PassedCheck -Name 'qualified-cell-scope-present' -Detail 'pregnancy-or-lactation.C1=dose-context-only and prescription-treatment-involved.C3=prescribed-treatment-only carry non-null scope; every other cell is null'
 
 # ---------------------------------------------------------------------------
-# Check 10: unbounded-operationalization
+# Check 10: unbounded-operationalization -- structural provenance-trace model (R1-F2/R2-F2).
+#
+# A bare forbidden-phrase blocklist (the prior implementation) is trivially evaded by paraphrase:
+# any behavior-affecting clause that avoids the exact listed substrings passes silently. This
+# check instead runs an ALLOW-LIST / provenance-trace model: any clause inside an
+# `applicabilityCriterion.test` field that uses behavior-outcome vocabulary (naming a disposition
+# this contract's matrix already governs -- refuse/allow/degrade/escalate/block/suppress, in any
+# inflection) is only permitted if it carries, nearby, an explicit `[cite: ...]` provenance tag
+# that resolves to either a ruled-rule ID (`D-B1`..`D-B6`, optionally `.ruleN`) or a matrix cell ID
+# (`D-B2.<label>.<C1|C2|C3>`). Behavior-affecting vocabulary with no nearby citation fails closed,
+# regardless of its exact wording -- this is what makes the control paraphrase-proof: the test
+# does not look for specific forbidden words, it demands every behavior-affecting mention justify
+# itself against the ruled matrix/rules it is citing, or be absent.
 # ---------------------------------------------------------------------------
+
+$citationTagPattern = '\[cite:\s*(D-B[1-6](?:\.rule[1-9][0-9]*)?|D-B2\.[a-z0-9-]+\.C[1-3])\]'
+$behaviorStemPattern = '(?i)(refus\w*|allow\w*|degrad\w*|escalat\w*|\bblock\w*|suppress\w*)'
 
 foreach ($lblName in $jsonLabelNames) {
     $lblObj = $labelsObj.$lblName
@@ -293,18 +327,44 @@ foreach ($lblName in $jsonLabelNames) {
     Assert-True (($basis.Contains('[OPERATIONALIZED') -or $basis.Contains('[RULED')) -and $basis.Contains($lblName)) "unbounded-operationalization: $lblName applicabilityCriterion basis does not cite a traceable provenance marker and the label name."
     $test = [string]$lblObj.applicabilityCriterion.test
     Assert-True (-not [string]::IsNullOrWhiteSpace($test)) "unbounded-operationalization: $lblName applicabilityCriterion has no test."
-    foreach ($forbidden in @('is refused', 'is allowed', 'is degraded', 'is escalated', 'must be refused', 'must be allowed')) {
-        Assert-True ((-not $test.Contains($forbidden))) "unbounded-operationalization: $lblName applicabilityCriterion test smuggles an allowed/refused product-behavior decision ('$forbidden') rather than confining itself to detection."
+
+    $citationHits = @([regex]::Matches($test, $citationTagPattern))
+    foreach ($stemMatch in [regex]::Matches($test, $behaviorStemPattern)) {
+        $windowStart = [Math]::Max(0, $stemMatch.Index - 150)
+        $windowEnd = [Math]::Min($test.Length, $stemMatch.Index + $stemMatch.Length + 150)
+        $window = $test.Substring($windowStart, $windowEnd - $windowStart)
+        $hasNearbyCitation = [regex]::IsMatch($window, $citationTagPattern)
+        Assert-True ($hasNearbyCitation) "unbounded-operationalization: $lblName applicabilityCriterion test contains behavior-affecting vocabulary ('$($stemMatch.Value)') with no nearby [cite: D-Bn | D-B2.<label>.<Cn>] provenance citation -- uncited behavior-affecting content fails this check regardless of wording (allow-list provenance model, not a forbidden-phrase blocklist)."
+    }
+    # Every citation tag present must actually resolve to a real matrix cell (this label's own
+    # behavior object) or a real ruled-rule ID -- a fabricated/dangling citation does not launder
+    # an uncited behavior decision.
+    foreach ($cm in $citationHits) {
+        $cited = $cm.Groups[1].Value
+        if ($cited -match '^D-B2\.([a-z0-9-]+)\.(C[1-3])$') {
+            $citedLabel = $Matches[1]
+            $citedCell = $Matches[2]
+            Assert-True ($jsonLabelNames -contains $citedLabel) "unbounded-operationalization: $lblName applicabilityCriterion test cites a matrix cell for unrecognized label '$citedLabel'."
+            $citedLblObj = $labelsObj.$citedLabel
+            Assert-True ($null -ne $citedLblObj.behavior.$citedCell) "unbounded-operationalization: $lblName applicabilityCriterion test cites matrix cell '$cited' which does not resolve to a real behavior cell."
+        } elseif ($cited -notmatch '^D-B[1-6](\.rule[1-9][0-9]*)?$') {
+            Assert-True ($false) "unbounded-operationalization: $lblName applicabilityCriterion test cites an unrecognized provenance tag '[cite: $cited]'."
+        }
     }
 }
-Add-PassedCheck -Name 'unbounded-operationalization' -Detail 'every applicabilityCriterion cites a traceable basis (provenance marker + label name) and confines itself to a detection test, not a behavior decision'
+Add-PassedCheck -Name 'unbounded-operationalization' -Detail 'every applicabilityCriterion cites a traceable basis (provenance marker + label name); every behavior-affecting clause inside a test field carries a resolvable [cite: D-Bn | D-B2.<label>.<Cn>] provenance tag (allow-list provenance-trace model, paraphrase-proof)'
 
 # ---------------------------------------------------------------------------
 # Check 11: matrix-fidelity -- parse D-B2 table from P0-B-DESIGN-GATE.md, diff every cell
 # against the JSON artifact (adversarial, byte-for-byte, zero tolerated drift)
 # ---------------------------------------------------------------------------
 
-$tableRowPattern = '(?m)^\|\s*`([a-z0-9-]+)`\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*$'
+# Confined to a single physical line and to non-pipe content only ([ \t] not \s, [^|\r\n] not .): a
+# prior version of this pattern used \s*/.+? , which can cross a newline inside the \s* separators
+# between cells and spuriously match into a *different*, differently-shaped pipe table immediately
+# below (e.g. the two-column "Per-label applicability criteria" table) when the current row runs
+# out of its own pipe-delimited cells. Tightened so each match is provably one single table row.
+$tableRowPattern = '(?m)^\|[ \t]*`([a-z0-9-]+)`[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|[ \t]*$'
 $tableMatches = [regex]::Matches($designGateContent, $tableRowPattern)
 Assert-True ($tableMatches.Count -ge 10) "matrix-fidelity: expected at least 10 D-B2 table rows parsed from P0-B-DESIGN-GATE.md, found $($tableMatches.Count)."
 
@@ -333,6 +393,7 @@ function ConvertTo-ExpectedCell {
 
 $matrixLabelsSeen = New-Object 'System.Collections.Generic.HashSet[string]'
 $statesSeen = New-Object 'System.Collections.Generic.HashSet[string]'
+$expectedByLabel = @{}
 foreach ($m in $tableMatches) {
     $label = $m.Groups[1].Value
     if (-not ($SubstanceFunctionRiskLabels -contains $label)) { continue }
@@ -367,6 +428,8 @@ foreach ($m in $tableMatches) {
 
     $expectedLocked = ($LockedLabels -contains $label)
     Assert-True ($lblObj.locked -eq $expectedLocked) "matrix-fidelity: $label.locked expected $expectedLocked, found $($lblObj.locked)."
+
+    $expectedByLabel[$label] = [pscustomobject]@{ C1 = $expC1; C2 = $expC2; C3 = $expC3; Calibration = $rawCalibration.Trim() }
 }
 Assert-True ($matrixLabelsSeen.Count -eq 10) "matrix-fidelity: expected all 10 labels parsed from the ruled table, found $($matrixLabelsSeen.Count)."
 
@@ -378,7 +441,50 @@ Assert-True ($contractMdContent.Contains('refused-and-escalated')) 'matrix-fidel
 Assert-True ($contractMdContent.Contains('dose-context-only')) 'matrix-fidelity: Markdown artifact missing the dose-context-only scope value (JSON/MD divergence).'
 Assert-True ($contractMdContent.Contains('prescribed-treatment-only')) 'matrix-fidelity: Markdown artifact missing the prescribed-treatment-only scope value (JSON/MD divergence).'
 
-Add-PassedCheck -Name 'matrix-fidelity' -Detail "all 10 labels x 3 guidance-class cells (30 cells) + calibrationRequired text + locked flag programmatically diffed against P0-B-DESIGN-GATE.md's parsed D-B2 table; zero drift"
+# R1-F1 (BLOCKER remediation): the prior implementation only probed the Markdown artifact with
+# four fixed substring .Contains(...) checks, above -- it never parsed the Markdown artifact's OWN
+# per-label behavior-matrix table and diffed it against ground truth, so a silently-corrupted
+# Markdown table cell (e.g. weakening a C2/C3 literal while leaving the JSON artifact untouched)
+# passed unnoticed. This block closes that gap: it parses
+# `product-capability-safety-contract.md`'s own "Per-label behavior matrix" table with the exact
+# same `$tableRowPattern` / `ConvertTo-ExpectedCell` logic already used above for the design-gate
+# table, and asserts cell-for-cell equality against the frozen ground truth parsed from
+# `P0-B-DESIGN-GATE.md` §3 directly (`$expectedByLabel`, built above) -- not against the JSON
+# artifact's own claims, so a JSON/MD co-corruption (or a corruption of the Markdown table alone)
+# cannot pass by the two artifacts merely agreeing with each other.
+$mdTableMatches = [regex]::Matches($contractMdContent, $tableRowPattern)
+$mdMatrixLabelsSeen = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($m in $mdTableMatches) {
+    $label = $m.Groups[1].Value
+    if (-not ($SubstanceFunctionRiskLabels -contains $label)) { continue }
+    if (-not $expectedByLabel.ContainsKey($label)) { continue }
+    $mdMatrixLabelsSeen.Add($label) | Out-Null
+
+    $mdRawC1 = $m.Groups[2].Value
+    $mdRawC2 = $m.Groups[3].Value
+    $mdRawC3 = $m.Groups[4].Value
+    $mdRawCalibration = $m.Groups[5].Value.Trim()
+
+    $mdC1 = ConvertTo-ExpectedCell -RawCell $mdRawC1
+    $mdC2 = ConvertTo-ExpectedCell -RawCell $mdRawC2
+    $mdC3 = ConvertTo-ExpectedCell -RawCell $mdRawC3
+    $groundTruth = $expectedByLabel[$label]
+
+    foreach ($pair in @(
+            @{ Name = 'C1'; Actual = $mdC1; Exp = $groundTruth.C1 },
+            @{ Name = 'C2'; Actual = $mdC2; Exp = $groundTruth.C2 },
+            @{ Name = 'C3'; Actual = $mdC3; Exp = $groundTruth.C3 }
+        )) {
+        Assert-True ($pair.Actual.Value -eq $pair.Exp.Value) "matrix-fidelity: the Markdown artifact's OWN per-label behavior matrix table cell $label.$($pair.Name) expected value '$($pair.Exp.Value)' (from P0-B-DESIGN-GATE.md's ruled table, ground truth), found '$($pair.Actual.Value)' in product-capability-safety-contract.md -- the Markdown artifact itself has drifted from ground truth."
+        if ($null -ne $pair.Exp.Scope) {
+            Assert-True ($pair.Actual.Scope -eq $pair.Exp.Scope) "matrix-fidelity: the Markdown artifact's OWN per-label behavior matrix table cell $label.$($pair.Name) expected scope '$($pair.Exp.Scope)' (ground truth), found '$($pair.Actual.Scope)' in product-capability-safety-contract.md."
+        }
+    }
+    Assert-True ($mdRawCalibration -eq $groundTruth.Calibration) "matrix-fidelity: the Markdown artifact's OWN per-label behavior matrix table Calibration-required text for $label diverges from ground truth (P0-B-DESIGN-GATE.md's ruled table).`nExpected: $($groundTruth.Calibration)`nFound in .md: $mdRawCalibration"
+}
+Assert-True ($mdMatrixLabelsSeen.Count -eq 10) "matrix-fidelity: expected all 10 labels parsed from the Markdown artifact's own per-label behavior matrix table, found $($mdMatrixLabelsSeen.Count) -- the Markdown artifact's own table is a required, independently-verified content surface, not merely a JSON-mirroring claim."
+
+Add-PassedCheck -Name 'matrix-fidelity' -Detail "all 10 labels x 3 guidance-class cells (30 cells) + calibrationRequired text + locked flag programmatically diffed against P0-B-DESIGN-GATE.md's parsed D-B2 table for BOTH artifacts independently (JSON and the Markdown artifact's own table); zero drift"
 
 # ---------------------------------------------------------------------------
 # Check 12: missing-behavior-state-coverage -- all four states present at least once
@@ -427,6 +533,16 @@ Add-PassedCheck -Name 'axis-binding-diff-scoped' -Detail 'classification-axes.sc
 # Check 14: no-unattributed-claim -- every ruled block carries a ruledBasis citation
 # ---------------------------------------------------------------------------
 
+# R2-F1 remediation: applicabilityCriterionDeferralRule transcribes the closing paragraph of
+# P0-B.md's "Per-label applicability criteria" section, which P0-B.md's own section heading marks
+# `[OPERATIONALIZED — bounded]` ("required content -- authored by this parcel ... not a ruled
+# D-B1..D-B6 clause"), never `[RULED — verbatim]`. Checked here, ground-truth / non-lexically:
+# this contract's citation of that section may never claim `[RULED` while the named source section
+# in P0-B.md itself is marked operationalized-bounded.
+$p0bMdContent = Read-RepoFile -Path 'docs/INITIATIVES/biostack-governed-delivery/parcels/P0-B.md'
+Assert-True ($p0bMdContent.Contains('### Per-label applicability criteria (required content') -and $p0bMdContent.Contains(', not a ruled D-B1..D-B6 clause)')) 'no-unattributed-claim: could not re-confirm, in P0-B.md itself, that the "Per-label applicability criteria" section is marked [OPERATIONALIZED -- bounded] (source-text drift -- cannot validate the deferral-rule marker against ground truth).'
+Assert-True ((-not $contract.applicabilityCriterionDeferralRule.basis.Contains('[RULED')) -and $contract.applicabilityCriterionDeferralRule.basis.Contains('[OPERATIONALIZED')) 'no-unattributed-claim: applicabilityCriterionDeferralRule.basis claims [RULED -- verbatim], but its named source (P0-B.md, "Per-label applicability criteria" closing paragraph) lives inside a section P0-B.md itself marks [OPERATIONALIZED -- bounded], not a ruled D-B1..D-B6 clause -- mislabeling an operationalized clause as owner-ruled falsely elevates its immutability status.'
+
 [string[]]$RuledBlockKeys = @('preemptionOrder', 'numericProvenance', 'missingInputLadder', 'functionReviewStatus', 'escalationSemantics', 'cellSemantics', 'doseContextDefinition', 'applicabilityCriterionDeferralRule')
 foreach ($key in $RuledBlockKeys) {
     $block = $contract.$key
@@ -434,7 +550,7 @@ foreach ($key in $RuledBlockKeys) {
     $basis = [string]$block.ruledBasis
     if ([string]::IsNullOrWhiteSpace($basis)) { $basis = [string]$block.basis }
     Assert-True (-not [string]::IsNullOrWhiteSpace($basis)) "no-unattributed-claim: top-level key '$key' has no ruledBasis/basis provenance citation."
-    Assert-True ($basis.Contains('[RULED') -or $basis.Contains('D-J') -or $basis.Contains('D-K')) "no-unattributed-claim: top-level key '$key' provenance citation '$basis' does not carry a recognizable [RULED — verbatim] marker."
+    Assert-True ($basis.Contains('[RULED') -or $basis.Contains('[OPERATIONALIZED') -or $basis.Contains('D-J') -or $basis.Contains('D-K')) "no-unattributed-claim: top-level key '$key' provenance citation '$basis' does not carry a recognizable [RULED — verbatim]/[OPERATIONALIZED — bounded] marker."
 }
 Add-PassedCheck -Name 'no-unattributed-claim' -Detail "all $($RuledBlockKeys.Count) top-level ruled blocks plus every per-label applicabilityCriterion carry an explicit [RULED — verbatim]/[OPERATIONALIZED — bounded] provenance citation"
 

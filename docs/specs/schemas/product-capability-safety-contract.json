@@ -140,7 +140,7 @@
     "effectOnThisContract": "none of this contract's ruled matrix, preemption order, or locked-label behavior is weakened, softened, or made conditional by any precedence-rank argument; D-K is transcribed here solely so a reader of this contract cannot cite rank mechanics as license to do so"
   },
   "applicabilityCriterionDeferralRule": {
-    "basis": "[RULED — verbatim] P0-B.md, \"Per-label applicability criteria,\" closing paragraph",
+    "basis": "[OPERATIONALIZED — bounded] P0-B.md, \"Per-label applicability criteria,\" closing paragraph (section header: \"required content — authored by this parcel, bounded by the closed vocabulary; [OPERATIONALIZED — bounded], not a ruled D-B1..D-B6 clause\")",
     "text": "A criterion that cannot be evaluated deterministically from a function's own declared fields at invocation time (for example, an undeclared capability-contract field a later function needs) defers to that function's own missing-input ladder behavior (missingInputLadder, rule 2) — it never causes this contract itself to guess an applicability determination."
   },
   "labels": {
@@ -190,7 +190,7 @@
       "locked": false,
       "applicabilityCriterion": {
         "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `gray-market-or-identity-uncertain` and its D-B2 calibration text (identity/purity uncertainty surfaced; potency-dependent math refused when identity/concentration unverified)",
-        "test": "True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins, in which case output is blocked outright with no evidence shown."
+        "test": "True when a required identity/concentration/manufacturing-source provenance field (per numericProvenance and the function's declared inputs) is absent, unverified, or not resolvable to one of the five locked numeric origins."
       },
       "behavior": {
         "C1": { "value": "degraded", "scope": null },
@@ -218,7 +218,7 @@
       "locked": false,
       "applicabilityCriterion": {
         "basis": "[OPERATIONALIZED — bounded] operationalizes the label name `interaction-or-contraindication-signal` and its D-B2 calibration text (conflict disclosure mandatory; escalate on strong signal)",
-        "test": "True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is function-declared, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s triggering criterion set. That same function-declared algorithm also carries the function's own declared strength grading — exactly the quantity the C3 cell's D→E strong-signal escalation names as \"the function's own declared evidence-source match threshold\": base applicability (does a record match at all) and the D→E upgrade (is the matched record's signal strong) are the matching-vs-grading components of one function-declared matching specification, not two independently defined specifications."
+        "test": "True when a matching interaction/contraindication record exists in the cited evidence source for the user's declared concurrent substances, medications, or conditions. Deterministic criterion: the base-applicability matching algorithm itself (exact substance-name match vs. drug-class/mechanism match vs. any broader match) is function-declared, not fixed by this contract — the same deferral-to-function pattern already used for `acute-red-flag-or-emergency`'s triggering criterion set. That same function-declared algorithm also carries the function's own declared strength grading — exactly the quantity the C3 cell's D→E strong-signal escalation [cite: D-B2.interaction-or-contraindication-signal.C3] names as \"the function's own declared evidence-source match threshold\": base applicability (does a record match at all) and the D→E upgrade (is the matched record's signal strong) are the matching-vs-grading components of one function-declared matching specification, not two independently defined specifications."
       },
       "behavior": {
         "C1": { "value": "allowed", "scope": null },
