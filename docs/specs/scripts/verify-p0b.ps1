@@ -302,23 +302,46 @@ foreach ($lblName in $jsonLabelNames) {
 Add-PassedCheck -Name 'qualified-cell-scope-present' -Detail 'pregnancy-or-lactation.C1=dose-context-only and prescription-treatment-involved.C3=prescribed-treatment-only carry non-null scope; every other cell is null'
 
 # ---------------------------------------------------------------------------
-# Check 10: unbounded-operationalization -- structural provenance-trace model (R1-F2/R2-F2).
+# Check 10: unbounded-operationalization -- closed-world sentence-citation rule
+#           (R1-F2/R2-F2, hardened per p0b_reverify_1 F1) + honestly-scoped stem defense-in-depth.
 #
-# A bare forbidden-phrase blocklist (the prior implementation) is trivially evaded by paraphrase:
-# any behavior-affecting clause that avoids the exact listed substrings passes silently. This
-# check instead runs an ALLOW-LIST / provenance-trace model: any clause inside an
-# `applicabilityCriterion.test` field that uses behavior-outcome vocabulary (naming a disposition
-# this contract's matrix already governs -- refuse/allow/degrade/escalate/block/suppress, in any
-# inflection) is only permitted if it carries, nearby, an explicit `[cite: ...]` provenance tag
-# that resolves to either a ruled-rule ID (`D-B1`..`D-B6`, optionally `.ruleN`) or a matrix cell ID
-# (`D-B2.<label>.<C1|C2|C3>`). Behavior-affecting vocabulary with no nearby citation fails closed,
-# regardless of its exact wording -- this is what makes the control paraphrase-proof: the test
-# does not look for specific forbidden words, it demands every behavior-affecting mention justify
-# itself against the ruled matrix/rules it is citing, or be absent.
+# WHAT THIS CONTROL ACTUALLY DOES (stated plainly, per p0b_reverify_1 F1 -- a prior version of
+# this check was marketed as "paraphrase-proof" while actually being a six-word lexical
+# blocklist; that overstatement is corrected here, and the control itself is replaced):
+#
+#   This is a CLOSED-WORLD STRUCTURAL rule over sentence boundaries, not a semantic or
+#   vocabulary-based detector. Every `applicabilityCriterion.test` field is split into
+#   sentences. The leading formulaic sentence(s) -- an optional literal `LOCKED.` sentence,
+#   followed by the one sentence that opens with `True when` / `True whenever` (the label's
+#   own criterion-defining clause, authored once) -- are PINNED and exempt from citation.
+#   EVERY SENTENCE AFTER the pinned sentence(s) must carry, somewhere within that same
+#   sentence, a `[cite: ...]` tag resolving to a ruled rule ID (`D-B1`..`D-B6`, optionally
+#   `.ruleN`) or a matrix cell ID (`D-B2.<label>.<C1|C2|C3>`). This rule does not read the
+#   sentence's words or meaning at all: an extra sentence with zero citation fails whether or
+#   not it contains any particular vocabulary. That is what makes it closed-world -- every
+#   non-pinned sentence is presumed uncited-and-failing unless a citation tag is structurally
+#   present, rather than open-world (presumed fine unless a forbidden word is matched).
+#
+# WHAT THIS CONTROL DOES NOT DO: it does not check that a cited sentence's CONTENT actually
+#   matches what the cited rule/cell says. A sentence could carry a syntactically valid but
+#   substantively wrong or irrelevant citation and this check would still pass it -- verifying
+#   citation *accuracy* is a semantic judgment, not a structural one, and is out of scope for
+#   this script. That class of error is caught (if at all) by this parcel's review-layer
+#   control: the required dual reviewer sign-off (two distinct reviewer IDs, checked
+#   elsewhere in this script) plus owner merge approval -- not by any automated check here.
+#
+#   The six-stem lexical scan below (`$behaviorStemPattern`) is kept as a SEPARATE, honestly
+#   labeled defense-in-depth layer only. It is exactly what it looks like: a closed six-word
+#   keyword blocklist, nothing more. It is not relied on as the primary or paraphrase-
+#   resistant control (that claim was the defect this hardening fixes); it is retained because
+#   it is cheap and additionally covers the pinned "True when/whenever" sentence itself, which
+#   the sentence-citation rule above deliberately does not require citations for (it is the
+#   label's own authored criterion, not an extra clause).
 # ---------------------------------------------------------------------------
 
 $citationTagPattern = '\[cite:\s*(D-B[1-6](?:\.rule[1-9][0-9]*)?|D-B2\.[a-z0-9-]+\.C[1-3])\]'
 $behaviorStemPattern = '(?i)(refus\w*|allow\w*|degrad\w*|escalat\w*|\bblock\w*|suppress\w*)'
+$sentenceSplitPattern = '(?<=[.])\s+(?=[A-Z])'
 
 foreach ($lblName in $jsonLabelNames) {
     $lblObj = $labelsObj.$lblName
@@ -328,13 +351,28 @@ foreach ($lblName in $jsonLabelNames) {
     $test = [string]$lblObj.applicabilityCriterion.test
     Assert-True (-not [string]::IsNullOrWhiteSpace($test)) "unbounded-operationalization: $lblName applicabilityCriterion has no test."
 
+    # -- Closed-world sentence-citation rule (primary control) --
+    $sentences = [regex]::Split($test.Trim(), $sentenceSplitPattern)
+    $pinnedCount = 0
+    if ($sentences.Count -gt 0 -and $sentences[0].Trim() -eq 'LOCKED.') {
+        $pinnedCount = 1
+    }
+    Assert-True ($sentences.Count -gt $pinnedCount -and $sentences[$pinnedCount] -match '^True (when|whenever)\b') "unbounded-operationalization: $lblName applicabilityCriterion test's first non-LOCKED sentence must be the pinned formulaic 'True when...'/'True whenever...' criterion-defining sentence; found: '$($sentences[$pinnedCount])'."
+    $pinnedCount++
+    for ($si = $pinnedCount; $si -lt $sentences.Count; $si++) {
+        $sentence = $sentences[$si]
+        $hasCitation = [regex]::IsMatch($sentence, $citationTagPattern)
+        Assert-True ($hasCitation) "unbounded-operationalization: $lblName applicabilityCriterion test has a sentence beyond the pinned formulaic sentence with no [cite: D-Bn | D-B2.<label>.<Cn>] provenance tag -- closed-world rule: every non-pinned sentence must carry its own citation regardless of wording (no vocabulary matching performed for this rule). Uncited sentence: '$($sentence.Trim())'"
+    }
+
+    # -- Defense-in-depth: closed six-stem lexical scan (secondary, honestly labeled, not paraphrase-resistant) --
     $citationHits = @([regex]::Matches($test, $citationTagPattern))
     foreach ($stemMatch in [regex]::Matches($test, $behaviorStemPattern)) {
         $windowStart = [Math]::Max(0, $stemMatch.Index - 150)
         $windowEnd = [Math]::Min($test.Length, $stemMatch.Index + $stemMatch.Length + 150)
         $window = $test.Substring($windowStart, $windowEnd - $windowStart)
         $hasNearbyCitation = [regex]::IsMatch($window, $citationTagPattern)
-        Assert-True ($hasNearbyCitation) "unbounded-operationalization: $lblName applicabilityCriterion test contains behavior-affecting vocabulary ('$($stemMatch.Value)') with no nearby [cite: D-Bn | D-B2.<label>.<Cn>] provenance citation -- uncited behavior-affecting content fails this check regardless of wording (allow-list provenance model, not a forbidden-phrase blocklist)."
+        Assert-True ($hasNearbyCitation) "unbounded-operationalization (defense-in-depth stem scan): $lblName applicabilityCriterion test contains listed behavior-stem vocabulary ('$($stemMatch.Value)') with no nearby [cite: D-Bn | D-B2.<label>.<Cn>] provenance citation -- note: this sub-check is a closed six-word lexical blocklist only, not a semantic or paraphrase-resistant detector; it catches exactly this vocabulary list and nothing else."
     }
     # Every citation tag present must actually resolve to a real matrix cell (this label's own
     # behavior object) or a real ruled-rule ID -- a fabricated/dangling citation does not launder
@@ -352,7 +390,7 @@ foreach ($lblName in $jsonLabelNames) {
         }
     }
 }
-Add-PassedCheck -Name 'unbounded-operationalization' -Detail 'every applicabilityCriterion cites a traceable basis (provenance marker + label name); every behavior-affecting clause inside a test field carries a resolvable [cite: D-Bn | D-B2.<label>.<Cn>] provenance tag (allow-list provenance-trace model, paraphrase-proof)'
+Add-PassedCheck -Name 'unbounded-operationalization' -Detail 'closed-world sentence-citation rule: every applicabilityCriterion.test sentence beyond the pinned formulaic (optional "LOCKED." +) "True when/whenever" sentence must carry a resolvable [cite: D-Bn | D-B2.<label>.<Cn>] tag -- checked by sentence structure, not vocabulary, so an uncited extra sentence fails regardless of wording; plus a separate, honestly-labeled closed six-stem lexical scan (defense-in-depth only, not itself paraphrase-resistant) covering the pinned sentence. Citation CONTENT accuracy (does the cited rule/cell actually say what the sentence claims) is a review-layer control -- this parcel''s required dual reviewer sign-off plus owner merge approval -- not enforced by this script.'
 
 # ---------------------------------------------------------------------------
 # Check 11: matrix-fidelity -- parse D-B2 table from P0-B-DESIGN-GATE.md, diff every cell
