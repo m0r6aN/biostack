@@ -12,13 +12,13 @@ that adds this record to `main`.
 ```json
 {
   "schema": "biostack.gate2.v1",
-  "status": "approved-pending-p0a-seal",
+  "status": "approved",
   "parcel": "P0-B-IMPL",
   "specPath": "docs/INITIATIVES/biostack-governed-delivery/parcels/P0-B.md",
   "builderId": "p0b_builder",
   "branch": "feat/p0b-product-capability-contract",
   "worktree": "/home/cmorgan76/Repos/biostack-wt/p0b-impl",
-  "baseCommit": "single anchor = the commit that adds THIS file to main (rebase onto main after #530 merges if needed)",
+  "baseCommit": "single anchor = the coordinator's seal commit after P0-A closed at 2d24fdd (recorded at dispatch)",
   "permissionEnvelope": "docs-only:p0b-contract-surfaces",
   "builderSurfaces": "exactly the spec's allowed surfaces (the machine-readable Product Capability and Safety Contract artifact(s), its schema/validator, the enablement-state fields, and the spec's named verification inputs — zero product runtime code, zero canon-document edits)",
   "reviewerIds": ["p0b_impl_review_1", "p0b_impl_review_2"],
