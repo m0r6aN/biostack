@@ -146,14 +146,50 @@ Add-PassedCheck -Name 'required-sources-present-at-BaseCommit' -Detail "20 requi
 # ---------------------------------------------------------------------------
 
 $headCommit = (@(Invoke-Git -Arguments @('rev-parse', 'HEAD')))[0].Trim()
-$diffNames = @(Invoke-Git -Arguments @('diff', '--name-only', "$BaseCommit...HEAD"))
+
+# Committed-history scope (closes p0a_impl_review_2 F4, explicit-pin branch of the amendment):
+# a literal `$BaseCommit...HEAD` diff is correct only while HEAD's history since BaseCommit
+# belongs entirely to this delivery. In practice, `BaseCommit` is pinned once, at the parcel's
+# Gate 2 dispatch anchor, and reused by every later re-verification of the same parcel family
+# (including this remediation) -- so once *other*, unrelated initiatives land further commits on
+# the shared default branch in between, a literal `$BaseCommit...HEAD` diff would also pick up
+# their legitimately out-of-surface files (for example a sibling parcel's own spec, or a
+# coordinator decision-ledger entry), which is not a fencing violation by *this* delivery. The
+# fencing-relevant base is therefore explicitly pinned to the merge-base of HEAD and this
+# worktree's upstream tracking branch (the point this delivery's own commits diverge from the
+# shared default branch) when an upstream is configured, falling back to the literal `BaseCommit`
+# otherwise (for example a detached-HEAD or no-upstream evidence run). Every other check in this
+# script (required-source presence, seed-regression, citation resolution, quotation-content
+# verification) continues to use the literal `$BaseCommit` unchanged -- only this check's
+# committed-history diff scope is pinned differently, and that pin is recorded in the evidence
+# bundle below (`fencingBaseCommit`) so it is never a silent, undocumented substitution.
+$upstreamProbe = Get-GitResult -Arguments @('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}')
+if ($upstreamProbe.ExitCode -eq 0 -and $upstreamProbe.Output.Count -gt 0 -and $upstreamProbe.Output[0].Trim()) {
+    $mergeBaseProbe = Get-GitResult -Arguments @('merge-base', 'HEAD', '@{u}')
+} else {
+    $mergeBaseProbe = [pscustomobject]@{ ExitCode = 1; Output = @() }
+}
+if ($mergeBaseProbe.ExitCode -eq 0 -and $mergeBaseProbe.Output.Count -gt 0 -and $mergeBaseProbe.Output[0].Trim()) {
+    $fencingBaseCommit = $mergeBaseProbe.Output[0].Trim()
+} else {
+    $fencingBaseCommit = $BaseCommit
+}
+
+$diffNames = @(Invoke-Git -Arguments @('diff', '--name-only', "$fencingBaseCommit...HEAD"))
 $untracked = @(Invoke-Git -Arguments @('ls-files', '--others', '--exclude-standard'))
-$allChanged = @($diffNames + $untracked | Where-Object { $_ -and ($_ -notlike 'artifacts/p0a-verification/*') } | Select-Object -Unique)
+# Working-tree scope (closes p0a_impl_review_2 F4, uncommitted-coverage branch of the amendment):
+# a committed-history diff plus untracked files is blind to a *tracked* file modified in the
+# working tree but not yet committed (staged or unstaged). `git diff --name-only HEAD` captures
+# both staged and unstaged deltas against HEAD for tracked files, so combining it with the
+# committed-history diff and the untracked-file list gives full working-tree coverage, not
+# merely committed-only scope.
+$workingTreeDirty = @(Invoke-Git -Arguments @('diff', '--name-only', 'HEAD'))
+$allChanged = @($diffNames + $untracked + $workingTreeDirty | Where-Object { $_ -and ($_ -notlike 'artifacts/p0a-verification/*') } | Select-Object -Unique)
 
 foreach ($path in $allChanged) {
     Assert-True ($AllowedSurfaces -contains $path) "canonical-write-fencing-violation: $path is outside the allowed-surfaces list."
 }
-Add-PassedCheck -Name 'canonical-write-fencing-violation (absence)' -Detail "$($allChanged.Count) changed path(s), all inside allowed surfaces"
+Add-PassedCheck -Name 'canonical-write-fencing-violation (absence)' -Detail "$($allChanged.Count) changed path(s) (committed history since pinned fencing base $fencingBaseCommit + working-tree staged/unstaged + untracked), all inside allowed surfaces"
 
 # ---------------------------------------------------------------------------
 # Check 3: no-placeholder -- TBD/TODO/FIXME/{{ absent from every file this parcel creates/modifies
@@ -327,7 +363,7 @@ foreach ($m in $inventoryRowMatches) {
 
     $statesSeen.Add($status) | Out-Null
     if ($status -eq 'contradictory' -and $dispositionLeading -eq 'fix') { $statesSeen.Add('refused') | Out-Null }
-    if ($fields['substance_function_risk_tags'] -match 'controlled-or-illegal-sourcing|acute-red-flag-or-emergency' -and $fields['proposed_disposition'] -match 'P0-D1-first') {
+    if ($fields['substance_function_risk_tags'] -match 'controlled-or-illegal-sourcing|acute-red-flag-or-emergency' -and $fields['handoff_target'] -match 'P0-D1-first') {
         $escalatedFlagFound = $true
     }
     $parsedRows[$ciId] = $fields
@@ -502,9 +538,17 @@ Add-PassedCheck -Name 'registry append-only diffs' -Detail 'docs/specs/README.md
 
 # ---------------------------------------------------------------------------
 # Check 16: unresolvable-citation -- every CI-NNN source_a/source_b file path resolves at BaseCommit
+#
+# Path pattern fix (found while closing p0a_impl_review_2 F2): the prior pattern required a
+# `docs`-prefixed or exact-literal `README.md`/`BIOSTACK_FRONTEND_READINESS_AUDIT.md` alternative
+# to be immediately followed by additional `[^`]*?\.md` content before the closing backtick --
+# which never matches a bare, standalone `` `README.md` `` or `` `BIOSTACK_FRONTEND_READINESS_AUDIT.md` ``
+# backtick citation (there is nothing left to match after the alternative already consumes the
+# whole literal). Both forms are used standalone in this inventory; the pattern below resolves
+# them correctly in addition to every `docs/...`-prefixed path.
 # ---------------------------------------------------------------------------
 
-$citedPathPattern = '`((?:docs|README\.md|BIOSTACK_FRONTEND_READINESS_AUDIT\.md)[^`]*?\.md)`'
+$citedPathPattern = '`(README\.md|BIOSTACK_FRONTEND_READINESS_AUDIT\.md|docs[^`]*?\.md)`'
 $citedPaths = [regex]::Matches($inventoryContent, $citedPathPattern) | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
 $unresolvable = New-Object 'System.Collections.Generic.List[string]'
 foreach ($p in $citedPaths) {
@@ -513,6 +557,163 @@ foreach ($p in $citedPaths) {
 }
 Assert-True ($unresolvable.Count -eq 0) "unresolvable-citation: $($unresolvable.Count) cited path(s) do not resolve at BaseCommit: $($unresolvable -join ', ')"
 Add-PassedCheck -Name 'unresolvable-citation (absence)' -Detail "$($citedPaths.Count) distinct cited file paths resolved at BaseCommit"
+
+# ---------------------------------------------------------------------------
+# Check 16b: quotation-content-verified -- every CI-NNN row's source_a/source_b quotation
+# appears character-exact in its cited file's content at BaseCommit (closes p0a_impl_review_2 F2:
+# the check above only confirmed the cited *path* existed, never the quoted *content*, for any
+# row beyond the ten seed rows that seed-regression separately anchors to the spec's own text,
+# not to the real source files -- a fabricated quotation in a non-seed row previously passed
+# cleanly).
+# ---------------------------------------------------------------------------
+
+$FileContentCache = @{}
+function Get-SourceFileContent {
+    param([Parameter(Mandatory = $true)][string]$Path)
+    if (-not $FileContentCache.ContainsKey($Path)) {
+        $result = Get-GitResult -Arguments @('show', "${BaseCommit}:$Path")
+        if ($result.ExitCode -eq 0) {
+            $FileContentCache[$Path] = ($result.Output -join "`n")
+        } else {
+            $FileContentCache[$Path] = $null
+        }
+    }
+    return $FileContentCache[$Path]
+}
+
+# Normalization applied identically to both the cited file's content and each quoted segment
+# before comparison. This does not weaken the "character-exact" discipline against *fabricated*
+# content (fabricated prose still fails to match real source text after identical normalization
+# on both sides -- verified below by the adversarial reproduction from p0a_impl_review_2 F2); it
+# exists only to absorb two kinds of structural, non-substantive difference this corpus's own
+# markdown-bulleted/bold-emphasis source files introduce when their content is quoted as
+# continuous prose: (1) a quotation spanning more than one source markdown list item or line
+# (bullet-dash prefixes and line breaks collapse to a single space, matching how a reader
+# naturally reconstructs prose from a bulleted list without needing a literal "..." between
+# every item), and (2) bold/italic markdown emphasis markers (`**`/`*`) the *source itself* wraps
+# around the quoted words -- these are source typography, not substantive content, and this
+# inventory's own citation-apparatus rule already treats surrounding decoration as exempt from
+# the byte-for-byte test.
+function ConvertTo-NormalizedQuoteText {
+    param([Parameter(Mandatory = $true)][string]$Text)
+    $t = $Text -replace "`r`n", "`n"
+    $t = $t -replace '\*\*', ''
+    $t = $t -replace '(?m)^[-*]\s+', ' '
+    $t = $t -replace '\s+', ' '
+    return $t.Trim()
+}
+$NormalizedFileContentCache = @{}
+function Get-NormalizedSourceFileContent {
+    param([Parameter(Mandatory = $true)][string]$Path)
+    if (-not $NormalizedFileContentCache.ContainsKey($Path)) {
+        $raw = Get-SourceFileContent -Path $Path
+        if ($null -eq $raw) {
+            $NormalizedFileContentCache[$Path] = $null
+        } else {
+            $NormalizedFileContentCache[$Path] = ConvertTo-NormalizedQuoteText -Text $raw
+        }
+    }
+    return $NormalizedFileContentCache[$Path]
+}
+
+# Two file identifiers are referenced in source_a/source_b prose as a bare filename (no
+# backticks, no directory prefix) rather than a backtick-wrapped path: `CHARTER.md` and
+# `README.md`. Both are unambiguous within this corpus (CHARTER.md has exactly one registered
+# file by that basename; bare README.md prose always refers to the repository-root file, never
+# `docs/specs/README.md`, which this inventory always cites by its full backtick-wrapped path).
+$BareAliasTarget = @{
+    'CHARTER.md' = 'docs/INITIATIVES/biostack-governed-delivery/CHARTER.md'
+    'README.md'  = 'README.md'
+}
+$bareTokenPattern = '(?<![`/\w])(CHARTER\.md|README\.md)\b'
+$quotePattern = '\*"(.*?)"\*'
+
+$quoteMismatches = New-Object 'System.Collections.Generic.List[string]'
+$quotesVerifiedCount = 0
+
+foreach ($ciId in $parsedRows.Keys) {
+    $rowFields = $parsedRows[$ciId]
+    foreach ($fieldName in @('source_a', 'source_b')) {
+        if (-not $rowFields.Contains($fieldName)) { continue }
+        $fieldText = $rowFields[$fieldName]
+        if ([string]::IsNullOrEmpty($fieldText)) { continue }
+
+        # Collect path tokens and quote tokens in their original left-to-right order; a quote is
+        # verified against the most recently seen path token that precedes it in the same field,
+        # mirroring how a human reader resolves "which file does this quotation come from" when a
+        # field cites more than one source document.
+        $tokens = New-Object 'System.Collections.Generic.List[object]'
+        foreach ($m in [regex]::Matches($fieldText, $citedPathPattern)) {
+            $tokens.Add([pscustomobject]@{ Index = $m.Index; Kind = 'path'; Value = $m.Groups[1].Value }) | Out-Null
+        }
+        foreach ($m in [regex]::Matches($fieldText, $bareTokenPattern)) {
+            $tokens.Add([pscustomobject]@{ Index = $m.Index; Kind = 'path'; Value = $BareAliasTarget[$m.Groups[1].Value] }) | Out-Null
+        }
+        foreach ($m in [regex]::Matches($fieldText, $quotePattern)) {
+            $tokens.Add([pscustomobject]@{ Index = $m.Index; Kind = 'quote'; Value = $m.Groups[1].Value }) | Out-Null
+        }
+        $ordered = $tokens | Sort-Object Index
+
+        $currentPath = $null
+        foreach ($tok in $ordered) {
+            if ($tok.Kind -eq 'path') {
+                $currentPath = $tok.Value
+                continue
+            }
+            if (-not $currentPath) {
+                $quoteMismatches.Add("${ciId}.${fieldName}: quoted span '$($tok.Value)' has no preceding cited file path to verify against") | Out-Null
+                continue
+            }
+            $fileContent = Get-NormalizedSourceFileContent -Path $currentPath
+            if ($null -eq $fileContent) {
+                $quoteMismatches.Add("${ciId}.${fieldName}: cited file '$currentPath' could not be read at BaseCommit to verify quotation '$($tok.Value)'") | Out-Null
+                continue
+            }
+            # A quotation may use a literal "..." to join two or more non-adjacent spans of the
+            # same source (for example, skipping intervening bullet-list items); each segment
+            # between the ellipses must independently appear present, in normalized form, in the
+            # source. A trailing comma this inventory sometimes appends purely to join two
+            # back-to-back quoted list fragments into readable prose (citation apparatus at the
+            # outer boundary of the span, not source content) is tolerated as a fallback only when
+            # the unmodified segment does not already match.
+            $segments = $tok.Value -split '\.\.\.' | ForEach-Object { $_.Trim() } | Where-Object { $_.Length -gt 0 }
+            foreach ($segment in $segments) {
+                $quotesVerifiedCount++
+                $normalizedSegment = ConvertTo-NormalizedQuoteText -Text $segment
+                $matched = $fileContent.Contains($normalizedSegment)
+                if (-not $matched -and $normalizedSegment.EndsWith(',')) {
+                    $matched = $fileContent.Contains($normalizedSegment.TrimEnd(',', ' ').Trim())
+                }
+                if (-not $matched) {
+                    $quoteMismatches.Add("${ciId}.${fieldName}: quoted segment not found (modulo whitespace/bullet/bold normalization) in '$currentPath': '$segment'") | Out-Null
+                }
+            }
+        }
+    }
+}
+Assert-True ($quoteMismatches.Count -eq 0) "quotation-content-verified: $($quoteMismatches.Count) quoted span(s) failed verification against their cited source file at BaseCommit:`n$($quoteMismatches -join "`n")"
+Add-PassedCheck -Name 'quotation-content-verified' -Detail "$quotesVerifiedCount quoted segment(s) across all CI-NNN rows' source_a/source_b fields verified present, modulo whitespace/bullet-prefix/bold-markdown normalization, in their cited file's content at BaseCommit"
+
+# ---------------------------------------------------------------------------
+# Check 17: dk-directional-constraint-present -- canon-precedence.md carries Coordinator Decision
+# D-K's directional-application constraint, transcribed verbatim (closes p0a_impl_review_2 F1 /
+# Coordinator Decision D-K).
+# ---------------------------------------------------------------------------
+
+[string[]]$DkConstraintLines = @(
+    'The precedence manifest answers **document authority order only**. Where the mechanically',
+    'resolved order favors a more permissive text over a narrower safety prohibition, the',
+    "prohibition **stands unchanged** until an explicit owner ruling supersedes it. Such rows route",
+    "to the owner through P0-D's disposition process; a P0-D builder must never weaken a safety",
+    "prohibition by rank alone. This is consistent with the charter's must-not list, D12's principle",
+    "(controls calibrate useful guidance; they do not license weakened safety), and D-I's staged-split",
+    "posture, all of which are already the owner's ruled doctrine."
+)
+Assert-True ($precedenceContent.Contains('D-K')) "dk-directional-constraint-present: canon-precedence.md does not reference Coordinator Decision D-K."
+foreach ($line in $DkConstraintLines) {
+    Assert-True ($precedenceContent.Contains("> $line")) "dk-directional-constraint-present: canon-precedence.md is missing D-K's verbatim constraint line: '$line'"
+}
+Add-PassedCheck -Name 'dk-directional-constraint-present' -Detail "canon-precedence.md carries D-K's directional-application constraint, verbatim, all $($DkConstraintLines.Count) blockquote lines verified"
 
 # ---------------------------------------------------------------------------
 # Evidence bundle
@@ -529,13 +730,14 @@ Assert-True ($trackedEvidence.ExitCode -ne 0) 'artifacts/p0a-verification must b
 Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'changed-files.txt') -Content ($allChanged -join "`n")
 
 $summary = [ordered]@{
-    schema      = 'biostack.p0a-verification-summary.v1'
-    pass        = $true
-    baseCommit  = $BaseCommit.ToLowerInvariant()
-    headCommit  = $headCommit
-    builderId   = $BuilderId
-    reviewerIds = [string[]]$ReviewerIds
-    checks      = $CheckResults.ToArray()
+    schema            = 'biostack.p0a-verification-summary.v1'
+    pass              = $true
+    baseCommit        = $BaseCommit.ToLowerInvariant()
+    fencingBaseCommit = $fencingBaseCommit.ToLowerInvariant()
+    headCommit        = $headCommit
+    builderId         = $BuilderId
+    reviewerIds       = [string[]]$ReviewerIds
+    checks            = $CheckResults.ToArray()
 }
 Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'verification-summary.json') -Content ($summary | ConvertTo-Json -Depth 12)
 
