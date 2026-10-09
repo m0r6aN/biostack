@@ -21,6 +21,7 @@ surfaces:
   - docs/specs/schemas/fixtures/p3b/negative-escalation-missing.json
   - docs/specs/schemas/fixtures/p3b/negative-function-review-status-invalid.json
   - docs/specs/schemas/fixtures/p3b/negative-premature-public-enablement-claim.json
+  - docs/specs/schemas/fixtures/p3b/positive-escalation-stage4-interaction-signal.json
   - docs/specs/scripts/verify-p3b.ps1
   - docs/specs/README.md
   - docs/specs/INDEX.md
@@ -231,17 +232,18 @@ approximate):
 |---|---|---|---|---|---|
 | `function_review_status` | function-review | unconditional — every spec of either shape (`coordinator-parcel` and `ticket-spec`) | one of the closed values `unreviewed`, `review-required`, `reviewed`, `not-applicable` | value must be a member of this closed four-value set; no other literal, including any disguised or cased variant, is accepted | `product-capability-safety-contract.json` `functionReviewStatus.rules` (D-B5 rule 1 names `unreviewed`; rule 3 names `review-required`/`reviewed`) |
 | `function_review_owner` | function-review | `function_review_status` equals `review-required` | a non-empty string naming one human owner | present and non-empty if and only if `function_review_status` is `review-required`; absent (not merely empty) for the other three values | `product-capability-safety-contract.json` `functionReviewStatus.rules[2]` ("`review-required` names the human owner and blocks public enablement until `reviewed`") |
-| `capability_claim` | capability + claim | `guidance_classes` is non-empty **or** `substance_function_risk` is non-empty | array of objects `{guidanceClass, label, behavior}`, one object per distinct declared `(guidanceClass, label)` pair the function actually occupies, plus (only for `guidanceClass: personalized-protocol-recommendation` entries) a fourth key `publiclyEnabled`, and (only for `guidanceClass: safety-escalation` entries) a fourth key `escalationRule` | `guidanceClass` is one of the four closed `productGuidanceClass` labels; `label` is one of the ten closed `substanceFunctionRisk` labels; for `guidanceClass` in `{deterministic-calculation, curated-evidence-guidance, personalized-protocol-recommendation}` (mapped to the contract's `C1`/`C2`/`C3` columns respectively), `behavior` must equal, byte-for-byte, `product-capability-safety-contract.json`'s `labels.<label>.behavior.<C1\|C2\|C3>.value` for that column; for `guidanceClass: safety-escalation`, `behavior` must equal the literal `escalated` and `escalationRule` must be an integer 1-4 indexing `escalationSemantics.rules`; a `personalized-protocol-recommendation` entry's `publiclyEnabled` must equal, live, `enablementState.biostackRecommendedOrigination.publiclyEnabled` (`false` at this parcel's `BaseCommit`, per D-B1(c)) | `product-capability-safety-contract.json` `labels.*.behavior.*.value`, `escalationSemantics.rules`, `enablementState.biostackRecommendedOrigination.publiclyEnabled` |
-| `numeric_provenance` | provenance | at least one `capability_claim` entry's `guidanceClass` is `deterministic-calculation` or `personalized-protocol-recommendation` | array of one or more distinct string values | every entry must be a member of the live `numericProvenance.lockedOrigins` five-value array; the key's total absence (not an empty array) is the signal that no `capability_claim` entry meets the trigger condition | `product-capability-safety-contract.json` `numericProvenance.lockedOrigins` |
+| `capability_claim` | capability + claim | `guidance_classes` is non-empty **or** `substance_function_risk` is non-empty | array of objects `{guidanceClass, label, behavior}`, one object per distinct declared `(guidanceClass, label)` pair the function actually occupies, plus (only for `guidanceClass: personalized-protocol-recommendation` entries) a fourth key `publiclyEnabled`, (only for `guidanceClass: safety-escalation` entries) a fourth key `escalationRule`, and (only for `guidanceClass: curated-evidence-guidance` entries presenting a dose-context numeric output, per the frozen contract's own `doseContextDefinition` test — referenced, never restated as a new rule) a fourth key `dosageContext: true` | `guidanceClass` is one of the four closed `productGuidanceClass` labels; `label` is one of the ten closed `substanceFunctionRisk` labels; for `guidanceClass` in `{deterministic-calculation, curated-evidence-guidance, personalized-protocol-recommendation}` (mapped to the contract's `C1`/`C2`/`C3` columns respectively), `behavior` must equal, byte-for-byte, `product-capability-safety-contract.json`'s `labels.<label>.behavior.<C1\|C2\|C3>.value` for that column; for `guidanceClass: safety-escalation`, `behavior` must equal the literal `escalated` (the literal defined once, live, at `cellSemantics.escalated`) and `escalationRule` must be an integer 1-4 indexing `escalationSemantics.rules`; a `personalized-protocol-recommendation` entry's `publiclyEnabled` must equal, live, `enablementState.biostackRecommendedOrigination.publiclyEnabled` (`false` at this parcel's `BaseCommit`, per D-B1(c)); a `curated-evidence-guidance` entry's `dosageContext` key, when present, must be the literal boolean `true` and is the sole self-declared trigger signal for the `numeric_provenance` row below (the spec author sets it if, and only if, `doseContextDefinition`'s own test is met — the test itself is never redefined here) | `product-capability-safety-contract.json` `labels.*.behavior.*.value`, `cellSemantics.escalated`, `escalationSemantics.rules`, `enablementState.biostackRecommendedOrigination.publiclyEnabled`, `doseContextDefinition` |
+| `numeric_provenance` | provenance | at least one `capability_claim` entry's `guidanceClass` is `deterministic-calculation` or `personalized-protocol-recommendation`, **or** at least one `capability_claim` entry's `guidanceClass` is `curated-evidence-guidance` and that entry carries `dosageContext: true` (matching the Objective's unqualified "each numeric output's provenance origin" promise: the frozen contract's own `numericProvenance` rules apply to "every displayed number," and `doseContextDefinition` defines dose context by the *shape* of the output value, not by which `guidanceClass` produced it, so a `curated-evidence-guidance` function presenting a dose-context numeric output triggers this key exactly as a `deterministic-calculation`/`personalized-protocol-recommendation` function would) | array of one or more distinct string values | every entry must be a member of the live `numericProvenance.lockedOrigins` five-value array; the key's total absence (not an empty array) is the signal that no `capability_claim` entry meets the trigger condition | `product-capability-safety-contract.json` `numericProvenance.lockedOrigins`, `doseContextDefinition` |
 | `missingness` | missingness | `capability_claim` is non-empty | object with keys `requiredInputs` (array of input-name strings) and `rungApplied` (object mapping each `requiredInputs` entry to one of `rung-1-refuse-invalid`, `rung-2-degrade-naming-missingness`, `rung-2-refuse-safety-material`, `rung-3-marker`) and, when any input is safety-material, `safetyMaterialInputs` (array, subset of `requiredInputs`) | every `safetyMaterialInputs` entry (an input the spec itself names as age, pregnancy/lactation status, identity/concentration, or prescribed-treatment scope) must map, in `rungApplied`, to `rung-2-refuse-safety-material` — never `rung-2-degrade-naming-missingness`, per D-B4 rule 2's safety-material refusal requirement; a `rungApplied` value outside the four-literal closed set fails | `product-capability-safety-contract.json` `missingInputLadder.rungs` (three rungs; rung 2's own text distinguishes degrade-naming-missingness from refuse-when-safety-material, hence the two `rung-2-*` literals) |
-| `escalation` | escalation | any `capability_claim` entry's `behavior` is `refused`, `escalated`, `refused-and-escalated`, or `degraded-escalates-on-strong-signal`, **or** any entry's `label` is `acute-red-flag-or-emergency` or `prescription-treatment-involved` | object with keys `preemptionStage` (integer 1-4, the `preemptionOrder.stages[].stage` this function's escalating label(s) fall under) and `outputType` (must equal the literal `safety-escalation`) | `preemptionStage` must correctly place every escalating `capability_claim` label in its live `preemptionOrder` stage (e.g. `acute-red-flag-or-emergency` → stage 1); `outputType` must equal the literal `safety-escalation`, per D-B6 rule 3 ("Escalation is a distinct output type ... never a footnote") | `product-capability-safety-contract.json` `preemptionOrder.stages`, `escalationSemantics.rules[3]` |
+| `escalation` | escalation | any `capability_claim` entry's `behavior` is `refused`, `escalated`, `refused-and-escalated`, or `degraded-escalates-on-strong-signal`, **or** any entry's `label` is `acute-red-flag-or-emergency` (unconditionally, matching `preemptionOrder.stages[0]`'s unscoped membership and `escalationSemantics.rules[0]`'s unscoped "stops ordinary guidance immediately"), **or** any entry's `label` is `prescription-treatment-involved` **and** that entry's `guidanceClass` is `personalized-protocol-recommendation` (narrowed to the C3 column precisely because the live contract scopes this label's only `refused`/escalating cell there "prescribed-treatment-only" — `labels.prescription-treatment-involved.behavior.C3.scope` — per `escalationSemantics.rules[1]`'s own "alteration-of-treatment surfaces refuse" text; this label's C1/C2 `degraded` cells carry no such scope and do not trigger `escalation`) | object with keys `preemptionStage` (integer 1-4, the `preemptionOrder.stages[].stage` this function's escalating label(s) fall under) and `outputType` (must equal the literal `safety-escalation`) | `preemptionStage` must correctly place every escalating `capability_claim` label in its live `preemptionOrder` stage (e.g. `acute-red-flag-or-emergency` → stage 1); for any escalating label absent from `preemptionOrder.stages[0].labels` through `stages[2].labels` (stages 1-3's explicit lists), `preemptionStage` is determinately `4` — `preemptionOrder.stages[3]`, whose pinned role text, "calibrating labels union their obligations," is this contract's own residual-membership rule for every such label, not an invented assignment; this is the deterministic resolution for `interaction-or-contraindication-signal`'s own D→E escalating case (`capability_claim.behavior: degraded-escalates-on-strong-signal`, the live `labels.interaction-or-contraindication-signal.behavior.C3.value`), which names no stage in stages 1-3 and therefore resolves, by this same residual rule, to `preemptionStage: 4` — exercised by fixture `positive-escalation-stage4-interaction-signal.json` (document contract 4); `outputType` must equal the literal `safety-escalation`, per `escalationSemantics.rules[2]` ("Escalation is a distinct output type ... never a footnote") | `product-capability-safety-contract.json` `preemptionOrder.stages`, `escalationSemantics.rules[1]`, `escalationSemantics.rules[2]` |
 
 **Trigger evaluation is cumulative, not exclusive:** a spec may trigger several of these five
 conditional keys simultaneously (for example a `pregnancy-or-lactation` × `curated-evidence-
 guidance` function triggers `capability_claim` and `missingness` but not `numeric_provenance`
 unless it also claims a `deterministic-calculation`/`personalized-protocol-recommendation`
-pairing, and not `escalation` unless its claimed behavior or label also meets that key's own
-trigger). `function_review_status` is always required, independent of every other trigger.
+pairing, or its `curated-evidence-guidance` entry itself carries `dosageContext: true`, and not
+`escalation` unless its claimed behavior or label also meets that key's own, now-scoped trigger).
+`function_review_status` is always required, independent of every other trigger.
 
 ### Required document contract 3: `docs/specs/schemas/classification-axes.schema.json` (modified)
 
@@ -251,7 +253,7 @@ changes from `"deferred-to-P3-B"` to `"bound-at-this-parcel"`. No label is added
 or redefined; `applicabilityField` entries (already `"status": "defined"` since P2) are untouched;
 `deliveryClass` and `substanceFunctionRisk` axis objects are untouched.
 
-### Required document contract 4: nine fixtures under `docs/specs/schemas/fixtures/p3b/`
+### Required document contract 4: ten fixtures under `docs/specs/schemas/fixtures/p3b/`
 
 Each JSON fixture carries exactly the keys `input`/`expected`, matching P2's and P3-A's fixture
 shape convention, with the same **independently-dispositive, single-violation** design rule P3-A's
@@ -301,15 +303,31 @@ document contract 6 pins (no fixture co-locates two violations).
   `guidanceClass: personalized-protocol-recommendation`, `publiclyEnabled: true` (the live
   contract's `enablementState.biostackRecommendedOrigination.publiclyEnabled` is `false`);
   `expected.result` `"invalid"`, `expected.reason` `"premature-public-enablement-claim"`.
+- `positive-escalation-stage4-interaction-signal.json`: `input.syntheticSpec` declares
+  `guidance_classes: [personalized-protocol-recommendation]`, `substance_function_risk:
+  [interaction-or-contraindication-signal]`, and a `capability_claim` entry
+  `{guidanceClass: personalized-protocol-recommendation, label:
+  interaction-or-contraindication-signal, behavior: degraded-escalates-on-strong-signal,
+  publiclyEnabled: false}` — the live `C3` cell value for that label, the exact D→E escalating
+  case `CAPABILITY-FIELD-MAP.md`'s `escalation` row's "Live cross-reference rule" column resolves
+  by its stage-4 residual-membership rule (the label names no stage in `preemptionOrder.stages[0]`
+  through `stages[2]`'s explicit lists). `escalation: {preemptionStage: 4, outputType:
+  "safety-escalation"}`; `missingness` and `function_review_status`/`function_review_owner`
+  populated correctly for the other triggered keys; `numeric_provenance` omitted (no
+  `deterministic-calculation` entry and no `curated-evidence-guidance` entry present).
+  `expected.result` is `"valid"` — this fixture is the sole, named discharge of the
+  `preemptionStage` indeterminacy this parcel's own field map resolves for stage-4-residual
+  labels; no other fixture exercises this label's escalating case.
 
 ### Required document contract 5: `docs/specs/scripts/verify-p3b.ps1`
 
 Must implement, at minimum and in the same no-network, PowerShell-only, nonzero-on-failure style
 as `verify-p3a.ps1`/`verify-p0b.ps1`: scope-and-frozen-surface checks, the additive-only
 extension-point check, `CAPABILITY-FIELD-MAP.md` structural checks, the `classification-axes.
-schema.json` diff-scoped check, the nine fixture checks (including the self-referential
-`coordinator-parcel`-shape fixture), and the standard evidence-bundle and clean-tree checks. The
-full, numbered check list is specified exactly in "Deterministic verification," below.
+schema.json` diff-scoped check, the ten fixture checks (including the self-referential
+`coordinator-parcel`-shape fixture and the stage-4-residual escalation fixture), and the standard
+evidence-bundle and clean-tree checks. The full, numbered check list is specified exactly in
+"Deterministic verification," below.
 
 ### Required document contract 6: `docs/specs/README.md` and `docs/specs/INDEX.md` amendments
 
@@ -344,9 +362,10 @@ The builder may create or modify only:
 10. `docs/specs/schemas/fixtures/p3b/negative-escalation-missing.json` — new.
 11. `docs/specs/schemas/fixtures/p3b/negative-function-review-status-invalid.json` — new.
 12. `docs/specs/schemas/fixtures/p3b/negative-premature-public-enablement-claim.json` — new.
-13. `docs/specs/scripts/verify-p3b.ps1` — new.
-14. `docs/specs/README.md` — modified. Exactly one appended section, zero removed/reordered lines.
-15. `docs/specs/INDEX.md` — modified. Exactly one appended row for `P3-B`, zero removed lines,
+13. `docs/specs/schemas/fixtures/p3b/positive-escalation-stage4-interaction-signal.json` — new.
+14. `docs/specs/scripts/verify-p3b.ps1` — new.
+15. `docs/specs/README.md` — modified. Exactly one appended section, zero removed/reordered lines.
+16. `docs/specs/INDEX.md` — modified. Exactly one appended row for `P3-B`, zero removed lines,
     zero other-row changes, using `coordinator-assigns-at-gate-2` in the branch/worktree and owner
     cells.
 
@@ -426,7 +445,7 @@ builder stops without editing it.
 
 ## Deterministic verification
 
-Run from the coordinator-named isolated P3-B worktree after committing all 15 deliverables:
+Run from the coordinator-named isolated P3-B worktree after committing all 16 deliverables:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File docs/specs/scripts/verify-p3b.ps1 `
@@ -443,7 +462,7 @@ dependencies, and must exit nonzero on any failure:
    require `HEAD` to descend from `BaseCommit` via `git merge-base --is-ancestor BaseCommit HEAD`.
 2. Run `git diff --check "$BaseCommit...HEAD"`; require exit `0`.
 3. Read `git diff --name-only "$BaseCommit...HEAD" --`; require the changed set to equal exactly
-   the 15 allowed surfaces listed in this spec, sorted ordinally — no more, no fewer.
+   the 16 allowed surfaces listed in this spec, sorted ordinally — no more, no fewer.
 4. Require `git diff --quiet "$BaseCommit...HEAD" --` to exit `0` for: the charter path, every
    closed P1/P2/P3-A/P0-A/P0-B artifact (including `product-capability-safety-contract.json`/`.md`
    byte-for-byte), `SECTION-HEADING-MAP.md`, `EXTENSION-POINTS.md`, `delivery-class-controls.json`,
@@ -456,7 +475,7 @@ dependencies, and must exit nonzero on any failure:
 5. Parse `parcel-spec.schema.json`; require exactly the same 15 top-level keys P3-A's own check 5
    pins, byte-identical values for all 14 keys other than `extensionSections`; require
    `extensionSections` to equal exactly `{"product-capability-safety-overlay": {...}}` with the
-   nine fields pinned in document contract 1, in the exact values pinned there.
+   six fields pinned in document contract 1, in the exact values pinned there.
 6. Compute the live union of every `requiredSpecAdditions` entry in `delivery-class-controls.json`
    (read-only); normalize the string `product-capability-safety-overlay` identically to
    `SECTION-HEADING-MAP.md`'s own term normalization; require it to be absent from that live union
@@ -470,10 +489,10 @@ dependencies, and must exit nonzero on any failure:
    MAP.md`) and `axes.productGuidanceClass.controlBindingStatus` (new value: `bound-at-this-
    parcel`); require every other byte of the file unchanged; fail `axis-binding-diff-scoped` on
    any other diff.
-9. For each of the nine `fixtures/p3b/*.json` fixtures: parse JSON; require exactly the keys
+9. For each of the ten `fixtures/p3b/*.json` fixtures: parse JSON; require exactly the keys
    `input`/`expected`; for `positive-coordinator-parcel-p3b-self.json`, resolve `input.specPath`
    to the real file `parcels/P3-B.md` and evaluate it under the `coordinator-parcel` shape,
-   applying the self-reference carve-out (Hard constraints) exactly as pinned; for the other two
+   applying the self-reference carve-out (Hard constraints) exactly as pinned; for the other three
    positive and six negative fixtures, evaluate the inlined `syntheticSpec` directly; require
    `expected.result`/`expected.reason` to match the validator's own independently computed result
    exactly, including every live cross-reference against `product-capability-safety-contract.json`
@@ -513,10 +532,11 @@ fixture mismatch is red. There is no exclusion list and no warning-only acceptan
   pinned six-row table; no row's "Live cross-reference rule" embeds a copied contract value.
 - **AC-P3B-03 — Axis binding flipped, scoped:** `classification-axes.schema.json`'s diff touches
   only `productGuidanceClass.controlSource`/`controlBindingStatus`, to exactly the pinned values.
-- **AC-P3B-04 — Fixture proof, including the self-referential coordinator-parcel case:** all nine
+- **AC-P3B-04 — Fixture proof, including the self-referential coordinator-parcel case:** all ten
   `fixtures/p3b` fixtures parse and the verifier reproduces every fixture's `expected` result and
   (when invalid) `reason` exactly, including `positive-coordinator-parcel-p3b-self.json` against
-  this parcel's own merged spec file.
+  this parcel's own merged spec file and `positive-escalation-stage4-interaction-signal.json`
+  against the stage-4-residual `preemptionStage` resolution.
 - **AC-P3B-05 — Live agreement, no drift:** every `capability_claim.behavior`, `numeric_provenance`
   entry, `missingness.rungApplied` safety-material mapping, and `escalation.preemptionStage`/
   `outputType` in every positive fixture resolves to the exact live value
@@ -526,7 +546,7 @@ fixture mismatch is red. There is no exclusion list and no warning-only acceptan
 - **AC-P3B-07 — No product-semantic invention:** no file under this parcel's surfaces assigns a
   new meaning, behavior, provenance origin, missing-input rule, or escalation rule beyond what
   `product-capability-safety-contract.json` already freezes.
-- **AC-P3B-08 — Scope integrity:** the changed-file set equals exactly the 15 allowed surfaces;
+- **AC-P3B-08 — Scope integrity:** the changed-file set equals exactly the 16 allowed surfaces;
   every frozen surface is byte-identical to `BaseCommit`.
 - **AC-P3B-09 — Bounded registry edits:** the `INDEX.md` diff is exactly one appended row with
   zero removed lines and zero column changes; the `README.md` diff is exactly one appended section
@@ -542,7 +562,7 @@ fixture mismatch is red. There is no exclusion list and no warning-only acceptan
 | AC-P3B-01 | `extension-point-check.json` |
 | AC-P3B-02 | `field-map-check.json` |
 | AC-P3B-03 | `axis-binding-check.json` |
-| AC-P3B-04 | `fixture-results.json` (all nine fixtures) |
+| AC-P3B-04 | `fixture-results.json` (all ten fixtures) |
 | AC-P3B-05 | `fixture-results.json` (live cross-reference sub-results) |
 | AC-P3B-06 | placeholder-scan output (check 11) |
 | AC-P3B-07 | `schema-check.json`/`field-map-check.json` plus reviewer scan |
@@ -644,7 +664,7 @@ integration parcel exist and are themselves dispatched.
 
 The coordinator writes the Gate 2 record before builder dispatch, naming: the approved spec path
 and SHA-256, the single `BaseCommit` dispatch anchor SHA, the isolated branch, the isolated
-worktree path starting at that anchor, the builder identity, the 15 builder-editable surfaces, the
+worktree path starting at that anchor, the builder identity, the 16 builder-editable surfaces, the
 permission envelope, the deterministic verification command with both identities and `BaseCommit`
 realized, the evidence destination `artifacts/p3b-verification`, and the two reviewers. Like P2,
 P3-A, and P0-B, P3-B's Gate 2 record is created out-of-band before the dispatch anchor and is not
