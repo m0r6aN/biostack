@@ -25,6 +25,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ── Node toolchain ─────────────────────────────────────────────────────
+      # Must run before any `node` step below: without it, every script falls
+      # back to the ubuntu runner's default Node (v20).
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26.8.2'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
       - name: Check authoritative product contract
         run: node scripts/sync-product-contract.mjs --check
 
@@ -55,13 +65,6 @@ jobs:
         run: dotnet test --verbosity minimal
 
       # ── Frontend tests ─────────────────────────────────────────────────────
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
       - name: Install frontend deps
         working-directory: frontend
         # npm install, not npm ci: npm's cross-platform optional-dependency

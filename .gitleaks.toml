@@ -23,6 +23,15 @@ paths = [
 id = "generic-api-key"
 
 [[rules.allowlists]]
+description = "Confirmed false positives: evidence-doc prose, deployment-receipt git-SHA image tags, and the public CPython release-signing key ID baked into python base images"
+regexTarget = "line"
+regexes = [
+  '''NetworkAccessed, observed/unavailable''',
+  '''biostack-(api|web):[0-9a-f]{40}''',
+  '''GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305''',
+]
+
+[[rules.allowlists]]
 description = "Documented licensed-source prose is not an access credential"
 condition = "AND"
 regexTarget = "line"

@@ -1748,7 +1748,7 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.equal(actionIdentities.length, 3);
   assert.equal(actionIdentities.every((match) => match[1].length === 40), true);
   assert.match(workflow, /python-version: "3\.12\.12"/);
-  assert.match(workflow, /node-version: "22\.23\.1"/);
+  assert.match(workflow, /node-version: "26\.8\.2"/);
   assert.match(workflow, /uv==0\.9\.7/);
   assert.match(workflow, /pip-audit==2\.9\.0/);
   assert.match(workflow, /--require-hashes/);

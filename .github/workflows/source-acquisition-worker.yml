@@ -66,6 +66,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
+      # Pin the Node toolchain: without this, `node` falls back to the
+      # runner's default Node (v20).
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "26.8.2"
+
       - name: Check source-rights containment copies
         run: node scripts/sync-source-rights.mjs --check
 
