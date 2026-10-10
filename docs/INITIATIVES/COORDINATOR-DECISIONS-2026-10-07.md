@@ -249,3 +249,119 @@ spec's own stage-5 text). Owner may override any pin.
    and pinned in the spec (it was builder-invented and unpinned).
 4. **F5:** fixture `expected` outcomes are hash-pinned in the verifier (independent of its own
    re-derivation).
+
+## D-N — P4 amendment A-P4-3: stage-5 scan-composition semantics + amendment-commit exclusivity (coordinator, 2026-10-10)
+
+Triggered by the P4 remediation-1 re-verify split (`p4_reverify_1` **FAIL** vs `p4_reverify_2`
+**PASS-WITH-FIXES**). Per D8, every disputed or shared finding was reproduced at code level
+before this triage. Owner may override any pin; override reopens only the pinned item.
+
+### Reproductions (coordinator, live at remediated hash `45d5995f`)
+
+1. **R1's disputed F1-REMAINS BLOCKER — REPRODUCED, HOLDS.** A `coordinator-parcel`-shape file
+   with clean frontmatter and clean headings whose section bodies are isolated `TBD` paragraphs
+   (the exact PoC class R2 originally demonstrated) returns `result: "valid"` at the remediated
+   hash. Root cause confirmed at the normalization layer: `strip-unicode-category-Cf-and-Cc`
+   (U+000A/U+000D are Unicode category Cc) deletes newlines without inserting a separator, gluing
+   `## Objective\nTBD` into `## ObjectiveTBD` and `TBD\nTBD` into `TBDTBD`, which defeats both
+   pinned `noPlaceholderPatterns` (`\b` boundaries gone; `^` line anchors gone). Normalized-text
+   proof: `[## ObjectiveTBD## ContractsTBD]`, `(?i)\b(TBD|TODO|FIXME)\b` → `False`. Control case
+   (space-separated `TBD` mid-paragraph) is correctly caught (`invalid`/`placeholder-violation`) —
+   so the body scan runs; line-isolated placeholders, the dominant real-world shape, evade it.
+   No fixture in the 17-fixture suite exercises body prose at all.
+2. **Shared finding (R2 F-R2-1 BLOCKER / R1 F6-NEW MAJOR) — REPRODUCED by both reviewers (R2
+   dynamically, via disposable clone) and confirmed by coordinator code reading.** The
+   amendment-commit carve-out in `verify-p4.ps1` check 4 asserts only (a) the code commit does
+   not touch `parcels/P4.md` and (b) `BaseCommit..HEAD~1` carries a `parcels/P4.md` change — it
+   never asserts the amendment commit is EXCLUSIVE to `parcels/P4.md`, and `HEAD~1` is checked as
+   a range, not as a commit. Any non-frozen path (e.g. `validate-spec.ps1`, `verify-p4.ps1`
+   themselves) smuggled into the "spec-only" amendment commit passes a clean `P4 verification
+   PASS`. This is the D-L failure class in verifier form.
+3. **R1/R2 shared MINOR (anchor semantics) — accepted as a record defect + a verifier hygiene
+   gap.** The remediation-1 dispatch record's `baseCommit` (the D-M ledger commit) is correct for
+   topology but is not a valid `verify-p4.ps1 -BaseCommit`: check 3's expected surface set is
+   anchored to the ORIGINAL P4-IMPL dispatch anchor, and a wrong-anchor run dies on a raw
+   assertion (`Expected 25, got 4`) rather than a named check failure. Both reviewers
+   independently derived the correct run anchor and got deterministic double-run `PASS` at it.
+   Additionally, check 3's `KnownOutOfScopeCoordinatorPaths` tolerance (three coordinator paths)
+   was builder-invented to absorb main-side coordinator commits in the original anchor span — it
+   is exact-pinned but manually grown, i.e. fragile-by-construction and outside check 3's own
+   "no open-ended tolerance" promise. All of this is ratified-and-reframed by A-P4-3c below; the
+   remediation-1 dispatch record gets a corrective anchor note.
+
+### A-P4-3 (ratified pins; transcribed verbatim into `parcels/P4.md` in the amendment commit, alone, before code)
+
+**A-P4-3a — stage-5 scan-composition semantics (fixes reproduction 1).** The nine pinned
+`placeholderNormalizationSteps` remain applied in their exact pinned order and are never modified
+(`parcel-spec.schema.json` stays byte-frozen). Stage 5 composes TWO normalized views of the same
+source text (frontmatter values, headings, and body text), and a placeholder match in EITHER view
+is a violation:
+
+1. **Merged view:** the current composition — scan parts joined, pipeline applied to the whole —
+   preserving today's detection of placeholders split across line boundaries (e.g. `TB` + newline
+   + `D` glues to `TBD` and is caught). This view's behavior is unchanged.
+2. **Line-preserving view:** the source text is split into its original lines; the identical
+   pipeline (same steps, same order) is applied to each line SEPARATELY; the normalized lines are
+   then scanned line-by-line (each line scanned against both pinned patterns, with `^`/`$`
+   anchoring intact). Newline deletion can no longer glue a line-isolated placeholder into a
+   neighboring word.
+
+Both views are computed from the same input text by one shared implementation used by BOTH
+invocation modes (`-SpecPath` disk mode reads the real file's body; `-SyntheticSpecJson` mode
+reads the synthetic input's new `body` field, below). Closed-world: there is no third view, no
+exclusion beyond the two already-pinned fixture spans from P4's original check 8, and no
+warning-only acceptance.
+
+**A-P4-3b — amendment-commit exclusivity (fixes reproduction 2).** The carve-out is retained but
+made mechanically exclusive. A conforming remediation-style branch is EXACTLY two commits above
+its dispatch anchor: (1) the amendment commit, whose changed-path set must equal exactly
+`docs/INITIATIVES/biostack-governed-delivery/parcels/P4.md` and nothing else (checked with
+per-commit path enumeration, not range diffs); (2) the code commit, which must not touch
+`parcels/P4.md`. Any other commit count (`branch-shape-not-amendment-then-code`), any extra path
+in the amendment commit (`amendment-commit-not-exclusive`), or any `parcels/P4.md` change in the
+code commit fails by the named identifier given here. These identifiers are
+`verify-p4.ps1`-local check-failure names in the AC-P4-05 sense, not `validate-spec.ps1` output
+`reason` literals.
+
+**A-P4-3c — anchor and surface-set semantics (fixes reproduction 3).** The full deterministic run
+takes `-BaseCommit` = the build's own Gate 2 dispatch anchor (the builder's branch base), and
+check 3's expected changed set is computed anchor-relative: exactly the paths the build's amended
+surface enumeration lists (the amendment commit's `parcels/P4.md` + the code-commit surfaces
+enumerated in the amended document contracts, including every new fixture), sorted ordinally, no
+more, no fewer. The `KnownOutOfScopeCoordinatorPaths` tolerance is DELETED; a fresh-anchor run
+needs none. A run attempted at any anchor whose changed set disagrees fails by named identifier
+`anchor-surface-set-mismatch` — a clean named failure, never an uncaught exception. Honest-scope
+sentence added to the spec: the verification anchor for any P4-lineage build is that build's own
+dispatch anchor, and the historical full-lineage run anchor (the original P4-IMPL dispatch
+anchor) is named in the spec as historical context only.
+
+**A-P4-3d — body-prose fixtures + pins (the regression proof).** Two new fixtures, hash-pinned
+per D-M's F5 rule, exercising the shared body path via the synthetic input's new OPTIONAL `body`
+string field (absent = today's behavior, unchanged; present = flows through the identical
+stage-5 dual-view scan as disk-mode body text):
+
+1. `negative-body-prose-isolated-paragraph-placeholder.json` — body is line-isolated `TBD`
+   paragraphs under clean headings (reproduction 1's exact shape); `expected.result: "invalid"`,
+   `expected.reason: "placeholder-violation"`.
+2. `negative-body-prose-split-token-placeholder.json` — body contains a placeholder split across
+   a line boundary (`TB` / `D` on consecutive lines); `expected.result: "invalid"`,
+   `expected.reason: "placeholder-violation"` — pins the merged view's continued necessity.
+
+A source-level structural assertion (check 5 class) additionally requires disk-mode and synthetic
+body text to flow through one shared stage-5 implementation — no second, divergent scan path.
+
+### Process notes
+
+- Re-verify verdict handling: `p4_reverify_2`'s PASS-WITH-FIXES stands as evidence for every item
+  it marked clean (A-P4-2 pins byte-match D-M; F5 hash pins independently tamper-tested; 12
+  adversarial body variants held against the MERGED view). Its verdict is superseded only on the
+  two reproduced findings. `p4_reverify_1`'s FAIL stands.
+- Fix-then-reverify: `p4_fixer_2` on `fix/p4-remediation-2` (amendment commit first, alone, then
+  code); bounded re-verify after (fresh reviewers, with reproduction 1's shape as a pinned
+  regression), then P4 closure. No locked decision is reopened by any pin above.
+- Verifier scar tissue applied to the new work itself: pin anchor pairs (BaseCommit = dispatch
+  anchor, HEAD = builder tip, is-ancestor-check every reviewed SHA); scan body prose (the very
+  defect); byte-pin all normative text; closed-world citation rules; guard empty-content paths
+  (empty body changes nothing about non-placeholder stages); hash-pin fixture expectations;
+  honest scope claims; structural-block quote matching; STOP-AND-REPORT on any deviation
+  (D-L — no self-reconciliation).
