@@ -228,3 +228,24 @@ semantic drift, and the spec subsequently merged unchanged (#532); (2) the proce
 recorded as a standing dispatch note for all future parcels (Gate 2 records already carry
 STOP-AND-REPORT language; enforcement emphasis added); (3) no product allowed-output consequence
 exists. Owner may override.
+
+## D-M — P4 amendment A-P4-2: three pins + one process ratification (coordinator, 2026-10-10)
+
+Triggered by the P4 implementation review split (R1 `PASS` vs R2 `FAIL`; R2's F1 reproduced at
+code level — stage 5 scans only headings+frontmatter, never `$parsed.Body`, contradicting the
+spec's own stage-5 text). Owner may override any pin.
+
+1. **A-P4-2a (process ratification, F2):** the builder's D1 technical rationale is accurate —
+   the spec's `pilot-rollback-alias` example is self-contradictory (it contains the bare term it
+   is meant to distinguish). Ratified: the corrected `expected.result` for
+   `positive-real-spec-p3b-cross-check.json` becomes the pinned value, the spec's example is
+   amended to a non-self-contradictory one, and AC-P4-05's cross-verifier-agreement scope is
+   restored to full agreement (not the builder's narrowed form). The builder's process failure
+   (unilateral override without STOP-AND-REPORT) is recorded under D-L's enforcement.
+2. **A-P4-2b (F3):** `missing-required-field` is ratified as the **13th** literal of the closed
+   reason vocabulary (it is a pre-existing P2 literal, not an invention) and must gain its own
+   fixture.
+3. **A-P4-2c (F4):** the `extension_section` frontmatter key is ratified as a named P4 convention
+   and pinned in the spec (it was builder-invented and unpinned).
+4. **F5:** fixture `expected` outcomes are hash-pinned in the verifier (independent of its own
+   re-derivation).
