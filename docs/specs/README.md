@@ -47,3 +47,7 @@ P0-B decides what the product may say: the machine-readable Product Capability a
 ## Parcel-schema binding to the Product Capability and Safety Contract (P3-B)
 
 P3-B binds six frontmatter fields (capability, claim, provenance, missingness, function-review, escalation) to P0-B's frozen contract and decides no product allowed-output of its own: [`CAPABILITY-FIELD-MAP.md`](schemas/CAPABILITY-FIELD-MAP.md) (the deterministic frontmatter-field-to-frozen-contract binding table) and the `extensionSections.product-capability-safety-overlay` entry in [`parcel-spec.schema.json`](schemas/parcel-spec.schema.json) (the one additive `domain-overlay-insertion` registration).
+
+## Deterministic validation — dependency-light spec linter (P4)
+
+P4 ships [`scripts/validate-spec.ps1`](scripts/validate-spec.ps1) (the general-purpose, invocable linter) and its proof fixtures under [`fixtures/p4/`](schemas/fixtures/p4/); it composes P2's/P3-A's/P3-B's already-shaped mechanics into one general, invocable linter and decides no new product allowed-output, review-enforcement rule, or closure/evidence contract of its own.

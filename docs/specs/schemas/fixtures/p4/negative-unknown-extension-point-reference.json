@@ -1,0 +1,103 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard",
+          "health-boundary"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable",
+        "extension_section": "fabricated-key-xyz"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback",
+        "## Guidance class",
+        "## Intended use",
+        "## Claims",
+        "## Evidence threshold",
+        "## Numeric provenance",
+        "## Missingness",
+        "## Red flags",
+        "## Escalation",
+        "## Function-review status"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "unknown-extension-point",
+    "detail": {
+      "key": "fabricated-key-xyz"
+    },
+    "foldSummary": {
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff",
+        "scientific-evidence references",
+        "rationale fixture",
+        "safety results",
+        "dual reviews",
+        "human review record when triggered"
+      ],
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected",
+        "positive, degraded, refused, escalated fixtures",
+        "calculation boundary tests where numeric"
+      ],
+      "recordedGuidanceClasses": [],
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check",
+        "unsupported certainty",
+        "prescribed-treatment direction",
+        "red-flag bypass",
+        "provenance loss"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback",
+        "guidance class",
+        "intended use",
+        "claims",
+        "evidence threshold",
+        "numeric provenance",
+        "missingness",
+        "red flags",
+        "escalation",
+        "function-review status"
+      ],
+      "mergeGates": [
+        "green-dual-review-required"
+      ],
+      "standingAuthorizationEligible": true,
+      "result": "routed",
+      "schema": "biostack.p2-routing-output.v1",
+      "reviewerCount": 2.0,
+      "recordedSubstanceFunctionRisk": []
+    }
+  }
+}

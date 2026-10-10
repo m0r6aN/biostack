@@ -1,0 +1,43 @@
+{
+  "input": {
+    "specPath": "docs/INITIATIVES/biostack-governed-delivery/parcels/P3-B.md"
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-section",
+    "detail": {
+      "term": "contracts"
+    },
+    "foldSummary": {
+      "reviewerCount": 1.0,
+      "recordedGuidanceClasses": [],
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check"
+      ],
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback"
+      ],
+      "recordedSubstanceFunctionRisk": [],
+      "result": "routed",
+      "mergeGates": [],
+      "schema": "biostack.p2-routing-output.v1",
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff"
+      ],
+      "standingAuthorizationEligible": true
+    }
+  }
+}

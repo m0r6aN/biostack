@@ -1,0 +1,40 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "ticket-spec",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "ticket": "BIO-P4-FIXTURE-001",
+        "function_review_status": "not-applicable"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key",
+    "detail": {
+      "missingKeys": [
+        "owner"
+      ]
+    }
+  }
+}

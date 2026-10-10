@@ -1,0 +1,42 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard",
+          "elevated"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "unknown-label",
+    "detail": {
+      "label": "elevated",
+      "reason": "unknown-label",
+      "axis": "deliveryClass"
+    }
+  }
+}

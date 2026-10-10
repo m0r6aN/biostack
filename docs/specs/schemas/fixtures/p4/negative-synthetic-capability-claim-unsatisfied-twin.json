@@ -1,0 +1,103 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard"
+        ],
+        "guidance_classes": [
+          "curated-evidence-guidance"
+        ],
+        "substance_function_risk": [
+          "ordinary"
+        ],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable",
+        "capability_claim": [
+          {
+            "guidanceClass": "curated-evidence-guidance",
+            "label": "ordinary",
+            "behavior": "degraded"
+          }
+        ],
+        "missingness": {
+          "requiredInputs": [],
+          "rungApplied": {}
+        }
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "capability-claim-drift",
+    "detail": {
+      "field": "capability_claim",
+      "claimed": "degraded",
+      "label": "ordinary",
+      "live": "allowed",
+      "guidanceClass": "curated-evidence-guidance"
+    },
+    "foldSummary": {
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback"
+      ],
+      "standingAuthorizationEligible": true,
+      "schema": "biostack.p2-routing-output.v1",
+      "mergeGates": [],
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff"
+      ],
+      "recordedSubstanceFunctionRisk": [
+        "ordinary"
+      ],
+      "recordedGuidanceClasses": [
+        "curated-evidence-guidance"
+      ],
+      "reviewerCount": 1.0,
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected"
+      ],
+      "result": "routed"
+    },
+    "boundFieldsChecked": [
+      {
+        "field": "function_review_status",
+        "pass": true
+      },
+      {
+        "field": "function_review_owner",
+        "pass": true
+      }
+    ]
+  }
+}
