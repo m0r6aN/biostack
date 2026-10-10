@@ -1,0 +1,126 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard",
+          "health-boundary"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback",
+        "## Guidance class",
+        "## Intended use",
+        "## Claims",
+        "## Evidence threshold",
+        "## Numeric provenance",
+        "## Missingness",
+        "## Red flags",
+        "## Escalation",
+        "## Function-review status"
+      ]
+    }
+  },
+  "expected": {
+    "result": "valid",
+    "reason": null,
+    "detail": null,
+    "foldSummary": {
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected",
+        "positive, degraded, refused, escalated fixtures",
+        "calculation boundary tests where numeric"
+      ],
+      "recordedGuidanceClasses": [],
+      "reviewerCount": 2.0,
+      "schema": "biostack.p2-routing-output.v1",
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff",
+        "scientific-evidence references",
+        "rationale fixture",
+        "safety results",
+        "dual reviews",
+        "human review record when triggered"
+      ],
+      "mergeGates": [
+        "green-dual-review-required"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback",
+        "guidance class",
+        "intended use",
+        "claims",
+        "evidence threshold",
+        "numeric provenance",
+        "missingness",
+        "red flags",
+        "escalation",
+        "function-review status"
+      ],
+      "recordedSubstanceFunctionRisk": [],
+      "result": "routed",
+      "standingAuthorizationEligible": true,
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check",
+        "unsupported certainty",
+        "prescribed-treatment direction",
+        "red-flag bypass",
+        "provenance loss"
+      ]
+    },
+    "boundFieldsChecked": [
+      {
+        "field": "function_review_status",
+        "pass": true
+      },
+      {
+        "field": "function_review_owner",
+        "pass": true
+      },
+      {
+        "field": "capability_claim",
+        "pass": true
+      },
+      {
+        "field": "missingness",
+        "pass": true
+      },
+      {
+        "field": "numeric_provenance",
+        "pass": true
+      },
+      {
+        "field": "escalation",
+        "pass": true
+      }
+    ]
+  }
+}

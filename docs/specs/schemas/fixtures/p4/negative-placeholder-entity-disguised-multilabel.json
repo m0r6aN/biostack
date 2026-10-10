@@ -1,0 +1,92 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard",
+          "migration"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable",
+        "conditionalInputs": {
+          "userDataOrProductionSchemaAffected": false
+        },
+        "placeholderProbe": "T&#66;D"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback",
+        "## Compatibility window",
+        "## Forward/backward behavior",
+        "## Data-loss analysis",
+        "## Environment plan"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "placeholder-violation",
+    "detail": {},
+    "foldSummary": {
+      "mergeGates": [
+        "explicit-base-and-environment-scope"
+      ],
+      "schema": "biostack.p2-routing-output.v1",
+      "result": "routed",
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected",
+        "migration",
+        "downgrade/rollback or restore",
+        "compatibility tests"
+      ],
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff",
+        "schema diff",
+        "compatibility matrix",
+        "backup/restore or rollback evidence",
+        "environment receipt"
+      ],
+      "standingAuthorizationEligible": true,
+      "recordedGuidanceClasses": [],
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check",
+        "destructive or irreversible path",
+        "unknown production state"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback",
+        "compatibility window",
+        "forward/backward behavior",
+        "data-loss analysis",
+        "environment plan"
+      ],
+      "reviewerCount": 1.0,
+      "recordedSubstanceFunctionRisk": []
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "ticket-spec",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "ticket": "BIO-P4-FIXTURE-001",
+        "function_review_status": "not-applicable"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "valid",
+    "reason": null,
+    "detail": null,
+    "foldSummary": {
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check"
+      ],
+      "standingAuthorizationEligible": true,
+      "recordedGuidanceClasses": [],
+      "mergeGates": [],
+      "result": "routed",
+      "schema": "biostack.p2-routing-output.v1",
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected"
+      ],
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff"
+      ],
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback"
+      ],
+      "reviewerCount": 1.0,
+      "recordedSubstanceFunctionRisk": []
+    },
+    "boundFieldsChecked": [
+      {
+        "field": "function_review_status",
+        "pass": true
+      },
+      {
+        "field": "function_review_owner",
+        "pass": true
+      },
+      {
+        "field": "capability_claim",
+        "pass": true
+      },
+      {
+        "field": "missingness",
+        "pass": true
+      },
+      {
+        "field": "numeric_provenance",
+        "pass": true
+      },
+      {
+        "field": "escalation",
+        "pass": true
+      }
+    ]
+  }
+}

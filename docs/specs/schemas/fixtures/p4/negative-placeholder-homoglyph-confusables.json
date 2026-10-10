@@ -1,0 +1,69 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "coordinator-parcel",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "parcel_id": "P4-FIXTURE",
+        "function_review_status": "not-applicable",
+        "placeholderProbe": "note ТВD only"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "placeholder-violation",
+    "detail": {},
+    "foldSummary": {
+      "requiredSpecAdditions": [
+        "objective",
+        "surfaces",
+        "contracts",
+        "acceptance criteria",
+        "tests",
+        "rollback"
+      ],
+      "requiredChecks": [
+        "focused tests",
+        "lint/build as affected"
+      ],
+      "standingAuthorizationEligible": true,
+      "result": "routed",
+      "requiredClosureEvidence": [
+        "checks",
+        "review",
+        "acceptance map",
+        "diff"
+      ],
+      "schema": "biostack.p2-routing-output.v1",
+      "recordedSubstanceFunctionRisk": [],
+      "mergeGates": [],
+      "mandatoryStopConditions": [
+        "scope/contract drift",
+        "red check"
+      ],
+      "reviewerCount": 1.0,
+      "recordedGuidanceClasses": []
+    }
+  }
+}

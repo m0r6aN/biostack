@@ -1,0 +1,50 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "ticket-spec",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_builder",
+        "created": "2026-10-10",
+        "updated": "2026-10-10",
+        "delivery_classes": [
+          "standard",
+          "privacy"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "ticket": "BIO-P4-FIXTURE-001",
+        "function_review_status": "not-applicable",
+        "fixtureOnly": true,
+        "testOnlyScalarValues": {
+          "standard": "a",
+          "privacy": "b"
+        }
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "incompatible-controls",
+    "detail": {
+      "reason": "incompatible-controls",
+      "field": "testOnlyScalarField",
+      "conflictingValues": [
+        "a",
+        "b"
+      ]
+    }
+  }
+}

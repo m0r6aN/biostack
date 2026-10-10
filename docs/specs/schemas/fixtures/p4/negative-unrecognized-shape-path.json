@@ -1,0 +1,12 @@
+{
+  "input": {
+    "specPath": "docs/INITIATIVES/biostack-governed-delivery/CHARTER.md"
+  },
+  "expected": {
+    "result": "unrecognized-shape",
+    "reason": "unrecognized-shape",
+    "detail": {
+      "path": "docs/INITIATIVES/biostack-governed-delivery/CHARTER.md"
+    }
+  }
+}

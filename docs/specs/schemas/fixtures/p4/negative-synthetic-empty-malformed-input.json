@@ -1,0 +1,27 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "ticket-spec",
+      "frontmatter": {},
+      "headings": []
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-frontmatter-key",
+    "detail": {
+      "missingKeys": [
+        "created",
+        "delivery_classes",
+        "guidance_classes",
+        "owner",
+        "status",
+        "substance_function_risk",
+        "surfaces",
+        "ticket",
+        "title",
+        "updated"
+      ]
+    }
+  }
+}
