@@ -857,6 +857,7 @@ function Invoke-SpecValidation {
     $shapeResolved = $null
     $frontmatter = $null
     $headings = @()
+    $bodyText = $null
     $displaySpecPath = $null
     $selfCarveOut = $false
 
@@ -895,6 +896,7 @@ function Invoke-SpecValidation {
         }
         $frontmatter = $parsed.Frontmatter
         $headings = Get-Headings -Body $parsed.Body
+        $bodyText = [string]$parsed.Body
         # Self-reference carve-out (narrowly scoped to exactly this one real
         # file, inherited verbatim from P3-B.md's own ratified Hard
         # constraints clause -- see Test-CapabilityFieldBinding, above).
@@ -949,7 +951,12 @@ function Invoke-SpecValidation {
         return New-Output -SpecPathOut $displaySpecPath -Shape $shapeResolved -Result 'invalid' -Reason 'missing-required-section' -Detail @{ term = $first } -FoldSummary $foldSummary -BoundFieldsChecked $null
     }
 
-    # --- Stage 5: placeholder scan (frontmatter values + headings) ---
+    # --- Stage 5: placeholder scan (frontmatter values + headings + body
+    #     prose, when available -- P4.md's own stage-5 text pins "every
+    #     frontmatter value and heading/body text available to the
+    #     validator"; in disk mode the real file's full Markdown body is
+    #     available (already parsed above as $parsed.Body) and must reach
+    #     this scan, not just its heading text and frontmatter values) ---
     $scanParts = New-Object 'System.Collections.Generic.List[string]'
     foreach ($h in $headings) { $scanParts.Add([string]$h) | Out-Null }
     foreach ($k in (Get-PropNames -Obj $frontmatter)) {
@@ -957,6 +964,7 @@ function Invoke-SpecValidation {
         if ($v -is [string]) { $scanParts.Add($v) | Out-Null }
         elseif ($v -is [System.Array]) { foreach ($item in $v) { if ($item -is [string]) { $scanParts.Add($item) | Out-Null } } }
     }
+    if (-not [string]::IsNullOrEmpty($bodyText)) { $scanParts.Add($bodyText) | Out-Null }
     $scanText = [string]::Join(' ', $scanParts.ToArray())
     if (Test-PlaceholderViolation -Text $scanText -StepOrder $stepOrder -Patterns $patterns) {
         return New-Output -SpecPathOut $displaySpecPath -Shape $shapeResolved -Result 'invalid' -Reason 'placeholder-violation' -Detail @{} -FoldSummary $foldSummary -BoundFieldsChecked $null
