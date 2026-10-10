@@ -14,7 +14,7 @@ architecture dual review).
   "builderId": "p4_builder",
   "branch": "feat/p4-spec-linter",
   "worktree": "/home/cmorgan76/Repos/biostack-wt/p4-impl",
-  "baseCommit": "single anchor = the commit that adds THIS file to main",
+  "baseCommit": "RE-ANCHORED: 152ec94 (PR #537 merge — final reviewed spec state incl. A-P4-1); the record's original anchor fdb83ee is superseded — see ANCHOR NOTE in the queue log",
   "permissionEnvelope": "docs-only:p4-linter-surfaces",
   "builderSurfaces": "exactly the spec's allowed surfaces (verify-p4.ps1, the 16 fixtures, spec-linter inputs — zero governance-contract edits, zero product code)",
   "reviewerIds": ["p4_impl_review_1", "p4_impl_review_2"],
