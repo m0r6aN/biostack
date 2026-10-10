@@ -59,10 +59,19 @@ $ErrorActionPreference = 'Stop'
     'docs/specs/schemas/fixtures/p3b/negative-function-review-status-invalid.json',
     'docs/specs/schemas/fixtures/p3b/negative-premature-public-enablement-claim.json',
     'docs/specs/schemas/fixtures/p3b/positive-escalation-stage4-interaction-signal.json',
+    'docs/specs/schemas/fixtures/p3b/positive-safety-escalation-binding.json',
+    'docs/specs/schemas/fixtures/p3b/negative-function-review-status-not-applicable-capability-bearing.json',
     'docs/specs/scripts/verify-p3b.ps1',
     'docs/specs/README.md',
     'docs/specs/INDEX.md'
 )
+#
+# Remediation 1 (fix/p3b-remediation-1) additionally changes only
+# `docs/specs/scripts/verify-p3b.ps1` (binding/robustness fixes) and adds the
+# two new fixture paths above (R2-F1 end-to-end safety-escalation coverage,
+# R2-F3 vacuous function-review coverage) -- 19 allowed surfaces total (16
+# originally pinned + 1 disclosed prerequisite merge-in + 2 remediation
+# fixtures; verify-p3b.ps1 itself was already pinned and is not a new path).
 
 [string[]]$GuidanceClassLabels = @(
     'deterministic-calculation', 'curated-evidence-guidance',
@@ -218,6 +227,22 @@ function Test-PropPresent {
 # matches parcel-spec.schema.json's noPlaceholderPatterns byte-for-byte)
 # ---------------------------------------------------------------------------
 
+# Minimal, deterministic, offline confusables-skeleton table (UTS #39-style)
+# covering common Latin-lookalike Cyrillic/Greek codepoints. Applied after
+# NFKC normalization as the final pipeline step (step 9, pinned). Ported
+# byte-for-byte from verify-p3a.ps1's own table, which carries the same
+# scope disclosure: intentionally bounded, not a full UTS #39 database.
+$script:ConfusablesMap = @{
+    [char]0x0410 = 'A'; [char]0x0430 = 'a'; [char]0x0412 = 'B'; [char]0x0415 = 'E'; [char]0x0435 = 'e'
+    [char]0x041A = 'K'; [char]0x043A = 'k'; [char]0x041C = 'M'; [char]0x041D = 'H'; [char]0x041E = 'O'
+    [char]0x043E = 'o'; [char]0x0420 = 'P'; [char]0x0440 = 'p'; [char]0x0421 = 'C'; [char]0x0441 = 'c'
+    [char]0x0422 = 'T'; [char]0x0442 = 't'; [char]0x0425 = 'X'; [char]0x0445 = 'x'; [char]0x0423 = 'Y'
+    [char]0x0443 = 'y'; [char]0x0406 = 'I'; [char]0x0456 = 'i'; [char]0x0391 = 'A'; [char]0x0392 = 'B'
+    [char]0x0395 = 'E'; [char]0x0396 = 'Z'; [char]0x0397 = 'H'; [char]0x0399 = 'I'; [char]0x039A = 'K'
+    [char]0x039C = 'M'; [char]0x039D = 'N'; [char]0x039F = 'O'; [char]0x03A1 = 'P'; [char]0x03A4 = 'T'
+    [char]0x03A5 = 'Y'; [char]0x03A7 = 'X'
+}
+
 function Get-PlaceholderNormalizedText {
     param([string]$Text)
     $t = $Text
@@ -236,7 +261,24 @@ function Get-PlaceholderNormalizedText {
     }
     $t = $sb.ToString()
     $t = $t.Normalize([System.Text.NormalizationForm]::FormKC)
-    return $t
+    # 9. unicode-confusables-skeleton (pinned by parcel-spec.schema.json's
+    # placeholderNormalizationSteps; was missing from this parcel's pipeline
+    # -- R1-F2 -- allowing homoglyph-substituted placeholders, e.g. a
+    # Cyrillic-T/B/D-spelled "TBD", to evade the literal TBD/TODO/FIXME scan
+    # even after NFKC normalization, which does not fold confusables. Table
+    # and step ported byte-for-byte from verify-p3a.ps1's own fix for the
+    # same class of evasion (that parcel's R2-F5 scope disclosure applies
+    # here identically: a bounded, deterministic, offline approximation of
+    # UTS #39 confusables, not a full confusables database).
+    $sb2 = New-Object System.Text.StringBuilder
+    foreach ($ch in $t.ToCharArray()) {
+        if ($script:ConfusablesMap.ContainsKey($ch)) {
+            [void]$sb2.Append($script:ConfusablesMap[$ch])
+        } else {
+            [void]$sb2.Append($ch)
+        }
+    }
+    return $sb2.ToString()
 }
 
 function Test-PlaceholderViolation {
@@ -326,6 +368,52 @@ function ConvertFrom-FrontmatterText {
 }
 
 # ---------------------------------------------------------------------------
+# Strict type coercion helpers (R2-F4, verifier robustness gap 2).
+#
+# PowerShell's bare [int]/[bool] casts are not safe for externally-supplied
+# field values: [int]"abc" throws an unhandled, script-terminating error
+# (because $ErrorActionPreference = 'Stop') instead of yielding a clean
+# 'invalid' result -- a single malformed fixture or spec would abort the
+# entire multi-check verification run rather than failing closed on just
+# that one field. Worse, [bool]"false" evaluates to $true (PowerShell casts
+# any non-empty string to $true), so a real spec file's YAML-sourced string
+# "false" (as opposed to a JSON fixture's native boolean literal) would
+# silently invert a publiclyEnabled/dosageContext declaration. These helpers
+# replace every such bare cast on claim-supplied data with explicit,
+# non-throwing parsing that returns $null on anything not strictly a
+# recognized integer/boolean form, which every call site below treats as a
+# clean 'invalid' result.
+# ---------------------------------------------------------------------------
+
+function ConvertTo-StrictInt {
+    param($Value)
+    if ($null -eq $Value) { return $null }
+    if ($Value -is [int]) { return $Value }
+    if ($Value -is [long] -and $Value -ge [int]::MinValue -and $Value -le [int]::MaxValue) { return [int]$Value }
+    if ($Value -is [double] -or $Value -is [decimal]) {
+        if ($Value -ne [Math]::Floor($Value)) { return $null }
+        return [int]$Value
+    }
+    if ($Value -is [string]) {
+        $parsed = 0
+        if ([int]::TryParse($Value, [System.Globalization.NumberStyles]::Integer, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$parsed)) { return $parsed }
+        return $null
+    }
+    return $null
+}
+
+function ConvertTo-StrictBool {
+    param($Value)
+    if ($Value -is [bool]) { return $Value }
+    if ($Value -is [string]) {
+        if ([StringComparer]::Ordinal.Equals($Value, 'true')) { return $true }
+        if ([StringComparer]::Ordinal.Equals($Value, 'false')) { return $false }
+        return $null
+    }
+    return $null
+}
+
+# ---------------------------------------------------------------------------
 # Core overlay validator: evaluates a frontmatter object (PSCustomObject or
 # OrderedDictionary, from either a parsed real spec file or an inlined
 # syntheticSpec fixture) against the six bound fields, live against the
@@ -352,8 +440,23 @@ function Test-CapabilitySafetyOverlay {
         }
     } else {
         $frs = [string](Get-PropValue -Obj $Frontmatter -Name 'function_review_status')
-        if ($FunctionReviewStatusLabels -notcontains $frs) {
+        if ($FunctionReviewStatusLabels -cnotcontains $frs) {
             return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-function-review-status'; Field = 'function_review_status' }
+        }
+        # R2-F3: `not-applicable` is not a D-B5-governed state at all -- the
+        # frozen contract's functionReviewStatus.rules only ever discuss
+        # `unreviewed`/`review-required`/`reviewed`. A capability-bearing spec
+        # (non-empty guidance_classes or substance_function_risk) declaring
+        # `not-applicable` would otherwise let a function that occupies a
+        # productGuidanceClass/substanceFunctionRisk cell skip function-review
+        # entirely with zero live justification -- a vacuous function-review
+        # declaration this overlay must not pass. CAPABILITY-FIELD-MAP.md's own
+        # discipline forbids this document from inventing a new product rule
+        # (e.g. a justification field P0-B never defined), so the
+        # spec-consistent fix is to fail the combination outright rather than
+        # author a new, unbound escape hatch.
+        if ([StringComparer]::Ordinal.Equals($frs, 'not-applicable') -and -not $axesEmpty) {
+            return [pscustomobject]@{ Result = 'invalid'; Reason = 'not-applicable-with-capability-bearing-axes'; Field = 'function_review_status' }
         }
         $ownerPresent = Test-PropPresent -Obj $Frontmatter -Name 'function_review_owner'
         $ownerVal = $null
@@ -387,19 +490,34 @@ function Test-CapabilitySafetyOverlay {
         $label = [string](Get-PropValue -Obj $claim -Name 'label')
         $behavior = [string](Get-PropValue -Obj $claim -Name 'behavior')
 
-        if ($GuidanceClassLabels -notcontains $guidanceClass) {
+        if ($GuidanceClassLabels -cnotcontains $guidanceClass) {
             return [pscustomobject]@{ Result = 'invalid'; Reason = 'unknown-label'; Field = 'capability_claim' }
         }
-        if ($SubstanceFunctionRiskLabels -notcontains $label) {
+        if ($SubstanceFunctionRiskLabels -cnotcontains $label) {
             return [pscustomobject]@{ Result = 'invalid'; Reason = 'unknown-label'; Field = 'capability_claim' }
         }
 
         if ($guidanceClass -eq 'safety-escalation') {
-            if ($behavior -ne $Contract.cellSemantics.escalated) {
+            # R2-F1: this branch's `behavior` comparand must be the short
+            # literal key `escalated` -- the same key-not-value convention the
+            # C1/C2/C3 columns already use (their `behavior.value` cells store
+            # the cellSemantics *key*, e.g. `refused`, never the long
+            # cellSemantics *sentence*, e.g. "R \u2014 refused"). The previous
+            # comparison against $Contract.cellSemantics.escalated compared
+            # against that long descriptive sentence instead, which (a) no
+            # fixture could plausibly satisfy and (b) even if satisfied, would
+            # never match the short-token $escalatingBehaviors membership test
+            # below -- meaning a guidanceClass: safety-escalation claim could
+            # never trigger its own required `escalation` block. Untested by
+            # every existing fixture (none declared guidanceClass:
+            # safety-escalation at all), confirming the binding was broken and
+            # unexercised end-to-end.
+            if (-not [StringComparer]::Ordinal.Equals($behavior, 'escalated')) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'capability-claim-drift'; Field = 'capability_claim' }
             }
             $escRule = Get-PropValue -Obj $claim -Name 'escalationRule'
-            if ($null -eq $escRule -or [int]$escRule -lt 1 -or [int]$escRule -gt $Contract.escalationSemantics.rules.Count) {
+            $escRuleInt = ConvertTo-StrictInt -Value $escRule
+            if ($null -eq $escRuleInt -or $escRuleInt -lt 1 -or $escRuleInt -gt $Contract.escalationSemantics.rules.Count) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-escalation-rule'; Field = 'capability_claim' }
             }
         } else {
@@ -421,7 +539,11 @@ function Test-CapabilitySafetyOverlay {
             if (-not $publiclyEnabledPresent) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'missing-required-frontmatter-key'; Field = 'capability_claim.publiclyEnabled' }
             }
-            $claimedPubliclyEnabled = [bool](Get-PropValue -Obj $claim -Name 'publiclyEnabled')
+            $claimedPubliclyEnabledRaw = Get-PropValue -Obj $claim -Name 'publiclyEnabled'
+            $claimedPubliclyEnabled = ConvertTo-StrictBool -Value $claimedPubliclyEnabledRaw
+            if ($null -eq $claimedPubliclyEnabled) {
+                return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-publicly-enabled-value'; Field = 'capability_claim.publiclyEnabled' }
+            }
             $livePubliclyEnabled = [bool]$Contract.enablementState.biostackRecommendedOrigination.publiclyEnabled
             if ($claimedPubliclyEnabled -and -not $livePubliclyEnabled) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'premature-public-enablement-claim'; Field = 'capability_claim.publiclyEnabled' }
@@ -444,7 +566,7 @@ function Test-CapabilitySafetyOverlay {
             $numericProvenanceTriggered = $true
         } elseif ($guidanceClass -eq 'curated-evidence-guidance') {
             $dosageContextPresent = Test-PropPresent -Obj $claim -Name 'dosageContext'
-            if ($dosageContextPresent -and [bool](Get-PropValue -Obj $claim -Name 'dosageContext')) {
+            if ($dosageContextPresent -and ([bool](ConvertTo-StrictBool -Value (Get-PropValue -Obj $claim -Name 'dosageContext')))) {
                 $numericProvenanceTriggered = $true
             }
         }
@@ -452,9 +574,16 @@ function Test-CapabilitySafetyOverlay {
         # escalation trigger: escalating behavior literal, or acute-red-flag-or-emergency label
         # (unconditional), or prescription-treatment-involved label scoped to the C3 column.
         $escalatingBehaviors = @('refused', 'escalated', 'refused-and-escalated', 'degraded-escalates-on-strong-signal')
-        if ($escalatingBehaviors -contains $behavior) { $escalationTriggered = $true }
+        if ($escalatingBehaviors -ccontains $behavior) { $escalationTriggered = $true }
         if ($label -eq 'acute-red-flag-or-emergency') { $escalationTriggered = $true }
         if ($label -eq 'prescription-treatment-involved' -and $guidanceClass -eq 'personalized-protocol-recommendation') { $escalationTriggered = $true }
+        # Every guidanceClass: safety-escalation claim is itself an escalation
+        # by definition -- this is belt-and-suspenders with the behavior-token
+        # check above (now that `behavior` is correctly pinned to the literal
+        # `escalated`, which is already a member of $escalatingBehaviors), kept
+        # explicit so this trigger cannot silently regress again if the
+        # literal token ever changes (R2-F1).
+        if ($guidanceClass -eq 'safety-escalation') { $escalationTriggered = $true }
     }
 
     # missingness: required when capability_claim is non-empty.
@@ -469,7 +598,7 @@ function Test-CapabilitySafetyOverlay {
         $safetyMaterialInputs = Get-PropArray -Obj $missingness -Name 'safetyMaterialInputs'
         foreach ($input in $requiredInputs) {
             $rung = [string](Get-PropValue -Obj $rungApplied -Name $input)
-            if ($RungApplicationLabels -notcontains $rung) {
+            if ($RungApplicationLabels -cnotcontains $rung) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-rung-application'; Field = 'missingness' }
             }
         }
@@ -491,7 +620,7 @@ function Test-CapabilitySafetyOverlay {
         $lockedOrigins = @($Contract.numericProvenance.lockedOrigins)
         $entries = Get-PropArray -Obj $Frontmatter -Name 'numeric_provenance'
         foreach ($entry in $entries) {
-            if ($lockedOrigins -notcontains [string]$entry) {
+            if ($lockedOrigins -cnotcontains [string]$entry) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'unknown-numeric-provenance-origin'; Field = 'numeric_provenance' }
             }
         }
@@ -508,21 +637,26 @@ function Test-CapabilitySafetyOverlay {
         if (-not [StringComparer]::Ordinal.Equals($outputType, 'safety-escalation')) {
             return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-escalation-output-type'; Field = 'escalation' }
         }
-        $claimedStage = [int](Get-PropValue -Obj $escalation -Name 'preemptionStage')
+        $claimedStageRaw = Get-PropValue -Obj $escalation -Name 'preemptionStage'
+        $claimedStage = ConvertTo-StrictInt -Value $claimedStageRaw
+        if ($null -eq $claimedStage) {
+            return [pscustomobject]@{ Result = 'invalid'; Reason = 'invalid-escalation-preemption-stage'; Field = 'escalation' }
+        }
         # Recompute each escalating claim's correct stage, live against preemptionOrder.
         $stages = @($Contract.preemptionOrder.stages)
         foreach ($claim in $claims) {
             $label = [string](Get-PropValue -Obj $claim -Name 'label')
             $guidanceClass = [string](Get-PropValue -Obj $claim -Name 'guidanceClass')
             $behavior = [string](Get-PropValue -Obj $claim -Name 'behavior')
-            $isEscalating = (@('refused', 'escalated', 'refused-and-escalated', 'degraded-escalates-on-strong-signal') -contains $behavior) -or
+            $isEscalating = (@('refused', 'escalated', 'refused-and-escalated', 'degraded-escalates-on-strong-signal') -ccontains $behavior) -or
                             ($label -eq 'acute-red-flag-or-emergency') -or
-                            ($label -eq 'prescription-treatment-involved' -and $guidanceClass -eq 'personalized-protocol-recommendation')
+                            ($label -eq 'prescription-treatment-involved' -and $guidanceClass -eq 'personalized-protocol-recommendation') -or
+                            ($guidanceClass -eq 'safety-escalation')
             if (-not $isEscalating) { continue }
             $resolvedStage = 4
             for ($s = 0; $s -lt 3; $s++) {
                 $stageLabels = @($stages[$s].labels)
-                if ($stageLabels -contains $label) { $resolvedStage = [int]$stages[$s].stage; break }
+                if ($stageLabels -ccontains $label) { $resolvedStage = [int]$stages[$s].stage; break }
             }
             if ($claimedStage -ne $resolvedStage) {
                 return [pscustomobject]@{ Result = 'invalid'; Reason = 'incorrect-preemption-stage'; Field = 'escalation' }
@@ -564,7 +698,7 @@ Add-PassedCheck -Number 2 -Name 'base-to-head diff check'
 [string[]]$ExpectedChanges = Sort-Ordinal -Values $AllowedSurfaces
 [string[]]$ActualChanges = Sort-Ordinal -Values (Invoke-Git -Arguments @('diff', '--name-only', "$BaseCommit...HEAD", '--'))
 Assert-SequenceEqual -Actual $ActualChanges -Expected $ExpectedChanges -Label 'BaseCommit...HEAD changed files'
-Add-PassedCheck -Number 3 -Name 'exact changed-file set equals the 17 allowed surfaces (16 pinned + 1 disclosed prerequisite merge-in, see header comment)'
+Add-PassedCheck -Number 3 -Name 'exact changed-file set equals the 19 allowed surfaces (16 pinned + 1 disclosed prerequisite merge-in + 2 remediation-1 fixtures, see header comment)'
 
 # Check 4
 [string[]]$RegressionSpecPaths = @(Invoke-Git -Arguments @('ls-tree', '-r', '--name-only', $BaseCommit, '--', 'docs/specs/active', 'docs/specs/done')) |
@@ -674,18 +808,45 @@ foreach ($axisName in (Get-PropNames -Obj $AxesDoc.axes)) {
 Add-PassedCheck -Number 8 -Name 'axis-binding-diff-scoped (productGuidanceClass.controlSource/controlBindingStatus only)'
 
 # ---------------------------------------------------------------------------
-# Check 9: ten fixtures
+# Check 9: rungApplied vocabulary live-counted against the frozen three-rung
+# ladder (R2-F5). $RungApplicationLabels is a static, pinned four-literal
+# set (rung-1-refuse-invalid, rung-2-degrade-naming-missingness,
+# rung-2-refuse-safety-material, rung-3-marker) because the frozen contract's
+# own missingInputLadder has exactly three rungs and rung 2's text names two
+# distinguishable sub-behaviors (degrade vs. refuse-when-safety-material) --
+# CAPABILITY-FIELD-MAP.md documents this as "three rungs ... hence the two
+# rung-2-* literals." That four-vs-three correspondence was previously
+# asserted only in prose, never live-checked: if the frozen contract's rung
+# count ever changed, this parcel's hardcoded vocabulary would silently drift
+# out of sync with it. This check live-counts missingInputLadder.rungs and
+# the distinct rung-number prefixes in $RungApplicationLabels and asserts
+# they agree, so any future drift fails loudly instead of silently.
 # ---------------------------------------------------------------------------
 
 $ContractDoc = ([IO.File]::ReadAllText((Join-Path $RepositoryRoot 'docs/specs/schemas/product-capability-safety-contract.json'))) | ConvertFrom-Json
+
+$liveRungCount = @($ContractDoc.missingInputLadder.rungs).Count
+$distinctRungNumbers = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($rungLabel in $RungApplicationLabels) {
+    $rm = [regex]::Match($rungLabel, '^rung-(\d+)-')
+    Assert-True $rm.Success "RungApplicationLabels entry '$rungLabel' does not match the pinned rung-<N>-* shape."
+    [void]$distinctRungNumbers.Add($rm.Groups[1].Value)
+}
+Assert-True ($distinctRungNumbers.Count -eq $liveRungCount) "rungApplied vocabulary names $($distinctRungNumbers.Count) distinct rungs but the live missingInputLadder.rungs has $liveRungCount."
+Add-PassedCheck -Number 9 -Name 'rungApplied vocabulary live-counted against frozen missingInputLadder.rungs (three rungs, two rung-2-* literals)'
+
+# ---------------------------------------------------------------------------
+# Check 10: twelve fixtures
+# ---------------------------------------------------------------------------
 
 [string[]]$FixtureNames = @(
     'positive-capability-bearing', 'positive-non-capability-bearing', 'positive-coordinator-parcel-p3b-self',
     'negative-capability-claim-missing', 'negative-claim-behavior-drift', 'negative-numeric-provenance-missing',
     'negative-escalation-missing', 'negative-function-review-status-invalid', 'negative-premature-public-enablement-claim',
-    'positive-escalation-stage4-interaction-signal'
+    'positive-escalation-stage4-interaction-signal', 'positive-safety-escalation-binding',
+    'negative-function-review-status-not-applicable-capability-bearing'
 )
-Assert-True ($FixtureNames.Count -eq 10) 'Exactly ten fixtures are pinned.'
+Assert-True ($FixtureNames.Count -eq 12) 'Exactly twelve fixtures are pinned.'
 
 $FixtureResults = New-Object 'System.Collections.Generic.List[object]'
 foreach ($name in $FixtureNames) {
@@ -714,10 +875,10 @@ foreach ($name in $FixtureNames) {
     }
     $FixtureResults.Add([ordered]@{ name = $name; pass = $true; result = $computed.Result; reason = $computed.Reason }) | Out-Null
 }
-Add-PassedCheck -Number 9 -Name 'ten p3b fixtures reproduce expected result/reason via live cross-reference (AC-P3B-04/05/10)'
+Add-PassedCheck -Number 10 -Name 'twelve p3b fixtures reproduce expected result/reason via live cross-reference (AC-P3B-04/05/10, incl. R2-F1 safety-escalation binding and R2-F3 vacuous function-review)'
 
 # ---------------------------------------------------------------------------
-# Check 10: INDEX.md / README.md bounded amendments
+# Check 11: INDEX.md / README.md bounded amendments
 # ---------------------------------------------------------------------------
 
 $indexUnifiedDiff = @(Invoke-Git -Arguments @('diff', "$BaseCommit...HEAD", '--', 'docs/specs/INDEX.md'))
@@ -757,10 +918,11 @@ Assert-True ($readmeHeadText.Contains('## Parcel-schema binding to the Product C
 foreach ($link in @('schemas/CAPABILITY-FIELD-MAP.md', 'schemas/parcel-spec.schema.json')) {
     Assert-True ($readmeHeadText.Contains($link)) "README.md P3-B section missing link to $link."
 }
-Add-PassedCheck -Number 10 -Name 'bounded INDEX.md/README.md amendments (AC-P3B-09) with pinned cell/content values'
+Add-PassedCheck -Number 11 -Name 'bounded INDEX.md/README.md amendments (AC-P3B-09) with pinned cell/content values'
 
 # ---------------------------------------------------------------------------
-# Check 11: no unresolved placeholder anywhere this parcel ships
+# Check 12: no unresolved placeholder anywhere this parcel ships (incl.
+# unicode-confusables-skeleton normalization step, R1-F2)
 # ---------------------------------------------------------------------------
 
 [string[]]$ModifiedSurfaces = @('docs/specs/README.md', 'docs/specs/INDEX.md', 'docs/specs/schemas/parcel-spec.schema.json', 'docs/specs/schemas/classification-axes.schema.json')
@@ -775,10 +937,10 @@ foreach ($surface in $AllowedSurfaces) {
     }
     Assert-True (-not (Test-PlaceholderViolation -Text $content)) "Unresolved placeholder found in $surface after normalization."
 }
-Add-PassedCheck -Number 11 -Name 'unresolved placeholder scan incl. normalization pipeline (AC-P3B-06)'
+Add-PassedCheck -Number 12 -Name 'unresolved placeholder scan incl. normalization pipeline (AC-P3B-06)'
 
 # ---------------------------------------------------------------------------
-# Check 12/13: evidence bundle and clean tree
+# Check 13/14: evidence bundle and clean tree
 # ---------------------------------------------------------------------------
 
 function Assert-OnlyAuthorizedEvidenceStatus {
@@ -807,7 +969,7 @@ Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'fixture-results.json') -Con
 
 $preSummaryStatus = @(Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all'))
 Assert-OnlyAuthorizedEvidenceStatus -StatusLines $preSummaryStatus
-Add-PassedCheck -Number 12 -Name 'authorized UTF-8/LF evidence bundle generation'
+Add-PassedCheck -Number 13 -Name 'authorized UTF-8/LF evidence bundle generation'
 
 $summary = [ordered]@{
     schema = 'biostack.p3b-verification-summary.v1'
@@ -831,7 +993,7 @@ foreach ($evidenceFile in $ExpectedEvidenceFiles) {
 
 $finalStatus = @(Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all'))
 Assert-OnlyAuthorizedEvidenceStatus -StatusLines $finalStatus
-Add-PassedCheck -Number 13 -Name 'untracked evidence directory and clean tree'
+Add-PassedCheck -Number 14 -Name 'untracked evidence directory and clean tree'
 
 Write-Output 'P3-B verification PASS'
 exit 0
