@@ -21,80 +21,63 @@ $ErrorActionPreference = 'Stop'
 # =============================================================================
 # verify-p4.ps1 -- P4's own self-check verifier (document contract 3).
 #
-# DISCLOSED DEVIATIONS (flagged here, in the PR body, and in the builder's
-# final report, matching the already-ratified P3-B precedent of disclosing a
-# discovered, provable conflict between a spec's own narrative assumption and
-# ground truth rather than silently papering over it):
+# REMEDIATION-1 (fix/p4-remediation-1): the original implementation (commit
+# cbf6e22) disclosed three deviations from P4.md's then-current text (D1/D2/
+# D3, below) without a ratified amendment, which p4_impl_review_2 found a
+# BLOCKER (F1), two MAJORs (F2/F3), and two MINORs (F4/F5) against. The
+# coordinator ratified a three-pin amendment, A-P4-2 (docs/INITIATIVES/
+# COORDINATOR-DECISIONS-2026-10-07.md ## D-M), landed in its own commit
+# immediately before this one, amending P4.md itself to match the corrected,
+# honestly-computed reality and to restore AC-P4-05's full cross-verifier-
+# agreement scope. This code commit implements that ratified amendment plus
+# the remaining findings (F1 BLOCKER, F3's fixture gap, F5's hash-pinning):
 #
-# D1. `positive-real-spec-p3b-cross-check.json`'s own narrative text (P4.md,
-#     document contract 2) asserts `expected.result` is `"valid"` for
-#     `parcels/P3-B.md` under this parcel's full seven-stage pipeline. A
-#     faithful, byte-pinned implementation of SECTION-HEADING-MAP.md's own
-#     "Heading-length bound" anti-heading-soup constraint (a candidate
-#     heading's normalized token count must not exceed the matched term's own
-#     token count by more than 4, capped at 10, whichever is smaller)
-#     objectively disqualifies every one of `parcels/P3-B.md`'s real
-#     `### Required document contract N: ...` H3 subheadings as a candidate
-#     for the 1-token term `contracts` (their own normalized token counts run
-#     10+, against an effective bound of 5) -- and the file carries no bare
-#     `## Contracts` or `## Tests` heading. `parcels/P3-B.md` is frozen
-#     (Frozen surfaces) and cannot be edited by this builder. This is an
-#     objectively reproducible fact, not an implementation defect: no prior
-#     verifier in this initiative ever applied full required-section
-#     resolution to a real `coordinator-parcel`-shape file before this
-#     parcel (P3-A/P0-A/P0-B/P3-B's own verifiers only ever check their own
-#     synthetic/template fixtures), so this gap was never previously
-#     surfaced. This fixture's `expected.result`/`expected.reason`/
-#     `expected.detail` are therefore set to validate-spec.ps1's own,
-#     honestly and independently computed top-level answer for this real
-#     file (`"invalid"` / `"missing-required-section"` / naming `contracts`),
-#     not to the spec's own narrative assumption, which this builder cannot
-#     honestly reproduce without either (a) silently weakening the
-#     byte-pinned, frozen heading-length-bound rule (forbidden -- Hard
-#     constraints' "structural-block quote matching" and AC-P4-02's
-#     composed-not-hardcoded discipline both require this rule be applied
-#     exactly as SECTION-HEADING-MAP.md states it), or (b) editing the
-#     frozen `parcels/P3-B.md` file (forbidden -- Frozen surfaces).
-# D2. Because of D1, check 7's own "agree with verify-p3b.ps1's own check 10
-#     Result/Reason" comparison is scoped to the one sub-computation check
-#     10's `Test-CapabilitySafetyOverlay` logic actually performs (the
-#     six-row capability-field-binding overlay), not to validate-spec.ps1's
-#     full, multi-stage top-level pipeline result (which additionally
-#     reflects stages 1-6, none of which check 10 ever touches or could ever
-#     disagree about). This is the narrower, textually supported reading of
-#     check 7's own parenthetical ("the only two fields check 10's own
-#     Test-CapabilitySafetyOverlay logic actually computes") and is the only
-#     reading under which a meaningful, non-vacuous, mechanically verified
-#     cross-verifier agreement claim is possible for a real file whose
-#     headings this builder cannot alter. Both sides of this narrower
-#     comparison are computed by genuinely invoking the real logic: check
-#     10's own side via a byte-ported copy of verify-p3b.ps1's own
-#     `Test-CapabilitySafetyOverlay` (read-only prior art, the same ported-
-#     reference-implementation pattern verify-p2.ps1's own `Invoke-Fold`
-#     already established for this exact purpose), and validate-spec.ps1's
-#     own side via that same script's actual, real `Test-CapabilityFieldBinding`
+# D1 (ratified, A-P4-2a): `positive-real-spec-p3b-cross-check.json`'s
+#     `expected.result`/`expected.reason`/`expected.detail` are the honestly
+#     and independently computed top-level answer for `parcels/P3-B.md`
+#     (`"invalid"` / `"missing-required-section"` / naming `contracts`),
+#     because SECTION-HEADING-MAP.md's own byte-pinned heading-length-bound
+#     rule objectively disqualifies every one of `parcels/P3-B.md`'s real
+#     `### Required document contract N: ...` H3 subheadings for the
+#     1-token terms `contracts`/`tests`, and the file carries no bare
+#     `## Contracts`/`## Tests` heading. `parcels/P3-B.md` is frozen and
+#     cannot be edited. This is now P4.md's own pinned value (amendment
+#     commit, A-P4-2a), not a builder-local deviation.
+# D2 (ratified, A-P4-2a; full scope restored): check 7's cross-verifier-
+#     agreement comparison performs BOTH (a) a full top-level
+#     result/reason/detail comparison of validate-spec.ps1's real CLI output
+#     for `parcels/P3-B.md` against the now-pinned, honestly-computed
+#     expected value (D1), and (b) the narrower capability-field-binding
+#     overlay sub-comparison against verify-p3b.ps1's own check 10 logic
+#     (the one sub-computation check 10 ever performs) -- restored to the
+#     amendment's required full scope, not narrowed to (b) alone. Sub-check
+#     (b)'s both sides are still computed by genuinely invoking the real
+#     logic: check 10's own side via a byte-ported copy of verify-p3b.ps1's
+#     own `Test-CapabilitySafetyOverlay` (read-only prior art, the same
+#     ported-reference-implementation pattern verify-p2.ps1's own
+#     `Invoke-Fold` already established), and validate-spec.ps1's own side
+#     via that same script's actual, real `Test-CapabilityFieldBinding`
 #     function (extracted and dot-sourced from the real, shipped
 #     docs/specs/scripts/validate-spec.ps1 file -- never re-derived or
-#     duplicated), both evaluated against the real, live
-#     `product-capability-safety-contract.json` and the real, frozen
-#     `parcels/P3-B.md` frontmatter.
-# D3. Check 10(b)'s own worked example (the `pilot-rollback-alias` probe) is
-#     self-contradictory as literally narrated: SECTION-HEADING-MAP.md's own
-#     matching rule states "every term below uses itself as its own
-#     canonical alias," so a heading literally containing the word
-#     "rollback" (e.g. the spec's own pinned probe heading, `## Pilot
-#     Rollback Alias`) already satisfies the bare term `rollback` via the
-#     base contiguous-token-subsequence rule alone, independent of any
-#     SECTION-HEADING-MAP.md alias-cell mutation -- so the literal worked
-#     example cannot produce the pre/post differential behavior it narrates
-#     (both states resolve `satisfied: true`), and could not mechanically
-#     prove live-read behavior either way. This check instead uses a probe
-#     heading/alias pair that does not already contain the bare term as a
-#     substring (`## Pilot Wind-Down Plan` / alias `pilot wind down plan`),
-#     which genuinely and mechanically distinguishes pre-mutation (missing-
+#     duplicated).
+# D3 (ratified, A-P4-2a): check 10(b)'s own worked example is corrected from
+#     the spec's own, now-amended, self-contradictory `pilot-rollback-alias`
+#     probe (which already contained the bare term "rollback" as a literal
+#     substring and therefore could not mechanically distinguish pre/post
+#     mutation behavior) to the coordinator-ratified, non-self-contradictory
+#     pair (`## Pilot Wind-Down Plan` / alias `pilot wind down plan`), which
+#     genuinely and mechanically distinguishes pre-mutation (missing-
 #     required-section) from post-mutation (satisfied) behavior while
 #     mutating the exact same field (SECTION-HEADING-MAP.md's `rollback` row
 #     canonical-alias cell) the spec names.
+#
+# Additionally, this commit: (F1, BLOCKER) fixes validate-spec.ps1's stage-5
+# placeholder scan to also scan the real file's Markdown body prose in disk
+# mode (previously frontmatter values and heading text only); (F3) adds a
+# dedicated fixture for the ratified 13th reason literal,
+# `missing-required-field`, and a reason-vocabulary closed-world assertion
+# to check 6; (F5) hash-pins every fixture's own `expected` block in this
+# file, independent of check 6's own live re-derivation.
 # =============================================================================
 
 [string[]]$AllowedSurfaces = @(
@@ -109,6 +92,7 @@ $ErrorActionPreference = 'Stop'
     'docs/specs/schemas/fixtures/p4/negative-synthetic-capability-claim-unsatisfied-twin.json',
     'docs/specs/schemas/fixtures/p4/negative-unknown-delivery-label-multilabel.json',
     'docs/specs/schemas/fixtures/p4/negative-invalid-status-value.json',
+    'docs/specs/schemas/fixtures/p4/negative-missing-required-field-migration-conditional.json',
     'docs/specs/schemas/fixtures/p4/negative-placeholder-entity-disguised-multilabel.json',
     'docs/specs/schemas/fixtures/p4/negative-placeholder-homoglyph-confusables.json',
     'docs/specs/schemas/fixtures/p4/negative-capability-claim-drift-referential.json',
@@ -128,7 +112,12 @@ $ErrorActionPreference = 'Stop'
     'docs/INITIATIVES/biostack-governed-delivery/parcels/P0-A.md',
     'docs/INITIATIVES/biostack-governed-delivery/parcels/P0-B.md',
     'docs/INITIATIVES/biostack-governed-delivery/parcels/P3-B.md',
-    'docs/INITIATIVES/biostack-governed-delivery/parcels/P4.md',
+    # parcels/P4.md intentionally excluded here (remediation-1, A-P4-2/D-M):
+    # the coordinator ratified a three-pin amendment to this parcel's own
+    # spec (see the dedicated amendment-commit check, below, immediately
+    # after check 4); it is still fully frozen against the code commit that
+    # follows the amendment commit, just not against the pre-amendment
+    # BaseCommit this check otherwise pins every other frozen path to.
     'docs/specs/schemas/parcel-spec.schema.json',
     'docs/specs/schemas/SECTION-HEADING-MAP.md',
     'docs/specs/schemas/EXTENSION-POINTS.md',
@@ -162,7 +151,8 @@ $ErrorActionPreference = 'Stop'
     'positive-real-spec-p3b-cross-check', 'positive-synthetic-capability-claim-satisfied',
     'negative-missing-required-frontmatter-field', 'negative-capability-field-missing-on-trigger',
     'negative-synthetic-capability-claim-unsatisfied-twin', 'negative-unknown-delivery-label-multilabel',
-    'negative-invalid-status-value', 'negative-placeholder-entity-disguised-multilabel',
+    'negative-invalid-status-value', 'negative-missing-required-field-migration-conditional',
+    'negative-placeholder-entity-disguised-multilabel',
     'negative-placeholder-homoglyph-confusables', 'negative-capability-claim-drift-referential',
     'negative-unknown-extension-point-reference', 'negative-incompatible-controls-scalar-conflict',
     'negative-unrecognized-shape-path', 'negative-synthetic-empty-malformed-input'
@@ -287,6 +277,78 @@ function Test-DeepEqual {
         return ([double]$Left) -eq ([double]$Right)
     }
     return [string]$Left -eq [string]$Right
+}
+
+# ---------------------------------------------------------------------------
+# F5 remediation: fixture expected-outcome hash-pinning (remediation-1).
+# A fixture's own `expected` block is canonicalized (sorted keys, no
+# whitespace, invariant-culture scalar formatting) and SHA-256-hashed; the
+# resulting hex digest is compared against a table pinned below, hardcoded
+# at remediation-authoring time by running this exact function once against
+# every fixture's own `expected` block as shipped. This is an independent
+# backstop against Deterministic verification check 6's own live
+# re-derivation (check 6 compares a fixture's `expected` against
+# validate-spec.ps1's own live output -- both could regress together in the
+# same weakening direction; this hash does not move unless a fixture file is
+# deliberately re-authored and its pinned hash is deliberately re-derived in
+# the same remediation commit that touches it).
+# ---------------------------------------------------------------------------
+
+function ConvertTo-CanonicalJson {
+    param($Value)
+    if ($null -eq $Value) { return 'null' }
+    if ($Value -is [bool]) { return $(if ($Value) { 'true' } else { 'false' }) }
+    if ($Value -is [string]) { return (ConvertTo-Json -InputObject $Value -Compress) }
+    if (($Value -is [int]) -or ($Value -is [long])) { return [string]$Value }
+    if ($Value -is [double] -or $Value -is [decimal]) { return $Value.ToString([System.Globalization.CultureInfo]::InvariantCulture) }
+    $isObj = ($Value -is [System.Collections.IDictionary]) -or ($Value -is [System.Management.Automation.PSCustomObject])
+    if ($isObj) {
+        $keys = Sort-Ordinal -Values @(Get-PropNames -Obj $Value)
+        $parts = foreach ($k in $keys) { ((ConvertTo-Json -InputObject $k -Compress) + ':' + (ConvertTo-CanonicalJson -Value (Get-PropValue -Obj $Value -Name $k))) }
+        return '{' + ($parts -join ',') + '}'
+    }
+    $isArr = ($Value -is [System.Collections.IEnumerable]) -and -not ($Value -is [string])
+    if ($isArr) {
+        $parts2 = foreach ($item in @($Value)) { ConvertTo-CanonicalJson -Value $item }
+        return '[' + ($parts2 -join ',') + ']'
+    }
+    return (ConvertTo-Json -InputObject ([string]$Value) -Compress)
+}
+
+function Get-CanonicalJsonSha256 {
+    param($Value)
+    $canon = ConvertTo-CanonicalJson -Value $Value
+    $bytes = [Text.Encoding]::UTF8.GetBytes($canon)
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $hashBytes = $sha256.ComputeHash($bytes)
+    } finally {
+        $sha256.Dispose()
+    }
+    return -join ($hashBytes | ForEach-Object { $_.ToString('x2') })
+}
+
+# Pinned independently of validate-spec.ps1/verify-p4.ps1's own live logic --
+# computed once, at remediation-authoring time, from the seventeen fixture
+# files' own `expected` blocks exactly as shipped in this commit.
+$script:PinnedFixtureExpectedHashes = @{
+    'negative-capability-claim-drift-referential'            = 'a86591d6ffd2c497d57eb6661dfe1b7de6d711c79b17d7f6b99263033adf8995'
+    'negative-capability-field-missing-on-trigger'            = '33a9f703dd1c3f4200bbc3f8d0f1bef5c9ade3756b70f270437b6066eb192490'
+    'negative-incompatible-controls-scalar-conflict'          = '1b8f682fe327c9322140765160cc1b4357423d28826f18a454def5b5fb661744'
+    'negative-invalid-status-value'                           = 'ea7faf568e04da3f520388f6b9c3af24b9a00a84ce63a619415a4d578a009a6a'
+    'negative-missing-required-field-migration-conditional'   = '15573ddfb84b55ebfbbfad46a5372a89fb1dc03d602737ac4a53da513c8cc4cb'
+    'negative-missing-required-frontmatter-field'             = '0bd9147f7ee2f2b97af961068114b6e55b28677a81d8a8940e6f668c9feda246'
+    'negative-placeholder-entity-disguised-multilabel'        = '4584cd568af59c4eb85dc6c880ae70b55ba0f29e75630649c712dad4e45c2fcb'
+    'negative-placeholder-homoglyph-confusables'              = '76857eef1dd353ea8f3234b4fc36889c0566667f4bd161307b7ab21c0fa90670'
+    'negative-synthetic-capability-claim-unsatisfied-twin'    = 'b6ecae8e8c63f5e69923e4ecc4ba5e57f961a2ed0018ce52da83e06bdbf78da8'
+    'negative-synthetic-empty-malformed-input'                = 'a6ec2d97c7b5adb2eee0873fe4016351d2ccb063de31ab47881b3b984a5a7ac5'
+    'negative-unknown-delivery-label-multilabel'              = '5c668aebad2ba4b7cf88990f971617f171ce4facaca5b8913171b638c5bc3bd7'
+    'negative-unknown-extension-point-reference'              = '59893e2ef11bdc649c18c10172027fcf7fd39e40287555689334e50f942b9803'
+    'negative-unrecognized-shape-path'                        = 'd4b7bd829c1563f25ea237ed1aa904b48953f208355479ae2c8763d6692dcb56'
+    'positive-coordinator-parcel-multilabel-fold'             = '9fedb347573750d5520b211234425c16b31c09712a7056fe6dc8d7a5d98f19c1'
+    'positive-real-spec-p3b-cross-check'                      = '606796dedd6c8a3ae05ee588778c13a9464918bdac6d1b5bf0874dc501adf330'
+    'positive-synthetic-capability-claim-satisfied'           = '64c71041b9a5d220a5bd4b1ec771d35f47919704dcd62635385488df9f3f7de2'
+    'positive-ticket-spec-standard-single'                    = 'a72c0733452251bcf208f1fe6824e1103c299b5fff28effa35cb65b01636fa9c'
 }
 
 # ---------------------------------------------------------------------------
@@ -706,10 +768,24 @@ Assert-True ($diffCheck.ExitCode -eq 0) "git diff --check failed: $($diffCheck.O
 Add-PassedCheck -Number 2 -Name 'base-to-head diff check'
 
 # Check 3
-[string[]]$ExpectedChanges = Sort-Ordinal -Values $AllowedSurfaces
+# Carried-forward allow-list discipline (P3-A's own closure lesson; P4.md's
+# own "Carried-forward allow-list discipline" paragraph): when BaseCommit
+# pre-dates one or more coordinator-authored, out-of-scope dispatch/decision
+# paths that are not part of this parcel's own diff (e.g. a pre-existing
+# BaseCommit anchor reused across a later amendment/remediation pass, which
+# necessarily also picks up any coordinator path touched on main in the
+# interim), those paths are tolerated ONLY if named and pinned here exactly
+# -- never by wildcard or unbounded allowance -- plus this parcel's own spec
+# file, parcels/P4.md (the amendment-commit carve-out, check 4, above).
+[string[]]$KnownOutOfScopeCoordinatorPaths = @(
+    'docs/INITIATIVES/COORDINATOR-DECISIONS-2026-10-07.md',
+    'docs/INITIATIVES/COORDINATOR-DISPATCH-QUEUE.md',
+    'docs/INITIATIVES/biostack-governed-delivery/dispatch/GATE2-P4-IMPLEMENTATION.md'
+)
+[string[]]$ExpectedChanges = Sort-Ordinal -Values ($AllowedSurfaces + $KnownOutOfScopeCoordinatorPaths + @('docs/INITIATIVES/biostack-governed-delivery/parcels/P4.md'))
 [string[]]$ActualChanges = Sort-Ordinal -Values (Invoke-Git -Arguments @('diff', '--name-only', "$BaseCommit...HEAD", '--'))
 Assert-SequenceEqual -Actual $ActualChanges -Expected $ExpectedChanges -Label 'BaseCommit...HEAD changed files'
-Add-PassedCheck -Number 3 -Name 'exact changed-file set equals the 20 allowed surfaces'
+Add-PassedCheck -Number 3 -Name 'exact changed-file set equals the 21 allowed surfaces, plus parcels/P4.md (amendment carve-out) and the named, pinned, out-of-scope coordinator paths -- no open-ended tolerance (amended: +1 fixture, A-P4-2b)'
 
 # Check 4
 [string[]]$RegressionSpecPaths = @(Invoke-Git -Arguments @('ls-tree', '-r', '--name-only', $BaseCommit, '--', 'docs/specs/active', 'docs/specs/done')) |
@@ -721,7 +797,24 @@ foreach ($path in $AllFrozenPaths) {
     $quiet = Get-GitResult -Arguments @('diff', '--quiet', "$BaseCommit...HEAD", '--', $path)
     Assert-True ($quiet.ExitCode -eq 0) "Frozen path changed: $path"
 }
-Add-PassedCheck -Number 4 -Name 'frozen surfaces byte-identical to BaseCommit'
+
+# Amendment-commit carve-out (remediation-1, A-P4-2/D-M): parcels/P4.md is
+# allowed to differ from BaseCommit (it carries the coordinator-ratified
+# three-pin amendment -- A-P4-2a/b/c), but it must be completely untouched
+# by the code commit that follows the amendment commit ("spec amendments
+# alone before code"; "no governance-contract edits beyond the D-M pins").
+# This is checked mechanically, not by reviewer judgment: the amendment
+# commit must be HEAD's immediate, sole parent carrying any parcels/P4.md
+# change since BaseCommit, and HEAD itself (the code commit) must carry no
+# further parcels/P4.md change.
+$p4SpecPathForCarveOut = 'docs/INITIATIVES/biostack-governed-delivery/parcels/P4.md'
+$headParent = (@(Invoke-Git -Arguments @('rev-parse', 'HEAD~1')))[0].Trim()
+$codeCommitP4Diff = Get-GitResult -Arguments @('diff', '--quiet', "$headParent..HEAD", '--', $p4SpecPathForCarveOut)
+Assert-True ($codeCommitP4Diff.ExitCode -eq 0) 'parcels/P4.md must be unchanged by the code commit (HEAD); only the dedicated amendment commit (HEAD~1) may carry the ratified A-P4-2 pins.'
+$amendmentCommitP4Diff = Get-GitResult -Arguments @('diff', '--quiet', "$BaseCommit..$headParent", '--', $p4SpecPathForCarveOut)
+Assert-True ($amendmentCommitP4Diff.ExitCode -ne 0) 'parcels/P4.md must carry the ratified A-P4-2 amendment in the commit immediately preceding the code commit (HEAD~1).'
+
+Add-PassedCheck -Number 4 -Name 'frozen surfaces byte-identical to BaseCommit, plus parcels/P4.md amendment-commit carve-out (amended once, in HEAD~1 only, byte-frozen thereafter -- A-P4-2/D-M)'
 
 # ---------------------------------------------------------------------------
 # Check 5: validate-spec.ps1 structural surface
@@ -754,8 +847,19 @@ Assert-True ([StringComparer]::Ordinal.Equals([string]$valid3.Output.shape, 'coo
 Add-PassedCheck -Number 5 -Name 'validate-spec.ps1 CLI/output-contract structural surface and pathPattern grammar (AC-P4-01)'
 
 # ---------------------------------------------------------------------------
-# Check 6: sixteen fixtures, reproduced by actually invoking validate-spec.ps1
+# Check 6: seventeen fixtures, reproduced by actually invoking
+# validate-spec.ps1, hash-pinned independently (F5), and reason-vocabulary
+# closed (A-P4-2b / F3 coverage)
 # ---------------------------------------------------------------------------
+
+[string[]]$PinnedReasonVocabulary = @(
+    'unknown-label', 'empty-required-axis', 'incompatible-controls',
+    'missing-required-frontmatter-key', 'missing-required-section',
+    'placeholder-violation', 'unknown-extension-point', 'unrecognized-shape',
+    'capability-claim-drift', 'invalid-function-review-status',
+    'premature-public-enablement-claim', 'missing-required-field', 'invalid-status'
+)
+Assert-True ($PinnedReasonVocabulary.Count -eq 13) 'Pinned reason vocabulary must carry exactly thirteen literals (A-P4-2b).'
 
 $FixtureResults = New-Object 'System.Collections.Generic.List[object]'
 $FixturesDir = Join-Path $RepositoryRoot 'docs/specs/schemas/fixtures/p4'
@@ -765,6 +869,12 @@ foreach ($name in $FixtureNames) {
     $fixtureDoc = ([IO.File]::ReadAllText($fixturePath)) | ConvertFrom-Json
     [string[]]$topKeys = Sort-Ordinal -Values @(Get-PropNames -Obj $fixtureDoc)
     Assert-SequenceEqual -Actual $topKeys -Expected (Sort-Ordinal -Values @('input', 'expected')) -Label "$name top-level keys"
+
+    # F5: hash-pin this fixture's own `expected` block, independent of its
+    # live re-derivation below.
+    Assert-True ($script:PinnedFixtureExpectedHashes.ContainsKey($name)) "$name : no pinned expected-outcome hash recorded (F5)."
+    $actualExpectedHash = Get-CanonicalJsonSha256 -Value $fixtureDoc.expected
+    Assert-True ([StringComparer]::OrdinalIgnoreCase.Equals($actualExpectedHash, $script:PinnedFixtureExpectedHashes[$name])) "$name : expected-outcome hash mismatch (F5). Pinned $($script:PinnedFixtureExpectedHashes[$name]), computed $actualExpectedHash -- the fixture's own expected block was weakened or altered without re-deriving its pinned hash."
 
     if (Test-PropPresent -Obj $fixtureDoc.input -Name 'specPath') {
         $invocation = Invoke-ValidateSpecCli -ScriptPath $ValidateSpecPath -RepoRootArg $RepositoryRoot -SpecPathArg ([string]$fixtureDoc.input.specPath)
@@ -797,15 +907,43 @@ foreach ($name in $FixtureNames) {
         Assert-True (Test-DeepEqual -Left $produced.boundFieldsChecked -Right $expected.boundFieldsChecked) "$name : boundFieldsChecked content mismatch."
     }
 
-    $FixtureResults.Add([ordered]@{ fixture = $name; pass = $true; result = [string]$produced.result; reason = [string]$producedReason }) | Out-Null
+    # F3 coverage: validate-spec.ps1's own output `reason` literal, whenever
+    # `result` is `invalid`, must be a member of the pinned, now-thirteen-
+    # literal closed vocabulary (A-P4-2b) -- never silently outside it.
+    if ([StringComparer]::Ordinal.Equals([string]$produced.result, 'invalid')) {
+        Assert-True ($PinnedReasonVocabulary -ccontains [string]$producedReason) "$name : produced reason '$producedReason' is outside the pinned thirteen-literal closed vocabulary (A-P4-2b)."
+    }
+
+    $FixtureResults.Add([ordered]@{ fixture = $name; pass = $true; result = [string]$produced.result; reason = [string]$producedReason; expectedHash = $script:PinnedFixtureExpectedHashes[$name] }) | Out-Null
 }
-Add-PassedCheck -Number 6 -Name 'sixteen fixtures reproduced exactly by actually invoking validate-spec.ps1 (AC-P4-03/04)'
+Add-PassedCheck -Number 6 -Name 'seventeen fixtures reproduced exactly by actually invoking validate-spec.ps1, hash-pinned (F5) and reason-vocabulary-closed (A-P4-2b/F3) (AC-P4-03/04)'
 
 # ---------------------------------------------------------------------------
-# Check 7: positive-real-spec-p3b-cross-check.json cross-verifier agreement
-# (overlay-only scope -- disclosed deviation D1/D2, above)
+# Check 7: positive-real-spec-p3b-cross-check.json cross-verifier agreement,
+# restored to full scope (A-P4-2a/D-M -- not the builder's narrowed form):
+# two independent, additive sub-checks, neither substituting for the other.
 # ---------------------------------------------------------------------------
 
+# Sub-check (a): full top-level agreement. validate-spec.ps1's real CLI,
+# invoked exactly as every other fixture is invoked (never an internally-
+# extracted or ported sub-function), must produce the pinned, honestly-
+# computed expected result/reason/detail for parcels/P3-B.md.
+$p3bFixtureDoc = ([IO.File]::ReadAllText((Join-Path $FixturesDir 'positive-real-spec-p3b-cross-check.json'))) | ConvertFrom-Json
+$p3bCliInvocation = Invoke-ValidateSpecCli -ScriptPath $ValidateSpecPath -RepoRootArg $RepositoryRoot -SpecPathArg ([string]$p3bFixtureDoc.input.specPath)
+$p3bCliOutput = $p3bCliInvocation.Output
+Assert-True ($null -ne $p3bCliOutput) 'general-linter-parcel-verifier-disagreement: validate-spec.ps1 produced no parseable output for parcels/P3-B.md.'
+Assert-True ([StringComparer]::Ordinal.Equals([string]$p3bCliOutput.result, [string]$p3bFixtureDoc.expected.result)) 'general-linter-parcel-verifier-disagreement: validate-spec.ps1''s own full top-level result for parcels/P3-B.md does not match the pinned, honestly-computed expected value (A-P4-2a).'
+Assert-True ([StringComparer]::Ordinal.Equals([string]$p3bCliOutput.reason, [string]$p3bFixtureDoc.expected.reason)) 'general-linter-parcel-verifier-disagreement: validate-spec.ps1''s own full top-level reason for parcels/P3-B.md does not match the pinned, honestly-computed expected value (A-P4-2a).'
+Assert-True (Test-DeepEqual -Left $p3bCliOutput.detail -Right $p3bFixtureDoc.expected.detail) 'general-linter-parcel-verifier-disagreement: validate-spec.ps1''s own full top-level detail for parcels/P3-B.md does not match the pinned, honestly-computed expected value (A-P4-2a).'
+
+# Sub-check (b): capability-field-binding sub-agreement -- the one narrower
+# sub-outcome both tools can actually compute for this file (stage 4's real
+# missing-required-section finding, sub-check (a) above, pre-empts
+# validate-spec.ps1's own stage 7 in its normal top-level pipeline; this
+# sub-check evaluates stage 7's own logic directly, independent of that
+# pre-emption, purely to compare it against verify-p3b.ps1's own check 10
+# logic -- it never feeds back into or overrides sub-check (a)'s top-level
+# result above).
 # Dot-sourced (not plain-called) so the nested `. $tempPath` inside
 # Import-ValidateSpecFunctions registers its functions in THIS scope, not a
 # child scope that disappears when the function returns.
@@ -818,8 +956,8 @@ Assert-True ($null -ne $p3bParsed) 'parcels/P3-B.md must carry a parseable leadi
 $p4OverlaySide = Test-CapabilityFieldBinding -Frontmatter $p3bParsed.Frontmatter -Contract $p4Sources.ContractDoc -RepoRoot $RepositoryRoot -SelfReferenceCarveOut $true
 $p3bOverlaySide = Test-P3BCapabilitySafetyOverlay -Frontmatter $p3bParsed.Frontmatter -Contract $p4Sources.ContractDoc -SelfReferenceCarveOut $true
 
-Assert-True ([StringComparer]::Ordinal.Equals([string]$p4OverlaySide.Result, [string]$p3bOverlaySide.Result)) 'general-linter-parcel-verifier-disagreement: Result mismatch between validate-spec.ps1''s own capability-field-binding logic and verify-p3b.ps1''s own check 10 logic, for parcels/P3-B.md.'
-Assert-True ([StringComparer]::Ordinal.Equals([string]$p4OverlaySide.Result, 'valid')) 'general-linter-parcel-verifier-disagreement: expected both sides to resolve valid for parcels/P3-B.md.'
+Assert-True ([StringComparer]::Ordinal.Equals([string]$p4OverlaySide.Result, [string]$p3bOverlaySide.Result)) 'capability-overlay-sub-agreement-mismatch: Result mismatch between validate-spec.ps1''s own capability-field-binding logic and verify-p3b.ps1''s own check 10 logic, for parcels/P3-B.md.'
+Assert-True ([StringComparer]::Ordinal.Equals([string]$p4OverlaySide.Result, 'valid')) 'capability-overlay-sub-agreement-mismatch: expected both sides to resolve valid for parcels/P3-B.md (neither side''s capability-bearing fields are triggered).'
 
 # Independently require validate-spec.ps1's own foldSummary/boundFieldsChecked
 # for this real file (computed above via the real P3-B.md fixture invocation
@@ -831,7 +969,7 @@ foreach ($row in $p4OverlaySide.Checked) {
     Assert-True ([bool]$row.pass) "parcels/P3-B.md overlay-only evaluation row '$($row.field)' did not pass."
 }
 
-Add-PassedCheck -Number 7 -Name 'cross-verifier agreement with verify-p3b.ps1''s own check 10 logic on parcels/P3-B.md, scoped to the capability-field-binding overlay (AC-P4-05; see disclosed deviation D1/D2)'
+Add-PassedCheck -Number 7 -Name 'cross-verifier agreement with verify-p3b.ps1 on parcels/P3-B.md: (a) full top-level result/reason/detail agreement with the pinned expected value, and (b) capability-field-binding sub-agreement with check 10''s own logic -- full scope restored, not narrowed (AC-P4-05; A-P4-2a/D-M)'
 
 # ---------------------------------------------------------------------------
 # Check 8: placeholder scan with the one pinned, closed-world JSON-pointer
@@ -1056,8 +1194,10 @@ Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'linter-structural-check.jso
                 )
             }) | ConvertTo-Json -Depth 10)
 Write-Utf8Lf -Path (Join-Path $resolvedEvidencePath 'fixture-results.json') -Content (($FixtureResults.ToArray() + [ordered]@{
-                fixture               = 'positive-real-spec-p3b-cross-check (overlay-only cross-check sub-result)'
+                fixture               = 'positive-real-spec-p3b-cross-check (cross-verifier-agreement sub-result, full scope -- A-P4-2a)'
                 pass                  = $true
+                fullTopLevelResult    = [string]$p3bCliOutput.result
+                fullTopLevelReason    = [string]$p3bCliOutput.reason
                 p4OverlayResult       = [string]$p4OverlaySide.Result
                 p3bCheck10Result      = [string]$p3bOverlaySide.Result
             }) | ConvertTo-Json -Depth 15)
@@ -1076,9 +1216,11 @@ $summary = [ordered]@{
     builderId           = $BuilderId
     reviewerIds         = [string[]]$ReviewerIds
     disclosedDeviations = @(
-        'D1: positive-real-spec-p3b-cross-check.json expected.result is the honestly-computed "invalid"/"missing-required-section" (naming contracts) for parcels/P3-B.md, not the "valid" literal P4.md''s own narrative text names, because SECTION-HEADING-MAP.md''s own byte-pinned heading-length-bound rule objectively disqualifies that real, frozen file''s actual ### Required document contract N: ... headings for the 1-token terms contracts/tests.',
-        'D2: check 7''s cross-verifier-agreement comparison is scoped to the capability-field-binding overlay sub-computation (the one thing verify-p3b.ps1''s own check 10 ever computes), not validate-spec.ps1''s full top-level pipeline result, which stage 4''s real finding (D1) would otherwise make permanently unable to agree with check 10 for this one real file.',
-        'D3: check 10(b)''s probe heading/alias pair is corrected from the spec''s own self-contradictory "pilot-rollback-alias" worked example (which already contains the bare term "rollback" as a literal substring and therefore cannot mechanically distinguish pre/post mutation behavior) to a pair that does not already contain the bare term, while mutating the exact same SECTION-HEADING-MAP.md field the spec names.'
+        'R1 (resolved by ratified amendment A-P4-2a/D-M, remediation-1): the original builder commit (cbf6e22) unilaterally set positive-real-spec-p3b-cross-check.json''s expected.result to the honestly-computed "invalid"/"missing-required-section" (naming contracts) for parcels/P3-B.md, diverging from P4.md''s own then-current narrative text ("valid") without a ratified amendment, and narrowed check 7''s cross-verifier-agreement comparison to the capability-field-binding overlay sub-computation only. The coordinator ratified the corrected expected.result and the non-self-contradictory check 10(b) probe pair (A-P4-2a/A-P4-2a note on pilot-rollback-alias) via D-M, amending P4.md itself (remediation-1 commit 1) before this code commit landed. Check 7 now performs BOTH the full top-level comparison (sub-check (a), restored) and the capability-overlay sub-comparison (sub-check (b), retained) -- neither narrows or substitutes for the other.',
+        'R2 (resolved by ratified amendment A-P4-2a/D-M, remediation-1): check 10(b)''s probe heading/alias pair is corrected from the spec''s own, now-amended, self-contradictory "pilot-rollback-alias" worked example (which already contained the bare term "rollback" as a literal substring and therefore could not mechanically distinguish pre/post mutation behavior) to the coordinator-ratified pair that does not already contain the bare term ("## Pilot Wind-Down Plan" / alias "pilot wind down plan"), while mutating the exact same SECTION-HEADING-MAP.md field the spec names.',
+        'R3 (F3, resolved by ratified amendment A-P4-2b/D-M, remediation-1): missing-required-field is ratified as the thirteenth literal of validate-spec.ps1''s own closed reason vocabulary (a pre-existing routing-output.schema.json/fold-engine.md literal, not an invention); it now has its own dedicated fixture (negative-missing-required-field-migration-conditional.json) and check 6 additionally asserts every produced invalid-result reason is a member of the pinned thirteen-literal vocabulary.',
+        'R4 (F1, code fix, remediation-1): validate-spec.ps1''s stage-5 placeholder scan now additionally scans the real file''s full Markdown body prose (disk-mode only; $parsed.Body, already available at that point) rather than only frontmatter values and heading text, per P4.md''s own stage-5 text ("every frontmatter value and heading/body text available to the validator"). Reproduced live against the reviewer''s own ATTACK.md-style proof-of-concept: pre-fix, a real file with a fully clean frontmatter/heading set but a body consisting entirely of repeated unresolved-decision placeholder markers was reported "valid"; post-fix it is correctly reported "invalid"/"placeholder-violation".',
+        'R5 (F5, code fix, remediation-1): every fixture''s own expected block is now additionally hash-pinned (SHA-256 over a canonical, sorted-key JSON serialization) in verify-p4.ps1, independent of check 6''s own live re-derivation against validate-spec.ps1''s actual output, as a backstop against a future rework that weakens both together.'
     )
     checks              = $CheckResults.ToArray()
 }

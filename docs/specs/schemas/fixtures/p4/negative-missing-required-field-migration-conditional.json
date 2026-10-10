@@ -1,0 +1,45 @@
+{
+  "input": {
+    "syntheticSpec": {
+      "declaredShape": "ticket-spec",
+      "frontmatter": {
+        "title": "P4 fixture synthetic spec",
+        "status": "review-candidate",
+        "owner": "p4_remediation_builder",
+        "created": "2026-10-12",
+        "updated": "2026-10-12",
+        "delivery_classes": [
+          "migration"
+        ],
+        "guidance_classes": [],
+        "substance_function_risk": [],
+        "surfaces": [
+          "docs/specs/scripts/validate-spec.ps1"
+        ],
+        "ticket": "BIO-P4-FIXTURE-013",
+        "function_review_status": "not-applicable"
+      },
+      "headings": [
+        "## Objective",
+        "## Surfaces",
+        "## Contracts",
+        "## Acceptance criteria",
+        "## Tests",
+        "## Rollback",
+        "## Compatibility window",
+        "## Forward/backward behavior",
+        "## Data-loss analysis",
+        "## Environment plan"
+      ]
+    }
+  },
+  "expected": {
+    "result": "invalid",
+    "reason": "missing-required-field",
+    "detail": {
+      "reason": "missing-required-field",
+      "field": "userDataOrProductionSchemaAffected",
+      "deliveryClass": "migration"
+    }
+  }
+}
