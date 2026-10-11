@@ -39,6 +39,13 @@ Four backend tests and the structural-eval boundary check were red on `main` (de
 
 Evidence: `dotnet test BioStack.sln` fully green (7 + 158 + 961 + 1018 + 466); the jq boundary check passes against the deterministically regenerated report; frontend suite 1325/1325.
 
+## Change D — Azure deployment de-duplication and deploy-audit unblock (2026-10-11)
+
+1. **Removed the Portal-generated `biostackmissionctrl-web-AutoDeployTrigger-….yml`.** It duplicated `deploy.yml`'s production web deployment: same container app (`biostackmissionctrl-web` — `$BaseName` "biostackmissionctrl" per `infra/azure/deploy-container-apps.ps1`'s `{base}-web` derivation), same `biostack-rg`, same ACR family, triggering on every push to `main`. It was also broken and weaker than `deploy.yml`: an Oryx source-build of the whole monorepo (no Dockerfile path) that failed on every run with "No builder was able to build the provided application source", authenticating with long-lived ACR admin credentials (`BIOSTACKMISSIONCTRLWEB_REGISTRY_USERNAME/PASSWORD`) instead of OIDC, and running no tests. `deploy.yml` remains the single deployment pipeline (verify → explicit Dockerfile builds → `az containerapp update` → readiness/TLS checks).
+2. **`frontend/package.json` `overrides.sharp` 0.35.4 → 0.35.5** — unblocks `npm audit --omit=dev --audit-level=moderate` in `deploy.yml` (CVE-2026-96889 / GHSA-wq5f-xc86-pv6w in librsvg via sharp). The 0.35.4 pin was itself the PR #211 security pin; 0.35.5 is its successor fix. Verified: audit clean, `npm run build` clean, frontend suite 1325/1325.
+
+Azure-side follow-ups (operator only): disable the container app's Deployment Center GitHub integration so the Portal cannot regenerate the workflow; delete the five `BIOSTACKMISSIONCTRLWEB_*` repository secrets; consider disabling ACR admin credentials on `biostackmissionctrlacr` (created `--admin-enabled true` by `deploy-container-apps.ps1`) now that `deploy.yml` uses OIDC + `az acr login`.
+
 ## Residual follow-ups
 
 - None blocking. If a public combinations/relationships surface is wanted, dispatch BIO-PAIRWISE-006 through Gate 2 (it remains `review-candidate`).
