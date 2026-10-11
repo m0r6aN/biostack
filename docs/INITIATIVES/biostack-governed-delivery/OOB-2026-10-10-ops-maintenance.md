@@ -28,6 +28,17 @@ Evidence: PR #540 description and CI run; `node --test scripts/verify-research-s
 - Working tree and pending diffs: no credentials (gitleaks 8.24.3, repo config).
 - Git history: dev-era `Jwt:Secret` / `Auth:CallbackSecret` values from commits `312257f0` / `b13dbc00` were already on `origin/main` and absent from the tree; the owner confirmed rotation on 2026-10-10. Remaining history hits are placeholders, test fixtures, and documented dev defaults.
 
+## Change C — repair of pre-existing CI failures on main (this PR, 2026-10-11)
+
+Four backend tests and the structural-eval boundary check were red on `main` (deploy workflow blocked) through corpus growth and Keon-language drift that never updated their locked pins/guards. All are guard-preservation fixes; no locked claim was weakened:
+
+1. **`ResearchJobTests` (2 tests)** — `ResearchJob_Applies_Review_Decision_To_Promotion_Manifest` and `PromotionImportDryRunJob_Succeeds_For_Safe_Create_Preview` resolved the default `SeedFilePath` (`Seeds/substances-seed.json`) against test output, where the production seed is copied. The governed seed batches (BIO-LOCAL-008..011) added `creatine`, so the import preview correctly flipped `create` → `update`. Fixed by pinning `SeedFilePath` to the controlled `Fixtures/substances-seed.json` (the pattern sibling test files already use) so the create path does not track the live corpus.
+2. **`CommercializationNote_ListsEverySku_WithAudiences`** — the K-3 Keon language pass renamed the locked SKU heading "Offline Verification Kit" → "Keon-compatible Offline Inspection Kit", despite BIO-KEON-002 T5 ("no changes to allowed/forbidden claims or SKU descriptions beyond language substitution"). Restored as "Offline Verification Kit (Keon-compatible offline inspection)" — satisfies the capstone guard verbatim and BIO-KEON-002 AC4 Keon positioning together.
+3. **`CliReadme_PreservesLockedOfflineBoundaryClaims`** — K-3 prefixed the locked boundary sentence with "Keon-compatible", breaking the verbatim claim. Sentence restored verbatim with Keon positioning appended.
+4. **`structural-evaluation-report.yml` jq pins** — `seedRecordCount` 57 → 99 and `seedCandidateOverlapCount` 12 → 16 (BIO-LOCAL-008..011 seed batches → 100 records / overlap 16; BIO-LOCAL-014 identity consolidation → 99), matching `StructuralEvaluationReportBuilderTests` which BIO-LOCAL-014 had updated. All qualitative non-authoritative assertions are unchanged.
+
+Evidence: `dotnet test BioStack.sln` fully green (7 + 158 + 961 + 1018 + 466); the jq boundary check passes against the deterministically regenerated report; frontend suite 1325/1325.
+
 ## Residual follow-ups
 
 - None blocking. If a public combinations/relationships surface is wanted, dispatch BIO-PAIRWISE-006 through Gate 2 (it remains `review-candidate`).
