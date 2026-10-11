@@ -70,11 +70,16 @@ jobs:
             .payload.comparison.candidateDeclarationsTrusted == false and
             .payload.comparison.effectAuthority == "none" and
             .payload.corpusInventory.snapshotVersion == "1.0.0" and
-            .payload.corpusInventory.seedRecordCount == 57 and
+            # seedRecordCount/seedCandidateOverlapCount track the live governed
+            # corpus snapshot: BIO-LOCAL-008..011 seed batches took the seed to 100
+            # records (overlap 16), BIO-LOCAL-014 identity consolidation merged one
+            # duplicate per owner rule D-D (100 - 1 = 99). Keep in step with
+            # StructuralEvaluationReportBuilderTests.
+            .payload.corpusInventory.seedRecordCount == 99 and
             .payload.corpusInventory.candidateRecordCount == 16 and
             .payload.corpusInventory.evidencePacketCount == 78 and
             .payload.corpusInventory.sourceRegistryRecordCount == 30 and
-            .payload.corpusInventory.seedCandidateOverlapCount == 12 and
+            .payload.corpusInventory.seedCandidateOverlapCount == 16 and
             (.payload.corpusInventory.identityTokenCollisions | length) == 2 and
             (.payload.corpusInventory.externalIdentifierCollisions | length) == 0 and
             .payload.corpusInventory.approvedRightsSourceCount == 7 and

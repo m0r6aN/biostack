@@ -41,7 +41,7 @@ These forbidden claims hold regardless of buyer, tier, or packaging.
 
 ## Candidate SKUs
 
-### 1. Keon-compatible Offline Inspection Kit
+### 1. Offline Verification Kit (Keon-compatible offline inspection)
 
 - **Included:** the verifier CLI, its documented Keon-compatible offline workflow, the export bundle and
   verification receipt contracts, and `--result-json` machine output.

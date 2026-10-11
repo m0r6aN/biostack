@@ -253,7 +253,7 @@ Release gate checklist:
 
 ## Boundary Notes
 
-- Keon-compatible receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
+- Receipt verification is receipt-only validation. It does not require the original bundle file to remain present. This is the Keon-compatible receipt-verification boundary.
 - Receipt output is deterministic by design and excludes machine-specific or
   environment-specific values.
 - The CLI is limited to Keon-compatible educational, observational verification of local export

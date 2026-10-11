@@ -226,6 +226,13 @@ public class ResearchJobTests
                 ResearchSourceRegistryFilePath = TestPaths.FixturePath("source-registry.sample.json"),
                 ResearchEvidencePacketPath = TestPaths.FixturePath("evidence-packet.sample.json"),
                 ResearchReviewDecisionPath = TestPaths.FixturePath("review-decision.sample.json"),
+                // Pin the seed input to the controlled fixture. Without this, the
+                // production Seeds/substances-seed.json copied into test output is
+                // used as the existing corpus, and the preview classifies the
+                // fixture candidate as "update" as soon as it exists in real seed
+                // data. This test covers the "create" path and must not track the
+                // live corpus.
+                SeedFilePath = TestPaths.FixturePath("substances-seed.json"),
                 ResearchOutputDirectory = outputDir,
             };
             var context = new IngestionContext(options, CreateLogger());
@@ -354,6 +361,8 @@ public class ResearchJobTests
                 ResearchSourceRegistryFilePath = TestPaths.FixturePath("source-registry.sample.json"),
                 ResearchEvidencePacketPath = TestPaths.FixturePath("evidence-packet.sample.json"),
                 ResearchReviewDecisionPath = TestPaths.FixturePath("review-decision.sample.json"),
+                // Isolate from the live corpus; see ResearchJob_Applies_Review_Decision_To_Promotion_Manifest.
+                SeedFilePath = TestPaths.FixturePath("substances-seed.json"),
                 ResearchOutputDirectory = researchOutput,
             };
             await CreateJob(researchOptions).RunAsync(new IngestionContext(researchOptions, CreateLogger()));
