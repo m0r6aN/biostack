@@ -31,7 +31,7 @@ export function UpgradeCard({
     try {
       setLoading(true);
       setError(null);
-      await startCheckout(returnPath);
+      await startCheckout('operator', returnPath);
     } catch {
       setError('Stripe checkout is not ready yet. Confirm billing config or sign in again.');
     } finally {

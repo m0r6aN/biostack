@@ -1,6 +1,7 @@
 namespace BioStack.Api.Endpoints;
 
 using BioStack.Api.Auth;
+using BioStack.Api.Security;
 
 /// <summary>
 /// Public contact-form intake. Anonymous by design: visitors reach support without an account.
@@ -66,7 +67,7 @@ public static class ContactEndpoints
         catch (Exception ex)
         {
             loggerFactory.CreateLogger(nameof(ContactEndpoints))
-                .LogWarning(ex, "Failed to deliver contact message ({Category}) from {Email}", category, email);
+                .LogWarning(ex, "Failed to deliver contact message ({Category}) from domain {EmailDomain}", category, LogRedaction.EmailDomain(email));
             return Results.Json(
                 new { error = "We couldn’t deliver your message right now. Please try again later." },
                 statusCode: StatusCodes.Status502BadGateway);

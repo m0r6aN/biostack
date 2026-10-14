@@ -38,7 +38,7 @@ type EntitlementsContextValue = {
   entitlements: Entitlements;
   loading: boolean;
   refreshEntitlements: () => Promise<Entitlements>;
-  startCheckout: (returnPath?: string) => Promise<void>;
+  startCheckout: (plan: 'operator' | 'commander', returnPath?: string) => Promise<void>;
 };
 
 const EntitlementsContext = createContext<EntitlementsContextValue | undefined>(undefined);
@@ -60,8 +60,8 @@ export function EntitlementsProvider({ children }: { children: React.ReactNode }
     }
   }, []);
 
-  const startCheckout = useCallback(async (returnPath?: string) => {
-    const { url: checkoutUrl } = await apiClient.createCheckoutSession('operator');
+  const startCheckout = useCallback(async (plan: 'operator' | 'commander') => {
+    const { url: checkoutUrl } = await apiClient.createCheckoutSession(plan);
     window.location.href = checkoutUrl;
   }, []);
 
