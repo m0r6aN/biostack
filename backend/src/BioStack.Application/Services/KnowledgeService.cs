@@ -21,7 +21,7 @@ public sealed class KnowledgeService : IKnowledgeService
 
     public async Task<IEnumerable<KnowledgeEntryResponse>> GetAllCompoundsAsync(CancellationToken cancellationToken = default)
     {
-        var entries = await _knowledgeSource.GetAllCompoundsAsync(cancellationToken);
+        var entries = await _knowledgeSource.ListPublicCompoundsAsync(cancellationToken);
         return entries
             .Where(entry => !string.IsNullOrWhiteSpace(entry.CanonicalName))
             .GroupBy(entry => entry.CanonicalName.Trim(), StringComparer.OrdinalIgnoreCase)

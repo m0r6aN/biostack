@@ -49,7 +49,7 @@ public sealed class KnowledgeServicePublicBoundaryTests
     {
         var source = new Mock<IKnowledgeSource>();
         source
-            .Setup(service => service.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
+            .Setup(service => service.ListPublicCompoundsAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<KnowledgeEntry> { CreateLegacyEntry() });
 
         var result = Assert.Single(await new KnowledgeService(source.Object).GetAllCompoundsAsync());
@@ -80,7 +80,7 @@ public sealed class KnowledgeServicePublicBoundaryTests
 
         var source = new Mock<IKnowledgeSource>();
         source
-            .Setup(service => service.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
+            .Setup(service => service.ListPublicCompoundsAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<KnowledgeEntry> { sparse, evidenceRicher });
 
         var results = (await new KnowledgeService(source.Object).GetAllCompoundsAsync()).ToList();

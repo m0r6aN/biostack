@@ -48,6 +48,48 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<List<KnowledgeEntry>> ListPublicCompoundsAsync(CancellationToken cancellationToken = default)
+    {
+        // Public list columns only. Includes every field PublicEvidenceCompleteness reads.
+        // Dose, schedule, pairing, and optimization columns stay on the full-entity read.
+        var rows = await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .Select(entry => new
+            {
+                entry.Id,
+                entry.CanonicalName,
+                entry.Aliases,
+                entry.Classification,
+                entry.RegulatoryStatus,
+                entry.MechanismSummary,
+                entry.EvidenceTier,
+                entry.SourceReferences,
+                entry.Notes,
+                entry.Pathways,
+                entry.Benefits,
+                entry.AvoidWith,
+                entry.DrugInteractions,
+            })
+            .ToListAsync(cancellationToken);
+
+        return rows.Select(row => new KnowledgeEntry
+        {
+            Id = row.Id,
+            CanonicalName = row.CanonicalName,
+            Aliases = row.Aliases,
+            Classification = row.Classification,
+            RegulatoryStatus = row.RegulatoryStatus,
+            MechanismSummary = row.MechanismSummary,
+            EvidenceTier = row.EvidenceTier,
+            SourceReferences = row.SourceReferences,
+            Notes = row.Notes,
+            Pathways = row.Pathways,
+            Benefits = row.Benefits,
+            AvoidWith = row.AvoidWith,
+            DrugInteractions = row.DrugInteractions,
+        }).ToList();
+    }
+
     public async Task<List<KnowledgeEntry>> SearchCompoundsByPathwayAsync(string pathway, CancellationToken cancellationToken = default)
     {
         var normalizedPathway = pathway.Trim();

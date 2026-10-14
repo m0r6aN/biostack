@@ -69,6 +69,10 @@ sealed class PreviewFakeKnowledgeSource : IKnowledgeSource
         CancellationToken cancellationToken = default)
         => throw new NotSupportedException();
 
+    public Task<List<KnowledgeEntry>> ListPublicCompoundsAsync(
+        CancellationToken cancellationToken = default)
+        => GetAllCompoundsAsync(cancellationToken);
+
     public Task<List<KnowledgeEntry>> SearchCompoundsByPathwayAsync(
         string pathway,
         CancellationToken cancellationToken = default)

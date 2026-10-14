@@ -26,6 +26,11 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
         return Task.FromResult(new List<KnowledgeEntry>(_knowledgeBase));
     }
 
+    public Task<List<KnowledgeEntry>> ListPublicCompoundsAsync(CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult(_knowledgeBase.Select(CopyPublicCompound).ToList());
+    }
+
     public Task<List<KnowledgeEntry>> SearchCompoundsByPathwayAsync(string pathway, CancellationToken cancellationToken = default)
     {
         var results = _knowledgeBase
@@ -87,6 +92,26 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
             changed++;
         }
         return Task.FromResult(changed);
+    }
+
+    private static KnowledgeEntry CopyPublicCompound(KnowledgeEntry entry)
+    {
+        return new KnowledgeEntry
+        {
+            Id = entry.Id,
+            CanonicalName = entry.CanonicalName,
+            Aliases = entry.Aliases,
+            Classification = entry.Classification,
+            RegulatoryStatus = entry.RegulatoryStatus,
+            MechanismSummary = entry.MechanismSummary,
+            EvidenceTier = entry.EvidenceTier,
+            SourceReferences = entry.SourceReferences,
+            Notes = entry.Notes,
+            Pathways = entry.Pathways,
+            Benefits = entry.Benefits,
+            AvoidWith = entry.AvoidWith,
+            DrugInteractions = entry.DrugInteractions,
+        };
     }
 
     private static bool AreEquivalent(KnowledgeEntry left, KnowledgeEntry right)

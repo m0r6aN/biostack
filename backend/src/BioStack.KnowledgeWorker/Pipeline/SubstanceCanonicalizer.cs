@@ -102,12 +102,14 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             "Pharmaceutical"   => CompoundCategory.Pharmaceutical,
             "Supplement"       => CompoundCategory.Supplement,
             "Hormone"          => CompoundCategory.Hormone,
-            "SARM"             => CompoundCategory.Sarm,
-            "SERM"             => CompoundCategory.Serm,
+            "SARM"               => CompoundCategory.Sarm,
+            "SERM"               => CompoundCategory.Serm,
+            "Amino Acid"         => CompoundCategory.AminoAcid,
+            "Research Compound"  => CompoundCategory.ResearchCompound,
             // The schema carries several classifications we do not yet model
-            // (Small Molecule, Biologic, Vitamin, Mineral, Amino Acid, Research Compound,
-            // Other). They collapse to Unknown until the domain enum is extended.
-            _                  => CompoundCategory.Unknown,
+            // (Small Molecule, Biologic, Vitamin, Mineral, Other). They collapse
+            // to Unknown until the domain enum is extended.
+            _                    => CompoundCategory.Unknown,
         };
     }
 
