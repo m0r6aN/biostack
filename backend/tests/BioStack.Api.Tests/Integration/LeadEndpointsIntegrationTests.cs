@@ -67,32 +67,29 @@ public class LeadEndpointsIntegrationTests : IAsyncLifetime
     [Fact]
     public async Task CaptureLead_WithValidPayload_ReturnsNoContentAndPersistsNormalizedLead()
     {
-        var source = $"reconstitution-calculator-{Guid.NewGuid():N}";
-
         var response = await _client.PostAsJsonAsync("/api/v1/leads/capture", new
         {
             Email = "  User@Example.com  ",
-            Source = source
+            Source = "reconstitution-calculator"
         });
 
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
         using var scope = _factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-        var stored = dbContext.LeadCaptures.Single(lead => lead.Source == source);
+        var stored = dbContext.LeadCaptures.Single();
 
         Assert.Equal("user@example.com", stored.Email);
-        Assert.Equal(source, stored.Source);
+        Assert.Equal("reconstitution-calculator", stored.Source);
     }
 
     [Fact]
     public async Task CaptureLead_WithDuplicatePayload_IsIdempotent()
     {
-        var source = $"reconstitution-calculator-{Guid.NewGuid():N}";
         var payload = new
         {
             Email = "user@example.com",
-            Source = source
+            Source = "clinics-coaches-pricing"
         };
 
         await _client.PostAsJsonAsync("/api/v1/leads/capture", payload);
@@ -103,7 +100,7 @@ public class LeadEndpointsIntegrationTests : IAsyncLifetime
         using var scope = _factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
 
-        Assert.Equal(1, dbContext.LeadCaptures.Count(lead => lead.Source == source));
+        Assert.Equal(1, dbContext.LeadCaptures.Count(lead => lead.Source == "clinics-coaches-pricing"));
     }
 
     [Fact]
@@ -116,5 +113,28 @@ public class LeadEndpointsIntegrationTests : IAsyncLifetime
         });
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task CaptureLead_WithUnknownSourceOrHoneypot_DoesNotPersist()
+    {
+        var unknown = await _client.PostAsJsonAsync("/api/v1/leads/capture", new
+        {
+            Email = "user@example.com",
+            Source = "not-a-product-source"
+        });
+        var honeypot = await _client.PostAsJsonAsync("/api/v1/leads/capture", new
+        {
+            Email = "bot@example.com",
+            Source = "clinics-coaches-pricing",
+            Website = "https://spam.example"
+        });
+
+        Assert.Equal(HttpStatusCode.BadRequest, unknown.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, honeypot.StatusCode);
+
+        using var scope = _factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.Empty(dbContext.LeadCaptures);
     }
 }

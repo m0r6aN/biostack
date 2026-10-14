@@ -105,21 +105,17 @@ Invoke-Az @("provider", "register", "--namespace", "Microsoft.OperationalInsight
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.ContainerRegistry")
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.Storage")
 
-Invoke-Az @("acr", "create", "--resource-group", $ResourceGroup, "--name", $acrName, "--sku", "Basic", "--admin-enabled", "true")
+Invoke-Az @("acr", "create", "--resource-group", $ResourceGroup, "--name", $acrName, "--sku", "Basic", "--admin-enabled", "false")
 
 $acrLoginServer = & (Require-AzCli) acr show --name $acrName --resource-group $ResourceGroup --query loginServer -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve ACR login server." }
 
-$acrUsername = & (Require-AzCli) acr credential show --name $acrName --resource-group $ResourceGroup --query username -o tsv
-if ($LASTEXITCODE -ne 0) { throw "Failed to resolve ACR username." }
-
-$acrPassword = & (Require-AzCli) acr credential show --name $acrName --resource-group $ResourceGroup --query "passwords[0].value" -o tsv
-if ($LASTEXITCODE -ne 0) { throw "Failed to resolve ACR password." }
+$acrIdentity = if ($usesUserAssignedIdentity) { $DataProtectionManagedIdentityResourceId } else { "system" }
 
 Invoke-Az @("acr", "build", "--resource-group", $ResourceGroup, "--registry", $acrName, "--image", "biostack-api:latest", "--file", "backend/Dockerfile", "backend")
 
 Invoke-Az @("containerapp", "env", "create", "--name", $envName, "--resource-group", $ResourceGroup, "--location", $Location)
-Invoke-Az @("containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-api:latest", "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword)
+Invoke-Az @("containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-api:latest", "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-identity", $acrIdentity)
 
 if ($usesUserAssignedIdentity) {
     Invoke-Az @("containerapp", "identity", "assign", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--user-assigned", $DataProtectionManagedIdentityResourceId)
@@ -222,7 +218,7 @@ Invoke-Az -Arguments $initialApiUpdateArgs
 
 Invoke-Az @("acr", "build", "--resource-group", $ResourceGroup, "--registry", $acrName, "--image", "biostack-web:latest", "--build-arg", "NEXT_PUBLIC_API_URL=$publicApiUrl", "--file", "frontend/Dockerfile", "frontend")
 
-Invoke-Az @("containerapp", "create", "--name", $webAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-web:latest", "--target-port", "3000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword)
+Invoke-Az @("containerapp", "create", "--name", $webAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-web:latest", "--target-port", "3000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-identity", $acrIdentity)
 
 $webFqdn = & (Require-AzCli) containerapp show --name $webAppName --resource-group $ResourceGroup --query properties.configuration.ingress.fqdn -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve web FQDN." }

@@ -36,10 +36,10 @@ export default function PricingClient() {
     }
   }
 
-  async function handleProCheckout() {
+  async function handlePlanCheckout(plan: 'operator' | 'commander') {
     try {
       setCheckoutError(null);
-      await startCheckout('/pricing');
+      await startCheckout(plan, '/pricing');
     } catch {
       setCheckoutError('Stripe checkout is not ready yet. Confirm billing config or sign in again.');
     }
@@ -95,12 +95,12 @@ export default function PricingClient() {
                 <p className="mt-7 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white/60">
                   Included with {currentTier}
                 </p>
-              ) : tier.name === 'Operator' ? (
+              ) : tier.name === 'Operator' || tier.name === 'Commander' ? (
                 <button
-                  onClick={handleProCheckout}
+                  onClick={() => void handlePlanCheckout(tier.name === 'Commander' ? 'commander' : 'operator')}
                   className="mt-7 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
                 >
-                  {entitlements.isPro ? 'Manage Operator access' : tier.ctaLabel}
+                  {tier.name === 'Operator' && entitlements.isPro ? 'Manage Operator access' : tier.ctaLabel}
                 </button>
               ) : (
                 <Link

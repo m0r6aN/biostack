@@ -1,5 +1,7 @@
 namespace BioStack.Api.Auth;
 
+using BioStack.Api.Security;
+
 using System.Net;
 using Azure;
 using Azure.Communication.Email;
@@ -58,9 +60,9 @@ public sealed class AzureCommunicationEmailContactMessageSender : IContactMessag
 
         await client.SendAsync(WaitUntil.Started, email, ct);
         _logger.LogInformation(
-            "Queued BioStack contact message ({Category}) from {Email} to the support inbox through Azure Communication Email",
+            "Queued BioStack contact message ({Category}) from domain {EmailDomain} to the support inbox through Azure Communication Email",
             message.Category,
-            message.Email);
+            LogRedaction.EmailDomain(message.Email));
     }
 
     private static string BuildPlainTextBody(ContactMessage message)

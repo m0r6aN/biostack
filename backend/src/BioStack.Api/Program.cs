@@ -18,6 +18,7 @@ using BioStack.Application.Services;
 using BioStack.Application.Abstractions;
 using BioStack.Api.Endpoints;
 using BioStack.Api.Billing;
+using BioStack.Api.Security;
 using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Cognition.CollectiveApi;
@@ -191,7 +192,7 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddPolicy("auth-start", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 5,
@@ -201,7 +202,7 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddPolicy("auth-verify", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 10,
@@ -211,7 +212,7 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddPolicy("provider-access", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 5,
@@ -221,14 +222,26 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddPolicy("contact", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 3,
                 Window = TimeSpan.FromHours(1),
                 QueueLimit = 0,
             }));
+
+    options.AddPolicy("lead-capture", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromHours(1),
+                QueueLimit = 0,
+            }));
 });
+
+builder.Services.AddSingleton<AuthStartAccountBudget>();
 
 // ── First-party cookie sessions + legacy bearer support ─────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]
@@ -563,12 +576,15 @@ app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapOpenApi();
-app.MapScalarApiReference(options =>
+if (!app.Environment.IsProduction())
 {
-    options.WithTitle("BioStack Mission Control API");
-    options.WithTheme(ScalarTheme.Moon);
-});
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.WithTitle("BioStack Mission Control API");
+        options.WithTheme(ScalarTheme.Moon);
+    });
+}
 
 app.MapHealthChecks(ProductContract.Current.Health.LivenessPath);
 

@@ -1,5 +1,7 @@
 namespace BioStack.Api.Auth;
 
+using BioStack.Api.Security;
+
 using Azure;
 using Azure.Communication.Email;
 using System.Collections.Concurrent;
@@ -54,7 +56,7 @@ public sealed class InMemoryMagicLinkDelivery : IMagicLinkDelivery, IDevMagicLin
         {
         }
 
-        _logger.LogInformation("BioStack magic link for {Contact}: {MagicLink}", contact, magicLink);
+        _logger.LogInformation("Queued BioStack development magic link for domain {EmailDomain}", LogRedaction.EmailDomain(contact));
         return Task.CompletedTask;
     }
 
@@ -118,7 +120,7 @@ public sealed class SmtpMagicLinkDelivery : IMagicLinkDelivery
         }
 
         await client.SendMailAsync(message, ct);
-        _logger.LogInformation("Sent BioStack magic link email to {Contact}", contact);
+        _logger.LogInformation("Sent BioStack magic link email to domain {EmailDomain}", LogRedaction.EmailDomain(contact));
     }
 
     private static string BuildHtmlBody(string magicLink, DateTime expiresAtUtc)
@@ -172,7 +174,7 @@ public sealed class AzureCommunicationEmailMagicLinkDelivery : IMagicLinkDeliver
         var message = new EmailMessage(senderAddress, contact, content);
 
         await client.SendAsync(WaitUntil.Started, message, ct);
-        _logger.LogInformation("Queued BioStack magic link email to {Contact} through Azure Communication Email", contact);
+        _logger.LogInformation("Queued BioStack magic link email to domain {EmailDomain} through Azure Communication Email", LogRedaction.EmailDomain(contact));
     }
 
     private static string BuildPlainTextBody(string magicLink, DateTime expiresAtUtc)

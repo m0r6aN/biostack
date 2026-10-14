@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using BioStack.Api.Auth;
+using BioStack.Api.Security;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -78,6 +79,7 @@ public static class AuthEndpoints
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
         HttpContext http,
+        AuthStartAccountBudget accountBudget,
         CancellationToken ct)
     {
         var normalizedRedirect = NormalizeRedirectPath(request.RedirectPath);
@@ -94,6 +96,11 @@ public static class AuthEndpoints
         if (request.Channel != EmailChannel || contact is null)
         {
             return Results.Ok(new { message = "If that email can sign in, we sent a link." });
+        }
+
+        if (!accountBudget.TryConsume(contact, DateTime.UtcNow))
+        {
+            return Results.StatusCode(StatusCodes.Status429TooManyRequests);
         }
 
         var now = DateTime.UtcNow;

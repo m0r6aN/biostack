@@ -152,12 +152,9 @@ public sealed class BillingService : IBillingService
 
     public async Task<StripeWebhookProcessingResult> ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default)
     {
-        var receipt = await _db.StripeWebhookEvents
-            .SingleOrDefaultAsync(e => e.StripeEventId == stripeEvent.Id, cancellationToken);
-        if (receipt?.ProcessingStatus == StripeWebhookProcessingStatuses.Processed)
+        var receipt = await ClaimStripeEventReceiptAsync(stripeEvent, cancellationToken);
+        if (receipt is null)
             return StripeWebhookProcessingResult.AlreadyProcessed;
-
-        var now = DateTime.UtcNow;
 
         try
         {
@@ -178,65 +175,92 @@ public sealed class BillingService : IBillingService
                     await ProcessPaymentSucceededAsync(stripeEvent, cancellationToken);
                     break;
             }
+
+            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Processed;
+            receipt.FailureCode = null;
+            receipt.LastAttemptAtUtc = DateTime.UtcNow;
+            receipt.ProcessedAtUtc = receipt.LastAttemptAtUtc;
+            await _db.SaveChangesAsync(cancellationToken);
+            return StripeWebhookProcessingResult.Processed;
         }
         catch (UnknownStripePriceException)
         {
-            receipt ??= new StripeWebhookEvent
-            {
-                Id = Guid.NewGuid(),
-                StripeEventId = stripeEvent.Id,
-                EventType = stripeEvent.Type,
-                AttemptCount = 0,
-            };
-            if (_db.Entry(receipt).State == EntityState.Detached)
-                _db.StripeWebhookEvents.Add(receipt);
-
-            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
-            receipt.FailureCode = "unknown_stripe_price";
-            receipt.AttemptCount++;
-            receipt.LastAttemptAtUtc = now;
-            receipt.ProcessedAtUtc = now;
-            await _db.SaveChangesAsync(cancellationToken);
-            return StripeWebhookProcessingResult.Quarantined;
+            return await QuarantineAcceptedReceiptAsync(receipt, "unknown_stripe_price", cancellationToken);
         }
         catch (UnmappedStripeCustomerException)
         {
-            receipt ??= new StripeWebhookEvent
-            {
-                Id = Guid.NewGuid(),
-                StripeEventId = stripeEvent.Id,
-                EventType = stripeEvent.Type,
-                AttemptCount = 0,
-            };
-            if (_db.Entry(receipt).State == EntityState.Detached)
-                _db.StripeWebhookEvents.Add(receipt);
-
-            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
-            receipt.FailureCode = "unmapped_app_user";
-            receipt.AttemptCount++;
-            receipt.LastAttemptAtUtc = now;
-            receipt.ProcessedAtUtc = now;
-            await _db.SaveChangesAsync(cancellationToken);
-            return StripeWebhookProcessingResult.Quarantined;
+            return await QuarantineAcceptedReceiptAsync(receipt, "unmapped_app_user", cancellationToken);
         }
+        catch
+        {
+            _db.StripeWebhookEvents.Remove(receipt);
+            await _db.SaveChangesAsync(cancellationToken);
+            throw;
+        }
+    }
 
-        receipt ??= new StripeWebhookEvent
+    private async Task<StripeWebhookEvent?> ClaimStripeEventReceiptAsync(Event stripeEvent, CancellationToken cancellationToken)
+    {
+        var now = DateTime.UtcNow;
+        var receipt = new StripeWebhookEvent
         {
             Id = Guid.NewGuid(),
             StripeEventId = stripeEvent.Id,
             EventType = stripeEvent.Type,
-            AttemptCount = 0,
+            ProcessingStatus = StripeWebhookProcessingStatuses.Accepted,
+            AttemptCount = 1,
+            LastAttemptAtUtc = now,
+            ProcessedAtUtc = now,
         };
-        if (_db.Entry(receipt).State == EntityState.Detached)
-            _db.StripeWebhookEvents.Add(receipt);
+        _db.StripeWebhookEvents.Add(receipt);
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+            return receipt;
+        }
+        catch (DbUpdateException)
+        {
+            _db.Entry(receipt).State = EntityState.Detached;
+            if (!await StripeEventReceiptExistsAsync(stripeEvent.Id, cancellationToken))
+                throw;
+        }
 
-        receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Processed;
-        receipt.FailureCode = null;
-        receipt.AttemptCount++;
-        receipt.LastAttemptAtUtc = now;
-        receipt.ProcessedAtUtc = now;
+        var claimed = await _db.StripeWebhookEvents
+            .Where(existing => existing.StripeEventId == stripeEvent.Id &&
+                existing.ProcessingStatus == StripeWebhookProcessingStatuses.Quarantined)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(existing => existing.ProcessingStatus, StripeWebhookProcessingStatuses.Accepted)
+                .SetProperty(existing => existing.AttemptCount, existing => existing.AttemptCount + 1)
+                .SetProperty(existing => existing.FailureCode, (string?)null)
+                .SetProperty(existing => existing.LastAttemptAtUtc, now), cancellationToken);
+        if (claimed != 1)
+            return null;
+
+        var tracked = _db.StripeWebhookEvents.Local
+            .FirstOrDefault(existing => existing.StripeEventId == stripeEvent.Id);
+        if (tracked is not null)
+            await _db.Entry(tracked).ReloadAsync(cancellationToken);
+
+        return await _db.StripeWebhookEvents
+            .SingleAsync(existing => existing.StripeEventId == stripeEvent.Id, cancellationToken);
+    }
+
+    private async Task<bool> StripeEventReceiptExistsAsync(string stripeEventId, CancellationToken cancellationToken)
+        => await _db.StripeWebhookEvents
+            .AsNoTracking()
+            .AnyAsync(receipt => receipt.StripeEventId == stripeEventId, cancellationToken);
+
+    private async Task<StripeWebhookProcessingResult> QuarantineAcceptedReceiptAsync(
+        StripeWebhookEvent receipt,
+        string failureCode,
+        CancellationToken cancellationToken)
+    {
+        receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
+        receipt.FailureCode = failureCode;
+        receipt.LastAttemptAtUtc = DateTime.UtcNow;
+        receipt.ProcessedAtUtc = receipt.LastAttemptAtUtc;
         await _db.SaveChangesAsync(cancellationToken);
-        return StripeWebhookProcessingResult.Processed;
+        return StripeWebhookProcessingResult.Quarantined;
     }
 
     public async Task ReconcileSubscriptionAsync(
