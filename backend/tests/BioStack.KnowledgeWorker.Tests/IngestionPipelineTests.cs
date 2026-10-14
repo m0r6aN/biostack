@@ -20,6 +20,22 @@ public class IngestionPipelineTests
         Path.Combine(AppContext.BaseDirectory, "Fixtures", "substances-seed.json");
 
     [Fact]
+    public void Pipeline_Prepares_Every_Qualifying_Seed_Record_Without_Database()
+    {
+        var pipeline = BuildPipeline();
+        var seedPath = Path.GetFullPath(Path.Combine(
+            AppContext.BaseDirectory,
+            "..", "..", "..", "..", "..",
+            "src", "BioStack.KnowledgeWorker", "Seeds", "substances-seed.json"));
+        var result = pipeline.Run(seedPath);
+
+        Assert.Equal(158, result.Accepted.Count);
+        Assert.Empty(result.Rejected);
+        Assert.Equal(158, result.Accepted.Select(row => row.Entry.CanonicalName).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        Assert.All(result.Accepted, row => Assert.False(string.IsNullOrWhiteSpace(row.Entry.CanonicalName)));
+    }
+
+    [Fact]
     public void Pipeline_Accepts_Canonical_Seed_Record()
     {
         var pipeline = BuildPipeline();

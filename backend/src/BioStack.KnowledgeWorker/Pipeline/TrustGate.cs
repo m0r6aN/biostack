@@ -56,12 +56,26 @@ public sealed class TrustGate : ITrustGate
                 ReviewReasons:  Array.Empty<string>());
         }
 
-        // ClassB: strip ClassA-only canonical truth. Mark for human review.
+        // ClassB: strip ClassA-only canonical truth. Mark for review.
+        // The public compound response does not carry the structured safety and
+        // regulatory objects. Preserve their text in review notes so a Refresh
+        // upsert does not replace a live page with an empty risk section.
         var stripped  = new List<string>();
         var reviews   = new List<string>
         {
-            "ClassB source cannot establish ClassA canonical truth; regulated fields blanked.",
+            "ClassB source cannot establish canonical regulatory or safety fields. The statements below are retained as uncertainty, not as a label-backed verdict.",
         };
+        AppendPreservedText(reviews, "Regulatory status", record.Regulatory.RegulatoryStatus);
+        foreach (var item in record.Safety.Contraindications)
+            AppendPreservedText(reviews, "Contraindication", item.Item);
+        foreach (var item in record.Safety.Warnings)
+            AppendPreservedText(reviews, "Warning", item.Item);
+        foreach (var item in record.Safety.Precautions)
+            AppendPreservedText(reviews, "Precaution", item.Item);
+        foreach (var item in record.Safety.AdverseEffects.Common)
+            AppendPreservedText(reviews, "Adverse effect", item);
+        foreach (var item in record.Safety.AdverseEffects.Serious)
+            AppendPreservedText(reviews, "Serious adverse effect", item);
 
         // Regulatory canon — blank.
         if (!string.IsNullOrWhiteSpace(record.Regulatory.RegulatoryStatus))
@@ -127,5 +141,17 @@ public sealed class TrustGate : ITrustGate
             RecordClass:    cls,
             StrippedFields: stripped,
             ReviewReasons:  reviews);
+    }
+
+    private static void AppendPreservedText(List<string> reviews, string label, string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return;
+
+        var trimmed = text.Trim();
+        if (trimmed.Length > 500)
+            trimmed = trimmed[..500].TrimEnd() + "...";
+
+        reviews.Add($"{label}: {trimmed}");
     }
 }
