@@ -9,17 +9,24 @@ public static class ClientIpResolver
     public static string PartitionKey(HttpContext httpContext, IConfiguration configuration)
     {
         var remote = httpContext.Connection.RemoteIpAddress;
-        if (remote is not null && IsTrustedProxy(remote, configuration) &&
+        if (remote is null)
+        {
+            return "unknown";
+        }
+
+        // Loopback and RateLimit:TrustedProxies only. Private and CGNAT ranges are not trusted.
+        var trusted = TrustedProxyAddresses(configuration);
+        if (IsTrustedProxy(remote, trusted) &&
             httpContext.Request.Headers.TryGetValue(ForwardedForHeader, out var forwarded))
         {
-            var client = FirstForwardedAddress(forwarded.ToString());
+            var client = RightmostUntrustedForwardedAddress(forwarded.ToString(), trusted);
             if (client is not null)
             {
                 return Normalize(client);
             }
         }
 
-        return remote is null ? "unknown" : Normalize(remote);
+        return Normalize(remote);
     }
 
     public static string? AccountKey(string? email)
@@ -33,30 +40,14 @@ public static class ClientIpResolver
         return normalized.Length is 0 or > 254 ? null : normalized;
     }
 
-    private static bool IsTrustedProxy(IPAddress remote, IConfiguration configuration)
+    private static bool IsTrustedProxy(IPAddress remote, HashSet<string> trusted)
     {
-        var normalized = Normalize(remote);
-        if (TrustedProxyAddresses(configuration).Contains(normalized))
-        {
-            return true;
-        }
-
         if (IPAddress.IsLoopback(remote))
         {
             return true;
         }
 
-        if (remote.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork &&
-            !remote.IsIPv4MappedToIPv6)
-        {
-            return false;
-        }
-
-        var bytes = remote.MapToIPv4().GetAddressBytes();
-        return bytes[0] == 10
-            || (bytes[0] == 172 && bytes[1] >= 16 && bytes[1] <= 31)
-            || (bytes[0] == 192 && bytes[1] == 168)
-            || (bytes[0] == 100 && bytes[1] >= 64 && bytes[1] <= 127);
+        return trusted.Contains(Normalize(remote));
     }
 
     private static HashSet<string> TrustedProxyAddresses(IConfiguration configuration)
@@ -74,10 +65,23 @@ public static class ClientIpResolver
         return parsed;
     }
 
-    private static IPAddress? FirstForwardedAddress(string header)
+    private static IPAddress? RightmostUntrustedForwardedAddress(string header, HashSet<string> trusted)
     {
-        var first = header.Split(',', 2, StringSplitOptions.TrimEntries)[0];
-        return IPAddress.TryParse(first, out var address) ? address : null;
+        var hops = header.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        for (var index = hops.Length - 1; index >= 0; index--)
+        {
+            if (!IPAddress.TryParse(hops[index], out var address))
+            {
+                return null;
+            }
+
+            if (!IsTrustedProxy(address, trusted))
+            {
+                return address;
+            }
+        }
+
+        return null;
     }
 
     private static string Normalize(IPAddress address)
