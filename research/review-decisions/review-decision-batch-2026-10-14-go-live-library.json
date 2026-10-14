@@ -1,0 +1,3966 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "go-live-library-2026-10-14",
+    "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+    "reviewedAt": "2026-10-14T20:00:00Z",
+    "notes": [
+      "One approve-for-promotion decision per seed canonical name.",
+      "Timestamp is later than prior review batches so Refresh treats this as the latest disposition.",
+      "Does not authorize a production write by itself. DryRun must be read before any live Refresh."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "go-live-library-2026-10-14-semaglutide",
+      "compoundName": "Semaglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-tirzepatide",
+      "compoundName": "Tirzepatide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-liraglutide",
+      "compoundName": "Liraglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-dulaglutide",
+      "compoundName": "Dulaglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-exenatide",
+      "compoundName": "Exenatide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-retatrutide",
+      "compoundName": "Retatrutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-metformin",
+      "compoundName": "Metformin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-acarbose",
+      "compoundName": "Acarbose",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-tesamorelin",
+      "compoundName": "Tesamorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-bremelanotide",
+      "compoundName": "Bremelanotide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-sermorelin",
+      "compoundName": "Sermorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ipamorelin",
+      "compoundName": "Ipamorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-cjc-1295",
+      "compoundName": "CJC-1295",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-bpc-157",
+      "compoundName": "BPC-157",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-tb-500",
+      "compoundName": "TB-500",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-mots-c",
+      "compoundName": "MOTS-c",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-melanotan-ii",
+      "compoundName": "Melanotan II",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-testosterone-cypionate",
+      "compoundName": "Testosterone cypionate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-oxandrolone",
+      "compoundName": "Oxandrolone",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-nandrolone-decanoate",
+      "compoundName": "Nandrolone decanoate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-anastrozole",
+      "compoundName": "Anastrozole",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-letrozole",
+      "compoundName": "Letrozole",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-human-chorionic-gonadotropin",
+      "compoundName": "Human chorionic gonadotropin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-finasteride",
+      "compoundName": "Finasteride",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-dhea",
+      "compoundName": "DHEA",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-tamoxifen",
+      "compoundName": "Tamoxifen",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-clomiphene",
+      "compoundName": "Clomiphene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-raloxifene",
+      "compoundName": "Raloxifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-enclomiphene",
+      "compoundName": "Enclomiphene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ostarine",
+      "compoundName": "Ostarine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ligandrol",
+      "compoundName": "Ligandrol",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-testolone",
+      "compoundName": "Testolone",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-andarine",
+      "compoundName": "Andarine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-yk-11",
+      "compoundName": "YK-11",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-creatine-monohydrate",
+      "compoundName": "Creatine monohydrate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-caffeine",
+      "compoundName": "Caffeine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-beta-alanine",
+      "compoundName": "Beta-alanine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-l-citrulline",
+      "compoundName": "L-citrulline",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-l-carnitine",
+      "compoundName": "L-carnitine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-coenzyme-q10",
+      "compoundName": "Coenzyme Q10",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-berberine",
+      "compoundName": "Berberine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-d3",
+      "compoundName": "Vitamin D3",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-omega-3-ethyl-esters",
+      "compoundName": "Omega-3 ethyl esters",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-tadalafil",
+      "compoundName": "Tadalafil",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-sildenafil",
+      "compoundName": "Sildenafil",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-modafinil",
+      "compoundName": "Modafinil",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-bupropion",
+      "compoundName": "Bupropion",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-levothyroxine",
+      "compoundName": "Levothyroxine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-nad",
+      "compoundName": "NAD+",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-thymosin-alpha-1",
+      "compoundName": "Thymosin alpha-1",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-spermidine",
+      "compoundName": "Spermidine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-urolithin-a",
+      "compoundName": "Urolithin A",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ac-262536",
+      "compoundName": "AC-262536",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-lasofoxifene",
+      "compoundName": "Lasofoxifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-lgd-3303",
+      "compoundName": "LGD-3303",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ll-37",
+      "compoundName": "LL-37",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-toremifene",
+      "compoundName": "Toremifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ghk-cu",
+      "compoundName": "GHK-Cu",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-acp-105",
+      "compoundName": "ACP-105",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-afamelanotide",
+      "compoundName": "Afamelanotide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-amycretin",
+      "compoundName": "Amycretin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-aod-9604",
+      "compoundName": "AOD-9604",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-bazedoxifene",
+      "compoundName": "Bazedoxifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-cagrilintide",
+      "compoundName": "Cagrilintide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-cardarine",
+      "compoundName": "Cardarine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-creatine",
+      "compoundName": "Creatine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-elamipretide",
+      "compoundName": "Elamipretide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-emideltide",
+      "compoundName": "Emideltide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-epitalon",
+      "compoundName": "Epitalon",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ghrp-2",
+      "compoundName": "GHRP-2",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ghrp-6",
+      "compoundName": "GHRP-6",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-glutathione",
+      "compoundName": "Glutathione",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-gonadorelin",
+      "compoundName": "Gonadorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-gsk2881078",
+      "compoundName": "GSK2881078",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-hexarelin",
+      "compoundName": "Hexarelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ibutamoren",
+      "compoundName": "Ibutamoren",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-igf-1-lr3",
+      "compoundName": "IGF-1 LR3",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-kisspeptin-10",
+      "compoundName": "Kisspeptin-10",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-kpv",
+      "compoundName": "KPV",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-magnesium",
+      "compoundName": "Magnesium",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-maridebart-cafraglutide",
+      "compoundName": "Maridebart cafraglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-mazdutide",
+      "compoundName": "Mazdutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-mecasermin",
+      "compoundName": "Mecasermin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-melatonin",
+      "compoundName": "Melatonin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ospemifene",
+      "compoundName": "Ospemifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-oxytocin",
+      "compoundName": "Oxytocin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-peg-mgf",
+      "compoundName": "PEG-MGF",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-pemvidutide",
+      "compoundName": "Pemvidutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-pramlintide",
+      "compoundName": "Pramlintide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-rad-150",
+      "compoundName": "RAD-150",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-s-23",
+      "compoundName": "S-23",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-selank",
+      "compoundName": "Selank",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-semax",
+      "compoundName": "Semax",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-setmelanotide",
+      "compoundName": "Setmelanotide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-somatropin",
+      "compoundName": "Somatropin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-stenabolic",
+      "compoundName": "Stenabolic",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-survodutide",
+      "compoundName": "Survodutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vk2735",
+      "compoundName": "VK2735",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vosilasarm",
+      "compoundName": "Vosilasarm",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-magnesium-oxide",
+      "compoundName": "Magnesium oxide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-b12",
+      "compoundName": "Vitamin B12",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-c",
+      "compoundName": "Vitamin C",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-zinc-sulfate",
+      "compoundName": "Zinc sulfate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ferrous-sulfate",
+      "compoundName": "Ferrous sulfate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-folic-acid",
+      "compoundName": "Folic acid",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-b6",
+      "compoundName": "Vitamin B6",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-riboflavin",
+      "compoundName": "Riboflavin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-niacin",
+      "compoundName": "Niacin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-potassium-chloride",
+      "compoundName": "Potassium chloride",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-calcium-carbonate",
+      "compoundName": "Calcium carbonate",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-potassium-iodide",
+      "compoundName": "Potassium iodide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-phytonadione",
+      "compoundName": "Phytonadione",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-acetylcysteine",
+      "compoundName": "Acetylcysteine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-atorvastatin",
+      "compoundName": "Atorvastatin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-lisinopril",
+      "compoundName": "Lisinopril",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-omeprazole",
+      "compoundName": "Omeprazole",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-sertraline",
+      "compoundName": "Sertraline",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ibuprofen",
+      "compoundName": "Ibuprofen",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-acetaminophen",
+      "compoundName": "Acetaminophen",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ashwagandha",
+      "compoundName": "Ashwagandha",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-glycine",
+      "compoundName": "Glycine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-collagen-peptides",
+      "compoundName": "Collagen peptides",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-lions-mane",
+      "compoundName": "Lion's mane",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-rhodiola",
+      "compoundName": "Rhodiola",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-l-theanine",
+      "compoundName": "L-theanine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-k2",
+      "compoundName": "Vitamin K2",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-biotin",
+      "compoundName": "Biotin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-l-tyrosine",
+      "compoundName": "L-tyrosine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-l-tryptophan",
+      "compoundName": "L-tryptophan",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-5-htp",
+      "compoundName": "5-HTP",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-same",
+      "compoundName": "SAMe",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-glucosamine",
+      "compoundName": "Glucosamine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-chondroitin",
+      "compoundName": "Chondroitin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-msm",
+      "compoundName": "MSM",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-inositol",
+      "compoundName": "Inositol",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-taurine",
+      "compoundName": "Taurine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-turmeric",
+      "compoundName": "Turmeric",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ginger",
+      "compoundName": "Ginger",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-garlic",
+      "compoundName": "Garlic",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-elderberry",
+      "compoundName": "Elderberry",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-echinacea",
+      "compoundName": "Echinacea",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-milk-thistle",
+      "compoundName": "Milk thistle",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-saw-palmetto",
+      "compoundName": "Saw palmetto",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-black-cohosh",
+      "compoundName": "Black cohosh",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-valerian",
+      "compoundName": "Valerian",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ginkgo",
+      "compoundName": "Ginkgo",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-st-johns-wort",
+      "compoundName": "St John's wort",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-ginseng",
+      "compoundName": "Ginseng",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-bacopa",
+      "compoundName": "Bacopa",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-omega-3-fatty-acids",
+      "compoundName": "Omega-3 fatty acids",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-choline",
+      "compoundName": "Choline",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-pantothenic-acid",
+      "compoundName": "Pantothenic acid",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-thiamine",
+      "compoundName": "Thiamine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-iodine",
+      "compoundName": "Iodine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-selenium",
+      "compoundName": "Selenium",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-a",
+      "compoundName": "Vitamin A",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-vitamin-e",
+      "compoundName": "Vitamin E",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    },
+    {
+      "decisionId": "go-live-library-2026-10-14-passionflower",
+      "compoundName": "Passionflower",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "agent-reviewed-catalog",
+          "public-observational-projection"
+        ],
+        "reviewCategories": [
+          "promotion-readiness"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Promotion decision for the 2026-10-14 catalog so Refresh can upsert the public observational projection.",
+        "This decision does not add dosing, sourcing, or a safety guarantee. Class B records still have regulated fields stripped by the trust gate.",
+        "Issued after independent review of the catalog. Later than every August 2026 decision so it is the effective Refresh disposition."
+      ]
+    }
+  ]
+}

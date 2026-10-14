@@ -70,6 +70,8 @@ public class TrustGateTests
         Assert.Contains("safety.contraindications", result.StrippedFields);
         Assert.Contains("safety.warnings",          result.StrippedFields);
         Assert.Contains("safety.monitoring",        result.StrippedFields);
+        Assert.Contains(result.ReviewReasons, reason => reason.StartsWith("Contraindication:", StringComparison.Ordinal));
+        Assert.Contains(result.ReviewReasons, reason => reason.StartsWith("Warning:", StringComparison.Ordinal));
     }
 
     [Fact]
