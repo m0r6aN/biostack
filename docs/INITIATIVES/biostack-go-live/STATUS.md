@@ -109,6 +109,7 @@ New financial commitment: **$0**. Reviewers were local read-only agents. No Stri
 - `docs/INITIATIVES/biostack-governed-delivery/PLAN-REVIEW.md` (plan review closed; does not authorize production)
 - `docs/specs/INDEX.md` (BIO-GOLIVE-001, 004, 005, and 006 are `active` and not-yet-closed; 002 and 003 remain review-candidate)
 - `docs/INITIATIVES/biostack-go-live/SESSION-2026-10-14-resume-4.md`
+- Draft pull requests, unmerged: [#546](https://github.com/m0r6aN/biostack/pull/546) evidence, [#547](https://github.com/m0r6aN/biostack/pull/547) classification, [#548](https://github.com/m0r6aN/biostack/pull/548) client identity, [#549](https://github.com/m0r6aN/biostack/pull/549) package pins, [#550](https://github.com/m0r6aN/biostack/pull/550) Commander checkout test
 - `docs/INITIATIVES/biostack-go-live/reviews/BIO-GOLIVE-001-impl-review-1.md`
 - `docs/INITIATIVES/biostack-go-live/reviews/BIO-GOLIVE-004-impl-review-1.md`
 - `docs/INITIATIVES/biostack-go-live/reviews/BIO-GOLIVE-005-impl-review-1.md`

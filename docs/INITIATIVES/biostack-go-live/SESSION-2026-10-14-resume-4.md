@@ -51,9 +51,21 @@ The specs stay `active`. Governed closure requires a merge plus a closure record
 - Premium journeys, paid lifecycle (refund, cancel, renewal, payment-failure downgrade), monitoring, support, restore drill, alert delivery, rollback rehearsal, and any spend stay open.
 - BIO-GOLIVE-002 and BIO-GOLIVE-003 remain `review-candidate`. Their comparison base is stale: PR #544 already landed overlapping source on `main` without Gate 2, and 004 now owns `ClientIpResolver`. Do not Gate 2 them until a new spec is reviewed against current `main`.
 
+## Pull requests
+
+Draft pull requests are open against `main`. They are not merged. A merge starts the Azure deploy workflow. Pull-request runs skip Azure login. The high-advisory restore check is expected to fail on every pull request except BIO-GOLIVE-005.
+
+| Pull request | Branch | Commit |
+|---|---|---|
+| [#546](https://github.com/m0r6aN/biostack/pull/546) | `docs/go-live-library-record` | `37f37920ad87e7b231cc17a75cbfc40ab831c5e6` |
+| [#547](https://github.com/m0r6aN/biostack/pull/547) | `feat/bio-golive-001-classification-list` | `6eb3710148d94e90f68cc2bbc5ddd433204dd746` |
+| [#548](https://github.com/m0r6aN/biostack/pull/548) | `fix/bio-golive-004-identity-and-receipts` | `bd4a0ac960a820a7c4970e636b9b8dc05f9491b0` |
+| [#549](https://github.com/m0r6aN/biostack/pull/549) | `fix/bio-golive-005-nuget-advisory-pins` | `d285e4fac26cccad8f1ff74e9b954ecf337d1869` |
+| [#550](https://github.com/m0r6aN/biostack/pull/550) | `test/bio-golive-006-commander-checkout` | `012c33c161c526d5bb2ce2fe6a89040cab45e424` |
+
 ## Next safe action
 
-Do not merge these branches. A later human deploy decision has to set `RateLimit:TrustedProxies` before BIO-GOLIVE-004 is deployed, and has to accept that BIO-GOLIVE-005 removes the advisory block that currently stops `main` from reaching Azure. After that deploy, the coordinator writes the Glycine and Retatrutide transcript. Live class repair is a separate parcel and still must name Retatrutide's class before any repair writes one.
+Do not merge these pull requests. A later human deploy decision has to set `RateLimit:TrustedProxies` before BIO-GOLIVE-004 is deployed, and has to accept that BIO-GOLIVE-005 removes the advisory block that currently stops `main` from reaching Azure. After that deploy, the coordinator writes the Glycine and Retatrutide transcript. Live class repair is a separate parcel and still must name Retatrutide's class before any repair writes one.
 
 ## Do not touch
 
