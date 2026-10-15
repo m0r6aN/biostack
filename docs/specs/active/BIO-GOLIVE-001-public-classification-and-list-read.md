@@ -1,7 +1,7 @@
 ---
 ticket: BIO-GOLIVE-001
 title: Public classification labels and a bounded compound-list read
-status: review-candidate
+status: active
 owner: clinton.morgan
 created: 2026-10-14
 updated: 2026-10-14
@@ -12,10 +12,14 @@ function_review_status: not-applicable
 surfaces:
   - backend/src/BioStack.Domain/Enums/CompoundCategory.cs
   - backend/src/BioStack.KnowledgeWorker/Pipeline/SubstanceCanonicalizer.cs
+  - backend/src/BioStack.Infrastructure/Knowledge/IKnowledgeSource.cs
   - backend/src/BioStack.Infrastructure/Knowledge/DatabaseKnowledgeSource.cs
+  - backend/src/BioStack.Infrastructure/Knowledge/LocalKnowledgeSource.cs
   - backend/src/BioStack.Application/Services/KnowledgeService.cs
   - backend/tests/BioStack.KnowledgeWorker.Tests/SubstanceCanonicalizerClassificationTests.cs
   - backend/tests/BioStack.Application.Tests/Services/KnowledgeListProjectionTests.cs
+  - backend/tests/BioStack.Application.Tests/Services/KnowledgeServicePublicBoundaryTests.cs
+  - backend/tests/BioStack.Application.Tests/Services/TranscriptCandidatePromotionPreviewServiceTests.cs
   - docs/INITIATIVES/biostack-go-live/evidence/BIO-GOLIVE-001-http-transcript.md
 routing_class: implementation/knowledge-promotion
 verification_class: component-testable
@@ -27,9 +31,9 @@ data_classification: public
 
 ## Objective
 
-The public API currently returns `classification: Unknown` for reviewed Amino Acid and Research Compound records. Glycine and Retatrutide are the named acceptance samples. The full list `GET /api/v1/knowledge/compounds` also loads every `KnowledgeEntry` column, including ignored dose and schedule fields, before it projects the public response. This parcel makes the reviewed class visible on the public JSON and makes the list read project only the public columns.
+The public API currently returns `classification: Unknown` for Amino Acid and Research Compound records whose stored integer is 0. Glycine is the named Amino Acid sample. The full list `GET /api/v1/knowledge/compounds` loads every `KnowledgeEntry` column, including ignored dose and schedule fields, before it projects the public response. This parcel adds the two enum members, maps those schema strings on a future canonicalization, and gives the public list its own column projection.
 
-This parcel does not generate catalog entries, does not run Refresh, and does not authorize production deploy. Deploy and any classification rewrite of existing production rows remain human production actions. Local tests are necessary. The launch acceptance evidence is an HTTP transcript after the human deploy.
+This parcel does not generate catalog entries, does not run Refresh, does not rewrite stored rows, and does not authorize production deploy. A human deploy does not change labels already stored as `Unknown`. Live `AminoAcid` and `ResearchCompound` labels require a later classification-repair parcel. Local tests prove the mapper and the projection. The coordinator transcript after a human deploy records the revision and the still-`Unknown` live labels. That transcript closes this parcel.
 
 ## Initiative (Product Lane)
 
@@ -50,22 +54,24 @@ Proposed only. The coordinator assigns both at Gate 2. Until then this spec stay
 
 ## Verified Facts
 
-1. Repository pin at shaping: `dev@6c9d8eccfd69f848d69c223e547c4d40dbf6ccee`. Uncommitted seed, trust-gate, and go-live files already exist. This spec does not authorize editing them.
+1. Dispatch tree for this amendment: `5b686e69536f2eedf0195ee77466f20b08a490d8`, which is contained in `origin/main` `9550964256d507d03b789df8f0eb4c448a6f7ac8`. The 2026-10-14 shaping pin `6c9d8eccfd69f848d69c223e547c4d40dbf6ccee` is history. A builder implements from the Gate 2 tree, not from that pin.
 2. `CompoundCategory` ends at `Other = 10`. It has no Amino Acid or Research Compound member. `JsonStringEnumConverter` therefore cannot emit those names.
 3. `SubstanceCanonicalizer.MapClassification` maps Peptide, Pharmaceutical, Supplement, Hormone, SARM, and SERM. Amino Acid, Research Compound, and every other schema class fall through to `Unknown`.
-4. `KnowledgeEntries.Classification` is an integer column (`INTEGER`, migration `20260422125251_RecoverBillingTierEnforcement`). A live API deploy of a new enum member does not rewrite rows already stored as `Unknown` (0).
-5. Committed seed `HEAD:backend/src/BioStack.KnowledgeWorker/Seeds/substances-seed.json` classifies Retatrutide as Research Compound. The uncommitted working tree classifies Retatrutide as Peptide and adds the alias `triple agonist`. The reviewed promotion record `go-live-library-2026-10-14-retatrutide` does not name a class. The public acceptance class for Retatrutide is Research Compound until a later approved knowledge-promotion parcel records a different reviewed class. The working-tree Peptide value is not the acceptance class.
-6. Glycine is Amino Acid in both the committed seed and the working tree.
-7. `DatabaseKnowledgeSource.GetAllCompoundsAsync` calls `ToListAsync()` on the full entity. `KnowledgeService.GetAllCompoundsAsync` then groups by canonical name and maps the public response, clearing dose and schedule fields in memory. `KnowledgeEntryResponse` already marks dose, schedule, pairing, and optimization fields with `JsonIgnore`. Those attributes stay.
-8. Resume probe `SESSION-2026-10-14-resume.md`: warm list returned HTTP 200, 158 items, 185,797 bytes, in 334 ms. Glycine and Retatrutide `classification` were `Unknown`. `https://biostack.cc/knowledge/glycine` contained the words Amino Acid. `https://biostack.cc/knowledge/retatrutide` contained Unknown. The earlier 40-second list timeout is a cold-start observation, not a closed latency proof.
-9. The public dossier page reads `entry.classification` from the API. A page that mentions Amino Acid in other prose does not satisfy this parcel.
+4. `KnowledgeEntries.Classification` is an integer column (`INTEGER`, migration `20260422125251_RecoverBillingTierEnforcement`). `MapClassification` runs on canonicalization and upsert. It does not run on read. A live API deploy of a new enum member does not rewrite rows already stored as `Unknown` (0).
+5. At the dispatch tree, committed `substances-seed.json` classifies Retatrutide as `Peptide` and includes the alias `triple agonist`. At the shaping pin the same row was `Research Compound` with alias `LY3437943` only. The promotion record `go-live-library-2026-10-14-retatrutide` approves promotion and names no class. The Peptide value is unreviewed seed drift. It is not a reviewed class. This parcel does not edit the seed and does not choose a class. A later knowledge-promotion parcel must name Retatrutide's reviewed class before any repair writes one. Until that record exists, no live Retatrutide label is acceptance for this parcel.
+6. At the dispatch tree, Glycine's committed classification is `Amino Acid`. Glycine was absent from the seed at the shaping pin. The live Glycine row is still stored as `Unknown`. This parcel does not change that row.
+7. `IKnowledgeSource.GetAllCompoundsAsync` is a full-entity read. `DatabaseKnowledgeSource.GetAllCompoundsAsync` calls `ToListAsync()` on the entity. Callers include `InteractionIntelligenceService`, `CounterfactualCandidateService`, `ProtocolParser`, and the swap pool, which reads pairing fields from that result. `KnowledgeService.GetAllCompoundsAsync` uses the same method and then clears dose and schedule fields in memory. `KnowledgeEntryResponse` already marks dose, schedule, pairing, and optimization fields with `JsonIgnore`. Those attributes stay. This parcel adds a separate list method. It does not narrow `GetAllCompoundsAsync`.
+8. Resume 3 probe on 2026-10-14: Glycine and Retatrutide API `classification` were `Unknown`. Production OpenAPI and Scalar returned HTTP 200. The earlier warm list of 158 items in 334 ms is not a cold-start measurement. Cold-start latency is outside this parcel.
+9. The public dossier page reads `entry.classification` from the API. A page that mentions Amino Acid in other prose does not satisfy a later repair parcel. It is not acceptance for this parcel.
 
 ## Surfaces
 
 - `backend/src/BioStack.Domain/Enums/CompoundCategory.cs` — append `AminoAcid = 11` and `ResearchCompound = 12`. Do not renumber 0 through 10.
 - `backend/src/BioStack.KnowledgeWorker/Pipeline/SubstanceCanonicalizer.cs` — map the schema strings `Amino Acid` and `Research Compound` to those members. Leave every other unmapped schema class on `Unknown`.
-- `backend/src/BioStack.Infrastructure/Knowledge/DatabaseKnowledgeSource.cs` — add a list projection that selects only public response columns.
-- `backend/src/BioStack.Application/Services/KnowledgeService.cs` — use that projection for `GetAllCompoundsAsync` only.
+- `backend/src/BioStack.Infrastructure/Knowledge/IKnowledgeSource.cs` — add `ListPublicCompoundsAsync`. Leave `GetAllCompoundsAsync` as the full-entity read.
+- `backend/src/BioStack.Infrastructure/Knowledge/DatabaseKnowledgeSource.cs` — implement `ListPublicCompoundsAsync` as a projection that selects `Id` and the public response columns only. Leave `GetAllCompoundsAsync` unchanged.
+- `backend/src/BioStack.Infrastructure/Knowledge/LocalKnowledgeSource.cs` — implement `ListPublicCompoundsAsync` with the same public fields. Leave `GetAllCompoundsAsync` unchanged.
+- `backend/src/BioStack.Application/Services/KnowledgeService.cs` — `GetAllCompoundsAsync` calls `ListPublicCompoundsAsync` only. No other service method changes.
 - Two new test files named in Tests.
 - `docs/INITIATIVES/biostack-go-live/evidence/BIO-GOLIVE-001-http-transcript.md` — coordinator-written after the human deploy. The builder does not invent this transcript.
 
@@ -75,15 +81,15 @@ Proposed only. The coordinator assigns both at Gate 2. Until then this spec stay
 - Existing stored integers 0 through 10 keep their current names. New members use unused integers 11 and 12.
 - The public list response stays `KnowledgeEntryResponse`. Dose, schedule, pairing, reconstitution, and optimization fields remain absent from the JSON.
 - Single-compound `GetCompoundAsync`, alias lookup, pathway search, and worker upsert stay on the full entity. This parcel does not change their contracts.
-- Production rows already stored as `Unknown` stay `Unknown` until a human runs a reviewed classification repair. This parcel's code must make a fresh canonicalization of Amino Acid and Research Compound persist as 11 and 12. It must not itself write production.
+- Production rows already stored as `Unknown` stay `Unknown` until a later repair parcel. This parcel's code must make a fresh canonicalization of the schema strings `Amino Acid` and `Research Compound` persist as 11 and 12. It must not itself write production. Live labels on existing rows are not acceptance for this parcel.
 
 ## Source/License/Provenance
 
-No new knowledge content is authored. The class strings come from the already published seed schema values `Amino Acid` and `Research Compound`. Provenance for the catalog remains the 2026-10-14 promotion batch `research/review-decisions/review-decision-batch-2026-10-14-go-live-library.json`. This parcel does not edit that file and does not treat the working-tree seed diff as a new source.
+No new knowledge content is authored. The mapper learns the schema strings `Amino Acid` and `Research Compound`. Provenance for the catalog remains the 2026-10-14 promotion batch `research/review-decisions/review-decision-batch-2026-10-14-go-live-library.json`. This parcel does not edit that file. The committed Retatrutide `Peptide` value is not a reviewed class and is not a source for this parcel.
 
 ## Evidence Grade
 
-The class label is an identity field, not a new evidence claim. Existing evidence-tier values are unchanged. Acceptance of the public label requires an HTTP transcript, not an agent assurance. A local unit test proves the mapper. It does not prove the deployed revision.
+The class label is an identity field, not a new evidence claim. Existing evidence-tier values are unchanged. This parcel's public evidence is a coordinator HTTP transcript that names the deployed revision and shows Glycine and Retatrutide still returning `Unknown`. A local unit test proves the mapper. It does not prove the deployed revision, and it does not prove a repaired live label.
 
 ## Review Lifecycle
 
@@ -91,8 +97,8 @@ The class label is an identity field, not a new evidence claim. Existing evidenc
 2. Gate 2 names the spec hash, branch, worktree, builder, and an independent implementation reviewer who did not write the fix.
 3. The builder implements only the allowed files in the named worktree.
 4. The implementation reviewer checks the diff against this spec.
-5. After merge, a human deploys the API. The coordinator records the HTTP transcript. Until that transcript exists, the library class-label gate stays failed.
-6. A separate human action is required before existing production `Unknown` rows can show the new labels: a reviewed classification repair of those rows. That repair is not this parcel and is not a Refresh rerun.
+5. After merge, a human deploys the API. The coordinator records the HTTP transcript. The transcript closes this parcel when it names the revision and shows the stored `Unknown` labels unchanged. The library class-label launch gate stays failed until a later repair parcel changes those rows.
+6. A separate approved parcel is required before existing production `Unknown` rows can show `AminoAcid` or `ResearchCompound`. That repair is not this parcel and is not a Refresh rerun. Retatrutide's reviewed class must be named by a promotion record before that repair writes a Retatrutide class.
 
 ## Promotion Authority
 
@@ -103,19 +109,19 @@ This parcel does not promote knowledge. Promotion authority for the 158 records 
 1. A canonicalized seed record whose schema classification is `Amino Acid` persists and serializes as `AminoAcid`, not `Unknown`.
 2. A canonicalized seed record whose schema classification is `Research Compound` persists and serializes as `ResearchCompound`, not `Unknown`.
 3. Existing enum names for integers 0 through 10 are unchanged. SARM still serializes as `Sarm`. SERM still serializes as `Serm`.
-4. `GetAllCompoundsAsync` does not materialize `RecommendedDosage`, `Frequency`, `PreferredTimeOfDay`, `StandardDosageRange`, `MaxReportedDose`, `WeeklyDosageSchedule`, `IncrementalEscalationSteps`, `TieredDosing`, `PairsWellWith`, `CompatibleBlends`, `VialCompatibility`, or the optimization strings.
-5. The public list still returns one item per distinct canonical name and still omits the `JsonIgnore` fields.
-6. `GetCompoundAsync` still resolves a canonical name and an alias.
-7. After a human production deploy, public Glycine JSON `classification` is `AminoAcid` and public Retatrutide JSON `classification` is `ResearchCompound`, unless a later approved promotion record has changed Retatrutide's reviewed class before that deploy. A cold `GET /api/v1/knowledge/compounds` returns 158 items in under 3 seconds. Evidence is the HTTP transcript, with the deployed revision named and no secret printed.
-8. If the human deploy happens before the classification repair, the transcript must say the code mapping passed in tests and the live rows are still `Unknown`. That result does not close acceptance criterion 7.
+4. `ListPublicCompoundsAsync` selects `Id` and the public response columns. It does not select `RecommendedDosage`, `Frequency`, `PreferredTimeOfDay`, `StandardDosageRange`, `MaxReportedDose`, `WeeklyDosageSchedule`, `IncrementalEscalationSteps`, `TieredDosing`, `PairsWellWith`, `CompatibleBlends`, `VialCompatibility`, or the optimization strings. `GetAllCompoundsAsync` remains a full-entity read for its existing callers.
+5. `KnowledgeService.GetAllCompoundsAsync` calls `ListPublicCompoundsAsync` and still returns one item per distinct canonical name. The public JSON still omits the `JsonIgnore` fields. Duplicate canonical names still break ties by `PublicEvidenceCompleteness` descending, then `Id`. The projection includes `Id` and every column that function reads, plus the other public response columns. It still excludes dose, schedule, pairing, and optimization columns.
+6. `GetCompoundAsync` still resolves a canonical name and an alias from the full entity.
+7. Local tests prove that a fresh canonicalization of `Amino Acid` persists as `AminoAcid` and `Research Compound` persists as `ResearchCompound`. After a human production deploy, the coordinator transcript names the revision and shows public Glycine and Retatrutide `classification` still `Unknown`. That transcript closes this parcel. Live `AminoAcid` and `ResearchCompound` on those rows are acceptance for the later repair parcel only. Cold-start time is recorded if observed and is not a pass or fail for this parcel.
 
 ## Tests
 
 1. `SubstanceCanonicalizerClassificationTests` asserts Amino Acid maps to `CompoundCategory.AminoAcid` and Research Compound maps to `CompoundCategory.ResearchCompound`. It also asserts Small Molecule still maps to `Unknown`, so the parcel does not silently widen the enum.
-2. `KnowledgeListProjectionTests` asserts the list query selects only public columns and that a stored Amino Acid row is returned as `AminoAcid`.
-3. Existing `KnowledgeServicePublicBoundaryTests` stay green and are not weakened.
-4. Focused command: `dotnet test backend/tests/BioStack.KnowledgeWorker.Tests --filter SubstanceCanonicalizerClassificationTests` and `dotnet test backend/tests/BioStack.Application.Tests --filter KnowledgeListProjectionTests`.
-5. The post-deploy HTTP transcript is coordinator evidence. The builder does not call production.
+2. `KnowledgeListProjectionTests` asserts that `KnowledgeService.GetAllCompoundsAsync` calls `ListPublicCompoundsAsync`, that the database projection selects `Id` and the public columns and does not reference the dose, schedule, pairing, or optimization properties, and that a stored integer 11 is returned as `AminoAcid`.
+3. Existing `KnowledgeServicePublicBoundaryTests` stay green and are not weakened. Their list setups stub `ListPublicCompoundsAsync` instead of `GetAllCompoundsAsync`.
+4. `PreviewFakeKnowledgeSource` implements `ListPublicCompoundsAsync` by returning the same entries as its `GetAllCompoundsAsync`. Preview behavior does not change.
+5. Focused command: `dotnet test backend/tests/BioStack.KnowledgeWorker.Tests --filter SubstanceCanonicalizerClassificationTests` and `dotnet test backend/tests/BioStack.Application.Tests --filter "FullyQualifiedName~KnowledgeListProjectionTests|FullyQualifiedName~KnowledgeServicePublicBoundaryTests|FullyQualifiedName~TranscriptCandidatePromotionPreviewServiceTests"`.
+6. The post-deploy HTTP transcript is coordinator evidence. The builder does not call production.
 
 ## Rollback
 
@@ -123,7 +129,7 @@ Revert the parcel commit. Enum values 11 and 12 disappear from new writes. Rows 
 
 ## Out of Scope
 
-- Production Refresh, seed edits, trust-gate edits, and the uncommitted go-live files.
+- Production Refresh, seed edits, trust-gate edits, and any change to the committed Retatrutide row.
 - Adding Small Molecule, Biologic, Vitamin, Mineral, or any class other than Amino Acid and Research Compound.
 - Removing `JsonIgnore` from dose, schedule, or pairing fields.
 - Frontend copy changes. The dossier already prints `entry.classification`.
@@ -134,10 +140,14 @@ Revert the parcel commit. Enum values 11 and 12 disappear from new writes. Rows 
 
 - `backend/src/BioStack.Domain/Enums/CompoundCategory.cs`
 - `backend/src/BioStack.KnowledgeWorker/Pipeline/SubstanceCanonicalizer.cs`
+- `backend/src/BioStack.Infrastructure/Knowledge/IKnowledgeSource.cs`
 - `backend/src/BioStack.Infrastructure/Knowledge/DatabaseKnowledgeSource.cs`
+- `backend/src/BioStack.Infrastructure/Knowledge/LocalKnowledgeSource.cs`
 - `backend/src/BioStack.Application/Services/KnowledgeService.cs`
 - `backend/tests/BioStack.KnowledgeWorker.Tests/SubstanceCanonicalizerClassificationTests.cs`
 - `backend/tests/BioStack.Application.Tests/Services/KnowledgeListProjectionTests.cs`
+- `backend/tests/BioStack.Application.Tests/Services/KnowledgeServicePublicBoundaryTests.cs`
+- `backend/tests/BioStack.Application.Tests/Services/TranscriptCandidatePromotionPreviewServiceTests.cs`
 
 Coordinator-owned: this spec, `docs/specs/INDEX.md`, the HTTP transcript, and every go-live status file.
 
@@ -146,5 +156,5 @@ Coordinator-owned: this spec, `docs/specs/INDEX.md`, the HTTP transcript, and ev
 - Any edit to `substances-seed.json`, `TrustGate.cs`, review-decision JSON, or `JsonIgnore` attributes on `KnowledgeEntryResponse`.
 - Any production connection string, Refresh invocation, Container App deploy, or live database write.
 - Renumbering existing `CompoundCategory` values.
-- Treating the working-tree Retatrutide Peptide class as the reviewed class.
+- Treating the committed Retatrutide Peptide value as the reviewed class.
 - Marking the library gate passed without the HTTP transcript.
