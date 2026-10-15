@@ -174,4 +174,22 @@ describe('billing plan intent', () => {
     });
     expect(apiClient.createCheckoutSession).toHaveBeenCalledWith('operator');
   });
+
+  it('creates a checkout session for commander when a signed-in user chooses Commander', async () => {
+    vi.mocked(apiClient.createCheckoutSession).mockImplementation(
+      () => new Promise(() => undefined),
+    );
+
+    render(<BillingPage />);
+
+    const commanderButton = await screen.findByRole('button', {
+      name: 'Upgrade to Commander',
+    });
+    fireEvent.click(commanderButton);
+
+    await waitFor(() => {
+      expect(apiClient.createCheckoutSession).toHaveBeenCalledTimes(1);
+    });
+    expect(apiClient.createCheckoutSession).toHaveBeenCalledWith('commander');
+  });
 });
