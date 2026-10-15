@@ -193,7 +193,8 @@ public sealed class BillingService : IBillingService
         }
         catch
         {
-            _db.StripeWebhookEvents.Remove(receipt);
+            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Failed;
+            receipt.FailureCode = "unexpected_processing_error";
             await _db.SaveChangesAsync(cancellationToken);
             throw;
         }

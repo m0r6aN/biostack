@@ -17,4 +17,5 @@ public static class StripeWebhookProcessingStatuses
     public const string Accepted = "accepted";
     public const string Processed = "processed";
     public const string Quarantined = "quarantined";
+    public const string Failed = "failed";
 }
