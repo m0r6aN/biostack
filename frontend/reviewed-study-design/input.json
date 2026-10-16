@@ -142,6 +142,22 @@
       "notes": []
     },
     {
+      "decisionId": "go-live-library-2026-10-14-bpc-157",
+      "compoundName": "BPC-157",
+      "decision": "approve-for-promotion",
+      "reviewerId": "biostack-go-live-coordinator-2026-10-14",
+      "reviewedAt": "2026-10-14T20:00:00Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": true,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
       "decisionId": "bpc-study-design-display-20260914-001",
       "compoundName": "BPC-157",
       "decision": "approve-claims",
