@@ -49,7 +49,10 @@ public static class ClaimVerdicts
         _ => 0,
     };
 
-    /// <summary>PROVEN IN HUMANS and MYTH need two reviewers; everything else one.</summary>
+    /// <summary>
+    /// PROVEN IN HUMANS and MYTH need two concurring reviewers, everything else one. Reviewers
+    /// are the two-reviewer AI council (consensus = both); there is no human approval gate.
+    /// </summary>
     public static int RequiredReviewers(string verdict) => verdict is ProvenInHumans or Myth ? 2 : 1;
 
     /// <summary>Re-check cadence: PROMISING every 3 months, everything else every 6.</summary>
@@ -77,10 +80,10 @@ public static class ClaimVerdicts
         if (resolvedSourceCount < 1) blockers.Add("needs at least one resolvable source");
         if (verifiedAt is null) blockers.Add("needs verified_at");
         if (reviewerCount < RequiredReviewers(candidateVerdict))
-            blockers.Add($"needs {RequiredReviewers(candidateVerdict)} reviewer sign-off(s)");
+            blockers.Add($"needs AI council consensus from {RequiredReviewers(candidateVerdict)} reviewer(s)");
         if (candidateVerdict == ProvenInHumans && string.IsNullOrWhiteSpace(qualifier))
             blockers.Add("PROVEN IN HUMANS needs a population and outcome qualifier");
-        if (publishedAt is null) blockers.Add("not published");
+        if (publishedAt is null) blockers.Add("no council verdict date");
         return blockers;
     }
 }

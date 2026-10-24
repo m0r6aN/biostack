@@ -724,7 +724,13 @@ export interface KnowledgePublicClaim {
   recheckDueAt?: string | null;
   publishedAt?: string | null;
   published: boolean;
+  /** published · pending-council · changes-requested · escalated-to-owner */
+  status?: 'published' | 'pending-council' | 'changes-requested' | 'escalated-to-owner';
+  /** 'ai-council' or 'owner' once published. */
+  reviewedBy?: string;
+  /** Council reviewer model ids (provider/model) once published. */
   reviewers: string[];
+  councilDecisionId?: string;
   changelog: { version: number; kind: string; verdict: ClaimVerdict; reason: string; publishedAt?: string | null; reviewers: string[] }[];
 }
 

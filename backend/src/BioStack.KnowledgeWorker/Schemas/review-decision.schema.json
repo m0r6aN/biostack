@@ -111,7 +111,56 @@
             }
           }
         },
-        "legalRisks": { "$ref": "#/$defs/stringArray" }
+        "legalRisks": { "$ref": "#/$defs/stringArray" },
+        "claims": {
+          "description": "Claim-level sign-off on evidence.publicClaims (growth spec Phase 1). Consensus approve at the claim's tier publishes it.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claimId", "currentTier", "outcome", "decision", "tier", "reviewers", "ownerOptions"],
+            "properties": {
+              "claimId": { "type": "string", "minLength": 1 },
+              "currentTier": { "type": "string" },
+              "outcome": { "enum": ["consensus", "escalated-to-owner", "incomplete"] },
+              "decision": { "enum": ["approve", "request-changes", "reject", null] },
+              "tier": { "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded", null] },
+              "reviewers": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["reviewerId", "provider", "model", "decision", "proposedTier", "rationale"],
+                  "properties": {
+                    "reviewerId": { "type": "string", "minLength": 1 },
+                    "provider": { "type": "string", "minLength": 1 },
+                    "model": { "type": "string", "minLength": 1 },
+                    "decision": { "enum": ["approve", "request-changes", "reject", null] },
+                    "proposedTier": { "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded", null] },
+                    "rationale": { "type": "string" }
+                  }
+                }
+              },
+              "ownerOptions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["optionId", "summary", "decision", "basis"],
+                  "properties": {
+                    "optionId": { "type": "string", "minLength": 1 },
+                    "summary": { "type": "string", "minLength": 1 },
+                    "decision": { "enum": ["approve-for-promotion", "request-changes", "reject"] },
+                    "proposedTier": { "type": ["string", "null"] },
+                    "basis": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -92,7 +92,14 @@ var builder = Host.CreateDefaultBuilder(args)
         });
         services.AddSingleton<ISubstanceRecordNormalizer, SubstanceRecordNormalizer>();
         services.AddSingleton<ITrustGate,                 TrustGate>();
-        services.AddSingleton<ISubstanceCanonicalizer,    SubstanceCanonicalizer>();
+        // Claim-level verdicts publish on two-reviewer AI council consensus (owner ruling: no
+        // human approval gates). Sign-offs are read from the same review-decision folders.
+        services.AddSingleton<IClaimSignOffSource>(_ => new DirectoryClaimSignOffSource(new[]
+        {
+            context.Configuration["Worker:ReviewDecisionDirectory"] ?? "research/review-decisions",
+            context.Configuration["Council:DecisionDirectory"] ?? "research/review-decisions",
+        }));
+        services.AddSingleton<ISubstanceCanonicalizer>(sp => new SubstanceCanonicalizer(sp.GetRequiredService<IClaimSignOffSource>()));
         services.AddSingleton<IIngestionPipeline,         IngestionPipeline>();
         services.AddSingleton<IResearchArtifactLoader,    ResearchArtifactLoader>();
         services.AddSingleton<IResearchArtifactValidator>(_ =>

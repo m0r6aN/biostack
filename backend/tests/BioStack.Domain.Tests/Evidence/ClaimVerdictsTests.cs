@@ -30,13 +30,13 @@ public sealed class ClaimVerdictsTests
     public void Proven_and_myth_need_two_reviewers_and_proven_needs_a_qualifier()
     {
         var now = new DateTime(2026, 10, 24, 0, 0, 0, DateTimeKind.Utc);
-        Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Myth, 1, 1, now, now, ""), b => b.Contains("2 reviewer"));
+        Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Myth, 1, 1, now, now, ""), b => b.Contains("2 reviewer(s)"));
         Assert.Empty(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Myth, 1, 2, now, now, ""));
         Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.ProvenInHumans, 1, 2, now, now, ""), b => b.Contains("qualifier"));
         Assert.Empty(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Thin, 1, 1, now, now, ""));
         Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Thin, 0, 1, now, now, ""), b => b.Contains("source"));
         Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Thin, 1, 1, null, now, ""), b => b.Contains("verified_at"));
-        Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Thin, 1, 1, now, null, ""), b => b.Contains("published"));
+        Assert.Contains(ClaimVerdicts.PublishBlockers(ClaimVerdicts.Thin, 1, 1, now, null, ""), b => b.Contains("verdict date"));
     }
 
     [Fact]
