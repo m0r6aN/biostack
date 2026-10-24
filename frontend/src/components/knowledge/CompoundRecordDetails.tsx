@@ -2,6 +2,7 @@
 
 import type { KnowledgeDoseReport, KnowledgeEntryDetails, KnowledgeSafetyItem } from '@/lib/types';
 import { tierKey, tierLabel } from '@/lib/evidenceTiers';
+import { PublicClaimsPanel } from './PublicClaimsPanel';
 
 /**
  * Full record detail for one compound: known vs unknown, dangers, doses found on both
@@ -116,6 +117,7 @@ export function CompoundRecordDetails({ details }: { details: KnowledgeEntryDeta
 
   return (
     <div className="space-y-4" data-testid="compound-record-details">
+      <PublicClaimsPanel claims={details.publicClaims ?? []} />
       <section aria-label="Known and unknown" className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-xl border border-emerald-400/15 bg-emerald-500/[0.04] p-3">
           <p className="text-xs uppercase tracking-[0.15em] text-emerald-300/70 mb-2">Known</p>

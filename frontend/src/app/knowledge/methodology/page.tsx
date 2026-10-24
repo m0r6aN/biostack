@@ -63,6 +63,35 @@ export default function MethodologyPage() {
             </div>
           </section>
 
+          <section aria-labelledby="verdicts-heading" id="verdicts" className="mt-12">
+            <h2 id="verdicts-heading" className="text-2xl font-semibold tracking-tight text-white">
+              Claim verdicts
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-white/62">
+              Each claim people make about a compound gets one plain-language verdict, taken from its
+              evidence tier: Established is PROVEN IN HUMANS (always with the population and outcome
+              studied, under trial conditions), Early Evidence is PROMISING, Plausible Theory is ANIMAL
+              ONLY, Anecdotal Signal and Unsupported are THIN, and Contradicted is MYTH. A claim stays NOT
+              YET GRADED until a reviewer signs off; PROVEN IN HUMANS and MYTH need two reviewers. Every
+              verdict is versioned with the date it was verified and the reason for each change.
+            </p>
+          </section>
+
+          <section aria-labelledby="hype-gap-heading" id="hype-gap" className="mt-12">
+            <h2 id="hype-gap-heading" className="text-2xl font-semibold tracking-tight text-white">
+              How the Hype Gap is measured
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-white/62">
+              The Hype Gap shows how far online claims outrun the evidence, as a band: Low, Moderate,
+              High or Extreme. Hype is scored by our editors from public search and social signals, on a
+              five-step scale (rare, niche, common, everywhere, viral) adjusted for how strong the
+              language is. The evidence score comes from the verdict. The gap is the difference. Claims
+              graded Hype Exceeds Evidence show at least High; a MYTH that is widely repeated shows
+              Extreme. Editorial scoring is a judgement, so we show the band, not a number, and say so.
+              Social signals measure talk, not use.
+            </p>
+          </section>
+
           <section aria-labelledby="sources-heading" className="mt-12">
             <h2 id="sources-heading" className="text-2xl font-semibold tracking-tight text-white">
               Where sources come from
