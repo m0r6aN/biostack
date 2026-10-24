@@ -47,7 +47,21 @@ export function getStatusColor(status: string): string {
 }
 
 export function getEvidenceTierColor(tier: string): string {
-  switch (tier) {
+  switch (tier.toLowerCase().replace(/[\s_-]/g, '')) {
+    case 'established':
+      return 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20';
+    case 'earlyevidence':
+      return 'bg-blue-500/10 text-blue-300 border border-blue-400/20';
+    case 'plausibletheory':
+      return 'bg-amber-500/10 text-amber-300 border border-amber-400/20';
+    case 'anecdotalsignal':
+      return 'bg-white/10 text-white/60 border border-white/15';
+    case 'contradicted':
+    case 'hypeexceedsevidence':
+      return 'bg-rose-500/10 text-rose-300 border border-rose-400/20';
+    case 'unsupported':
+    case 'notgraded':
+      return 'bg-white/5 text-white/40 border border-white/10';
     case 'strong':
       return 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20';
     case 'moderate':

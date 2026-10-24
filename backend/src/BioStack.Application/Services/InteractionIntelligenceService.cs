@@ -397,10 +397,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
     {
         return tier switch
         {
-            EvidenceTier.Strong => 0.10d,
-            EvidenceTier.Mechanistic => 0.08d,
-            EvidenceTier.Moderate => 0.05d,
-            EvidenceTier.Limited => 0.02d,
+            EvidenceTier.Established => 0.10d,
+            EvidenceTier.EarlyEvidence => 0.05d,
+            EvidenceTier.PlausibleTheory => 0.02d,
+            EvidenceTier.AnecdotalSignal => 0.01d,
             _ => 0d
         };
     }

@@ -159,7 +159,7 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
                 Classification = CompoundCategory.Peptide,
                 RegulatoryStatus = "Research-grade peptide",
                 MechanismSummary = "Gastric pentadecapeptide implicated in tissue repair and protective mechanisms across multiple organ systems",
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 SourceReferences = new List<string>
                 {
                     "Sikiric et al. - Pentadecapeptide BPC-157 research",
@@ -184,7 +184,7 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
                 Classification = CompoundCategory.Peptide,
                 RegulatoryStatus = "Research-grade peptide",
                 MechanismSummary = "Synthetic fragment of naturally-occurring thymosin beta-4, associated with tissue repair and inflammatory modulation",
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 SourceReferences = new List<string>
                 {
                     "Thymosin research literature",
@@ -205,7 +205,7 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
                 Classification = CompoundCategory.Peptide,
                 RegulatoryStatus = "Research-grade peptide",
                 MechanismSummary = "Mitochondrial-derived peptide with proposed metabolic and mitochondrial function effects",
-                EvidenceTier = EvidenceTier.Limited,
+                EvidenceTier = EvidenceTier.PlausibleTheory,
                 SourceReferences = new List<string>
                 {
                     "Lee et al. - Mitochondrial peptide research",
@@ -233,7 +233,7 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
                 Classification = CompoundCategory.Coenzyme,
                 RegulatoryStatus = "Endogenous coenzyme",
                 MechanismSummary = "Essential coenzyme involved in cellular energy metabolism, DNA repair, and sirtuin activation pathways",
-                EvidenceTier = EvidenceTier.Strong,
+                EvidenceTier = EvidenceTier.Established,
                 SourceReferences = new List<string>
                 {
                     "Imai & Guarente - NAD+ biology",
@@ -255,7 +255,7 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
                 Classification = CompoundCategory.Pharmaceutical,
                 RegulatoryStatus = "Investigational drug",
                 MechanismSummary = "Triple receptor agonist targeting GLP-1, GIP, and glucagon receptors for metabolic effects",
-                EvidenceTier = EvidenceTier.Limited,
+                EvidenceTier = EvidenceTier.PlausibleTheory,
                 SourceReferences = new List<string>
                 {
                     "Eli Lilly clinical research",

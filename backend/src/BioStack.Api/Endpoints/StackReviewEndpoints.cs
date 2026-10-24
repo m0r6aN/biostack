@@ -203,7 +203,7 @@ public static class StackReviewEndpoints
 
         var evidenceTiers = payload.Compounds.ToDictionary(
             c => c.Slug,
-            c => Enum.TryParse<EvidenceTier>(c.EvidenceTier, true, out var t) ? t : EvidenceTier.None);
+            c => ParseDeliberationTier(c.EvidenceTier));
 
         var knownPatterns = payload.KnownPatternNames.Select(name =>
             new KnownPattern(Guid.NewGuid().ToString("N"), name, [], name)).ToList();
@@ -409,4 +409,20 @@ public static class StackReviewEndpoints
         "Warning"  => "assumption",
         _          => "claim"
     };
+
+    // Accepts the 7-tier methodology names the knowledge API now returns ("Established",
+    // "EarlyEvidence", "Early Evidence", ...) and the deliberation engine's own names.
+    private static EvidenceTier ParseDeliberationTier(string? value)
+    {
+        var key = (value ?? string.Empty).Replace(" ", string.Empty).Replace("-", string.Empty);
+        return key.ToLowerInvariant() switch
+        {
+            "established" => EvidenceTier.Strong,
+            "earlyevidence" => EvidenceTier.Moderate,
+            "plausibletheory" => EvidenceTier.Limited,
+            "anecdotalsignal" => EvidenceTier.Anecdotal,
+            "contradicted" or "unsupported" or "hypeexceedsevidence" => EvidenceTier.None,
+            _ => Enum.TryParse<EvidenceTier>(key, true, out var t) ? t : EvidenceTier.None,
+        };
+    }
 }

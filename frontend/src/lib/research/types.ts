@@ -7,6 +7,9 @@ export type PromotionReadiness =
   | 'candidate-for-promotion';
 
 export type EvidenceTier =
+  | 'Established' | 'Plausible Theory' | 'Early Evidence' | 'Anecdotal Signal'
+  | 'Contradicted' | 'Unsupported' | 'Hype Exceeds Evidence' | 'Not graded'
+  // Legacy scale, still emitted by relationship packets and older research artifacts.
   | 'Strong' | 'Moderate' | 'Limited'
   | 'Insufficient' | 'Unknown' | 'Anecdotal';
 

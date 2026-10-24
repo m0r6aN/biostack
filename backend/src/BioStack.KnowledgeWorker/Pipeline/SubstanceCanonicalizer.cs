@@ -121,17 +121,8 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
         };
     }
 
-    private static EvidenceTier MapEvidenceTier(string schemaValue)
-    {
-        return (schemaValue ?? string.Empty).Trim() switch
-        {
-            "Strong"       => EvidenceTier.Strong,
-            "Moderate"     => EvidenceTier.Moderate,
-            "Limited"      => EvidenceTier.Limited,
-            "Insufficient" => EvidenceTier.Unknown,
-            _              => EvidenceTier.Unknown,
-        };
-    }
+    // 7-tier methodology labels ("Early Evidence"). "Not graded" and anything else map to Unknown.
+    private static EvidenceTier MapEvidenceTier(string schemaValue) => EvidenceTiers.Parse(schemaValue);
 
     private static KnowledgeEntryDetails BuildDetails(SubstanceRecord r)
     {

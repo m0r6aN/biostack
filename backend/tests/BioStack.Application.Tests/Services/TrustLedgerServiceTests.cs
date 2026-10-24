@@ -10,7 +10,7 @@ using Xunit;
 [Trait("Category", "Unit")]
 public class TrustLedgerServiceTests
 {
-    private static KnowledgeEntry MakeEntry(string name, EvidenceTier tier = EvidenceTier.Moderate) =>
+    private static KnowledgeEntry MakeEntry(string name, EvidenceTier tier = EvidenceTier.EarlyEvidence) =>
         new()
         {
             CanonicalName = name,
@@ -29,7 +29,7 @@ public class TrustLedgerServiceTests
     {
         var mockSource = new Mock<IKnowledgeSource>();
         mockSource.Setup(s => s.GetCompoundAsync(It.IsAny<string>(), default))
-                  .ReturnsAsync(MakeEntry("BPC-157", EvidenceTier.Moderate));
+                  .ReturnsAsync(MakeEntry("BPC-157", EvidenceTier.EarlyEvidence));
 
         var sut = new TrustLedgerService(mockSource.Object);
         var result = await sut.GetTrustLedgerAsync("bpc-157");
@@ -67,7 +67,7 @@ public class TrustLedgerServiceTests
     [Fact]
     public async Task GetTrustLedger_WhenSourceRefsEmpty_AddsQualityFlag()
     {
-        var entry = MakeEntry("NoRefs", EvidenceTier.Limited);
+        var entry = MakeEntry("NoRefs", EvidenceTier.PlausibleTheory);
         entry.SourceReferences = [];
 
         var mockSource = new Mock<IKnowledgeSource>();

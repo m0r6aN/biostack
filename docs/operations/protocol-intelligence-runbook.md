@@ -12,7 +12,7 @@ Protocol Intelligence is educational and observational. Runtime output must be s
 ## License review workflow
 
 1. Register every source in the source registry with license, redistribution, commercial-use, credential, and attribution state.
-2. Block display, export, and training use when license status is unknown, non-commercial-only, restricted, expired, or pending legal review.
+2. Record license status. Unknown, non-commercial-only, restricted or expired licenses are logged as known risks (canon "Known risks") and shown on the source; export and training use stay off until the owner decides.
 3. Preserve source excerpts only where license permits. Contract endpoints may expose artifact versions and IDs, not restricted source text.
 4. Re-review licenses before adding a source to any monetized feature.
 
@@ -20,8 +20,8 @@ Protocol Intelligence is educational and observational. Runtime output must be s
 
 1. Load structured artifacts from `research/protocol-intelligence`.
 2. Validate contract fields, source references, evidence tier, confidence, review status, and forbidden-output scan result.
-3. Require human review for high-risk, regulatory, safety, prescription, hormone-axis, GLP-1, SARM, SERM, peptide, source-quality, adverse-effect, and contradiction claims.
-4. Promote only artifacts with approved review status and complete citations.
+3. Run the two-reviewer AI council on high-risk, regulatory, safety, prescription, hormone-axis, GLP-1, SARM, SERM, peptide, source-quality, adverse-effect, and contradiction claims; disagreements escalate to the owner.
+4. Publish artifacts with complete citations; unreviewed artifacts are labeled pending review.
 5. Keep rejected or incomplete artifacts out of user-facing runtime responses.
 
 ## Review SLA
@@ -35,7 +35,7 @@ Protocol Intelligence is educational and observational. Runtime output must be s
 
 1. Disable runtime visibility for the artifact ID or artifact type.
 2. Re-run Protocol Intelligence contract tests and evaluation worker checks.
-3. Publish a replacement artifact only after reviewer approval and forbidden-output scan pass.
+3. Publish a replacement artifact after AI council consensus (or owner decision) and a passing forbidden-output scan.
 4. Record the rollback reason, affected artifact IDs, reviewer, timestamp, and replacement status.
 5. Verify user-facing endpoints return Unknown or warning-only output while the artifact is disabled.
 

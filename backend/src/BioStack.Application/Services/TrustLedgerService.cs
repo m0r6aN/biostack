@@ -118,7 +118,7 @@ public sealed class TrustLedgerService(IKnowledgeSource knowledgeSource) : ITrus
         KnowledgeEntry entry, List<string> blockers)
     {
         var actions = new List<string>(blockers);
-        if (entry.EvidenceTier is EvidenceTier.Limited or EvidenceTier.Unknown)
+        if (entry.EvidenceTier is EvidenceTier.PlausibleTheory or EvidenceTier.AnecdotalSignal or EvidenceTier.Unknown)
             actions.Add("Source review required to elevate evidence tier");
         return actions;
     }
@@ -126,11 +126,11 @@ public sealed class TrustLedgerService(IKnowledgeSource knowledgeSource) : ITrus
     private static string MapTierToConfidence(EvidenceTier tier) =>
         tier switch
         {
-            EvidenceTier.Strong      => "high",
-            EvidenceTier.Mechanistic => "high",
-            EvidenceTier.Moderate    => "moderate",
-            EvidenceTier.Limited     => "low",
-            _                        => "insufficient"
+            EvidenceTier.Established     => "high",
+            EvidenceTier.EarlyEvidence   => "moderate",
+            EvidenceTier.PlausibleTheory => "low",
+            EvidenceTier.AnecdotalSignal => "low",
+            _                            => "insufficient"
         };
 }
 
