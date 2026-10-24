@@ -19,6 +19,12 @@ public interface ISubstanceCanonicalizer
 
 public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
 {
+    private readonly IClaimSignOffSource _signOffs;
+
+    public SubstanceCanonicalizer() : this(EmptyClaimSignOffSource.Instance) { }
+
+    public SubstanceCanonicalizer(IClaimSignOffSource signOffs) => _signOffs = signOffs;
+
     public KnowledgeEntry ToKnowledgeEntry(SubstanceRecord record)
     {
         if (record is null) throw new ArgumentNullException(nameof(record));
@@ -81,7 +87,7 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             Notes             = string.Join(" ", record.Provenance.CurationNotes
                                       .Select(n => n.Trim())
                                       .Where(n => n.Length > 0)),
-            Details           = BuildDetails(record),
+            Details           = BuildDetails(record, _signOffs.Current),
         };
 
         // Primary dosing projection — first productSpecific guidance wins, otherwise first entry.
@@ -128,7 +134,7 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
     // 7-tier methodology labels ("Early Evidence"). "Not graded" and anything else map to Unknown.
     private static EvidenceTier MapEvidenceTier(string schemaValue) => EvidenceTiers.Parse(schemaValue);
 
-    private static KnowledgeEntryDetails BuildDetails(SubstanceRecord r)
+    private static KnowledgeEntryDetails BuildDetails(SubstanceRecord r, ClaimSignOffIndex signOffs)
     {
         static List<string> Clean(IEnumerable<string?> values) => values
             .Select(v => (v ?? string.Empty).Trim())
@@ -191,7 +197,7 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             {
                 Claim = c.Claim, Tier = c.Tier, Confidence = c.Confidence, Sources = c.Sources.ToList(),
             }).ToList(),
-            PublicClaims  = PublicClaimProjector.Project(r),
+            PublicClaims  = PublicClaimProjector.Project(r, signOffs),
             EvidenceGaps  = Clean(r.Evidence.EvidenceGaps),
             Controversies = Clean(r.Evidence.Controversies),
             Interactions  = r.Interactions.Select(i => new KnowledgeInteraction

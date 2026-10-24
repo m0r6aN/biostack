@@ -21,13 +21,27 @@ plain-language labels derived from it (`BioStack.Domain/Evidence/ClaimVerdicts.c
 `sources`, `verifiedAt`, `verifiedBy`, `reviewers`, `changeReason`, `publishedAt`). Old versions are
 never deleted; the latest version must match the claim's tier, derived verdict and sources.
 
-## Publish gate
+## Publish gate (AI council, no human approval)
 
-A verdict, note and Hype Gap band are public only when the latest version has `verifiedAt`,
-`publishedAt`, at least one resolvable source, the qualifier (PROVEN IN HUMANS) and enough
-reviewers (two for PROVEN IN HUMANS and MYTH, one otherwise). Until then the API returns
-`verdict: "NOT YET GRADED"` with the statement and sources only. Re-check due: PROMISING 3 months,
-everything else 6 months after `verifiedAt`.
+Owner ruling: no human approval gates. Claim sign-off comes from the two-reviewer AI council
+(`RunMode=CouncilReview`, PR #556/#557). Each reviewer returns a verdict per public claim; the
+decision batch records them under `council.claims` with both reviewers' provider/model ids and the
+batch's `reviewedAt` (the verdict date).
+
+- Both reviewers approve at the claim's own tier: **consensus**, the claim publishes. That is two
+  concurring reviewers, which also meets the two-reviewer rule for PROVEN IN HUMANS and MYTH.
+- Both request changes at the same tier: consensus to hold; the claim stays NOT YET GRADED.
+- Anything else (disagreement, or agreement on a different tier): **escalated to Clint** with
+  distinct options in `research/owner-escalations/council-escalation-*.{json,md}`. His pick is
+  recorded as `ownerDecision` on the claim's latest version and publishes it.
+- A sign-off only counts if it is dated on or after the latest version's `verifiedAt`; a new
+  version makes the record due for the council again.
+
+The verdict, note and Hype Gap band are public only with that sign-off, `verifiedAt`, at least one
+resolvable source and (PROVEN IN HUMANS) the qualifier. The API returns `status`
+(`published` / `pending-council` / `changes-requested` / `escalated-to-owner`), `reviewedBy`
+(`ai-council` / `owner`), `reviewers` (model ids) and `publishedAt` (verdict date). Re-check due:
+PROMISING 3 months, everything else 6 months after `verifiedAt`.
 
 ## Hype Gap v0 (editorial)
 
@@ -36,7 +50,7 @@ everything else 6 months after `verifiedAt`.
 THIN 15 · MYTH 0; bands Low <15 · Moderate 15–39 · High 40–64 · Extreme ≥65. MYTH with HypeScore ≥ 40
 shows Extreme. Only the band is public. The rubric-to-score numbers are a v0 choice for review.
 
-## To publish (needs Clint)
+## To publish
 
-Name reviewers, then for each claim add reviewer initials and `publishedAt` to its latest version
-(an `edit` entry, no version bump) and re-run the KnowledgeWorker seed/refresh.
+Configure the council's two reviewers (`Council__Reviewers__0__*`, `Council__Reviewers__1__*`), run
+`Worker__RunMode=CouncilReview`, then Seed/Refresh. Only escalations need Clint.

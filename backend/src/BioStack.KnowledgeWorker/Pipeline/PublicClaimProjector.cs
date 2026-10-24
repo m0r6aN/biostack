@@ -9,8 +9,8 @@ namespace BioStack.KnowledgeWorker.Pipeline;
 /// <summary>
 /// Turns a record's <c>evidence.publicClaims</c> into the public projection. The verdict
 /// is derived from the 7-tier grade; it, the note and the Hype Gap band are withheld
-/// (NOT YET GRADED) until the latest version is verified, reviewed and published and
-/// the record passes <see cref="Validate"/>.
+/// (NOT YET GRADED) until the two-reviewer AI council reaches consensus on the latest
+/// version (or the owner resolves an escalation) and the record passes <see cref="Validate"/>.
 /// </summary>
 public static class PublicClaimProjector
 {
@@ -18,13 +18,29 @@ public static class PublicClaimProjector
         @"\b\d+(\.\d+)?\s?(mg|mcg|µg|ug|g|iu|ml|mL|units?)\b",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
+    public const string OwnerReviewerId = "owner:clinton-morgan";
+
     public static List<KnowledgePublicClaim> Project(SubstanceRecord record)
+        => Project(record, ClaimSignOffIndex.Empty);
+
+    public static List<KnowledgePublicClaim> Project(SubstanceRecord record, ClaimSignOffIndex signOffs)
     {
         var sources = SourcesById(record);
-        return record.Evidence.PublicClaims.Select(c => Project(c, sources)).ToList();
+        return record.Evidence.PublicClaims
+            .Select(c => Project(c, sources, signOffs.For(record.Identity.CanonicalName, c.Id)))
+            .ToList();
     }
 
     public static KnowledgePublicClaim Project(PublicClaim claim, IReadOnlyDictionary<string, SourceRecord> sourcesById)
+        => Project(claim, sourcesById, Array.Empty<ClaimSignOff>());
+
+    /// <summary>
+    /// Sign-off comes from the AI council (consensus approve at the claim's tier, dated on or
+    /// after the latest version's verifiedAt) or, after an escalation, from the owner's
+    /// recorded decision. No human approval is required otherwise.
+    /// </summary>
+    public static KnowledgePublicClaim Project(
+        PublicClaim claim, IReadOnlyDictionary<string, SourceRecord> sourcesById, IReadOnlyList<ClaimSignOff> signOffs)
     {
         var tier = EvidenceTiers.Parse(claim.Tier);
         var candidate = CandidateVerdict(claim);
@@ -45,10 +61,19 @@ public static class PublicClaimProjector
             .ToList();
 
         var latest = Latest(claim);
+        var signOff = SignOffFor(claim, latest, NextVersionAt(claim, latest), signOffs);
         var blockers = ClaimVerdicts.PublishBlockers(
-            candidate, resolved.Count, latest?.Reviewers.Count ?? 0, latest?.VerifiedAt, latest?.PublishedAt, qualifier).ToList();
+            candidate, resolved.Count, signOff?.Reviewers.Count ?? 0, latest?.VerifiedAt, signOff?.At, qualifier).ToList();
         blockers.AddRange(Validate(claim, sourcesById));
         var published = blockers.Count == 0;
+
+        var current = latest?.VerifiedAt is { } verified
+            ? signOffs.LastOrDefault(s => s.ReviewedAt.UtcDateTime >= verified)
+            : signOffs.LastOrDefault();
+        var status = published ? "published"
+            : current?.Outcome == "escalated-to-owner" ? "escalated-to-owner"
+            : current is { Outcome: "consensus", Decision: "request-changes" } ? "changes-requested"
+            : "pending-council";
 
         var hypeScore = HypeGap.HypeScore(claim.Hype?.Rubric, claim.Hype?.Intensity);
         var band = published ? HypeGap.Band(candidate, tier, hypeScore) : string.Empty;
@@ -70,19 +95,63 @@ public static class PublicClaimProjector
             Version = latest?.Version ?? 0,
             VerifiedAt = latest?.VerifiedAt,
             RecheckDueAt = latest?.VerifiedAt?.AddMonths(ClaimVerdicts.RecheckMonths(candidate)),
-            PublishedAt = published ? latest?.PublishedAt : null,
+            PublishedAt = published ? signOff!.At : null,
             Published = published,
-            Reviewers = published ? latest!.Reviewers.ToList() : new List<string>(),
-            Changelog = claim.Versions
-                .Where(v => v.PublishedAt is not null && v.Verdict != ClaimVerdicts.NotYetGraded)
-                .OrderBy(v => v.Version).ThenBy(v => v.PublishedAt)
-                .Select(v => new KnowledgeClaimChange
-                {
-                    Version = v.Version, Kind = v.Kind, Verdict = v.Verdict, Reason = v.ChangeReason,
-                    PublishedAt = v.PublishedAt, Reviewers = v.Reviewers.ToList(),
-                })
-                .ToList(),
+            Status = status,
+            ReviewedBy = published ? signOff!.By : string.Empty,
+            Reviewers = published ? signOff!.Reviewers.ToList() : new List<string>(),
+            CouncilDecisionId = published ? signOff!.DecisionId : string.Empty,
+            Changelog = Changelog(claim, signOffs),
         };
+    }
+
+    private sealed record SignOffInfo(string By, IReadOnlyList<string> Reviewers, DateTime At, string DecisionId);
+
+    private static DateTime? NextVersionAt(PublicClaim claim, PublicClaimVersion? version)
+        => version is null ? null : claim.Versions
+            .Where(v => v.Kind != "edit" && v.Version > version.Version)
+            .Select(v => v.VerifiedAt).Where(d => d is not null).Min();
+
+    /// <summary>The sign-off that applies to one version, if any.</summary>
+    private static SignOffInfo? SignOffFor(PublicClaim claim, PublicClaimVersion? version, DateTime? before, IReadOnlyList<ClaimSignOff> signOffs)
+    {
+        if (version is null) return null;
+        // Edit entries (typo fixes) share the version number; an owner decision on any of them counts.
+        var owner = claim.Versions
+            .Where(v => v.Version == version.Version && v.OwnerDecision?.DecidedAt is not null)
+            .Select(v => v.OwnerDecision!)
+            .Where(d => version.VerifiedAt is null || d.DecidedAt >= version.VerifiedAt)
+            .OrderBy(d => d.DecidedAt).LastOrDefault();
+        if (owner is not null)
+        {
+            var who = string.IsNullOrWhiteSpace(owner.DecidedBy) ? OwnerReviewerId : owner.DecidedBy;
+            // The owner is the final escalation step, so the decision stands in for both seats.
+            return new SignOffInfo("owner", new[] { who, who }, owner.DecidedAt!.Value, $"owner-option-{owner.OptionId}");
+        }
+
+        var council = signOffs.FirstOrDefault(s =>
+            s.Outcome == "consensus" && s.Decision == "approve" &&
+            string.Equals(s.Tier, version.Tier, StringComparison.Ordinal) &&
+            (version.VerifiedAt is null || s.ReviewedAt.UtcDateTime >= version.VerifiedAt) &&
+            (before is null || s.ReviewedAt.UtcDateTime < before));
+        return council is null ? null
+            : new SignOffInfo("ai-council", council.ReviewerModels, council.ReviewedAt.UtcDateTime, council.DecisionId);
+    }
+
+    private static List<KnowledgeClaimChange> Changelog(PublicClaim claim, IReadOnlyList<ClaimSignOff> signOffs)
+    {
+        var entries = new List<KnowledgeClaimChange>();
+        foreach (var v in claim.Versions.Where(v => v.Kind != "edit").OrderBy(v => v.Version))
+        {
+            var signed = SignOffFor(claim, v, NextVersionAt(claim, v), signOffs);
+            if (signed is null || v.Verdict == ClaimVerdicts.NotYetGraded) continue;
+            entries.Add(new KnowledgeClaimChange
+            {
+                Version = v.Version, Kind = v.Kind, Verdict = v.Verdict, Reason = v.ChangeReason,
+                PublishedAt = signed.At, Reviewers = signed.Reviewers.Distinct().ToList(),
+            });
+        }
+        return entries;
     }
 
     /// <summary>The verdict the grade earns, before any publish gate.</summary>
@@ -90,7 +159,7 @@ public static class PublicClaimProjector
         => ClaimVerdicts.FromTier(EvidenceTiers.Parse(claim.Tier), EvidenceTiers.Parse(claim.EvidenceBasis));
 
     public static PublicClaimVersion? Latest(PublicClaim claim)
-        => claim.Versions.OrderBy(v => v.Version).ThenBy(v => v.PublishedAt ?? v.VerifiedAt ?? DateTime.MinValue).LastOrDefault();
+        => claim.Versions.OrderBy(v => v.Version).ThenBy(v => v.Kind == "edit" ? 1 : 0).ThenBy(v => v.VerifiedAt ?? DateTime.MinValue).LastOrDefault();
 
     public static Dictionary<string, SourceRecord> SourcesById(SubstanceRecord record)
         => record.Provenance.SourceRecords

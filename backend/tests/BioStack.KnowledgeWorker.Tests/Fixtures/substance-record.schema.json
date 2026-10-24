@@ -752,7 +752,7 @@
       }
     },
     "publicClaim": {
-      "description": "A claim as people state it online. The public verdict is derived from the tier and shown only once reviewed and published.",
+      "description": "A claim as people state it online. The public verdict is derived from the tier and shown only after AI-council consensus (or an owner decision on an escalation).",
       "type": "object",
       "additionalProperties": false,
       "required": ["id", "statement", "population", "outcome", "tier", "note", "sources", "versions"],
@@ -806,7 +806,7 @@
     "publicClaimVersion": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["version", "kind", "tier", "verdict", "sources", "verifiedAt", "reviewers", "changeReason", "publishedAt"],
+      "required": ["version", "kind", "tier", "verdict", "sources", "verifiedAt", "changeReason"],
       "properties": {
         "version": { "type": "integer", "minimum": 1 },
         "kind": { "type": "string", "enum": ["initial", "update", "correction", "edit"] },
@@ -815,9 +815,23 @@
         "sources": { "$ref": "#/$defs/sourceRefArray" },
         "verifiedAt": { "$ref": "#/$defs/nullableDateTime" },
         "verifiedBy": { "type": "string" },
-        "reviewers": { "type": "array", "items": { "type": "string" } },
         "changeReason": { "$ref": "#/$defs/nonEmptyString" },
-        "publishedAt": { "$ref": "#/$defs/nullableDateTime" }
+        "ownerDecision": {
+          "description": "Set only when the owner resolves an AI-council escalation for this version.",
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["optionId", "decidedAt", "decidedBy"],
+              "properties": {
+                "optionId": { "type": "string", "minLength": 1 },
+                "decidedAt": { "$ref": "#/$defs/nullableDateTime" },
+                "decidedBy": { "type": "string", "minLength": 1 }
+              }
+            },
+            { "type": "null" }
+          ]
+        }
       }
     },
     "doseReport": {

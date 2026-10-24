@@ -184,7 +184,18 @@ public sealed class HypeAssessment
     [JsonPropertyName("rationale")] public string    Rationale { get; set; } = string.Empty;
 }
 
-/// <summary>One entry of a claim's version history. Old versions are never deleted.</summary>
+/// <summary>The owner's pick on an escalated claim (option letter from the council escalation file).</summary>
+public sealed class ClaimOwnerDecision
+{
+    [JsonPropertyName("optionId")]  public string    OptionId  { get; set; } = string.Empty;
+    [JsonPropertyName("decidedAt")] public DateTime? DecidedAt { get; set; }
+    [JsonPropertyName("decidedBy")] public string    DecidedBy { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// One entry of a claim's version history. Old versions are never deleted. Sign-off is not
+/// stored here: it comes from the two-reviewer AI council's review-decision batches.
+/// </summary>
 public sealed class PublicClaimVersion
 {
     [JsonPropertyName("version")]      public int          Version      { get; set; }
@@ -195,9 +206,9 @@ public sealed class PublicClaimVersion
     [JsonPropertyName("sources")]      public List<string> Sources      { get; set; } = new();
     [JsonPropertyName("verifiedAt")]   public DateTime?    VerifiedAt   { get; set; }
     [JsonPropertyName("verifiedBy")]   public string       VerifiedBy   { get; set; } = string.Empty;
-    [JsonPropertyName("reviewers")]    public List<string> Reviewers    { get; set; } = new();
     [JsonPropertyName("changeReason")] public string       ChangeReason { get; set; } = string.Empty;
-    [JsonPropertyName("publishedAt")]  public DateTime?    PublishedAt  { get; set; }
+    /// <summary>Set only when Clint resolves a council escalation for this version; publishes the claim at its tier.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("ownerDecision")] public ClaimOwnerDecision? OwnerDecision { get; set; }
 }
 
 public sealed class SourceRecord

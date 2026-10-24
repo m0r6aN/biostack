@@ -29,7 +29,10 @@ public static class CouncilItemSelector
             {
                 var latest = decisions[0];
                 if (latest.Decision.Equals("escalate-to-owner", StringComparison.OrdinalIgnoreCase)) continue;
-                if (reviewed is null || latest.ReviewedAt >= reviewed) continue;
+                var claimsVerified = LatestClaimVerification(record);
+                var recordCurrent = reviewed is null || latest.ReviewedAt >= reviewed;
+                var claimsCurrent = claimsVerified is null || latest.ReviewedAt >= claimsVerified;
+                if (recordCurrent && claimsCurrent) continue;
             }
             items.Add(Build(record, name!, reviewed));
         }
@@ -46,6 +49,15 @@ public static class CouncilItemSelector
         var tier = (record["evidence"] as JsonObject)?["overallTier"]?.GetValue<string>() ?? RecordEvidenceTiers.NotGraded;
         return new CouncilReviewItem(name, RecordEvidenceTiers.Normalize(tier), reviewed, payload);
     }
+
+    /// <summary>Newest <c>verifiedAt</c> across the record's public-claim versions: a new claim version is due for the council.</summary>
+    public static DateTimeOffset? LatestClaimVerification(JsonObject record)
+        => ((record["evidence"] as JsonObject)?["publicClaims"] as JsonArray)?
+            .OfType<JsonObject>()
+            .SelectMany(c => (c["versions"] as JsonArray)?.OfType<JsonObject>() ?? Enumerable.Empty<JsonObject>())
+            .Select(v => ParseDate(v["verifiedAt"] is JsonValue jv && jv.TryGetValue<string>(out var t) ? t : null))
+            .Where(d => d is not null)
+            .Max();
 
     private static DateTimeOffset? ParseDate(string? value)
         => DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var d) ? d : null;

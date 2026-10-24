@@ -162,9 +162,15 @@ public sealed class KnowledgePublicClaim
     public DateTime? RecheckDueAt { get; set; }
     public DateTime? PublishedAt { get; set; }
     public bool Published { get; set; }
-    /// <summary>Reviewer initials, only once published.</summary>
+    /// <summary>published · pending-council · changes-requested · escalated-to-owner.</summary>
+    public string Status { get; set; } = string.Empty;
+    /// <summary>"ai-council" or "owner" once published.</summary>
+    public string ReviewedBy { get; set; } = string.Empty;
+    /// <summary>Council reviewer model ids (provider/model), or the owner id, once published.</summary>
     public List<string> Reviewers { get; set; } = new();
-    /// <summary>Published versions only, oldest first.</summary>
+    /// <summary>Review-decision id that carried the sign-off.</summary>
+    public string CouncilDecisionId { get; set; } = string.Empty;
+    /// <summary>Signed-off versions only, oldest first.</summary>
     public List<KnowledgeClaimChange> Changelog { get; set; } = new();
 }
 
@@ -184,6 +190,7 @@ public sealed class KnowledgeClaimChange
     public string Verdict { get; set; } = string.Empty;
     public string Reason { get; set; } = string.Empty;
     public DateTime? PublishedAt { get; set; }
+    /// <summary>Council reviewer model ids (provider/model) or the owner id.</summary>
     public List<string> Reviewers { get; set; } = new();
 }
 
