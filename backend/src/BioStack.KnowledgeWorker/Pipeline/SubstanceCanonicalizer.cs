@@ -191,6 +191,7 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             {
                 Claim = c.Claim, Tier = c.Tier, Confidence = c.Confidence, Sources = c.Sources.ToList(),
             }).ToList(),
+            PublicClaims  = PublicClaimProjector.Project(r),
             EvidenceGaps  = Clean(r.Evidence.EvidenceGaps),
             Controversies = Clean(r.Evidence.Controversies),
             Interactions  = r.Interactions.Select(i => new KnowledgeInteraction

@@ -705,6 +705,29 @@ export interface KnowledgeDoseReport {
   notes: string;
 }
 
+export type ClaimVerdict = 'PROVEN IN HUMANS' | 'PROMISING' | 'ANIMAL ONLY' | 'THIN' | 'MYTH' | 'NOT YET GRADED';
+
+export interface KnowledgePublicClaim {
+  id: string;
+  statement: string;
+  population: string;
+  outcome: string;
+  tier: string;
+  verdict: ClaimVerdict;
+  qualifier: string;
+  note: string;
+  hypeBand: '' | 'Low' | 'Moderate' | 'High' | 'Extreme';
+  hypeMethodNote: string;
+  sources: { id: string; title: string; url: string; publisher: string; sourceType: string }[];
+  version: number;
+  verifiedAt?: string | null;
+  recheckDueAt?: string | null;
+  publishedAt?: string | null;
+  published: boolean;
+  reviewers: string[];
+  changelog: { version: number; kind: string; verdict: ClaimVerdict; reason: string; publishedAt?: string | null; reviewers: string[] }[];
+}
+
 export interface KnowledgeEntryDetails {
   compoundFamily: string;
   requiresPrescription?: boolean | null;
@@ -724,6 +747,8 @@ export interface KnowledgeEntryDetails {
   doseReports: KnowledgeDoseReport[];
   labelDosing: { context: string; population: string; route: string; amount?: number | null; unit: string; frequency: string; scheduleText: string; productSpecific: boolean; notes: string[]; sources: string[] }[];
   claims: { claim: string; tier: string; confidence: string; sources: string[] }[];
+  /** Claims as they circulate online with a verdict derived from the 7-tier grade; NOT YET GRADED until reviewed and published. */
+  publicClaims?: KnowledgePublicClaim[];
   evidenceGaps: string[];
   controversies: string[];
   interactions: { type: string; target: string; severity: string; mechanism: string; effect: string; note: string; sources: string[] }[];

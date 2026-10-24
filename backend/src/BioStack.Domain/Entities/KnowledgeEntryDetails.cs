@@ -22,6 +22,13 @@ public sealed class KnowledgeEntryDetails
     public List<KnowledgeDoseReport> DoseReports { get; set; } = new();
     public List<KnowledgeLabelDose> LabelDosing { get; set; } = new();
     public List<KnowledgeClaim> Claims { get; set; } = new();
+
+    /// <summary>
+    /// Claims as they circulate online, each with a plain-language verdict derived from
+    /// its 7-tier grade (growth spec 02). Verdict, note and Hype Gap band stay
+    /// NOT YET GRADED / empty until a reviewer signs off and the claim is published.
+    /// </summary>
+    public List<KnowledgePublicClaim> PublicClaims { get; set; } = new();
     public List<string> EvidenceGaps { get; set; } = new();
     public List<string> Controversies { get; set; } = new();
     public List<KnowledgeInteraction> Interactions { get; set; } = new();
@@ -129,6 +136,55 @@ public sealed class KnowledgeClaim
     public string Tier { get; set; } = string.Empty;
     public string Confidence { get; set; } = string.Empty;
     public List<string> Sources { get; set; } = new();
+}
+
+public sealed class KnowledgePublicClaim
+{
+    /// <summary>Stable id, e.g. "bpc-157-heals-tendons". Never reused.</summary>
+    public string Id { get; set; } = string.Empty;
+    /// <summary>The claim as people say it online. Never contains a dose.</summary>
+    public string Statement { get; set; } = string.Empty;
+    public string Population { get; set; } = string.Empty;
+    public string Outcome { get; set; } = string.Empty;
+    /// <summary>Canonical 7-tier grade for this claim.</summary>
+    public string Tier { get; set; } = string.Empty;
+    /// <summary>Public verdict; NOT YET GRADED until published.</summary>
+    public string Verdict { get; set; } = string.Empty;
+    /// <summary>"In [population], for [outcome], under trial conditions." (PROVEN IN HUMANS only).</summary>
+    public string Qualifier { get; set; } = string.Empty;
+    public string Note { get; set; } = string.Empty;
+    /// <summary>Low · Moderate · High · Extreme, or empty when not scored.</summary>
+    public string HypeBand { get; set; } = string.Empty;
+    public string HypeMethodNote { get; set; } = string.Empty;
+    public List<KnowledgeClaimSource> Sources { get; set; } = new();
+    public int Version { get; set; }
+    public DateTime? VerifiedAt { get; set; }
+    public DateTime? RecheckDueAt { get; set; }
+    public DateTime? PublishedAt { get; set; }
+    public bool Published { get; set; }
+    /// <summary>Reviewer initials, only once published.</summary>
+    public List<string> Reviewers { get; set; } = new();
+    /// <summary>Published versions only, oldest first.</summary>
+    public List<KnowledgeClaimChange> Changelog { get; set; } = new();
+}
+
+public sealed class KnowledgeClaimSource
+{
+    public string Id { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
+    public string Publisher { get; set; } = string.Empty;
+    public string SourceType { get; set; } = string.Empty;
+}
+
+public sealed class KnowledgeClaimChange
+{
+    public int Version { get; set; }
+    public string Kind { get; set; } = string.Empty;
+    public string Verdict { get; set; } = string.Empty;
+    public string Reason { get; set; } = string.Empty;
+    public DateTime? PublishedAt { get; set; }
+    public List<string> Reviewers { get; set; } = new();
 }
 
 public sealed class KnowledgeInteraction
