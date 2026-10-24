@@ -43,7 +43,7 @@ Stripe checkout, webhook, subscription-state, and customer-portal integrations e
 
 ## How knowledge gets in
 
-The knowledge architecture is source-first. Approved sources are ingested and normalized deterministically, classified for evidence strength and risk, human-reviewed where the contract requires it, and only then promoted into canonical product knowledge. Evidence is graded and the grade is shown, including when it is weak — a compound whose support is mechanistic rather than clinical is labeled as such rather than rounded up.
+The knowledge architecture is source-first. Approved sources are ingested and normalized deterministically, classified for evidence strength and risk, reviewed by the two-reviewer AI council (consensus passes; disagreement escalates to the owner), and published. A record still awaiting review is shown and labeled pending review; nothing gathered is hidden. Evidence is graded and the grade is shown, including when it is weak — a compound whose support is mechanistic rather than clinical is labeled as such rather than rounded up.
 
 A general-purpose model may assist only inside a constrained, cited, guardrailed workflow. It is not an autonomous authority, and it does not promote knowledge on its own.
 
@@ -74,7 +74,7 @@ The governance foundation is more built out than its user-facing exposure, and t
 - Gates, the Spine, receipt anchoring, and the source-first pipeline are implemented and exercised in tests.
 - Receipt views exist as authenticated in-product surfaces; they are not public routes.
 - Outside Production, the Keon runtime may run stubbed, which is a development convenience and not a claim about deployed governance.
-- Public Class B and Class C surfaces remain blocked behind human-only ratification gates recorded in `docs/guidance/RATIFICATION.md` (product canon reconciliation, legal/policy reconciliation, governance manual update, clinical safety copy review, public surface enablement).
+- Clinton Morgan is the sole owner, operator and decision maker. Classes A–C are enabled under the Guidance Content Contract (`docs/guidance/RATIFICATION.md`); there are no reviewer-role approval steps. Legal items are logged as known risks in the canon, not blockers.
 - The offline protocol-intelligence evaluator is intentionally **not** a live, user-facing narrative or per-protocol recommendation service.
 - `/privacy` and `/terms` are stubs pending approved policy. **No data-custody, storage-location, or privacy guarantee may be claimed on any public surface until they are approved.** BioStack's persistence is server-side (PostgreSQL or SQLite by configuration); it is not local-first, and nothing in this repository should be described that way.
 

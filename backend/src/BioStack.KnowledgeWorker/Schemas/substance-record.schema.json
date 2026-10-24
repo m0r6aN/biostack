@@ -111,6 +111,11 @@
       "enum": ["low", "moderate", "high", "critical", "review", "unknown"]
     },
     "evidenceTier": {
+      "description": "7-tier methodology scale (docs/biostack/evidence-grading-methodology-v1.md). 'Not graded' = no grade assigned yet.",
+      "type": "string",
+      "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded"]
+    },
+    "legacyEvidenceTier": {
       "type": "string",
       "enum": ["Strong", "Moderate", "Limited", "Insufficient", "Unknown"]
     },
@@ -707,7 +712,9 @@
           "type": "string",
           "enum": ["low", "moderate", "high", "unknown"]
         },
-        "sources": { "$ref": "#/$defs/sourceRefArray" }
+        "sources": { "$ref": "#/$defs/sourceRefArray" },
+        "legacyTier": { "$ref": "#/$defs/legacyEvidenceTier" },
+        "gradeRationale": { "type": "string" }
       }
     },
     "evidence": {
@@ -756,13 +763,9 @@
         "sourceTitle": { "$ref": "#/$defs/nonEmptyString" },
         "sourceUrl": { "$ref": "#/$defs/nonEmptyString" },
         "retrievedAt": { "$ref": "#/$defs/nullableDateTime" },
-        "grade": { "$ref": "#/$defs/methodologyGrade" },
+        "grade": { "$ref": "#/$defs/evidenceTier" },
         "notes": { "type": "string" }
       }
-    },
-    "methodologyGrade": {
-      "type": "string",
-      "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded"]
     },
     "sourceRecord": {
       "type": "object",

@@ -7,7 +7,8 @@
 | Package status | **Fully ratified** |
 | Engineering readiness | **Complete** |
 | Product / legal / governance / clinical / public enablement | **All passed** |
-| Public Class B/C UX enablement | **Unblocked** under contract classes, approval levels, and existing review gates |
+| Public Class B/C UX enablement | **Unblocked** under contract classes and the AI council review gate |
+| Revised | 2026-10-24 — contract v1.1.0 (Class D rewritten; approval levels replaced by AI council gate; owner is sole decision maker) |
 | Date prepared | 2026-08-02 |
 | Fully ratified | 2026-08-02 |
 
@@ -15,7 +16,9 @@
 
 Product owner **Clint Morgan** has directed that all ratification gates for Guidance Content Contract v1 are **fully passed**, with **no remaining legal or other blockers** for implementing Class A/B/C evidence-context and comparison behavior as defined by the contract.
 
-Class D personalized medical direction remains **prohibited**.
+Class D personalized medical direction is **out of scope**: BioStack never prescribes.
+
+**2026-10-24:** Clinton Morgan is the sole owner, operator and decision maker. Reviewer-role approval steps are removed. Review is the two-reviewer AI council; disagreements escalate to him with distinct options; legal items are logged as known risks (canon "Known risks").
 
 ## Sign-off table
 
@@ -45,7 +48,7 @@ The same Class B comparison pattern applies to any compound/protocol entry vs re
 | Internal / admin research staging (Class A) | **Allowed** under review gates |
 | User-facing Class B comparison language | **Allowed** under contract + copy-guards + deterministic math |
 | User-facing Class C harm-reduction context | **Allowed** under approved templates and contract rules |
-| Class D personalized direction | **Prohibited** — primary control is reviewed templates + human review; copy-guard tests provide automated **backstop** coverage for known Class D phrasings (not the sole enforcement) |
+| Class D personalized direction | **Out of scope** — BioStack never prescribes. Primary control is reviewed templates + AI council review; copy-guard tests provide automated **backstop** coverage for known Class D phrasings (not the sole enforcement) |
 | Sidecar candidate evidence | Still **never canonical** until review/promotion |
 
 ### Structural non-promotability of sidecar output (S4)

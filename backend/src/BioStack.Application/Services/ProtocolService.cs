@@ -852,8 +852,8 @@ public sealed class ProtocolService : IProtocolService
         var interferenceHits = interactionIntelligence.Summary.Interferences;
         var avoidHits = CountNameMatches(entries, entry => entry.AvoidWith);
         var drugInteractionFlags = entries.Sum(entry => entry.DrugInteractions.Count);
-        var strongEvidence = entries.Count(entry => entry.EvidenceTier is EvidenceTier.Strong or EvidenceTier.Mechanistic);
-        var moderateEvidence = entries.Count(entry => entry.EvidenceTier == EvidenceTier.Moderate);
+        var strongEvidence = entries.Count(entry => entry.EvidenceTier == EvidenceTier.Established);
+        var moderateEvidence = entries.Count(entry => entry.EvidenceTier == EvidenceTier.EarlyEvidence);
         var synergyScore = interactionIntelligence.Score.SynergyScore;
         var redundancyPenalty = interactionIntelligence.Score.RedundancyPenalty;
         var interferencePenalty = interactionIntelligence.Score.InterferencePenalty;

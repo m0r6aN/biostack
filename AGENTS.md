@@ -46,7 +46,7 @@ rtk pip list            rtk pnpm install        rtk npm run <script>
 
 Start governed work at `docs/INITIATIVES/biostack-governed-delivery/README.md`.
 
-- Do not implement without an approved active spec and a coordinator-named branch and worktree.
+- Do not implement without an approved active spec and a coordinator-named branch and worktree, **unless Clinton Morgan (sole owner, operator and decision maker) directs the work himself**; his direct instruction is the approval (2026-10-24).
 - Load specialized context from the spec's declared delivery, guidance, and substance/function classifications.
 - Do not treat the governed-delivery goal as production-release authorization.
 <!-- /biostack:governed-delivery-pointer -->

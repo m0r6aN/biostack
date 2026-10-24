@@ -22,14 +22,14 @@ public class SwapRecommendationTests
             CanonicalName = "BPC-157",
             Classification = CompoundCategory.Peptide,
             Pathways = new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
-            EvidenceTier = EvidenceTier.Moderate
+            EvidenceTier = EvidenceTier.EarlyEvidence
         };
         var tb = new KnowledgeEntry
         {
             CanonicalName = "TB-500",
             Classification = CompoundCategory.Peptide,
             Pathways = new List<string> { "tissue-repair", "anti-inflammatory", "cell-migration" },
-            EvidenceTier = EvidenceTier.Moderate
+            EvidenceTier = EvidenceTier.EarlyEvidence
         };
 
         var knowledgeSource = new Mock<IKnowledgeSource>();
@@ -54,7 +54,7 @@ public class SwapRecommendationTests
     private static KnowledgeEntry MakePeptide(
         string name,
         List<string> pathways,
-        EvidenceTier evidence = EvidenceTier.Moderate,
+        EvidenceTier evidence = EvidenceTier.EarlyEvidence,
         List<string>? avoidWith = null,
         List<string>? pairsWellWith = null,
         List<string>? aliases = null)
@@ -101,9 +101,9 @@ public class SwapRecommendationTests
                 CanonicalName = "Not-A-Peptide",
                 Classification = CompoundCategory.Supplement,
                 Pathways = new List<string> { "tissue-repair", "angiogenesis" },
-                EvidenceTier = EvidenceTier.Strong
+                EvidenceTier = EvidenceTier.Established
             },
-            MakePeptide("GHK-Cu", new List<string> { "collagen-synthesis", "tissue-repair" }, EvidenceTier.Strong)
+            MakePeptide("GHK-Cu", new List<string> { "collagen-synthesis", "tissue-repair" }, EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -121,12 +121,12 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Interfering-Repair",
                 new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
-                EvidenceTier.Strong,
+                EvidenceTier.Established,
                 avoidWith: new List<string> { "TB-500" }),
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -144,12 +144,12 @@ public class SwapRecommendationTests
             MakePeptide(
                 "BpcReplacer-A",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong),
+                EvidenceTier.Established),
             // Replaces TB-500: preserves 2/3 of TB's pathways and removes tissue-repair overlap with BPC.
             MakePeptide(
                 "TbReplacer-B",
                 new List<string> { "anti-inflammatory", "cell-migration", "bone-density" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -173,7 +173,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "NearlyIdentical",
                 new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
-                EvidenceTier.Moderate)
+                EvidenceTier.EarlyEvidence)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -202,7 +202,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -234,7 +234,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -253,7 +253,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -270,7 +270,7 @@ public class SwapRecommendationTests
         // preservation floor — so it must be excluded with pathway_not_preserved.
         var candidates = new List<KnowledgeEntry>
         {
-            MakePeptide("Weak-Overlap", new List<string> { "tissue-repair", "unrelated-1" }, EvidenceTier.Strong)
+            MakePeptide("Weak-Overlap", new List<string> { "tissue-repair", "unrelated-1" }, EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -291,7 +291,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "NearlyIdentical",
                 new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
-                EvidenceTier.Moderate)
+                EvidenceTier.EarlyEvidence)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -313,11 +313,11 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong),
+                EvidenceTier.Established),
             MakePeptide(
                 "Alt-Repair",
                 new List<string> { "tissue-repair", "angiogenesis", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -339,7 +339,7 @@ public class SwapRecommendationTests
             MakePeptide(
                 "Clean-Repair",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -362,13 +362,13 @@ public class SwapRecommendationTests
             MakePeptide(
                 "LowerIntendedUse",
                 new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
-                EvidenceTier.Moderate),
+                EvidenceTier.EarlyEvidence),
             // 3/3 preservation but without tissue-repair: use angiogenesis + gi-protective + a third BPC pathway... BPC has 3 pathways, so to get 3/3 we'd need tissue-repair.
             // Use 2/3 but different pair + Strong evidence instead.
             MakePeptide(
                 "HigherIntendedUse",
                 new List<string> { "angiogenesis", "gi-protective", "cell-signaling" },
-                EvidenceTier.Strong)
+                EvidenceTier.Established)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -406,14 +406,14 @@ public class SwapRecommendationTests
             CanonicalName = "B",
             Classification = CompoundCategory.Supplement,
             Pathways = new List<string> { "p1" },
-            EvidenceTier = EvidenceTier.Moderate
+            EvidenceTier = EvidenceTier.EarlyEvidence
         };
         var peerD = new KnowledgeEntry
         {
             CanonicalName = "D",
             Classification = CompoundCategory.Supplement,
             Pathways = new List<string> { "p2" },
-            EvidenceTier = EvidenceTier.Moderate
+            EvidenceTier = EvidenceTier.EarlyEvidence
         };
         var candidate = MakePeptide("X", new List<string> { "p1", "p2", "p3" }, candidateEvidence);
 
@@ -450,7 +450,7 @@ public class SwapRecommendationTests
     public async Task Swaps_FiresPreservesSynergyWhenBaselinePairSurvives()
     {
         var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
-            BuildPairIdentityRig(EvidenceTier.Moderate);
+            BuildPairIdentityRig(EvidenceTier.EarlyEvidence);
 
         // Variant keeps the (B,D) baseline synergy intact after A -> X.
         var variant = BuildVariant(
@@ -486,7 +486,7 @@ public class SwapRecommendationTests
         // The fix counts distinct matched pair keys, so duplicates no longer inflate
         // the preserved count past the preservable count.
         var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
-            BuildPairIdentityRig(EvidenceTier.Moderate);
+            BuildPairIdentityRig(EvidenceTier.EarlyEvidence);
 
         // Variant keeps the (B,D) baseline synergy but emits it twice (duplicate rows).
         var variant = BuildVariant(
@@ -519,7 +519,7 @@ public class SwapRecommendationTests
         // Candidate with Strong evidence so stronger_evidence fires and the swap still surfaces
         // even though preserves_synergy must not.
         var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
-            BuildPairIdentityRig(EvidenceTier.Strong);
+            BuildPairIdentityRig(EvidenceTier.Established);
 
         // Variant drops the (B,D) baseline pair but introduces two NEW synergies so the
         // aggregate synergy count is at least as high as baseline - this is the exact

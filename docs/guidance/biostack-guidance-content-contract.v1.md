@@ -2,12 +2,13 @@
 
 | Field | Value |
 |---|---|
-| Version | **1.0.0** |
+| Version | **1.1.0** |
 | Status | **Fully ratified** — see `RATIFICATION.md` |
-| Effective for implementation | Class A/B/C engineering and product surfaces may use this contract under copy-guards and review gates |
+| Effective for implementation | Class A/B/C engineering and product surfaces may use this contract under copy-guards and the AI council review gate |
 | Effective for public UX | **Unblocked** for Classes A–C when wording obeys this contract; Class D remains prohibited |
 | Date | 2026-08-02 |
 | Fully ratified | 2026-08-02 (Clint Morgan — all gates passed; no remaining blockers) |
+| Revised | 2026-10-24 (Clinton Morgan, sole owner and decision maker): Class D rewritten; reviewer-role approval levels replaced by the AI council gate; doses from online sources added to Class A |
 | Ratification package | `docs/guidance/RATIFICATION.md` |
 | Product canon | `docs/canon/biostack-protocol-intelligence-canon.md` (evidence-context §) |
 
@@ -36,6 +37,8 @@ Permitted content:
 - Regulatory label information and official safety communications
 - Case-report amounts (labeled as case reports)
 - Observational or community-reported patterns (**clearly labeled**)
+- Doses reported on Reddit, Facebook, Instagram, forums and blogs, shown on the **reported** side of the "Doses found" panel with source link and grade (`Anecdotal Signal` or `Hype Exceeds Evidence` unless the source supports more). Facebook/Instagram items are cited links or manual entries only.
+- `n/a` where a side has nothing found
 
 Required fields when stating amounts:
 
@@ -48,6 +51,7 @@ Required fields when stating amounts:
 | Frequency | Yes when available; else explicit unknown |
 | Exposure role | initiation / escalation / maintenance / maximum / not classified |
 | Evidence class | Yes (see Phase 5 taxonomy) |
+| Grade | Yes — 7-tier methodology scale |
 | Uncertainty / limitations | Yes when material |
 
 Example (permitted):
@@ -85,7 +89,7 @@ Example (permitted):
 
 ### Class C — Evidence-guided harm-reduction context
 
-**Status:** Permitted **only** through approved content templates and approval level ≥ `clinical_safety_copy_review` for high-impact safety wording.
+**Status:** Permitted through content templates that passed the AI council review gate (see "Review gate").
 
 Permitted:
 
@@ -105,22 +109,24 @@ Example (permitted):
 
 ---
 
-### Class D — Personalized medical direction
+### Class D — Personalized medical direction (BioStack never prescribes)
 
-**Status:** **Prohibited** unless product and regulatory posture deliberately change via a new contract version.
+**Status:** **Out of scope.** BioStack never prescribes. Class D is not a gated or deferred feature; it is something BioStack does not do.
 
-Prohibited:
+Showing what sources report — including every dose found on the study side and the reported side, each with its source and grade — is **Class A**, not Class D. Class D is only the step from "here is what was found" to "here is what you should do".
 
-- Selecting the correct dose for a person
-- Personalized titration schedules
-- Diagnosis
-- Declaring an amount safe for the user
-- Declaring a protocol appropriate for the user
-- Replacing clinical monitoring
-- Predicting that a user will experience a particular outcome
-- Automatically changing a protocol
-- Uncited start / stop / increase / decrease / combine / substitute instructions
-- Using age, weight, sex, goals, or symptoms to manufacture a prescription
+BioStack does not:
+
+- Select a dose for a person
+- Build a personal titration schedule
+- Diagnose
+- Tell a user an amount is safe for them
+- Tell a user a protocol is appropriate for them
+- Replace clinical monitoring
+- Predict that a user will experience a particular outcome
+- Change a protocol automatically
+- Instruct a user to start, stop, increase, decrease, combine or substitute
+- Turn age, weight, sex, goals or symptoms into a prescription
 
 Personal context **may** be used only to explain **applicability** of evidence (e.g., study population differs), not to invent a dose.
 
@@ -145,17 +151,17 @@ User-facing phrasing must remain non-prescriptive.
 
 ---
 
-## Approval levels
+## Review gate
 
-| Level | May release |
-|---|---|
-| `automated_candidate` | Internal staging only; never user-facing |
-| `scientific_review` | Class A structured fields for reviewed knowledge |
-| `copy_review` | Class B comparison templates |
-| `clinical_safety_copy_review` | Class C high-impact safety wording |
-| `legal_product_ratification` | Public enablement of new Class B/C product surfaces |
+Reviewer-role approval levels (`automated_candidate`, `scientific_review`, `copy_review`, `clinical_safety_copy_review`, `legal_product_ratification`) were removed on 2026-10-24.
 
-Public dosing-context UX requires `legal_product_ratification` against this contract version.
+| Step | Who | Result |
+|---|---|---|
+| Review | Two-reviewer AI council (two independently configured models; `docs/operations/ai-council-review.md`) | Consensus passes |
+| Disagreement | Escalated to the owner, Clinton Morgan, with distinct options | He decides |
+| Legal question | Logged as a known risk (canon "Known risks") | Does not block |
+
+Content that has not completed review is shown labeled `pending review`.
 
 ---
 
@@ -166,14 +172,14 @@ Public dosing-context UX requires `legal_product_ratification` against this cont
 - Evidence class
 - Source identifiers and locations
 - Extraction provenance (workflow, versions, hashes)
-- Reviewer identity and decision
+- Review decision (AI council reviewers and outcome, or owner decision)
 - Partial/conflict flags
 
 High-impact fields (amounts, AE rates, contraindications) additionally require:
 
 - Verbatim or offset-addressable source location
 - Deterministic unit validation where applicable
-- Human review before promotion
+- AI council review; disagreement escalates to the owner
 
 ---
 
@@ -220,7 +226,7 @@ Enforcement: DoctrineSanitizer / EvidenceGate banned-phrase scans + contract tes
 
 - Does not expand medical-device claims.
 - Does not change consent to allow personalized prescribing.
-- Educational / harm-reduction framing must remain consistent with legal policies after ratification.
+- Educational / harm-reduction framing must remain consistent with legal policies; open legal items are tracked as known risks.
 - Hosted model fallbacks must not receive user health data merely because local GPU/Ollama failed.
 
 ---
@@ -244,11 +250,12 @@ Enforcement: DoctrineSanitizer / EvidenceGate banned-phrase scans + contract tes
 
 ## Versioning
 
-Any change that alters permitted/prohibited classes or public wording authority requires a new minor/major version and re-ratification for public surfaces.
+Any change that alters permitted/prohibited classes or public wording authority requires a new minor/major version and the owner's decision.
 
 | Version | Notes |
 |---|---|
 | 1.0.0 | Initial contract from kickoff Phase 1 |
+| 1.1.0 | 2026-10-24: Class D rewritten (never prescribes; showing found doses is Class A); online-reported doses added to Class A; approval levels replaced by AI council gate with owner escalation |
 
 ---
 

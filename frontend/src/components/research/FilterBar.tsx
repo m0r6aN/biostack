@@ -13,7 +13,7 @@ interface FilterBarProps {
   sidebar?: boolean;
 }
 
-const EVIDENCE_TIERS = ['Strong', 'Moderate', 'Limited', 'Insufficient', 'Unknown', 'Anecdotal'];
+const EVIDENCE_TIERS = ['Established', 'Plausible Theory', 'Early Evidence', 'Anecdotal Signal', 'Contradicted', 'Unsupported', 'Hype Exceeds Evidence', 'Not graded'];
 const SORT_OPTIONS = [
   { value: 'risk', label: 'Risk Priority' },
   { value: 'name', label: 'Compound Name' },

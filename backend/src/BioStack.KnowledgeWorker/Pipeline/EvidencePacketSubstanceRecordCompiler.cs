@@ -273,10 +273,7 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
     private static string NormalizeClassification(string value)
         => ResearchAllowedClassifications.Contains(value) ? value : "Other";
 
-    private static string NormalizeEvidenceTier(string value)
-        => value.Equals("Anecdotal", StringComparison.OrdinalIgnoreCase) ? "Insufficient"
-            : AllowedEvidenceTiers.Contains(value) ? value
-            : "Unknown";
+    private static string NormalizeEvidenceTier(string value) => RecordEvidenceTiers.Normalize(value);
 
     private static string NormalizeConfidence(string value)
         => AllowedConfidence.Contains(value.ToLowerInvariant()) ? value.ToLowerInvariant() : "unknown";
@@ -284,9 +281,9 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
     private static string BestEvidenceTier(IEnumerable<string> tiers)
     {
         var best = tiers.Select(NormalizeEvidenceTier)
-            .OrderByDescending(t => EvidenceTierRank.TryGetValue(t, out var rank) ? rank : 0)
+            .OrderByDescending(RecordEvidenceTiers.Rank)
             .FirstOrDefault();
-        return string.IsNullOrWhiteSpace(best) ? "Unknown" : best;
+        return string.IsNullOrWhiteSpace(best) ? RecordEvidenceTiers.NotGraded : best;
     }
 
     private static string ReadString(JsonNode? node)
@@ -320,22 +317,8 @@ public sealed class EvidencePacketSubstanceRecordCompiler : IEvidencePacketSubst
         "Mineral", "Supplement", "Pharmaceutical", "Amino Acid", "Research Compound", "Other",
     };
 
-    private static readonly HashSet<string> AllowedEvidenceTiers = new(StringComparer.Ordinal)
-    {
-        "Strong", "Moderate", "Limited", "Insufficient", "Unknown",
-    };
-
     private static readonly HashSet<string> AllowedConfidence = new(StringComparer.Ordinal)
     {
         "low", "moderate", "high", "unknown",
-    };
-
-    private static readonly Dictionary<string, int> EvidenceTierRank = new(StringComparer.Ordinal)
-    {
-        ["Strong"] = 5,
-        ["Moderate"] = 4,
-        ["Limited"] = 3,
-        ["Insufficient"] = 2,
-        ["Unknown"] = 1,
     };
 }

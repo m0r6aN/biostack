@@ -494,14 +494,7 @@ internal static class SwapRecommendationEngine
         return (0.5d * pathwayScore) + (0.2d * classificationScore) + (0.2d * evidenceScore) + (0.1d * pairingScore);
     }
 
-    private static double EvidenceWeight(EvidenceTier tier) => tier switch
-    {
-        EvidenceTier.Strong => 1d,
-        EvidenceTier.Mechanistic => 0.8d,
-        EvidenceTier.Moderate => 0.5d,
-        EvidenceTier.Limited => 0.2d,
-        _ => 0d
-    };
+    private static double EvidenceWeight(EvidenceTier tier) => EvidenceTiers.SupportWeight(tier);
 
     private static List<string> DeriveReasons(
         KnowledgeEntry original,
