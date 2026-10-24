@@ -12,7 +12,7 @@ const units = ['mg', 'mcg', 'IU', 'g'];
 
 export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
   const [inputs, setInputs] = useState({
-    amount: 1000,
+    amount: Number.NaN,
     fromUnit: 'mcg',
     toUnit: 'mg',
   });
@@ -44,9 +44,10 @@ export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
             <input
               type="number"
               step="0.1"
-              value={inputs.amount}
+              value={Number.isNaN(inputs.amount) ? '' : inputs.amount}
+              placeholder="Enter value"
               onChange={(e) =>
-                setInputs({ ...inputs, amount: parseFloat(e.target.value) })
+                setInputs({ ...inputs, amount: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
@@ -90,7 +91,7 @@ export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
 
           <button
             onClick={handleCalculate}
-            disabled={isLoading}
+            disabled={isLoading || !Number.isFinite(inputs.amount)}
             className="w-full px-5 py-3 bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/10 disabled:text-white/30 text-slate-950 rounded-xl font-medium transition-all"
           >
             {isLoading ? 'Converting...' : 'Convert'}

@@ -25,7 +25,7 @@ describe('OverlapResults', () => {
     expect(
       screen.getByText('Some people look at these examples in similar recovery-oriented overlap contexts.')
     ).toBeInTheDocument();
-    expect(screen.getByText('Some links may be affiliate links.')).toBeInTheDocument();
+    expect(screen.getByText('Links open third-party retailer search results.')).toBeInTheDocument();
     expect(screen.getAllByText('View example products')[0]).toBeInTheDocument();
   });
 

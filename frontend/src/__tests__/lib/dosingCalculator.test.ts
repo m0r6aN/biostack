@@ -1,4 +1,13 @@
-import { calculateUnifiedDosing, formatDose, formatNumber, toMcg } from '@/lib/dosingCalculator';
+import {
+  calculateUnifiedDosing,
+  DEFAULT_UNIFIED_DOSING_INPUT,
+  formatDose,
+  formatNumber,
+  isUnifiedDosingInputComplete,
+  parseNumberInput,
+  toMcg,
+  tryCalculateUnifiedDosing,
+} from '@/lib/dosingCalculator';
 import { describe, expect, it } from 'vitest';
 
 // ── toMcg ─────────────────────────────────────────────────────────────────────
@@ -141,5 +150,38 @@ describe('calculateUnifiedDosing', () => {
     expect(result.dosePerAdministrationMcg).toBe(125);
     expect(result.volumePerAdministrationMl).toBe(0.05);
     expect(result.weeklyTotalMcg).toBe(1750);
+  });
+});
+
+// ── empty defaults ────────────────────────────────────────────────────────────
+describe('calculator defaults', () => {
+  it('prefills no amount, volume, concentration, dose or schedule', () => {
+    expect(Number.isNaN(DEFAULT_UNIFIED_DOSING_INPUT.powderAmount)).toBe(true);
+    expect(Number.isNaN(DEFAULT_UNIFIED_DOSING_INPUT.diluentVolumeMl)).toBe(true);
+    expect(Number.isNaN(DEFAULT_UNIFIED_DOSING_INPUT.knownConcentration)).toBe(true);
+    expect(Number.isNaN(DEFAULT_UNIFIED_DOSING_INPUT.desiredDose)).toBe(true);
+    expect(Number.isNaN(DEFAULT_UNIFIED_DOSING_INPUT.splitCount)).toBe(true);
+  });
+
+  it('returns no result and no error until required values are entered', () => {
+    expect(isUnifiedDosingInputComplete(DEFAULT_UNIFIED_DOSING_INPUT)).toBe(false);
+    expect(tryCalculateUnifiedDosing(DEFAULT_UNIFIED_DOSING_INPUT)).toEqual({ result: null, error: '' });
+  });
+
+  it('computes a per-dose result without a schedule, and requires one for totals', () => {
+    const entered = { ...DEFAULT_UNIFIED_DOSING_INPUT, powderAmount: 5, diluentVolumeMl: 2, desiredDose: 250 };
+    expect(tryCalculateUnifiedDosing(entered).result?.u100UnitsPerAdministration).toBeCloseTo(10);
+    expect(tryCalculateUnifiedDosing({ ...entered, doseBasis: 'weekly-total' }).result).toBeNull();
+  });
+
+  it('still reports invalid entered values', () => {
+    const entered = { ...DEFAULT_UNIFIED_DOSING_INPUT, powderAmount: 5, diluentVolumeMl: 0, desiredDose: 250 };
+    expect(tryCalculateUnifiedDosing(entered).error).not.toBe('');
+  });
+
+  it('parses an empty field as not entered', () => {
+    expect(Number.isNaN(parseNumberInput(''))).toBe(true);
+    expect(Number.isNaN(parseNumberInput('  '))).toBe(true);
+    expect(parseNumberInput('2.5')).toBe(2.5);
   });
 });

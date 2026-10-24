@@ -1,5 +1,5 @@
 import ToolsPage from '@/app/tools/page';
-import { calculateUnifiedDosing, DEFAULT_UNIFIED_DOSING_INPUT, formatNumber } from '@/lib/dosingCalculator';
+import { calculateUnifiedDosing, DEFAULT_UNIFIED_DOSING_INPUT, formatNumber, type UnifiedDosingInput } from '@/lib/dosingCalculator';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -20,14 +20,38 @@ vi.mock('@/lib/api', () => ({
   },
 }));
 
+const ENTERED: UnifiedDosingInput = { ...DEFAULT_UNIFIED_DOSING_INPUT, powderAmount: 5, diluentVolumeMl: 2, desiredDose: 250, splitCount: 1 };
+
+function enterValues(values: { powder: string; liquid: string; amount: string }) {
+  fireEvent.change(screen.getByLabelText('Powder amount'), { target: { value: values.powder } });
+  fireEvent.change(screen.getByText('How much liquid was added?').closest('label')!.querySelector('input')!, { target: { value: values.liquid } });
+  fireEvent.change(screen.getByText('What amount are you calculating?').closest('label')!.querySelector('input')!, { target: { value: values.amount } });
+}
+
 describe('active /tools calculator visuals', () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
 
+  it('opens with no prefilled amounts and no computed result', () => {
+    render(<ToolsPage />);
+
+    expect(screen.getByLabelText('Powder amount')).toHaveValue(null);
+    expect(screen.getByText('How much liquid was added?').closest('label')!.querySelector('input')).toHaveValue(null);
+    expect(screen.getByText('What amount are you calculating?').closest('label')!.querySelector('input')).toHaveValue(null);
+    expect(screen.getAllByPlaceholderText('Enter value').length).toBeGreaterThanOrEqual(3);
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Calculation summary' })).not.toBeInTheDocument();
+    expect(screen.getByText('Enter your values to calculate')).toBeVisible();
+    expect(screen.getByRole('status')).toHaveTextContent('No draw is shown');
+    expect(screen.queryByText(/must be positive|Calculation failed/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Save this calculation' })).toBeDisabled();
+  });
+
   it.each([375, 768, 1280])('keeps the vial, syringe, beginner help, and worded summary visible at %spx', (width) => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });
     render(<ToolsPage />);
+    enterValues({ powder: '5', liquid: '2', amount: '250' });
 
     expect(screen.getByTestId('vial-visualizer')).toBeVisible();
     expect(screen.getByTestId('syringe-draw-visualizer')).toBeVisible();
@@ -40,8 +64,9 @@ describe('active /tools calculator visuals', () => {
   });
 
   it('restates the active-route result from calculateUnifiedDosing', () => {
-    const expected = calculateUnifiedDosing(DEFAULT_UNIFIED_DOSING_INPUT);
+    const expected = calculateUnifiedDosing(ENTERED);
     render(<ToolsPage />);
+    enterValues({ powder: '5', liquid: '2', amount: '250' });
 
     expect(screen.getByRole('heading', { name: 'Calculation summary' }).nextElementSibling).toHaveTextContent(
       `${formatNumber(expected.concentrationMcgPerMl)} mcg/mL`
@@ -77,6 +102,8 @@ describe('active /tools calculator visuals', () => {
 
   it('replaces the syringe meter with a clear incomplete state for zero input', () => {
     render(<ToolsPage />);
+    enterValues({ powder: '5', liquid: '2', amount: '250' });
+    expect(screen.getByRole('meter', { name: /calculated draw/i })).toBeInTheDocument();
     const desiredDose = screen.getByText('What amount are you calculating?').closest('label')!.querySelector('input')!;
     fireEvent.change(desiredDose, { target: { value: '0' } });
 
@@ -86,6 +113,7 @@ describe('active /tools calculator visuals', () => {
 
   it('flags unit mismatch and order-of-magnitude values without recommending a dose', () => {
     render(<ToolsPage />);
+    enterValues({ powder: '5', liquid: '2', amount: '250' });
     const amountField = screen.getByText('What amount are you calculating?').closest('label')!;
     fireEvent.change(amountField.querySelector('input')!, { target: { value: '5' } });
     fireEvent.change(amountField.querySelector('select')!, { target: { value: 'g' } });
