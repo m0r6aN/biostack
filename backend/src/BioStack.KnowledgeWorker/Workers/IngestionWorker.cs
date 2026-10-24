@@ -9,7 +9,8 @@ using Microsoft.Extensions.Options;
 /// One-shot hosted service. Resolves <see cref="RunMode"/>, dispatches the matching
 /// <see cref="IIngestionJob"/>, and requests application shutdown when the job completes.
 /// The worker is designed for Azure Container App Jobs: Azure decides when to run,
-/// the app decides what kind of run it is. There is no internal long-running loop.
+/// the app decides what kind of run it is. Optional loop mode (<c>Worker:LoopEnabled</c>)
+/// repeats the RunMode every interval for always-on or local runs.
 /// </summary>
 public sealed class IngestionWorker : BackgroundService
 {
@@ -57,6 +58,23 @@ public sealed class IngestionWorker : BackgroundService
             mode, _options.DryRun, _options.MaxBatchSize,
             _options.SeedFilePath, _options.ScopeHint ?? "(none)");
 
+        if (_options.LoopEnabled)
+        {
+            var interval = WorkerLoop.ResolveInterval(_options.RefreshIntervalHours, _options.LoopIntervalMinutes);
+            _logger.LogInformation("[IngestionWorker] Loop mode — RunMode={Mode} every {Interval}.", mode, interval);
+            await WorkerLoop.RunAsync(
+                async ct => { LastExitCode = 0; await RunJobAsync(mode, ct); return LastExitCode == 0; },
+                interval,
+                (n, ok, ex) =>
+                {
+                    if (ex is not null) { LastExitCode = 1; _logger.LogError(ex, "[IngestionWorker] Loop pass {N} failed.", n); }
+                    else _logger.LogInformation("[IngestionWorker] Loop pass {N} complete — Success={Ok}.", n, ok);
+                },
+                cancellationToken: stoppingToken);
+            _lifetime.StopApplication();
+            return;
+        }
+
         try
         {
             await RunJobAsync(mode, stoppingToken);
@@ -89,6 +107,8 @@ public sealed class IngestionWorker : BackgroundService
             RunMode.SourceAcquisitionRetention => scope.ServiceProvider.GetRequiredService<ISourceAcquisitionRetentionJob>(),
             RunMode.PromotionImportDryRun => scope.ServiceProvider.GetRequiredService<IPromotionImportDryRunJob>(),
             RunMode.ProtocolIntelligenceEvaluation => scope.ServiceProvider.GetRequiredService<IProtocolIntelligenceEvaluationJob>(),
+            RunMode.ResearchPlanning => scope.ServiceProvider.GetRequiredService<IResearchPlanningJob>(),
+            RunMode.CouncilReview => scope.ServiceProvider.GetRequiredService<ICouncilReviewJob>(),
             _               => throw new InvalidOperationException($"Unknown RunMode: {mode}"),
         };
 

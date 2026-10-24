@@ -41,7 +41,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What are evidence tiers?',
     answer:
-      'Evidence tiers classify how well-supported a compound’s effects are in scientific literature. BioStack uses Strong, Moderate, Limited, and Mechanistic so users can read knowledge entries with the right expectations.',
+      'Evidence tiers classify how well-supported a compound’s effects are in scientific literature. BioStack grades each claim on seven tiers (Established, Plausible Theory, Early Evidence, Anecdotal Signal, Contradicted, Unsupported, and Hype Exceeds Evidence) so users can read knowledge entries with the right expectations.',
   },
   {
     question: 'Is there a free plan?',

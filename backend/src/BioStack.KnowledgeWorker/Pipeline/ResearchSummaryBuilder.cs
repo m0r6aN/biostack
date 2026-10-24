@@ -107,8 +107,7 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
                 "misinformation-heavy", "hype-boundary", "performance-use-boundary"));
             AddWhen(categories, "Weak or Emerging Human Evidence", compound,
                 HasAny(compound, "limited-human-evidence", "emerging-longevity-compound", "investigational-compound")
-                || compound.OverallEvidenceTier.Equals("Insufficient", StringComparison.OrdinalIgnoreCase)
-                || compound.OverallEvidenceTier.Equals("Limited", StringComparison.OrdinalIgnoreCase));
+                || RecordEvidenceTiers.IsWeak(compound.OverallEvidenceTier));
             AddWhen(categories, "Route / Formulation Ambiguity", compound, HasAny(compound,
                 "route-specific-boundary", "alias-ambiguity", "product-specific-labels"));
             AddWhen(categories, "Product-Specific Label", compound, HasAny(compound,
@@ -359,9 +358,7 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             {
                 blockers.Add($"review-required: completeness is {completeness}");
             }
-            if (evidenceTier.Equals("Unknown", StringComparison.OrdinalIgnoreCase)
-                || evidenceTier.Equals("Insufficient", StringComparison.OrdinalIgnoreCase)
-                || evidenceTier.Equals("Limited", StringComparison.OrdinalIgnoreCase))
+            if (RecordEvidenceTiers.IsWeak(evidenceTier))
             {
                 blockers.Add($"review-required: evidence tier is {evidenceTier}");
             }

@@ -17,13 +17,13 @@ public class InteractionIntelligenceServiceTests
         {
             CanonicalName = "BPC-157",
             Pathways = new List<string> { "tissue-repair", "angiogenesis" },
-            EvidenceTier = EvidenceTier.Limited
+            EvidenceTier = EvidenceTier.PlausibleTheory
         };
         var tb500 = new KnowledgeEntry
         {
             CanonicalName = "TB-500",
             Pathways = new List<string> { "tissue-repair", "angiogenesis" },
-            EvidenceTier = EvidenceTier.Limited
+            EvidenceTier = EvidenceTier.PlausibleTheory
         };
 
         var hintRepository = new Mock<ICompoundInteractionHintRepository>();
@@ -57,13 +57,13 @@ public class InteractionIntelligenceServiceTests
         {
             CanonicalName = "Semaglutide",
             Pathways = new List<string> { "incretin-signaling", "appetite-regulation" },
-            EvidenceTier = EvidenceTier.Strong
+            EvidenceTier = EvidenceTier.Established
         };
         var liraglutide = new KnowledgeEntry
         {
             CanonicalName = "Liraglutide",
             Pathways = new List<string> { "incretin-signaling", "glucose-regulation" },
-            EvidenceTier = EvidenceTier.Strong
+            EvidenceTier = EvidenceTier.Established
         };
 
         var hintRepository = new Mock<ICompoundInteractionHintRepository>();

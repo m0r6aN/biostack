@@ -98,7 +98,7 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
         await UpsertAsync(new KnowledgeEntry
         {
             CanonicalName = "PublicBoundaryProbe",
-            EvidenceTier = EvidenceTier.Moderate,
+            EvidenceTier = EvidenceTier.EarlyEvidence,
             SourceReferences = new List<string> { "https://example.invalid/evidence" },
             MechanismSummary = "Observed mechanism.",
             PairsWellWith = new List<string> { "Pairing recommendation" },
@@ -135,7 +135,7 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
         using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
         var root = doc.RootElement;
 
-        Assert.Equal("Moderate", root.GetProperty("evidenceTier").GetString());
+        Assert.Equal("EarlyEvidence", root.GetProperty("evidenceTier").GetString());
         Assert.Equal(
             "https://example.invalid/evidence",
             Assert.Single(root.GetProperty("sourceReferences").EnumerateArray()).GetString());

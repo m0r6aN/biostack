@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createPublicPageMetadata } from '@/lib/site';
+import { METHODOLOGY_TIERS } from '@/lib/evidenceTiers';
 import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
@@ -7,35 +8,16 @@ import { MarketingNav } from '@/components/marketing/MarketingNav';
 export const metadata = createPublicPageMetadata({
   title: 'How BioStack Grades Evidence | BioStack',
   description:
-    'The rubric behind every evidence tier in the BioStack library: what Unknown, Limited, Moderate, Strong, and Mechanistic mean, where sources come from, and what a grade does not claim.',
+    'The rubric behind every evidence tier in the BioStack library: what Established, Plausible Theory, Early Evidence, Anecdotal Signal, Contradicted, Unsupported, and Hype Exceeds Evidence mean, where sources come from, and what a grade does not claim.',
   path: '/knowledge/methodology',
 });
 
 const tiers = [
+  ...METHODOLOGY_TIERS.map(t => ({ name: t.label, definition: t.definition })),
   {
-    name: 'Unknown',
+    name: 'Not graded',
     definition:
-      'No graded human or preclinical literature has been reviewed for this claim, or the available material does not meet the sourcing bar below. Unknown is the default state — a compound starts here and earns its way out.',
-  },
-  {
-    name: 'Limited',
-    definition:
-      'Sparse evidence: isolated case reports, small uncontrolled studies, or findings that have not been replicated. Enough to describe, not enough to weigh.',
-  },
-  {
-    name: 'Moderate',
-    definition:
-      'Multiple consistent studies or at least one well-designed controlled trial, with limitations in size, duration, or population that keep the picture incomplete.',
-  },
-  {
-    name: 'Strong',
-    definition:
-      'Replicated controlled human trials or systematic reviews pointing the same direction. Strong describes the state of the literature — it is not an endorsement of use.',
-  },
-  {
-    name: 'Mechanistic',
-    definition:
-      'Evidence describes how a compound acts (receptor, pathway, in-vitro or animal data) without adequate human outcome data. A plausible mechanism is not an outcome.',
+      'No grade has been assigned yet. The record is shown with everything gathered so far, and the review status says where it stands.',
   },
 ];
 
@@ -66,7 +48,7 @@ export default function MethodologyPage() {
 
           <section aria-labelledby="tiers-heading" className="mt-12">
             <h2 id="tiers-heading" className="text-2xl font-semibold tracking-tight text-white">
-              The five tiers
+              The seven tiers
             </h2>
             <div className="mt-6 space-y-4">
               {tiers.map((tier) => (

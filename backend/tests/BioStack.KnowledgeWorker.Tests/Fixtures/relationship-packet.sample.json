@@ -65,7 +65,7 @@
       "relationshipReviewStatus": "review-required"
     },
     {
-      "relationshipId": "rel-caffeine-broscience-001",
+      "relationshipId": "rel-caffeine-hype-exceeds-evidence-001",
       "subjectCompound": "Caffeine",
       "objectCompound": "Yohimbine",
       "relationshipType": "community-stack",
@@ -74,7 +74,7 @@
       "mechanismBasis": [],
       "categoryBasis": ["Performance"],
       "claimRefs": [],
-      "sourceRefs": ["src-forum-broscience-thread-001"],
+      "sourceRefs": ["src-forum-hype-exceeds-evidence-thread-001"],
       "evidenceTier": "Anecdotal",
       "confidence": "low",
       "communitySignal": {
@@ -117,7 +117,7 @@
       "accessedAt": "2026-04-30T18:25:00Z"
     },
     {
-      "sourceId": "src-forum-broscience-thread-001",
+      "sourceId": "src-forum-hype-exceeds-evidence-thread-001",
       "sourceType": "forum-thread",
       "authorityTier": "D",
       "title": "Caffeine + yohimbine pre-workout — anyone stacking?",

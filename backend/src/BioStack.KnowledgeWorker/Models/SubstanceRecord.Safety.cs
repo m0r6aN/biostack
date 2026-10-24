@@ -135,6 +135,9 @@ public sealed class ClaimEvidence
     [JsonPropertyName("tier")]       public string       Tier       { get; set; } = string.Empty;
     [JsonPropertyName("confidence")] public string       Confidence { get; set; } = string.Empty;
     [JsonPropertyName("sources")]    public List<string> Sources    { get; set; } = new();
+    /// <summary>Grade before the 7-tier regrade (Strong/Moderate/Limited/Insufficient/Unknown).</summary>
+    [JsonPropertyName("legacyTier")]     public string? LegacyTier     { get; set; }
+    [JsonPropertyName("gradeRationale")] public string? GradeRationale { get; set; }
 }
 
 public sealed class Evidence

@@ -401,7 +401,7 @@ Change a claim from:
 * Limited to Moderate
 * Moderate to Strong
 * Strong to downgraded
-* Bro-science to rejected
+* Hype Exceeds Evidence to rejected
 * Hypothesis to supported mechanism
 
 ### Why it matters

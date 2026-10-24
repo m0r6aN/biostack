@@ -53,7 +53,7 @@ public sealed class DatabaseKnowledgeSourcePreviewTests : IDisposable
             {
                 CanonicalName = name,
                 Classification = CompoundCategory.Peptide,
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 MechanismSummary = "Original mechanism",
             });
             await seedContext.SaveChangesAsync();
@@ -66,7 +66,7 @@ public sealed class DatabaseKnowledgeSourcePreviewTests : IDisposable
         {
             CanonicalName = name,
             Classification = CompoundCategory.Peptide,
-            EvidenceTier = EvidenceTier.Moderate,
+            EvidenceTier = EvidenceTier.EarlyEvidence,
             MechanismSummary = "Changed mechanism",
         });
 
@@ -88,7 +88,7 @@ public sealed class DatabaseKnowledgeSourcePreviewTests : IDisposable
             {
                 CanonicalName = name,
                 Classification = CompoundCategory.Peptide,
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 MechanismSummary = "Same mechanism",
             });
             await seedContext.SaveChangesAsync();
@@ -101,7 +101,7 @@ public sealed class DatabaseKnowledgeSourcePreviewTests : IDisposable
         {
             CanonicalName = name,
             Classification = CompoundCategory.Peptide,
-            EvidenceTier = EvidenceTier.Moderate,
+            EvidenceTier = EvidenceTier.EarlyEvidence,
             MechanismSummary = "Same mechanism",
         });
 

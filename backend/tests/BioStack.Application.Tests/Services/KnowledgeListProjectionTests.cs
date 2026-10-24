@@ -113,7 +113,7 @@ public sealed class KnowledgeListProjectionTests : IDisposable
         Assert.Equal(11, (int)listed.Classification);
         Assert.Equal("Research", listed.RegulatoryStatus);
         Assert.Equal("Amino acid mechanism", listed.MechanismSummary);
-        Assert.Equal(EvidenceTier.Moderate, listed.EvidenceTier);
+        Assert.Equal(EvidenceTier.EarlyEvidence, listed.EvidenceTier);
         Assert.Equal(new[] { "Source A", "Source B" }, listed.SourceReferences);
         Assert.Equal("Notes", listed.Notes);
         Assert.Equal(new[] { "glycine-pathway" }, listed.Pathways);
@@ -199,7 +199,7 @@ public sealed class KnowledgeListProjectionTests : IDisposable
             Classification = CompoundCategory.AminoAcid,
             RegulatoryStatus = "Research",
             MechanismSummary = "Amino acid mechanism",
-            EvidenceTier = EvidenceTier.Moderate,
+            EvidenceTier = EvidenceTier.EarlyEvidence,
             SourceReferences = new List<string> { "Source A", "Source B" },
             Notes = "Notes",
             Pathways = new List<string> { "glycine-pathway" },

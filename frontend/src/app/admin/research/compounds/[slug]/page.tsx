@@ -18,6 +18,9 @@ import { useEffect, useRef, useState } from 'react';
 type Tab = 'overview' | 'claims' | 'resolution' | 'decision' | 'relationships';
 
 const STATUS_COLOR: Record<string, string> = {
+  Established: 'text-emerald-400', 'Early Evidence': 'text-blue-400', 'Plausible Theory': 'text-amber-400',
+  'Anecdotal Signal': 'text-white/40', Contradicted: 'text-rose-400', Unsupported: 'text-white/40',
+  'Hype Exceeds Evidence': 'text-rose-400', 'Not graded': 'text-white/40',
   Strong: 'text-emerald-400', Moderate: 'text-blue-400', Limited: 'text-amber-400',
   Insufficient: 'text-rose-400', Unknown: 'text-white/40', Anecdotal: 'text-white/40',
   substantial: 'text-emerald-400', complete: 'text-emerald-400',

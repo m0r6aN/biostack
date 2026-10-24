@@ -10,7 +10,7 @@ BioStack will build an Evidence-Guided Protocol Intelligence Engine. The impleme
 
 BioStack uses AI to retrieve, classify, extract, cite, organize, interpret, and synthesize evidence into educational protocol intelligence. BioStack rejects autonomous medical authority, prescribing, diagnosis, and treatment planning. BioStack may provide evidence-informed educational guidance, risk-aware recommendations, and decision support when outputs are grounded in cited sources, clear uncertainty, safety boundaries, and user-observable context.
 
-The core architecture is curated source ingestion, deterministic normalization, retrieval, source-aware extraction/classification, evidence-tier scoring, risk classification, protocol interpretation, human review, and canonical promotion. A constrained general LLM may synthesize cited evidence, identify uncertainty, propose review queues, and generate allowed educational guidance only after retrieval and guardrail checks.
+The core architecture is curated source ingestion, deterministic normalization, retrieval, source-aware extraction/classification, evidence-tier scoring, risk classification, protocol interpretation, AI council review (owner escalation on disagreement), and publication. A constrained general LLM may synthesize cited evidence, identify uncertainty, propose review queues, and generate allowed educational guidance only after retrieval and guardrail checks.
 
 ## Context
 
@@ -61,8 +61,8 @@ Open medical LLMs such as BioMistral, Meditron, BioGPT, and GatorTron may be ben
 7. High-risk category guardrail engine
    - Run deterministic rules before LLM synthesis for SARMs, SERMs, investigational peptides, prescription-only substances, compounded GLP-1 products, banned-in-sport substances, gray-market substances, dosing/cycle/PCT/injection/sourcing requests, and individualized medical claims.
 
-8. Human review and canonical promotion
-   - Human review is required before extracted edges, warning copy, evidence grades, source-quality grades, supplement interpretations, regulatory interpretations, or high-risk category classifications become canonical.
+8. AI council review and publication
+   - The two-reviewer AI council reviews extracted edges, warning copy, evidence grades, source-quality grades, supplement interpretations, regulatory interpretations, and high-risk category classifications. Consensus passes; disagreement escalates to the owner. Unreviewed records are published labeled pending review (owner ruling 2026-10-24).
 
 9. Constrained LLM synthesis and guidance
    - A general LLM may summarize only retrieved sources with citations.
@@ -140,7 +140,9 @@ Legal or compliance review is required for:
 - Global DRO terms and anti-scraping restrictions.
 - PMC full-text article-level licenses and automated retrieval limits.
 
-## Human-Review Requirements
+## Review Requirements
+
+2026-10-24: "Human review" below means the two-reviewer AI council with owner escalation (`docs/operations/ai-council-review.md`). Legal or compliance items are logged as known risks, not blockers.
 
 Human review is required before canonical promotion of:
 

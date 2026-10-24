@@ -1,16 +1,26 @@
 # KnowledgeWorker Refresh Runbook
 
 `RunMode=Refresh` re-ingests `Seeds/substances-seed.json` and upserts each record into
-`KnowledgeEntries`. As of this runbook, Refresh is **gated**: a record is upserted only
-when the Refresh-specific promotion gate accepts its applicable review disposition as
-`approve-for-promotion` with `clearsSoftPromotionBlockers: true`
-(`backend/src/BioStack.KnowledgeWorker/Pipeline/PromotionGate.cs`). Every other
-record is skipped and reported by canonical name and reason. This is a Clint-only,
-production-database operation — nobody else runs this against `biostack.cc`'s database.
+`KnowledgeEntries`.
+
+**2026-10-24 (owner ruling 9: remove do-not-display gates).** The promotion gate labels; it no
+longer hides. A record whose applicable review disposition is `approve-for-promotion` with
+`clearsSoftPromotionBlockers: true` is published as reviewed. Every other record is **published
+with `details.reviewStatus = pending-review`** (or `changes-requested`) and counted as
+`PendingReview`. Only archived or rejected records are skipped. The older text below that says
+records are "skipped" describes the pre-2026-10-24 behavior; the `skip-unpromoted` rows in the
+sample output now read `Created`/`Updated` with reason `published pending review: …`.
+
+After the `20261024000000_AddKnowledgeEntryDetailsAndUniqueName` and
+`20261024010000_MapEvidenceTierToSevenTierScale` migrations, run one Refresh so every row
+(including the formerly stale duplicate Retatrutide row) is rewritten from the reviewed seed.
+
+This is a Clint-only, production-database operation — nobody else runs this against
+`biostack.cc`'s database. Scheduled runs (PR C) use the same gate.
 
 This procedure is written for PowerShell, run from `D:\Repos\BioStack` on Windows, against
 the worker's own build output. It does not depend on a deployed Container App Job existing
-(none is currently defined in `infra/` — see the A1 promotion-state audit, §4) — it assumes
+(scheduled jobs are now defined in `infra/azure/knowledge-schedules.bicep` — see `docs/operations/knowledge-schedules.md`) — it assumes
 you run the worker binary directly against the production connection string.
 
 ## 0. Before you start

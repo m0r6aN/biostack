@@ -133,6 +133,15 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<ISourceAcquisitionRetentionJob, SourceAcquisitionRetentionJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
         services.AddScoped<IProtocolIntelligenceEvaluationJob, ProtocolIntelligenceEvaluationJob>();
+        var councilOptions = new BioStack.KnowledgeWorker.Council.CouncilOptions();
+        context.Configuration.GetSection("Council").Bind(councilOptions);
+        services.AddSingleton(councilOptions);
+        services.AddScoped<ICouncilReviewJob>(sp => new CouncilReviewJob(
+            sp.GetRequiredService<WorkerOptions>(),
+            sp.GetRequiredService<BioStack.KnowledgeWorker.Council.CouncilOptions>(),
+            sp.GetRequiredService<IResearchArtifactValidator>()));
+        services.AddScoped<IResearchPlanningJob>(sp => new ResearchPlanningJob(
+            sp.GetRequiredService<WorkerOptions>(), sp.GetRequiredService<IResearchArtifactValidator>()));
 
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();

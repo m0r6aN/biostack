@@ -22,12 +22,17 @@ public enum PromotionSkipReason
 
     /// <summary>Latest applicable disposition includes <c>archive-draft</c> or <c>reject</c>.</summary>
     ArchivedOrRejected,
+
+    /// <summary>Latest applicable decision is <c>escalate-to-owner</c>: the AI council disagreed and the owner has not decided yet.</summary>
+    AwaitingOwner,
 }
 
 /// <summary>Outcome of evaluating one compound against the promotion gate.</summary>
-public sealed record PromotionGateDecision(bool Allowed, PromotionSkipReason? SkipReason)
+public sealed record PromotionGateDecision(bool Allowed, PromotionSkipReason? SkipReason, string? ApprovedBy = null)
 {
     public static readonly PromotionGateDecision Approved = new(true, null);
+
+    public static PromotionGateDecision ApprovedByReviewer(string? reviewerId) => new(true, null, reviewerId);
 
     public static PromotionGateDecision Skip(PromotionSkipReason reason) => new(false, reason);
 
@@ -40,6 +45,7 @@ public sealed record PromotionGateDecision(bool Allowed, PromotionSkipReason? Sk
         PromotionSkipReason.RequestChanges => "latest decision is request-changes",
         PromotionSkipReason.BlockersNotCleared => "approve-for-promotion decision exists but clearsSoftPromotionBlockers=false",
         PromotionSkipReason.ArchivedOrRejected => "compound is archived or rejected",
+        PromotionSkipReason.AwaitingOwner => "AI council disagreed; awaiting owner decision",
         _ => "unknown",
     };
 }
@@ -90,6 +96,8 @@ public sealed class ReviewDecisionPromotionGate : IPromotionGate
         // Deny conservatively unless every applicable decision at that instant promotes.
         if (latest.Any(d => Is(d, "archive-draft") || Is(d, "reject")))
             return PromotionGateDecision.Skip(PromotionSkipReason.ArchivedOrRejected);
+        if (latest.Any(d => Is(d, "escalate-to-owner")))
+            return PromotionGateDecision.Skip(PromotionSkipReason.AwaitingOwner);
         if (latest.Any(d => Is(d, "request-changes")))
             return PromotionGateDecision.Skip(PromotionSkipReason.RequestChanges);
         if (latest.Any(d => Is(d, "approve-for-promotion") && !d.ClearsSoftPromotionBlockers))
@@ -97,7 +105,7 @@ public sealed class ReviewDecisionPromotionGate : IPromotionGate
         if (latest.Any(d => Is(d, "approve-claims")))
             return PromotionGateDecision.Skip(PromotionSkipReason.ApproveClaimsOnly);
         if (latest.All(d => Is(d, "approve-for-promotion") && d.ClearsSoftPromotionBlockers))
-            return PromotionGateDecision.Approved;
+            return PromotionGateDecision.ApprovedByReviewer(latest[0].ReviewerId);
         return PromotionGateDecision.Skip(PromotionSkipReason.NoDecision);
     }
 
