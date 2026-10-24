@@ -46,8 +46,9 @@ public sealed class RefreshJobIntegrationTests : IDisposable
     }
 
     [Fact]
-    public async Task Refresh_Upserts_Promoted_And_Skips_NonPromoted()
+    public async Task Refresh_Upserts_Promoted_And_Publishes_NonPromoted_As_PendingReview()
     {
+        // Owner ruling 9 (2026-10-24): the promotion gate labels, it no longer hides.
         using var context = CreateDbContext();
         SeedAuthSentinel(context, out var authUserId);
 
@@ -55,16 +56,18 @@ public sealed class RefreshJobIntegrationTests : IDisposable
         var result = await job.RunAsync(runContext);
 
         Assert.True(result.Success);
-        Assert.Equal(1, runContext.CreatedCount);
-        Assert.Equal(1, runContext.SkippedUnpromotedCount);
+        Assert.Equal(2, runContext.CreatedCount);
+        Assert.Equal(0, runContext.SkippedUnpromotedCount);
+        Assert.Equal(1, runContext.PublishedPendingReviewCount);
 
         var entries = await context.KnowledgeEntries.AsNoTracking().ToListAsync();
-        var created = Assert.Single(entries);
-        Assert.Equal(PromotedName, created.CanonicalName);
+        Assert.Equal(2, entries.Count);
+        var pending = Assert.Single(entries, e => e.CanonicalName == NonPromotedName);
+        Assert.Equal("pending-review", pending.Details!.ReviewStatus);
 
-        var skipRow = Assert.Single(runContext.PlanRows, r => r.CanonicalName == NonPromotedName);
-        Assert.Equal("skip-unpromoted", skipRow.Action);
-        Assert.Contains("no review decision", skipRow.Reason, StringComparison.OrdinalIgnoreCase);
+        var row = Assert.Single(runContext.PlanRows, r => r.CanonicalName == NonPromotedName);
+        Assert.Contains("no review decision", row.Reason, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("pending review", row.Reason, StringComparison.OrdinalIgnoreCase);
 
         // The auth-adjacent table is untouched: same row count, same id, same content.
         var authUsers = await context.AppUsers.AsNoTracking().ToListAsync();
@@ -83,10 +86,11 @@ public sealed class RefreshJobIntegrationTests : IDisposable
 
         Assert.True(result.Success);
         Assert.Equal(2, runContext.ScannedCount);
-        Assert.Equal(1, runContext.CreatedCount);          // would-insert, for the promoted record
+        Assert.Equal(2, runContext.CreatedCount);          // would-insert both; the unpromoted one as pending review
         Assert.Equal(0, runContext.UpdatedCount);
         Assert.Equal(0, runContext.UnchangedCount);
-        Assert.Equal(1, runContext.SkippedUnpromotedCount);
+        Assert.Equal(0, runContext.SkippedUnpromotedCount);
+        Assert.Equal(1, runContext.PublishedPendingReviewCount);
 
         // No writes of any kind: KnowledgeEntries is still empty and the auth sentinel is untouched.
         Assert.Empty(await context.KnowledgeEntries.AsNoTracking().ToListAsync());
@@ -96,7 +100,7 @@ public sealed class RefreshJobIntegrationTests : IDisposable
         Assert.Contains(PromotedName, table);
         Assert.Contains("would-insert", table);
         Assert.Contains(NonPromotedName, table);
-        Assert.Contains("skip-unpromoted", table);
+        Assert.Contains("pending review", table);
     }
 
     [Fact]
@@ -132,8 +136,8 @@ public sealed class RefreshJobIntegrationTests : IDisposable
         var result = await job.RunAsync(run);
         Assert.False(result.Success);
         Assert.Equal(3, run.ScannedCount);
-        Assert.Equal(2, run.FailedCount);
-        Assert.Equal(1, run.SkippedUnpromotedCount);
+        Assert.Equal(3, run.FailedCount);
+        Assert.Equal(0, run.SkippedUnpromotedCount);
         Assert.Equal(0, run.CreatedCount + run.UpdatedCount + run.UnchangedCount);
         Assert.Equal(run.ScannedCount, run.PlanRows.Count);
         Assert.Contains(run.PlanRows, row => row.CanonicalName == "Rejected fixture" && row.Action == "rejected" && row.Reason.Length > 0);

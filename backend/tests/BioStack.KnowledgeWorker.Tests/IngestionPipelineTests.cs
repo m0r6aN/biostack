@@ -36,6 +36,32 @@ public class IngestionPipelineTests
     }
 
     [Fact]
+    public void Pipeline_Carries_Full_Retatrutide_Record_Into_Details()
+    {
+        var pipeline = BuildPipeline();
+        var seedPath = Path.GetFullPath(Path.Combine(
+            AppContext.BaseDirectory,
+            "..", "..", "..", "..", "..",
+            "src", "BioStack.KnowledgeWorker", "Seeds", "substances-seed.json"));
+        var row = Assert.Single(pipeline.Run(seedPath).Accepted, r => r.Entry.CanonicalName == "Retatrutide");
+        var details = Assert.IsType<BioStack.Domain.Entities.KnowledgeEntryDetails>(row.Entry.Details);
+
+        Assert.Contains("not FDA-approved", row.Entry.RegulatoryStatus);
+        Assert.Equal(9, details.DoseReports.Count(d => d.Side == "study"));
+        Assert.Empty(details.DoseReports.Where(d => d.Side == "reported"));   // rendered as n/a
+        Assert.All(details.DoseReports, d =>
+        {
+            Assert.False(string.IsNullOrWhiteSpace(d.SourceUrl));
+            Assert.False(string.IsNullOrWhiteSpace(d.Grade));
+        });
+        Assert.Contains(details.Sources, s => s.Url.Contains("42814954"));
+        Assert.Contains(details.Sources, s => s.Url.Contains("NCT05931367"));
+        Assert.NotEmpty(details.Safety.Warnings);
+        Assert.Contains(details.StudiedUses, u => u.LabelStatus == "not-indicated");
+        Assert.DoesNotContain("ClassB", row.Entry.Notes);
+    }
+
+    [Fact]
     public void Pipeline_Accepts_Canonical_Seed_Record()
     {
         var pipeline = BuildPipeline();

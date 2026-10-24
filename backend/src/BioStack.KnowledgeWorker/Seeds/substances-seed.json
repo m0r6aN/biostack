@@ -2045,7 +2045,7 @@
     },
     "regulatory": {
       "requiresPrescription": false,
-      "regulatoryStatus": "not-established",
+      "regulatoryStatus": "investigational (not FDA-approved; Lilly plans US submission Q1 2027; not eligible for 503A/503B compounding)",
       "labelStatusByUseCase": [
         {
           "useCase": "obesity (investigational)",
@@ -2055,7 +2055,9 @@
       "jurisdiction": "US",
       "approvedIndications": [],
       "offLabelNotes": [
-        "Investigational molecule; clinical-trial evidence is not an approved-product label."
+        "Investigational molecule; clinical-trial evidence is not an approved-product label.",
+        "Lilly Medical states retatrutide cannot be legally sold or marketed for human use and plans to submit to FDA in Q1 2027.",
+        "Products sold as 'research use only' are not Lilly's drug; identity, purity and dose cannot be verified."
       ]
     },
     "mechanism": {
@@ -2116,10 +2118,12 @@
         "useCase": "investigational obesity and metabolic research",
         "labelStatus": "not-indicated",
         "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "A phase 2 randomized trial studied subcutaneous retatrutide for body-weight reduction in adults with obesity or overweight plus weight-related conditions. Not FDA-approved. Educational reference only.",
-        "evidenceTier": "Moderate",
+        "benefitSummary": "Phase 2 (48 wk) and phase 3 TRIUMPH-1 (80 wk) and TRIUMPH-4 (68 wk) randomized trials studied once-weekly subcutaneous retatrutide for body-weight reduction in adults with obesity or overweight. Not FDA-approved.",
+        "evidenceTier": "Strong",
         "sources": [
-          "nejm-retatrutide"
+          "nejm-retatrutide",
+          "triumph-1",
+          "triumph-4"
         ]
       }
     ],
@@ -2135,8 +2139,8 @@
         "dose": {
           "amount": null,
           "unit": "unknown",
-          "frequency": "not established by approved label",
-          "scheduleText": "Dosing is not established by an approved label; review primary trial protocols or future labeling with a licensed clinician.",
+          "frequency": "not established by an approved label",
+          "scheduleText": "No approved label dose. Doses studied in trials are listed under dose reports with their sources.",
           "preferredTimeOfDay": null
         },
         "notes": [
@@ -2144,7 +2148,7 @@
         ],
         "productSpecific": false,
         "sources": [
-          "src:retatrutide"
+          "lilly-medical-retatrutide"
         ]
       }
     ],
@@ -2174,26 +2178,60 @@
           "severity": "high",
           "notes": "Gray-market copies carry unverified identity, dose accuracy, and sterility risk.",
           "sources": [
+            "lilly-medical-retatrutide",
             "nejm-retatrutide"
           ]
         }
       ],
       "warnings": [
         {
-          "item": "Incretin-class gastrointestinal adverse effects require clinical trial/protocol context; approved labeled risks are not established",
-          "severity": "review",
-          "notes": "Do not extrapolate another GLP-1 product label as retatrutide-specific authorization.",
+          "item": "Gastrointestinal adverse events (nausea, vomiting, diarrhea) were dose-related in trials",
+          "severity": "moderate",
+          "notes": "TRIUMPH-4: nausea 38.1% (9 mg) and 43.2% (12 mg) vs 10.7% placebo; vomiting about 20%. Phase 2: lower starting dose lessened GI events.",
+          "sources": [
+            "nejm-retatrutide",
+            "triumph-4"
+          ]
+        },
+        {
+          "item": "Dysesthesia (abnormal skin sensation) was reported more often than placebo",
+          "severity": "moderate",
+          "notes": "TRIUMPH-1: 5.1% / 12.3% / 12.5% (4 / 9 / 12 mg) vs 0.9% placebo. TRIUMPH-4: 8.8% / 20.9% (9 / 12 mg).",
+          "sources": [
+            "triumph-1",
+            "triumph-4"
+          ]
+        },
+        {
+          "item": "Heart rate increased with dose",
+          "severity": "moderate",
+          "notes": "Phase 2: heart rate rose dose-dependently, peaked at 24 weeks, then declined.",
           "sources": [
             "nejm-retatrutide"
+          ]
+        },
+        {
+          "item": "Gray-market products are unverified",
+          "severity": "high",
+          "notes": "A Reddit self-report analysis (n=13,589) could not verify product identity, purity or dose.",
+          "sources": [
+            "jama-netw-open-2026-reddit"
           ]
         }
       ],
       "precautions": [],
       "adverseEffects": {
         "common": [
-          "gastrointestinal adverse events reported in investigational obesity trials"
+          "nausea",
+          "vomiting",
+          "diarrhea",
+          "constipation",
+          "decreased appetite",
+          "dysesthesia",
+          "increased heart rate"
         ],
         "serious": [
+          "discontinuation for adverse events: TRIUMPH-1 4.1% / 6.9% / 11.3% (4 / 9 / 12 mg) vs 4.9% placebo; TRIUMPH-4 12.2% / 18.2% (9 / 12 mg)",
           "full labeled serious-risk profile not established (not approved)"
         ]
       },
@@ -2274,39 +2312,68 @@
       ]
     },
     "evidence": {
-      "overallTier": "Moderate",
+      "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Retatrutide (LY3437943) is described as a triple agonist of GIP, GLP-1, and glucagon receptors.",
-          "tier": "Moderate",
+          "claim": "Retatrutide (LY3437943) is a triple agonist of GIP, GLP-1, and glucagon receptors.",
+          "tier": "Strong",
           "confidence": "high",
           "sources": [
             "nejm-retatrutide"
           ]
         },
         {
-          "claim": "Phase 2 randomized trial evidence exists for body-weight change in adults with obesity/overweight.",
-          "tier": "Moderate",
+          "claim": "Once-weekly retatrutide reduced body weight vs placebo in randomized trials: phase 2 −8.7% to −24.2% at 48 wk (1–12 mg); TRIUMPH-1 −17.6% / −23.7% / −25.0% at 80 wk (4 / 9 / 12 mg) vs −3.9%.",
+          "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "nejm-retatrutide"
+            "nejm-retatrutide",
+            "triumph-1"
           ]
         },
         {
-          "claim": "Not an FDA-approved marketed product as of this review.",
+          "claim": "In adults with knee osteoarthritis and obesity (TRIUMPH-4), weight change was −26.4% (9 mg) and −28.7% (12 mg) vs −2.1% placebo at 68 wk.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "triumph-4"
+          ]
+        },
+        {
+          "claim": "Dose-related GI adverse events, dysesthesia and heart-rate increase were observed in trials.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "nejm-retatrutide",
+            "triumph-1",
+            "triumph-4"
+          ]
+        },
+        {
+          "claim": "Not an FDA-approved marketed product; Lilly plans US submission in Q1 2027.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "lilly-medical-retatrutide"
+          ]
+        },
+        {
+          "claim": "Self-reported effects from gray-market use (Reddit, n=13,589) include increased appetite, fatigue, nausea, insomnia and tachycardia; product and dose unverifiable.",
           "tier": "Limited",
-          "confidence": "high",
+          "confidence": "low",
           "sources": [
-            "nejm-retatrutide"
+            "jama-netw-open-2026-reddit"
           ]
         }
       ],
       "evidenceGaps": [
         "No FDA-approved prescribing information; long-term labeled safety and interactions are not established.",
-        "Later-phase and regulatory outcomes may change the public evidence picture after this review date."
+        "TRIUMPH-4 results are a conference abstract; full peer-reviewed publication pending at this review.",
+        "Cardiovascular outcomes and long-term (>80 wk) safety are not yet reported.",
+        "No source quantifies doses used outside trials; online dose reports are n/a."
       ],
       "controversies": [
-        "Gray-market research-peptide sellers may present investigational triple-agonist trial results as consumer weight-loss products."
+        "Gray-market research-peptide sellers present trial results as consumer weight-loss products; identity and dose are unverifiable."
       ]
     },
     "provenance": {
@@ -2316,22 +2383,71 @@
           "title": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial",
           "publisher": "New England Journal of Medicine",
           "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
-          "publishedAt": "2023-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "publishedAt": "2023-06-26T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
-          "sourceType": "other",
+          "sourceType": "trial-registry",
           "title": "ClinicalTrials.gov retatrutide obesity phase 2 (NCT04881760)",
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT04881760",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Retatrutide for obesity: TRIUMPH-1 phase 3 randomized trial (NCT05929066)",
+          "publisher": "PubMed",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42814954/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "trial-registry",
+          "title": "ClinicalTrials.gov TRIUMPH-1 (NCT05929066)",
+          "publisher": "ClinicalTrials.gov",
+          "url": "https://clinicaltrials.gov/study/NCT05929066",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Retatrutide once weekly for knee osteoarthritis pain and obesity: 68-week phase 3 trial (TRIUMPH-4) — ACR abstract",
+          "publisher": "ACR Convergence",
+          "url": "https://acrabstracts.org/abstract/retatrutide-once-weekly-for-the-treatment-of-knee-osteoarthritis-pain-and-obesity-results-from-a-68-week-phase-3-randomized-clinical-trial/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "trial-registry",
+          "title": "ClinicalTrials.gov TRIUMPH-4 (NCT05931367)",
+          "publisher": "ClinicalTrials.gov",
+          "url": "https://clinicaltrials.gov/study/NCT05931367",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "manufacturer",
+          "title": "Is retatrutide available in the consumer market?",
+          "publisher": "Lilly Medical",
+          "url": "https://medical.lilly.com/us/products/answers/is-retatrutide-available-in-the-consumer-market-381272",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Self-reported effects of retatrutide use on Reddit (JAMA Network Open)",
+          "publisher": "JAMA Network Open",
+          "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2855285",
+          "publishedAt": "2026-10-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: investigational triple agonist with phase 2 obesity data; regulatory status not-established."
+        "Agent review 2026-10-14: investigational triple agonist with phase 2 obesity data; regulatory status not-established.",
+        "2026-10-24: added TRIUMPH-1, TRIUMPH-4, Lilly regulatory statement, JAMA Netw Open self-report study, and trial dose reports."
       ],
-      "lastReviewedAt": "2026-10-14T00:00:00Z",
+      "lastReviewedAt": "2026-10-24T00:00:00Z",
       "reviewStatus": "reviewed"
     },
     "ops": {
@@ -2348,7 +2464,162 @@
       "qualityFlags": [
         "classB-only"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 1,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "338 adults with obesity or overweight without type 2 diabetes",
+        "outcome": "−8.7% body weight vs −2.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial (NEJM 2023;389:514-526)",
+        "sourceUrl": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "338 adults with obesity or overweight without type 2 diabetes",
+        "outcome": "−17.1% body weight vs −2.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial (NEJM 2023;389:514-526)",
+        "sourceUrl": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Trial arms escalated from a starting dose of 2 or 4 mg."
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 8,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "338 adults with obesity or overweight without type 2 diabetes",
+        "outcome": "−22.8% body weight vs −2.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial (NEJM 2023;389:514-526)",
+        "sourceUrl": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Trial arms escalated from a starting dose of 2 or 4 mg."
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 12,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "338 adults with obesity or overweight without type 2 diabetes",
+        "outcome": "−24.2% body weight vs −2.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial (NEJM 2023;389:514-526)",
+        "sourceUrl": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Trial arms escalated from a starting dose of 2 or 4 mg."
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm",
+        "amount": 4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "80 weeks",
+        "route": "subcutaneous",
+        "population": "2,339 adults with obesity or overweight",
+        "outcome": "−17.6% body weight vs −3.9% placebo; dysesthesia 5.1%; AE discontinuation 4.1%",
+        "sourceType": "trial",
+        "sourceTitle": "TRIUMPH-1 phase 3 (NCT05929066)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42814954/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Treatment-regimen estimand."
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm",
+        "amount": 9,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "80 weeks",
+        "route": "subcutaneous",
+        "population": "2,339 adults with obesity or overweight",
+        "outcome": "−23.7% body weight vs −3.9% placebo; dysesthesia 12.3%; AE discontinuation 6.9%",
+        "sourceType": "trial",
+        "sourceTitle": "TRIUMPH-1 phase 3 (NCT05929066)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42814954/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Treatment-regimen estimand."
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm",
+        "amount": 12,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "80 weeks",
+        "route": "subcutaneous",
+        "population": "2,339 adults with obesity or overweight",
+        "outcome": "−25.0% body weight vs −3.9% placebo; dysesthesia 12.5%; AE discontinuation 11.3%",
+        "sourceType": "trial",
+        "sourceTitle": "TRIUMPH-1 phase 3 (NCT05929066)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42814954/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Established",
+        "notes": "Treatment-regimen estimand."
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm",
+        "amount": 9,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "68 weeks",
+        "route": "subcutaneous",
+        "population": "Adults with knee osteoarthritis and obesity",
+        "outcome": "−26.4% body weight vs −2.1% placebo; nausea 38.1%; dysesthesia 8.8%; AE discontinuation 12.2%",
+        "sourceType": "trial",
+        "sourceTitle": "TRIUMPH-4 phase 3, ACR abstract (NCT05931367)",
+        "sourceUrl": "https://acrabstracts.org/abstract/retatrutide-once-weekly-for-the-treatment-of-knee-osteoarthritis-pain-and-obesity-results-from-a-68-week-phase-3-randomized-clinical-trial/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Conference abstract; full publication pending."
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm",
+        "amount": 12,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "68 weeks",
+        "route": "subcutaneous",
+        "population": "Adults with knee osteoarthritis and obesity",
+        "outcome": "−28.7% body weight vs −2.1% placebo; nausea 43.2%; dysesthesia 20.9%; AE discontinuation 18.2%",
+        "sourceType": "trial",
+        "sourceTitle": "TRIUMPH-4 phase 3, ACR abstract (NCT05931367)",
+        "sourceUrl": "https://acrabstracts.org/abstract/retatrutide-once-weekly-for-the-treatment-of-knee-osteoarthritis-pain-and-obesity-results-from-a-68-week-phase-3-randomized-clinical-trial/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Conference abstract; full publication pending."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",

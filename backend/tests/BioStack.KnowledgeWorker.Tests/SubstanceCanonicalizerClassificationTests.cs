@@ -28,14 +28,20 @@ public sealed class SubstanceCanonicalizerClassificationTests
     }
 
     [Theory]
-    [InlineData("Small Molecule")]
+    [InlineData("Small Molecule", CompoundCategory.SmallMolecule)]
+    [InlineData("Biologic", CompoundCategory.Biologic)]
+    [InlineData("Vitamin", CompoundCategory.Vitamin)]
+    [InlineData("Mineral", CompoundCategory.Mineral)]
+    [InlineData("Other", CompoundCategory.Other)]
+    public void MapClassification_MapsEverySchemaClassification(string schemaValue, CompoundCategory expected)
+    {
+        Assert.Equal(expected, Canonicalize(schemaValue).Classification);
+    }
+
+    [Theory]
     [InlineData("small molecule")]
     [InlineData("amino acid")]
     [InlineData("research compound")]
-    [InlineData("Biologic")]
-    [InlineData("Vitamin")]
-    [InlineData("Mineral")]
-    [InlineData("Other")]
     [InlineData("")]
     public void MapClassification_LeavesUnmappedSchemaStringsUnknown(string schemaValue)
     {

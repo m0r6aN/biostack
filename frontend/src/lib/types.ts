@@ -663,6 +663,77 @@ export interface KnowledgeEntry {
   optimizationSupplements?: string;
   optimizationSleep?: string;
   optimizationExercise?: string;
+  standardDosageRange?: string;
+  maxReportedDose?: string;
+  incrementalEscalationSteps?: string[];
+  /** Full record detail. Present on the single-compound read; null on the list read. */
+  details?: KnowledgeEntryDetails | null;
+}
+
+export interface KnowledgeSourceRecord {
+  title: string;
+  url: string;
+  publisher: string;
+  sourceType: string;
+  publishedAt?: string | null;
+  lastCheckedAt?: string | null;
+}
+
+export interface KnowledgeSafetyItem {
+  item: string;
+  severity: string;
+  notes: string;
+  sources: string[];
+}
+
+/** A dose as found in one source. side "study": trials, studies, labels, guidelines, professional sources. side "reported": Reddit, Facebook, Instagram, forums, blogs. Never a direction. */
+export interface KnowledgeDoseReport {
+  side: 'study' | 'reported';
+  context: string;
+  amount?: number | null;
+  unit: string;
+  frequency: string;
+  duration: string;
+  route: string;
+  population: string;
+  outcome: string;
+  sourceType: string;
+  sourceTitle: string;
+  sourceUrl: string;
+  retrievedAt?: string | null;
+  grade: string;
+  notes: string;
+}
+
+export interface KnowledgeEntryDetails {
+  compoundFamily: string;
+  requiresPrescription?: boolean | null;
+  jurisdiction: string;
+  approvedIndications: string[];
+  labelStatusByUseCase: { useCase: string; labelStatus: string }[];
+  offLabelNotes: string[];
+  studiedUses: { useCase: string; labelStatus: string; population: string; summary: string; evidenceTier: string; sources: string[] }[];
+  safety: {
+    contraindications: KnowledgeSafetyItem[];
+    warnings: KnowledgeSafetyItem[];
+    precautions: KnowledgeSafetyItem[];
+    adverseEffectsCommon: string[];
+    adverseEffectsSerious: string[];
+    monitoring: { parameter: string; reason: string; frequency: string }[];
+  };
+  doseReports: KnowledgeDoseReport[];
+  labelDosing: { context: string; population: string; route: string; amount?: number | null; unit: string; frequency: string; scheduleText: string; productSpecific: boolean; notes: string[]; sources: string[] }[];
+  claims: { claim: string; tier: string; confidence: string; sources: string[] }[];
+  evidenceGaps: string[];
+  controversies: string[];
+  interactions: { type: string; target: string; severity: string; mechanism: string; effect: string; note: string; sources: string[] }[];
+  formulations: { productName: string; route: string; dosageForm: string; strength: string }[];
+  sources: KnowledgeSourceRecord[];
+  recordClass: string;
+  unofficialSourceFields: string[];
+  reviewStatus: string;
+  lastReviewedAt?: string | null;
+  reviewReasons?: string[];
 }
 
 // Reduced overlap responses omit all reasoning/classification fields and return severity:null.

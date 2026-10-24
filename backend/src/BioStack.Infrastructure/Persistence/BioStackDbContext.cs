@@ -439,6 +439,13 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.TieredDosing).HasConversion(
                 v => v == null ? null : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                 v => string.IsNullOrEmpty(v) ? null : JsonSerializer.Deserialize<TieredDosingData>(v, (JsonSerializerOptions?)null));
+            entity.Property(e => e.Details).HasConversion(
+                v => v == null ? null : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                v => string.IsNullOrEmpty(v) ? null : JsonSerializer.Deserialize<KnowledgeEntryDetails>(v, (JsonSerializerOptions?)null),
+                new Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer<KnowledgeEntryDetails?>(
+                    (a, b) => JsonSerializer.Serialize(a, (JsonSerializerOptions?)null) == JsonSerializer.Serialize(b, (JsonSerializerOptions?)null),
+                    v => v == null ? 0 : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null).GetHashCode(),
+                    v => v == null ? null : JsonSerializer.Deserialize<KnowledgeEntryDetails>(JsonSerializer.Serialize(v, (JsonSerializerOptions?)null), (JsonSerializerOptions?)null)));
         });
 
         modelBuilder.Entity<LeadCapture>(entity =>

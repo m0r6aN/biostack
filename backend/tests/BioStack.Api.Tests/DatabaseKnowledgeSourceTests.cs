@@ -22,6 +22,42 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
     }
 
     [Fact]
+    public async Task UpsertCompoundAsync_CaseInsensitiveDuplicate_UpdatesLowestIdAndRemovesTheRest()
+    {
+        // Production held two "Retatrutide" rows; the API served one while Refresh updated
+        // the other. The upsert now converges on exactly one row per name.
+        var low = Guid.Parse("00000000-0000-0000-0000-0000000000a1");
+        var high = Guid.Parse("00000000-0000-0000-0000-0000000000f9");
+        using (var seed = CreateDbContext())
+        {
+            seed.KnowledgeEntries.Add(new KnowledgeEntry { Id = high, CanonicalName = "retatrutide", RegulatoryStatus = "stale" });
+            seed.KnowledgeEntries.Add(new KnowledgeEntry { Id = low, CanonicalName = "Retatrutide", RegulatoryStatus = "stale" });
+            await seed.SaveChangesAsync();
+        }
+
+        using (var write = CreateDbContext())
+        {
+            var source = new DatabaseKnowledgeSource(write);
+            var disposition = await source.UpsertCompoundAsync(new KnowledgeEntry
+            {
+                CanonicalName = "Retatrutide",
+                RegulatoryStatus = "investigational",
+                Details = new KnowledgeEntryDetails { ReviewStatus = "reviewed" },
+            });
+            Assert.Equal(KnowledgeUpsertDisposition.Updated, disposition);
+        }
+
+        using var read = CreateDbContext();
+        var row = Assert.Single(await read.KnowledgeEntries.AsNoTracking().ToListAsync(), e => e.CanonicalName.ToLower() == "retatrutide");
+        Assert.Equal(low, row.Id);
+        Assert.Equal("investigational", row.RegulatoryStatus);
+        Assert.Equal("reviewed", row.Details!.ReviewStatus);
+
+        var served = await new DatabaseKnowledgeSource(read).GetCompoundAsync("RETATRUTIDE");
+        Assert.Equal(low, served!.Id);
+    }
+
+    [Fact]
     public async Task UpsertCompoundAsync_WhenUpdatingExistingEntryWithoutId_PreservesExistingId()
     {
         var canonicalName = $"Integration-{Guid.NewGuid():N}";

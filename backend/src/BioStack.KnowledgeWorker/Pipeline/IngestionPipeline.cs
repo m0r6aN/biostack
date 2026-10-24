@@ -108,11 +108,16 @@ public sealed class IngestionPipeline : IIngestionPipeline
             // 3. Normalize — idempotent mutations on the typed instance.
             _normalizer.Normalize(typed);
 
-            // 4. Trust gate — strip ClassA-only fields when record is ClassB.
+            // 4. Trust gate — classify authority and label (never blank) unofficial fields.
             var gated = _trustGate.Apply(typed);
 
             // 5. Canonicalize — project into the persisted KnowledgeEntry shape.
             var entry = _canonicalizer.ToKnowledgeEntry(gated.Record);
+            if (entry.Details is not null)
+            {
+                entry.Details.RecordClass = gated.RecordClass == TrustClass.A ? "A" : "B";
+                entry.Details.UnofficialSourceFields = gated.UnofficialFields.ToList();
+            }
 
             accepted.Add(new PreparedRecord(
                 SourceIndex:    raw.Index,

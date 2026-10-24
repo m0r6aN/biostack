@@ -6,10 +6,11 @@ using BioStack.KnowledgeWorker.Models;
 
 /// <summary>
 /// Maps a <see cref="SubstanceRecord"/> (post-normalize, post-trust-gate) to the
-/// persisted <see cref="KnowledgeEntry"/> domain entity. Lossy by design: the
-/// <c>KnowledgeEntry</c> model predates the full substance-record schema, so we
-/// project the richest safe subset and leave deeper fields for a future Phase 2
-/// <c>IngestionDbContext</c> schema.
+/// persisted <see cref="KnowledgeEntry"/> domain entity. Not lossy: the flat columns
+/// keep their existing meaning for protocol/interaction services, and everything else
+/// the record carries (safety, regulatory detail, studied uses including not-indicated
+/// ones, claims, gaps, controversies, interactions, dose reports, titled sources) is
+/// carried in <see cref="KnowledgeEntry.Details"/> so the public page can show it.
 /// </summary>
 public interface ISubstanceCanonicalizer
 {
@@ -75,7 +76,12 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
                                       .Select(FormatInteraction)
                                       .Distinct(StringComparer.OrdinalIgnoreCase)
                                       .ToList(),
-            Notes             = string.Join(" | ", record.Ops.ReviewReasons),
+            // Notes is display text. Pipeline review reasons are internal and live in
+            // Details.ReviewReasons; they are never printed raw on the page.
+            Notes             = string.Join(" ", record.Provenance.CurationNotes
+                                      .Select(n => n.Trim())
+                                      .Where(n => n.Length > 0)),
+            Details           = BuildDetails(record),
         };
 
         // Primary dosing projection — first productSpecific guidance wins, otherwise first entry.
@@ -106,9 +112,11 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             "SERM"               => CompoundCategory.Serm,
             "Amino Acid"         => CompoundCategory.AminoAcid,
             "Research Compound"  => CompoundCategory.ResearchCompound,
-            // The schema carries several classifications we do not yet model
-            // (Small Molecule, Biologic, Vitamin, Mineral, Other). They collapse
-            // to Unknown until the domain enum is extended.
+            "Small Molecule"     => CompoundCategory.SmallMolecule,
+            "Biologic"           => CompoundCategory.Biologic,
+            "Vitamin"            => CompoundCategory.Vitamin,
+            "Mineral"            => CompoundCategory.Mineral,
+            "Other"              => CompoundCategory.Other,
             _                    => CompoundCategory.Unknown,
         };
     }
@@ -122,6 +130,91 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             "Limited"      => EvidenceTier.Limited,
             "Insufficient" => EvidenceTier.Unknown,
             _              => EvidenceTier.Unknown,
+        };
+    }
+
+    private static KnowledgeEntryDetails BuildDetails(SubstanceRecord r)
+    {
+        static List<string> Clean(IEnumerable<string?> values) => values
+            .Select(v => (v ?? string.Empty).Trim())
+            .Where(v => v.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        static KnowledgeSafetyItem Item(SafetyItem i) => new()
+        {
+            Item = i.Item, Severity = i.Severity, Notes = i.Notes ?? string.Empty, Sources = i.Sources.ToList(),
+        };
+
+        return new KnowledgeEntryDetails
+        {
+            CompoundFamily       = r.Identity.CompoundFamily ?? string.Empty,
+            RequiresPrescription = r.Regulatory.RequiresPrescription,
+            Jurisdiction         = r.Regulatory.Jurisdiction ?? string.Empty,
+            ApprovedIndications  = Clean(r.Regulatory.ApprovedIndications),
+            LabelStatusByUseCase = r.Regulatory.LabelStatusByUseCase
+                .Select(l => new KnowledgeLabelStatus { UseCase = l.UseCase, LabelStatus = l.LabelStatus })
+                .ToList(),
+            OffLabelNotes        = Clean(r.Regulatory.OffLabelNotes),
+            StudiedUses          = r.Indications.Select(i => new KnowledgeStudiedUse
+            {
+                UseCase = i.UseCase, LabelStatus = i.LabelStatus, Population = i.Population,
+                Summary = i.BenefitSummary, EvidenceTier = i.EvidenceTier, Sources = i.Sources.ToList(),
+            }).ToList(),
+            Safety = new KnowledgeSafety
+            {
+                Contraindications     = r.Safety.Contraindications.Select(Item).ToList(),
+                Warnings              = r.Safety.Warnings.Select(Item).ToList(),
+                Precautions           = r.Safety.Precautions.Select(p => new KnowledgeSafetyItem
+                {
+                    Item = p.Item, Notes = p.Notes ?? string.Empty, Sources = p.Sources.ToList(),
+                }).ToList(),
+                AdverseEffectsCommon  = Clean(r.Safety.AdverseEffects.Common),
+                AdverseEffectsSerious = Clean(r.Safety.AdverseEffects.Serious),
+                Monitoring            = r.Safety.Monitoring.Select(m => new KnowledgeMonitoringItem
+                {
+                    Parameter = m.Parameter, Reason = m.Reason, Frequency = m.Frequency ?? string.Empty,
+                }).ToList(),
+            },
+            DoseReports = r.DoseReports.Select(d => new KnowledgeDoseReport
+            {
+                Side = string.Equals(d.Side, "reported", StringComparison.OrdinalIgnoreCase) ? "reported" : "study",
+                Context = d.Context ?? string.Empty, Amount = d.Amount, Unit = d.Unit, Frequency = d.Frequency,
+                Duration = d.Duration ?? string.Empty, Route = d.Route ?? string.Empty,
+                Population = d.Population ?? string.Empty, Outcome = d.Outcome ?? string.Empty,
+                SourceType = d.SourceType, SourceTitle = d.SourceTitle, SourceUrl = d.SourceUrl,
+                RetrievedAt = d.RetrievedAt, Grade = d.Grade, Notes = d.Notes ?? string.Empty,
+            }).ToList(),
+            LabelDosing = r.DosingGuidance.Select(g => new KnowledgeLabelDose
+            {
+                Context = g.Context.UseCase, Population = g.Context.Population, Route = g.Context.Route,
+                Amount = g.Dose.Amount, Unit = g.Dose.Unit, Frequency = g.Dose.Frequency,
+                ScheduleText = g.Dose.ScheduleText, ProductSpecific = g.ProductSpecific,
+                Notes = Clean(g.Notes), Sources = g.Sources.ToList(),
+            }).ToList(),
+            Claims = r.Evidence.ClaimSpecificEvidence.Select(c => new KnowledgeClaim
+            {
+                Claim = c.Claim, Tier = c.Tier, Confidence = c.Confidence, Sources = c.Sources.ToList(),
+            }).ToList(),
+            EvidenceGaps  = Clean(r.Evidence.EvidenceGaps),
+            Controversies = Clean(r.Evidence.Controversies),
+            Interactions  = r.Interactions.Select(i => new KnowledgeInteraction
+            {
+                Type = i.Type, Target = i.Target, Severity = i.Severity, Mechanism = i.Mechanism ?? string.Empty,
+                Effect = i.Effect ?? string.Empty, Note = i.RecommendedAction, Sources = i.Sources.ToList(),
+            }).ToList(),
+            Formulations = r.Formulations.Select(f => new KnowledgeFormulation
+            {
+                ProductName = f.ProductName, Route = f.Route, DosageForm = f.DosageForm, Strength = f.Strength ?? string.Empty,
+            }).ToList(),
+            Sources = r.Provenance.SourceRecords.Select(s => new KnowledgeSourceRecord
+            {
+                Title = s.Title, Url = s.Url ?? string.Empty, Publisher = s.Publisher ?? string.Empty,
+                SourceType = s.SourceType, PublishedAt = s.PublishedAt, LastCheckedAt = s.LastCheckedAt,
+            }).ToList(),
+            ReviewStatus   = r.Provenance.ReviewStatus ?? string.Empty,
+            LastReviewedAt = r.Provenance.LastReviewedAt,
+            ReviewReasons  = Clean(r.Ops.ReviewReasons),
         };
     }
 

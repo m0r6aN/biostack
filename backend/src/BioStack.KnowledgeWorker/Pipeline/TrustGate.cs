@@ -21,8 +21,8 @@ using BioStack.KnowledgeWorker.Models;
 ///     truth, or "compatible"/"recommended" verdicts on safety-relevant mixing.
 ///
 ///   * Conflict: if ClassB conflicts with ClassA, ClassA wins.
-///     Absence of ClassA support → the regulated / safety-critical field is
-///     kept null / unknown / review-required, never filled optimistically.
+///     Absence of ClassA support → the field is KEPT and labeled "unofficial source"
+///     (owner ruling 2026-10-24: remove do-not-display gates). Nothing is blanked.
 ///
 /// The gate runs AFTER schema validation & normalization and BEFORE canonicalization,
 /// because the fields it strips would otherwise be written to <c>KnowledgeEntry</c>
@@ -37,7 +37,11 @@ public sealed record TrustGateResult(
     SubstanceRecord Record,
     TrustClass      RecordClass,
     IReadOnlyList<string> StrippedFields,
-    IReadOnlyList<string> ReviewReasons);
+    IReadOnlyList<string> ReviewReasons)
+{
+    /// <summary>Fields kept from non-official sources; the page labels them, never hides them.</summary>
+    public IReadOnlyList<string> UnofficialFields { get; init; } = Array.Empty<string>();
+}
 
 public sealed class TrustGate : ITrustGate
 {
@@ -56,102 +60,39 @@ public sealed class TrustGate : ITrustGate
                 ReviewReasons:  Array.Empty<string>());
         }
 
-        // ClassB: strip ClassA-only canonical truth. Mark for review.
-        // The public compound response does not carry the structured safety and
-        // regulatory objects. Preserve their text in review notes so a Refresh
-        // upsert does not replace a live page with an empty risk section.
-        var stripped  = new List<string>();
-        var reviews   = new List<string>
+        // ClassB: nothing is blanked. Owner ruling 2026-10-24 (round 2, ruling 9): BioStack
+        // does not hide gathered data. Regulatory, safety, dosing and blend statements that
+        // come only from non-official sources are kept and recorded as "unofficial" so the
+        // page labels them instead of dropping them. ClassA still wins on conflict upstream
+        // (FieldAuthorityPolicy); this gate only marks authority.
+        var unofficial = new List<string>();
+        if (!string.IsNullOrWhiteSpace(record.Regulatory.RegulatoryStatus)) unofficial.Add("regulatoryStatus");
+        if (record.Regulatory.ApprovedIndications.Count > 0) unofficial.Add("approvedIndications");
+        if (record.Regulatory.LabelStatusByUseCase.Count > 0) unofficial.Add("labelStatusByUseCase");
+        if (record.Safety.Contraindications.Count > 0) unofficial.Add("contraindications");
+        if (record.Safety.Warnings.Count > 0) unofficial.Add("warnings");
+        if (record.Safety.Monitoring.Count > 0) unofficial.Add("monitoring");
+        if (record.DosingGuidance.Any(d => d.ProductSpecific)) unofficial.Add("labelDosing");
+        if (record.Compatibility.CompatibleBlends.Count > 0
+            || record.Compatibility.BlendingRules.Any(br => br.Status.Equals("allowed", StringComparison.OrdinalIgnoreCase)))
+            unofficial.Add("compatibility");
+
+        var reviews = new List<string>
         {
-            "ClassB source cannot establish canonical regulatory or safety fields. The statements below are retained as uncertainty, not as a label-backed verdict.",
+            "ClassB-only record: regulatory and safety statements come from non-official sources and are shown with that label.",
         };
-        AppendPreservedText(reviews, "Regulatory status", record.Regulatory.RegulatoryStatus);
-        foreach (var item in record.Safety.Contraindications)
-            AppendPreservedText(reviews, "Contraindication", item.Item);
-        foreach (var item in record.Safety.Warnings)
-            AppendPreservedText(reviews, "Warning", item.Item);
-        foreach (var item in record.Safety.Precautions)
-            AppendPreservedText(reviews, "Precaution", item.Item);
-        foreach (var item in record.Safety.AdverseEffects.Common)
-            AppendPreservedText(reviews, "Adverse effect", item);
-        foreach (var item in record.Safety.AdverseEffects.Serious)
-            AppendPreservedText(reviews, "Serious adverse effect", item);
 
-        // Regulatory canon — blank.
-        if (!string.IsNullOrWhiteSpace(record.Regulatory.RegulatoryStatus))
-        {
-            record.Regulatory.RegulatoryStatus = string.Empty;
-            stripped.Add("regulatory.regulatoryStatus");
-        }
-        if (record.Regulatory.ApprovedIndications.Count > 0)
-        {
-            record.Regulatory.ApprovedIndications = new List<string>();
-            stripped.Add("regulatory.approvedIndications");
-        }
-        if (record.Regulatory.LabelStatusByUseCase.Count > 0)
-        {
-            record.Regulatory.LabelStatusByUseCase = new List<LabelStatusByUseCaseItem>();
-            stripped.Add("regulatory.labelStatusByUseCase");
-        }
-
-        // Safety canon — blank.
-        if (record.Safety.Contraindications.Count > 0)
-        {
-            record.Safety.Contraindications = new List<SafetyItem>();
-            stripped.Add("safety.contraindications");
-        }
-        if (record.Safety.Warnings.Count > 0)
-        {
-            record.Safety.Warnings = new List<SafetyItem>();
-            stripped.Add("safety.warnings");
-        }
-        if (record.Safety.Monitoring.Count > 0)
-        {
-            record.Safety.Monitoring = new List<MonitoringItem>();
-            stripped.Add("safety.monitoring");
-        }
-
-        // Product-specific dosing truth — blank (enrichment-only dosing cannot establish canon).
-        var removedDosing = record.DosingGuidance.RemoveAll(d => d.ProductSpecific);
-        if (removedDosing > 0)
-        {
-            stripped.Add($"dosingGuidance.productSpecific[x{removedDosing}]");
-        }
-
-        // Blending "allowed" verdicts — a ClassB source cannot declare a blend hard-safe.
-        var removedAllow = record.Compatibility.BlendingRules.RemoveAll(
-            br => br.Status.Equals("allowed", StringComparison.OrdinalIgnoreCase));
-        if (removedAllow > 0)
-        {
-            stripped.Add($"compatibility.blendingRules.allowed[x{removedAllow}]");
-        }
-        if (record.Compatibility.CompatibleBlends.Count > 0)
-        {
-            record.Compatibility.CompatibleBlends = new List<string>();
-            stripped.Add("compatibility.compatibleBlends");
-        }
-
-        // Flag for review. Operators must escalate to a ClassA source before republication.
         record.Ops.NeedsReview   = true;
-        record.Ops.ReviewReasons = record.Ops.ReviewReasons.Concat(reviews).ToList();
+        record.Ops.ReviewReasons = record.Ops.ReviewReasons.Concat(reviews).Distinct().ToList();
         record.Ops.QualityFlags  = record.Ops.QualityFlags.Concat(new[] { "classB-only" }).Distinct().ToList();
 
         return new TrustGateResult(
             Record:         record,
             RecordClass:    cls,
-            StrippedFields: stripped,
-            ReviewReasons:  reviews);
-    }
-
-    private static void AppendPreservedText(List<string> reviews, string label, string? text)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-            return;
-
-        var trimmed = text.Trim();
-        if (trimmed.Length > 500)
-            trimmed = trimmed[..500].TrimEnd() + "...";
-
-        reviews.Add($"{label}: {trimmed}");
+            StrippedFields: Array.Empty<string>(),
+            ReviewReasons:  reviews)
+        {
+            UnofficialFields = unofficial,
+        };
     }
 }

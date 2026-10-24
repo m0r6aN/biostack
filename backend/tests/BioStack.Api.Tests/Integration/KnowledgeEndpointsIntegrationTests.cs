@@ -93,7 +93,7 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task GetCompound_PublicSerializationPreservesEvidenceAndOmitsIndividualizedActionFields()
+    public async Task GetCompound_PublicSerializationReturnsEveryField_IncludingDetails()
     {
         await UpsertAsync(new KnowledgeEntry
         {
@@ -118,7 +118,15 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
             OptimizationCarbs = "200 g/day",
             OptimizationSupplements = new List<string> { "Supplement recommendation" },
             OptimizationSleep = "8 hours",
-            OptimizationExercise = "Train daily"
+            OptimizationExercise = "Train daily",
+            Details = new KnowledgeEntryDetails
+            {
+                ReviewStatus = "pending-review",
+                DoseReports = new List<KnowledgeDoseReport>
+                {
+                    new() { Side = "study", Amount = 250, Unit = "mcg", SourceTitle = "Trial", SourceUrl = "https://example.invalid/trial", Grade = "Early Evidence" },
+                },
+            },
         });
 
         var response = await _client.GetAsync("/api/v1/knowledge/compounds/PublicBoundaryProbe");
@@ -139,7 +147,8 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
             "Observed interaction",
             Assert.Single(root.GetProperty("drugInteractions").EnumerateArray()).GetString());
 
-        var withheldProperties = new[]
+        // Owner ruling 9 (2026-10-24): no field is withheld from the public read.
+        var exposedProperties = new[]
         {
             "pairsWellWith",
             "compatibleBlends",
@@ -159,7 +168,12 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
             "optimizationExercise"
         };
 
-        Assert.All(withheldProperties, property => Assert.False(root.TryGetProperty(property, out _), property));
+        Assert.All(exposedProperties, property => Assert.True(root.TryGetProperty(property, out _), property));
+        var details = root.GetProperty("details");
+        Assert.Equal("pending-review", details.GetProperty("reviewStatus").GetString());
+        var dose = Assert.Single(details.GetProperty("doseReports").EnumerateArray());
+        Assert.Equal("study", dose.GetProperty("side").GetString());
+        Assert.Equal("Early Evidence", dose.GetProperty("grade").GetString());
     }
 
     [Fact]

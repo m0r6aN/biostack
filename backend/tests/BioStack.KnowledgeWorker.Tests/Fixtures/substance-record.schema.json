@@ -76,6 +76,11 @@
     },
     "ops": {
       "$ref": "#/$defs/ops"
+    },
+    "doseReports": {
+      "description": "Doses as found in sources, never a direction. side=study: trials, studies, labels, guidelines and other professional sources. side=reported: Reddit, Facebook, Instagram, forums and blogs (cited links or manual entries only; no automated collection from Meta platforms). Each row carries its source and a grade. An empty side renders as n/a.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/doseReport" }
     }
   },
   "$defs": {
@@ -730,6 +735,35 @@
         }
       }
     },
+    "doseReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["side", "amount", "unit", "frequency", "sourceType", "sourceTitle", "sourceUrl", "grade"],
+      "properties": {
+        "side": { "type": "string", "enum": ["study", "reported"] },
+        "context": { "type": "string" },
+        "amount": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "frequency": { "type": "string" },
+        "duration": { "type": "string" },
+        "route": { "type": "string" },
+        "population": { "type": "string" },
+        "outcome": { "type": "string" },
+        "sourceType": {
+          "type": "string",
+          "enum": ["trial", "trial-registry", "study", "label", "guideline", "regulator", "professional", "reddit", "facebook", "instagram", "forum", "blog", "other"]
+        },
+        "sourceTitle": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceUrl": { "$ref": "#/$defs/nonEmptyString" },
+        "retrievedAt": { "$ref": "#/$defs/nullableDateTime" },
+        "grade": { "$ref": "#/$defs/methodologyGrade" },
+        "notes": { "type": "string" }
+      }
+    },
+    "methodologyGrade": {
+      "type": "string",
+      "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded"]
+    },
     "sourceRecord": {
       "type": "object",
       "additionalProperties": false,
@@ -753,6 +787,11 @@
             "guideline",
             "manufacturer",
             "internal-curation",
+            "trial-registry",
+            "press-release",
+            "forum",
+            "social",
+            "blog",
             "other"
           ]
         },
@@ -829,4 +868,4 @@
       }
     }
   }
-}
+}

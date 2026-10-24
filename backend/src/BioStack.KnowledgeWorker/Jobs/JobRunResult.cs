@@ -12,7 +12,8 @@ public sealed record JobRunResult(
     int    FlaggedForReviewCount,
     int    FailedCount,
     int    SkippedUnpromotedCount = 0,
-    string? ErrorMessage = null)
+    string? ErrorMessage = null,
+    int    PublishedPendingReviewCount = 0)
 {
     /// <summary>Builds a result from the terminal state of an <see cref="IngestionContext"/>.</summary>
     public static JobRunResult FromContext(IngestionContext ctx) => new(
@@ -23,7 +24,8 @@ public sealed record JobRunResult(
         UnchangedCount:       ctx.UnchangedCount,
         FlaggedForReviewCount: ctx.FlaggedForReviewCount,
         FailedCount:          ctx.FailedCount,
-        SkippedUnpromotedCount: ctx.SkippedUnpromotedCount);
+        SkippedUnpromotedCount: ctx.SkippedUnpromotedCount,
+        PublishedPendingReviewCount: ctx.PublishedPendingReviewCount);
 
     /// <summary>Represents a run that failed before producing any results.</summary>
     public static JobRunResult Failure(string error) => new(

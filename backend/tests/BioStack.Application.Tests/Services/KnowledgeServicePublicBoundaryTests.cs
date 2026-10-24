@@ -10,7 +10,7 @@ using Xunit;
 public sealed class KnowledgeServicePublicBoundaryTests
 {
     [Fact]
-    public async Task GetCompoundAsync_PreservesObservationalEvidence_AndWithholdsPrescriptiveFields()
+    public async Task GetCompoundAsync_ReturnsEveryRecordField_IncludingDetails()
     {
         var source = new Mock<IKnowledgeSource>();
         source
@@ -26,22 +26,18 @@ public sealed class KnowledgeServicePublicBoundaryTests
         Assert.Equal(new[] { "Observed benefit" }, result.Benefits);
         Assert.Equal(new[] { "Reported caution" }, result.AvoidWith);
         Assert.Equal(new[] { "Observed interaction" }, result.DrugInteractions);
-        Assert.Empty(result.PairsWellWith);
-        Assert.Empty(result.CompatibleBlends);
-        Assert.Empty(result.VialCompatibility);
-        Assert.Empty(result.RecommendedDosage);
-        Assert.Empty(result.StandardDosageRange);
-        Assert.Empty(result.MaxReportedDose);
-        Assert.Empty(result.Frequency);
-        Assert.Empty(result.PreferredTimeOfDay);
-        Assert.Empty(result.WeeklyDosageSchedule);
-        Assert.Empty(result.IncrementalEscalationSteps);
-        Assert.Null(result.TieredDosing);
-        Assert.Empty(result.OptimizationProtein);
-        Assert.Empty(result.OptimizationCarbs);
-        Assert.Empty(result.OptimizationSupplements);
-        Assert.Empty(result.OptimizationSleep);
-        Assert.Empty(result.OptimizationExercise);
+        // Owner ruling 9 (2026-10-24): the service no longer strips fields. Everything the
+        // record holds is returned; the UI frames doses as facts about sources.
+        Assert.Equal(new[] { "Pairing recommendation" }, result.PairsWellWith);
+        Assert.Equal(new[] { "Blend recommendation" }, result.CompatibleBlends);
+        Assert.Equal("Co-vial direction", result.VialCompatibility);
+        Assert.Equal("250 mcg", result.RecommendedDosage);
+        Assert.Equal("250-500 mcg", result.StandardDosageRange);
+        Assert.Equal("500 mcg", result.MaxReportedDose);
+        Assert.Equal("Twice daily", result.Frequency);
+        Assert.NotNull(result.TieredDosing);
+        Assert.NotNull(result.Details);
+        Assert.Equal("study", Assert.Single(result.Details!.DoseReports).Side);
     }
 
     [Fact]
@@ -54,8 +50,8 @@ public sealed class KnowledgeServicePublicBoundaryTests
 
         var result = Assert.Single(await new KnowledgeService(source.Object).GetAllCompoundsAsync());
 
-        Assert.Empty(result.RecommendedDosage);
-        Assert.Empty(result.PairsWellWith);
+        Assert.Equal("250 mcg", result.RecommendedDosage);
+        Assert.Equal(new[] { "Pairing recommendation" }, result.PairsWellWith);
         Assert.Equal(new[] { "Reported caution" }, result.AvoidWith);
     }
 
@@ -126,7 +122,14 @@ public sealed class KnowledgeServicePublicBoundaryTests
             OptimizationCarbs = "200 g/day",
             OptimizationSupplements = new List<string> { "Supplement recommendation" },
             OptimizationSleep = "8 hours",
-            OptimizationExercise = "Train daily"
+            OptimizationExercise = "Train daily",
+            Details = new KnowledgeEntryDetails
+            {
+                DoseReports = new List<KnowledgeDoseReport>
+                {
+                    new() { Side = "study", Amount = 250, Unit = "mcg", SourceTitle = "Trial", SourceUrl = "https://example.org/trial", Grade = "Early Evidence" },
+                },
+            },
         };
     }
 }

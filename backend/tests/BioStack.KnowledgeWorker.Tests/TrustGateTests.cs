@@ -39,63 +39,64 @@ public class TrustGateTests
         Assert.NotEmpty(record.Compatibility.CompatibleBlends);
     }
 
-    // ── ClassB: enrichment-only. Canonical truth is stripped. ───────────────────
+    // ── ClassB: nothing is blanked; unofficial fields are labeled. ─────────────
+    // Owner ruling 9 (2026-10-24): remove do-not-display gates.
 
     [Fact]
-    public void ClassB_Strips_Regulatory_Canon_And_Flags_For_Review()
+    public void ClassB_Keeps_Regulatory_Canon_Labels_It_Unofficial_And_Flags_For_Review()
     {
         var record = SubstanceRecordFactory.ClassBAttemptingSafetyCanon();
 
         var result = Gate.Apply(record);
 
         Assert.Equal(TrustClass.B, result.RecordClass);
-        Assert.Equal(string.Empty, record.Regulatory.RegulatoryStatus);
-        Assert.Empty(record.Regulatory.ApprovedIndications);
-        Assert.Empty(record.Regulatory.LabelStatusByUseCase);
+        Assert.Equal("approved", record.Regulatory.RegulatoryStatus);
+        Assert.NotEmpty(record.Regulatory.ApprovedIndications);
+        Assert.NotEmpty(record.Regulatory.LabelStatusByUseCase);
         Assert.True(record.Ops.NeedsReview);
         Assert.Contains("classB-only", record.Ops.QualityFlags);
-        Assert.Contains(result.StrippedFields, f => f.StartsWith("regulatory."));
+        Assert.Empty(result.StrippedFields);
+        Assert.Contains("regulatoryStatus", result.UnofficialFields);
+        Assert.Contains("approvedIndications", result.UnofficialFields);
     }
 
     [Fact]
-    public void ClassB_Strips_Safety_Canon_Contraindications_Warnings_And_Monitoring()
+    public void ClassB_Keeps_Safety_Canon_And_Labels_It_Unofficial()
     {
         var record = SubstanceRecordFactory.ClassBAttemptingSafetyCanon();
 
         var result = Gate.Apply(record);
 
-        Assert.Empty(record.Safety.Contraindications);
-        Assert.Empty(record.Safety.Warnings);
-        Assert.Empty(record.Safety.Monitoring);
-        Assert.Contains("safety.contraindications", result.StrippedFields);
-        Assert.Contains("safety.warnings",          result.StrippedFields);
-        Assert.Contains("safety.monitoring",        result.StrippedFields);
-        Assert.Contains(result.ReviewReasons, reason => reason.StartsWith("Contraindication:", StringComparison.Ordinal));
-        Assert.Contains(result.ReviewReasons, reason => reason.StartsWith("Warning:", StringComparison.Ordinal));
+        Assert.NotEmpty(record.Safety.Contraindications);
+        Assert.NotEmpty(record.Safety.Warnings);
+        Assert.NotEmpty(record.Safety.Monitoring);
+        Assert.Contains("contraindications", result.UnofficialFields);
+        Assert.Contains("warnings", result.UnofficialFields);
+        Assert.Contains("monitoring", result.UnofficialFields);
     }
 
     [Fact]
-    public void ClassB_Strips_ProductSpecific_Dosing_Guidance()
+    public void ClassB_Keeps_ProductSpecific_Dosing_Guidance_Labeled_Unofficial()
     {
         var record = SubstanceRecordFactory.ClassBAttemptingSafetyCanon();
 
         var result = Gate.Apply(record);
 
-        Assert.DoesNotContain(record.DosingGuidance, d => d.ProductSpecific);
-        Assert.Contains(result.StrippedFields, f => f.StartsWith("dosingGuidance.productSpecific"));
+        Assert.Contains(record.DosingGuidance, d => d.ProductSpecific);
+        Assert.Contains("labelDosing", result.UnofficialFields);
     }
 
     [Fact]
-    public void ClassB_Strips_Allowed_Blending_Rules_And_CompatibleBlends()
+    public void ClassB_Keeps_Blending_Rules_And_CompatibleBlends_Labeled_Unofficial()
     {
         var record = SubstanceRecordFactory.ClassBAttemptingSafetyCanon();
 
         var result = Gate.Apply(record);
 
-        Assert.DoesNotContain(record.Compatibility.BlendingRules,
+        Assert.Contains(record.Compatibility.BlendingRules,
             br => br.Status.Equals("allowed", StringComparison.OrdinalIgnoreCase));
-        Assert.Empty(record.Compatibility.CompatibleBlends);
-        Assert.Contains(result.StrippedFields, f => f.StartsWith("compatibility."));
+        Assert.NotEmpty(record.Compatibility.CompatibleBlends);
+        Assert.Contains("compatibility", result.UnofficialFields);
     }
 
     [Fact]

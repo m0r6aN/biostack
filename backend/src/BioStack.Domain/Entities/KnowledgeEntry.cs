@@ -33,6 +33,9 @@ public sealed class KnowledgeEntry
     public TieredDosingData? TieredDosing { get; set; }
     public List<string> DrugInteractions { get; set; } = new();
 
+    // Full record detail (safety, claims, doses from both sides, sources, field authority).
+    public KnowledgeEntryDetails? Details { get; set; }
+
     // Optimization
     public string OptimizationProtein { get; set; } = string.Empty;
     public string OptimizationCarbs { get; set; } = string.Empty;

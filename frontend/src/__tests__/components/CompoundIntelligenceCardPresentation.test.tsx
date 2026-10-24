@@ -82,18 +82,19 @@ describe('Knowledge presentation', () => {
   });
 
   it('preserves all supplied qualifiers and describes missing data as a record limitation', () => {
+    const rawNotes = 'Educational reference only. Not a therapeutic recommendation.';
     const qualifiers = {
       mechanismSummary: 'Experimental mechanism; clinical relevance unproven.',
-      notes: 'Educational reference only. Not a therapeutic recommendation.',
       regulatoryStatus: 'Regulatory status not established by this record',
       benefits: ['Preclinical signal; human efficacy not established'],
       pathways: ['Tissue repair (preclinical)'],
       avoidWith: ['Review required; not individualized advice'],
       drugInteractions: ['Data not currently available'],
     };
-    show(qualifiers);
+    show({ ...qualifiers, notes: rawNotes });
     for (const value of Object.values(qualifiers).flat()) expect(screen.getByText(value)).toBeVisible();
-    expect(screen.getByRole('region', { name: 'Evidence and limitations' })).toHaveTextContent(qualifiers.notes);
+    // Raw record notes are internal context and are not printed on the card.
+    expect(screen.getByRole('region', { name: 'Evidence and limitations' })).not.toHaveTextContent(rawNotes);
     expect(screen.getByText('Human/preclinical evidence breakdown is not available in this record.')).toBeVisible();
     expect(screen.queryByText(/no human evidence|no interactions|safe to combine/i)).not.toBeInTheDocument();
   });
@@ -116,7 +117,7 @@ it('shows an accepted dated explanation with adjacent citation without replacing
   expect(explanation).toHaveTextContent(syntheticExplanation.limitations);
   expect(explanation.querySelector('a')).toHaveAttribute('href', syntheticExplanation.citation.url);
   expect(screen.getByText('Tissue support')).toBeInTheDocument();
-  expect(screen.getByText('Existing record qualification')).toBeInTheDocument();
+  expect(screen.queryByText('Existing record qualification')).not.toBeInTheDocument();
   expect(screen.queryByText('Human/preclinical evidence breakdown is not available in this record.')).not.toBeInTheDocument();
 });
 
