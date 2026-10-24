@@ -14,5 +14,9 @@ public enum CompoundCategory
     Nutraceutical = 9,
     Other = 10,
     AminoAcid = 11,
-    ResearchCompound = 12
+    ResearchCompound = 12,
+    SmallMolecule = 13,
+    Biologic = 14,
+    Vitamin = 15,
+    Mineral = 16
 }

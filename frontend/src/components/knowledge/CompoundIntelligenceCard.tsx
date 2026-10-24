@@ -11,6 +11,7 @@ import { formatWeight } from '@/lib/utils';
 import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
+import { CompoundRecordDetails, NOT_AVAILABLE } from './CompoundRecordDetails';
 
 // Some pathway / benefit / interaction entries in the source data are short
 // tags ("cellular-energy"); others are full sentences copied from the
@@ -103,12 +104,20 @@ export function CompoundIntelligenceCard({
   // results (already a list of dossiers) don't need a link to themselves.
   const showDossierLink = recommendationSurface === 'compound-detail';
   const showAddToProtocol = recommendationSurface === 'knowledge-detail';
+  const details = entry.details ?? null;
+  const sourceCount = details ? details.sources.length : entry.sourceReferences.length;
+  const reviewLabel = details?.reviewStatus
+    ? `${details.reviewStatus.replace(/-/g, ' ')}${details.lastReviewedAt ? ` · ${details.lastReviewedAt.slice(0, 10)}` : ''}`
+    : null;
   return (
     <GlassCard variant="default" className="p-4 sm:p-6 relative overflow-hidden break-words">
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
           <Heading className="text-lg font-semibold text-white">{entry.canonicalName}</Heading>
+          {details?.compoundFamily && (
+            <p className="text-sm text-white/55 mt-1">{details.compoundFamily}</p>
+          )}
           {entry.aliases.length > 0 && (
             <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
           )}
@@ -133,7 +142,20 @@ export function CompoundIntelligenceCard({
 
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Regulatory Status</p>
-            <p className="text-sm text-white/65">{entry.regulatoryStatus}</p>
+            <p className="text-sm text-white/65">{entry.regulatoryStatus?.trim() || NOT_AVAILABLE}</p>
+            {details?.unofficialSourceFields?.includes('regulatoryStatus') && (
+              <p className="text-xs text-amber-300/80 mt-1">Unofficial source</p>
+            )}
+          </div>
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Sources</p>
+            <p className="text-sm text-white/65" data-testid="verdict-source-count">{sourceCount}</p>
+          </div>
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Review</p>
+            <p className="text-sm text-white/65" data-testid="verdict-review">{reviewLabel ?? NOT_AVAILABLE}</p>
           </div>
         </div>
 
@@ -155,13 +177,14 @@ export function CompoundIntelligenceCard({
               </a>
               <p className="text-sm leading-6 text-white/65">{studyDesign.limitations}</p>
             </div>
-          ) : (
+          ) : details && details.claims.length > 0 ? null : (
             <p className="text-sm leading-6 text-white/65">
               Human/preclinical evidence breakdown is not available in this record.
             </p>
           )}
-          {entry.notes && <p className="text-sm leading-6 text-white/65">{entry.notes}</p>}
         </section>
+
+        {details && <CompoundRecordDetails details={details} />}
 
         {/* Profile context section — demographics only, no dosage adjacency */}
         {currentProfile && (
@@ -183,7 +206,7 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {benefits.length > 0 && (
+        {!details && benefits.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
             <TagList items={benefits} tone="emerald" />
@@ -218,7 +241,7 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {entry.sourceReferences.length > 0 && (
+        {!details && entry.sourceReferences.length > 0 && (
           <section aria-label="Sources">
             <h4 className="text-sm font-medium text-white/80 mb-2">Sources</h4>
             <ul id={referenceListId} className="text-sm space-y-2">

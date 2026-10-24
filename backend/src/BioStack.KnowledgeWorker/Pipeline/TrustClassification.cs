@@ -46,6 +46,11 @@ public static class TrustClassification
         "review",
         "database",
         "internal-curation",
+        "trial-registry",
+        "press-release",
+        "forum",
+        "social",
+        "blog",
         "other",
     };
 

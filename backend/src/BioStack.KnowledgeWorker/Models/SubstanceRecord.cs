@@ -25,6 +25,27 @@ public sealed class SubstanceRecord
     [JsonPropertyName("evidence")]            public Evidence            Evidence            { get; set; } = new();
     [JsonPropertyName("provenance")]          public Provenance          Provenance          { get; set; } = new();
     [JsonPropertyName("ops")]                 public Ops                 Ops                 { get; set; } = new();
+    [JsonPropertyName("doseReports")]         public List<DoseReport>    DoseReports         { get; set; } = new();
+}
+
+/// <summary>A dose as found in one source (study side or reported side). Never a direction.</summary>
+public sealed class DoseReport
+{
+    [JsonPropertyName("side")]        public string    Side        { get; set; } = "study";
+    [JsonPropertyName("context")]     public string?   Context     { get; set; }
+    [JsonPropertyName("amount")]      public double?   Amount      { get; set; }
+    [JsonPropertyName("unit")]        public string    Unit        { get; set; } = string.Empty;
+    [JsonPropertyName("frequency")]   public string    Frequency   { get; set; } = string.Empty;
+    [JsonPropertyName("duration")]    public string?   Duration    { get; set; }
+    [JsonPropertyName("route")]       public string?   Route       { get; set; }
+    [JsonPropertyName("population")]  public string?   Population  { get; set; }
+    [JsonPropertyName("outcome")]     public string?   Outcome     { get; set; }
+    [JsonPropertyName("sourceType")]  public string    SourceType  { get; set; } = string.Empty;
+    [JsonPropertyName("sourceTitle")] public string    SourceTitle { get; set; } = string.Empty;
+    [JsonPropertyName("sourceUrl")]   public string    SourceUrl   { get; set; } = string.Empty;
+    [JsonPropertyName("retrievedAt")] public DateTime? RetrievedAt { get; set; }
+    [JsonPropertyName("grade")]       public string    Grade       { get; set; } = string.Empty;
+    [JsonPropertyName("notes")]       public string?   Notes       { get; set; }
 }
 
 public sealed class Identity

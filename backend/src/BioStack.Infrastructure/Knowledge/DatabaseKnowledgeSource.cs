@@ -22,11 +22,14 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         }
 
         var normalizedCanonicalName = normalizedName.ToLowerInvariant();
+        // Deterministic: a unique index on lower(CanonicalName) prevents duplicates, but if a
+        // legacy duplicate survives, always serve the same row (lowest Id) instead of an
+        // unordered first match.
         var canonicalMatch = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .FirstOrDefaultAsync(k =>
-                k.CanonicalName.ToLower() == normalizedCanonicalName,
-                cancellationToken);
+            .Where(k => k.CanonicalName.ToLower() == normalizedCanonicalName)
+            .OrderBy(k => k.Id)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (canonicalMatch is not null)
         {
@@ -37,8 +40,10 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        return entries.FirstOrDefault(k =>
-            k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)));
+        return entries
+            .OrderBy(k => k.Id)
+            .FirstOrDefault(k =>
+                k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)));
     }
 
     public async Task<List<KnowledgeEntry>> GetAllCompoundsAsync(CancellationToken cancellationToken = default)
@@ -110,12 +115,24 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
     public async Task<KnowledgeUpsertDisposition> UpsertCompoundAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)
     {
-        var existing = await _dbContext.KnowledgeEntries
-            .FirstOrDefaultAsync(k => k.CanonicalName == entry.CanonicalName, cancellationToken);
+        // Case-insensitive and ordered, so the upsert always writes the row the API serves.
+        // Any legacy duplicates of the same name are removed here so a Refresh converges on
+        // exactly one row per compound.
+        var normalized = (entry.CanonicalName ?? string.Empty).Trim().ToLowerInvariant();
+        var matches = await _dbContext.KnowledgeEntries
+            .Where(k => k.CanonicalName.ToLower() == normalized)
+            .OrderBy(k => k.Id)
+            .ToListAsync(cancellationToken);
+        var existing = matches.FirstOrDefault();
+        var removedDuplicates = matches.Count > 1;
+        if (removedDuplicates)
+        {
+            _dbContext.KnowledgeEntries.RemoveRange(matches.Skip(1));
+        }
 
         if (existing != null)
         {
-            if (!ApplyChanges(existing, entry))
+            if (!ApplyChanges(existing, entry) && !removedDuplicates)
             {
                 return KnowledgeUpsertDisposition.Unchanged;
             }
@@ -137,16 +154,20 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         // AsNoTracking: this instance is never attached to the change tracker, so running
         // it through ApplyChanges below to compute the diff is safe — there is nothing for
         // a stray SaveChangesAsync to persist, and this method never calls SaveChangesAsync.
-        var existing = await _dbContext.KnowledgeEntries
+        var normalized = (entry.CanonicalName ?? string.Empty).Trim().ToLowerInvariant();
+        var matches = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .FirstOrDefaultAsync(k => k.CanonicalName == entry.CanonicalName, cancellationToken);
+            .Where(k => k.CanonicalName.ToLower() == normalized)
+            .OrderBy(k => k.Id)
+            .ToListAsync(cancellationToken);
+        var existing = matches.FirstOrDefault();
 
         if (existing is null)
         {
             return KnowledgeUpsertDisposition.Created;
         }
 
-        return ApplyChanges(existing, entry)
+        return ApplyChanges(existing, entry) || matches.Count > 1
             ? KnowledgeUpsertDisposition.Updated
             : KnowledgeUpsertDisposition.Unchanged;
     }
@@ -188,6 +209,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         changed |= SetIfDifferent(existing.OptimizationSleep, incoming.OptimizationSleep, value => existing.OptimizationSleep = value);
         changed |= SetIfDifferent(existing.OptimizationExercise, incoming.OptimizationExercise, value => existing.OptimizationExercise = value);
         changed |= SetIfDifferent(existing.TieredDosing, incoming.TieredDosing, value => existing.TieredDosing = value, TieredDosingEquals);
+        changed |= SetIfDifferent(existing.Details, incoming.Details, value => existing.Details = value, DetailsEquals);
 
         changed |= SetListIfDifferent(existing.Aliases, incoming.Aliases, value => existing.Aliases = value);
         changed |= SetListIfDifferent(existing.SourceReferences, incoming.SourceReferences, value => existing.SourceReferences = value);
@@ -230,6 +252,9 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         setter(incoming);
         return true;
     }
+
+    private static bool DetailsEquals(KnowledgeEntryDetails? current, KnowledgeEntryDetails? incoming)
+        => System.Text.Json.JsonSerializer.Serialize(current) == System.Text.Json.JsonSerializer.Serialize(incoming);
 
     private static bool TieredDosingEquals(TieredDosingData? current, TieredDosingData? incoming)
     {

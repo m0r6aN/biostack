@@ -120,7 +120,25 @@ public abstract class IngestionJobBase : IIngestionJob
         // Promotion gate runs before anything else — including before DryRun's read-only
         // preview — so a skip is reported the same way whether this is a DryRun or a write.
         var gate = EvaluatePromotionGate(prepared);
-        if (!gate.Allowed)
+        var planReason = string.Empty;
+        if (!gate.Allowed && gate.SkipReason != PromotionSkipReason.ArchivedOrRejected)
+        {
+            planReason = $"published pending review: {gate.SkipReasonText}";
+            // Owner ruling 9 (2026-10-24): the promotion gate no longer hides records. A
+            // record without an approve-for-promotion decision is published and labeled
+            // with its review state instead of being skipped. Only archive/reject withholds.
+            if (prepared.Entry.Details is not null)
+            {
+                prepared.Entry.Details.ReviewStatus = gate.SkipReason == PromotionSkipReason.RequestChanges
+                    ? "changes-requested"
+                    : "pending-review";
+            }
+            context.IncrementPublishedPendingReview();
+            context.Logger.LogInformation(
+                "[{Job}] PUBLISH (pending review) '{Name}': {Reason}",
+                JobName, canonicalName, gate.SkipReasonText);
+        }
+        else if (!gate.Allowed)
         {
             context.IncrementSkippedUnpromoted();
             context.RecordPlanRow(canonicalName, "skip-unpromoted", gate.SkipReasonText);
@@ -144,7 +162,7 @@ public abstract class IngestionJobBase : IIngestionJob
             var previewDisposition = await KnowledgeSource.PreviewUpsertAsync(prepared.Entry, ct);
             var action = DryRunActionLabel(previewDisposition);
             RecordDispositionCounters(context, previewDisposition);
-            context.RecordPlanRow(canonicalName, action, string.Empty);
+            context.RecordPlanRow(canonicalName, action, planReason);
             context.Logger.LogInformation(
                 "[{Job}] DRY-RUN would {Action} '{Name}' class={Class} strippedFields={Stripped}",
                 JobName, action, canonicalName, prepared.TrustClass, prepared.StrippedFields.Count);
@@ -159,7 +177,7 @@ public abstract class IngestionJobBase : IIngestionJob
 
         var disposition = await KnowledgeSource.UpsertCompoundAsync(prepared.Entry, ct);
         RecordDispositionCounters(context, disposition);
-        context.RecordPlanRow(canonicalName, disposition.ToString(), string.Empty);
+        context.RecordPlanRow(canonicalName, disposition.ToString(), planReason);
     }
 
     private static void RecordDispositionCounters(IngestionContext context, KnowledgeUpsertDisposition disposition)

@@ -24,6 +24,7 @@ public sealed class IngestionContext
     private int _updated;
     private int _unchanged;
     private int _skippedUnpromoted;
+    private int _publishedPendingReview;
     private int _flaggedForReview;
     private int _failed;
 
@@ -32,6 +33,8 @@ public sealed class IngestionContext
     public int UpdatedCount           => _updated;
     public int UnchangedCount         => _unchanged;
     public int SkippedUnpromotedCount => _skippedUnpromoted;
+    /// <summary>Records published without an approve-for-promotion decision, labeled pending-review.</summary>
+    public int PublishedPendingReviewCount => _publishedPendingReview;
     public int FlaggedForReviewCount  => _flaggedForReview;
     public int FailedCount            => _failed;
 
@@ -58,6 +61,7 @@ public sealed class IngestionContext
     public void IncrementUpdated()           => Interlocked.Increment(ref _updated);
     public void IncrementUnchanged()         => Interlocked.Increment(ref _unchanged);
     public void IncrementSkippedUnpromoted() => Interlocked.Increment(ref _skippedUnpromoted);
+    public void IncrementPublishedPendingReview() => Interlocked.Increment(ref _publishedPendingReview);
     public void IncrementFlaggedForReview()  => Interlocked.Increment(ref _flaggedForReview);
     public void IncrementFailed()            => Interlocked.Increment(ref _failed);
 
@@ -82,18 +86,18 @@ public sealed class IngestionContext
         {
             Logger.LogInformation(
                 "[{Job}] DRY-RUN summary — Scanned={Scanned} WouldCreate={Created} WouldUpdate={Updated} "
-                + "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} FlaggedForReview={Flagged} "
+                + "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} PendingReview={PendingReview} FlaggedForReview={Flagged} "
                 + "Failed={Failed} (no writes were made)",
-                jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _flaggedForReview, _failed);
+                jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _failed);
             Logger.LogInformation("[{Job}] DRY-RUN per-record plan:\n{Table}", jobName, BuildPlanTable());
             return;
         }
 
         Logger.LogInformation(
             "[{Job}] Run complete — Scanned={Scanned} Created={Created} Updated={Updated} " +
-            "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} FlaggedForReview={Flagged} " +
+            "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} PendingReview={PendingReview} FlaggedForReview={Flagged} " +
             "Failed={Failed} DryRun={DryRun}",
-            jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _flaggedForReview, _failed, DryRun);
+            jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _failed, DryRun);
     }
 
     /// <summary>Renders <see cref="PlanRows"/> as a simple fixed-width text table.</summary>
