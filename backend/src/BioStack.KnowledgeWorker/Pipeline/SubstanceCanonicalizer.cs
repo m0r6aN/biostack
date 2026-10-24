@@ -19,6 +19,15 @@ public interface ISubstanceCanonicalizer
 
 public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
 {
+    internal const int MaxPathwayTagLength = 120;
+
+    /// <summary>True for a pathway/mechanism tag; false for empty values and prose sentences.</summary>
+    internal static bool IsPathwayTag(string value) =>
+        value.Length > 0
+        && value.Length <= MaxPathwayTagLength
+        && !value.EndsWith('.')
+        && !value.Contains(". ", StringComparison.Ordinal);
+
     public KnowledgeEntry ToKnowledgeEntry(SubstanceRecord record)
     {
         if (record is null) throw new ArgumentNullException(nameof(record));
@@ -41,9 +50,14 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             RegulatoryStatus  = record.Regulatory.RegulatoryStatus ?? string.Empty,
             MechanismSummary  = record.Mechanism.MechanismSummary ?? string.Empty,
             EvidenceTier      = MapEvidenceTier(record.Evidence.OverallTier),
+            // Pathways are short tags used by the overlap checker. Prose sentences (often a copy
+            // of the mechanism summary in primaryMechanisms) are not tags and are left out
+            // (growth spec O7: Ibutamoren's pathways held its mechanism sentence).
             Pathways          = record.Mechanism.Pathways
                                       .Concat(record.Mechanism.PrimaryMechanisms)
                                       .Concat(record.Mechanism.Targets)
+                                      .Select(s => s.Trim())
+                                      .Where(IsPathwayTag)
                                       .Distinct(StringComparer.OrdinalIgnoreCase)
                                       .ToList(),
             // An indication explicitly marked "not-indicated" records no claimed
@@ -67,6 +81,7 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             CompatibleBlends  = record.Compatibility.CompatibleBlends.ToList(),
             VialCompatibility = record.Compatibility.VialCompatibilitySummary ?? string.Empty,
             SourceReferences  = record.Provenance.SourceRecords
+                                      .Where(s => PublicSourcePolicy.IsPublicCitable(s.Url, s.Publisher))
                                       .Select(s => s.Url ?? s.Title)
                                       .Where(s => !string.IsNullOrWhiteSpace(s))
                                       .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -202,7 +217,9 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             {
                 ProductName = f.ProductName, Route = f.Route, DosageForm = f.DosageForm, Strength = f.Strength ?? string.Empty,
             }).ToList(),
-            Sources = r.Provenance.SourceRecords.Select(s => new KnowledgeSourceRecord
+            Sources = r.Provenance.SourceRecords
+                .Where(s => PublicSourcePolicy.IsPublicCitable(s.Url, s.Publisher))
+                .Select(s => new KnowledgeSourceRecord
             {
                 Title = s.Title, Url = s.Url ?? string.Empty, Publisher = s.Publisher ?? string.Empty,
                 SourceType = s.SourceType, PublishedAt = s.PublishedAt, LastCheckedAt = s.LastCheckedAt,
