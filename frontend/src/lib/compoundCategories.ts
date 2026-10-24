@@ -9,7 +9,7 @@ export const CATEGORY_CLASSIFICATIONS: Record<string, string[]> = {
   Pharmaceutical: ['Pharmaceutical', 'Small Molecule', 'Hormone', 'SARM', 'SERM'],
   Nutraceutical: ['Vitamin', 'Amino Acid', 'Small Molecule', 'Supplement'],
   Coenzyme: ['Small Molecule', 'Vitamin'],
-  Other: ['Other', 'Research Compound', 'Hormone', 'SARM', 'SERM', 'Small Molecule'],
+  Other: ['Other', 'Research Compound', 'Hormone', 'SARM', 'SERM', 'Small Molecule', 'Gene Therapy', 'Epigenetic Therapy', 'Cell Therapy', 'Oligonucleotide'],
 };
 
 export function classificationsForCategory(category: string): string[] {

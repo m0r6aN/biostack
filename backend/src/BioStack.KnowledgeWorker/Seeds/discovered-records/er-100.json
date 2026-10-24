@@ -1,0 +1,434 @@
+[
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "er-100",
+      "canonicalName": "ER-100",
+      "slug": "er-100",
+      "aliases": [
+        "ER-100 epigenetic therapy",
+        "OSK epigenetic therapy",
+        "ER100",
+        "AAV2-OSK",
+        "LB100-001 (study code)"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "partial epigenetic reprogramming gene therapy (OCT4, SOX2, KLF4)"
+      ],
+      "classification": "Epigenetic Therapy",
+      "compoundFamily": "partial epigenetic reprogramming gene therapy (AAV-delivered, doxycycline-inducible OSK)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "AAV vector encoding OCT4, SOX2 and KLF4 (OSK)"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": true,
+      "regulatoryStatus": "investigational (FDA IND cleared 2026-01-28 per sponsor; Phase 1 NCT07290244 recruiting; not FDA-approved; not available outside the trial)",
+      "labelStatusByUseCase": [
+        {
+          "useCase": "optic neuropathies (open-angle glaucoma, NAION) — investigational",
+          "labelStatus": "not-indicated"
+        }
+      ],
+      "jurisdiction": "US",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Only available inside the Phase 1 trial NCT07290244; there is no approved, compounded or research-use product.",
+        "Life Biosciences reports it is the first partial epigenetic reprogramming therapy cleared for human trials."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "ER-100 is an investigational gene therapy from Life Biosciences: an engineered AAV vector, injected into the eye (intravitreal), carries genes for three Yamanaka transcription factors — OCT4, SOX2 and KLF4 (OSK, without c-MYC). Expression is switched on only while the patient takes oral doxycycline (56 days in the trial). The aim is partial epigenetic reprogramming: restoring youthful gene-expression patterns in retinal ganglion cells without changing cell identity or the patient's DNA sequence.",
+      "primaryMechanisms": [
+        "partial epigenetic reprogramming",
+        "doxycycline-inducible OCT4/SOX2/KLF4 expression",
+        "AAV-mediated intravitreal gene delivery"
+      ],
+      "pathways": [
+        "epigenetic-reprogramming",
+        "DNA-methylation-age",
+        "retinal-ganglion-cell-survival"
+      ],
+      "targets": [
+        "retinal ganglion cells",
+        "optic nerve"
+      ],
+      "effectTags": [
+        "epigenetic-age-reversal (preclinical)",
+        "axon-regeneration (preclinical)",
+        "vision"
+      ],
+      "goalTags": [
+        "longevity",
+        "vision",
+        "neuroprotection"
+      ]
+    },
+    "formulations": [
+      {
+        "formulationId": "er-100-intravitreal",
+        "productName": "ER-100",
+        "manufacturer": "Life Biosciences Inc.",
+        "route": "other",
+        "dosageForm": "intravitreal injection (one eye) of an investigational AAV gene therapy, plus oral doxycycline (activator) for 56 days",
+        "strength": null,
+        "concentration": null,
+        "unit": "vg/eye",
+        "substitutableWith": [],
+        "storage": {
+          "beforeReconstitution": "unknown (investigational product handled by trial sites)",
+          "afterReconstitution": "n/a",
+          "temperatureNotes": "unknown",
+          "lightSensitivity": null,
+          "stabilityWindow": "unknown"
+        },
+        "reconstitution": {
+          "required": false,
+          "diluent": null,
+          "diluentVolume": null,
+          "instructions": "n/a — supplied to trial sites for intravitreal injection; preparation details unknown",
+          "productSpecific": false
+        }
+      }
+    ],
+    "indications": [
+      {
+        "useCase": "open-angle glaucoma (investigational)",
+        "labelStatus": "not-indicated",
+        "population": "Adults with open-angle glaucoma enrolled in Phase 1 NCT07290244 (dose escalation, one eye).",
+        "benefitSummary": "Phase 1 safety study. Sponsor-reported interim data (3 participants, 2026-10-08): 2 of 3 had at least 28% of visual-field points improve by more than 4 dB. Open-label, no control arm, not peer reviewed.",
+        "evidenceTier": "Early Evidence",
+        "sources": [
+          "ctgov-nct07290244",
+          "lifebio-2026-10-08-interim"
+        ]
+      },
+      {
+        "useCase": "non-arteritic anterior ischemic optic neuropathy, NAION (investigational)",
+        "labelStatus": "not-indicated",
+        "population": "Adults with NAION; cohort opens after OAG dose selection (3, expandable to 6).",
+        "benefitSummary": "No human data yet; NAION cohort not yet dosed per the registry design.",
+        "evidenceTier": "Not graded",
+        "sources": [
+          "ctgov-nct07290244"
+        ]
+      }
+    ],
+    "dosingGuidance": [
+      {
+        "guidanceId": "er-100-guidance",
+        "context": {
+          "useCase": "investigational optic neuropathy research",
+          "population": "Phase 1 trial participants only",
+          "formulation": "er-100-intravitreal",
+          "route": "intravitreal"
+        },
+        "dose": {
+          "amount": null,
+          "unit": "unknown",
+          "frequency": "single dose (one eye)",
+          "scheduleText": "No approved dose. Trial dose levels are listed under dose reports with their sources.",
+          "preferredTimeOfDay": null
+        },
+        "notes": [
+          "Not available outside the trial; there is no approved or community dose."
+        ],
+        "productSpecific": false,
+        "sources": [
+          "ctgov-nct07290244"
+        ]
+      }
+    ],
+    "compatibility": {
+      "vialCompatibilitySummary": "n/a — single intravitreal injection given by trial investigators; never mixed.",
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": [
+        "all compounds"
+      ]
+    },
+    "safety": {
+      "contraindications": [
+        {
+          "item": "Not an available product; only given inside the Phase 1 trial",
+          "severity": "high",
+          "notes": "Any product sold as ER-100 or 'OSK therapy' outside the trial is not Life Biosciences' investigational product.",
+          "sources": [
+            "ctgov-nct07290244",
+            "lifebio-2026-01-28-ind"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "item": "Long-term safety of in-vivo reprogramming is unknown",
+          "severity": "review",
+          "notes": "Yamanaka-factor expression carries a theoretical risk of dedifferentiation or tumor formation; ER-100 omits c-MYC and limits expression to the doxycycline window. Participants are followed up to 5 years.",
+          "sources": [
+            "ctgov-nct07290244",
+            "lu-2020-nature"
+          ]
+        },
+        {
+          "item": "Intravitreal injection and AAV vector risks",
+          "severity": "review",
+          "notes": "Intraocular inflammation and immune response to the vector are known class risks of intravitreal AAV therapy; the trial tracks treatment-emergent adverse events and dose-limiting toxicities to Day 112.",
+          "sources": [
+            "ctgov-nct07290244"
+          ]
+        }
+      ],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [
+          "unknown (3 participants reported; no dose-limiting toxicities, serious adverse events or adverse events of special interest through Day 56 per sponsor)"
+        ],
+        "serious": [
+          "none reported to date (n=3, sponsor interim)"
+        ]
+      },
+      "monitoring": [
+        {
+          "parameter": "treatment-emergent adverse events and dose-limiting toxicities",
+          "reason": "Primary safety endpoints of the Phase 1 trial",
+          "frequency": "baseline to Day 56 and Day 112, then long-term follow-up up to 5 years",
+          "sources": [
+            "ctgov-nct07290244"
+          ]
+        },
+        {
+          "parameter": "liver function tests",
+          "reason": "Primary safety laboratory endpoint (systemic doxycycline and vector exposure)",
+          "frequency": "during and after the doxycycline activation period",
+          "sources": [
+            "ctgov-nct07290244"
+          ]
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "interactionId": "er-100-doxycycline-activator",
+        "type": "drug-drug",
+        "target": "doxycycline",
+        "severity": "review",
+        "mechanism": "Doxycycline is the activator: OSK is expressed only while it is taken",
+        "effect": "Doxycycline is part of the regimen, not an interaction to avoid; its own side effects and interactions apply during the 56 days.",
+        "recommendedAction": "Trial-protocol use only.",
+        "sources": [
+          "ctgov-nct07290244"
+        ]
+      }
+    ],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [
+        "n/a — investigational single-dose trial therapy; no supportive guidance applies."
+      ],
+      "sources": []
+    },
+    "evidence": {
+      "overallTier": "Early Evidence",
+      "claimSpecificEvidence": [
+        {
+          "claim": "ER-100 is an AAV-delivered, doxycycline-inducible OSK (OCT4, SOX2, KLF4) partial epigenetic reprogramming therapy given by intravitreal injection.",
+          "tier": "Established",
+          "confidence": "high",
+          "sources": [
+            "ctgov-nct07290244",
+            "lifebio-2026-01-28-ind"
+          ],
+          "gradeRationale": "Registry intervention description and sponsor IND announcement; a factual description of the product."
+        },
+        {
+          "claim": "Partial reprogramming with OSK restored youthful DNA-methylation patterns, axon regeneration and vision in mouse models of optic nerve injury, glaucoma and aging.",
+          "tier": "Plausible Theory",
+          "confidence": "moderate",
+          "sources": [
+            "lu-2020-nature"
+          ],
+          "gradeRationale": "Peer-reviewed animal study (Lu et al., Nature 2020); mechanistic and preclinical only, no human evidence."
+        },
+        {
+          "claim": "ER-100 was tolerated in the first 3 open-angle glaucoma participants through Day 56, with no dose-limiting toxicities, serious adverse events or adverse events of special interest.",
+          "tier": "Early Evidence",
+          "confidence": "low",
+          "sources": [
+            "lifebio-2026-10-08-interim"
+          ],
+          "gradeRationale": "Sponsor press release; n=3, open-label, interim, not peer reviewed."
+        },
+        {
+          "claim": "ER-100 improves vision in glaucoma (2 of 3 participants had at least 28% of visual-field points improve by more than 4 dB).",
+          "tier": "Early Evidence",
+          "confidence": "low",
+          "sources": [
+            "lifebio-2026-10-08-interim"
+          ],
+          "gradeRationale": "Credible early clinical signal but n=3, no control, open-label, sponsor-reported, not peer reviewed; safety, not efficacy, is the primary endpoint."
+        },
+        {
+          "claim": "ER-100 benefits NAION.",
+          "tier": "Not graded",
+          "confidence": "unknown",
+          "sources": [
+            "ctgov-nct07290244"
+          ],
+          "gradeRationale": "No human NAION data yet; cohort follows OAG dose selection."
+        },
+        {
+          "claim": "Partial epigenetic reprogramming like ER-100 reverses aging in the whole body.",
+          "tier": "Unsupported",
+          "confidence": "moderate",
+          "sources": [
+            "ctgov-nct07290244",
+            "lu-2020-nature"
+          ],
+          "gradeRationale": "ER-100 is a local eye therapy; no human evidence for systemic age reversal exists."
+        }
+      ],
+      "evidenceGaps": [
+        "Efficacy is unknown: the trial's primary endpoints are safety and tolerability.",
+        "Results so far are sponsor-reported for 3 participants and not peer reviewed.",
+        "Dose level 2 (6 x 10^11 vg/eye) and NAION data are not yet reported.",
+        "Long-term (up to 5-year) safety of in-vivo reprogramming is unknown."
+      ],
+      "controversies": [
+        "Longevity media present ER-100 as 'age reversal'; the human data so far are a 3-person eye safety readout."
+      ]
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "trial-registry",
+          "title": "Evaluating ER-100 for Safety in People With Glaucoma or NAION (NCT07290244)",
+          "publisher": "ClinicalTrials.gov",
+          "url": "https://clinicaltrials.gov/study/NCT07290244",
+          "publishedAt": "2025-12-18T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "manufacturer",
+          "title": "Life Biosciences Announces FDA Clearance of IND Application for ER-100 in Optic Neuropathies",
+          "publisher": "Life Biosciences",
+          "url": "https://www.lifebiosciences.com/life-biosciences-announces-fda-clearance-of-ind-application-for-er-100-in-optic-neuropathies/",
+          "publishedAt": "2026-01-28T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "manufacturer",
+          "title": "Life Biosciences Announces First Patient Dosed in Phase 1 Trial of ER-100 for Optic Neuropathies",
+          "publisher": "Life Biosciences",
+          "url": "https://www.lifebiosciences.com/life-biosciences-announces-first-patient-dosed-in-phase-1-trial-of-er-100-for-optic-neuropathies/",
+          "publishedAt": "2026-06-09T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "press-release",
+          "title": "Life Biosciences Announces First-in-Human Data from Ongoing Phase 1 Trial Evaluating ER-100 in Optic Neuropathies",
+          "publisher": "Life Biosciences",
+          "url": "https://www.lifebiosciences.com/life-biosciences-announces-first-in-human-data-from-ongoing-phase-1-trial-evaluating-er-100-in-optic-neuropathies/",
+          "publishedAt": "2026-10-08T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Reprogramming to recover youthful epigenetic information and restore vision (Lu et al., Nature 588:124-129)",
+          "publisher": "Nature",
+          "url": "https://doi.org/10.1038/s41586-020-2975-4",
+          "publishedAt": "2020-12-02T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        }
+      ],
+      "curationNotes": [
+        "2026-10-24: added after the owner flagged ER-100 as missing; the first record in Seeds/discovered-records (outside the 158-record seed).",
+        "Source refs: ctgov-nct07290244 = NCT07290244; lifebio-2026-01-28-ind, lifebio-2026-06-09-first-patient, lifebio-2026-10-08-interim = Life Biosciences releases (2026-01-28, 2026-06-09, 2026-10-08); lu-2020-nature = Lu et al. 2020.",
+        "Open discovery (RunMode=Discovery) finds this record's trial from the ClinicalTrials.gov 'gene-epigenetic-therapy' scope area."
+      ],
+      "lastReviewedAt": "2026-10-24T00:00:00Z",
+      "reviewStatus": "reviewed"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "discovered:er-100.json",
+      "ingestedAt": null,
+      "updatedAt": "2026-10-24T00:00:00Z",
+      "lastChangeType": "manual-review",
+      "isActive": true,
+      "completeness": "partial",
+      "needsReview": false,
+      "reviewReasons": [],
+      "qualityFlags": []
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 1 OAG dose level 1",
+        "amount": 200000000000.0,
+        "unit": "vg/eye",
+        "frequency": "single intravitreal injection, one eye",
+        "duration": "plus oral doxycycline for 56 days (activator)",
+        "route": "intravitreal",
+        "population": "adults with open-angle glaucoma (3 dosed at interim)",
+        "outcome": "No DLTs, SAEs or AESIs through Day 56; 2 of 3 with >=28% of visual-field points improved >4 dB (sponsor interim)",
+        "sourceType": "trial",
+        "sourceTitle": "ER-100 first-in-human interim data (Life Biosciences, 2026-10-08)",
+        "sourceUrl": "https://www.lifebiosciences.com/life-biosciences-announces-first-in-human-data-from-ongoing-phase-1-trial-evaluating-er-100-in-optic-neuropathies/",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Early Evidence"
+      },
+      {
+        "side": "study",
+        "context": "Phase 1 OAG dose level 2 (planned; DSMB recommended escalation)",
+        "amount": 600000000000.0,
+        "unit": "vg/eye",
+        "frequency": "single intravitreal injection, one eye",
+        "duration": "plus oral doxycycline for 56 days (activator)",
+        "route": "intravitreal",
+        "population": "adults with open-angle glaucoma",
+        "outcome": "unknown — not yet reported",
+        "sourceType": "trial-registry",
+        "sourceTitle": "ClinicalTrials.gov NCT07290244 arm: OAG - High Dose ER-100 (6 x 10^11 vg/eye)",
+        "sourceUrl": "https://clinicaltrials.gov/study/NCT07290244",
+        "retrievedAt": "2026-10-24T00:00:00Z",
+        "grade": "Not graded"
+      },
+      {
+        "side": "reported",
+        "context": "community / self-reported use",
+        "amount": null,
+        "unit": "n/a",
+        "frequency": "n/a",
+        "sourceType": "other",
+        "sourceTitle": "n/a — no community or online dose reports exist (not available outside the trial)",
+        "sourceUrl": "https://clinicaltrials.gov/study/NCT07290244",
+        "grade": "Not graded",
+        "notes": "n/a: ER-100 is not obtainable outside the trial."
+      }
+    ]
+  }
+]

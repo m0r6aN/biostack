@@ -1,0 +1,338 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "discovery-scope",
+  "notes": "Scope taxonomy for RunMode=Discovery (docs/biostack/discovery-runbook.md). Each area drives open-ended queries against ClinicalTrials.gov v2, PubMed E-utilities and bioRxiv/medRxiv; openFDA new NDA/BLA originals are scanned regardless of area. Edit freely: adding an area widens what the worker can find without a code change. excludeKeywords drop trials and papers whose title or conditions are outside BioStack's scope (oncology and infectious disease).",
+  "areas": [
+    {
+      "areaId": "incretin-obesity",
+      "label": "Incretin, amylin and obesity therapies",
+      "defaultClassification": "Peptide",
+      "clinicalTrialsTerms": [
+        "obesity",
+        "overweight",
+        "weight management",
+        "GLP-1",
+        "amylin",
+        "glucagon receptor"
+      ],
+      "pubmedQuery": "(obesity[ti] OR overweight[ti] OR \"weight management\"[ti] OR GLP-1[ti] OR amylin[ti] OR incretin[ti])",
+      "preprintKeywords": [
+        "obesity",
+        "glp-1",
+        "incretin",
+        "amylin",
+        "weight loss"
+      ]
+    },
+    {
+      "areaId": "muscle-preservation",
+      "label": "Muscle preservation (myostatin, activin, sarcopenia)",
+      "defaultClassification": "Biologic",
+      "clinicalTrialsTerms": [
+        "sarcopenia",
+        "muscle atrophy",
+        "myostatin",
+        "activin",
+        "lean mass"
+      ],
+      "pubmedQuery": "(sarcopenia[ti] OR myostatin[ti] OR activin[ti] OR \"lean mass\"[ti] OR \"muscle mass\"[ti])",
+      "preprintKeywords": [
+        "sarcopenia",
+        "myostatin",
+        "activin",
+        "lean mass"
+      ]
+    },
+    {
+      "areaId": "longevity-aging",
+      "label": "Longevity and aging biology",
+      "defaultClassification": "Research Compound",
+      "clinicalTrialsTerms": [
+        "aging",
+        "healthspan",
+        "senolytic",
+        "frailty",
+        "biological age",
+        "lifespan"
+      ],
+      "pubmedQuery": "(aging[ti] OR ageing[ti] OR healthspan[ti] OR senolytic*[ti] OR longevity[ti] OR \"biological age\"[ti])",
+      "preprintKeywords": [
+        "aging",
+        "ageing",
+        "healthspan",
+        "senolytic",
+        "longevity",
+        "epigenetic clock"
+      ]
+    },
+    {
+      "areaId": "gene-epigenetic-therapy",
+      "label": "Gene, epigenetic and cell therapies",
+      "defaultClassification": "Gene Therapy",
+      "clinicalTrialsTerms": [
+        "gene therapy",
+        "epigenetic reprogramming",
+        "partial reprogramming",
+        "epigenetic editing",
+        "AAV",
+        "gene editing",
+        "cell therapy"
+      ],
+      "pubmedQuery": "(\"gene therapy\"[ti] OR reprogramming[ti] OR \"epigenetic editing\"[ti] OR \"base editing\"[ti] OR AAV[ti] OR \"cell therapy\"[ti])",
+      "preprintKeywords": [
+        "gene therapy",
+        "reprogramming",
+        "epigenetic editing",
+        "aav",
+        "base editing",
+        "yamanaka"
+      ]
+    },
+    {
+      "areaId": "peptides-regenerative",
+      "label": "Peptides and tissue repair",
+      "defaultClassification": "Peptide",
+      "clinicalTrialsTerms": [
+        "peptide",
+        "tissue repair",
+        "wound healing peptide",
+        "mitochondrial peptide"
+      ],
+      "pubmedQuery": "(peptide[ti] AND (repair[tiab] OR regenerat*[tiab] OR mitochondria*[tiab]))",
+      "preprintKeywords": [
+        "peptide",
+        "tissue repair",
+        "mitochondrial-derived peptide"
+      ]
+    },
+    {
+      "areaId": "hormones-sarm-serm",
+      "label": "Hormones, SARMs, SERMs and GH secretagogues",
+      "defaultClassification": "Research Compound",
+      "clinicalTrialsTerms": [
+        "selective androgen receptor modulator",
+        "selective estrogen receptor modulator",
+        "growth hormone secretagogue",
+        "testosterone deficiency",
+        "menopause"
+      ],
+      "pubmedQuery": "(\"selective androgen receptor modulator\"[tiab] OR \"selective estrogen receptor modulator\"[tiab] OR \"growth hormone secretagogue\"[tiab] OR hypogonadism[ti])",
+      "preprintKeywords": [
+        "androgen receptor modulator",
+        "estrogen receptor modulator",
+        "growth hormone secretagogue",
+        "hypogonadism"
+      ]
+    },
+    {
+      "areaId": "mitochondrial-metabolic",
+      "label": "Mitochondrial and metabolic modulators",
+      "defaultClassification": "Research Compound",
+      "clinicalTrialsTerms": [
+        "mitochondrial",
+        "NAD+",
+        "exercise mimetic",
+        "ERR agonist",
+        "AMPK"
+      ],
+      "pubmedQuery": "(mitochondri*[ti] OR NAD*[ti] OR \"exercise mimetic\"[tiab])",
+      "preprintKeywords": [
+        "mitochondria",
+        "nad+",
+        "exercise mimetic",
+        "nicotinamide"
+      ]
+    },
+    {
+      "areaId": "neuro-cognition",
+      "label": "Neuroprotection and cognition",
+      "defaultClassification": "Research Compound",
+      "clinicalTrialsTerms": [
+        "cognitive decline",
+        "neuroprotection",
+        "optic neuropathy",
+        "neurodegeneration"
+      ],
+      "pubmedQuery": "(\"cognitive decline\"[ti] OR neuroprotect*[ti] OR \"optic neuropathy\"[ti] OR nootropic*[ti])",
+      "preprintKeywords": [
+        "cognitive decline",
+        "neuroprotection",
+        "optic neuropathy",
+        "nootropic"
+      ]
+    }
+  ],
+  "clinicalTrialsInterventionTypes": [
+    "DRUG",
+    "BIOLOGICAL",
+    "GENETIC",
+    "DIETARY_SUPPLEMENT",
+    "COMBINATION_PRODUCT"
+  ],
+  "innStems": [
+    {
+      "suffix": "glipron",
+      "classification": "Small Molecule"
+    },
+    {
+      "suffix": "glutide",
+      "classification": "Peptide"
+    },
+    {
+      "suffix": "dutide",
+      "classification": "Peptide"
+    },
+    {
+      "suffix": "lintide",
+      "classification": "Peptide"
+    },
+    {
+      "suffix": "relin",
+      "classification": "Peptide"
+    },
+    {
+      "suffix": "tide",
+      "classification": "Peptide"
+    },
+    {
+      "suffix": "mab",
+      "classification": "Biologic"
+    },
+    {
+      "suffix": "cept",
+      "classification": "Biologic"
+    },
+    {
+      "suffix": "vec",
+      "classification": "Gene Therapy"
+    },
+    {
+      "suffix": "gene",
+      "classification": "Gene Therapy"
+    },
+    {
+      "suffix": "cel",
+      "classification": "Cell Therapy"
+    },
+    {
+      "suffix": "siran",
+      "classification": "Oligonucleotide"
+    },
+    {
+      "suffix": "rsen",
+      "classification": "Oligonucleotide"
+    },
+    {
+      "suffix": "bosarm",
+      "classification": "SARM"
+    },
+    {
+      "suffix": "oxifene",
+      "classification": "SERM"
+    },
+    {
+      "suffix": "ifene",
+      "classification": "SERM"
+    }
+  ],
+  "stopNames": [
+    "placebo",
+    "saline",
+    "vehicle",
+    "standard of care",
+    "usual care",
+    "control",
+    "sham",
+    "no intervention",
+    "chemotherapy",
+    "diet",
+    "exercise",
+    "lifestyle",
+    "metformin",
+    "insulin",
+    "best supportive care"
+  ],
+  "codeNamePrefixDenylist": [
+    "NCT",
+    "ISRCTN",
+    "EUCTR",
+    "COVID",
+    "SARS",
+    "IL",
+    "CD",
+    "HLA",
+    "ICD",
+    "DSM",
+    "ISO",
+    "FGF",
+    "GDF",
+    "TNF",
+    "TGF",
+    "HSP",
+    "MMP",
+    "CYP",
+    "APOE",
+    "BRCA",
+    "HER",
+    "PD",
+    "CTLA",
+    "ACE",
+    "MCP",
+    "SF",
+    "EQ",
+    "PHQ",
+    "GAD",
+    "HADS",
+    "MMSE",
+    "MOCA",
+    "WHO",
+    "FDA",
+    "EMA",
+    "HBA",
+    "LDL",
+    "HDL",
+    "BMI",
+    "GLP",
+    "GIP",
+    "SGLT",
+    "DPP",
+    "NAD",
+    "ATP",
+    "TP",
+    "FY",
+    "Q",
+    "H",
+    "P",
+    "N",
+    "T",
+    "GPR",
+    "MF",
+    "ATC",
+    "SNP",
+    "RS",
+    "OR",
+    "HR",
+    "CI"
+  ],
+  "excludeKeywords": [
+    "cancer",
+    "carcinoma",
+    "tumor",
+    "tumour",
+    "oncology",
+    "leukemia",
+    "leukaemia",
+    "lymphoma",
+    "myeloma",
+    "melanoma",
+    "neoplasm",
+    "metastatic",
+    "sarcoma",
+    "glioblastoma",
+    "hiv",
+    "hepatitis b",
+    "tuberculosis",
+    "malaria",
+    "covid"
+  ]
+}

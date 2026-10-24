@@ -23,8 +23,11 @@ COPY --from=build /app/publish .
 COPY research/research-requests/market-interest-coverage-2026-07-24.v1.json /app/inputs/research-request.json
 COPY research/source-authorization/recommended-seven-source-decisions.basaria-alias-map-20260913.json /app/inputs/source-decisions.json
 COPY research/input/sources/pilot-source-registry.json /app/inputs/source-registry.json
+# Scheduled jobs (infra/azure/knowledge-schedules.bicep): review decisions resolve relative to the
+# working directory; the Azure Files share mounts at /app/research-runtime.
+COPY research/review-decisions/ /app/research/review-decisions/
 
-RUN mkdir -p /app/ResearchOutput \
+RUN mkdir -p /app/ResearchOutput /app/research-runtime \
     && chown -R app:app /app
 
 ENV DOTNET_ENVIRONMENT=Production

@@ -116,6 +116,10 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
             "Biologic"           => CompoundCategory.Biologic,
             "Vitamin"            => CompoundCategory.Vitamin,
             "Mineral"            => CompoundCategory.Mineral,
+            "Gene Therapy"       => CompoundCategory.GeneTherapy,
+            "Epigenetic Therapy" => CompoundCategory.EpigeneticTherapy,
+            "Cell Therapy"       => CompoundCategory.CellTherapy,
+            "Oligonucleotide"    => CompoundCategory.Oligonucleotide,
             "Other"              => CompoundCategory.Other,
             _                    => CompoundCategory.Unknown,
         };

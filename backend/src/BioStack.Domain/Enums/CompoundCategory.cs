@@ -18,5 +18,9 @@ public enum CompoundCategory
     SmallMolecule = 13,
     Biologic = 14,
     Vitamin = 15,
-    Mineral = 16
+    Mineral = 16,
+    GeneTherapy = 17,
+    EpigeneticTherapy = 18,
+    CellTherapy = 19,
+    Oligonucleotide = 20
 }

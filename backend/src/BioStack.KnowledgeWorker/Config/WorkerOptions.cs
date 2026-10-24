@@ -56,6 +56,16 @@ public sealed class WorkerOptions
     public string ResearchPlanningOutputDirectory { get; set; } = "research/research-requests/scheduled";
 
     /// <summary>
+    /// Curated records outside the 158-record seed (e.g. ER-100), shipped with the worker.
+    /// Read by Refresh, CouncilReview, ResearchPlanning and Discovery; the seed wins on name collisions.
+    /// Set in appsettings.json ("Seeds/discovered-records"); null disables it (tests with their own seed).
+    /// </summary>
+    public string? CuratedDiscoveredRecordDirectory { get; set; }
+
+    /// <summary>Where RunMode=Discovery writes auto-discovered draft records (read by the same jobs). appsettings.json: "research/discovered-records".</summary>
+    public string? DiscoveredRecordDirectory { get; set; }
+
+    /// <summary>
     /// Maximum number of substances processed per batch within a single job run.
     /// </summary>
     public int MaxBatchSize { get; set; } = 50;

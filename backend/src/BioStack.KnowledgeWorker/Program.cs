@@ -142,6 +142,17 @@ var builder = Host.CreateDefaultBuilder(args)
             sp.GetRequiredService<IResearchArtifactValidator>()));
         services.AddScoped<IResearchPlanningJob>(sp => new ResearchPlanningJob(
             sp.GetRequiredService<WorkerOptions>(), sp.GetRequiredService<IResearchArtifactValidator>()));
+        var discoveryOptions = new BioStack.KnowledgeWorker.Discovery.DiscoveryOptions();
+        context.Configuration.GetSection("Discovery").Bind(discoveryOptions);
+        services.AddSingleton(discoveryOptions);
+        services.AddScoped<IDiscoveryJob>(sp => new DiscoveryJob(
+            sp.GetRequiredService<WorkerOptions>(),
+            discoveryOptions,
+            sp.GetRequiredService<IResearchArtifactValidator>(),
+            sp.GetRequiredService<ISubstanceRecordValidator>(),
+            BioStack.KnowledgeWorker.Discovery.DiscoveryRunner.CreateSources(discoveryOptions, () => new HttpClient(
+                new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5), AutomaticDecompression = System.Net.DecompressionMethods.All },
+                disposeHandler: true) { Timeout = TimeSpan.FromSeconds(60) })));
 
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();

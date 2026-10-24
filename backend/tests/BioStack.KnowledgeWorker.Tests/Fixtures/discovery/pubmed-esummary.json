@@ -1,0 +1,64 @@
+{
+ "header": {
+  "type": "esummary",
+  "version": "0.3"
+ },
+ "result": {
+  "uids": [
+   "42903654",
+   "42902597",
+   "42889249",
+   "42843337",
+   "42831032",
+   "42814954"
+  ],
+  "42903654": {
+   "uid": "42903654",
+   "pubdate": "2026 Nov",
+   "sortpubdate": "2026/10/12 00:00",
+   "source": "EClinicalMedicine",
+   "fulljournalname": "EClinicalMedicine",
+   "title": "Weight loss and blood pressure lowering with GLP-1 receptor agonists and multi-hormone receptor modulators in overweight and obesity: a systematic review and meta-regression of phase 3 clinical trials."
+  },
+  "42902597": {
+   "uid": "42902597",
+   "pubdate": "2026 Oct 20",
+   "sortpubdate": "2026/10/20 00:00",
+   "source": "OMICS",
+   "fulljournalname": "Omics : a journal of integrative biology",
+   "title": "Oral Versus Injectable Incretin-Based Anti-Obesity Therapies: An Integrated Computational and Evidence-Based Comparison of Orforglipron, Semaglutide, and Tirzepatide."
+  },
+  "42889249": {
+   "uid": "42889249",
+   "pubdate": "2026 Sep",
+   "sortpubdate": "2026/09/14 00:00",
+   "source": "Cureus",
+   "fulljournalname": "Cureus",
+   "title": "Modern Obesity Treatment: Efficacy, Safety, and Future Directions of GLP-1 (Glucagon-Like Peptide-1) and GIP (Glucose-Dependent Insulinotropic Polypeptide) Receptor Agonists."
+  },
+  "42843337": {
+   "uid": "42843337",
+   "pubdate": "2026 Oct 8",
+   "sortpubdate": "2026/10/08 00:00",
+   "source": "Cell Metab",
+   "fulljournalname": "Cell metabolism",
+   "title": "UBT251, a novel triple GLP-1, GIP, and glucagon receptor agonist, in adults with overweight or obesity: A multicenter, randomized phase 2 trial."
+  },
+  "42831032": {
+   "uid": "42831032",
+   "pubdate": "2026 Dec",
+   "sortpubdate": "2026/09/18 00:00",
+   "source": "Obes Pillars",
+   "fulljournalname": "Obesity pillars",
+   "title": "Evaluation of clinical relevance of weight nadirs and weight regain during 3 years of treatment with tirzepatide in participants with obesity or overweight and prediabetes."
+  },
+  "42814954": {
+   "uid": "42814954",
+   "pubdate": "2026 Sep 29",
+   "sortpubdate": "2026/09/29 00:00",
+   "source": "N Engl J Med",
+   "fulljournalname": "The New England journal of medicine",
+   "title": "Retatrutide, a Triple Hormone Receptor Agonist, for Treatment of Obesity."
+  }
+ }
+}

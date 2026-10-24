@@ -1,0 +1,167 @@
+{
+ "meta": {
+  "results": {
+   "skip": 0,
+   "limit": 100,
+   "total": 5
+  }
+ },
+ "results": [
+  {
+   "application_number": "NDA220210",
+   "sponsor_name": "IONIS PHARMS INC",
+   "openfda": {},
+   "products": [
+    {
+     "brand_name": "ZANVASTRO",
+     "active_ingredients": [
+      {
+       "name": "ZILGANERSEN SODIUM",
+       "strength": "EQ 56MG BASE/2.8ML (EQ 20MG BASE/ML)"
+      }
+     ]
+    }
+   ],
+   "submissions": [
+    {
+     "submission_type": "ORIG",
+     "submission_status": "AP",
+     "submission_status_date": "20260903",
+     "submission_class_code": "TYPE 1"
+    }
+   ]
+  },
+  {
+   "application_number": "NDA220290",
+   "sponsor_name": "ASTRAZENECA AB",
+   "openfda": {},
+   "products": [
+    {
+     "brand_name": "BREZTRI AEROSPHERE",
+     "active_ingredients": [
+      {
+       "name": "BUDESONIDE, GLYCOPYRROLATE, AND FORMOTEROL FUMARATE",
+       "strength": "160MCG/9MCG/4.8MCG"
+      }
+     ]
+    }
+   ],
+   "submissions": [
+    {
+     "submission_type": "ORIG",
+     "submission_status": "AP",
+     "submission_status_date": "20261008",
+     "submission_class_code": "TYPE 5"
+    }
+   ]
+  },
+  {
+   "application_number": "NDA220295",
+   "sponsor_name": "INTERCEPT",
+   "openfda": {
+    "generic_name": [
+     "LINERIXIBAT"
+    ],
+    "brand_name": [
+     "LYNAVOY"
+    ]
+   },
+   "products": [
+    {
+     "brand_name": "LYNAVOY",
+     "active_ingredients": [
+      {
+       "name": "LINERIXIBAT",
+       "strength": "40MG"
+      }
+     ]
+    }
+   ],
+   "submissions": [
+    {
+     "submission_type": "ORIG",
+     "submission_status": "AP",
+     "submission_status_date": "20260317",
+     "submission_class_code": "TYPE 1"
+    }
+   ]
+  },
+  {
+   "application_number": "NDA019892",
+   "sponsor_name": "RHODES PHARMS",
+   "openfda": {
+    "generic_name": [
+     "HYDROMORPHONE HYDROCHLORIDE"
+    ],
+    "brand_name": [
+     "DILAUDID",
+     "HYDROMORPHONE HYDROCHLORIDE"
+    ]
+   },
+   "products": [
+    {
+     "brand_name": "DILAUDID",
+     "active_ingredients": [
+      {
+       "name": "HYDROMORPHONE HYDROCHLORIDE",
+       "strength": "2MG"
+      }
+     ]
+    },
+    {
+     "brand_name": "DILAUDID",
+     "active_ingredients": [
+      {
+       "name": "HYDROMORPHONE HYDROCHLORIDE",
+       "strength": "8MG"
+      }
+     ]
+    }
+   ],
+   "submissions": [
+    {
+     "submission_type": "SUPPL",
+     "submission_status": "AP",
+     "submission_status_date": "20260618",
+     "submission_class_code": "REMS"
+    },
+    {
+     "submission_type": "ORIG",
+     "submission_status": "AP",
+     "submission_status_date": "19921207",
+     "submission_class_code": "TYPE 3"
+    }
+   ]
+  },
+  {
+   "application_number": "BLA761140",
+   "sponsor_name": "AMGEN INC",
+   "openfda": {},
+   "products": [
+    {
+     "brand_name": "RIABNI",
+     "active_ingredients": [
+      {
+       "name": "RITUXIMAB-ARRX",
+       "strength": "100MG/10ML(10MG/ML)"
+      }
+     ]
+    }
+   ],
+   "submissions": [
+    {
+     "submission_type": "ORIG",
+     "submission_status": "AP",
+     "submission_status_date": "20201217",
+     "submission_class_code": "UNKNOWN"
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_status": "AP",
+     "submission_status_date": "20260929",
+     "submission_class_code": "BIOEQUIV"
+    }
+   ]
+  }
+ ]
+}

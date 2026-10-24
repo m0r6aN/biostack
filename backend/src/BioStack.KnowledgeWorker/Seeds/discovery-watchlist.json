@@ -91,6 +91,125 @@
         "nootropic"
       ],
       "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "ER-100",
+      "aliases": [
+        "ER-100 epigenetic therapy",
+        "OSK epigenetic therapy"
+      ],
+      "classification": "EpigeneticTherapy",
+      "categories": [
+        "gene-epigenetic-therapy",
+        "longevity"
+      ],
+      "rationale": "Owner-flagged 2026-10-24: Life Biosciences partial epigenetic reprogramming gene therapy, Phase 1 NCT07290244."
+    },
+    {
+      "compoundName": "CagriSema",
+      "aliases": [
+        "cagrilintide/semaglutide"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "glp-1",
+        "amylin",
+        "weight-management"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: NDA submitted Dec 2025."
+    },
+    {
+      "compoundName": "Petrelintide",
+      "aliases": [
+        "ZP8396"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "amylin",
+        "weight-management"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: long-acting amylin analog, phase 2."
+    },
+    {
+      "compoundName": "Eloralintide",
+      "aliases": [
+        "LY3841136"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "amylin",
+        "weight-management"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: amylin agonist, phase 2."
+    },
+    {
+      "compoundName": "CT-388",
+      "aliases": [
+        "RG6640"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "glp-1",
+        "weight-management"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: GLP-1/GIP agonist, phase 2."
+    },
+    {
+      "compoundName": "Apitegromab",
+      "aliases": [
+        "SRK-015",
+        "Isembyld"
+      ],
+      "classification": "Biologic",
+      "categories": [
+        "muscle-preservation"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: anti-myostatin antibody, FDA-approved for SMA Sep 2026."
+    },
+    {
+      "compoundName": "Efinopegdutide",
+      "aliases": [
+        "MK-6024"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "glp-1",
+        "metabolic-health"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: GLP-1/glucagon co-agonist in MASH trials."
+    },
+    {
+      "compoundName": "LOY-002",
+      "aliases": [],
+      "classification": "SmallMolecule",
+      "categories": [
+        "longevity"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: Loyal's dog-lifespan drug; FDA CVM RXE and TAS accepted."
+    },
+    {
+      "compoundName": "Rapamycin",
+      "aliases": [
+        "sirolimus"
+      ],
+      "classification": "SmallMolecule",
+      "categories": [
+        "longevity"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: most-studied longevity drug; not in the corpus."
+    },
+    {
+      "compoundName": "NMN",
+      "aliases": [
+        "nicotinamide mononucleotide",
+        "beta-NMN"
+      ],
+      "classification": "Supplement",
+      "categories": [
+        "longevity",
+        "mitochondrial"
+      ],
+      "rationale": "Benchmark gap 2026-10-24: popular NAD+ precursor; not in the corpus."
     }
   ]
 }
