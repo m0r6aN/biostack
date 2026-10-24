@@ -52,7 +52,7 @@
       "properties": {
         "decisionId": { "type": "string", "minLength": 1 },
         "compoundName": { "type": "string", "minLength": 1 },
-        "decision": { "type": "string", "enum": ["approve-for-promotion", "approve-claims", "resolve-review-items", "archive-draft", "request-changes", "reject"] },
+        "decision": { "type": "string", "enum": ["approve-for-promotion", "approve-claims", "resolve-review-items", "archive-draft", "request-changes", "reject", "escalate-to-owner"] },
         "reviewerId": { "type": "string", "minLength": 1 },
         "reviewedAt": { "type": "string", "format": "date-time" },
         "scope": {
@@ -72,7 +72,46 @@
         },
         "clearsSoftPromotionBlockers": { "type": "boolean", "default": false },
         "expiresAt": { "type": ["string", "null"], "format": "date-time" },
-        "notes": { "$ref": "#/$defs/stringArray" }
+        "notes": { "$ref": "#/$defs/stringArray" },
+        "council": { "$ref": "#/$defs/council" }
+      }
+    },
+    "council": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reviewers", "ownerOptions", "legalRisks"],
+      "properties": {
+        "outcome": { "enum": ["consensus", "escalated-to-owner"] },
+        "reviewers": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["reviewerId", "provider", "model", "decision", "proposedTier", "rationale"],
+            "properties": {
+              "reviewerId": { "type": "string", "minLength": 1 },
+              "provider": { "type": "string", "minLength": 1 },
+              "model": { "type": "string", "minLength": 1 },
+              "decision": { "enum": ["approve", "request-changes", "reject"] },
+              "proposedTier": { "enum": ["Established", "Plausible Theory", "Early Evidence", "Anecdotal Signal", "Contradicted", "Unsupported", "Hype Exceeds Evidence", "Not graded"] },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "ownerOptions": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["optionId", "summary", "decision", "basis"],
+            "properties": {
+              "optionId": { "type": "string", "minLength": 1 },
+              "summary": { "type": "string", "minLength": 1 },
+              "decision": { "enum": ["approve-for-promotion", "request-changes", "reject"] },
+              "proposedTier": { "type": ["string", "null"] },
+              "basis": { "type": "string" }
+            }
+          }
+        },
+        "legalRisks": { "$ref": "#/$defs/stringArray" }
       }
     }
   }

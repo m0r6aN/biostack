@@ -108,6 +108,7 @@ public sealed class IngestionWorker : BackgroundService
             RunMode.PromotionImportDryRun => scope.ServiceProvider.GetRequiredService<IPromotionImportDryRunJob>(),
             RunMode.ProtocolIntelligenceEvaluation => scope.ServiceProvider.GetRequiredService<IProtocolIntelligenceEvaluationJob>(),
             RunMode.ResearchPlanning => scope.ServiceProvider.GetRequiredService<IResearchPlanningJob>(),
+            RunMode.CouncilReview => scope.ServiceProvider.GetRequiredService<ICouncilReviewJob>(),
             _               => throw new InvalidOperationException($"Unknown RunMode: {mode}"),
         };
 

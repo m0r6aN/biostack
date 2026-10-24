@@ -61,6 +61,13 @@ public enum RunMode
     /// and new-compound discovery requests.
     /// </summary>
     ResearchPlanning = 8,
+
+    /// <summary>
+    /// Database-free two-reviewer AI council. Reviews due records with two configured models,
+    /// writes consensus decisions and escalate-to-owner markers as a review-decision batch,
+    /// owner escalations with distinct options, and a known-risk log of legal items.
+    /// </summary>
+    CouncilReview = 9,
 }
 
 public static class WorkerRunModePolicy
@@ -71,5 +78,6 @@ public static class WorkerRunModePolicy
             or RunMode.SourceAcquisitionRetention
             or RunMode.PromotionImportDryRun
             or RunMode.ProtocolIntelligenceEvaluation
-            or RunMode.ResearchPlanning;
+            or RunMode.ResearchPlanning
+            or RunMode.CouncilReview;
 }

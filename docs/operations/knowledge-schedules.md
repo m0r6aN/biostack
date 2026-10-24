@@ -9,7 +9,7 @@ Owner ruling 7 (2026-10-24): every data task runs on a schedule, covering both r
 | `<base>-kw-plan-updates` | `ResearchPlanning` (updates only) | `0 6 * * *` daily | 02:00 / 01:00 | `research-requests/` on the share |
 | `<base>-kw-plan-discovery` | `ResearchPlanning` (discovery only) | `30 6 * * 1` Mondays | 02:30 / 01:30 | `research-requests/` |
 | `<base>-kw-research` | `Research` | `0 7 * * *` daily | 03:00 / 02:00 | `research-output/` (drafts, review queue, task queue) |
-| `<base>-kw-council` *(PR D)* | `CouncilReview` | `0 8 * * *` daily | 04:00 / 03:00 | `review-decisions/`, `owner-escalations/` |
+| `<base>-kw-council` | `CouncilReview` | `0 8 * * *` daily | 04:00 / 03:00 | `review-decisions/`, `owner-escalations/` |
 | `<base>-kw-refresh-dryrun` | `Refresh`, `DryRun=true` | `0 9 * * *` daily | 05:00 / 04:00 | nothing (logs the diff) |
 | `<base>-kw-refresh-apply` | `Refresh` | `30 9 * * *` daily | 05:30 / 04:30 | `KnowledgeEntries` (idempotent) |
 
@@ -39,6 +39,7 @@ Worker__RunMode=ResearchPlanning Worker__LoopEnabled=true Worker__RefreshInterva
    - create an empty `evidence-packets/` folder
 4. Create a user-assigned identity. Grant it **AcrPull** on the registry and **Key Vault Secrets User** on the vault.
 5. Store the Postgres connection string in Key Vault, for example as secret `db-conn-string`, and pass its versionless URI as `dbConnectionStringSecretUri`. The Bicep never takes the value itself.
-6. Deploy:
+6. Store both council API keys in Key Vault and pass their versionless URIs as `councilReviewer0ApiKeySecretUri` / `councilReviewer1ApiKeySecretUri`, along with `councilReviewer{0,1}Provider` and `Model` (see `ai-council-review.md`).
+7. Deploy:
    `az deployment group create -g <rg> -f infra/azure/knowledge-schedules.bicep -p baseName=… containerAppsEnvironmentId=… workerImage=… acrLoginServer=… identityResourceId=… researchStorageName=… dbConnectionStringSecretUri=…`
    Set `enableRefreshApply=false` to keep only the dry run.

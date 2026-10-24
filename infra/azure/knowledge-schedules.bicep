@@ -9,7 +9,7 @@ targetScope = 'resourceGroup'
 //   refresh-apply    daily  09:30 UTC                  Refresh apply (idempotent; unchanged rows are no-ops)
 // Source acquisition stays a Manual job (source-acquisition-jobs.bicep): each cycle needs its
 // approved request, source-decision and registry inputs.
-// The AI council review job is added by the council change (PR D).
+//   council          daily  08:00 UTC                  two-reviewer AI council (consensus passes; disagreement -> owner)
 
 @minLength(3)
 @maxLength(18)
@@ -37,11 +37,36 @@ param dbConnectionStringSecretUri string
 param planUpdatesCron string = '0 6 * * *'
 param planDiscoveryCron string = '30 6 * * 1'
 param researchCron string = '0 7 * * *'
+param councilCron string = '0 8 * * *'
 param refreshDryRunCron string = '0 9 * * *'
 param refreshApplyCron string = '30 9 * * *'
 
 @description('Set false to keep only the dry-run Refresh scheduled.')
 param enableRefreshApply bool = true
+
+@description('Council reviewer 0 provider: openai-compatible or anthropic.')
+@allowed([ 'openai-compatible', 'anthropic' ])
+param councilReviewer0Provider string
+@description('Council reviewer 0 model name.')
+param councilReviewer0Model string
+@description('Council reviewer 0 base URL (empty = provider default).')
+param councilReviewer0Endpoint string = ''
+@description('Council reviewer 0 auth header for openai-compatible: bearer or api-key (Azure OpenAI).')
+param councilReviewer0AuthHeader string = 'bearer'
+@description('Key Vault secret URI (versionless) for reviewer 0 API key.')
+param councilReviewer0ApiKeySecretUri string
+
+@description('Council reviewer 1 provider: openai-compatible or anthropic.')
+@allowed([ 'openai-compatible', 'anthropic' ])
+param councilReviewer1Provider string
+param councilReviewer1Model string
+param councilReviewer1Endpoint string = ''
+param councilReviewer1AuthHeader string = 'bearer'
+@description('Key Vault secret URI (versionless) for reviewer 1 API key.')
+param councilReviewer1ApiKeySecretUri string
+
+@description('Max compounds the council reviews per run.')
+param councilMaxItemsPerRun int = 20
 
 @description('Entries reviewed longer ago than this are due for an update check.')
 param updateCheckStaleDays int = 30
@@ -132,6 +157,44 @@ module research './modules/knowledge-schedule-job.bicep' = {
   }
 }
 
+module council './modules/knowledge-schedule-job.bicep' = {
+  name: '${deployment().name}-council'
+  params: {
+    name: '${baseName}-kw-council'
+    location: location
+    containerAppsEnvironmentId: containerAppsEnvironmentId
+    image: image
+    acrLoginServer: acrLoginServer
+    identityResourceId: identityResourceId
+    storageName: researchStorageName
+    cronExpression: councilCron
+    replicaTimeoutSeconds: 7200
+    keyVaultSecrets: [
+      { name: 'council-reviewer-0-api-key', keyVaultUrl: councilReviewer0ApiKeySecretUri }
+      { name: 'council-reviewer-1-api-key', keyVaultUrl: councilReviewer1ApiKeySecretUri }
+    ]
+    env: concat(common, [
+      { name: 'Worker__RunMode', value: 'CouncilReview' }
+      { name: 'Council__MaxItemsPerRun', value: string(councilMaxItemsPerRun) }
+      { name: 'Council__DecisionDirectory', value: '${runtime}/review-decisions' }
+      { name: 'Council__EscalationDirectory', value: '${runtime}/owner-escalations' }
+      { name: 'Council__KnownRiskDirectory', value: '${runtime}/known-risks' }
+      { name: 'Council__Reviewers__0__Id', value: 'reviewer-0' }
+      { name: 'Council__Reviewers__0__Provider', value: councilReviewer0Provider }
+      { name: 'Council__Reviewers__0__Model', value: councilReviewer0Model }
+      { name: 'Council__Reviewers__0__Endpoint', value: councilReviewer0Endpoint }
+      { name: 'Council__Reviewers__0__AuthHeader', value: councilReviewer0AuthHeader }
+      { name: 'Council__Reviewers__0__ApiKey', secretRef: 'council-reviewer-0-api-key' }
+      { name: 'Council__Reviewers__1__Id', value: 'reviewer-1' }
+      { name: 'Council__Reviewers__1__Provider', value: councilReviewer1Provider }
+      { name: 'Council__Reviewers__1__Model', value: councilReviewer1Model }
+      { name: 'Council__Reviewers__1__Endpoint', value: councilReviewer1Endpoint }
+      { name: 'Council__Reviewers__1__AuthHeader', value: councilReviewer1AuthHeader }
+      { name: 'Council__Reviewers__1__ApiKey', secretRef: 'council-reviewer-1-api-key' }
+    ])
+  }
+}
+
 module refreshDryRun './modules/knowledge-schedule-job.bicep' = {
   name: '${deployment().name}-refresh-dryrun'
   params: {
@@ -172,5 +235,6 @@ output scheduledJobs array = concat([
   planUpdates.outputs.jobName
   planDiscovery.outputs.jobName
   research.outputs.jobName
+  council.outputs.jobName
   refreshDryRun.outputs.jobName
 ], enableRefreshApply ? [ '${baseName}-kw-refresh-apply' ] : [])
