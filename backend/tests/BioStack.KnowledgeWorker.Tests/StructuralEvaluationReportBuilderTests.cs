@@ -34,22 +34,20 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal("none", report.Payload.Comparison.EffectAuthority);
         Assert.Equal(4, report.Payload.Comparison.CandidateCaseCount);
         Assert.Equal("1.0.0", report.Payload.CorpusInventory.SnapshotVersion);
-        // BIO-LOCAL-014: chorionic-gonadotropin consolidated into human-chorionic-gonadotropin
-        // per owner rule D-D; 100 - 1 consolidated = 99 records.
-        Assert.Equal(99, report.Payload.CorpusInventory.SeedRecordCount);
+        // Go-live library 2026-10-14 expanded the seed corpus from the BIO-LOCAL-014 count of 99 to 158.
+        Assert.Equal(158, report.Payload.CorpusInventory.SeedRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.CandidateRecordCount);
         Assert.Equal(78, report.Payload.CorpusInventory.EvidencePacketCount);
         Assert.Equal(30, report.Payload.CorpusInventory.SourceRegistryRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
-        // BIO-LOCAL-014: seed-only 84 - 1 consolidated (chorionic-gonadotropin was seed-only) = 83.
-        Assert.Equal(83, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
+        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142.
+        Assert.Equal(142, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
         Assert.Equal(0, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(report.Payload.CorpusInventory.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, report.Payload.CorpusInventory.EvidenceWithoutCandidateCanonicalIds.Count);
-        // BIO-LOCAL-011: 3 identity-token collisions observed at the 100-record corpus (was 2 at 57).
-        // BIO-LOCAL-014: the chorionic-gonadotropin collision is resolved by consolidation per
-        // owner rule D-D; 3 - 1 resolved = 2 (the creatine pair stays distinct and unchanged).
-        Assert.Equal(2, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
+        // The 2026-10-14 library adds magnesium-oxide and the testolone/vosilasarm aliases to the
+        // two creatine collisions.
+        Assert.Equal(8, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
         Assert.Empty(report.Payload.CorpusInventory.ExternalIdentifierCollisions);
         Assert.Equal(7, report.Payload.CorpusInventory.ApprovedRightsSourceCount);
         Assert.Equal(7, report.Payload.CorpusInventory.ActiveOperationsSourceCount);
