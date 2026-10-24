@@ -73,7 +73,7 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
                 Classification = CompoundCategory.Peptide,
                 RegulatoryStatus = "Research-grade peptide",
                 MechanismSummary = "Initial mechanism",
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 SourceReferences = new List<string> { "Initial source" },
                 Notes = "Initial notes",
                 Pathways = new List<string> { "initial-pathway" },
@@ -111,7 +111,7 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
                 Classification = CompoundCategory.Peptide,
                 RegulatoryStatus = "Research-grade peptide",
                 MechanismSummary = "Updated mechanism",
-                EvidenceTier = EvidenceTier.Moderate,
+                EvidenceTier = EvidenceTier.EarlyEvidence,
                 SourceReferences = new List<string> { "Updated source" },
                 Notes = "Updated notes",
                 Pathways = new List<string> { "updated-pathway" },
@@ -164,7 +164,7 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
                 CanonicalName = "Canonical Alias Test",
                 Aliases = new List<string> { "First Alias", "Middle Alias", "Last Alias" },
                 Classification = CompoundCategory.Peptide,
-                EvidenceTier = EvidenceTier.Moderate
+                EvidenceTier = EvidenceTier.EarlyEvidence
             });
 
             await seedContext.SaveChangesAsync();

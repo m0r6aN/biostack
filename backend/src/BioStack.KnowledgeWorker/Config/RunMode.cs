@@ -54,6 +54,20 @@ public enum RunMode
     /// artifacts. It never invokes an acquisition adapter or a source endpoint.
     /// </summary>
     SourceAcquisitionRetention = 7,
+
+    /// <summary>
+    /// Scheduled, database-free research planning. Reads the seed corpus and the discovery
+    /// watchlist and writes a research-request batch of update checks for existing entries
+    /// and new-compound discovery requests.
+    /// </summary>
+    ResearchPlanning = 8,
+
+    /// <summary>
+    /// Database-free two-reviewer AI council. Reviews due records with two configured models,
+    /// writes consensus decisions and escalate-to-owner markers as a review-decision batch,
+    /// owner escalations with distinct options, and a known-risk log of legal items.
+    /// </summary>
+    CouncilReview = 9,
 }
 
 public static class WorkerRunModePolicy
@@ -63,5 +77,7 @@ public static class WorkerRunModePolicy
             or RunMode.SourceAcquisition
             or RunMode.SourceAcquisitionRetention
             or RunMode.PromotionImportDryRun
-            or RunMode.ProtocolIntelligenceEvaluation;
+            or RunMode.ProtocolIntelligenceEvaluation
+            or RunMode.ResearchPlanning
+            or RunMode.CouncilReview;
 }

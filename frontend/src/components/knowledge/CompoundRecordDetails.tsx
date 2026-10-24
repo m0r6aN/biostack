@@ -1,6 +1,7 @@
 'use client';
 
 import type { KnowledgeDoseReport, KnowledgeEntryDetails, KnowledgeSafetyItem } from '@/lib/types';
+import { tierKey, tierLabel } from '@/lib/evidenceTiers';
 
 /**
  * Full record detail for one compound: known vs unknown, dangers, doses found on both
@@ -98,7 +99,7 @@ function SafetyList({ label, items }: { label: string; items: KnowledgeSafetyIte
 
 export function knownAndUnknown(details: KnowledgeEntryDetails): { known: string[]; unknown: string[] } {
   const known = details.claims
-    .filter(c => ['strong', 'moderate', 'established'].includes(c.tier.toLowerCase()))
+    .filter(c => ['established', 'strong'].includes(tierKey(c.tier)))
     .map(c => c.claim);
   const unknown = [...details.evidenceGaps];
   return { known, unknown };
@@ -181,7 +182,7 @@ export function CompoundRecordDetails({ details }: { details: KnowledgeEntryDeta
           <ul className="space-y-2">
             {details.claims.map((c, i) => (
               <li key={i} className="text-sm text-white/70">
-                <span className="mr-2 rounded border border-white/15 px-1.5 py-0.5 text-xs text-white/60">{c.tier || 'Not graded'}</span>
+                <span className="mr-2 rounded border border-white/15 px-1.5 py-0.5 text-xs text-white/60">{tierLabel(c.tier)}</span>
                 {c.claim}
               </li>
             ))}

@@ -8,7 +8,7 @@ BioStack is an evidence-aware protocol intelligence product for organizing suppl
 
 This methodology defines how BioStack grades claims across evidence tiers. It is the operating standard for the first 50 compound records, user-facing evidence labels, the Stack Report, evidence changelogs, contradiction surfacing, and marketing-claim review.
 
-The goal is to help users distinguish established evidence, plausible theory, early evidence, anecdotal signal, contradictions, unsupported claims, and bro-science. BioStack grades the support behind a claim. It does not tell a user what to take, start, stop, combine, or dose.
+The goal is to help users distinguish established evidence, plausible theory, early evidence, anecdotal signal, contradictions, unsupported claims, and claims where hype exceeds evidence (Hype Exceeds Evidence). BioStack grades the support behind a claim. It does not tell a user what to take, start, stop, combine, or dose.
 
 ## Scope And V1 Boundary
 
@@ -59,7 +59,7 @@ BioStack uses seven beta evidence tiers:
 - Anecdotal Signal
 - Contradicted
 - Unsupported
-- Bro-Science
+- Hype Exceeds Evidence
 
 These tiers are claim-level labels. They are not endorsements, instructions, or clinical determinations.
 
@@ -71,7 +71,7 @@ These tiers are claim-level labels. They are not endorsements, instructions, or 
 | Anecdotal Signal | The claim is supported mainly by user reports, community reports, case narratives, or n-of-1 notes, not generalizable scientific evidence. | Traceable anecdotal or self-reported signal, clearly separated from general evidence. | User notes, community reports, case reports when not enough for broader evidence, recurring qualitative observations. | Upgrading general evidence based on popularity, subreddit consensus, testimonials, or personal tracking alone. | Label as anecdotal. Keep personal and general evidence visually and textually separate. | "Some users report this pattern, but it is not established scientific evidence." | "Users report it, so it works." |
 | Contradicted | Credible evidence conflicts with or directly weakens the claim, especially when higher-quality or better-matched evidence is negative. | A credible negative or conflicting evidence base that is stronger, more relevant, or more recent than evidence supporting the claim. | Failed replication, better-designed negative studies, systematic reviews finding no meaningful effect, or safety findings that undermine a benefit claim. | Merely limited evidence, weak mechanism without outcome evidence, or a single small negative study against several stronger positive studies. | State that evidence conflicts with the claim. Where credible evidence is mixed, show both sides. | "Higher-quality evidence conflicts with this claim in the studied context." | "This claim is false in every case." |
 | Unsupported | The claim lacks adequate source-verified support. | No credible evidence source directly supporting the specific claim after source review. | Claims with no citations, citations that do not match the claim, or evidence that is too remote to support the claim. | Mechanistically plausible claims, early human evidence, or clearly labeled anecdotal signal. | Keep it plain. Say what is missing. | "BioStack could not verify reliable evidence for this specific claim." | "No evidence means it cannot happen." |
-| Bro-Science | The claim is driven by hype, influencer repetition, distorted citations, or community certainty that substantially exceeds the evidence. | Evidence review finds unsupported certainty, misrepresented studies, affiliate-driven exaggeration, or claim inflation. | Claims that cite studies but change the outcome, product pages posing as proof, confident social claims, or optimization language without support. | Good-faith early evidence, credible mechanistic theory, or cautious anecdotal reports. | Use sparingly and only when the claim quality and presentation justify it. Explain the distortion without mocking users. | "This claim is commonly repeated online, but the cited evidence does not support it." | "Only uninformed people believe this." |
+| Hype Exceeds Evidence | The claim is driven by hype, influencer repetition, distorted citations, or community certainty that substantially exceeds the evidence. | Evidence review finds unsupported certainty, misrepresented studies, affiliate-driven exaggeration, or claim inflation. | Claims that cite studies but change the outcome, product pages posing as proof, confident social claims, or optimization language without support. | Good-faith early evidence, credible mechanistic theory, or cautious anecdotal reports. | Use sparingly and only when the claim quality and presentation justify it. Explain the distortion without mocking users. | "This claim is commonly repeated online, but the cited evidence does not support it." | "Only uninformed people believe this." |
 
 ## Claim Grading Unit
 
@@ -128,8 +128,8 @@ These sources may be useful for claim discovery, misinformation monitoring, or p
 - Every nontrivial claim must cite source IDs.
 - Low-trust sources may identify claims to investigate, not truth to publish.
 - Safety-critical, regulatory, contraindication, medication, pregnancy, surgery, or lab-related claims require authoritative review.
-- AI may propose candidate summaries, but source verification and final grade assignment require human review for beta corpus records.
-- Runtime surfaces should consume reviewed artifacts. They should not invent new compound claims.
+- Grades are assigned against this methodology and checked by the two-reviewer AI council. Consensus passes; disagreement escalates to the owner, Clinton Morgan, with distinct options.
+- Runtime surfaces show every gathered record, labeled with its review status. They should not invent new compound claims.
 
 ## Grading Dimensions
 
@@ -162,7 +162,7 @@ Use the highest tier that the exact claim can support after constraints are appl
 4. Surface safety and contradiction context even when the benefit evidence is strong.
 5. Do not upgrade general evidence based on user notes, popularity, influencer certainty, or community consensus.
 6. Do not use "Established" unless the exact outcome and context are supported by consistent relevant human evidence.
-7. Use "Bro-Science" only when the claim is not merely unsupported, but is presented with inflated certainty, distorted citations, or hype-driven confidence.
+7. Use "Hype Exceeds Evidence" only when the claim is not merely unsupported, but is presented with inflated certainty, distorted citations, or hype-driven confidence.
 
 ## Contradiction Handling
 
@@ -197,9 +197,9 @@ Decision guide:
 | Mechanism is plausible, but direct human evidence is absent | Plausible Theory |
 | One or more small human studies suggest a signal, but findings are limited or mixed | Early Evidence |
 | Community reports exist, but no reliable generalizable evidence supports the claim | Anecdotal Signal |
-| The claim cites evidence that does not actually support the outcome | Unsupported or Bro-Science |
+| The claim cites evidence that does not actually support the outcome | Unsupported or Hype Exceeds Evidence |
 | Stronger or better-matched evidence directly conflicts with the claim | Contradicted |
-| Promotional certainty materially exceeds evidence and misleads users | Bro-Science |
+| Promotional certainty materially exceeds evidence and misleads users | Hype Exceeds Evidence |
 
 ## Evidence Changelog Rules
 
@@ -362,7 +362,7 @@ Use this template for the first 50 compound records. It is designed for corpus c
 
 | Claim | Evidence tier | Confidence | Evidence basis | Key citations | Population/context | Dose/form studied | Safety notes | Contradictions | User-facing explanation | Last reviewed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| <Specific claim> | <Established/Plausible Theory/Early Evidence/Anecdotal Signal/Contradicted/Unsupported/Bro-Science> | <High/Moderate/Low confidence in grade assignment> | <Short basis by study type and source quality> | <Source IDs> | <Population and context> | <Commonly studied range or form, if sourced. Not an instruction.> | <Known warning, tolerability context, or unknown> | <Mixed findings, negative findings, or none identified> | <Plain user-facing copy> | <YYYY-MM-DD> |
+| <Specific claim> | <Established/Plausible Theory/Early Evidence/Anecdotal Signal/Contradicted/Unsupported/Hype Exceeds Evidence> | <High/Moderate/Low confidence in grade assignment> | <Short basis by study type and source quality> | <Source IDs> | <Population and context> | <Commonly studied range or form, if sourced. Not an instruction.> | <Known warning, tolerability context, or unknown> | <Mixed findings, negative findings, or none identified> | <Plain user-facing copy> | <YYYY-MM-DD> |
 
 ## Changelog
 

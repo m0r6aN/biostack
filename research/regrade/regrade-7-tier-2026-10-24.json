@@ -1,0 +1,3003 @@
+{
+  "method": "docs/biostack/evidence-grading-methodology-v1.md (7 tiers); tools/regrade/regrade_7_tier.py",
+  "records": 158,
+  "overallCounts": {
+    "Established": 63,
+    "Hype Exceeds Evidence": 6,
+    "Contradicted": 3,
+    "Early Evidence": 47,
+    "Plausible Theory": 22,
+    "Unsupported": 17
+  },
+  "claimCounts": {
+    "Established": 134,
+    "Hype Exceeds Evidence": 26,
+    "Early Evidence": 69,
+    "Anecdotal Signal": 6,
+    "Contradicted": 15,
+    "Unsupported": 26,
+    "Plausible Theory": 34
+  },
+  "transitions": {
+    "Strong -> Established": 111,
+    "Moderate -> Established": 5,
+    "Insufficient -> Hype Exceeds Evidence": 22,
+    "Moderate -> Early Evidence": 41,
+    "Limited -> Anecdotal Signal": 3,
+    "Limited -> Hype Exceeds Evidence": 4,
+    "Moderate -> Contradicted": 7,
+    "Insufficient -> Unsupported": 19,
+    "Insufficient -> Plausible Theory": 6,
+    "Limited -> Established": 17,
+    "Limited -> Early Evidence": 28,
+    "Insufficient -> Anecdotal Signal": 3,
+    "Limited -> Contradicted": 5,
+    "Moderate -> Plausible Theory": 3,
+    "Limited -> Plausible Theory": 25,
+    "Strong -> Contradicted": 1,
+    "Unknown -> Unsupported": 7,
+    "Insufficient -> Contradicted": 2,
+    "Insufficient -> Established": 1
+  },
+  "compounds": [
+    {
+      "compound": "Semaglutide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Ozempic labeling covers type 2 diabetes glycemic control and certain CV-risk contexts.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Wegovy labeling covers chronic weight management and labeled CV-risk reduction contexts.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Labels contraindicate personal/family MTC history and MEN 2.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "FDA has warned about safety/quality concerns with unapproved compounded semaglutide products.",
+          "from": "Moderate",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Tirzepatide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Tirzepatide is FDA-approved as Mounjaro for type 2 diabetes and as Zepbound for chronic weight management in labeled populations, with MTC/MEN2 contraindications on product labels.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Liraglutide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Liraglutide is a synthetic glucagon-like peptide-1 (GLP-1) receptor agonist analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "The FDA-approved Victoza (liraglutide) label states it is indicated (1) as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients aged 10 years and older with type 2 diabetes mellitus, and (2) to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus and established cardiovascular disease.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "The FDA-approved Saxenda (liraglutide 3 mg/day) label states it is indicated, in combination with a reduced-calorie diet and increased physical activity, to reduce excess body weight in (a) adults and pediatric patients aged 12 years and older with body weight above 60 kg and obesity, and (b) adults with overweight plus at least one weight-related comorbid condition.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Both Victoza and Saxenda (liraglutide) carry an FDA boxed warning that liraglutide causes thyroid C-cell tumors in rodents at clinically relevant exposures, with human relevance undetermined; liraglutide is contraindicated in patients with a personal or family history of medullary thyroid carcinoma (MTC) or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2), and in patients with serious hypersensitivity to liraglutide or its excipients.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "The Victoza label documents reports of acute pancreatitis (including fatal and non-fatal hemorrhagic or necrotizing pancreatitis), gastrointestinal adverse reactions (sometimes severe), acute gallbladder disease (cholelithiasis/cholecystitis), increased hypoglycemia risk when combined with insulin or an insulin secretagogue, and rare reports of pulmonary aspiration during elective surgery in patients receiving GLP-1 receptor agonists.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In the LEADER trial (liraglutide vs. placebo added to standard care in 9,340 adults with type 2 diabetes at high cardiovascular risk), the primary composite cardiovascular outcome (death from cardiovascular causes, nonfatal myocardial infarction, or nonfatal stroke) occurred in fewer patients in the liraglutide group (608 of 4,668 patients, 13.0%) than in the placebo group (694 of 4,672 patients, 14.9%), hazard ratio 0.87 (95% CI 0.78-0.97, p=0.01 for superiority); this trial underlies Victoza's cardiovascular risk-reduction indication.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "A CADTH clinical review of Saxenda's pivotal SCALE phase 3 trials found statistically significant placebo-adjusted body-weight reductions with liraglutide 3 mg, including a treatment difference of −5.39% (95% CI −5.82 to −4.95, p<0.0001) in the main trial (Study 1839), with odds of achieving ≥5% weight loss about 4.8-fold higher than placebo (OR 4.80, 95% CI 4.12–5.60, p<0.0001). The same review flagged evidence gaps: underrepresentation of patients with BMI 27 to <30 kg/m2, a lack of comparative (head-to-head) evidence, and trial populations that were predominantly White and female, limiting generalizability.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Illegal online sellers market GLP-1 agonist injectables — the drug class that includes liraglutide — without requiring a valid prescription, and some sellers evade enforcement by labeling products 'peptides' intended 'for research purposes only' and 'not for human consumption.' Substandard and falsified GLP-1 products have been identified in multiple countries. Separately, FDA states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Dulaglutide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "FDA-labeled glycemic and CV indications are supported by registrational and outcomes evidence.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Weight-loss marketing as if labeled for obesity is not supported as an approved indication.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Exenatide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Labeled T2D glycemic indication is established.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "EXSCEL CVOT showed noninferiority for MACE with once-weekly exenatide without a primary superiority claim for CV benefit in the narrative used here.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Retatrutide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Retatrutide (LY3437943) is a triple agonist of GIP, GLP-1, and glucagon receptors.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Once-weekly retatrutide reduced body weight vs placebo in randomized trials: phase 2 −8.7% to −24.2% at 48 wk (1–12 mg); TRIUMPH-1 −17.6% / −23.7% / −25.0% at 80 wk (4 / 9 / 12 mg) vs −3.9%.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In adults with knee osteoarthritis and obesity (TRIUMPH-4), weight change was −26.4% (9 mg) and −28.7% (12 mg) vs −2.1% placebo at 68 wk.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Dose-related GI adverse events, dysesthesia and heart-rate increase were observed in trials.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Not an FDA-approved marketed product; Lilly plans US submission in Q1 2027.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Self-reported effects from gray-market use (Reddit, n=13,589) include increased appetite, fatigue, nausea, insomnia and tachycardia; product and dose unverifiable.",
+          "from": "Limited",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Metformin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Metformin has evidence relevant to type 2 diabetes per product label.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Acarbose",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Acarbose is FDA-approved to improve glycemic control in type 2 diabetes as an adjunct to diet and exercise.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Tesamorelin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Tesamorelin, marketed as EGRIFTA/EGRIFTA SV/EGRIFTA WR, is FDA-approved solely for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy; original Egrifta was approved November 10, 2010, with Egrifta SV approved in 2019 and Egrifta WR approved March 25, 2025 as reformulations.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "The FDA label explicitly states EGRIFTA SV is not indicated for weight loss management because it has a weight-neutral effect, and that the effect of tesamorelin-induced visceral fat reduction on cardiovascular outcomes or antiretroviral adherence has not been established.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "EGRIFTA SV is contraindicated in patients with disruption of the hypothalamic-pituitary axis, active malignancy, known hypersensitivity to tesamorelin or excipients, and in pregnancy; labeled warnings include increased neoplasm risk, elevated IGF-1 requiring monitoring, fluid retention, new-onset or worsening glucose intolerance, hypersensitivity reactions, and increased mortality risk reported with growth hormone in critically ill patients.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Tesamorelin is a synthetic analogue of human growth hormone-releasing hormone (GHRH) that stimulates the pituitary to release endogenous growth hormone, in turn increasing IGF-1; its molecular formula is C221H366N72O67S (PubChem CID 16137828).",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In a randomized, placebo-controlled trial in HIV-infected patients with abdominal fat accumulation, 6 months of tesamorelin was associated with a significantly greater reduction in visceral adipose tissue than placebo (treatment difference -42 cm^2, p=.005) and a modest reduction in liver fat (net effect -2.9%, p=.003); the study authors characterized it as a preliminary study.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "The FDA label describes EGRIFTA SV as a once-daily subcutaneous injection kit; this is label/trial protocol context only, not a use recommendation, and product-specific reconstitution/administration steps must be taken from the current label.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Bremelanotide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Bremelanotide (Vyleesi) is FDA-approved for premenopausal HSDD with labeled cardiovascular and nausea warnings.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Sermorelin",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "FDA-approved sermorelin acetate injection (brand GEREF) was indicated for treatment of idiopathic growth hormone deficiency in children with growth failure; the manufacturer (EMD Serono) discontinued the product in 2008, and FDA formally determined the product was not withdrawn from sale for reasons of safety or effectiveness.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "As of the access date, no sermorelin or sermorelin acetate drug product is listed in DailyMed (the NLM/FDA labeling repository), and sermorelin/sermorelin acetate does not appear in FDA's Category 2 table of bulk drug substances presenting significant safety risks or in the table of substances nominated but withdrawn on the FDA 503A bulk substances page; there is currently no FDA-approved sermorelin product on the market.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Sermorelin (acetate) is a synthetic 29-amino-acid peptide corresponding to the amino-terminal, biologically active segment of native human growth hormone-releasing hormone (GHRH); it acts as a GHRH-receptor agonist on the anterior pituitary to stimulate endogenous growth hormone secretion.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "The only FDA-approved sermorelin products were GEREF injection formulations (0.5 mg base/vial and 1.0 mg base/vial for pediatric GHD treatment; 0.05 mg base/amp for diagnostic testing of pituitary somatotroph GH secretory capacity); both were discontinued by the manufacturer in the 2000s and are no longer manufactured, so sermorelin currently reaches consumers only as a compounded or research-labeled product outside the FDA-approved supply chain.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking.",
+          "from": "Limited",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Ipamorelin",
+      "overallFrom": "Contradicted",
+      "overallTo": "Contradicted",
+      "claims": [
+        {
+          "claim": "FDA lists ipamorelin acetate among bulk drug substances that may present significant safety risks for compounding, citing risk of immunogenicity for certain routes of administration due to potential aggregation or peptide-related impurities; the page additionally notes serious adverse events including death associated with intravenous administration.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In its Pharmacy Compounding Advisory Committee briefing, FDA concluded the evaluation criteria weigh against placing ipamorelin (free base) and ipamorelin acetate on the 503A Bulks List, citing immunogenicity potential from impurities and peptide-related aggregates, possible stimulation of reward processing with potential for reinforcing and addictive behaviors, and possible negative effects on reproductive health and pregnancy outcomes.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In the principal published human efficacy trial - a multicenter, double-blind, placebo-controlled phase 2 study in 117 bowel-resection patients - intravenous ipamorelin 0.03 mg/kg twice daily did not significantly accelerate recovery from postoperative ileus versus placebo (median time to first tolerated meal 25.3 vs 32.6 hours, p = 0.15); the regimen was reported as well tolerated in that setting, and FDA's briefing notes development for this indication was subsequently discontinued.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "CJC-1295",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Short-term controlled human data show GH/IGF-I rises after CJC-1295 in healthy adults.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "No FDA-approved product; wellness outcome claims are not established.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "BPC-157",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "BPC-157 literature is predominantly preclinical; systematic reviews note very limited clinical study mass relative to marketing claims.",
+          "from": "Limited",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "TB-500",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "WADA lists thymosin-beta4 and derivatives such as TB-500 among prohibited substances in sport.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Published biomedical literature largely concerns thymosin beta-4; product-specific human efficacy for vendor TB-500 is not established.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "MOTS-c",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "MOTS-c was nominated for FDA's 503A Bulk Drug Substances list but the nomination was withdrawn; FDA's own note on the withdrawn-nominations table states it identified no human exposure data for MOTS-c via any route of administration and lacks information on whether MOTS-c would cause harm if administered to humans, while also flagging potential immunogenicity risk from peptide-related impurities.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. At the PCAC meeting on July 23, 2026, the committee voted 7-5 with 2 abstentions to recommend MOTS-c for the 503A Bulks List, overriding the staff recommendation. An advisory committee vote is not itself a legal listing decision -- FDA must still complete rulemaking before MOTS-c could be lawfully compounded under 503A -- and the staff's underlying findings on the absence of human exposure data and incomplete characterization remain unchanged by the vote.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "MOTS-c is a 16-amino-acid peptide encoded within mitochondrial DNA (within the 12S rRNA region) that acts via AMPK-dependent signaling; in mice it regulates skeletal-muscle metabolism and nuclear genes related to metabolism and proteostasis, and endogenous MOTS-c is exercise-inducible, rising in circulation during and after acute exercise in humans.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        },
+        {
+          "claim": "An investigational Phase 2a randomized, placebo-controlled trial (NCT07505745) is recruiting adults aged 18-65 with BMI 27-40 kg/m2 and documented prediabetes to receive investigational MOTS-c or matching placebo via subcutaneous injection once daily for 12 weeks alongside standardized lifestyle counseling, to evaluate improvement in insulin sensitivity; results are not yet available.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        },
+        {
+          "claim": "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Melanotan II",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Melanotan II has evidence relevant to regulatory safety warning reference.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Testosterone cypionate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Testosterone cypionate injection is FDA-approved for testosterone replacement in males with labeled deficiency states, with contraindications including breast/prostate carcinoma and pregnancy.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Oxandrolone",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Oxandrolone has evidence relevant to approved catabolic weight loss contexts per label.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Nandrolone decanoate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Nandrolone decanoate has evidence relevant to historical regulatory reference.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Anastrozole",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Anastrozole is FDA-approved for hormone receptor-positive breast cancer indications described in product labeling.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Letrozole",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Letrozole is an FDA-approved aromatase inhibitor with labeled indications in hormone receptor-positive breast cancer; full risks and monitoring are defined in prescribing information.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Human chorionic gonadotropin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "FDA-approved hCG products are labeled for selected fertility and endocrine indications; full eligibility and risks are defined in product prescribing information.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Finasteride",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Labeled hair-loss and BPH indications are supported by FDA-approved labeling and extensive clinical use.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "DHEA",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "DHEA has human clinical literature, but benefit claims are heterogeneous and often limited for broad anti-aging use.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Tamoxifen",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Tamoxifen citrate is FDA-approved for breast cancer treatment and for risk reduction in labeled populations, with boxed warnings for uterine malignancies, stroke, and pulmonary embolism.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Clomiphene",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Labeled efficacy for ovulatory dysfunction is established by FDA-approved labeling.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Off-label male hypogonadism testosterone effects are supported by RCT meta-analysis but are not labeled indications.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Raloxifene",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Raloxifene is a benzothiophene-derivative selective estrogen receptor modulator (SERM), marketed as Evista (raloxifene hydrochloride); its structured-database identifiers are PubChem CID 5035, DrugBank DB00481, CAS 84449-90-1, and UNII YX9162EO3I.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "FDA-approved EVISTA (raloxifene hydrochloride) labeling covers two indications in postmenopausal women: treatment and prevention of osteoporosis, and reduction of risk of invasive breast cancer in postmenopausal women with osteoporosis or at high risk for invasive breast cancer.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "EVISTA carries an FDA boxed warning for increased risk of venous thromboembolism (deep vein thrombosis, pulmonary embolism, retinal vein thrombosis) and for increased risk of death due to stroke in a trial of postmenopausal women with documented coronary heart disease or elevated coronary risk; the drug is contraindicated in women with active or past history of venous thromboembolism and in pregnancy.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In the MORE randomized, double-blind, placebo-controlled trial (7,705 postmenopausal women with osteoporosis, 180 centers, 25 countries, median 40 months follow-up), raloxifene reduced the risk of invasive breast cancer versus placebo: 13 cases among 5,129 women on raloxifene vs 27 among 2,576 on placebo (relative risk 0.24, 95% CI 0.13-0.44, P<.001); estrogen-receptor-positive breast cancer risk was reduced by 90% (RR 0.10, 95% CI 0.04-0.24).",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In the MORE trial, raloxifene significantly increased the risk of venous thromboembolic disease relative to placebo (relative risk 3.1, 95% CI 1.5-6.2), independently corroborating the magnitude of the VTE risk described qualitatively in FDA boxed-warning labeling.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Anabolic-androgenic-steroid-using bodybuilding forums promote self-directed raloxifene dosing (posts described protocols ranging from 30-120 mg/day, including a 17-week taper starting at 120 mg/day) to reverse gynecomastia, citing a pediatric case series (\"J Pediatr. 2004\") reporting 91% of raloxifene-treated patients improved and \"no side effects were seen in any patients\"; no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users was identified, the cited pediatric population and setting do not generalize to self-directed adult AAS-user dosing, and this use is not an FDA-approved indication.",
+          "from": "Insufficient",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Enclomiphene",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Human clinical studies support pharmacodynamic testosterone/gonadotropin effects in secondary hypogonadism research settings.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "US approval status is not established by included label sources in this record.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Ostarine",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Ostarine has evidence relevant to regulatory safety warning reference.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Ligandrol",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Ligandrol (LGD-4033) is a SARM without FDA approval; FDA warns against SARM use and LiverTox summarizes cholestatic liver injury patterns linked to SARM exposure including ligandrol-named cases in the class review.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Testolone",
+      "overallFrom": "Contradicted",
+      "overallTo": "Contradicted",
+      "claims": [
+        {
+          "claim": "FDA warning letters identify RAD-140/Testolone products marketed for bodybuilding as unapproved new drugs and note life-threatening reactions including liver toxicity with SARMs.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Early-phase oncology study of RAD140 in pretreated ER+/HER2- metastatic breast cancer reported modest clinical benefit and frequent AST/ALT elevations; this does not establish bodybuilding benefit or safety.",
+          "from": "Limited",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        }
+      ]
+    },
+    {
+      "compound": "Andarine",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "Andarine is an unapproved SARM with limited human clinical development disclosure and substantial gray-market use; FDA class warnings apply.",
+          "from": "Limited",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "YK-11",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "YK-11 is not FDA-approved; FDA has associated SARM-containing bodybuilding products with harm and has detected YK-11 in product testing contexts.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "No published human clinical trials of YK-11 were identified; mechanistic data are preclinical.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Creatine monohydrate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Creatine monohydrate has strong sports-nutrition evidence for high-intensity performance.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Caffeine",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Caffeine has extensive human evidence for increased alertness and established dose-related adverse effects; it is a common food and OTC stimulant ingredient.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Beta-alanine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Multiple sports-nutrition reviews support beta-alanine for certain high-intensity performance outcomes via elevated muscle carnosine, with paresthesia as a common effect.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "L-citrulline",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "L-citrulline is studied as a nitric-oxide pathway precursor in exercise and vascular research; it is sold as a dietary supplement rather than an approved drug for performance.",
+          "from": "Moderate",
+          "to": "Plausible Theory",
+          "why": "Mechanistic or preclinical support without direct human outcome evidence (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "L-carnitine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "L-carnitine is essential for mitochondrial long-chain fatty acid transport; prescription levocarnitine is used for carnitine deficiency, while supplemental use for performance has mixed evidence.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Coenzyme Q10",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "CoQ10 is a well-characterized endogenous cofactor with a substantial clinical-research literature of mixed quality depending on endpoint.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Berberine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Clinical trials and meta-analyses have evaluated berberine for glycemic and lipid endpoints with heterogeneous methods and effect sizes; it remains a supplement, not an approved antidiabetic drug.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin D3",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Vitamin D is required for calcium absorption and bone health; NIH ODS publishes RDAs and upper intake levels for vitamin D.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Large RCTs such as VITAL did not show routine vitamin D supplementation prevents major cardiovascular events or invasive cancer in generally healthy adults at the studied dose.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        }
+      ]
+    },
+    {
+      "compound": "Omega-3 ethyl esters",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Omega-3 ethyl esters has evidence relevant to severe hypertriglyceridemia per label.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Tadalafil",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Tadalafil is an FDA-approved PDE5 inhibitor with labeled indications that include erectile dysfunction, signs and symptoms of BPH, and (as Adcirca) pulmonary arterial hypertension.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Sildenafil",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Sildenafil is FDA-approved for erectile dysfunction and pulmonary arterial hypertension under product-specific labels.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Concomitant nitrates are contraindicated due to severe hypotension risk.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Modafinil",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Modafinil has evidence relevant to narcolepsy, obstructive sleep apnea sleepiness, or shift work disorder per label.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Bupropion",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Bupropion is FDA-approved for depression-related indications and smoking cessation with boxed suicidality warning and seizure risk.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Levothyroxine",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Levothyroxine is FDA-approved thyroid hormone replacement for hypothyroidism; dosing is individualized with TSH/clinical monitoring, and labels warn against use for euthyroid weight loss.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "NAD+",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "NAD+ has evidence relevant to cellular metabolism reference.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Thymosin alpha-1",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Thymosin alpha-1 (thymalfasin, brand name Zadaxin) has no FDA-approved drug label in the United States - DailyMed, the authoritative U.S. label repository, returns zero results for \"thymalfasin\" - and is available in the U.S. only through compounding, not as an approved product; it is approved as a marketed drug in dozens of other countries (commonly cited for hepatitis B/C and as a cancer/vaccine adjuvant), but that ex-U.S. approval status has not been independently verified here against a primary foreign regulator source.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "FDA's evaluation of thymosin alpha-1 (Tα1, free base and acetate) for the 503A compounding Bulks List found that a balancing of the four evaluation criteria weighs against adding it, citing insufficient physicochemical characterization, an immunogenicity risk potentially amplified by aggregation and peptide-related impurities, and a proposed injectable concentration (3 mg/mL) that exceeds Ta1 free base's aqueous solubility (2 mg/mL); the nomination was subsequently withdrawn and FDA is evaluating the substance at its own discretion rather than under a completed rulemaking.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "FDA's bulk drug substance evaluation flags a potential safety concern specific to immunosuppressed patients: thymosin alpha-1's immune-stimulating activity could cause or worsen acute or chronic graft-versus-host disease (GVHD) and lead to engraftment failure in hematopoietic stem cell transplant (HSCT) recipients.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In the largest and most rigorous published human efficacy trial - TESTS, a multicentre, double-blind, placebo-controlled phase 3 trial in 1,106 adults with sepsis across 22 Chinese centers - subcutaneous thymosin alpha-1 every 12 hours for up to 7 days did not reduce 28-day all-cause mortality versus placebo (23.4% vs 24.1%; hazard ratio 0.99, 95% CI 0.77-1.27, p=0.93), and secondary/safety outcomes showed no significant differences between groups.",
+          "from": "Strong",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "An earlier, smaller multicenter randomized controlled trial (ETASS, six Chinese hospitals, n=361 ICU patients with severe sepsis, 2008-2010) reported a numerically lower 28-day death rate with thymosin alpha-1 added to conventional therapy versus conventional therapy alone (26.0% vs 35.0%; relative risk 0.74, 95% CI 0.54-1.02), a difference that did not reach conventional statistical significance, alongside greater improvement in monocyte HLA-DR expression (an immune-function marker) in the treatment group.",
+          "from": "Limited",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Spermidine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Spermidine is indexed by PubChem as CID 1102 (CAS 124-20-9).",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "A randomized pilot trial examined spermidine effects on memory performance in older adults at dementia risk (PubMed 30388439).",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "A JAMA Network Open randomized trial examined spermidine supplementation on cognition and biomarkers in older adults with subjective cognitive decline.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Urolithin A",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Urolithin A is indexed by PubChem as CID 5488186 and associated with CAS number 1143-70-0.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        },
+        {
+          "claim": "A randomized clinical trial studied urolithin A supplementation in older adults using muscle endurance and mitochondrial-health biomarkers as outcomes, supporting BioStack tracking it as an emerging mitochondrial-health compound without overstating general longevity benefits.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "AC-262536",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "AC-262536 (Accadine/Accadrine, CAS 870888-46-3, C18H18N2O, MW 278.4) is a non-steroidal selective androgen receptor modulator originally developed by Acadia Pharmaceuticals; it exhibits endo-exo isomerism with the endo form being pharmacologically active, and it is not an approved pharmaceutical product.",
+          "from": "Moderate",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        },
+        {
+          "claim": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "AC-262536 has no approved medical use and is not a licensed pharmaceutical product in the United States; FDA states that SARMs as a class 'are not FDA approved' and 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,' and AC-262536 has additionally been documented as encountered in the illicit/novel-designer-drug market.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "FDA has warned that SARMs as a class are 'associated with serious or life-threatening health problems,' specifically citing increased risk of heart attack or stroke and liver injury/acute liver failure, along with psychosis/hallucinations, sleep disturbances, sexual dysfunction, infertility, pregnancy/miscarriage risk, and testicular shrinkage; this warning targets the SARM drug class broadly (including products marketed to teens and young adults) and is not derived from AC-262536-specific human safety data, which does not exist.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        },
+        {
+          "claim": "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' — claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Lasofoxifene",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Lasofoxifene has no currently valid marketing authorization anywhere. It was rejected by FDA for a US osteoporosis indication (Complete Response Letter, January 2009, after an earlier 2005 non-approvable letter under the name Oporia) and never launched in the US; the EU authorization for Fablyn (granted by the European Commission on 24 February 2009 for osteoporosis in postmenopausal women at increased fracture risk) automatically lapsed on 27 February 2012 under the sunset clause because the product was never marketed in any EU member state.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Lasofoxifene is a nonsteroidal, third-generation selective estrogen receptor modulator that binds both ERα and ERβ with high affinity, acting as an estrogen-receptor antagonist in breast and endometrial tissue while producing estrogen-agonist effects in bone.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In ELAINE 1, an open-label, randomized, phase II, multicenter trial in 103 patients with ER+/HER2- metastatic breast cancer harboring an ESR1 mutation who had progressed on prior aromatase-inhibitor-based therapy, oral lasofoxifene 5 mg daily (n=52) numerically improved median progression-free survival versus intramuscular fulvestrant 500 mg (n=51) - 24.2 weeks (~5.6 months) vs 16.2 weeks (~3.7 months) - with a hazard ratio of 0.699 (95% CI 0.434-1.125); the difference did not reach statistical significance (p=0.138). Both arms showed grade 3/4 toxicity in roughly 20% of patients with no unexpected safety signals; the most frequent lasofoxifene adverse events were nausea, fatigue, arthralgia, and hot flushes.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "Lasofoxifene's active clinical development is now centered on oncology rather than its original osteoporosis indication: the drug sponsor describes it as under investigation as an endocrine therapy, combined with the CDK4/6 inhibitor abemaciclib, for postmenopausal and ovarian-suppressed premenopausal women with locally advanced or metastatic ER+ breast cancer, via the ELAINE trial program (ELAINE 1, 2, and the phase III ELAINE 3 study).",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "LGD-3303",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "In castrated male rats (an androgen-deficiency model), oral LGD-3303 at 1 mg/kg/day completely prevented loss of levator ani muscle weight and acted as a partial agonist on prostate and preputial gland tissue; local tissue drug concentrations were reportedly higher in prostate than in the more strongly responding levator ani muscle, indicating the tissue selectivity is not explained by differential drug distribution. This is preclinical rodent evidence only and has not been demonstrated in a human clinical study.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "LGD-3303 was originated by Ligand Pharmaceuticals as a candidate SARM investigated for osteoporosis, hypogonadism, and sexual dysfunction. Its highest recorded R&D status is preclinical (\"Pending/Preclinical\"), all three tracked indications are listed as inactive, and no clinical-trial-phase development is recorded, with the most recent development record dated December 31, 2007. LGD-3303 holds no marketing approval in any jurisdiction, has not entered human clinical trials, and was subsequently encountered outside pharmaceutical development as a novel designer drug by at least 2020.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "FDA classifies SARMs as a drug class - which includes LGD-3303 by chemical and pharmacological category - as unapproved products that \"cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,\" and warns that SARM use is associated with increased risk of heart attack or stroke and liver injury/acute liver failure, among other serious effects. No FDA warning letter or enforcement action naming LGD-3303 specifically was located in this session's search of fda.gov.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "NIH's LiverTox reference describes a distinctive bland cholestatic drug-induced liver injury pattern documented with SARM use as a class: onset roughly 2-3 months after starting, presenting with fatigue, anorexia, dark urine, and jaundice, with moderate bilirubin elevation (reported 4-8 mg/dL initially) but only 2-5x-normal aminotransferase elevation, and a prolonged but usually self-limited course of about 1-6 months, occasionally with bilirubin cast nephropathy requiring temporary dialysis in severe cases. The compounds specifically named in LiverTox's case-report basis are ligandrol (LGD-4033), enobosarm/ostarine, vosilasarm/RAD-140, andarine, and YK-11; LGD-3303 is not individually named among the documented case reports in this reference, despite sharing the same androgen-receptor mechanism class.",
+          "from": "Insufficient",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        },
+        {
+          "claim": "The WADA Prohibited List's S1.2 anabolic-agents category prohibits \"Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]\" using \"including, but not limited to\" language, so LGD-3303 falls within the prohibited SARM class as a chemical/pharmacological analog even though it is not individually named in this illustrative list. Independent anti-doping research has developed equine (horse) in vivo metabolite-profiling methods specifically to detect LGD-3303 administration, identifying a monohydroxylated metabolite with better detectability than the parent compound for doping-control testing.",
+          "from": "Moderate",
+          "to": "Plausible Theory",
+          "why": "Mechanistic or preclinical support without direct human outcome evidence (was Moderate)."
+        },
+        {
+          "claim": "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits.",
+          "from": "Insufficient",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        }
+      ]
+    },
+    {
+      "compound": "LL-37",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "LL-37 (ropocamptide) is the sole human cathelicidin-derived antimicrobial peptide, a 37-amino-acid amphipathic peptide (molecular formula C205H340N60O53) secreted by bone marrow cells, circulating leukocytes, and epithelial tissue as part of innate host defense.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "LL-37 exhibits antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities, including regulation of leukocyte chemotaxis and cytokine production and support of wound-healing processes; nonclinical work also reports pro-apoptotic tumor-suppressive activity via p53 induction in some cancer cell contexts.",
+          "from": "Moderate",
+          "to": "Plausible Theory",
+          "why": "Mechanistic or preclinical support without direct human outcome evidence (was Moderate)."
+        },
+        {
+          "claim": "FDA lists cathelicidin LL-37 among bulk drug substances nominated but withdrawn from consideration for the 503A compounding bulks list, stating that compounded drugs containing it may pose immunogenicity risk for certain routes of administration and complexities regarding peptide-related impurities and API characterization, that FDA lacks sufficient safety information to know whether the drug would cause harm when administered to humans, and that nonclinical research suggests detrimental effects on male reproduction and protumorigenic potential in some tissues.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "FDA's compounding safety review states that nonclinical (animal/preclinical) research findings suggest LL-37 has detrimental effects on male reproduction and can be protumorigenic in some tissues; these are nonclinical safety signals, not confirmed human adverse effects, and no human dose-response or incidence data for these signals were identified.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients (144 in the full analysis set) with hard-to-heal venous leg ulcers, topical LL-37 (0.5 or 1.6 mg/mL, twice weekly) did not significantly improve complete wound closure versus placebo in the overall population (26.5% and 24.7% vs 25.3%, p>0.05); a post-hoc subgroup analysis in larger ulcers (≥10 cm²) found the 0.5 mg/mL dose significantly improved wound closure (28.1% vs 8.1%, p=0.0458) and healing rate versus placebo. The study drug was reported well tolerated, with six serious adverse events judged possibly (none probably) treatment-related and no deaths.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Toremifene",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "FDA-approved indication for toremifene (as Fareston, toremifene citrate) is treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors, at an oral dose of 60 mg once daily; the product remains an active approved NDA (020497), most recently updated by a December 2024 labeling supplement.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Toremifene is contraindicated in patients with known hypersensitivity to the drug, and should not be prescribed to patients with congenital or acquired QT prolongation (long QT syndrome), uncorrected hypokalemia, or uncorrected hypomagnesemia.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "FDA's boxed warning states toremifene prolongs the QTc interval in a dose- and concentration-related manner, which can result in Torsade de pointes, syncope, seizure, and/or death; drugs known to prolong the QT interval and strong CYP3A4 inhibitors should be avoided, and the label separately warns of thromboembolic disease risk and endometrial malignancy (hyperplasia, polyps, cancer) requiring baseline and periodic monitoring.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Toremifene is a triphenylethylene-derivative selective estrogen receptor modulator (SERM); its antitumor effect in breast cancer is believed to be mainly due to antiestrogenic activity, competing with estrogen for receptor binding sites in the tumor and blocking estrogen's growth-stimulating effects, while displaying estrogen-agonist activity in other tissues such as bone.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "A higher-dose toremifene 80 mg product developed specifically to reduce fracture risk in men on androgen deprivation therapy (ADT) for prostate cancer was never approved: FDA issued a Complete Response Letter requiring a second confirmatory Phase III fracture trial and additional data showing no adverse effect on time-to-disease-progression or overall survival before that indication could be approved; toremifene 80 mg for this use remains unapproved.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In a two-year, double-blind, placebo-controlled Phase III trial of 1,389 men on ADT for prostate cancer, toremifene 80 mg/day reduced new morphometric vertebral fractures versus placebo (reported as roughly 50-53% relative reduction depending on analysis population, p<0.05) and increased lumbar spine and hip bone mineral density (p<0.0001), but venous thromboembolic events were more frequent with toremifene than placebo (reported 2.4% vs 1.02%), concentrated in patients with pre-existing VTE risk factors; this trial supports a mechanistic bone effect in older ADT-treated men and does not establish efficacy or safety for young, non-hypogonadal men using toremifene for post-cycle recovery.",
+          "from": "Limited",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "GHK-Cu",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Skin-regeneration research review supports topical/cosmetic scientific interest with limited rigorous clinical standardization.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "Systemic anti-aging injectable claims are insufficiently supported.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "ACP-105",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "ACP-105 is an unapproved SARM without identified controlled human clinical efficacy trials; available work includes receptor characterization and doping-control metabolite studies.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Afamelanotide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Afamelanotide (SCENESSE) is FDA-approved to increase pain-free light exposure in adults with EPP and was supported by randomized controlled trials.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Amycretin",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Early-phase randomized trials have reported dose-related weight loss and GI adverse events with amycretin; no regulatory approval was verified.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "AOD-9604",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "AOD-9604 has human trial exposure in obesity/metabolic research but no verified FDA-approved product; FDA compounding evaluation materials discuss the substance.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Bazedoxifene",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Bazedoxifene is FDA-approved in the US only as part of DUAVEE (conjugated estrogens/bazedoxifene) for specific postmenopausal indications.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Cagrilintide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Phase 3 weight-management trials of cagrilintide alone and with semaglutide have been publicly summarized; FDA approval was not verified for this record.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Cardarine",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "GW501516/cardarine has limited short human biomarker studies historically, but multi-organ rodent carcinogenicity and lack of approval dominate the risk-benefit assessment; gray-market marketing is not evidence of safety.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Creatine",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "ISSN position stand and NIH ODS materials support efficacy for high-intensity exercise performance with creatine monohydrate.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Hair-loss/DHT causation claims are not supported by a 2025 RCT measuring hormones and hair outcomes over 12 weeks.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        }
+      ]
+    },
+    {
+      "compound": "Elamipretide",
+      "overallFrom": "Contradicted",
+      "overallTo": "Contradicted",
+      "claims": [
+        {
+          "claim": "Barth syndrome accelerated approval rests on intermediate muscle-strength endpoint with confirmatory requirements.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Phase 3 primary mitochondrial myopathy trial (MMPOWER-3) did not meet co-primary endpoints.",
+          "from": "Insufficient",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        }
+      ]
+    },
+    {
+      "compound": "Emideltide",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "Historical insomnia studies exist but are insufficient for modern efficacy claims.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        },
+        {
+          "claim": "FDA compounding evaluation weighs against 503A bulks placement based on characterization and safety concerns.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Epitalon",
+      "overallFrom": "Hype Exceeds Evidence",
+      "overallTo": "Hype Exceeds Evidence",
+      "claims": [
+        {
+          "claim": "Synthetic epitalon lacks adequate placebo-controlled human outcome trials for marketed longevity claims.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "FDA staff briefing weighs against 503A bulks listing.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "GHRP-2",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Diagnostic GH-stimulation human studies provide Moderate pharmacodynamic evidence in testing contexts.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Chronic wellness/performance marketing claims are Insufficient.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "GHRP-6",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Human pharmacodynamic GH-release studies exist (Moderate mechanism/PD support).",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Bodybuilding/anti-aging chronic benefit claims are Insufficient.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Glutathione",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "Small oral RCTs suggest possible modest skin melanin-index changes at some sites; evidence is limited.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "Injectable skin-lightening/detox efficacy is not established and safety concerns are Strongly documented by regulators.",
+          "from": "Insufficient",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Gonadorelin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Gonadorelin is the synthetic form of native hypothalamic gonadotropin-releasing hormone (GnRH/LHRH), a decapeptide that acts on the anterior pituitary to stimulate release of luteinizing hormone (LH) and follicle-stimulating hormone (FSH).",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "The only current FDA-approved gonadorelin product identified on DailyMed (FACTREL, gonadorelin hydrochloride injection) is an FDA-approved veterinary drug for cattle - indicated for treatment of ovarian follicular cysts and for estrous-cycle synchronization - and its label explicitly states it is not approved for human use.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In Canada, LUTREPULSE (gonadorelin acetate, delivered via pulsatile subcutaneous pump) is indicated per its Health Canada product monograph for induction of ovulation in women with primary hypothalamic amenorrhea; this ovulation-induction indication is Canada-specific and historical, not a currently active US indication (the corresponding human Factrel product in the US is confirmed discontinued). Gonadorelin has also historically been used diagnostically, under a since-discontinued US FDA-approved human product, to test hypothalamic-pituitary-gonadal axis function.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Regulator/clinical-reference sources warn that gonadorelin use is contraindicated or hazardous in patients with hormone-dependent tumors (risk the tumor may worsen) and in undiagnosed gonadotropin-releasing-hormone-secreting pituitary adenoma, where treatment could precipitate pituitary complications including sudden vision loss; ovarian hyperstimulation and multiple pregnancy are recognized risks of pulsatile use for ovulation induction.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In a prospective, self-selected open-label comparison in 28 azoospermic men with congenital hypogonadotropic hypogonadism (CHH), pulsatile subcutaneous gonadorelin (10 mcg every 90 minutes via infusion pump) induced spermatogenesis significantly earlier than cyclical hCG/hMG therapy (median 6 vs 14 months), though overall spermatogenesis-success rates were statistically similar between the two approaches (90% vs 83.3%).",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "Gonadorelin is widely marketed by telehealth/TRT clinics as a lower-cost hCG alternative to prevent testicular shrinkage and preserve fertility during testosterone replacement therapy, but no controlled human trial data specific to that TRT-adjunct use (intermittent/non-pulsatile subcutaneous dosing in men on exogenous testosterone) was located this session; the clinic source itself concedes evidence is thin and that fertility preservation should not be assumed.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "Gonadorelin (base form) is registered in PubChem as CID 638793, molecular formula C55H75N17O13, with CAS Registry Number 33515-09-2 cross-referenced from DrugBank and regulatory chemical databases; distinct PubChem entries exist for the acetate (CID 11980076), diacetate (CID 56841073), and hydrochloride (CID 23624131) salt forms used in different commercial products.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "GSK2881078",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "GSK2881078 is a synthetic, nonsteroidal selective androgen receptor modulator (SARM) — an indole-carbonitrile small molecule (CAS 1539314-06-1, PubChem CID 86709174) — that acts as an anabolic agent inducing anabolic effects in muscle via the androgen receptor, without approval as a drug product in any jurisdiction.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In a randomized, placebo-controlled, dose-escalation phase 1 study in healthy older men (1.0-4.0 mg/day) and postmenopausal women (0.35-1.5 mg/day) dosed for 28-56 days, GSK2881078 produced dose-dependent increases in total lean body mass at every dose level versus placebo; women gained roughly 3.39 kg and men roughly 1.76 kg of total lean mass by 8 weeks at studied doses. This is a healthy-volunteer pharmacodynamic finding, not evidence of clinical benefit (e.g., strength, function, or muscle-wasting outcomes) in a patient population.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol (30-45% at the highest doses), and male subjects showed reversible reductions in total testosterone; changes reversed after stopping the drug. No serious adverse events were reported and the compound was described as generally well tolerated in this healthy-volunteer setting, but suppression of HDL cholesterol and androgen axis parameters are class-consistent safety signals for SARMs. An independent clinical-reference source (LiverTox) additionally reports that in this GSK2881078 trial, ALT rose above the upper limit of normal in over 50% of treated subjects (versus 13% of placebo) and above 5x ULN in 3% of treated subjects — a hepatic-transaminase-elevation signal not described in the primary paper's HDL/testosterone results and now added here as a distinct safety-critical signal.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events. The basis for the trial's existence, design and participant disposition in this packet is the trial registration records - the ClinicalTrials.gov entry and the sponsor's own study register, the latter now carrying no usable authority tier - which establish that the trial was conducted and how it was designed, but not what it found; no results from the primary publication have been retrieved and no efficacy outcome is asserted here. A secondary source (Wikipedia, not independently verified against the primary Thorax publication) states the drug increased muscle strength in men; this sex-specific efficacy framing and the full quantitative leg-press/DXA results remain unconfirmed and are not asserted here as established findings. A separate, independently accessed companion patient-reported-outcomes study of the same trial (Tabberer et al. 2024) reports that in a qualitative interview subsample (n=32), most participants described improvements in muscle strength and functional limitations and all reported a positive trial experience; this corroborates a general positive direction of participant-perceived effect but does not confirm, quantify, or sex-differentiate the efficacy result, and does not substitute for the primary trial's quantitative endpoints.",
+          "from": "Limited",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "FDA states that SARMs as a drug class have not been approved by FDA for any use, are illegally marketed (often as dietary supplements, which they are not), and have been linked to life-threatening reactions including liver injury requiring hospitalization and increased risk of heart attack or stroke. This is a class-wide regulatory position; the FDA alert does not name GSK2881078 specifically, and GSK2881078 itself is an investigational compound with no completed marketing application or approved product.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "GSK2881078 is sold by multiple online 'research chemical' suppliers as a research-use-only compound (not for human consumption), while GSK's own completed trials tested it only under close medical supervision at low, sex-specific microgram/milligram doses for defined short durations (up to 13 weeks) with lab-monitored safety endpoints. No published human evidence supports self-administered, unsupervised, or longer-duration gray-market use for bodybuilding, anti-aging, or general muscle-building purposes, and FDA's SARM-class warnings (heart attack/stroke/liver injury risk) apply to this unsupervised-use pattern.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Hexarelin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Hexarelin is a synthetic hexapeptide GHRP-class growth hormone secretagogue that stimulates growth hormone release both in vitro and in vivo by acting as a ghrelin/growth hormone secretagogue receptor (GHS-R1a) agonist.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In a double-blind, placebo-controlled, rising-dose study of 12 healthy adult male volunteers, single intravenous boluses of hexarelin (0.5, 1, and 2 micrograms/kg) produced dose-dependent increases in plasma growth hormone, peaking at about 30 minutes; mean peak GH concentrations were 3.9 (placebo), 26.9, 52.3, and 55.0 ng/mL at increasing doses, with response near-maximal by the 2 microgram/kg dose. This is an acute GH-release pharmacodynamic finding in healthy men, not evidence of any downstream clinical benefit.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In a rat model of myocardial ischemia/reperfusion injury (left coronary artery ligation), subcutaneous hexarelin (100 mcg/kg/day for 7 days) improved cardiac systolic function, reduced malondialdehyde production, and increased surviving cardiomyocytes versus control, an effect blocked by a GHSR antagonist and attributed to interleukin-1 pathway modulation. This is preclinical rodent data and does not establish a cardioprotective effect in humans.",
+          "from": "Insufficient",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "Hexarelin has no FDA-approved drug product and, unlike some other GH secretagogue peptides (e.g. ipamorelin, GHRP-6), does not currently appear on FDA's published Category 2 list of bulk drug substances that may present significant safety risks for compounding; its regulatory status for 503A/503B compounding has not been affirmatively confirmed and should be re-checked against the live FDA list at review time.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Hexarelin (listed as examorelin) is named explicitly under WADA's S2.2.4 Growth Hormone Releasing Factors category of the Prohibited List, alongside other GHRPs (GHRP-1/2/3/4/5/6) and GH secretagogues, and is therefore prohibited at all times in professional and Olympic-level sport.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Hexarelin (CAS 140703-51-1) is catalogued in PubChem under the synonym Examorelin (CID 6918297) with molecular formula C47H58N12O6.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Hexarelin is marketed online by peptide vendors with a broad list of purported human benefits -- faster recovery and hypertrophy, increased lipolysis, joint/tendon healing, improved sleep, cardioprotection, and bone/skin effects from 'multi-cycle use' -- none of which are supported by controlled human trial evidence located in this review; the only controlled human data available addresses acute growth-hormone pharmacodynamics, and the cardioprotection claim specifically originates from a rat ischemia/reperfusion study, not human outcomes data.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "In a dose-response study of intravenous hexarelin (0-1.0 micrograms/kg) in healthy adult men (Massoud et al. 1996, J Clin Endocrinol Metab), hexarelin produced dose-dependent increases in prolactin (up to 180% above baseline, ED50 0.39 micrograms/kg) and a step increase in cortisol of approximately 40% at doses of 0.5 micrograms/kg and above, in addition to growth hormone release. In a separate 16-week chronic twice-daily subcutaneous dosing study (Rahim et al. 1999, Clinical Endocrinology), the cortisol response to hexarelin decreased over the treatment course and prolactin levels remained stable, with the authors concluding that clinically significant over-stimulation of the pituitary-adrenal axis and prolactin secretion did not occur at the doses used. Taken together, hexarelin has demonstrated measurable acute effects on cortisol and prolactin beyond the GH axis, though the only located chronic-dosing study did not find clinically significant HPA-axis over-stimulation at the studied dose.",
+          "from": "Limited",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        }
+      ]
+    },
+    {
+      "compound": "Ibutamoren",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Ibutamoren (MK-677 / MK-0677) is a small-molecule, orally bioavailable ghrelin-receptor (growth hormone secretagogue receptor) agonist, not a peptide, with PubChem CID 178024 and molecular formula C27H36N4O5S.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "FDA lists ibutamoren mesylate on its Category 2 list of bulk drug substances that may present significant safety risks for compounding (added to the 503B list December 29, 2022 and the 503A list September 29, 2023), citing potential risk of congestive heart failure and referencing a randomized, placebo-controlled hip-fracture-recovery trial of ibutamoren mesylate that was terminated early for a possible CHF safety signal.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Ibutamoren is a non-peptide agonist at the ghrelin/growth hormone secretagogue receptor that increases pulsatile growth hormone secretion and downstream IGF-1 levels when administered orally.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In a 2-year, double-blind, randomized, placebo-controlled trial in 65 healthy adults aged 60-81, oral MK-677 25 mg/day significantly increased fat-free mass relative to placebo at 1 year (change +1.1 kg vs -0.5 kg, P<0.001) and increased body cell mass, but produced no significant change in abdominal visceral fat or total fat mass, and the increase in fat-free mass did not translate into improved strength or physical function.",
+          "from": "Moderate",
+          "to": "Contradicted",
+          "why": "Claim reports a negative or conflicting human finding."
+        },
+        {
+          "claim": "In the Nass et al. 2008 controlled trial of oral MK-677 25 mg/day in healthy older adults, MK-677 was associated with increased fasting blood glucose (+0.3 mmol/L, P=0.015) and decreased insulin sensitivity, increased body weight (+2.7 kg vs +0.8 kg placebo, P=0.003), elevated cortisol (+47 nmol/L, P=0.020), and the most frequent side effects were increased appetite (subsiding over months) and transient, mild lower-extremity edema and muscle pain.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "No ibutamoren product is FDA-approved for any indication, and vendor/clinic marketing commonly claims broad benefits - enhanced muscle protein synthesis, improved deep/REM sleep, faster recovery from workouts and surgery, youthful skin and hair, slower biological aging, fat loss, joint health, and elevated mood via serotonin/dopamine - that are not supported by the identified controlled human evidence, which comes from a single trial in older adults showing increased fat-free mass but no functional/strength benefit, adverse metabolic signals (higher fasting glucose, lower insulin sensitivity), and a separate FDA-flagged cardiac safety signal from an unrelated trial population.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "IGF-1 LR3",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "IGF-1 LR3 (Long-Arg3-IGF-I) is a synthetic 83-amino-acid analogue of human IGF-1 bearing an arginine substitution at position 3 and a 13-amino-acid N-terminal extension; these modifications reduce its affinity for IGF-binding proteins, contributing to a longer functional half-life and greater potency than native IGF-1 in preclinical models. FDA's Substance Registration System assigns it UNII M9L22Y19H9 with CAS 143045-27-6; commercial vendor chemical listings commonly cite a different CAS number (946870-92-4) for the same substance name, an identifier discrepancy that is unresolved.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "No FDA-approved drug product contains IGF-1 LR3, and IGF-1 LR3 does not appear on FDA's published Category 2 list of bulk drug substances presenting significant safety risks for compounding. The only FDA-approved IGF-1-based product, INCRELEX (mecasermin), is a chemically distinct molecule - recombinant human IGF-1 with an amino acid sequence identical to endogenous IGF-1, not the LR3 analogue - and is approved solely for growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or GH gene deletion with neutralizing antibodies to GH.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Severe hypoglycemia (including hypoglycemic seizures) is a labeled, mechanism-based risk of IGF-1 receptor agonism established for the FDA-approved parent molecule mecasermin (Increlex). A Finnish national anti-doping information service states that not all adverse effects of IGF-1 LR3 in humans have been characterized but are presumed similar to ordinary IGF-1, including severe hypoglycemia. No direct human safety data specific to IGF-1 LR3 itself were identified this session.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "In a 7-day continuous-infusion study in guinea pigs, LR3IGF-I (120 micrograms/day) significantly increased the fractional weight of adrenals, gut, kidneys and spleen, but overall body growth (weight gain, feed intake, feed conversion efficiency, carcass composition) was not significantly affected in any treatment group, including higher-dose native IGF-I or IGF-II. This is animal-model, non-human pharmacology data and must not be read as evidence of human muscle-growth, fat-loss, or performance benefit.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "No published human clinical trials of IGF-1 LR3 for any therapeutic or performance endpoint were identified, and ClinicalTrials.gov is reported to list no completed or active IGF-1 LR3 study. A Finnish national doping-information service similarly notes that scientific studies have only sporadically mentioned IGF abuse. The muscle-growth, fat-loss, hyperplasia, and recovery benefits attributed to IGF-1 LR3 in popular and commercial use rest on preclinical (rodent) mechanistic work and the unrelated Increlex pediatric-deficiency dataset, not on direct human evidence for these uses.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        },
+        {
+          "claim": "IGF-1 LR3 is commonly marketed online for 'anabolic' muscle-building effects and 'satellite cell activation and possible hyperplasia (creation of new muscle fibers),' with the underlying mechanism sourced by the marketing material itself only to preclinical rat studies, and with dosing ranges the same source describes as 'extrapolated from preclinical work, the Increlex clinical record, and decades of community reporting' rather than validated clinical evidence. These popular marketing claims are not supported by any identified human controlled trial. Anecdotal reports are not treated as established evidence.",
+          "from": "Limited",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        },
+        {
+          "claim": "IGF-1 and LR3IGF-1 are classified as doping substances under the Finnish Criminal Code according to Finland's national anti-doping information service. IGF-1 LR3 is understood to fall within the broader class of IGF-1-related growth factors restricted in competitive sport, but this specific finding is documented only for Finland; general WADA Prohibited List classification for IGF-1 analogues was not independently verified this session.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Kisspeptin-10",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Kisspeptin-10 is the minimal bioactive C-terminal decapeptide fragment of the KISS1 gene product (kisspeptin/metastin) and acts as an agonist at the KISS1R (GPR54) receptor, the key upstream activator of hypothalamic GnRH neurons in the hypothalamic-pituitary-gonadal (HPG) axis.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In its Pharmacy Compounding Advisory Committee briefing document, FDA concluded the evaluation criteria weigh against placing kisspeptin-10 on the 503A Bulks List, citing poor physicochemical characterization (impurity data not publicly available or provided in the certificate of analysis), potential immunogenicity risk from parenteral administration of a 10-amino-acid peptide (amplified by possible aggregation and peptide-related impurities), and insufficient evidence of effectiveness for treating hypogonadism in men via IM or SC administration.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "In a controlled human pharmacodynamic study in healthy men, intravenous kisspeptin-10 produced a rapid, dose-dependent rise in serum LH after bolus dosing (maximal effect at 1 microg/kg), and continuous low-dose infusion (1.5 microg/kg/h) increased LH pulse frequency and raised testosterone from 16.6 +/- 2.4 to 24.0 +/- 2.5 nmol/L; the authors describe this as evidence for its potential as a stimulator of endogenous reproductive hormone secretion, not as a demonstrated treatment for any diagnosed condition.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "No FDA-approved kisspeptin-10 product exists, and FDA's own compounding evaluation found insufficient evidence that kisspeptin-10 is effective for treating hypogonadism in men; the acute LH/testosterone-stimulating pharmacodynamic effects shown in short research-clinic infusion studies have not been shown to translate into a validated clinical treatment for hypogonadism, infertility, or libido disorders, and no chronic self-administration safety or efficacy data in gray-market users exist.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "Gray-market vendor pages market kisspeptin-10 with a broad set of consumer benefit claims -- fertility improvement, weight loss/fat metabolism, mood regulation and anxiety reduction, antidepressant-like effects, and cognitive/memory benefits -- that go well beyond anything shown in the small acute human LH-stimulation studies or acknowledged by FDA's compounding review; the same vendor page simultaneously disclaims the product as being for laboratory/research use only and states no claims are made that it can cure, treat, or prevent any condition. Anecdotal reports are not treated as established evidence.",
+          "from": "Limited",
+          "to": "Anecdotal Signal",
+          "why": "Support is user, community or case reports, not generalizable evidence."
+        },
+        {
+          "claim": "Kisspeptin-10 (human) is registered in PubChem as CID 25240297 with molecular formula C63H83N17O14, corresponding to the C-terminal 10-amino-acid fragment of the KISS1 gene product (metastin/kisspeptin), CAS number 374675-21-5.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "KPV",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "KPV (Lys-Pro-Val) is the C-terminal tripeptide fragment of alpha-melanocyte-stimulating hormone (alpha-MSH(11-13)), with PubChem CID 125672, CAS number 67727-97-3, and molecular formula C16H30N4O4.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "In vitro, nanomolar concentrations of KPV inhibit NF-kappaB and MAP kinase inflammatory signaling and reduce pro-inflammatory cytokine secretion in human intestinal epithelial cell lines and T cells, and KPV is taken up into cells via the peptide transporter PepT1.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); a second, independent 2008 study (Dalmasso et al., Inflammatory Bowel Diseases, PMID 18092346) corroborates similar anti-inflammatory effects of KPV in DSS-colitis and CD45RB-transfer-colitis mouse models, including significantly reduced myeloperoxidase activity and improved recovery. This is animal-model evidence only, not evidence of efficacy in humans.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "FDA lists KPV in the 'bulk drug substances nominated but withdrawn' table for 503A compounding evaluation, stating it has not identified any human exposure data for KPV administered via any route and lacks information on whether KPV would cause harm if administered to humans.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "No completed human clinical trials of KPV have been identified; published efficacy and mechanism evidence for KPV's anti-inflammatory effects is limited to animal (mouse) colitis and dermatitis models and in vitro human cell-line experiments, leaving human efficacy and safety for gut-health, skin, and general anti-inflammatory uses unestablished despite active consumer marketing of KPV for those uses.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Magnesium",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Maridebart cafraglutide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Mazdutide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Mecasermin",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Melatonin",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Ospemifene",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "Oxytocin",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": []
+    },
+    {
+      "compound": "PEG-MGF",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "PEG-MGF was nominated then withdrawn from FDA 503A bulk substance consideration; no FDA-approved product exists and FDA cites lack of human exposure data.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "In vitro studies of unpegylated MGF/MGF-E peptides conflict on muscle-cell effects; no human trial of commercial PEG-MGF was located.",
+          "from": "Insufficient",
+          "to": "Plausible Theory",
+          "why": "Only mechanistic or preclinical rationale found (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Pemvidutide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Pemvidutide is indexed as a GLP-1/glucagon dual agonist (DrugBank DB18998; UNII A35F525WBG).",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "A randomized, double-blind, placebo-controlled study reported effects of pemvidutide on MASLD (PubMed 39002641).",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Not FDA-approved for marketing as of this review.",
+          "from": "Limited",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        }
+      ]
+    },
+    {
+      "compound": "Pramlintide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Symlin (pramlintide acetate) labeling covers adjunctive use with mealtime insulin in type 1 and type 2 diabetes.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "Label carries boxed warning for severe insulin-associated hypoglycemia and contraindicates gastroparesis and hypoglycemia unawareness.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Weight-loss use outside diabetes is not an FDA-approved indication.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "RAD-150",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "RAD-150/TLB-150 benzoate is indexed as a chemical entity related to RAD140 (PubChem CID 68547459).",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "No published human clinical trial of RAD-150 was located; efficacy claims are vendor-sourced.",
+          "from": "Insufficient",
+          "to": "Hype Exceeds Evidence",
+          "why": "Claim describes promotional or online certainty beyond the cited evidence."
+        },
+        {
+          "claim": "FDA warns SARM bodybuilding products are unapproved and associated with life-threatening reactions including liver injury.",
+          "from": "Moderate",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "S-23",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "S-23 is indexed in PubChem (CID 67546346; CAS 1010396-29-8) as a SARM-class compound.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "FDA warns against SARM use; products are unapproved and linked to serious adverse events.",
+          "from": "Moderate",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        },
+        {
+          "claim": "Human data located are limited to anti-doping microdose excretion work rather than efficacy/safety trials at performance doses.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Selank",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Selank is indexed (PubChem CID 11765600; UNII TS9JR8EP1G; CAS 129954-34-3).",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "A Russian clinical study (PMID 18454096) compared selank with medazepam in GAD/neurasthenia (small sample; randomization/blinding details incompletely verified from abstract).",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "Not FDA-approved; bulk nomination withdrawn on FDA compounding safety page.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Semax",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Semax is indexed (PubChem CID 9811102; CAS 80714-61-0).",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "Russian clinical literature and a 2018 meta-analysis report stroke-related outcomes, but underlying trials are not uniformly modern double-blind international RCTs.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        },
+        {
+          "claim": "Not FDA-approved; bulk nomination withdrawn.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Setmelanotide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Imcivree (setmelanotide) is FDA-approved for specific rare genetic and acquired hypothalamic obesity indications.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Phase 3 open-label trials in POMC/PCSK1 and LEPR deficiency showed substantial proportions achieving >=10% weight loss; results are genotype-specific.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Label excludes common polygenic obesity.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Somatropin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "Genotropin and other somatropin products are FDA-approved for labeled pediatric and adult GHD-related indications.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Label carries serious warnings including critical-illness mortality and Prader-Willi risk contexts.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "Systematic review evidence in healthy athletes shows increased lean mass but minimal performance benefit with higher adverse events.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Anti-aging/bodybuilding use is not an FDA-approved indication and is subject to enforcement messaging.",
+          "from": "Moderate",
+          "to": "Established",
+          "why": "High-confidence regulatory or label fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Stenabolic",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "SR9009 is indexed in PubChem (CID 57394020) as a REV-ERB agonist research compound.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "Mouse studies (Nature 2012) reported metabolic and circadian effects of synthetic REV-ERB agonists including SR9009.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        },
+        {
+          "claim": "No published controlled human trial of SR9009 was located.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        },
+        {
+          "claim": "WADA prohibits SR9009 as a metabolic modulator.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Survodutide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Survodutide is a GCGR/GLP-1R dual agonist (DrugBank DB18989; PubChem CID 168429725).",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Phase 2 randomized trial evidence exists for body-weight reduction in overweight/obesity and for histologic MASH endpoints.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "Not FDA-approved; DailyMed search returned no approved label at evidence compilation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "VK2735",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "Phase 2 VENTURE (weekly subcutaneous VK2735) reported dose-dependent mean weight reductions up to about 14.7% over 13 weeks versus about 1.7% placebo in a peer-reviewed Obesity publication; confirmatory Phase 3 results were not incorporated as approved evidence.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        },
+        {
+          "claim": "VK2735 has no FDA-approved product label; DailyMed search returns no package labels.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        }
+      ]
+    },
+    {
+      "compound": "Vosilasarm",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "PubChem identifies vosilasarm with CID 44200882; aliases include RAD140/testolone.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        },
+        {
+          "claim": "FDA warning letter classifies RAD-140/Testolone bodybuilding products as unapproved new drugs and cites liver toxicity among SARM risks.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+        },
+        {
+          "claim": "First-in-human Phase 1 RAD140 study in metastatic breast cancer showed modest clinical benefit and frequent grade 3/4 AST/ALT elevations; not a bodybuilding efficacy basis.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Magnesium oxide",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral magnesium oxide dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin B12",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral cyanocobalamin dietary supplement.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin C",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral vitamin C dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Zinc sulfate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral zinc sulfate dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Ferrous sulfate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral ferrous sulfate dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Folic acid",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral folic acid tablet.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin B6",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral pyridoxine hydrochloride dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Riboflavin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for an oral riboflavin dietary supplement tablet.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Niacin",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for prescription extended-release niacin tablets.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Potassium chloride",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for prescription potassium chloride extended-release tablets.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Calcium carbonate",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "A DailyMed Tums Ultra label identifies calcium carbonate as an OTC antacid. It does not establish a bone or disease-treatment effect.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Potassium iodide",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for IOSAT potassium iodide tablets.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Phytonadione",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for prescription phytonadione tablets.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Acetylcysteine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A DailyMed label exists for acetylcysteine solution.",
+          "from": "Moderate",
+          "to": "Early Evidence",
+          "why": "Human evidence exists but is not settled (was Moderate)."
+        }
+      ]
+    },
+    {
+      "compound": "Atorvastatin",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Lipitor label supports labeled lipid-lowering use of atorvastatin.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Lisinopril",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Zestril label supports labeled antihypertensive and heart-failure use of lisinopril.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Omeprazole",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Prilosec label supports labeled acid-suppression use of omeprazole.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Sertraline",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Zoloft label supports labeled psychiatric uses of sertraline.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Ibuprofen",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Motrin IB label supports labeled temporary pain and fever use of OTC ibuprofen.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Acetaminophen",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The DailyMed Tylenol Regular Strength label supports labeled temporary pain and fever use and warns of liver injury.",
+          "from": "Strong",
+          "to": "Established",
+          "why": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ]
+    },
+    {
+      "compound": "Ashwagandha",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines ashwagandha supplementation for anxiety and stress.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Glycine",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses glycine supplementation for performance and recovery without establishing a recommendation.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Collagen peptides",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines collagen peptide supplementation for recovery-related outcomes.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Lion's mane",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review describes discussed health properties of Hericium erinaceus without establishing clinical benefit.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Rhodiola",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review covers Rhodiola traditional use, pharmacology, toxicity, and clinical studies.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "L-theanine",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis of randomized trials examines cognitive and affective effects of L-theanine.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin K2",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses vitamin K2 from a clinical perspective without establishing a supplement indication.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Biotin",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses biotin nutrition and therapeutic discussions without establishing a cosmetic indication.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "L-tyrosine",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed review examines tyrosine under stress or cognitive demand without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "L-tryptophan",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines L-tryptophan and mood without establishing a treatment recommendation.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "5-HTP",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses 5-HTP physiology and toxicology without establishing a treatment indication.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "SAMe",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines SAMe for central nervous system outcomes without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Glucosamine",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis evaluates glucosamine sulfate in knee osteoarthritis without establishing a personal recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Chondroitin",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis includes chondroitin sulfate in knee osteoarthritis regimens without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "MSM",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses MSM applications and safety without establishing a treatment indication.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Inositol",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses inositols without establishing a treatment recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Taurine",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines taurine and lipid or glycemic markers without establishing a treatment recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Turmeric",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed overview of systematic reviews examines curcumin-containing nutraceuticals without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Ginger",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed umbrella review examines orally consumed ginger without establishing a personal recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Garlic",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines garlic and cardiovascular discussions without establishing a treatment recommendation.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Elderberry",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines elderberry for viral respiratory illnesses without establishing a recommendation.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Echinacea",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines echinacea for upper respiratory infections without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Milk thistle",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines silymarin in NAFLD/NASH without establishing a treatment recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Saw palmetto",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines saw palmetto for lower urinary tract symptoms without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Black cohosh",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines black cohosh extracts for menopausal symptoms without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Valerian",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed umbrella review examines valerian for insomnia and does not establish efficacy.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "Ginkgo",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A Cochrane review examines Ginkgo biloba for cognitive impairment and dementia without establishing a personal recommendation.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    },
+    {
+      "compound": "St John's wort",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines St John's wort for major depressive disorder without establishing a personal recommendation.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Ginseng",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines ginseng and cognitive function without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Bacopa",
+      "overallFrom": "Early Evidence",
+      "overallTo": "Early Evidence",
+      "claims": [
+        {
+          "claim": "A PubMed systematic review examines human trials of Bacopa monnieri without establishing a recommendation.",
+          "from": "Limited",
+          "to": "Early Evidence",
+          "why": "Preliminary human evidence with documented limits (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Omega-3 fatty acids",
+      "overallFrom": "Plausible Theory",
+      "overallTo": "Plausible Theory",
+      "claims": [
+        {
+          "claim": "A PubMed meta-analysis examines omega-3 fatty acids in cardiovascular prevention without establishing a supplement recommendation.",
+          "from": "Limited",
+          "to": "Plausible Theory",
+          "why": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Choline",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses choline as an essential nutrient without establishing a supplement recommendation.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Pantothenic acid",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed scoping review examines pantothenic acid evidence without establishing a treatment recommendation.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Thiamine",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed clinical review discusses thiamine deficiency disorders without establishing an oral supplement plan.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Iodine",
+      "overallFrom": "Established",
+      "overallTo": "Established",
+      "claims": [
+        {
+          "claim": "The NIH ODS iodine fact sheet describes iodine as an essential component of thyroid hormones. It does not establish a personal supplement plan or a disease-treatment approval.",
+          "from": "Limited",
+          "to": "Established",
+          "why": "Regulatory or label fact backed by an authoritative source (was Limited)."
+        }
+      ]
+    },
+    {
+      "compound": "Selenium",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses selenium and human health without establishing a prevention recommendation.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin A",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses vitamin A deficiency and excessive intake without establishing a supplement plan.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Vitamin E",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "A PubMed review discusses vitamin E and cardiovascular disease without establishing a supplement recommendation.",
+          "from": "Unknown",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Unknown)."
+        }
+      ]
+    },
+    {
+      "compound": "Passionflower",
+      "overallFrom": "Unsupported",
+      "overallTo": "Unsupported",
+      "claims": [
+        {
+          "claim": "No passionflower-specific efficacy claim is established. Sleep and anxiety use is recorded as commonly discussed and unproven here.",
+          "from": "Insufficient",
+          "to": "Unsupported",
+          "why": "No adequate source-verified support found for the specific claim (was Insufficient)."
+        }
+      ]
+    }
+  ]
+}

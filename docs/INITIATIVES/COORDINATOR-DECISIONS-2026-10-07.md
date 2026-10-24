@@ -1,5 +1,9 @@
 # Coordinator Decisions — 2026-10-07
 
+> **Superseded in part, 2026-10-24.** Clinton Morgan is the sole owner, operator and decision
+> maker. Coordinator and reviewer-role approval steps no longer gate work; the AI council gate
+> (`docs/operations/ai-council-review.md`) with owner escalation replaces them.
+
 Coordinator-owned record. Owner delegated decision authority for the pairwise lane in session
 ("I authorize you to make the decision") and ratified amendment R2 ("Ratify R2").
 

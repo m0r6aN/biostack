@@ -192,9 +192,7 @@ public sealed class ResearchTaskQueueBuilder : IResearchTaskQueueBuilder
     private static bool IsPartialReviewState(ResearchSummaryCompound compound)
         => compound.Completeness.Equals("minimal", StringComparison.OrdinalIgnoreCase)
            || compound.Completeness.Equals("partial", StringComparison.OrdinalIgnoreCase)
-           || compound.OverallEvidenceTier.Equals("Unknown", StringComparison.OrdinalIgnoreCase)
-           || compound.OverallEvidenceTier.Equals("Insufficient", StringComparison.OrdinalIgnoreCase)
-           || compound.OverallEvidenceTier.Equals("Limited", StringComparison.OrdinalIgnoreCase)
+           || RecordEvidenceTiers.IsWeak(compound.OverallEvidenceTier)
            || compound.HasRequestedChanges;
 
     private static bool HasSourceExpansionSignal(ResearchSummaryCompound compound)

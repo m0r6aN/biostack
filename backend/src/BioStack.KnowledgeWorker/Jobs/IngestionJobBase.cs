@@ -129,9 +129,12 @@ public abstract class IngestionJobBase : IIngestionJob
             // with its review state instead of being skipped. Only archive/reject withholds.
             if (prepared.Entry.Details is not null)
             {
-                prepared.Entry.Details.ReviewStatus = gate.SkipReason == PromotionSkipReason.RequestChanges
-                    ? "changes-requested"
-                    : "pending-review";
+                prepared.Entry.Details.ReviewStatus = gate.SkipReason switch
+                {
+                    PromotionSkipReason.RequestChanges => "changes-requested",
+                    PromotionSkipReason.AwaitingOwner => "escalated-to-owner",
+                    _ => "pending-review",
+                };
             }
             context.IncrementPublishedPendingReview();
             context.Logger.LogInformation(
@@ -146,6 +149,13 @@ public abstract class IngestionJobBase : IIngestionJob
                 "[{Job}] SKIP (not promoted) '{Name}': {Reason}",
                 JobName, canonicalName, gate.SkipReasonText);
             return;
+        }
+        else if (gate.ApprovedBy is { } approver && prepared.Entry.Details is not null)
+        {
+            // Consensus approval from the two-reviewer AI council vs. an owner decision.
+            prepared.Entry.Details.ReviewStatus = approver.StartsWith("ai-council", StringComparison.OrdinalIgnoreCase)
+                ? "ai-council-reviewed"
+                : "reviewed";
         }
 
         if (prepared.Record.Ops.NeedsReview)

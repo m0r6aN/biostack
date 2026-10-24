@@ -1036,7 +1036,7 @@ public class ResearchEvidenceProcessingTests
         if (!needsReview)
         {
             draft["ops"]!["completeness"] = "complete";
-            draft["evidence"]!["overallTier"] = "Strong";
+            draft["evidence"]!["overallTier"] = "Established";
             draft["ops"]!["reviewReasons"] = new JsonArray();
         }
         return draft;

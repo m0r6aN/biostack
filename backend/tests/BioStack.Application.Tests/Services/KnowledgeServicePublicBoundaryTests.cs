@@ -21,7 +21,7 @@ public sealed class KnowledgeServicePublicBoundaryTests
 
         Assert.NotNull(result);
         Assert.Equal("Observed mechanism.", result.MechanismSummary);
-        Assert.Equal(EvidenceTier.Limited, result.EvidenceTier);
+        Assert.Equal(EvidenceTier.PlausibleTheory, result.EvidenceTier);
         Assert.Equal(new[] { "Source reference" }, result.SourceReferences);
         Assert.Equal(new[] { "Observed benefit" }, result.Benefits);
         Assert.Equal(new[] { "Reported caution" }, result.AvoidWith);
@@ -101,7 +101,7 @@ public sealed class KnowledgeServicePublicBoundaryTests
             Classification = CompoundCategory.Peptide,
             RegulatoryStatus = "Research",
             MechanismSummary = "Observed mechanism.",
-            EvidenceTier = EvidenceTier.Limited,
+            EvidenceTier = EvidenceTier.PlausibleTheory,
             SourceReferences = new List<string> { "Source reference" },
             Pathways = new List<string> { "Observed pathway" },
             Benefits = new List<string> { "Observed benefit" },

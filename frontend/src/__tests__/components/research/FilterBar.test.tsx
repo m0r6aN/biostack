@@ -28,14 +28,14 @@ describe('FilterBar', () => {
     expect(screen.getByText('Regulatory / Approval')).toBeInTheDocument();
   });
 
-  it('"More filters" expander is collapsed by default — Strong tier hidden', () => {
+  it('"More filters" expander is collapsed by default — Established tier hidden', () => {
     render(<FilterBar blockedCount={1} reviewCount={1} candidateCount={1} categories={categories} />);
-    expect(screen.queryByText('Strong')).not.toBeInTheDocument();
+    expect(screen.queryByText('Established')).not.toBeInTheDocument();
   });
 
   it('clicking "More filters" reveals evidence tier chips', () => {
     render(<FilterBar blockedCount={1} reviewCount={1} candidateCount={1} categories={categories} />);
     fireEvent.click(screen.getByText('More filters'));
-    expect(screen.getByText('Strong')).toBeInTheDocument();
+    expect(screen.getByText('Established')).toBeInTheDocument();
   });
 });

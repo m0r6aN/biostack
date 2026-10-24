@@ -207,11 +207,11 @@ public class CompoundGraphTests
                     subject: "AlphaCompound",
                     obj: "BetaCompound",
                     relationshipType: "synergy",
-                    sourceRefs: new[] { "src-forum-broscience-thread-001" },
+                    sourceRefs: new[] { "src-forum-hype-exceeds-evidence-thread-001" },
                     evidenceTier: "Limited",
                     confidence: "moderate"),
             },
-            packetSources: new[] { ("src-forum-broscience-thread-001", "D") });
+            packetSources: new[] { ("src-forum-hype-exceeds-evidence-thread-001", "D") });
 
             var registry = (JsonNode)new JsonObject { ["sources"] = new JsonArray() };
             var graph = builder.Build(
@@ -385,7 +385,7 @@ public class CompoundGraphTests
     }
 
     [Fact]
-    public void Builder_Emits_PopularStackInsufficientEvidence_Finding_For_BroScience_Pair()
+    public void Builder_Emits_PopularStackInsufficientEvidence_Finding_For_HypeExceedsEvidence_Pair()
     {
         var builder = new CompoundGraphBuilder(new RelationshipPacketAuthorizer());
         var packet = JsonNode.Parse(File.ReadAllText(
@@ -498,13 +498,13 @@ public class CompoundGraphTests
             subject: "AnecCompoundA",
             obj: "AnecCompoundB",
             relationshipType: "community-stack",
-            sourceRefs: new[] { "src-forum-broscience-thread-001" },
+            sourceRefs: new[] { "src-forum-hype-exceeds-evidence-thread-001" },
             evidenceTier: "Anecdotal",
             confidence: "low");
         var packet = BuildRelationshipPacket(
             packetId: "p-anecdotal",
             relationships: new[] { rel },
-            packetSources: new[] { ("src-forum-broscience-thread-001", "D") });
+            packetSources: new[] { ("src-forum-hype-exceeds-evidence-thread-001", "D") });
 
         var graph = builder.Build(new JsonArray(), Array.Empty<JsonNode>(), new[] { (JsonNode)packet }, null);
 

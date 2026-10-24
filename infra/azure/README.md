@@ -72,3 +72,7 @@ The included template leaves the Blob and Key Vault data-plane endpoints reachab
 ## Acceptance
 
 Repository builds prove configuration and wiring only. Before release, execute the session continuity procedure in `docs/operations/production-operations-runbook.md`: authenticate once, restart the serving API revision, verify the same cookie, allow the API to reach zero replicas, and verify the same cookie again after cold start.
+
+## Knowledge schedules (2026-10-24)
+
+`knowledge-schedules.bicep` deploys the scheduled KnowledgeWorker jobs: daily update planning, weekly discovery planning, daily Research compile, and a daily Refresh dry-run followed by an apply. The database connection string is a Key Vault reference resolved by a user-assigned identity; no secret is a parameter value. See `docs/operations/knowledge-schedules.md`.
