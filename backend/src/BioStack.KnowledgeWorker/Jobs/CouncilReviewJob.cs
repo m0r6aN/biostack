@@ -52,7 +52,14 @@ public sealed class CouncilReviewJob : ICouncilReviewJob
 
         var decisionDir = ResolveCwd(_council.DecisionDirectory);
         var index = LoadIndex(decisionDir);
-        var items = CouncilItemSelector.Select(seed, index, _council.MaxItemsPerRun);
+        // Discovered records (curated + auto-discovered drafts) are reviewed first so new
+        // compounds and therapies are not starved behind the 158-record seed.
+        var combined = BioStack.KnowledgeWorker.Discovery.DiscoveredRecordStore.Combine(seed, DiscoveryJob.DiscoveredDirectories(_worker));
+        var seedKeys = BioStack.KnowledgeWorker.Discovery.DiscoveredRecordStore.NameKeys(seed);
+        var ordered = new JsonArray(combined
+            .OrderBy(r => seedKeys.Contains(BioStack.KnowledgeWorker.Discovery.CandidateNames.Normalize(r?["identity"]?["canonicalName"]?.GetValue<string>())))
+            .Select(r => r?.DeepClone()).ToArray());
+        var items = CouncilItemSelector.Select(ordered, index, _council.MaxItemsPerRun);
         context.Logger.LogInformation("[CouncilReview] {Count} record(s) due; reviewers {A} and {B}.",
             items.Count, $"{reviewers[0].Provider}/{reviewers[0].Model}", $"{reviewers[1].Provider}/{reviewers[1].Model}");
 

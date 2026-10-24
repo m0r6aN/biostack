@@ -68,6 +68,13 @@ public enum RunMode
     /// owner escalations with distinct options, and a known-risk log of legal items.
     /// </summary>
     CouncilReview = 9,
+
+    /// <summary>
+    /// Database-free open discovery. Queries ClinicalTrials.gov v2, PubMed E-utilities, openFDA and
+    /// bioRxiv/medRxiv for compounds and therapies in the scope taxonomy, matches names and code names
+    /// against the corpus, and writes a report, a research-request batch and draft records.
+    /// </summary>
+    Discovery = 10,
 }
 
 public static class WorkerRunModePolicy
@@ -79,5 +86,6 @@ public static class WorkerRunModePolicy
             or RunMode.PromotionImportDryRun
             or RunMode.ProtocolIntelligenceEvaluation
             or RunMode.ResearchPlanning
-            or RunMode.CouncilReview;
+            or RunMode.CouncilReview
+            or RunMode.Discovery;
 }

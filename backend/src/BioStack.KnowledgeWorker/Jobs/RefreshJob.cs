@@ -36,6 +36,9 @@ public sealed class RefreshJob : IngestionJobBase, IRefreshJob
     protected override string JobName    => "RefreshJob";
     protected override string ChangeType => "refresh";
 
+    protected override IEnumerable<string> AdditionalRecordFiles()
+        => BioStack.KnowledgeWorker.Discovery.DiscoveredRecordStore.Files(DiscoveryJob.DiscoveredDirectories(Options));
+
     protected override PromotionGateDecision EvaluatePromotionGate(PreparedRecord prepared)
         => _promotionGate.Evaluate(prepared.Record.Identity.CanonicalName);
 }

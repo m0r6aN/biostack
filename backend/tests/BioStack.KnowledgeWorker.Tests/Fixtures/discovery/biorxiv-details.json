@@ -1,0 +1,9 @@
+{
+  "_comment": "Synthetic fixture in the shape of https://api.biorxiv.org/details/{server}/{from}/{to}/{cursor}/json (one page).",
+  "messages": [ { "status": "ok", "category": "all", "interval": "2026-10-17:2026-10-24", "cursor": 0, "count": 3, "total": "3" } ],
+  "collection": [
+    { "title": "Partial reprogramming with XRP-2041 restores visual acuity in aged primates", "doi": "10.1101/2026.10.20.000001", "date": "2026-10-20", "license": "cc_by", "category": "neuroscience", "abstract": "Yamanaka factor reprogramming in the retina.", "server": "bioRxiv" },
+    { "title": "Resistance Training Frequency and Muscle Hypertrophy: A Systematic Review", "doi": "10.64898/2026.10.07.26365015", "date": "2026-10-20", "license": "cc_by", "category": "sports medicine", "abstract": "Weekly training volume drives hypertrophy.", "server": "medRxiv" },
+    { "title": "Soil microbiome sequencing of ABC-123 samples", "doi": "10.1101/2026.10.21.000002", "date": "2026-10-21", "license": "cc_no", "category": "microbiology", "abstract": "Soil.", "server": "bioRxiv" }
+  ]
+}

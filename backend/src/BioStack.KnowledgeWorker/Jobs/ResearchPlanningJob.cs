@@ -32,8 +32,10 @@ public sealed class ResearchPlanningJob : IResearchPlanningJob
     {
         var seedPath = Resolve(_options.SeedFilePath);
         if (!File.Exists(seedPath)) return Task.FromResult(JobRunResult.Failure($"Seed not found at '{seedPath}'."));
-        var seed = JsonNode.Parse(File.ReadAllText(seedPath)) as JsonArray
+        var seedOnly = JsonNode.Parse(File.ReadAllText(seedPath)) as JsonArray
                    ?? throw new InvalidOperationException($"Expected seed JSON array at '{seedPath}'.");
+        // Discovered records count as corpus: they get update checks and are not re-requested.
+        var seed = BioStack.KnowledgeWorker.Discovery.DiscoveredRecordStore.Combine(seedOnly, DiscoveryJob.DiscoveredDirectories(_options));
 
         var watchlist = Array.Empty<DiscoveryCandidate>() as IReadOnlyList<DiscoveryCandidate>;
         if (!string.IsNullOrWhiteSpace(_options.ResearchDiscoveryWatchlistPath))

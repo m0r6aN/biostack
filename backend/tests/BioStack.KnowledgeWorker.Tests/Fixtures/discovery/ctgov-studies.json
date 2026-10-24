@@ -1,0 +1,185 @@
+{
+ "studies": [
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT06887881",
+     "briefTitle": "PIMS vs PGT-A in Infertile PCOS Patients"
+    },
+    "statusModule": {
+     "overallStatus": "RECRUITING",
+     "startDateStruct": {
+      "date": "2025-06-12"
+     },
+     "lastUpdatePostDateStruct": {
+      "date": "2026-04-02"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "First Affiliated Hospital, Sun Yat-Sen University"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "PGT-A",
+      "PCOS",
+      "PIMS"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "NA"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "type": "GENETIC",
+       "name": "PIMS screening"
+      },
+      {
+       "type": "GENETIC",
+       "name": "PGT-A screening"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT07290244",
+     "briefTitle": "Evaluating ER-100 for Safety in People With Glaucoma or Non-Arteritic Anterior Ischemic Optic Neuropathy (Optic Nerve Conditions)"
+    },
+    "statusModule": {
+     "overallStatus": "RECRUITING",
+     "startDateStruct": {
+      "date": "2026-03-02"
+     },
+     "lastUpdatePostDateStruct": {
+      "date": "2026-05-19"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Life Biosciences Inc."
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Open Angle Glaucoma (OAG)",
+      "NAION( Non-arteritic Anterior Ischemic Optic Neuropathy)"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "PHASE1"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "type": "GENETIC",
+       "name": "ER-100 epigenetic therapy",
+       "otherNames": [
+        "OSK epigenetic therapy",
+        "Investigational epigenetic therapy for optic neuropathies"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT07779694",
+     "briefTitle": "16-Hour Fasting Plus Serplulimab and CAPEOX as Neoadjuvant Therapy in pMMR/MSS Advanced Mid-to-Low Rectal Cancer"
+    },
+    "statusModule": {
+     "overallStatus": "NOT_YET_RECRUITING",
+     "startDateStruct": {
+      "date": "2026-10-01"
+     },
+     "lastUpdatePostDateStruct": {
+      "date": "2026-09-08"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Zhejiang University"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "pMMR/MSS",
+      "Locally Advanced Rectal Carcinoma",
+      "Fasting, Intermittent"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "PHASE2"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "type": "BEHAVIORAL",
+       "name": "16-Hour Fasting"
+      },
+      {
+       "type": "DRUG",
+       "name": "Serplulimab + chemotherapy"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT07403890",
+     "briefTitle": "Rewiring the Brain-Immune Axis for Chronic Pain Using Transcranial Magnetic Stimulation in Psoriatic Arthritis"
+    },
+    "statusModule": {
+     "overallStatus": "NOT_YET_RECRUITING",
+     "startDateStruct": {
+      "date": "2026-03-01"
+     },
+     "lastUpdatePostDateStruct": {
+      "date": "2026-02-11"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "NHS Greater Glasgow and Clyde"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Psoriatic Arthritis"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "NA"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "type": "DEVICE",
+       "name": "Active Repetitive Transcranial Magnetic Stimulation (rTMS)"
+      },
+      {
+       "type": "DEVICE",
+       "name": "Control Repetitive Transcranial Magnetic Stimulation (rTMS)"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

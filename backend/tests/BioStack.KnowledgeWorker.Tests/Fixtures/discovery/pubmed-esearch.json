@@ -1,0 +1,21 @@
+{
+ "header": {
+  "type": "esearch",
+  "version": "0.3"
+ },
+ "esearchresult": {
+  "count": "23",
+  "retmax": "20",
+  "retstart": "0",
+  "idlist": [
+   "42903654",
+   "42902597",
+   "42889249",
+   "42843337",
+   "42831032",
+   "42814954"
+  ],
+  "translationset": [],
+  "querytranslation": "\"obesity\"[Title] AND (\"phase 2\"[Title/Abstract] OR \"phase 3\"[Title/Abstract]) AND \"randomized\"[Title/Abstract] AND 2026/06/26:2026/10/24[Date - Publication]"
+ }
+}

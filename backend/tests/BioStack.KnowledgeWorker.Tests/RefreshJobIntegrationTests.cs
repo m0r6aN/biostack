@@ -147,6 +147,27 @@ public sealed class RefreshJobIntegrationTests : IDisposable
 
     // ── helpers ─────────────────────────────────────────────────────────────────
 
+    [Fact]
+    public async Task Refresh_Publishes_Discovered_Records_Alongside_The_Seed_Through_The_Gate()
+    {
+        // Owner report 2026-10-24 (ER-100 missing): records outside the seed must reach the site.
+        using var context = CreateDbContext();
+        SeedAuthSentinel(context, out _);
+        var curated = Path.Combine(TestPaths.BackendRoot(), "src", "BioStack.KnowledgeWorker", "Seeds", "discovered-records");
+        var options = new WorkerOptions { DryRun = false, SeedFilePath = _seedPath, MaxBatchSize = 50, CuratedDiscoveredRecordDirectory = curated };
+        var runContext = new IngestionContext(options, NullLogger.Instance);
+        var job = new RefreshJob(BuildPipeline(), new DatabaseKnowledgeSource(context), options,
+            new ReviewDecisionPromotionGate(BuildGateIndexApproving(PromotedName)));
+
+        var result = await job.RunAsync(runContext);
+
+        Assert.True(result.Success);
+        Assert.Equal(3, runContext.CreatedCount);
+        var er100 = Assert.Single(await context.KnowledgeEntries.AsNoTracking().Where(e => e.CanonicalName == "ER-100").ToListAsync());
+        Assert.Equal(BioStack.Domain.Enums.CompoundCategory.EpigeneticTherapy, er100.Classification);
+        Assert.Equal("pending-review", er100.Details!.ReviewStatus); // no council decision yet: published, labelled
+    }
+
     private RefreshJob BuildRefreshJob(BioStackDbContext context, bool DryRun, out IngestionContext runContext)
     {
         var pipeline = BuildPipeline();

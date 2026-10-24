@@ -32,6 +32,10 @@ public sealed class SubstanceCanonicalizerClassificationTests
     [InlineData("Biologic", CompoundCategory.Biologic)]
     [InlineData("Vitamin", CompoundCategory.Vitamin)]
     [InlineData("Mineral", CompoundCategory.Mineral)]
+    [InlineData("Gene Therapy", CompoundCategory.GeneTherapy)]
+    [InlineData("Epigenetic Therapy", CompoundCategory.EpigeneticTherapy)]
+    [InlineData("Cell Therapy", CompoundCategory.CellTherapy)]
+    [InlineData("Oligonucleotide", CompoundCategory.Oligonucleotide)]
     [InlineData("Other", CompoundCategory.Other)]
     public void MapClassification_MapsEverySchemaClassification(string schemaValue, CompoundCategory expected)
     {

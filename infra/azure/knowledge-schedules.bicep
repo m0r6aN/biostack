@@ -2,6 +2,7 @@ targetScope = 'resourceGroup'
 
 // Scheduled data tasks for the knowledge corpus (owner ruling 7, 2026-10-24).
 // All times are UTC cron. Defaults (America/New_York in parentheses, EDT/EST):
+//   discovery        daily  05:30 UTC (01:30 / 00:30)  open discovery: ClinicalTrials.gov, PubMed, openFDA, bioRxiv/medRxiv -> requests + draft records
 //   plan-updates     daily  06:00 UTC (02:00 / 01:00)  update checks for every existing entry past the stale window
 //   plan-discovery   weekly Mon 06:30 UTC              new-compound research from the discovery watchlist
 //   research         daily  07:00 UTC                  compile evidence packets into draft records + review queue
@@ -19,7 +20,7 @@ param location string = resourceGroup().location
 @description('Existing Container Apps managed environment resource ID.')
 param containerAppsEnvironmentId string
 
-@description('Immutable worker image: <acr login server>/<repo>@sha256:<64 hex>. Build with backend/Dockerfile.knowledgeworker.')
+@description('Immutable worker image: <acr login server>/<repo>@sha256:<64 hex>. Build with backend/KnowledgeWorker.Dockerfile.')
 param workerImage string
 
 @description('ACR login server, e.g. myacr.azurecr.io.')
@@ -34,6 +35,19 @@ param researchStorageName string
 @description('Key Vault secret URI (versionless) holding the Postgres connection string. Used by Refresh only.')
 param dbConnectionStringSecretUri string
 
+param discoveryCron string = '30 5 * * *'
+
+@description('NCBI E-utilities contact email (required by NCBI policy). PubMed discovery is skipped when empty.')
+param ncbiEmail string = ''
+
+@description('Optional Key Vault secret URI (versionless) for an NCBI API key (10 req/s instead of 3). Empty = no key.')
+param ncbiApiKeySecretUri string = ''
+
+@description('Optional Key Vault secret URI (versionless) for an openFDA API key (higher daily quota). Empty = no key.')
+param openFdaApiKeySecretUri string = ''
+
+@description('Days each discovery run looks back over.')
+param discoveryLookbackDays int = 30
 param planUpdatesCron string = '0 6 * * *'
 param planDiscoveryCron string = '30 6 * * 1'
 param researchCron string = '0 7 * * *'
@@ -82,6 +96,9 @@ var runtime = '/app/research-runtime'
 var common = [
   { name: 'DOTNET_ENVIRONMENT', value: 'Production' }
   { name: 'Worker__MaxBatchSize', value: string(maxBatchSize) }
+  { name: 'Worker__DiscoveredRecordDirectory', value: '${runtime}/discovered-records' }
+  // appsettings*.json is excluded from the image (.dockerignore), so every path is set here.
+  { name: 'Worker__CuratedDiscoveredRecordDirectory', value: 'Seeds/discovered-records' }
 ]
 var dbSecrets = [
   { name: 'db-conn-string', keyVaultUrl: dbConnectionStringSecretUri }
@@ -96,6 +113,35 @@ var planningEnv = [
   { name: 'Worker__ResearchPlanningOutputDirectory', value: '${runtime}/research-requests' }
   { name: 'Worker__ResearchUpdateCheckStaleDays', value: string(updateCheckStaleDays) }
 ]
+
+var discoverySecrets = concat(
+  empty(ncbiApiKeySecretUri) ? [] : [ { name: 'ncbi-api-key', keyVaultUrl: ncbiApiKeySecretUri } ],
+  empty(openFdaApiKeySecretUri) ? [] : [ { name: 'openfda-api-key', keyVaultUrl: openFdaApiKeySecretUri } ])
+var discoveryKeyEnv = concat(
+  empty(ncbiApiKeySecretUri) ? [] : [ { name: 'Discovery__NcbiApiKey', secretRef: 'ncbi-api-key' } ],
+  empty(openFdaApiKeySecretUri) ? [] : [ { name: 'Discovery__OpenFdaApiKey', secretRef: 'openfda-api-key' } ])
+
+module discovery './modules/knowledge-schedule-job.bicep' = {
+  name: '${deployment().name}-discovery'
+  params: {
+    name: '${baseName}-kw-discovery'
+    location: location
+    containerAppsEnvironmentId: containerAppsEnvironmentId
+    image: image
+    acrLoginServer: acrLoginServer
+    identityResourceId: identityResourceId
+    storageName: researchStorageName
+    cronExpression: discoveryCron
+    keyVaultSecrets: discoverySecrets
+    env: concat(common, [
+      { name: 'Worker__RunMode', value: 'Discovery' }
+      { name: 'Worker__ResearchPlanningOutputDirectory', value: '${runtime}/research-requests' }
+      { name: 'Discovery__OutputDirectory', value: '${runtime}/discovery' }
+      { name: 'Discovery__LookbackDays', value: string(discoveryLookbackDays) }
+      { name: 'Discovery__NcbiEmail', value: ncbiEmail }
+    ], discoveryKeyEnv)
+  }
+}
 
 module planUpdates './modules/knowledge-schedule-job.bicep' = {
   name: '${deployment().name}-plan-updates'
@@ -232,6 +278,7 @@ module refreshApply './modules/knowledge-schedule-job.bicep' = if (enableRefresh
 }
 
 output scheduledJobs array = concat([
+  discovery.outputs.jobName
   planUpdates.outputs.jobName
   planDiscovery.outputs.jobName
   research.outputs.jobName

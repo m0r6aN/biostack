@@ -46,6 +46,12 @@ public abstract class IngestionJobBase : IIngestionJob
     protected virtual PromotionGateDecision EvaluatePromotionGate(PreparedRecord prepared)
         => PromotionGateDecision.Approved;
 
+    /// <summary>
+    /// Record files ingested after the seed. SeedJob ingests the seed only; RefreshJob adds
+    /// discovered records (curated and auto-discovered), which still pass its promotion gate.
+    /// </summary>
+    protected virtual IEnumerable<string> AdditionalRecordFiles() => Array.Empty<string>();
+
     public async Task<JobRunResult> RunAsync(IngestionContext context, CancellationToken cancellationToken = default)
     {
         context.Logger.LogInformation(
@@ -56,6 +62,21 @@ public abstract class IngestionJobBase : IIngestionJob
         try
         {
             result = Pipeline.Run(Options.SeedFilePath);
+            var extraFiles = AdditionalRecordFiles().ToList();
+            if (extraFiles.Count > 0)
+            {
+                var accepted = result.Accepted.ToList();
+                var rejected = result.Rejected.ToList();
+                var names = new HashSet<string>(accepted.Select(a => BioStack.KnowledgeWorker.Discovery.CandidateNames.Normalize(a.Record.Identity.CanonicalName)));
+                foreach (var file in extraFiles)
+                {
+                    var extra = Pipeline.Run(file);
+                    accepted.AddRange(extra.Accepted.Where(a => names.Add(BioStack.KnowledgeWorker.Discovery.CandidateNames.Normalize(a.Record.Identity.CanonicalName))));
+                    rejected.AddRange(extra.Rejected);
+                }
+                context.Logger.LogInformation("[{Job}] Added {Count} discovered record file(s).", JobName, extraFiles.Count);
+                result = new PipelineResult(accepted, rejected);
+            }
         }
         catch (Exception ex)
         {

@@ -6,6 +6,7 @@ Owner ruling 7 (2026-10-24): every data task runs on a schedule, covering both r
 
 | Job | RunMode | Default cron (UTC) | New York time (EDT / EST) | Writes |
 |---|---|---|---|---|
+| `<base>-kw-discovery` | `Discovery` (open discovery) | `30 5 * * *` daily | 01:30 / 00:30 | `discovery/` report, `research-requests/`, `discovered-records/` |
 | `<base>-kw-plan-updates` | `ResearchPlanning` (updates only) | `0 6 * * *` daily | 02:00 / 01:00 | `research-requests/` on the share |
 | `<base>-kw-plan-discovery` | `ResearchPlanning` (discovery only) | `30 6 * * 1` Mondays | 02:30 / 01:30 | `research-requests/` |
 | `<base>-kw-research` | `Research` | `0 7 * * *` daily | 03:00 / 02:00 | `research-output/` (drafts, review queue, task queue) |
@@ -17,7 +18,9 @@ Owner ruling 7 (2026-10-24): every data task runs on a schedule, covering both r
 
 **Update checks.** Every entry whose `provenance.lastReviewedAt` is older than `Worker:ResearchUpdateCheckStaleDays` (default 30) gets a request, oldest first, up to `Worker:MaxBatchSize`. An entry is marked high priority when its overall grade is weak (Plausible Theory, Anecdotal Signal, Unsupported, Hype Exceeds Evidence, Contradicted or Not graded) or when its regulatory status is missing. With a cap of 50 and 158 entries, the whole corpus is covered every 4 days.
 
-**Discovery.** Every compound in the watchlist (`Seeds/discovery-watchlist.json`, or the copy on the share at `/app/research-runtime/discovery/watchlist.json`) that is not already in the corpus, matched by name or alias, gets a `discover-*` request. Edit the watchlist to steer research.
+**Open discovery.** `RunMode=Discovery` searches ClinicalTrials.gov, PubMed, openFDA and bioRxiv/medRxiv for new compounds and therapies in the scope taxonomy (`Seeds/discovery-scope.json`), writes draft records to `discovered-records/`, and Refresh and the council pick them up with no human step. See [`docs/biostack/discovery-runbook.md`](../biostack/discovery-runbook.md).
+
+**Watchlist.** Every compound in the watchlist (`Seeds/discovery-watchlist.json`, or the copy on the share at `/app/research-runtime/discovery/watchlist.json`) that is not already in the corpus, matched by name or alias, gets a `discover-*` request. Edit the watchlist to steer research.
 
 ## Worker loop (always-on or local)
 
@@ -30,7 +33,7 @@ Worker__RunMode=ResearchPlanning Worker__LoopEnabled=true Worker__RefreshInterva
 ## Deploy
 
 1. Build and push the image from the repo root:
-   `docker build -f backend/Dockerfile.knowledgeworker -t <acr>/biostack-knowledgeworker:<tag> .`
+   `docker build -f backend/KnowledgeWorker.Dockerfile -t <acr>/biostack-knowledgeworker:<tag> .`
    Then deploy it by digest.
 2. Create an Azure Files share and register it as Container Apps environment storage (`researchStorageName`).
 3. Seed the share:
@@ -40,6 +43,7 @@ Worker__RunMode=ResearchPlanning Worker__LoopEnabled=true Worker__RefreshInterva
 4. Create a user-assigned identity. Grant it **AcrPull** on the registry and **Key Vault Secrets User** on the vault.
 5. Store the Postgres connection string in Key Vault, for example as secret `db-conn-string`, and pass its versionless URI as `dbConnectionStringSecretUri`. The Bicep never takes the value itself.
 6. Store both council API keys in Key Vault and pass their versionless URIs as `councilReviewer0ApiKeySecretUri` / `councilReviewer1ApiKeySecretUri`, along with `councilReviewer{0,1}Provider` and `Model` (see `ai-council-review.md`).
-7. Deploy:
+7. Discovery (optional keys): pass `ncbiEmail` (required for PubMed; NCBI policy), and optionally `ncbiApiKeySecretUri` / `openFdaApiKeySecretUri` (versionless Key Vault URIs). Without `ncbiEmail` the discovery job runs ClinicalTrials.gov, openFDA and preprints only.
+8. Deploy:
    `az deployment group create -g <rg> -f infra/azure/knowledge-schedules.bicep -p baseName=… containerAppsEnvironmentId=… workerImage=… acrLoginServer=… identityResourceId=… researchStorageName=… dbConnectionStringSecretUri=…`
    Set `enableRefreshApply=false` to keep only the dry run.
