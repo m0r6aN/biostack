@@ -133,6 +133,8 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<ISourceAcquisitionRetentionJob, SourceAcquisitionRetentionJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
         services.AddScoped<IProtocolIntelligenceEvaluationJob, ProtocolIntelligenceEvaluationJob>();
+        services.AddScoped<IResearchPlanningJob>(sp => new ResearchPlanningJob(
+            sp.GetRequiredService<WorkerOptions>(), sp.GetRequiredService<IResearchArtifactValidator>()));
 
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();

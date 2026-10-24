@@ -26,10 +26,34 @@ public sealed class WorkerOptions
     public bool SeedOnStartup { get; set; } = true;
 
     /// <summary>
-    /// Retained for configuration-compatibility. The worker no longer runs a long-running loop;
-    /// schedule Refresh runs via Azure Container App Job cron instead.
+    /// Interval between passes when <see cref="LoopEnabled"/> is true. Azure Container App Job
+    /// cron (infra/azure/knowledge-schedules.bicep) is the production scheduler.
     /// </summary>
     public int RefreshIntervalHours { get; set; } = 24;
+
+    /// <summary>
+    /// When true the worker repeats its RunMode every <see cref="RefreshIntervalHours"/>
+    /// (or <see cref="LoopIntervalMinutes"/>) instead of exiting after one pass.
+    /// </summary>
+    public bool LoopEnabled { get; set; } = false;
+
+    /// <summary>Optional loop interval override in minutes (takes precedence over hours).</summary>
+    public int? LoopIntervalMinutes { get; set; }
+
+    /// <summary>RunMode=ResearchPlanning: include update checks for existing entries.</summary>
+    public bool ResearchPlanningIncludeUpdates { get; set; } = true;
+
+    /// <summary>RunMode=ResearchPlanning: include new-compound discovery from the watchlist.</summary>
+    public bool ResearchPlanningIncludeDiscovery { get; set; } = true;
+
+    /// <summary>An existing entry is due for an update check once its last review is older than this.</summary>
+    public int ResearchUpdateCheckStaleDays { get; set; } = 30;
+
+    /// <summary>Discovery watchlist (compounds to research that are not yet in the corpus).</summary>
+    public string? ResearchDiscoveryWatchlistPath { get; set; } = "Seeds/discovery-watchlist.json";
+
+    /// <summary>Where RunMode=ResearchPlanning writes research-request batches.</summary>
+    public string ResearchPlanningOutputDirectory { get; set; } = "research/research-requests/scheduled";
 
     /// <summary>
     /// Maximum number of substances processed per batch within a single job run.

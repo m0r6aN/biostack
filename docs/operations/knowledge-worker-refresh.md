@@ -20,7 +20,7 @@ This is a Clint-only, production-database operation — nobody else runs this ag
 
 This procedure is written for PowerShell, run from `D:\Repos\BioStack` on Windows, against
 the worker's own build output. It does not depend on a deployed Container App Job existing
-(none is currently defined in `infra/` — see the A1 promotion-state audit, §4) — it assumes
+(scheduled jobs are now defined in `infra/azure/knowledge-schedules.bicep` — see `docs/operations/knowledge-schedules.md`) — it assumes
 you run the worker binary directly against the production connection string.
 
 ## 0. Before you start

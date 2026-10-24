@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "discovery-watchlist",
+  "notes": [
+    "Compounds the scheduler should research that are not yet in the corpus. Names only: no claims.",
+    "Edit freely. Entries already in the corpus (by name or alias) are ignored."
+  ],
+  "entries": [
+    {
+      "compoundName": "Orforglipron",
+      "aliases": [
+        "LY3502970"
+      ],
+      "classification": "SmallMolecule",
+      "categories": [
+        "glp-1"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "Tesofensine",
+      "aliases": [
+        "NS2330"
+      ],
+      "classification": "SmallMolecule",
+      "categories": [
+        "weight-management"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "Pinealon",
+      "aliases": [
+        "EDR peptide"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "nootropic"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "SLU-PP-332",
+      "aliases": [],
+      "classification": "SmallMolecule",
+      "categories": [
+        "research-chemical"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "Bimagrumab",
+      "aliases": [
+        "BYM338"
+      ],
+      "classification": "Biologic",
+      "categories": [
+        "body-composition"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "Ecnoglutide",
+      "aliases": [
+        "XW003"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "glp-1"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "5-Amino-1MQ",
+      "aliases": [
+        "5-amino-1-methylquinolinium"
+      ],
+      "classification": "SmallMolecule",
+      "categories": [
+        "research-chemical"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    },
+    {
+      "compoundName": "Dihexa",
+      "aliases": [
+        "PNB-0408"
+      ],
+      "classification": "Peptide",
+      "categories": [
+        "nootropic"
+      ],
+      "rationale": "Watchlist: frequently discussed compound not yet in the BioStack corpus."
+    }
+  ]
+}

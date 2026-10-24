@@ -2,6 +2,7 @@
 
 !backend/
 !backend/NuGet.Config
+!backend/Directory.Build.props
 !backend/packages/
 !backend/packages/**
 !backend/src/
@@ -26,6 +27,8 @@
 !research/input/
 !research/input/sources/
 !research/input/sources/pilot-source-registry.json
+!research/review-decisions/
+!research/review-decisions/**
 
 **/.env
 **/.env.*
