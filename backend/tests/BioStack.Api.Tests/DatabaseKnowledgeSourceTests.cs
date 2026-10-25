@@ -152,6 +152,7 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
     [InlineData("middle alias")]
     [InlineData("last alias")]
     [InlineData("CANONICAL ALIAS TEST")]
+    [InlineData("canonical-alias-test")]
     public async Task GetCompoundAsync_FindsEntriesByCanonicalNameOrAlias(string lookup)
     {
         var entryId = Guid.NewGuid();

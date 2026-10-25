@@ -1,6 +1,12 @@
 import type { MetadataRoute } from 'next';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { compoundSitemapEntries, type SitemapCompound } from '@/lib/sitemapEntries';
 import { absoluteSiteUrl } from '@/lib/site';
+
+// Generated per request (cached for an hour) rather than at build time: the production build
+// runs without API access, which froze the sitemap at the 15 static routes and listed no
+// dossiers (growth spec O3).
+export const dynamic = 'force-dynamic';
 
 const STATIC_PATHS = [
   '',
@@ -20,34 +26,29 @@ const STATIC_PATHS = [
   '/tools/unit-converter',
 ];
 
-async function fetchCompoundPaths(): Promise<string[]> {
+async function fetchCompounds(): Promise<SitemapCompound[]> {
   try {
     const response = await fetch(`${getApiBaseUrl()}/api/v1/knowledge/compounds`, {
       next: { revalidate: 3600 },
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(8000),
     });
 
     if (!response.ok) {
       return [];
     }
 
-    const entries = (await response.json()) as Array<{ canonicalName?: string }>;
-
-    return entries
-      .map((entry) => entry.canonicalName)
-      .filter((name): name is string => Boolean(name && name.trim()))
-      .map((name) => `/knowledge/${encodeURIComponent(name)}`);
+    return (await response.json()) as SitemapCompound[];
   } catch {
-    // Sitemap generation is best-effort; static routes always ship.
+    // Best-effort; static routes always ship.
     return [];
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const compoundPaths = await fetchCompoundPaths();
+  const compounds = await fetchCompounds();
 
-  return [...STATIC_PATHS, ...compoundPaths].map((path) => ({
-    url: absoluteSiteUrl(path || '/'),
-    lastModified: new Date(),
-  }));
+  return [
+    ...STATIC_PATHS.map((path) => ({ url: absoluteSiteUrl(path || '/') })),
+    ...compoundSitemapEntries(compounds),
+  ];
 }

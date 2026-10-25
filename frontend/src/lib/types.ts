@@ -668,6 +668,8 @@ export interface KnowledgeEntry {
   incrementalEscalationSteps?: string[];
   /** Full record detail. Present on the single-compound read; null on the list read. */
   details?: KnowledgeEntryDetails | null;
+  /** Dossier URL slug (/knowledge/{slug}); added by the API in growth Phase 0. */
+  slug?: string;
 }
 
 export interface KnowledgeSourceRecord {

@@ -159,7 +159,7 @@ export function InputStage({
                 onChange={(event) => onInputTextChange(event.target.value)}
                 rows={16}
                 className="min-h-80 w-full resize-y rounded-lg border border-white/10 bg-[#0F141B] p-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
-                placeholder={`BPC-157 500mcg daily\nTB-500 500mcg daily\nNAD+ 100mg 2x weekly\n8 weeks on, 8 weeks off`}
+                placeholder="Paste or type your protocol: one compound per line, with the amount, frequency and cycle exactly as you have them written."
               />
             </label>
             <p className="mt-3 text-sm leading-6 text-white/52">
