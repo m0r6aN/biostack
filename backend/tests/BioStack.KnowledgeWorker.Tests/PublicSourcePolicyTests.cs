@@ -73,7 +73,7 @@ public sealed class PublicSourcePolicyTests
         var entry = new SubstanceCanonicalizer().ToKnowledgeEntry(record);
 
         Assert.NotEmpty(entry.SourceReferences);
-        Assert.Equal(record.Provenance.SourceRecords.Count, entry.SourceReferences.Count);
+        Assert.Equal(record.Provenance.SourceRecords.Count(s => PublicSourcePolicy.IsPublicCitable(s.Url, s.Publisher)), entry.SourceReferences.Count);
         Assert.DoesNotContain(entry.SourceReferences, url => url.Contains("revolutionhealth", StringComparison.OrdinalIgnoreCase));
     }
 

@@ -202,7 +202,7 @@ public sealed class PublicClaimTests
     {
         var sources = new Dictionary<string, SourceRecord>
         {
-            ["s1"] = new() { Id = "s1", Title = "T", Url = "https://example.org/a", SourceType = "paper" },
+            ["s1"] = new() { Id = "s1", Title = "T", Url = "https://pubmed.ncbi.nlm.nih.gov/1/", SourceType = "paper" },
         };
         var derived = ClaimVerdicts.FromTier(BioStack.Domain.Enums.EvidenceTiers.Parse(tier));
         var claim = new PublicClaim

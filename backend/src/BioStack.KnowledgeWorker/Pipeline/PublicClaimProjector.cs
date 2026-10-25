@@ -50,6 +50,7 @@ public static class PublicClaimProjector
         var resolved = claim.Sources
             .Where(sourcesById.ContainsKey)
             .Select(id => (id, s: sourcesById[id]))
+            .Where(x => PublicSourcePolicy.IsPublicCitable(x.s.Url, x.s.Publisher))
             .Select(x => new KnowledgeClaimSource
             {
                 Id = x.id,

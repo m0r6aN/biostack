@@ -1,5 +1,6 @@
 import type { ClaimVerdict, KnowledgePublicClaim } from '@/lib/types';
 import { formatAsOf, STATUS_COPY } from '@/lib/claimVerdicts';
+import { isAllowlistedSourceUrl } from '@/lib/outboundLinks';
 
 export { formatAsOf };
 
@@ -25,6 +26,8 @@ function safeHref(value: string): string | null {
   try {
     const url = new URL(value);
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    // 06 §B: only allowlisted source domains become outbound links.
+    if (!isAllowlistedSourceUrl(url.href)) return null;
     return url.href;
   } catch {
     return null;
