@@ -30456,10 +30456,68 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "No controlled human evidence establishes safety or efficacy of mecasermin/rhIGF-1 for adult anti-aging, muscle-building, fat-loss, or general wellness use."
+        "No controlled human evidence establishes safety or efficacy of mecasermin/rhIGF-1 for adult anti-aging, muscle-building, fat-loss, or general wellness use.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Bodybuilding vendor content promotes IGF-1-family peptides for hypertrophy with self-directed dosing that is outside labeled pediatric Increlex use."
+      ],
+      "publicClaims": [
+        {
+          "id": "mecasermin-igfd",
+          "statement": "Mecasermin treats growth failure from severe IGF-1 deficiency.",
+          "population": "children 2+ with severe primary IGF-1 deficiency",
+          "outcome": "growth",
+          "tier": "Established",
+          "qualifier": {
+            "population": "children 2+ with severe primary IGFD",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Increlex is FDA-approved for growth failure in children with severe primary IGF-1 deficiency or GH gene deletion with GH antibodies; it is not a substitute for GH.",
+          "sources": [
+            "dailymed-increlex"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-increlex"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "mecasermin-low-sugar-risk",
+          "statement": "IGF-1 injections carry little low-blood-sugar risk.",
+          "population": "people using IGF-1",
+          "outcome": "hypoglycemia",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns of severe hypoglycemia, including seizures, from its insulin-like effects, and says to give it around a meal.",
+          "sources": [
+            "dailymed-increlex"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-increlex"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30470,7 +30528,8 @@
           "publisher": "U.S. National Library of Medicine / DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a8b27a1b-a611-4f91-ad22-76d4b390c3ae",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-increlex"
         },
         {
           "sourceType": "other",
@@ -31116,10 +31175,68 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "No oxytocin product is FDA-approved for bonding, trust, social cognition, anxiety, or wellness; largest controlled intranasal ASD trial did not show significant primary social benefit."
+        "No oxytocin product is FDA-approved for bonding, trust, social cognition, anxiety, or wellness; largest controlled intranasal ASD trial did not show significant primary social benefit.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Telehealth and compounding marketing of intranasal oxytocin as a love/bonding hormone exceeds labeled evidence and the negative pediatric ASD RCT."
+      ],
+      "publicClaims": [
+        {
+          "id": "oxytocin-labor",
+          "statement": "Oxytocin (Pitocin) is used to start or strengthen labor for medical reasons.",
+          "population": "pregnant people with medical reasons for induction",
+          "outcome": "uterine contractions",
+          "tier": "Established",
+          "qualifier": {
+            "population": "pregnant people with a medical indication",
+            "outcome": "labeled obstetric use"
+          },
+          "note": "Yes, under hospital care. Pitocin is labeled for medically indicated induction and to control bleeding after delivery; it is not indicated for elective induction.",
+          "sources": [
+            "dailymed-pitocin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-pitocin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "oxytocin-autism-social",
+          "statement": "Oxytocin nasal spray improves social skills in autism.",
+          "population": "children and teens with autism",
+          "outcome": "social functioning",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. A 24-week placebo-controlled trial of 290 children and teens found no difference in social or cognitive measures.",
+          "sources": [
+            "sikich-2021-nejm-oxytocin-autism"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "sikich-2021-nejm-oxytocin-autism"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31130,7 +31247,8 @@
           "publisher": "DailyMed / U.S. Food and Drug Administration",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-pitocin"
         },
         {
           "sourceType": "paper",
@@ -31138,7 +31256,8 @@
           "publisher": "New England Journal of Medicine",
           "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2103583",
           "publishedAt": "2021-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "nejm-sikich-2021-oxytocin-autism"
         },
         {
           "sourceType": "other",
@@ -31147,6 +31266,15 @@
           "url": "https://go.drugbank.com/drugs/DB00107",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Intranasal Oxytocin in Children and Adolescents with Autism Spectrum Disorder (N Engl J Med 2021)",
+          "publisher": "The New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34644471/",
+          "publishedAt": "2021-10-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "sikich-2021-nejm-oxytocin-autism"
         }
       ],
       "curationNotes": [
@@ -31972,10 +32100,68 @@
       ],
       "evidenceGaps": [
         "Current US market availability of branded Symlin presentations may be limited/discontinued even though historical approval remains documented.",
-        "Controlled evidence for non-diabetic weight-loss use is weaker than glycemic adjunct evidence."
+        "Controlled evidence for non-diabetic weight-loss use is weaker than glycemic adjunct evidence.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Telehealth marketing sometimes frames pramlintide as a general weight-loss drug despite absence of an FDA weight-loss indication."
+      ],
+      "publicClaims": [
+        {
+          "id": "pramlintide-mealtime",
+          "statement": "Pramlintide helps control mealtime blood sugar with insulin.",
+          "population": "adults with type 1 or type 2 diabetes using mealtime insulin",
+          "outcome": "glycemic control",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults using mealtime insulin",
+            "outcome": "adjunct glycemic control"
+          },
+          "note": "Yes. Symlin is labeled as an add-on to mealtime insulin in type 1 and type 2 diabetes.",
+          "sources": [
+            "dailymed-symlinpen-label"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-symlinpen-label"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "pramlintide-weight-loss",
+          "statement": "Pramlintide is a safe weight-loss shot.",
+          "population": "people without diabetes seeking weight loss",
+          "outcome": "approval and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It is not approved for weight loss, and the boxed warning covers severe hypoglycemia when used with insulin.",
+          "sources": [
+            "dailymed-symlinpen-label"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-symlinpen-label"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31986,7 +32172,8 @@
           "publisher": "U.S. FDA / DailyMed (NLM)",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4aea30ff-eb0d-45c1-b114-3127966328ff",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-symlinpen-label"
         },
         {
           "sourceType": "paper",
@@ -33355,10 +33542,68 @@
       ],
       "evidenceGaps": [
         "Efficacy outside labeled genotypes/acquired hypothalamic obesity is not established.",
-        "Gray-market research peptides are not approved Imcivree."
+        "Gray-market research peptides are not approved Imcivree.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Research-chemical vendors cite rare-disease responder rates while selling material for general weight-loss curiosity, misaligning evidence scope with marketing."
+      ],
+      "publicClaims": [
+        {
+          "id": "setmelanotide-rare-obesity",
+          "statement": "Setmelanotide treats certain rare genetic and hypothalamic forms of obesity.",
+          "population": "people with POMC, PCSK1 or LEPR deficiency, Bardet-Biedl syndrome or acquired hypothalamic obesity",
+          "outcome": "weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "patients with labeled genetic or hypothalamic obesity",
+            "outcome": "weight reduction"
+          },
+          "note": "Yes, for those groups. Imcivree is FDA-approved to reduce and maintain lower weight in these specific conditions.",
+          "sources": [
+            "dailymed-imcivree"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-imcivree"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "setmelanotide-common-obesity",
+          "statement": "Setmelanotide works for ordinary obesity.",
+          "population": "people with common (polygenic) obesity",
+          "outcome": "weight loss",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The label says it is not indicated for general obesity because it would not be expected to work.",
+          "sources": [
+            "dailymed-imcivree"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "dailymed-imcivree"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -33369,7 +33614,8 @@
           "publisher": "DailyMed / U.S. NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70c3ccf7-4df0-4c75-ba07-fede9970c8d9",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-imcivree"
         },
         {
           "sourceType": "regulator",
@@ -33377,7 +33623,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/news-events-human-drugs/fda-approves-first-treatment-weight-management-people-certain-rare-genetic-conditions",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-imcivree-approval"
         },
         {
           "sourceType": "paper",
@@ -33385,7 +33632,8 @@
           "publisher": "Lancet Diabetes & Endocrinology / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/33137293/",
           "publishedAt": "2020-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-33137293"
         }
       ],
       "curationNotes": [
@@ -33674,7 +33922,8 @@
           "tier": "Early Evidence",
           "confidence": "high",
           "sources": [
-            "dare-liu2008"
+            "dare-liu2008",
+            "liu-2008-annintmed-gh-athletic"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -33692,10 +33941,68 @@
       ],
       "evidenceGaps": [
         "Product labels differ across brands and indications.",
-        "Long-term mortality epidemiology (SAGhE follow-up) requires reading primary literature alongside current FDA communications."
+        "Long-term mortality epidemiology (SAGhE follow-up) requires reading primary literature alongside current FDA communications.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Longevity clinics and gray-market sellers promote HGH as a fountain of youth despite lack of FDA approval for anti-aging and evidence of adverse effects in healthy adults."
+      ],
+      "publicClaims": [
+        {
+          "id": "somatropin-ghd",
+          "statement": "Growth hormone treats growth hormone deficiency.",
+          "population": "children and adults with GH deficiency or labeled growth disorders",
+          "outcome": "growth and GH replacement",
+          "tier": "Established",
+          "qualifier": {
+            "population": "children and adults with labeled indications",
+            "outcome": "GH replacement and growth"
+          },
+          "note": "Yes. Genotropin is FDA-approved for childhood growth failure from GH deficiency and other labeled conditions, and for adult GH deficiency.",
+          "sources": [
+            "dailymed-genotropin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-genotropin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "somatropin-athletic",
+          "statement": "HGH improves athletic performance.",
+          "population": "healthy young athletes",
+          "outcome": "strength and exercise capacity",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not supported. A systematic review of trials in fit young adults found more lean mass (about 2 kg) but no clear gain in strength or exercise capacity, plus more swelling and fatigue.",
+          "sources": [
+            "liu-2008-annintmed-gh-athletic"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "liu-2008-annintmed-gh-athletic"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -33706,7 +34013,8 @@
           "publisher": "DailyMed / U.S. NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-genotropin"
         },
         {
           "sourceType": "regulator",
@@ -33714,7 +34022,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/cms_ia/importalert_204.html",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-import-alert-hgh"
         },
         {
           "sourceType": "other",
@@ -33722,7 +34031,8 @@
           "publisher": "NCBI Bookshelf / DARE",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK75460/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dare-liu2008"
         },
         {
           "sourceType": "paper",
@@ -33731,6 +34041,15 @@
           "url": "https://pubmed.ncbi.nlm.nih.gov/32707116/",
           "publishedAt": "2020-01-01T00:00:00Z",
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Systematic review: the effects of growth hormone on athletic performance (Ann Intern Med 2008)",
+          "publisher": "Annals of Internal Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18347346/",
+          "publishedAt": "2008-05-20T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "liu-2008-annintmed-gh-athletic"
         }
       ],
       "curationNotes": [
@@ -37944,20 +38263,49 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for prescription potassium chloride extended-release tablets.",
-          "tier": "Early Evidence",
+          "claim": "Prescription extended-release potassium chloride is labeled for treating and preventing low potassium, with warnings for hyperkalemia and gastrointestinal injury.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
             "src:potassium-chloride"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25 to state what the label covers."
         }
       ],
       "evidenceGaps": [
-        "This record does not establish who has hypokalemia or how serum potassium should be followed."
+        "This record does not establish who has hypokalemia or how serum potassium should be followed.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "potassium-chloride-harmless",
+          "statement": "Extra potassium supplements are harmless.",
+          "population": "people taking potassium salts",
+          "outcome": "hyperkalemia and cardiac arrest",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns potassium salts can cause potentially fatal high potassium and cardiac arrest, especially with kidney disease, and are contraindicated when potassium is already high.",
+          "sources": [
+            "dailymed-klor-con"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-klor-con"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -37967,7 +38315,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9d3f1972-8ff0-4fc5-86b4-daeb2ba83fb4",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-klor-con"
         }
       ],
       "curationNotes": [
@@ -38225,10 +38574,68 @@
         }
       ],
       "evidenceGaps": [
-        "Bone outcomes and person-specific upper limits are not established by this label-based record."
+        "Bone outcomes and person-specific upper limits are not established by this label-based record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Antacid labeling and dietary-supplement labeling are often conflated."
+      ],
+      "publicClaims": [
+        {
+          "id": "calcium-carbonate-heartburn",
+          "statement": "Calcium carbonate relieves heartburn.",
+          "population": "adults with heartburn or acid indigestion",
+          "outcome": "symptom relief",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults",
+            "outcome": "temporary heartburn relief"
+          },
+          "note": "Yes. Tums is an OTC antacid labeled for heartburn, acid indigestion and sour stomach.",
+          "sources": [
+            "dailymed-tums"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-tums"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "calcium-carbonate-fractures",
+          "statement": "Calcium supplements prevent fractures in healthy adults.",
+          "population": "community-dwelling adults",
+          "outcome": "fractures",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The USPSTF found low-dose calcium with vitamin D does not prevent fractures in postmenopausal women, evidence is insufficient for others and for higher doses, and supplementation raises kidney-stone risk.",
+          "sources": [
+            "uspstf-2018-jama-vitd-calcium-fractures"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "uspstf-2018-jama-vitd-calcium-fractures"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -38239,7 +38646,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f4786707-a0f7-4ba8-9656-06278d1b4b6c",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-tums"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Vitamin D, Calcium, or Combined Supplementation for the Primary Prevention of Fractures in Community-Dwelling Adults: USPSTF Recommendation Statement (JAMA 2018)",
+          "publisher": "JAMA (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29677309/",
+          "publishedAt": "2018-04-17T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "uspstf-2018-jama-vitd-calcium-fractures"
         }
       ],
       "curationNotes": [
@@ -38490,21 +38907,79 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for IOSAT potassium iodide tablets.",
-          "tier": "Early Evidence",
+          "claim": "IOSAT potassium iodide is an OTC thyroid-blocking drug for nuclear radiation emergencies; it protects only the thyroid from radioactive iodine.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
             "src:potassium-iodide"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25 to state what the label covers."
         }
       ],
       "evidenceGaps": [
-        "This record does not establish routine dietary iodine needs or who should avoid iodide."
+        "This record does not establish routine dietary iodine needs or who should avoid iodide.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Radiation-emergency labeling is often misread as ordinary supplement guidance."
+      ],
+      "publicClaims": [
+        {
+          "id": "potassium-iodide-thyroid",
+          "statement": "Potassium iodide protects the thyroid in a nuclear emergency.",
+          "population": "people exposed to radioactive iodine",
+          "outcome": "thyroid uptake of radioactive iodine",
+          "tier": "Established",
+          "qualifier": {
+            "population": "people in a radiation emergency, as directed by officials",
+            "outcome": "thyroid blocking"
+          },
+          "note": "Yes, when public officials advise it. The label says it helps keep radioactive iodine out of the thyroid.",
+          "sources": [
+            "dailymed-iosat"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-iosat"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "potassium-iodide-all-radiation",
+          "statement": "Potassium iodide protects you from radiation in general.",
+          "population": "people in a radiation emergency",
+          "outcome": "protection from radiation",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label says KI protects only the thyroid from radioactive iodine and must be used with other emergency measures.",
+          "sources": [
+            "dailymed-iosat"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-iosat"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -38515,7 +38990,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=bab815ee-47ef-4c87-a60d-e0d7863ad871",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-iosat"
         }
       ],
       "curationNotes": [
@@ -38765,20 +39241,52 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for prescription phytonadione tablets.",
-          "tier": "Early Evidence",
+          "claim": "Prescription phytonadione tablets are labeled for adult coagulation disorders caused by vitamin K deficiency or interference, including anticoagulant-induced prothrombin deficiency.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
             "src:phytonadione"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25 to state what the label covers."
         }
       ],
       "evidenceGaps": [
-        "Dietary vitamin K2 and prescription vitamin K1 are different objects. This record does not transfer evidence between them."
+        "Dietary vitamin K2 and prescription vitamin K1 are different objects. This record does not transfer evidence between them.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "phytonadione-clotting",
+          "statement": "Vitamin K (phytonadione) treats clotting problems from vitamin K deficiency or warfarin-type drugs.",
+          "population": "adults with vitamin K-related coagulation disorders",
+          "outcome": "clotting factor formation",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with vitamin K-related coagulation disorders",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. The label covers clotting disorders from vitamin K deficiency or interference, including those caused by anticoagulants that block vitamin K.",
+          "sources": [
+            "dailymed-phytonadione"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-phytonadione"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -38788,7 +39296,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=66ada4f8-c5a9-49f1-848f-e172416892a1",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-phytonadione"
         }
       ],
       "curationNotes": [
@@ -39041,21 +39550,53 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for acetylcysteine solution.",
-          "tier": "Early Evidence",
+          "claim": "Acetylcysteine solution is labeled for inhalation as a mucolytic and for oral use as an acetaminophen-overdose antidote.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
             "src:acetylcysteine"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25 to state what the label covers."
         }
       ],
       "evidenceGaps": [
-        "Dietary-supplement NAC and the labeled drug are not shown to be interchangeable by this record."
+        "Dietary-supplement NAC and the labeled drug are not shown to be interchangeable by this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Supplement marketing of NAC is a separate regulatory controversy and is not resolved here."
+      ],
+      "publicClaims": [
+        {
+          "id": "acetylcysteine-uses",
+          "statement": "Acetylcysteine is an approved antidote for acetaminophen overdose and thins mucus.",
+          "population": "people with acetaminophen overdose or thick airway mucus",
+          "outcome": "antidote and mucolytic use",
+          "tier": "Established",
+          "qualifier": {
+            "population": "patients under medical care",
+            "outcome": "labeled antidote and mucolytic uses"
+          },
+          "note": "Yes. The prescription solution is labeled for inhaled use to loosen thick mucus and for oral use as an acetaminophen antidote under medical care.",
+          "sources": [
+            "dailymed-acetylcysteine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-acetylcysteine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -39066,7 +39607,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5558a5f5-e821-473b-7d8a-5d33d09f0586",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-acetylcysteine"
         }
       ],
       "curationNotes": [
@@ -40503,9 +41045,67 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not restate age, pregnancy, duration, or dose limits from the label."
+        "This record does not restate age, pregnancy, duration, or dose limits from the label.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "ibuprofen-pain-fever",
+          "statement": "OTC ibuprofen relieves minor pain and fever.",
+          "population": "adults and children 12+",
+          "outcome": "temporary pain and fever relief",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults and children 12+",
+            "outcome": "temporary minor pain and fever"
+          },
+          "note": "Yes. The Motrin IB label covers temporary relief of minor aches, pains and fever.",
+          "sources": [
+            "dailymed-motrin-ib"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-motrin-ib"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ibuprofen-harmless",
+          "statement": "Ibuprofen is harmless for your stomach and heart.",
+          "population": "people using OTC ibuprofen",
+          "outcome": "stomach bleeding and cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns NSAIDs can cause severe stomach bleeding and raise the risk of heart attack, heart failure and stroke, especially above or longer than directed.",
+          "sources": [
+            "dailymed-motrin-ib"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-motrin-ib"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -40515,7 +41115,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d21129f8-4d96-4e36-bc39-a534306dd77e",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-motrin-ib"
         }
       ],
       "curationNotes": [
@@ -40787,9 +41388,67 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not restate maximum daily amounts, alcohol warnings, or product-combination rules."
+        "This record does not restate maximum daily amounts, alcohol warnings, or product-combination rules.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "acetaminophen-pain-fever",
+          "statement": "Acetaminophen relieves minor pain and fever.",
+          "population": "adults and children 12+",
+          "outcome": "temporary pain and fever relief",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults and children 12+",
+            "outcome": "temporary minor pain and fever"
+          },
+          "note": "Yes. The Tylenol label covers temporary relief of minor aches, pains and fever.",
+          "sources": [
+            "dailymed-tylenol"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-tylenol"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "acetaminophen-any-amount",
+          "statement": "Acetaminophen is safe in any amount or with daily drinking.",
+          "population": "people using OTC acetaminophen",
+          "outcome": "liver damage",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns of severe liver damage above the daily maximum, with other acetaminophen products, or with three or more alcoholic drinks a day.",
+          "sources": [
+            "dailymed-tylenol"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-tylenol"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -40799,7 +41458,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1622f694-4d63-4c56-8737-fae31f0ecfb7",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-tylenol"
         }
       ],
       "curationNotes": [
