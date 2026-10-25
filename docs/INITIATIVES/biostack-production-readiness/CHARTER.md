@@ -1,5 +1,7 @@
 # Initiative Charter
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 ## Mission
 
 Prove BioStack can accept free, paid, and provider users safely and operably in production, with truthful packaging, governed customer data, recoverable operations, and evidence-backed release gates.
@@ -14,7 +16,7 @@ Annual billing, new clinical/prescriptive features, unsupported AI claims, unrel
 
 ## Success criteria
 
-Every blocking scenario passes in its required environment; security and release gates pass; human approvals are recorded; rollback is rehearsed; evidence is indexed; the release owner records GO.
+Every blocking scenario passes in its required environment; security and release gates pass; the AI council has reviewed content and Clint has signed off; rollback is rehearsed; evidence is indexed; Clint records GO.
 
 ## Stop conditions
 

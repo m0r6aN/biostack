@@ -1,5 +1,7 @@
 # BioStack go-live status
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 Initiative: `biostack-go-live`
 Coordinator session: 2026-10-14 resume 4
 Repository pin: `origin/main@9550964256d507d03b789df8f0eb4c448a6f7ac8` (PR #545). Local branch `docs/go-live-library-record` is `5b686e69536f2eedf0195ee77466f20b08a490d8`, plus uncommitted coordinator records. Four implementation branches are local only and are not on `main`.
@@ -97,7 +99,7 @@ Launch ledger Lane 2 records one authorized $12 Operator charge on 2026-08-28 (i
 1. Legal: no qualified professional has approved terms, privacy, or subscription policy. Launch jurisdictions are not named in an approval record.
 2. Money: no acquisition or operating budget is approved. Any new spend needs a decision.
 3. Production: Refresh, deploy, secret rotation, backup drills, and live billing changes are Clint-only. This session will not perform them.
-4. Release verdict: only the production-readiness release owner may change that initiative's NO-GO. This file does not.
+4. Release verdict: only Clinton Morgan changes the NO-GO. Current gates: `docs/launch-readiness-ledger.md`. This file does not change it.
 
 ## Costs this session
 
