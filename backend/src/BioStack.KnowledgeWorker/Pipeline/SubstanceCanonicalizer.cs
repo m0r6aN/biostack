@@ -198,7 +198,8 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
                 Context = d.Context ?? string.Empty, Amount = d.Amount, Unit = d.Unit, Frequency = d.Frequency,
                 Duration = d.Duration ?? string.Empty, Route = d.Route ?? string.Empty,
                 Population = d.Population ?? string.Empty, Outcome = d.Outcome ?? string.Empty,
-                SourceType = d.SourceType, SourceTitle = d.SourceTitle, SourceUrl = d.SourceUrl,
+                SourceType = d.SourceType, SourceTitle = d.SourceTitle,
+                SourceUrl = PublicSourcePolicy.IsAllowlistedHost(d.SourceUrl) ? d.SourceUrl ?? string.Empty : string.Empty,
                 RetrievedAt = d.RetrievedAt, Grade = d.Grade, Notes = d.Notes ?? string.Empty,
             }).ToList(),
             LabelDosing = r.DosingGuidance.Select(g => new KnowledgeLabelDose
