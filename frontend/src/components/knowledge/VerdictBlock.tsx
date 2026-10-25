@@ -5,6 +5,7 @@ import type { KnowledgeEntry } from '@/lib/types';
 import { displayVerdict, formatAsOf, headlineClaim, isPublished, shareText } from '@/lib/claimVerdicts';
 import { HYPE_METHOD_HREF, VerdictChip } from './PublicClaimsPanel';
 import { cardImageUrl } from '@/lib/verdictCard';
+import { iframeSnippet } from '@/lib/embed';
 import { compoundSlug } from '@/lib/compoundSlug';
 
 export const VERDICT_FOOTNOTE = 'A verdict describes the research, not what\u2019s right for you.';
@@ -19,6 +20,7 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
   const headline = headlineClaim(claims);
   const [shared, setShared] = useState('');
   const [copied, setCopied] = useState(false);
+  const [embedCopied, setEmbedCopied] = useState(false);
   if (!headline) return null;
 
   const published = isPublished(headline);
@@ -31,6 +33,15 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
       setCopied(true);
     } catch {
       setCopied(false);
+    }
+  }
+
+  async function onEmbed() {
+    try {
+      await navigator.clipboard.writeText(iframeSnippet(headline!.id, `${entry.canonicalName}: ${headline!.statement}`));
+      setEmbedCopied(true);
+    } catch {
+      setEmbedCopied(false);
     }
   }
 
@@ -73,6 +84,12 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
             className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
             Story card
           </a>
+          {published && (
+            <button type="button" onClick={onEmbed} title="Copy an embed snippet that always shows the latest verdict"
+              className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
+              {embedCopied ? 'Embed copied' : 'Embed'}
+            </button>
+          )}
         </div>
       </div>
 
