@@ -24,7 +24,6 @@ public sealed class ClaimBatch4Tests
     [InlineData("Human chorionic gonadotropin", 3)]
     [InlineData("Finasteride", 3)]
     [InlineData("DHEA", 2)]
-    [InlineData("Testolone", 3)]
     [InlineData("Andarine", 2)]
     [InlineData("AC-262536", 2)]
     [InlineData("LGD-3303", 2)]

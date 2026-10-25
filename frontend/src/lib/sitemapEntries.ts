@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { compoundPath } from '@/lib/compoundSlug';
+import { compoundPath, compoundSlug } from '@/lib/compoundSlug';
+import { RETIRED_SLUGS } from '@/lib/mergedRecords';
 import { absoluteSiteUrl } from '@/lib/site';
 
 export type SitemapCompound = {
@@ -16,6 +17,8 @@ export function compoundSitemapEntries(entries: SitemapCompound[]): MetadataRout
   for (const entry of entries) {
     const name = entry.canonicalName?.trim();
     if (!name) continue;
+    // A record folded into another redirects; never list its old URL.
+    if (RETIRED_SLUGS.has(compoundSlug(name))) continue;
     const path = compoundPath(name);
     if (path === '/knowledge/' || seen.has(path)) continue;
     seen.add(path);

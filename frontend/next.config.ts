@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import path from "path";
+import { mergedRecordRedirects } from "./src/lib/mergedRecords";
 
 const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050').replace(/\/$/, '');
 
@@ -41,6 +42,8 @@ const nextConfig: NextConfig = {
         destination: '/tools',
         permanent: true,
       },
+      // Retired duplicate compound records (2026-10-25 consolidation).
+      ...mergedRecordRedirects(),
     ];
   },
 };
