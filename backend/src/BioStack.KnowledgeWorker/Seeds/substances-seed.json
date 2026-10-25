@@ -981,11 +981,11 @@
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
         },
         {
-          "claim": "Illegal online sellers market GLP-1 agonist injectables — the drug class that includes liraglutide — without requiring a valid prescription, and some sellers evade enforcement by labeling products 'peptides' intended 'for research purposes only' and 'not for human consumption.' Substandard and falsified GLP-1 products have been identified in multiple countries. Separately, FDA states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label.",
+          "claim": "FDA has warned companies that illegally sold unapproved GLP-1-class drugs falsely labeled 'for research purposes' or 'not for human consumption' directly to consumers with dosing instructions, and states these products are of unknown quality. FDA also states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "nabp-glp1-illegal-sellers-report",
+            "fda-unapproved-glp1-concerns",
             "fda-glp1-compounding-policy"
           ],
           "legacyTier": "Insufficient",
@@ -1060,14 +1060,6 @@
         },
         {
           "sourceType": "other",
-          "title": "NABP Report Explores How Illegal Online Sellers Exploit Consumer Demand for Weight Loss Drugs",
-          "publisher": "National Association of Boards of Pharmacy (NABP)",
-          "url": "https://nabp.pharmacy/news/news-releases/nabp-report-explores-how-illegal-online-sellers-exploit-consumer-demand-for-weight-loss-drugs/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T22:30:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER trial, primary publication)",
           "publisher": "New England Journal of Medicine (Marso SP, Daniels GH, Brown-Frandsen K, et al., 2016;375:311-322) via PubMed Central",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
@@ -1108,14 +1100,6 @@
         },
         {
           "sourceType": "other",
-          "title": "ChEMBL molecule record: Liraglutide (CHEMBL4084119)",
-          "publisher": "European Bioinformatics Institute / ChEMBL",
-          "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=liraglutide&format=json",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Label: VICTOZA (liraglutide) injection, live FDA label PDF (2025, supplement s046)",
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022341s046lbl.pdf",
@@ -1129,6 +1113,15 @@
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/206321s025lbl.pdf",
           "publishedAt": null,
           "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -2393,11 +2386,12 @@
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
         },
         {
-          "claim": "Not an FDA-approved marketed product; Lilly plans US submission in Q1 2027.",
+          "claim": "Not an FDA-approved product: FDA names retatrutide among unapproved drugs illegally sold 'for research purposes', and it remains in phase 3 trials. Submission timing: unknown (no regulator source).",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "lilly-medical-retatrutide"
+            "fda-unapproved-glp1-concerns",
+            "ctgov-nct05929066"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -2462,9 +2456,9 @@
           "population": "people in the United States",
           "outcome": "regulatory status",
           "tier": "Contradicted",
-          "note": "Not FDA-approved. Lilly describes it as investigational and not available in the consumer market.",
+          "note": "Not FDA-approved. FDA lists retatrutide among unapproved drugs that companies have illegally sold as 'research' products.",
           "sources": [
-            "lilly-medical-retatrutide"
+            "fda-unapproved-glp1-concerns"
           ],
           "versions": [
             {
@@ -2478,6 +2472,18 @@
               "verifiedAt": "2026-10-24T00:00:00Z",
               "verifiedBy": "automated research agent; not a reviewer",
               "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            },
+            {
+              "version": 2,
+              "kind": "update",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-unapproved-glp1-concerns"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Manufacturer page replaced by an FDA source (public sourcing rule); verdict unchanged. Publishes after two-reviewer AI council consensus."
             }
           ]
         },
@@ -2565,15 +2571,6 @@
           "id": "ctgov-nct05931367"
         },
         {
-          "sourceType": "manufacturer",
-          "title": "Is retatrutide available in the consumer market?",
-          "publisher": "Lilly Medical",
-          "url": "https://medical.lilly.com/us/products/answers/is-retatrutide-available-in-the-consumer-market-381272",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z",
-          "id": "lilly-medical-retatrutide"
-        },
-        {
           "sourceType": "paper",
           "title": "Self-reported effects of retatrutide use on Reddit (JAMA Network Open)",
           "publisher": "JAMA Network Open",
@@ -2581,6 +2578,15 @@
           "publishedAt": "2026-10-14T00:00:00Z",
           "lastCheckedAt": "2026-10-24T00:00:00Z",
           "id": "jama-netw-open-2026-reddit"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -3679,12 +3685,12 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Tesamorelin, marketed as EGRIFTA/EGRIFTA SV/EGRIFTA WR, is FDA-approved solely for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy; original Egrifta was approved November 10, 2010, with Egrifta SV approved in 2019 and Egrifta WR approved March 25, 2025 as reformulations.",
+          "claim": "Tesamorelin (EGRIFTA, EGRIFTA SV, EGRIFTA WR) is FDA-approved solely for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy; the original application (BLA 022505) was approved November 10, 2010, and later formulations were approved as supplements to the same application (including a March 25, 2025 approval).",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "dailymed-egrifta-sv-label",
-            "drugscom-egrifta-approval-history"
+            "drugsfda-egrifta-bla022505"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -3731,11 +3737,11 @@
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established.",
+          "claim": "Online cognition claims for tesamorelin trace to one randomized, placebo-controlled 20-week trial (152 adults aged 55-87, 66 with mild cognitive impairment) that reported a favorable composite cognitive effect, mainly executive function, with a trend for verbal memory; adverse events were reported by 68% on treatment vs 36% on placebo. This is one trial in older adults, distinct from the FDA-approved HIV-lipodystrophy indication, and no cognitive-function claim appears in the FDA label; cognitive or anti-aging benefit in the people tesamorelin is marketed to online is not established.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "moderate",
           "sources": [
-            "peakedlabs-tesamorelin-vendor-guide",
+            "baker-2012-archneurol-ghrh-cognition",
             "dailymed-egrifta-sv-label"
           ],
           "legacyTier": "Insufficient",
@@ -3770,14 +3776,6 @@
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
         {
-          "sourceType": "regulator",
-          "title": "Egrifta WR (tesamorelin) FDA Approval History",
-          "publisher": "Drugs.com (aggregating FDA approval announcements)",
-          "url": "https://www.drugs.com/history/egrifta-wr.html",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
           "sourceType": "other",
           "title": "Effect of Tesamorelin on Visceral Fat and Liver Fat in HIV-Infected Patients With Abdominal Fat Accumulation: A Randomized Clinical Trial",
           "publisher": "JAMA (Stanley TL, Falutz J, et al.)",
@@ -3794,12 +3792,22 @@
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
         {
-          "sourceType": "other",
-          "title": "Tesamorelin Peptide: Fat Loss, Cognition, FDA Evidence, Dosing, and Comparisons (2026 Guide)",
-          "publisher": "PeakedLabs (commercial peptide vendor/blog)",
-          "url": "https://peakedlabs.com/blog/tesamorelin-peptide-fat-loss-cognition",
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: EGRIFTA (tesamorelin) BLA 022505 application overview",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022505",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-egrifta-bla022505"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of growth hormone-releasing hormone on cognitive function in adults with mild cognitive impairment and healthy older adults: results of a controlled trial (Arch Neurol 2012;69:1420-9)",
+          "publisher": "Archives of Neurology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22869065/",
+          "publishedAt": "2012-11-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "baker-2012-archneurol-ghrh-cognition"
         }
       ],
       "curationNotes": [
@@ -4256,7 +4264,7 @@
         "evidenceTier": "Hype Exceeds Evidence",
         "sources": [
           "fedreg-geref",
-          "dailymed-search-sermorelin"
+          "drugsfda-geref-nda019863"
         ]
       }
     ],
@@ -4358,11 +4366,12 @@
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "As of the access date, no sermorelin or sermorelin acetate drug product is listed in DailyMed (the NLM/FDA labeling repository), and sermorelin/sermorelin acetate does not appear in FDA's Category 2 table of bulk drug substances presenting significant safety risks or in the table of substances nominated but withdrawn on the FDA 503A bulk substances page; there is currently no FDA-approved sermorelin product on the market.",
+          "claim": "Both FDA applications for sermorelin acetate (GEREF, NDA 019863 and NDA 020443) are listed in Drugs@FDA as Discontinued, so there is currently no marketed FDA-approved sermorelin product; sermorelin/sermorelin acetate does not appear in FDA's Category 2 table of bulk drug substances presenting significant safety risks or in the nominated-but-withdrawn table on the FDA 503A bulk substances page.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "dailymed-search-sermorelin",
+            "drugsfda-geref-nda019863",
+            "drugsfda-geref-nda020443",
             "fda-bulk-drug-substances-category2",
             "fedreg-geref-determination-2013"
           ],
@@ -4387,17 +4396,17 @@
           "confidence": "moderate",
           "sources": [
             "fedreg-geref-determination-2013",
-            "dailymed-search-sermorelin"
+            "drugsfda-geref-nda019863",
+            "drugsfda-geref-nda020443"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking.",
+          "claim": "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "moderate",
           "sources": [
-            "healthline-sermorelin",
             "pmc-gh-secretagogues-review",
             "vittone-1997-ghrh-elderly-men",
             "vitiello-2006-ghrh-cognition-elderly"
@@ -4406,11 +4415,10 @@
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
         },
         {
-          "claim": "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits.",
+          "claim": "Sermorelin is promoted online for anti-aging, restoring natural growth-hormone production, well-being, lean body mass, insulin sensitivity and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "moderate",
           "sources": [
-            "healthline-sermorelin",
             "fedreg-geref-determination-2013",
             "vittone-1997-ghrh-elderly-men",
             "vitiello-2006-ghrh-cognition-elderly"
@@ -4434,14 +4442,6 @@
           "publisher": "U.S. Food and Drug Administration / Federal Register",
           "url": "https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams",
           "publishedAt": "2013-03-04T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "DailyMed Search Results for SERMORELIN",
-          "publisher": "U.S. National Library of Medicine / DailyMed (FDA-sourced labeling repository)",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sermorelin",
-          "publishedAt": null,
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
         {
@@ -4478,22 +4478,6 @@
         },
         {
           "sourceType": "other",
-          "title": "Sermorelin Therapy Benefits, Risks, Uses, Approval, and Side Effects",
-          "publisher": "Healthline Media",
-          "url": "https://www.healthline.com/health/sermorelin",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "EMD Serono, Inc. to Discontinue Geref Diagnostic",
-          "publisher": "BioSpace",
-          "url": "https://www.biospace.com/emd-serono-inc-to-discontinue-geref-diagnostic",
-          "publishedAt": "2008-10-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-29T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men",
           "publisher": "Metabolism: Clinical and Experimental (via Johns Hopkins University research repository)",
           "url": "https://pure.johnshopkins.edu/en/publications/effects-of-single-nightly-injections-of-growth-hormone-releasing--6/",
@@ -4515,6 +4499,24 @@
           "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=sermorelin",
           "publishedAt": null,
           "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: GEREF (sermorelin acetate) NDA 019863 application overview (marketing status: Discontinued)",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019863",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-geref-nda019863"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: GEREF (sermorelin acetate) NDA 020443 application overview (marketing status: Discontinued)",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020443",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-geref-nda020443"
         }
       ],
       "curationNotes": [
@@ -6276,12 +6278,12 @@
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. At the PCAC meeting on July 23, 2026, the committee voted 7-5 with 2 abstentions to recommend MOTS-c for the 503A Bulks List, overriding the staff recommendation. An advisory committee vote is not itself a legal listing decision -- FDA must still complete rulemaking before MOTS-c could be lawfully compounded under 503A -- and the staff's underlying findings on the absence of human exposure data and incomplete characterization remain unchanged by the vote.",
+          "claim": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. The Pharmacy Compounding Advisory Committee discussed MOTS-c on July 23, 2026; FDA had not published official minutes or a vote record at this review, so the outcome is unknown here (reported only by non-regulator sources). An advisory committee vote is not a listing decision: FDA must still complete rulemaking before MOTS-c could be compounded under 503A.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "fda-pcac-briefing-193347",
-            "ajmc-pcac-peptides-vote-2026"
+            "fda-pcac-2026-07-23-meeting"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -6319,12 +6321,12 @@
           "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
         },
         {
-          "claim": "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c.",
+          "claim": "Online sellers promote self-administered MOTS-c injection protocols with fat-loss, exercise-mimetic and anti-aging claims, citing mouse data. FDA's briefing found no clinical studies or human exposure data for administered MOTS-c, and WADA lists MOTS-c as a prohibited AMPK activator (S4.4.1). Community-reported doses: n/a (no citable source). The marketing outruns the human evidence, which is absent.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "gethealthspan-mots-c-dosage-protocol",
-            "fda-pcac-briefing-193347"
+            "fda-pcac-briefing-193347",
+            "wada-2026-prohibited-list"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
@@ -6373,14 +6375,6 @@
         },
         {
           "sourceType": "other",
-          "title": "FDA Panel Backs 6 Peptides for Compounding",
-          "publisher": "AJMC (American Journal of Managed Care)",
-          "url": "https://www.ajmc.com/view/fda-panel-backs-6-peptides-for-compounding",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Systematic review of mitochondrial-derived peptides (MOTS-c and related peptides) in metabolic disease",
           "publisher": "Diabetology & Metabolic Syndrome",
           "url": "https://link.springer.com/article/10.1186/s13098-024-01405-w",
@@ -6396,12 +6390,22 @@
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
         {
-          "sourceType": "other",
-          "title": "MOTS-C Dosage Chart: How to Actually Protocol This Mitochondrial Peptide",
-          "publisher": "Healthspan (gethealthspan.com)",
-          "url": "https://www.gethealthspan.com/research/article/mots-c-dosage-chart-protocol-guide",
+          "sourceType": "regulator",
+          "title": "July 23-24, 2026: Meeting of the Pharmacy Compounding Advisory Committee (meeting page and materials)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-pcac-2026-07-23-meeting"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -8853,22 +8857,6 @@
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e94155f-19be-4944-b197-be4edbb4faf9",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-10-24T00:00:00Z"
-        },
-        {
-          "sourceType": "internal-curation",
-          "title": "BIO-LOCAL-007 inventory citation: research/input/candidates/peptide-serm-sarm-market-interest.v1.json:1177",
-          "publisher": null,
-          "url": "research/input/candidates/peptide-serm-sarm-market-interest.v1.json#L1177",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-08T00:28:12Z"
-        },
-        {
-          "sourceType": "internal-curation",
-          "title": "BIO-LOCAL-007 inventory citation: research/input/evidence/chorionic-gonadotropin.evidence.json:12",
-          "publisher": null,
-          "url": "research/input/evidence/chorionic-gonadotropin.evidence.json#L12",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-08T00:28:12Z"
         }
       ],
       "curationNotes": [
@@ -10674,8 +10662,7 @@
           "confidence": "high",
           "sources": [
             "pubchem-cid-5035",
-            "drugbank-db00481",
-            "chemicalbook-raloxifene"
+            "drugbank-db00481"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
@@ -10734,11 +10721,11 @@
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "Anabolic-androgenic-steroid-using bodybuilding forums promote self-directed raloxifene dosing (posts described protocols ranging from 30-120 mg/day, including a 17-week taper starting at 120 mg/day) to reverse gynecomastia, citing a pediatric case series (\"J Pediatr. 2004\") reporting 91% of raloxifene-treated patients improved and \"no side effects were seen in any patients\"; no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users was identified, the cited pediatric population and setting do not generalize to self-directed adult AAS-user dosing, and this use is not an FDA-approved indication.",
+          "claim": "Raloxifene is discussed in bodybuilding communities for self-treating gynecomastia. The evidence usually cited is a pediatric retrospective chart review (38 adolescents with persistent pubertal gynecomastia; some improvement in 91% of raloxifene-treated patients, no side effects recorded), whose authors say further study is needed to show a true treatment effect. No controlled trial in adult anabolic-steroid users was identified, the pediatric setting does not generalize, and this is not an FDA-approved indication. Community-reported doses: n/a (no citable source).",
           "tier": "Anecdotal Signal",
           "confidence": "low",
           "sources": [
-            "elitefitness-forum-gyno-dosing",
+            "lawrence-2004-jpediatr-pubertal-gynecomastia",
             "dailymed-evista-label"
           ],
           "legacyTier": "Insufficient",
@@ -10796,20 +10783,13 @@
           "lastCheckedAt": "2026-08-29T01:58:43Z"
         },
         {
-          "sourceType": "other",
-          "title": "Raloxifene | 84449-90-1",
-          "publisher": "ChemicalBook (commercial chemical supplier database)",
-          "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB1290431.htm",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Raloxifene Doses For Reversal Of Existing Gyno (forum thread)",
-          "publisher": "EliteFitness.com Bodybuilding Forums (user-generated content)",
-          "url": "https://www.elitefitness.com/forum/threads/raloxifene-doses-for-reversal-of-existing-gyno.599350/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "sourceType": "paper",
+          "title": "Beneficial effects of raloxifene and tamoxifen in the treatment of pubertal gynecomastia (J Pediatr 2004;145:71-6)",
+          "publisher": "The Journal of Pediatrics (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15238910/",
+          "publishedAt": "2004-07-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lawrence-2004-jpediatr-pubertal-gynecomastia"
         }
       ],
       "curationNotes": [
@@ -13959,7 +13939,7 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "Multiple sports-nutrition reviews support beta-alanine for certain high-intensity performance outcomes via elevated muscle carnosine, with paresthesia as a common effect.",
+          "claim": "The ISSN position stand concludes that four weeks of beta-alanine supplementation raises muscle carnosine (an intracellular pH buffer) and may improve some high-intensity exercise outcomes; paresthesia (tingling) is the only reported side effect.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
@@ -13979,20 +13959,21 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "other",
-          "title": "PubMed search: beta-alanine supplementation exercise performance review",
-          "publisher": "PubMed / NLM",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=beta-alanine+supplementation+exercise+performance+review",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "database",
           "title": "PubChem Compound Summary: beta-Alanine",
           "publisher": "NCBI / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/239",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "International society of sports nutrition position stand: Beta-Alanine (J Int Soc Sports Nutr 2015;12:30)",
+          "publisher": "Journal of the International Society of Sports Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26175657/",
+          "publishedAt": "2015-07-15T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "pubmed-beta-alanine"
         }
       ],
       "curationNotes": [
@@ -14299,6 +14280,16 @@
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Mechanistic or preclinical support without direct human outcome evidence (was Moderate)."
+        },
+        {
+          "claim": "A 2019 meta-analysis of 12 studies (198 participants) found a small benefit of citrulline over placebo for high-intensity strength and power performance (standardized mean difference 0.20, 95% CI 0.01-0.39); every individual study's confidence interval crossed no effect.",
+          "tier": "Early Evidence",
+          "confidence": "low",
+          "sources": [
+            "trexler-2019-sportsmed-citrulline-meta"
+          ],
+          "legacyTier": "Limited",
+          "gradeRationale": "One meta-analysis of small human trials with a small pooled effect. Added 2026-10-25; legacy grade set to Limited for compatibility."
         }
       ],
       "evidenceGaps": [
@@ -14311,20 +14302,21 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "paper",
-          "title": "Citrulline — PubMed literature search hub",
-          "publisher": "PubMed / NCBI",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=citrulline+exercise",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "database",
           "title": "Compound summary for L-citrulline",
           "publisher": "PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/#query=L-citrulline",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-04-20T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Acute Effects of Citrulline Supplementation on High-Intensity Strength and Power Performance: A Systematic Review and Meta-Analysis (Sports Med 2019;49:707-718)",
+          "publisher": "Sports Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30895562/",
+          "publishedAt": "2019-05-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "trexler-2019-sportsmed-citrulline-meta"
         }
       ],
       "curationNotes": [
@@ -15311,14 +15303,6 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "other",
-          "title": "PubMed search: berberine diabetes randomized trial review",
-          "publisher": "PubMed / NLM",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=berberine+type+2+diabetes+review",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "database",
           "title": "PubChem Compound Summary: Berberine",
           "publisher": "NCBI / PubChem",
@@ -15333,6 +15317,15 @@
           "url": "https://ods.od.nih.gov/factsheets/Berberine-HealthProfessional/",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Glucose-lowering effect of berberine on type 2 diabetes: A systematic review and meta-analysis (Front Pharmacol 2022;13:1015045)",
+          "publisher": "Frontiers in Pharmacology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36467075/",
+          "publishedAt": "2022-11-17T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "pubmed-berberine"
         }
       ],
       "curationNotes": [
@@ -15679,14 +15672,6 @@
           "title": "Vitamin D: Fact Sheet for Health Professionals",
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "label",
-          "title": "DailyMed: cholecalciferol (vitamin D3) product listings",
-          "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cholecalciferol",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
@@ -18399,12 +18384,12 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "Thymosin alpha-1 (thymalfasin, brand name Zadaxin) has no FDA-approved drug label in the United States - DailyMed, the authoritative U.S. label repository, returns zero results for \"thymalfasin\" - and is available in the U.S. only through compounding, not as an approved product; it is approved as a marketed drug in dozens of other countries (commonly cited for hepatitis B/C and as a cancer/vaccine adjuvant), but that ex-U.S. approval status has not been independently verified here against a primary foreign regulator source.",
+          "claim": "FDA states it has approved no drug products containing thymosin alpha-1 (thymalfasin) and that it is not approved in the United States, Japan, or Europe (except Italy). A 2009 review reports approval in over 35 countries for hepatitis B and C and as an immune adjuvant; FDA says it could not independently verify those approval claims.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "dailymed-search-thymalfasin",
-            "rethinkpeptides-zadaxin-global"
+            "fda-ta1-bulks-183892",
+            "goldstein-2009-ebt-thymosin-alpha1"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -18434,8 +18419,7 @@
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "drugbank-db04900",
-            "superpower-thymosin-alpha-1"
+            "drugbank-db04900"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -18461,13 +18445,12 @@
           "gradeRationale": "Claim reports a negative or conflicting human finding."
         },
         {
-          "claim": "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review.",
+          "claim": "Thymosin alpha-1 is marketed online for immune 'optimization', autoimmune disease, inflammation, cancer support and longevity uses; FDA notes a website advertising a compounded product as 'FDA-approved' although FDA has approved none. The largest placebo-controlled human trial in a systemic-immune indication (TESTS, sepsis) found no mortality benefit, and no controlled human evidence for general immune optimization, anti-aging or wellness use in healthy adults was identified.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "innerbody-thymosin-alpha-1",
-            "pubmed-tests-2025",
-            "americanpeptides-thymosin-alpha-1"
+            "fda-ta1-bulks-183892",
+            "pubmed-tests-2025"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
@@ -18487,14 +18470,6 @@
           "title": "Thymosin Alpha-1 (Tα1) Related Bulk Drug Substances",
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/183892/download",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "DailyMed Search Results for \"thymalfasin\"",
-          "publisher": "U.S. National Library of Medicine (DailyMed)",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thymalfasin",
           "publishedAt": null,
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
@@ -18531,36 +18506,13 @@
           "lastCheckedAt": "2026-08-28T21:30:00Z"
         },
         {
-          "sourceType": "other",
-          "title": "Zadaxin: The Brand Name Thymosin Alpha-1 and Its Global Use",
-          "publisher": "RethinkPeptides",
-          "url": "https://rethinkpeptides.com/articles/zadaxin-the-brand-name-thymosin-alpha-1-and-its-global-use",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Thymosin Alpha-1 | Safety, Benefits, and More [2026]",
-          "publisher": "Innerbody Research",
-          "url": "https://www.innerbody.com/thymosin-alpha-1-peptide",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Thymosin Alpha-1 (Zadaxin): A Thymic Peptide and Toll-Like Receptor Signaling Research Guide",
-          "publisher": "Superpower",
-          "url": "https://superpower.com/guides/thymosin-alpha-1",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Thymosin Alpha-1 Research Peptide | 99%+ COA",
-          "publisher": "American Peptides",
-          "url": "https://www.americanpeptides.us/learn/thymosin-alpha-1",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "sourceType": "paper",
+          "title": "From lab to bedside: emerging clinical applications of thymosin alpha 1 (Expert Opin Biol Ther 2009;9:593-608)",
+          "publisher": "Expert Opinion on Biological Therapy (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19392576/",
+          "publishedAt": "2009-05-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "goldstein-2009-ebt-thymosin-alpha1"
         }
       ],
       "curationNotes": [
@@ -19545,12 +19497,12 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Lasofoxifene has no currently valid marketing authorization anywhere. It was rejected by FDA for a US osteoporosis indication (Complete Response Letter, January 2009, after an earlier 2005 non-approvable letter under the name Oporia) and never launched in the US; the EU authorization for Fablyn (granted by the European Commission on 24 February 2009 for osteoporosis in postmenopausal women at increased fracture risk) automatically lapsed on 27 February 2012 under the sunset clause because the product was never marketed in any EU member state.",
+          "claim": "Lasofoxifene has no currently valid marketing authorization: a 2011 review describes it as not approved for use in the US, and the EU authorization for Fablyn (granted 24 February 2009 for osteoporosis in postmenopausal women at increased fracture risk) lapsed on 27 February 2012 under the sunset clause because it was never marketed. Details of FDA's regulatory letters: unknown (no regulator source located).",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "ema-epar-fablyn",
-            "drugscom-fablyn-history"
+            "peterson-2011-annpharmacother-lasofoxifene"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -19577,11 +19529,12 @@
           "gradeRationale": "Claim reports a negative or conflicting human finding."
         },
         {
-          "claim": "Lasofoxifene's active clinical development is now centered on oncology rather than its original osteoporosis indication: the drug sponsor describes it as under investigation as an endocrine therapy, combined with the CDK4/6 inhibitor abemaciclib, for postmenopausal and ovarian-suppressed premenopausal women with locally advanced or metastatic ER+ breast cancer, via the ELAINE trial program (ELAINE 1, 2, and the phase III ELAINE 3 study).",
+          "claim": "Lasofoxifene's clinical development now centers on oncology: registered trials test it with the CDK4/6 inhibitor abemaciclib in ER+/HER2- advanced or metastatic breast cancer (ELAINE-2, phase 2, completed; ELAINE-3, phase 3, recruiting).",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "sermonix-lasofoxifene-page",
+            "ctgov-nct05696626-elaine3",
+            "ctgov-nct04432454-elaine2",
             "elaine1-wustl-fulltext"
           ],
           "legacyTier": "Limited",
@@ -19593,7 +19546,7 @@
           "confidence": "moderate",
           "sources": [
             "ema-epar-fablyn",
-            "drugscom-fablyn-history",
+            "peterson-2011-annpharmacother-lasofoxifene",
             "elaine1-wustl-fulltext"
           ],
           "legacyTier": "Insufficient",
@@ -19620,14 +19573,6 @@
         },
         {
           "sourceType": "other",
-          "title": "Fablyn (Lasofoxifene): FDA Approval History",
-          "publisher": "Drugs.com",
-          "url": "https://www.drugs.com/history/fablyn.html",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial",
           "publisher": "Annals of Oncology (Bardia A, Neven P, Streich G, et al., 2024); open-access copy via Washington University in St. Louis Digital Commons",
           "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
@@ -19644,19 +19589,38 @@
         },
         {
           "sourceType": "other",
-          "title": "Lasofoxifene",
-          "publisher": "Sermonix Pharmaceuticals",
-          "url": "https://sermonixpharma.com/lasofoxifene/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Lasofoxifene: Uses, Interactions, Mechanism of Action (DB06202)",
           "publisher": "DrugBank Online",
           "url": "https://go.drugbank.com/drugs/DB06202",
           "publishedAt": null,
           "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Lasofoxifene: selective estrogen receptor modulator for the prevention and treatment of postmenopausal osteoporosis (Ann Pharmacother 2011;45:499-509)",
+          "publisher": "Annals of Pharmacotherapy (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21467260/",
+          "publishedAt": "2011-04-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "peterson-2011-annpharmacother-lasofoxifene"
+        },
+        {
+          "sourceType": "trial-registry",
+          "title": "ClinicalTrials.gov ELAINE-3: lasofoxifene plus abemaciclib vs fulvestrant plus abemaciclib (NCT05696626, phase 3)",
+          "publisher": "ClinicalTrials.gov",
+          "url": "https://clinicaltrials.gov/study/NCT05696626",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ctgov-nct05696626-elaine3"
+        },
+        {
+          "sourceType": "trial-registry",
+          "title": "ClinicalTrials.gov ELAINE-2: lasofoxifene combined with abemaciclib (NCT04432454, phase 2)",
+          "publisher": "ClinicalTrials.gov",
+          "url": "https://clinicaltrials.gov/study/NCT04432454",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ctgov-nct04432454-elaine2"
         }
       ],
       "curationNotes": [
@@ -19844,35 +19808,34 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+          "claim": "LGD-3303 is an orally available nonsteroidal selective androgen receptor modulator (SARM) developed by Ligand Pharmaceuticals. Published receptor-binding and potency values could not be traced to a citable primary source in this review: unknown.",
           "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
-            "glpbio-lgd3303",
-            "xcessbio-lgd3303"
+            "vajda-2009-jpet-lgd3303-pkpd",
+            "pubchem-cid-25195253"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
         },
         {
-          "claim": "In castrated male rats (an androgen-deficiency model), oral LGD-3303 at 1 mg/kg/day completely prevented loss of levator ani muscle weight and acted as a partial agonist on prostate and preputial gland tissue; local tissue drug concentrations were reportedly higher in prostate than in the more strongly responding levator ani muscle, indicating the tissue selectivity is not explained by differential drug distribution. This is preclinical rodent evidence only and has not been demonstrated in a human clinical study.",
+          "claim": "In a castrated-rat model of androgen deficiency, LGD-3303 had potent activity on levator ani muscle but acted as a partial agonist on prostate and preputial gland, and never stimulated ventral prostate above intact levels; local drug concentrations were higher in prostate than in muscle, so the tissue selectivity is not explained by drug distribution. This is rodent evidence only; no human study exists.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "glpbio-lgd3303",
-            "kimerachems-lgd3303-blog"
+            "vajda-2009-jpet-lgd3303-pkpd"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
         },
         {
-          "claim": "LGD-3303 was originated by Ligand Pharmaceuticals as a candidate SARM investigated for osteoporosis, hypogonadism, and sexual dysfunction. Its highest recorded R&D status is preclinical (\"Pending/Preclinical\"), all three tracked indications are listed as inactive, and no clinical-trial-phase development is recorded, with the most recent development record dated December 31, 2007. LGD-3303 holds no marketing approval in any jurisdiction, has not entered human clinical trials, and was subsequently encountered outside pharmaceutical development as a novel designer drug by at least 2020.",
+          "claim": "LGD-3303 was developed by Ligand Pharmaceuticals and published only in preclinical (rat) studies of muscle, prostate and bone. No human clinical trial or marketing approval was found in any registry or regulator source reviewed; FDA states SARMs cannot be legally marketed as supplements or drugs.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "patsnap-synapse-lgd3303",
-            "kimerachems-lgd3303-blog",
-            "wikipedia-lgd3303"
+            "vajda-2009-jpet-lgd3303-pkpd",
+            "vajda-2009-jbmr-lgd3303-bisphosphonate",
+            "fda-sarm-consumer-update"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -19898,26 +19861,24 @@
           "gradeRationale": "Support is user, community or case reports, not generalizable evidence."
         },
         {
-          "claim": "The WADA Prohibited List's S1.2 anabolic-agents category prohibits \"Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]\" using \"including, but not limited to\" language, so LGD-3303 falls within the prohibited SARM class as a chemical/pharmacological analog even though it is not individually named in this illustrative list. Independent anti-doping research has developed equine (horse) in vivo metabolite-profiling methods specifically to detect LGD-3303 administration, identifying a monohydroxylated metabolite with better detectability than the parent compound for doping-control testing.",
+          "claim": "The WADA 2026 Prohibited List (S1.2 Other anabolic agents) prohibits selective androgen receptor modulators 'including, but not limited to' the examples it names, so LGD-3303 falls within the prohibited SARM class even though it is not named individually. Anti-doping researchers have profiled LGD-3303 metabolites in horses and propose a monohydroxylated metabolite as a doping-control target.",
           "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "usada-sarms-prohibited-class",
-            "drugs-com-wada-s1",
-            "equine-lgd3303-metabolite-study"
+            "wada-2026-prohibited-list",
+            "broberg-2023-jpba-lgd3303-equine"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Mechanistic or preclinical support without direct human outcome evidence (was Moderate)."
         },
         {
-          "claim": "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits.",
+          "claim": "LGD-3303 is sold online as a 'research use only' chemical while sellers highlight rat muscle data in ways that imply bodybuilding benefit. No human efficacy or safety trial, case series or regulator clinical data for LGD-3303 was located; FDA warns against SARM use, and LiverTox documents liver injury with the SARM class. Muscle-building, bone or performance claims are not supported by human evidence. Community-reported doses: n/a (no citable source).",
           "tier": "Anecdotal Signal",
           "confidence": "high",
           "sources": [
-            "glpbio-lgd3303",
-            "kimerachems-lgd3303-blog",
-            "xcessbio-lgd3303",
-            "patsnap-synapse-lgd3303"
+            "fda-sarm-consumer-update",
+            "nih-livertox-sarms"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Support is user, community or case reports, not generalizable evidence."
@@ -19966,22 +19927,6 @@
           "lastCheckedAt": "2026-08-29T02:21:10Z"
         },
         {
-          "sourceType": "other",
-          "title": "LGD-3303 - Drug Targets, Indications, Patents, R&D Status",
-          "publisher": "Synapse (PatSnap pharmaceutical intelligence database)",
-          "url": "https://synapse.patsnap.com/drug/f83f74b74f1140e48277a5c038881a5d",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "LGD-3303",
-          "publisher": "Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/LGD-3303",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
-        },
-        {
           "sourceType": "regulator",
           "title": "Selective Androgen Receptor Modulators (SARMs): A Prohibited Class of Anabolic Agents",
           "publisher": "U.S. Anti-Doping Agency (USADA) — the official national anti-doping organization for the United States, implementing the WADA Code",
@@ -19990,44 +19935,40 @@
           "lastCheckedAt": "2026-08-29T02:21:10Z"
         },
         {
-          "sourceType": "other",
-          "title": "S1. Anabolic Agents - WADA Anti-Doping Prohibited List",
-          "publisher": "Drugs.com (compiling WADA Prohibited List anabolic-agents category)",
-          "url": "https://www.drugs.com/wada/s1-anabolic-agents.html",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "sourceType": "paper",
+          "title": "Pharmacokinetics and pharmacodynamics of LGD-3303, an orally available nonsteroidal selective androgen receptor modulator (J Pharmacol Exp Ther 2009;328:663-70)",
+          "publisher": "Journal of Pharmacology and Experimental Therapeutics (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19017848/",
+          "publishedAt": "2009-02-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "vajda-2009-jpet-lgd3303-pkpd"
         },
         {
-          "sourceType": "other",
-          "title": "Equine in vivo metabolite profiling of the selective androgen receptor modulator LGD-3303 for doping control",
-          "publisher": "ResearchGate (peer-reviewed doping-control pharmacology study, equine model)",
-          "url": "https://www.researchgate.net/publication/370953660_Equine_in_vivo_metabolite_profiling_of_the_selective_androgen_receptor_modulator_LGD-3303_for_doping_control",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "sourceType": "paper",
+          "title": "Combination treatment with a selective androgen receptor modulator (SARM) and a bisphosphonate has additive effects in osteopenic female rats (J Bone Miner Res 2009;24:231-40)",
+          "publisher": "Journal of Bone and Mineral Research (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18847323/",
+          "publishedAt": "2009-02-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "vajda-2009-jbmr-lgd3303-bisphosphonate"
         },
         {
-          "sourceType": "other",
-          "title": "LGD-3303 | CAS NO.:917891-35-1",
-          "publisher": "GlpBio (research-chemical vendor)",
-          "url": "https://www.glpbio.com/lgd-3303.html",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "sourceType": "paper",
+          "title": "Equine in vivo metabolite profiling of the selective androgen receptor modulator LGD-3303 for doping control (J Pharm Biomed Anal 2023;233:115468)",
+          "publisher": "Journal of Pharmaceutical and Biomedical Analysis (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37224728/",
+          "publishedAt": "2023-09-05T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "broberg-2023-jpba-lgd3303-equine"
         },
         {
-          "sourceType": "other",
-          "title": "LGD-3303: SARM Tissue Selectivity and the Rat Record",
-          "publisher": "Kimera Chems (research-chemical vendor blog)",
-          "url": "https://kimerachems.co/blog/lgd-3303-research/",
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "LGD-3303 - Xcess Biosciences",
-          "publisher": "Xcess Biosciences (research-chemical vendor)",
-          "url": "https://www.xcessbio.com/products/m22793",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -20263,11 +20204,10 @@
           "gradeRationale": "Claim reports a negative or conflicting human finding."
         },
         {
-          "claim": "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
+          "claim": "LL-37 is sold online as a research peptide framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "evolvepeptides-ll37-vendor",
             "fda-ll37-bulk-nominated-withdrawn",
             "mahlapuu-2021-wrr-pmc9298190"
           ],
@@ -20305,14 +20245,6 @@
           "title": "LL-37 | C205H340N60O53 | CID 16198951 - PubChem Compound Summary",
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ll-37",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Buy LL-37 2mg | Antimicrobial Peptide | 99%+ Purity",
-          "publisher": "Evolve Peptides (research-chemical vendor)",
-          "url": "https://www.evolvepeptides.com/product/ll-37-2-mg/",
           "publishedAt": null,
           "lastCheckedAt": "2026-08-29T02:21:10Z"
         }
@@ -20622,40 +20554,39 @@
           "confidence": "high",
           "sources": [
             "dailymed-fareston-label",
-            "wikipedia-toremifene"
+            "pubchem-cid-3005573"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
         },
         {
-          "claim": "A higher-dose toremifene 80 mg product developed specifically to reduce fracture risk in men on androgen deprivation therapy (ADT) for prostate cancer was never approved: FDA issued a Complete Response Letter requiring a second confirmatory Phase III fracture trial and additional data showing no adverse effect on time-to-disease-progression or overall survival before that indication could be approved; toremifene 80 mg for this use remains unapproved.",
+          "claim": "A toremifene 80 mg regimen was tested to reduce fracture risk in men on androgen deprivation therapy (ADT) for prostate cancer, but the only FDA approval for toremifene (FARESTON, NDA 020497) is for metastatic breast cancer; the ADT fracture use is not approved. The content of FDA's regulatory correspondence on that application: unknown (no regulator source located).",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "fiercebiotech-toremifene-crl-80mg",
-            "fda-openfda-drugsfda-toremifene-search-2026"
+            "drugsfda-fareston-nda020497",
+            "smith-2010-jurol-toremifene-fracture"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "In a two-year, double-blind, placebo-controlled Phase III trial of 1,389 men on ADT for prostate cancer, toremifene 80 mg/day reduced new morphometric vertebral fractures versus placebo (reported as roughly 50-53% relative reduction depending on analysis population, p<0.05) and increased lumbar spine and hip bone mineral density (p<0.0001), but venous thromboembolic events were more frequent with toremifene than placebo (reported 2.4% vs 1.02%), concentrated in patients with pre-existing VTE risk factors; this trial supports a mechanistic bone effect in older ADT-treated men and does not establish efficacy or safety for young, non-hypogonadal men using toremifene for post-cycle recovery.",
+          "claim": "In a two-year, double-blind, placebo-controlled phase III trial in 1,284 men on ADT for prostate cancer (646 toremifene 80 mg/day, 638 placebo), new vertebral fractures occurred in 2.5% vs 4.9% (relative risk reduction 50%, p = 0.05), and bone mineral density rose at spine, hip and femoral neck (p < 0.0001); venous thromboembolic events were more frequent with toremifene (2.6% vs 1.1%). This supports a bone effect in older ADT-treated men and does not establish efficacy or safety for young men using toremifene for post-cycle recovery.",
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "fiercebiotech-toremifene-phase3-fracture",
-            "fiercebiotech-toremifene-crl-80mg"
+            "smith-2010-jurol-toremifene-fracture"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Claim reports a negative or conflicting human finding."
         },
         {
-          "claim": "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use.",
+          "claim": "Toremifene is promoted on bodybuilding sites as a post-cycle-therapy SERM said to restore natural testosterone, raise free testosterone, prevent gynecomastia and outperform tamoxifen. No controlled human trial in anabolic-steroid-using or post-cycle populations was identified; the only large randomized trial outside breast cancer studied older men on ADT. Community-reported doses: n/a (no citable source).",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "sarms-io-vendor-pct",
-            "fiercebiotech-toremifene-phase3-fracture"
+            "smith-2010-jurol-toremifene-fracture",
+            "dailymed-fareston-label"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
@@ -20695,44 +20626,22 @@
           "lastCheckedAt": "2026-08-29T01:58:43Z"
         },
         {
-          "sourceType": "other",
-          "title": "GTx's Toremifene Citrate 80 mg Meets Primary and Key Endpoints in Phase III Trial in Advanced Prostate Cancer Patients on Androgen Deprivation Therapy",
-          "publisher": "Fierce Biotech",
-          "url": "https://www.fiercebiotech.com/biotech/gtx-s-toremifene-citrate-80-mg-meets-primary-and-key-endpoints-phase-iii-trial",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "sourceType": "paper",
+          "title": "Toremifene to reduce fracture risk in men receiving androgen deprivation therapy for prostate cancer (J Urol 2010;184:1316-21)",
+          "publisher": "The Journal of Urology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20723926/",
+          "publishedAt": "2010-10-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "smith-2010-jurol-toremifene-fracture"
         },
         {
-          "sourceType": "other",
-          "title": "GTx Receives Complete Response Letter from FDA for Toremifene 80 mg New Drug Application",
-          "publisher": "Fierce Biotech",
-          "url": "https://www.fiercebiotech.com/biotech/gtx-receives-complete-response-letter-from-fda-for-toremifene-80-mg-new-drug-application",
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: FARESTON (toremifene citrate) NDA 020497 application overview",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020497",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Toremifene",
-          "publisher": "Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/Toremifene",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Toremifene (Fareston) PCT: Best SERM For Post Cycle Results?",
-          "publisher": "sarms.io (gray-market vendor/content site)",
-          "url": "https://sarms.io/toremifene-pct/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Drugs@FDA data (openFDA API): drug products with active ingredient TOREMIFENE CITRATE",
-          "publisher": "U.S. Food and Drug Administration (openFDA / Drugs@FDA)",
-          "url": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T03:40:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-fareston-nda020497"
         }
       ],
       "curationNotes": [
@@ -21698,11 +21607,12 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "Early-phase randomized trials have reported dose-related weight loss and GI adverse events with amycretin; no regulatory approval was verified.",
+          "claim": "In a phase 1b/2a randomized placebo-controlled study (125 adults with overweight or obesity, single US site), weekly subcutaneous amycretin produced larger body-weight reductions than placebo (for example -22.0% vs +1.9% at week 36 in the 20 mg part); the most common adverse events were gastrointestinal, and many participants withdrew. No regulatory approval was verified.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "pubmed-amycretin"
+            "pubmed-amycretin",
+            "gasiorek-2025-lancet-amycretin-oral"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
@@ -21718,20 +21628,22 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "other",
-          "title": "Amycretin (compound overview)",
-          "publisher": "Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/Amycretin",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Amycretin, a novel, unimolecular GLP-1 and amylin receptor agonist administered subcutaneously: results from a phase 1b/2a randomised controlled study (Lancet 2025)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40550231/",
+          "publishedAt": "2025-07-12T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "pubmed-amycretin"
         },
         {
-          "sourceType": "other",
-          "title": "PubMed search: amycretin clinical trial",
-          "publisher": "PubMed / NLM",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=amycretin",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Safety, tolerability, pharmacokinetics, and pharmacodynamics of the first-in-class GLP-1 and amylin receptor agonist, amycretin: a first-in-human, phase 1 trial (Lancet 2025)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40550229/",
+          "publishedAt": "2025-07-12T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "gasiorek-2025-lancet-amycretin-oral"
         }
       ],
       "curationNotes": [
@@ -22372,11 +22284,13 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "Phase 3 weight-management trials of cagrilintide alone and with semaglutide have been publicly summarized; FDA approval was not verified for this record.",
+          "claim": "In the phase 3 REDEFINE 1 trial (3,417 adults with overweight or obesity), cagrilintide-semaglutide reduced body weight by 20.4% vs 3.0% with placebo at 68 weeks; gastrointestinal adverse events affected 79.6% vs 39.9%. Cagrilintide alone was tested as a comparator arm and in a phase 2 dose-finding trial. FDA approval was not verified for this record.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "acc-redefine"
+            "acc-redefine",
+            "davies-2025-nejm-redefine2",
+            "lau-2021-lancet-cagrilintide-phase2"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -22392,20 +22306,31 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "other",
-          "title": "REDEFINE 1 and REDEFINE 2 journal scan: cagrilintide-semaglutide weight loss",
-          "publisher": "American College of Cardiology",
-          "url": "https://www.acc.org/latest-in-cardiology/journal-scans/2025/07/02/14/43/redefine-1-and-redefine-2",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (REDEFINE 1; N Engl J Med 2025)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40544433/",
+          "publishedAt": "2025-08-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "acc-redefine"
         },
         {
-          "sourceType": "other",
-          "title": "PubMed search: cagrilintide obesity",
-          "publisher": "PubMed / NLM",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=cagrilintide+obesity",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Cagrilintide-Semaglutide in Adults with Overweight or Obesity and Type 2 Diabetes (REDEFINE 2; N Engl J Med 2025)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40544432/",
+          "publishedAt": "2025-08-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "davies-2025-nejm-redefine2"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Once-weekly cagrilintide for weight management in people with overweight and obesity: a multicentre, randomised, double-blind, placebo-controlled and active-controlled, dose-finding phase 2 trial (Lancet 2021)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34798060/",
+          "publishedAt": "2021-12-11T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lau-2021-lancet-cagrilintide-phase2"
         }
       ],
       "curationNotes": [
@@ -25249,49 +25174,41 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "mayoclinic-gonadorelin-monograph",
-            "pubchem-cid-638793",
-            "rxlist-factrel-human-label"
+            "pubchem-cid-638793"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
         },
         {
-          "claim": "The only current FDA-approved gonadorelin product identified on DailyMed (FACTREL, gonadorelin hydrochloride injection) is an FDA-approved veterinary drug for cattle - indicated for treatment of ovarian follicular cysts and for estrous-cycle synchronization - and its label explicitly states it is not approved for human use.",
+          "claim": "The only current FDA-approved gonadorelin product on DailyMed (FACTREL, gonadorelin hydrochloride injection) is a veterinary drug for cattle, indicated for ovarian follicular cysts and estrous-cycle synchronization, and its label states it is not for human use; the human FACTREL application (NDA 018123) is listed in Drugs@FDA as Discontinued.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "dailymed-factrel-veterinary",
-            "dailymed-live-search-gonadorelin-2026-08-29",
-            "rxlist-factrel-human-label"
+            "drugsfda-factrel-nda018123"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "In Canada, LUTREPULSE (gonadorelin acetate, delivered via pulsatile subcutaneous pump) is indicated per its Health Canada product monograph for induction of ovulation in women with primary hypothalamic amenorrhea; this ovulation-induction indication is Canada-specific and historical, not a currently active US indication (the corresponding human Factrel product in the US is confirmed discontinued). Gonadorelin has also historically been used diagnostically, under a since-discontinued US FDA-approved human product, to test hypothalamic-pituitary-gonadal axis function.",
-          "tier": "Early Evidence",
+          "claim": "Gonadorelin was historically used as a human diagnostic agent under the now-discontinued US FACTREL application (NDA 018123). Non-US approvals (for example a pulsatile product for ovulation induction in Canada) could not be verified from a regulator source in this review: unknown.",
+          "tier": "Unsupported",
           "confidence": "moderate",
           "sources": [
-            "ferring-lutrepulse-pm-canada",
-            "mayoclinic-gonadorelin-monograph",
-            "rxlist-factrel-human-label"
+            "drugsfda-factrel-nda018123"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Regraded 2026-10-25: the non-US approval could not be verified from a regulator source after the non-citable reference was removed."
         },
         {
-          "claim": "Regulator/clinical-reference sources warn that gonadorelin use is contraindicated or hazardous in patients with hormone-dependent tumors (risk the tumor may worsen) and in undiagnosed gonadotropin-releasing-hormone-secreting pituitary adenoma, where treatment could precipitate pituitary complications including sudden vision loss; ovarian hyperstimulation and multiple pregnancy are recognized risks of pulsatile use for ovulation induction.",
-          "tier": "Early Evidence",
+          "claim": "Human contraindications and warnings for gonadorelin could not be verified from a current regulator label: the US human product is discontinued and no current human label is on DailyMed. Unknown. The veterinary label is not a human safety source.",
+          "tier": "Unsupported",
           "confidence": "moderate",
           "sources": [
-            "ferring-lutrepulse-pm-canada",
-            "mayoclinic-gonadorelin-monograph",
-            "rxlist-factrel-human-label",
-            "drugs-com-gonadorelin-cons"
+            "drugsfda-factrel-nda018123"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Regraded 2026-10-25: no current human regulator label exists; the consumer-reference sources were removed as non-citable."
         },
         {
           "claim": "In a prospective, self-selected open-label comparison in 28 azoospermic men with congenital hypogonadotropic hypogonadism (CHH), pulsatile subcutaneous gonadorelin (10 mcg every 90 minutes via infusion pump) induced spermatogenesis significantly earlier than cyclical hCG/hMG therapy (median 6 vs 14 months), though overall spermatogenesis-success rates were statistically similar between the two approaches (90% vs 83.3%).",
@@ -25305,11 +25222,10 @@
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
         },
         {
-          "claim": "Gonadorelin is widely marketed by telehealth/TRT clinics as a lower-cost hCG alternative to prevent testicular shrinkage and preserve fertility during testosterone replacement therapy, but no controlled human trial data specific to that TRT-adjunct use (intermittent/non-pulsatile subcutaneous dosing in men on exogenous testosterone) was located this session; the clinic source itself concedes evidence is thin and that fertility preservation should not be assumed.",
+          "claim": "Gonadorelin is promoted by telehealth and testosterone clinics as a lower-cost hCG alternative to prevent testicular shrinkage and preserve fertility during testosterone therapy, but no controlled human trial of that use (intermittent subcutaneous dosing in men on exogenous testosterone) was located; the human data located concern pulsatile pump therapy in congenital hypogonadotropic hypogonadism, a different population and regimen.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "moderate",
           "sources": [
-            "fullpotentialmen-gonadorelin-trt-marketing",
             "zhang-2019-pulsatile-gonadorelin-chh",
             "dailymed-factrel-veterinary"
           ],
@@ -25321,9 +25237,7 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "pubchem-cid-638793",
-            "chemicalbook-cas-33515-09-2",
-            "alfa-chemistry-cas-33515-09-2"
+            "pubchem-cid-638793"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -25349,22 +25263,6 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "regulator",
-          "title": "LUTREPULSE (gonadorelin acetate) Product Monograph",
-          "publisher": "Health Canada / Ferring Inc.",
-          "url": "https://ferring.ca/media/1018/lutrepulse-pm-control-no-187199-32-mg-en_17may2016.pdf",
-          "publishedAt": "2016-05-17T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Gonadorelin (intravenous route, injection route) - Description and Brand Names",
-          "publisher": "Mayo Clinic (drug information derived from IBM Micromedex)",
-          "url": "https://www.mayoclinic.org/drugs-supplements/gonadorelin-intravenous-route-injection-route/description/drg-20067426",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "paper",
           "title": "The Pulsatile Gonadorelin Pump Induces Earlier Spermatogenesis Than Cyclical Gonadotropin Therapy in Congenital Hypogonadotropic Hypogonadism Men",
           "publisher": "American Journal of Men's Health (Zhang L, Cai K, Wang Y, Ji W, Cheng Z, Chen G, Liao Z, 2019)",
@@ -25382,38 +25280,6 @@
         },
         {
           "sourceType": "other",
-          "title": "Gonadorelin for Men on Testosterone Replacement Therapy: An HCG Alternative to Prevent Testicular Shrinkage",
-          "publisher": "Full Potential HRT Clinic (clinic marketing page)",
-          "url": "https://www.fullpotentialmen.com/gonadorelin-for-men-on-testosterone-replacement-therapy/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "Factrel (gonadorelin) - historical US FDA human label, reproduced by RxList",
-          "publisher": "RxList (reproducing historical FDA-approved human Factrel labeling)",
-          "url": "https://www.rxlist.com/factrel-drug.htm",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Gonadorelin (Consumer information)",
-          "publisher": "Drugs.com",
-          "url": "https://www.drugs.com/cons/gonadorelin.html",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "DailyMed search results for query GONADORELIN (live, 2026-08-29)",
-          "publisher": "U.S. Food and Drug Administration / DailyMed (NIH)",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GONADORELIN",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Therapeutic effects of a pulsatile GnRH pump on adult male patients with congenital hypogonadotropic hypogonadism (CHH): a retrospective study",
           "publisher": "Translational Andrology and Urology (Jiang H, Li BJ, Jin DC, Zhong QL, Zhu T, Li YF)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12336735/",
@@ -25421,20 +25287,13 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "database",
-          "title": "Gonadorelin (CAS 33515-09-2) chemical product properties",
-          "publisher": "ChemicalBook",
-          "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB2706342.htm",
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: FACTREL (gonadorelin hydrochloride) human NDA 018123 application overview (marketing status: Discontinued)",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018123",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "database",
-          "title": "Gonadorelin (CAS 33515-09-2) supplier registry entry",
-          "publisher": "Alfa Chemistry",
-          "url": "https://www.alfa-chemistry.com/cas_33515-09-2.htm",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-factrel-nda018123"
         }
       ],
       "curationNotes": [
@@ -25630,13 +25489,12 @@
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events. The basis for the trial's existence, design and participant disposition in this packet is the trial registration records - the ClinicalTrials.gov entry and the sponsor's own study register, the latter now carrying no usable authority tier - which establish that the trial was conducted and how it was designed, but not what it found; no results from the primary publication have been retrieved and no efficacy outcome is asserted here. A secondary source (Wikipedia, not independently verified against the primary Thorax publication) states the drug increased muscle strength in men; this sex-specific efficacy framing and the full quantitative leg-press/DXA results remain unconfirmed and are not asserted here as established findings. A separate, independently accessed companion patient-reported-outcomes study of the same trial (Tabberer et al. 2024) reports that in a qualitative interview subsample (n=32), most participants described improvements in muscle strength and functional limitations and all reported a positive trial experience; this corroborates a general positive direction of participant-perceived effect but does not confirm, quantify, or sex-differentiate the efficacy result, and does not substitute for the primary trial's quantitative endpoints.",
+          "claim": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events. The basis for the trial's existence, design and participant disposition in this packet is the trial registration records - the ClinicalTrials.gov entry and the sponsor's own study register, the latter now carrying no usable authority tier - which establish that the trial was conducted and how it was designed, but not what it found; no results from the primary publication have been retrieved and no efficacy outcome is asserted here. The quantitative leg-press and DXA results were not retrieved from a primary publication in this review and are unknown here. A separate, independently accessed companion patient-reported-outcomes study of the same trial (Tabberer et al. 2024) reports that in a qualitative interview subsample (n=32), most participants described improvements in muscle strength and functional limitations and all reported a positive trial experience; this corroborates a general positive direction of participant-perceived effect but does not confirm, quantify, or sex-differentiate the efficacy result, and does not substitute for the primary trial's quantitative endpoints.",
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
             "clinicaltrials-nct03359473",
             "gsk-study-register-200182",
-            "wikipedia-gsk2881078",
             "tabberer-2024-jpro-copd-qualitative"
           ],
           "legacyTier": "Limited",
@@ -25653,11 +25511,10 @@
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "GSK2881078 is sold by multiple online 'research chemical' suppliers as a research-use-only compound (not for human consumption), while GSK's own completed trials tested it only under close medical supervision at low, sex-specific microgram/milligram doses for defined short durations (up to 13 weeks) with lab-monitored safety endpoints. No published human evidence supports self-administered, unsupervised, or longer-duration gray-market use for bodybuilding, anti-aging, or general muscle-building purposes, and FDA's SARM-class warnings (heart attack/stroke/liver injury risk) apply to this unsupervised-use pattern.",
+          "claim": "GSK2881078 is sold online as a research-use-only compound (not for human consumption), while GSK's own completed trials tested it only under close medical supervision at low, sex-specific microgram/milligram doses for defined short durations (up to 13 weeks) with lab-monitored safety endpoints. No published human evidence supports self-administered, unsupervised, or longer-duration gray-market use for bodybuilding, anti-aging, or general muscle-building purposes, and FDA's SARM-class warnings (heart attack/stroke/liver injury risk) apply to this unsupervised-use pattern.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "invivochem-vendor-listing",
             "fda-sarms-bodybuilding-alert",
             "clark-2018-jcem-lean-mass"
           ],
@@ -25726,14 +25583,6 @@
         },
         {
           "sourceType": "other",
-          "title": "GSK2881078",
-          "publisher": "Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/GSK2881078",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
           "title": "Selective Androgen Receptor Modulators (SARMs)",
           "publisher": "LiverTox: Clinical and Research Information on Drug-Induced Liver Injury, NCBI Bookshelf (National Institute of Diabetes and Digestive and Kidney Diseases)",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
@@ -25746,14 +25595,6 @@
           "publisher": "Journal of Patient-Reported Outcomes (Tabberer M, Williamson N, Tatlock S, Gater A, Grimes R, Akinseye C, Neil D, Mahon-Smith A, Nelsen L, 2024)",
           "url": "https://doi.org/10.1186/s41687-024-00712-0",
           "publishedAt": "2024-04-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "GSK-2881078 | selective androgen receptor modulator (SARM) | CAS 1539314-06-1 | Buy GSK2881078 from Supplier InvivoChem",
-          "publisher": "InvivoChem",
-          "url": "https://www.invivochem.com/gsk-2881078.html",
-          "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
       ],
@@ -25928,7 +25769,7 @@
           "confidence": "high",
           "sources": [
             "imbimbo-1994-ejcp-dose-response",
-            "scbt-hexarelin-product-page"
+            "pubchem-cid-6918297"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
@@ -25958,19 +25799,17 @@
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "fda-bulk-drugs-category2-listing",
-            "riteaid-hexarelin-status-safety"
+            "fda-bulk-drugs-category2-listing"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "Hexarelin (listed as examorelin) is named explicitly under WADA's S2.2.4 Growth Hormone Releasing Factors category of the Prohibited List, alongside other GHRPs (GHRP-1/2/3/4/5/6) and GH secretagogues, and is therefore prohibited at all times in professional and Olympic-level sport.",
+          "claim": "The WADA 2026 Prohibited List names examorelin (hexarelin) under S2.2.4 Growth hormone releasing factors, among the GH-releasing peptides, so it is prohibited in sport at all times.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "wada-s2-prohibited-list-drugscom",
-            "vada-prohibited-list-2026"
+            "wada-2026-prohibited-list"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -25980,19 +25819,16 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "pubchem-cid-6918297",
-            "scbt-hexarelin-product-page",
-            "caymanchem-hexarelin-product-page"
+            "pubchem-cid-6918297"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
         },
         {
-          "claim": "Hexarelin is marketed online by peptide vendors with a broad list of purported human benefits -- faster recovery and hypertrophy, increased lipolysis, joint/tendon healing, improved sleep, cardioprotection, and bone/skin effects from 'multi-cycle use' -- none of which are supported by controlled human trial evidence located in this review; the only controlled human data available addresses acute growth-hormone pharmacodynamics, and the cardioprotection claim specifically originates from a rat ischemia/reperfusion study, not human outcomes data.",
+          "claim": "Hexarelin is promoted online with a broad list of purported human benefits -- faster recovery and hypertrophy, increased lipolysis, joint/tendon healing, improved sleep, cardioprotection, and bone/skin effects from 'multi-cycle use' -- none of which are supported by controlled human trial evidence located in this review; the only controlled human data available addresses acute growth-hormone pharmacodynamics, and the cardioprotection claim specifically originates from a rat ischemia/reperfusion study, not human outcomes data.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "peptidedeck-hexarelin-vendor-page",
             "imbimbo-1994-ejcp-dose-response",
             "kong-2017-ihj-rat-cardioprotection"
           ],
@@ -26005,8 +25841,7 @@
           "confidence": "moderate",
           "sources": [
             "massoud-1996-jcem-cortisol-prolactin-doseresponse",
-            "rahim-1999-clinendo-chronic-hpa-axis",
-            "riteaid-hexarelin-status-safety"
+            "rahim-1999-clinendo-chronic-hpa-axis"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Claim reports a negative or conflicting human finding."
@@ -26028,14 +25863,6 @@
           "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "S2. Peptide Hormones, Growth Factors, Related Substances And Mimetics - WADA Anti-Doping Prohibited List",
-          "publisher": "World Anti-Doping Agency (mirrored via Drugs.com)",
-          "url": "https://www.drugs.com/wada/s2-peptide-hormones-growth-factors-and-related-substances.html",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
@@ -26064,22 +25891,6 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "database",
-          "title": "Hexarelin | CAS 140703-51-1",
-          "publisher": "Santa Cruz Biotechnology",
-          "url": "https://www.scbt.com/p/hexarelin-140703-51-1",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Hexarelin: Status and Safety",
-          "publisher": "Rite Aid",
-          "url": "https://riteaid.com/peptides/hexarelin",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "paper",
           "title": "Hexarelin-induced growth hormone, cortisol, and prolactin release: a dose-response study",
           "publisher": "The Journal of Clinical Endocrinology & Metabolism (Massoud AF, Hindmarsh PC, Brook CG, 1996)",
@@ -26097,27 +25908,12 @@
         },
         {
           "sourceType": "regulator",
-          "title": "VADA Prohibited List 2026 (transposition of the WADA Prohibited List)",
-          "publisher": "Voluntary Anti-Doping Association (VADA)",
-          "url": "https://vada-testing.org/wp-content/uploads/2026/02/VADA-Prohibited-List-2026-.pdf",
-          "publishedAt": "2026-02-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "database",
-          "title": "Hexarelin | Product 30716",
-          "publisher": "Cayman Chemical",
-          "url": "https://www.caymanchem.com/product/30716/hexarelin",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Hexarelin Peptide: Benefits, Dosage, Uses & Side Effects",
-          "publisher": "PeptideDeck",
-          "url": "https://www.peptidedeck.com/peptides/hexarelin-peptide",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -26571,13 +26367,12 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "IGF-1 LR3 (Long-Arg3-IGF-I) is a synthetic 83-amino-acid analogue of human IGF-1 bearing an arginine substitution at position 3 and a 13-amino-acid N-terminal extension; these modifications reduce its affinity for IGF-binding proteins, contributing to a longer functional half-life and greater potency than native IGF-1 in preclinical models. FDA's Substance Registration System assigns it UNII M9L22Y19H9 with CAS 143045-27-6; commercial vendor chemical listings commonly cite a different CAS number (946870-92-4) for the same substance name, an identifier discrepancy that is unresolved.",
+          "claim": "IGF-1 LR3 (Long-Arg3-IGF-I) is a synthetic 83-amino-acid analogue of human IGF-1 bearing an arginine substitution at position 3 and a 13-amino-acid N-terminal extension; these modifications reduce its affinity for IGF-binding proteins, contributing to a longer functional half-life and greater potency than native IGF-1 in preclinical models. FDA's Substance Registration System assigns it UNII M9L22Y19H9 with CAS 143045-27-6.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
             "fda-unii-srs-m9l22y19h9",
-            "conlon-1995-guinea-pig",
-            "wikipedia-igf1lr3"
+            "conlon-1995-guinea-pig"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -26594,12 +26389,11 @@
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         },
         {
-          "claim": "Severe hypoglycemia (including hypoglycemic seizures) is a labeled, mechanism-based risk of IGF-1 receptor agonism established for the FDA-approved parent molecule mecasermin (Increlex). A Finnish national anti-doping information service states that not all adverse effects of IGF-1 LR3 in humans have been characterized but are presumed similar to ordinary IGF-1, including severe hypoglycemia. No direct human safety data specific to IGF-1 LR3 itself were identified this session.",
+          "claim": "Severe hypoglycemia (including hypoglycemic seizures) is a labeled, mechanism-based risk of IGF-1 receptor agonism for the FDA-approved parent molecule mecasermin (Increlex). No direct human safety data for IGF-1 LR3 itself were identified: unknown.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "dailymed-increlex-label",
-            "dopinglinkki"
+            "dailymed-increlex-label"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
@@ -26615,33 +26409,31 @@
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
         },
         {
-          "claim": "No published human clinical trials of IGF-1 LR3 for any therapeutic or performance endpoint were identified, and ClinicalTrials.gov is reported to list no completed or active IGF-1 LR3 study. A Finnish national doping-information service similarly notes that scientific studies have only sporadically mentioned IGF abuse. The muscle-growth, fat-loss, hyperplasia, and recovery benefits attributed to IGF-1 LR3 in popular and commercial use rest on preclinical (rodent) mechanistic work and the unrelated Increlex pediatric-deficiency dataset, not on direct human evidence for these uses.",
+          "claim": "No published human clinical trial of IGF-1 LR3 for any therapeutic or performance endpoint was identified. Muscle-growth, fat-loss, hyperplasia and recovery claims rest on animal work and on the unrelated Increlex pediatric IGF-1-deficiency data, not on human evidence for these uses.",
           "tier": "Plausible Theory",
           "confidence": "high",
           "sources": [
-            "peptidedosingprotocols",
-            "dopinglinkki",
-            "wikipedia-igf1lr3"
+            "conlon-1995-guinea-pig",
+            "dailymed-increlex-label"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Only mechanistic or preclinical rationale found (was Insufficient)."
         },
         {
-          "claim": "IGF-1 LR3 is commonly marketed online for 'anabolic' muscle-building effects and 'satellite cell activation and possible hyperplasia (creation of new muscle fibers),' with the underlying mechanism sourced by the marketing material itself only to preclinical rat studies, and with dosing ranges the same source describes as 'extrapolated from preclinical work, the Increlex clinical record, and decades of community reporting' rather than validated clinical evidence. These popular marketing claims are not supported by any identified human controlled trial. Anecdotal reports are not treated as established evidence.",
+          "claim": "IGF-1 LR3 is marketed online for 'anabolic' muscle growth and new muscle-fiber formation, based on animal studies. No human controlled trial supports these claims. Community-reported doses: n/a (no citable source).",
           "tier": "Anecdotal Signal",
           "confidence": "moderate",
           "sources": [
-            "peptidedosingprotocols"
+            "conlon-1995-guinea-pig"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Support is user, community or case reports, not generalizable evidence."
         },
         {
-          "claim": "IGF-1 and LR3IGF-1 are classified as doping substances under the Finnish Criminal Code according to Finland's national anti-doping information service. IGF-1 LR3 is understood to fall within the broader class of IGF-1-related growth factors restricted in competitive sport, but this specific finding is documented only for Finland; general WADA Prohibited List classification for IGF-1 analogues was not independently verified this session.",
+          "claim": "The WADA 2026 Prohibited List (S2.3 Growth factors) prohibits insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues, which covers IGF-1 LR3.",
           "tier": "Established",
           "confidence": "moderate",
           "sources": [
-            "dopinglinkki",
             "wada-2026-prohibited-list"
           ],
           "legacyTier": "Limited",
@@ -26692,44 +26484,21 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "paper",
-          "title": "Long R3 insulin-like growth factor-I (IGF-I) infusion stimulates organ growth but reduces plasma IGF-I, IGF-II and IGF binding protein concentrations in the guinea pig",
-          "publisher": "The Journal of Endocrinology (Conlon MA, Tomas FM, Owens PC, Wallace JC, Howarth GS, Ballard FJ, 1995); accessed via Europe PMC",
-          "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:7561636&format=json&resultType=core",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Insulin-like growth factor 1 (IGF-1) and long chain IGF (Ir3igf-1)",
-          "publisher": "Dopinglinkki, A-Clinic Foundation (Finnish national doping/substance information service)",
-          "url": "https://dopinglinkki.fi/en/info-bank/doping-substances/insulin-like-growth-factor-1-igf-1-and-long-chain-igf-ir3igf-1/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "IGF-1 LR3 Peptide Dosage Guide: Cycle, Side Effects & Safety",
-          "publisher": "PeptideDosingProtocols.com",
-          "url": "https://www.peptidedosingprotocols.com/protocol/igf-1-lr3",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "IGF-1 LR3",
-          "publisher": "Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/IGF-1_LR3",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
           "sourceType": "regulator",
           "title": "World Anti-Doping Code International Standard: The 2026 Prohibited List, Section S2.3 (Growth Factors and Growth Factor Modulators)",
           "publisher": "World Anti-Doping Agency (WADA)",
           "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": "2025-09-01T00:00:00Z",
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Long R3 insulin-like growth factor-I (IGF-I) infusion stimulates organ growth but reduces plasma IGF-I, IGF-II and IGF binding protein concentrations in the guinea pig (J Endocrinol 1995;146:247-53)",
+          "publisher": "The Journal of Endocrinology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/7561636/",
+          "publishedAt": "1995-08-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "conlon-1995-guinea-pig"
         }
       ],
       "curationNotes": [
@@ -26940,12 +26709,12 @@
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
         },
         {
-          "claim": "Gray-market vendor pages market kisspeptin-10 with a broad set of consumer benefit claims -- fertility improvement, weight loss/fat metabolism, mood regulation and anxiety reduction, antidepressant-like effects, and cognitive/memory benefits -- that go well beyond anything shown in the small acute human LH-stimulation studies or acknowledged by FDA's compounding review; the same vendor page simultaneously disclaims the product as being for laboratory/research use only and states no claims are made that it can cure, treat, or prevent any condition. Anecdotal reports are not treated as established evidence.",
+          "claim": "Kisspeptin-10 is promoted online for fertility, weight loss, mood, anxiety and cognition, far beyond the small acute human LH-stimulation studies; FDA's compounding review found insufficient evidence of effectiveness for hypogonadism in men. Anecdotal reports are not treated as evidence.",
           "tier": "Anecdotal Signal",
           "confidence": "high",
           "sources": [
-            "peptides-org-kp10-dosage-page",
-            "fda-pcac-briefing-kisspeptin-182089"
+            "fda-pcac-briefing-kisspeptin-182089",
+            "jayasena-2011-jcem-lh-pulse"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Support is user, community or case reports, not generalizable evidence."
@@ -27000,14 +26769,6 @@
           "title": "PubChem Compound Summary: Kisspeptin-10 (CID 25240297)",
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Kisspeptin-10",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Kisspeptin-10 Dosage Calculator and Chart | A-Z Guide",
-          "publisher": "peptides.org",
-          "url": "https://www.peptides.org/kisspeptin-10-dosage-calculator/",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
@@ -27216,8 +26977,7 @@
           "confidence": "high",
           "sources": [
             "fda-bulk-substances-withdrawn",
-            "fda-pcac-briefing-193346",
-            "thepeptide-expert-pcac-2026"
+            "fda-pcac-briefing-193346"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -27229,7 +26989,6 @@
           "sources": [
             "fda-bulk-substances-withdrawn",
             "crook-2008-gastro-pept1-kpv",
-            "brainflow-kpv-guide-2026",
             "fda-pcac-briefing-193346"
           ],
           "legacyTier": "Insufficient",
@@ -27285,22 +27044,6 @@
           "publisher": "Inflammatory Bowel Diseases (Dalmasso G, et al., 2008; PubMed ID 18092346)",
           "url": "https://europepmc.org/article/MED/18092346",
           "publishedAt": "2008-03-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "PCAC 2026 Regulatory Tracker — KPV Pharmacy Compounding Advisory Committee Vote",
-          "publisher": "The Peptide Expert",
-          "url": "https://thepeptide.expert/regulatory/pcac-2026",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "KPV Peptide: Benefits, Dosage, Side Effects & 2026 Status",
-          "publisher": "Brainflow (consumer peptide-marketing blog)",
-          "url": "https://brainflow.co/kpv-peptide-guide/",
-          "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
       ],
@@ -27930,20 +27673,13 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "database",
-          "title": "DailyMed search results for mazdutide (no US label)",
-          "publisher": "U.S. National Library of Medicine / DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=mazdutide",
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Innovent Announces Mazdutide NMPA Approval for Chronic Weight Management",
-          "publisher": "Innovent Biologics via PR Newswire",
-          "url": "https://www.prnewswire.com/news-releases/innovent-announces-mazdutide-first-dual-gcgglp-1-receptor-agonist-received-approval-from-chinas-nmpa-for-chronic-weight-management-302493152.html",
-          "publishedAt": "2025-06-27T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -30574,14 +30310,6 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Semax",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Semax (ACTH4-7-PGP), Product 27719",
-          "publisher": "Cayman Chemical",
-          "url": "https://www.caymanchem.com/product/27719/semax",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
       ],
       "curationNotes": [
@@ -31311,7 +31039,7 @@
         "sources": [
           "nature-sr9009",
           "pubchem-sr9009",
-          "wada-s4"
+          "wada-2026-prohibited-list"
         ]
       }
     ],
@@ -31420,14 +31148,14 @@
           "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
         },
         {
-          "claim": "WADA prohibits SR9009 as a metabolic modulator.",
-          "tier": "Early Evidence",
+          "claim": "The WADA 2026 Prohibited List names SR9009 among Rev-erb-alpha agonists under S4.4.1 metabolic modulators, so it is prohibited in sport.",
+          "tier": "Established",
           "confidence": "high",
           "sources": [
-            "wada-s4"
+            "wada-2026-prohibited-list"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Regraded 2026-10-25: verified directly against the WADA 2026 Prohibited List text (S4.4.1 names SR9009)."
         }
       ],
       "evidenceGaps": [
@@ -31457,12 +31185,13 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "other",
-          "title": "S4. Hormone And Metabolic Modulators — WADA Prohibited List reference",
-          "publisher": "World Anti-Doping Agency (mirrored listing)",
-          "url": "https://www.drugs.com/wada/s4-hormone-and-metabolic-modulators.html",
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -31958,11 +31687,12 @@
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
         },
         {
-          "claim": "VK2735 has no FDA-approved product label; DailyMed search returns no package labels.",
+          "claim": "VK2735 is investigational: its published data come from phase 2 trials and registered studies, and no FDA approval was found.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "dailymed-search-vk2735-2026"
+            "pubmed-41508550",
+            "ctgov-nct06828055"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -31990,14 +31720,6 @@
           "title": "NCT06828055 Phase 2 oral VK2735 dose-finding study",
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT06828055",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "DailyMed search results for VK2735 (no labels)",
-          "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=VK2735",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
