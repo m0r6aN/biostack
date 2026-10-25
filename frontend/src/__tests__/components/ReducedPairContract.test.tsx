@@ -1,14 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { OverlapResults } from '@/components/knowledge/OverlapResults';
 import { StackGraph } from '@/components/protocol/StackGraph';
 import { summarizeCompoundOverlap } from '@/components/tools/ToolsDecisionSurface';
 import { getRelationshipCandidatesFromOverlaps } from '@/lib/onboardingIntelligence';
-import { getContextTagsForOverlapFlags } from '@/lib/recommendations';
 import type { CompoundRecord } from '@/lib/types';
 
-vi.mock('@/components/recommendations/ContextualRecommendations', () => ({ ContextualRecommendations: () => null }));
 const pair = { compoundA: 'Alpha', compoundB: 'Beta', severity: null };
 const flag = { compoundNames: ['Alpha', 'Beta'], severity: null };
 const active = { id: 'alpha', name: 'Alpha', status: 'Active' } as CompoundRecord;
@@ -35,9 +33,8 @@ describe('explicit unavailable pair severity', () => {
     expect(screen.getByText(full.description)).toBeInTheDocument();
     expect(screen.queryByText(/^Pathway:/)).not.toBeInTheDocument();
   });
-  it('keeps onboarding detail neutral and recommendation inputs defined', () => {
+  it('keeps onboarding detail neutral', () => {
     expect(getRelationshipCandidatesFromOverlaps([flag])[0].detail).toBe('Severity unavailable.');
-    expect(() => getContextTagsForOverlapFlags([flag])).not.toThrow();
   });
   it('distinguishes reduced graph data from an actually empty stack', () => {
     const { rerender } = render(<StackGraph intelligence={{ pairs: [pair] }} compounds={[active]} />);

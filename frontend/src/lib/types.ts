@@ -507,7 +507,6 @@ export interface EntitlementFeatures {
   protocolBuilder: boolean;
   observabilityCorrelations: boolean;
   savedAdvancedProtocolViews: boolean;
-  affiliateSurfaces: boolean;
 }
 
 export interface Entitlements {
