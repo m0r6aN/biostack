@@ -639,6 +639,7 @@ app.MapProviderAccessEndpoints();
 app.MapAdminEndpoints();
 app.MapKompressEndpoints();
 app.MapClaimCheckEndpoints();
+app.MapCommunityEndpoints();
 
 if (app.Environment.IsDevelopment())
     app.MapDevAuthEndpoints();
