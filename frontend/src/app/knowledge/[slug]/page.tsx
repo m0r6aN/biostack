@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { permanentRedirect } from 'next/navigation';
 import { compoundPath, compoundSlug } from '@/lib/compoundSlug';
-import { dossierCardUrl, dossierDescription, dossierTitle } from '@/lib/dossierMeta';
-import { tierLabel } from '@/lib/evidenceTiers';
+import { dossierCardAlt, dossierCardUrl, dossierDescription, dossierShareTitle } from '@/lib/dossierMeta';
+import { redactDoseText } from '@/lib/doseRedaction';
 import { dossierVersionDate, fetchKnowledgeEntry, safeDecodeSlug } from '@/lib/knowledgeServer';
 import { createPublicPageMetadata } from '@/lib/site';
 import type { KnowledgeEntry } from '@/lib/types';
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return createPublicPageMetadata({
-    title: dossierTitle(entry.canonicalName),
+    title: dossierShareTitle(entry),
     description: dossierDescription(entry),
     path: compoundPath(entry.canonicalName),
     image: {
       url: dossierCardUrl(entry),
       width: 1200,
       height: 630,
-      alt: `${entry.canonicalName}: BioStack evidence grade ${tierLabel(entry.evidenceTier)}`,
+      alt: dossierCardAlt(entry),
     },
   });
 }
@@ -46,7 +46,7 @@ function buildStructuredData(entry: KnowledgeEntry, path: string) {
     '@type': 'WebPage',
     name: `${entry.canonicalName}: what the evidence actually says`,
     url: path,
-    description: entry.mechanismSummary,
+    description: redactDoseText(entry.mechanismSummary),
     dateModified: dossierVersionDate(entry) ?? undefined,
     isPartOf: {
       '@type': 'WebSite',
@@ -56,7 +56,7 @@ function buildStructuredData(entry: KnowledgeEntry, path: string) {
       '@type': 'ChemicalSubstance',
       name: entry.canonicalName,
       alternateName: entry.aliases,
-      description: entry.mechanismSummary,
+      description: redactDoseText(entry.mechanismSummary),
     },
     citation: entry.sourceReferences,
   };
