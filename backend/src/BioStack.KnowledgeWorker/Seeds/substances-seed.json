@@ -15431,6 +15431,454 @@
     "schemaVersion": "1.0.0",
     "recordType": "substance",
     "identity": {
+      "canonicalId": "creatine-monohydrate",
+      "canonicalName": "Creatine monohydrate",
+      "slug": "creatine-monohydrate",
+      "aliases": [
+        "creatine",
+        "Creapure"
+      ],
+      "brandNames": [],
+      "synonyms": [],
+      "classification": "Supplement",
+      "compoundFamily": "Phosphocreatine energy buffer (monohydrate salt form)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Creatine monohydrate"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "dietary-supplement",
+      "jurisdiction": "US",
+      "approvedIndications": [],
+      "labelStatusByUseCase": [
+        {
+          "useCase": "exercise performance dietary supplement",
+          "labelStatus": "not-indicated"
+        }
+      ],
+      "offLabelNotes": [
+        "Most studied commercial form of creatine. GRAS notice pathway exists for food ingredient use; not a drug approval."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Creatine monohydrate increases muscle creatine/phosphocreatine stores that help regenerate ATP during high-intensity contractions.",
+      "primaryMechanisms": [
+        "phosphocreatine energy buffering"
+      ],
+      "pathways": [
+        "phosphagen system"
+      ],
+      "targets": [
+        "skeletal muscle creatine pool"
+      ],
+      "effectTags": [
+        "high-intensity-performance",
+        "training-adaptation-support"
+      ],
+      "goalTags": [
+        "strength-training",
+        "anaerobic-performance"
+      ]
+    },
+    "formulations": [
+      {
+        "formulationId": "creatine-monohydrate-oral",
+        "productName": "Creatine monohydrate",
+        "manufacturer": null,
+        "route": "oral",
+        "dosageForm": "powder",
+        "strength": null,
+        "concentration": null,
+        "unit": null,
+        "substitutableWith": [],
+        "storage": {
+          "beforeReconstitution": "Store according to product labeling or manufacturer instructions.",
+          "afterReconstitution": null,
+          "temperatureNotes": "Avoid excessive heat and moisture unless labeling states otherwise.",
+          "lightSensitivity": null,
+          "stabilityWindow": null
+        },
+        "reconstitution": {
+          "required": false,
+          "diluent": null,
+          "diluentVolume": null,
+          "instructions": null,
+          "productSpecific": false
+        }
+      }
+    ],
+    "indications": [
+      {
+        "useCase": "High-intensity and resistance-training performance (studied)",
+        "labelStatus": "not-indicated",
+        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
+        "benefitSummary": "Creatine monohydrate is the best-studied creatine form for high-intensity exercise performance and lean-mass training contexts in healthy people. Presented as educational supplement reference, not a disease treatment.",
+        "evidenceTier": "Established",
+        "sources": [
+          "src:creatine-monohydrate"
+        ]
+      }
+    ],
+    "dosingGuidance": [
+      {
+        "guidanceId": "creatine-monohydrate-guidance",
+        "context": {
+          "useCase": "exercise performance supplement reference",
+          "population": "Healthy adults",
+          "formulation": null,
+          "route": "oral"
+        },
+        "dose": {
+          "amount": null,
+          "unit": "g",
+          "frequency": "see primary sources",
+          "scheduleText": "Common study patterns are summarized in NIH/ISSN sources; this record does not assign a personal dose.",
+          "preferredTimeOfDay": null
+        },
+        "notes": [
+          "Educational reference only; not medical advice."
+        ],
+        "productSpecific": false,
+        "sources": [
+          "src:creatine-monohydrate"
+        ]
+      }
+    ],
+    "compatibility": {
+      "vialCompatibilitySummary": "Not applicable or unknown for non-injectable use; avoid assuming compatibility across products.",
+      "blendingRules": [
+        {
+          "ruleType": "co-use",
+          "target": "other compounds",
+          "status": "unknown",
+          "message": "No hard-safe compatibility conclusion is established by this seed record.",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": [
+        "other compounds"
+      ]
+    },
+    "safety": {
+      "contraindications": [
+        {
+          "item": "Known hypersensitivity to creatine monohydrate products",
+          "severity": "review",
+          "notes": "Avoid if prior reaction.",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "item": "Kidney disease caution and creatinine lab confounds",
+          "severity": "high",
+          "notes": "Safety conclusions are strongest in people without prior kidney damage; creatinine-based GFR estimates can shift with supplementation.",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "precautions": [
+        {
+          "item": "Hydration and concurrent nephrotoxic therapy review",
+          "notes": "Practical precaution when labs or kidney history are relevant.",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "adverseEffects": {
+        "common": [
+          "transient water weight gain",
+          "GI upset in some users"
+        ],
+        "serious": [
+          "renal risk mainly a concern with pre-existing kidney disease or misinterpreted labs"
+        ]
+      },
+      "monitoring": [
+        {
+          "parameter": "Renal context for serum creatinine/eGFR",
+          "reason": "Interpret labs knowing creatine intake can raise creatinine.",
+          "frequency": "If clinically indicated",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "interactionId": "creatine-monohydrate-nephrotoxic-drugs",
+        "type": "drug-drug",
+        "target": "nephrotoxic drugs",
+        "severity": "review",
+        "mechanism": "Shared renal monitoring burden",
+        "effect": "Potential additive clinical concern rather than a proven PK interaction.",
+        "recommendedAction": "Clinician review when relevant.",
+        "sources": [
+          "src:creatine-monohydrate"
+        ]
+      }
+    ],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [
+        {
+          "target": "kidney disease context without clinician review",
+          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
+          "severity": "review",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "overlapRules": [
+        {
+          "ruleId": "creatine-monohydrate-phosphocreatine-system-overlap",
+          "ruleType": "pathway-overlap",
+          "tag": "phosphocreatine-system",
+          "severity": "review",
+          "message": "Shared pathway tag: phosphocreatine-system.",
+          "action": "Show overlap and require interpretation rather than returning no relationship.",
+          "sources": [
+            "src:creatine-monohydrate"
+          ]
+        }
+      ],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [
+        {
+          "topic": "Baseline",
+          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
+        }
+      ],
+      "supplements": [
+        {
+          "topic": "Stack review",
+          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
+        }
+      ],
+      "sleep": [
+        {
+          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
+        }
+      ],
+      "exercise": [
+        {
+          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
+        }
+      ],
+      "applicabilityNotes": [
+        "Supportive guidance is general tracking context and is not a treatment recommendation."
+      ],
+      "sources": [
+        "src:internal-guidance"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Established",
+      "claimSpecificEvidence": [
+        {
+          "claim": "Creatine monohydrate has strong sports-nutrition evidence for high-intensity performance.",
+          "tier": "Established",
+          "confidence": "high",
+          "sources": [
+            "src:creatine-monohydrate"
+          ],
+          "legacyTier": "Strong",
+          "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+        }
+      ],
+      "evidenceGaps": [
+        "Alternate forms often lack equal head-to-head outcome evidence versus monohydrate.",
+        "Long-term data in CKD populations remain limited.",
+        "Community-reported doses: n/a (no citable source)."
+      ],
+      "controversies": [
+        "Marketing of superior creatine forms versus monohydrate frequently outpaces comparative evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "creatine-monohydrate-performance",
+          "statement": "Creatine improves strength and high-intensity exercise performance.",
+          "population": "healthy adults who train",
+          "outcome": "high-intensity performance and training gains",
+          "tier": "Established",
+          "qualifier": {
+            "population": "healthy exercising adults",
+            "outcome": "high-intensity, repeated-effort performance"
+          },
+          "note": "Yes. The ISSN position stand finds creatine consistently raises muscle creatine and improves high-intensity performance and training adaptations; NIH ODS reaches a similar view.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position",
+            "ods-exercise-athletic-performance"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "kreider-2017-jissn-creatine-position",
+                "ods-exercise-athletic-performance"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-monohydrate-hair-loss",
+          "statement": "Creatine causes hair loss.",
+          "population": "resistance-trained men",
+          "outcome": "DHT levels and hair health",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not supported. A 12-week randomized trial in resistance-trained men found no difference vs placebo in DHT, the DHT-to-testosterone ratio, or hair density and thickness.",
+          "sources": [
+            "lak-2025-jissn-creatine-hair-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "lak-2025-jissn-creatine-hair-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-monohydrate-unsafe",
+          "statement": "Creatine is unsafe for healthy people.",
+          "population": "healthy adults",
+          "outcome": "safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The ISSN position stand reports short- and long-term use is safe and well tolerated in healthy people. People with kidney disease should ask a clinician first.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "kreider-2017-jissn-creatine-position"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "Dietary Supplements for Exercise and Athletic Performance - Health Professional Fact Sheet",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-exercise-athletic-performance"
+        },
+        {
+          "sourceType": "guideline",
+          "title": "ISSN position stand: safety and efficacy of creatine supplementation",
+          "publisher": "Journal of the International Society of Sports Nutrition",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28615996/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "kreider-2017-jissn-creatine-position"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Does creatine cause hair loss? A 12-week randomized controlled trial (J Int Soc Sports Nutr 2025)",
+          "publisher": "Journal of the International Society of Sports Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+          "publishedAt": "2025-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lak-2025-jissn-creatine-hair-rct"
+        }
+      ],
+      "curationNotes": [
+        "Agent review 2026-10-14: accepted Strong monohydrate sports evidence; clarified supplement regulatory status and renal cautions."
+      ],
+      "lastReviewedAt": "2026-10-14T00:00:00Z",
+      "reviewStatus": "reviewed"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "seed:substances-seed.json",
+      "ingestedAt": null,
+      "updatedAt": null,
+      "lastChangeType": "manual-review",
+      "isActive": true,
+      "completeness": "substantial",
+      "needsReview": false,
+      "reviewReasons": [],
+      "qualityFlags": [
+        "agent-reviewed"
+      ]
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 5,
+        "unit": "g",
+        "frequency": "once daily",
+        "duration": "12 weeks",
+        "route": "oral",
+        "population": "45 resistance-trained men aged 18-40",
+        "outcome": "no change in DHT or hair outcomes vs placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Does creatine cause hair loss? (J Int Soc Sports Nutr 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
       "canonicalId": "caffeine",
       "canonicalName": "Caffeine",
       "slug": "caffeine",
@@ -25964,10 +26412,7 @@
       "slug": "creatine",
       "aliases": [
         "Cr",
-        "creatine monohydrate (common form)",
-        "Creatine monohydrate",
-        "creatine-monohydrate",
-        "Creapure"
+        "creatine monohydrate (common form)"
       ],
       "brandNames": [],
       "synonyms": [],

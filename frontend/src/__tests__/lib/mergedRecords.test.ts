@@ -4,11 +4,9 @@ import { MERGED_RECORDS, RETIRED_SLUGS, mergedRecordRedirects } from '@/lib/merg
 import { compoundSitemapEntries } from '@/lib/sitemapEntries';
 
 describe('merged duplicate records', () => {
-  it('retires testolone and creatine-monohydrate into their canonical records', () => {
-    expect(MERGED_RECORDS.map((m) => [m.from, m.to])).toEqual([
-      ['testolone', 'vosilasarm'],
-      ['creatine-monohydrate', 'creatine'],
-    ]);
+  it('retires only testolone into vosilasarm; creatine-monohydrate stays distinct (D-D)', () => {
+    expect(MERGED_RECORDS.map((m) => [m.from, m.to])).toEqual([['testolone', 'vosilasarm']]);
+    expect(RETIRED_SLUGS.has('creatine-monohydrate')).toBe(false);
   });
 
   it('permanently redirects the old dossier, claim, short-link, embed and vs URLs', () => {
@@ -16,14 +14,13 @@ describe('merged duplicate records', () => {
     const dest = (source: string) => r.find((x) => x.source === source)?.destination;
     expect(r.every((x) => x.permanent)).toBe(true);
     expect(dest('/knowledge/testolone')).toBe('/knowledge/vosilasarm');
-    expect(dest('/knowledge/creatine-monohydrate')).toBe('/knowledge/creatine');
     expect(dest('/knowledge/testolone/:path*')).toBe('/knowledge/vosilasarm/:path*');
     expect(dest('/knowledge/testolone/claims/rad140-record-safe')).toBe('/knowledge/vosilasarm/claims/testolone-safe');
-    expect(dest('/knowledge/creatine-monohydrate/claims/creatine-monohydrate-hair-loss')).toBe('/knowledge/creatine/claims/creatine-hair-loss');
-    expect(dest('/c/creatine-monohydrate-unsafe')).toBe('/c/creatine-unsafe');
     expect(dest('/embed/verdict/rad140-record-muscle')).toBe('/embed/verdict/testolone-muscle');
     expect(dest('/vs/testolone/:other')).toBe('/vs/vosilasarm/:other');
-    expect(dest('/vs/:other/creatine-monohydrate')).toBe('/vs/:other/creatine');
+    expect(dest('/vs/:other/testolone')).toBe('/vs/:other/vosilasarm');
+    expect(dest('/c/rad140-record-legal-supplement')).toBe('/c/testolone-legal-supplement');
+    expect(r.some((x) => x.source.includes('creatine'))).toBe(false);
     expect(dest('/embed/vs/:other/testolone')).toBe('/embed/vs/:other/vosilasarm');
   });
 
@@ -46,7 +43,7 @@ describe('merged duplicate records', () => {
       { canonicalName: 'Creatine' },
     ]);
     const paths = entries.map((e) => new URL(e.url).pathname);
-    expect(paths).toEqual(['/knowledge/vosilasarm', '/knowledge/creatine']);
+    expect(paths).toEqual(['/knowledge/creatine-monohydrate', '/knowledge/vosilasarm', '/knowledge/creatine']);
     for (const slug of RETIRED_SLUGS) expect(paths).not.toContain(`/knowledge/${slug}`);
   });
 });

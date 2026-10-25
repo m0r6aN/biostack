@@ -16,7 +16,7 @@ public sealed class SevenTierRegradeTests
     public void Seed_Uses_Only_Seven_Tier_Labels_And_Keeps_Legacy_Grade_With_Rationale()
     {
         var records = JsonNode.Parse(File.ReadAllText(SeedPath))!.AsArray();
-        Assert.Equal(156, records.Count);
+        Assert.Equal(157, records.Count);
         foreach (var record in records)
         {
             var evidence = record!["evidence"]!;

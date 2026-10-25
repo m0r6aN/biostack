@@ -29,9 +29,9 @@ public class IngestionPipelineTests
             "src", "BioStack.KnowledgeWorker", "Seeds", "substances-seed.json"));
         var result = pipeline.Run(seedPath);
 
-        Assert.Equal(156, result.Accepted.Count);
+        Assert.Equal(157, result.Accepted.Count);
         Assert.Empty(result.Rejected);
-        Assert.Equal(156, result.Accepted.Select(row => row.Entry.CanonicalName).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        Assert.Equal(157, result.Accepted.Select(row => row.Entry.CanonicalName).Distinct(StringComparer.OrdinalIgnoreCase).Count());
         Assert.All(result.Accepted, row => Assert.False(string.IsNullOrWhiteSpace(row.Entry.CanonicalName)));
     }
 
