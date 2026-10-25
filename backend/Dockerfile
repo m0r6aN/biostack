@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY BioStack.sln .
+COPY Directory.Build.props .
 COPY NuGet.Config .
 COPY packages/ packages/
 COPY src/BioStack.Domain/BioStack.Domain.csproj src/BioStack.Domain/
