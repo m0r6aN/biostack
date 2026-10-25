@@ -22485,22 +22485,54 @@
           "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
         },
         {
-          "claim": "A JAMA Network Open randomized trial examined spermidine supplementation on cognition and biomarkers in older adults with subjective cognitive decline.",
-          "tier": "Early Evidence",
+          "claim": "In the 12-month SmartAge trial in 100 older adults with subjective cognitive decline, spermidine did not change memory or biomarkers versus placebo; exploratory signals need confirmation.",
+          "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "jama-smartage-2022"
+            "jama-smartage-2022",
+            "schwarz-2022-jamanetopen-smartage"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25 from the trial abstract; the primary outcome was null."
         }
       ],
       "evidenceGaps": [
         "Broad anti-aging and autophagy marketing claims exceed current human clinical outcome evidence.",
-        "Optimal identity, dose, and long-term safety of commercial supplements are not standardized like approved drugs."
+        "Optimal identity, dose, and long-term safety of commercial supplements are not standardized like approved drugs.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer longevity marketing often outpaces mixed/early cognitive trial results."
+      ],
+      "publicClaims": [
+        {
+          "id": "spermidine-memory",
+          "statement": "Spermidine improves memory in older adults.",
+          "population": "older adults with subjective cognitive decline",
+          "outcome": "memory",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. A 12-month trial found no memory benefit over placebo. A 3-month pilot of 30 people had suggested one.",
+          "sources": [
+            "schwarz-2022-jamanetopen-smartage",
+            "pubmed-30388439"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "schwarz-2022-jamanetopen-smartage",
+                "pubmed-30388439"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -22511,7 +22543,8 @@
           "publisher": "National Center for Biotechnology Information",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/1102",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-spermidine"
         },
         {
           "sourceType": "paper",
@@ -22519,7 +22552,8 @@
           "publisher": "Cortex / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/30388439/",
           "publishedAt": "2018-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-30388439"
         },
         {
           "sourceType": "paper",
@@ -22527,7 +22561,17 @@
           "publisher": "JAMA Network Open",
           "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2792725",
           "publishedAt": "2022-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "jama-smartage-2022"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of Spermidine Supplementation on Cognition and Biomarkers in Older Adults With Subjective Cognitive Decline: A Randomized Clinical Trial (JAMA Netw Open 2022)",
+          "publisher": "JAMA Network Open (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35616942/",
+          "publishedAt": "2022-05-02T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "schwarz-2022-jamanetopen-smartage"
         }
       ],
       "curationNotes": [
@@ -22733,7 +22777,8 @@
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "jama-urolithin-a-older-adults-2022"
+            "jama-urolithin-a-older-adults-2022",
+            "liu-2022-jamanetopen-urolithin-a"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -22751,10 +22796,65 @@
         }
       ],
       "evidenceGaps": [
-        "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added."
+        "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer anti-aging marketing often exceeds the scope of available randomized human data."
+      ],
+      "publicClaims": [
+        {
+          "id": "urolithin-a-endurance",
+          "statement": "Urolithin A improves muscle endurance in older adults.",
+          "population": "adults 65 to 90",
+          "outcome": "muscle endurance and walking distance",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Partly. One 4-month trial found better hand and leg muscle endurance, but no significant gain in 6-minute walk distance or muscle ATP production.",
+          "sources": [
+            "liu-2022-jamanetopen-urolithin-a"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "liu-2022-jamanetopen-urolithin-a"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "urolithin-a-anti-aging",
+          "statement": "Urolithin A slows aging or extends lifespan.",
+          "population": "adults",
+          "outcome": "aging and lifespan",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. Human evidence covers specific muscle and biomarker endpoints, not aging or lifespan.",
+          "sources": [
+            "liu-2022-jamanetopen-urolithin-a"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "liu-2022-jamanetopen-urolithin-a"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -22765,7 +22865,8 @@
           "publisher": "National Center for Biotechnology Information",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5488186",
           "publishedAt": null,
-          "lastCheckedAt": "2026-05-05T00:00:00Z"
+          "lastCheckedAt": "2026-05-05T00:00:00Z",
+          "id": "pubchem-urolithin-a"
         },
         {
           "sourceType": "paper",
@@ -22773,7 +22874,17 @@
           "publisher": "JAMA Network Open",
           "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2788244",
           "publishedAt": "2022-01-20T00:00:00Z",
-          "lastCheckedAt": "2026-05-05T00:00:00Z"
+          "lastCheckedAt": "2026-05-05T00:00:00Z",
+          "id": "jama-urolithin-a-older-adults-2022"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effect of Urolithin A Supplementation on Muscle Endurance and Mitochondrial Health in Older Adults: A Randomized Clinical Trial (JAMA Netw Open 2022)",
+          "publisher": "JAMA Network Open (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35050355/",
+          "publishedAt": "2022-01-04T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "liu-2022-jamanetopen-urolithin-a"
         }
       ],
       "curationNotes": [
@@ -44633,21 +44744,76 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines collagen peptide supplementation for recovery-related outcomes.",
+          "claim": "A systematic review of 15 RCTs combining collagen peptides with exercise found the clearest benefits for joint function and joint pain; collagen did not boost muscle protein synthesis more than higher-quality protein.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:collagen-peptides"
+            "pubmed-34491424-collagen-exercise"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Peptide characterization, funding bias, and durability of findings are unresolved."
+        "Peptide characterization, funding bias, and durability of findings are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Positive summaries conflict with concerns that effects weaken in higher-quality studies."
+      ],
+      "publicClaims": [
+        {
+          "id": "collagen-peptides-joints",
+          "statement": "Collagen peptides with exercise ease joint pain.",
+          "population": "recreational athletes and older adults who exercise",
+          "outcome": "joint pain and function",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A review of 15 trials found the most benefit for joint function and pain.",
+          "sources": [
+            "pubmed-34491424-collagen-exercise"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-34491424-collagen-exercise"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "collagen-peptides-muscle",
+          "statement": "Collagen builds muscle better than other protein.",
+          "population": "active adults",
+          "outcome": "muscle protein synthesis",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It did not raise muscle protein synthesis more than higher-quality protein sources.",
+          "sources": [
+            "pubmed-34491424-collagen-exercise"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "pubmed-34491424-collagen-exercise"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -44658,7 +44824,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/34491424/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-34491424-collagen-exercise"
         }
       ],
       "curationNotes": [
@@ -44906,21 +45073,50 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review describes discussed health properties of Hericium erinaceus without establishing clinical benefit.",
-          "tier": "Unsupported",
+          "claim": "A 2015 review catalogs lion's mane chemistry and reported health properties, mostly from laboratory and animal studies; it does not establish clinical benefit.",
+          "tier": "Plausible Theory",
           "confidence": "low",
           "sources": [
-            "src:lions-mane"
+            "pubmed-26244378-hericium"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Human trial quality, constituent standardization, and adverse-event capture are insufficient."
+        "Human trial quality, constituent standardization, and adverse-event capture are insufficient.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing claims outrun the human evidence summarized in reviews."
+      ],
+      "publicClaims": [
+        {
+          "id": "lions-mane-brain",
+          "statement": "Lion's mane boosts memory and protects the brain.",
+          "population": "adults",
+          "outcome": "cognitive function",
+          "tier": "Plausible Theory",
+          "qualifier": null,
+          "note": "Unproven. The reported brain benefits come mostly from lab and animal research. No retrieved review established a clinical benefit.",
+          "sources": [
+            "pubmed-26244378-hericium"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Plausible Theory",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "pubmed-26244378-hericium"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -44931,7 +45127,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/26244378/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-26244378-hericium"
         }
       ],
       "curationNotes": [
@@ -45180,20 +45377,50 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review covers Rhodiola traditional use, pharmacology, toxicity, and clinical studies.",
+          "claim": "NCCIH says there is not enough reliable evidence to determine whether rhodiola is useful for any health purpose; most human research is low-to-moderate quality.",
           "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:rhodiola"
+            "nccih-rhodiola",
+            "pubmed-30652331-rhodiola"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Species identity, extract standardization, and fatigue outcomes are not established."
+        "Species identity, extract standardization, and fatigue outcomes are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "rhodiola-stress-fatigue",
+          "statement": "Rhodiola relieves stress, fatigue or depression.",
+          "population": "adults",
+          "outcome": "stress, fatigue and mood",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. NCCIH says evidence is not reliable enough for any use. An interaction with losartan has been reported.",
+          "sources": [
+            "nccih-rhodiola"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-rhodiola"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -45203,7 +45430,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/30652331/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-30652331-rhodiola"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Rhodiola: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/rhodiola",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-rhodiola"
         }
       ],
       "curationNotes": [
@@ -47105,20 +47342,49 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines SAMe for central nervous system outcomes without establishing a recommendation.",
+          "claim": "A 2024 systematic review of 36 studies found SAMe effective for mood, behavior or sleep outcomes in 24, alone or with existing treatment; adverse events were mostly mild GI upset.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:same"
+            "pubmed-39339750-same-cns"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Formulation stability, effect size, and mood-switching risk are unresolved."
+        "Formulation stability, effect size, and mood-switching risk are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "same-mood",
+          "statement": "SAMe improves depression and mood.",
+          "population": "adults with mood symptoms",
+          "outcome": "mood",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A 2024 review found benefit in 24 of 36 studies, often alongside standard treatment. Side effects were mostly mild stomach upset.",
+          "sources": [
+            "pubmed-39339750-same-cns"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-39339750-same-cns"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -47128,7 +47394,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/39339750/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-39339750-same-cns"
         }
       ],
       "curationNotes": [
@@ -47376,21 +47643,79 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis evaluates glucosamine sulfate in knee osteoarthritis without establishing a personal recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2024 meta-analysis found glucosamine sulfate slowed tibiofemoral joint-space narrowing in knee osteoarthritis, while NCCIH says it remains uncertain whether glucosamine helps symptoms.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:glucosamine"
+            "pubmed-38581640-gs-cs-koa",
+            "nccih-glucosamine-chondroitin-oa"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Salt form, product quality, and clinically meaningful symptom change remain contested."
+        "Salt form, product quality, and clinically meaningful symptom change remain contested.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Trial results differ by salt, sponsor, and outcome definition."
+      ],
+      "publicClaims": [
+        {
+          "id": "glucosamine-knee-pain",
+          "statement": "Glucosamine relieves knee osteoarthritis pain.",
+          "population": "adults with knee osteoarthritis",
+          "outcome": "pain and function",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Uncertain. Results are inconsistent and expert reviews disagree, per NCCIH. A 2024 meta-analysis found slower joint-space narrowing with glucosamine sulfate.",
+          "sources": [
+            "nccih-glucosamine-chondroitin-oa",
+            "pubmed-38581640-gs-cs-koa"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-glucosamine-chondroitin-oa",
+                "pubmed-38581640-gs-cs-koa"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "glucosamine-warfarin",
+          "statement": "Glucosamine is safe with warfarin.",
+          "population": "people taking warfarin",
+          "outcome": "bleeding",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Glucosamine and chondroitin have been linked to higher bleeding risk with warfarin. Glucosamine may also raise blood sugar in some people.",
+          "sources": [
+            "nccih-glucosamine-chondroitin-oa"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-glucosamine-chondroitin-oa"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -47401,7 +47726,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38581640/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38581640-gs-cs-koa"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Glucosamine and Chondroitin for Osteoarthritis: What You Need To Know",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/glucosamine-and-chondroitin-for-osteoarthritis-what-you-need-to-know",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-glucosamine-chondroitin-oa"
         }
       ],
       "curationNotes": [
@@ -47649,21 +47984,81 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis includes chondroitin sulfate in knee osteoarthritis regimens without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2024 meta-analysis found chondroitin sulfate reduced knee osteoarthritis pain and improved function versus placebo, but the glucosamine-chondroitin combination did not; NCCIH calls the overall evidence inconsistent.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:chondroitin"
+            "pubmed-38581640-gs-cs-koa",
+            "nccih-glucosamine-chondroitin-oa"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Independent effects of chondroitin versus combination products are not cleanly established."
+        "Independent effects of chondroitin versus combination products are not cleanly established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Osteoarthritis guidelines and meta-analyses do not agree on clinical usefulness."
+      ],
+      "publicClaims": [
+        {
+          "id": "chondroitin-knee-pain",
+          "statement": "Chondroitin relieves knee osteoarthritis pain.",
+          "population": "adults with knee osteoarthritis",
+          "outcome": "pain and function",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A meta-analysis found less pain and better function. NCCIH says study results and expert reviews conflict.",
+          "sources": [
+            "pubmed-38581640-gs-cs-koa",
+            "nccih-glucosamine-chondroitin-oa"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-38581640-gs-cs-koa",
+                "nccih-glucosamine-chondroitin-oa"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "chondroitin-combo",
+          "statement": "Glucosamine plus chondroitin works better than either alone.",
+          "population": "adults with knee osteoarthritis",
+          "outcome": "pain and function",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. In pooled analyses the combination did not reduce pain or improve function.",
+          "sources": [
+            "pubmed-38581640-gs-cs-koa",
+            "nccih-glucosamine-chondroitin-oa"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "pubmed-38581640-gs-cs-koa",
+                "nccih-glucosamine-chondroitin-oa"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -47674,7 +48069,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38581640/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38581640-gs-cs-koa"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Glucosamine and Chondroitin for Osteoarthritis: What You Need To Know",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/glucosamine-and-chondroitin-for-osteoarthritis-what-you-need-to-know",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-glucosamine-chondroitin-oa"
         }
       ],
       "curationNotes": [
@@ -47923,20 +48328,49 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses MSM applications and safety without establishing a treatment indication.",
-          "tier": "Unsupported",
+          "claim": "A 2017 review reports improved inflammation and joint or muscle pain measures with MSM in small studies, and notes MSM is GRAS and generally well tolerated; optimal use is still being studied.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:msm"
+            "pubmed-28300758-msm"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Independent randomized evidence and long-term safety are limited."
+        "Independent randomized evidence and long-term safety are limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "msm-joint-pain",
+          "statement": "MSM relieves joint pain.",
+          "population": "adults with joint or muscle pain",
+          "outcome": "pain",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A review reports benefit in small trials but says the right amount and duration are still being worked out.",
+          "sources": [
+            "pubmed-28300758-msm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-28300758-msm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -47946,7 +48380,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/28300758/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-28300758-msm"
         }
       ],
       "curationNotes": [
@@ -48195,20 +48630,49 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses inositols without establishing a treatment recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2021 narrative review describes myo- and D-chiro-inositol as well tolerated and used in PCOS, gestational diabetes and male fertility problems, while noting many effects are still under scrutiny.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:inositol"
+            "pubmed-34638926-inositols"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Isomer, population, and outcome definitions differ across studies."
+        "Isomer, population, and outcome definitions differ across studies.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "inositol-pcos",
+          "statement": "Inositol helps polycystic ovary syndrome.",
+          "population": "women with PCOS",
+          "outcome": "metabolic and reproductive outcomes",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A narrative review describes it as a well-tolerated option, but many effects are still being studied.",
+          "sources": [
+            "pubmed-34638926-inositols"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-34638926-inositols"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -48218,7 +48682,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/34638926/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-34638926-inositols"
         }
       ],
       "curationNotes": [
@@ -51761,20 +52226,78 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines ginseng and cognitive function without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2024 meta-analysis of 15 RCTs (671 participants) found a small memory benefit from ginseng but no effect on overall cognition, attention or executive function.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:ginseng"
+            "pubmed-39474788-ginseng-cog-ma",
+            "nccih-asian-ginseng"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Species, dose, and durability of cognitive findings are unresolved."
+        "Species, dose, and durability of cognitive findings are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "ginseng-memory",
+          "statement": "Ginseng improves memory and thinking.",
+          "population": "adults, including people with cognitive impairment",
+          "outcome": "cognitive function",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Slightly, for memory only. A meta-analysis of 15 small trials found no effect on overall cognition, attention or executive function.",
+          "sources": [
+            "pubmed-39474788-ginseng-cog-ma",
+            "nccih-asian-ginseng"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-39474788-ginseng-cog-ma",
+                "nccih-asian-ginseng"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ginseng-fatigue",
+          "statement": "Ginseng fights fatigue.",
+          "population": "adults with general fatigue",
+          "outcome": "fatigue",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly a small effect. NCCIH cites a 2023 review suggesting a small benefit for general fatigue, but research disagrees.",
+          "sources": [
+            "nccih-asian-ginseng"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-asian-ginseng"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -51784,7 +52307,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/39474788/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-39474788-ginseng-cog-ma"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Asian Ginseng: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/asian-ginseng",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-asian-ginseng"
         }
       ],
       "curationNotes": [
@@ -52033,20 +52566,49 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines human trials of Bacopa monnieri without establishing a recommendation.",
+          "claim": "A systematic review of 6 twelve-week RCTs in adults without dementia found Bacopa improved 9 of 17 memory free-recall tests, with little evidence in other cognitive domains.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:bacopa"
+            "pubmed-22747190-bacopa-sr"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "Trial size, extract standardization, and long-term safety are limited."
+        "Trial size, extract standardization, and long-term safety are limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "bacopa-memory",
+          "statement": "Bacopa improves memory.",
+          "population": "adults without dementia",
+          "outcome": "memory free recall",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. Across 6 twelve-week trials, Bacopa improved about half of free-recall memory tests. Other cognitive skills showed little benefit.",
+          "sources": [
+            "pubmed-22747190-bacopa-sr"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-22747190-bacopa-sr"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -52056,7 +52618,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/22747190/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-22747190-bacopa-sr"
         }
       ],
       "curationNotes": [
@@ -54547,20 +55110,50 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "No passionflower-specific efficacy claim is established. Sleep and anxiety use is recorded as commonly discussed and unproven here.",
-          "tier": "Unsupported",
+          "claim": "NCCIH says a small amount of research suggests oral passionflower might reduce anxiety, including before surgery or dental procedures, but conclusions are not definite.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:passionflower"
+            "nccih-passionflower",
+            "pubmed-24140586-passiflora"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review or record exists."
         }
       ],
       "evidenceGaps": [
-        "A dedicated passionflower trial synthesis was not opened, so efficacy and safety remain insufficient."
+        "A dedicated passionflower trial synthesis was not opened, so efficacy and safety remain insufficient.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "passionflower-anxiety",
+          "statement": "Passionflower eases anxiety.",
+          "population": "adults, including before surgery or dental work",
+          "outcome": "anxiety symptoms",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly, based on limited research. It may interact with anesthesia and should not be used in pregnancy.",
+          "sources": [
+            "nccih-passionflower"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-passionflower"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -54570,7 +55163,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/24140586/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-24140586-passiflora"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Passionflower: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/passionflower",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-passionflower"
         }
       ],
       "curationNotes": [
