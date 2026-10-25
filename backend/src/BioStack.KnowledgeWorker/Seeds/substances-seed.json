@@ -3759,10 +3759,125 @@
         }
       ],
       "evidenceGaps": [
-        "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established."
+        "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Wellness-clinic marketing may blur labeled HIV-lipodystrophy use with unverified body-composition or longevity claims."
+      ],
+      "publicClaims": [
+        {
+          "id": "tesamorelin-visceral-fat",
+          "statement": "Tesamorelin reduces belly (visceral) fat.",
+          "population": "adults with HIV and excess abdominal fat",
+          "outcome": "visceral fat reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with HIV and abdominal fat accumulation (26-week randomized trial; FDA-labeled use)",
+            "outcome": "percent change in visceral adipose tissue vs placebo"
+          },
+          "note": "In a 26-week randomized trial of 412 people with HIV, visceral fat fell 15% on tesamorelin and rose 5% on placebo. This is the FDA-approved use, for HIV-associated lipodystrophy only.",
+          "sources": [
+            "falutz-2007-nejm-tesamorelin",
+            "dailymed-egrifta-sv"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "falutz-2007-nejm-tesamorelin",
+                "dailymed-egrifta-sv"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tesamorelin-weight-loss-drug",
+          "statement": "Tesamorelin is a weight-loss drug.",
+          "population": "people seeking weight loss",
+          "outcome": "body-weight reduction",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The FDA label says it is not indicated for weight loss because its effect on weight is neutral.",
+          "sources": [
+            "dailymed-egrifta-sv"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-egrifta-sv"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tesamorelin-liver-fat",
+          "statement": "Tesamorelin reduces liver fat.",
+          "population": "adults with HIV and fatty liver",
+          "outcome": "liver fat fraction",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 12-month randomized trial of 61 people with HIV and fatty liver found a larger drop in liver fat on tesamorelin than placebo. Effects on liver scarring are not known.",
+          "sources": [
+            "stanley-2019-lancethiv-tesamorelin-nafld"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "stanley-2019-lancethiv-tesamorelin-nafld"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tesamorelin-cognition",
+          "statement": "Tesamorelin improves memory and brain function.",
+          "population": "older adults",
+          "outcome": "cognitive function",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "One 20-week randomized trial in older adults, some with mild cognitive impairment, found a modest benefit, mainly in executive function, with more side effects than placebo. It has not been replicated, and the label makes no cognition claim.",
+          "sources": [
+            "baker-2012-archneurol-ghrh-cognition",
+            "dailymed-egrifta-sv"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "baker-2012-archneurol-ghrh-cognition",
+                "dailymed-egrifta-sv"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -3773,7 +3888,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "dailymed-egrifta-sv"
         },
         {
           "sourceType": "other",
@@ -3808,6 +3924,24 @@
           "publishedAt": "2012-11-01T00:00:00Z",
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "baker-2012-archneurol-ghrh-cognition"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Metabolic effects of a growth hormone-releasing factor in patients with HIV (N Engl J Med 2007;357:2359-70)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18057338/",
+          "publishedAt": "2007-12-06T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "falutz-2007-nejm-tesamorelin"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of tesamorelin on non-alcoholic fatty liver disease in HIV: a randomised, double-blind, multicentre trial (Lancet HIV 2019)",
+          "publisher": "The Lancet HIV (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31611038/",
+          "publishedAt": "2019-12-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "stanley-2019-lancethiv-tesamorelin-nafld"
         }
       ],
       "curationNotes": [
@@ -3841,7 +3975,43 @@
         "authority-support-pass-2026-08-29",
         "compiled-from-evidence-packet"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized trial arm",
+        "amount": 2,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "26 weeks",
+        "route": "subcutaneous",
+        "population": "412 adults with HIV and abdominal fat accumulation",
+        "outcome": "visceral fat -15.2% vs +5.0% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Metabolic effects of a growth hormone-releasing factor in patients with HIV (N Engl J Med 2007)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/18057338/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Randomized trial arm",
+        "amount": 2,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "12 months",
+        "route": "subcutaneous",
+        "population": "61 adults with HIV and fatty liver",
+        "outcome": "liver fat fraction -4.1 points vs placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Effects of tesamorelin on NAFLD in HIV (Lancet HIV 2019)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/31611038/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -4140,10 +4310,70 @@
         }
       ],
       "evidenceGaps": [
-        "Benefit outside the labeled premenopausal HSDD population is not established by this record."
+        "Benefit outside the labeled premenopausal HSDD population is not established by this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Research-chemical PT-141 vials are not equivalent to approved Vyleesi autoinjector product quality or labeling."
+      ],
+      "publicClaims": [
+        {
+          "id": "bremelanotide-desire",
+          "statement": "Bremelanotide increases sexual desire in women with low desire.",
+          "population": "premenopausal women with HSDD",
+          "outcome": "sexual desire and related distress",
+          "tier": "Established",
+          "qualifier": {
+            "population": "premenopausal women with acquired, generalized hypoactive sexual desire disorder (RECONNECT; FDA-labeled use)",
+            "outcome": "desire score and distress vs placebo"
+          },
+          "note": "In two 24-week phase 3 trials of 1,267 women, bremelanotide modestly improved desire and reduced distress vs placebo. Nausea was common, and blood pressure rises briefly after each dose.",
+          "sources": [
+            "kingsberg-2019-obgyn-reconnect",
+            "dailymed-vyleesi"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "kingsberg-2019-obgyn-reconnect",
+                "dailymed-vyleesi"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bremelanotide-sexual-performance",
+          "statement": "Bremelanotide enhances sexual performance, including in men.",
+          "population": "men and women seeking enhancement",
+          "outcome": "sexual performance",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The FDA label says it is not indicated to enhance sexual performance, or for men or postmenopausal women.",
+          "sources": [
+            "dailymed-vyleesi"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "dailymed-vyleesi"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -4154,7 +4384,17 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-vyleesi"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials (Obstet Gynecol 2019)",
+          "publisher": "Obstetrics & Gynecology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31599840/",
+          "publishedAt": "2019-11-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "kingsberg-2019-obgyn-reconnect"
         }
       ],
       "curationNotes": [
@@ -4176,7 +4416,26 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (RECONNECT)",
+        "amount": 1.75,
+        "unit": "mg",
+        "frequency": "as needed",
+        "duration": "24 weeks",
+        "route": "subcutaneous",
+        "population": "1,267 premenopausal women with HSDD",
+        "outcome": "desire +0.35 and distress -0.33 vs placebo (integrated)",
+        "sourceType": "trial",
+        "sourceTitle": "Bremelanotide for HSDD: Two Randomized Phase 3 Trials (Obstet Gynecol 2019)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/31599840/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -4428,10 +4687,70 @@
         }
       ],
       "evidenceGaps": [
-        "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking."
+        "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits."
+      ],
+      "publicClaims": [
+        {
+          "id": "sermorelin-currently-approved",
+          "statement": "Sermorelin is a currently marketed FDA-approved drug.",
+          "population": "people buying sermorelin",
+          "outcome": "US regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Both FDA applications for the only approved sermorelin product (GEREF) are listed as Discontinued. FDA determined it was not withdrawn for safety or effectiveness reasons.",
+          "sources": [
+            "drugsfda-geref-nda019863",
+            "drugsfda-geref-nda020443",
+            "fedreg-geref-determination-2013"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "drugsfda-geref-nda019863",
+                "drugsfda-geref-nda020443",
+                "fedreg-geref-determination-2013"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "sermorelin-anti-aging",
+          "statement": "Sermorelin reverses aging and builds muscle.",
+          "population": "healthy older adults",
+          "outcome": "body composition, strength and aging",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. In a 6-week study of 11 healthy older men, nightly sermorelin-type GHRH raised nighttime growth hormone but did not change IGF-1, weight, muscle or fat; two of six strength measures improved.",
+          "sources": [
+            "vittone-1997-metabolism-ghrh"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "vittone-1997-metabolism-ghrh"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -4442,7 +4761,8 @@
           "publisher": "U.S. Food and Drug Administration / Federal Register",
           "url": "https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams",
           "publishedAt": "2013-03-04T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "fedreg-geref-determination-2013"
         },
         {
           "sourceType": "regulator",
@@ -4517,6 +4837,15 @@
           "publishedAt": null,
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "drugsfda-geref-nda020443"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men (Metabolism 1997)",
+          "publisher": "Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/9005976/",
+          "publishedAt": "1997-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "vittone-1997-metabolism-ghrh"
         }
       ],
       "curationNotes": [
@@ -4546,7 +4875,26 @@
         "remediation-pass-2026-08-29",
         "compiled-from-evidence-packet"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Small uncontrolled trial (GHRH 1-29)",
+        "amount": 2,
+        "unit": "mg",
+        "frequency": "once nightly",
+        "duration": "6 weeks",
+        "route": "subcutaneous",
+        "population": "11 healthy men aged 64-76",
+        "outcome": "nighttime GH rose; no change in IGF-1 or body composition",
+        "sourceType": "trial",
+        "sourceTitle": "Effects of single nightly injections of GHRH 1-29 in healthy elderly men (Metabolism 1997)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/9005976/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Anecdotal Signal",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -4746,10 +5094,93 @@
       ],
       "evidenceGaps": [
         "Human efficacy for anti-aging, body-composition, or chronic subcutaneous self-administration is unestablished.",
-        "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished."
+        "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online stacks with CJC-1295 are heavily marketed despite thin controlled human evidence for those uses."
+      ],
+      "publicClaims": [
+        {
+          "id": "ipamorelin-gut-recovery",
+          "statement": "Ipamorelin speeds gut recovery after bowel surgery.",
+          "population": "adults after bowel resection",
+          "outcome": "time to first tolerated meal",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The one controlled trial (117 patients) found no significant difference from placebo on its efficacy measures.",
+          "sources": [
+            "beck-2014-ijcd-poi-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "beck-2014-ijcd-poi-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ipamorelin-safe",
+          "statement": "Ipamorelin is safe.",
+          "population": "people using ipamorelin",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it lacks the information to know whether it would cause harm by the injection routes people use, and notes serious adverse events, including a death, reported when it was given intravenously.",
+          "sources": [
+            "fda-503a-category2-safety-risks"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ipamorelin-anti-aging",
+          "statement": "Ipamorelin builds muscle, burns fat and slows aging.",
+          "population": "healthy adults",
+          "outcome": "body composition and aging",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "No human trial has tested these claims. FDA found no data supporting its effectiveness for growth hormone deficiency.",
+          "sources": [
+            "fda-pcac-briefing-182088"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-182088"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -4760,7 +5191,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T00:00:00Z"
+          "lastCheckedAt": "2026-08-28T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         },
         {
           "sourceType": "regulator",
@@ -4768,7 +5200,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/182088/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T00:00:00Z"
+          "lastCheckedAt": "2026-08-28T00:00:00Z",
+          "id": "fda-pcac-briefing-182088"
         },
         {
           "sourceType": "other",
@@ -4776,7 +5209,8 @@
           "publisher": "International Journal of Colorectal Disease (Beck DE, Sweeney WB, McCarter MD, et al., 2014)",
           "url": "https://link.springer.com/article/10.1007/s00384-014-2030-8",
           "publishedAt": "2014-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T00:00:00Z"
+          "lastCheckedAt": "2026-08-28T00:00:00Z",
+          "id": "beck-2014-ijcd-poi-rct"
         },
         {
           "sourceType": "other",
@@ -4814,7 +5248,26 @@
         "regulatory-boundary",
         "compiled-from-evidence-packet"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 0.03,
+        "unit": "mg/kg",
+        "frequency": "twice daily",
+        "duration": "up to 7 days",
+        "route": "intravenous",
+        "population": "114 adults after bowel resection",
+        "outcome": "no significant difference vs placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Ipamorelin for postoperative ileus (Int J Colorectal Dis 2014)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/25331030/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Unsupported",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -5124,10 +5577,95 @@
       ],
       "evidenceGaps": [
         "No approved indication and no adequate long-term outcome trials for body composition, recovery, or anti-aging claims.",
-        "DAC vs non-DAC identity is frequently conflated in commerce."
+        "DAC vs non-DAC identity is frequently conflated in commerce.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Phase 2 subject death led to program withdrawal; public sources do not fully settle causality attribution."
+      ],
+      "publicClaims": [
+        {
+          "id": "cjc-1295-raises-gh",
+          "statement": "CJC-1295 raises growth hormone and IGF-1.",
+          "population": "healthy adults",
+          "outcome": "GH and IGF-1 levels",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Small placebo-controlled dosing studies in healthy adults found sustained, dose-dependent rises in growth hormone and IGF-1. Raising these hormones is not the same as a health benefit.",
+          "sources": [
+            "teichman-2006-jcem-cjc1295"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "teichman-2006-jcem-cjc1295"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "cjc-1295-muscle-anti-aging",
+          "statement": "CJC-1295 builds muscle and reverses aging.",
+          "population": "healthy adults",
+          "outcome": "body composition and aging",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA found no studies of its effectiveness in people; human data come only from short hormone-level studies in healthy adults.",
+          "sources": [
+            "fda-pcac-briefing-183819",
+            "teichman-2006-jcem-cjc1295"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-183819",
+                "teichman-2006-jcem-cjc1295"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "cjc-1295-safe",
+          "statement": "CJC-1295 is safe.",
+          "population": "people using CJC-1295",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA reports serious adverse events including increased heart rate and a whole-body vasodilatory reaction, and says clinical data are limited.",
+          "sources": [
+            "fda-503a-category2-safety-risks"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -5138,7 +5676,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/183819/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-pcac-briefing-183819"
         },
         {
           "sourceType": "regulator",
@@ -5146,7 +5685,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         },
         {
           "sourceType": "paper",
@@ -5154,7 +5694,8 @@
           "publisher": "PubMed / JCEM",
           "url": "https://pubmed.ncbi.nlm.nih.gov/16352683/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "teichman-2006-jcem-cjc1295"
         }
       ],
       "curationNotes": [
@@ -5177,7 +5718,43 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled dosing study arm",
+        "amount": 30,
+        "unit": "mcg/kg",
+        "frequency": "single dose or repeated weekly/biweekly",
+        "duration": "28 to 49 days",
+        "route": "subcutaneous",
+        "population": "healthy adults aged 21-61",
+        "outcome": "sustained dose-dependent GH and IGF-1 rises",
+        "sourceType": "trial",
+        "sourceTitle": "Prolonged stimulation of GH and IGF-I secretion by CJC-1295 (J Clin Endocrinol Metab 2006)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16352683/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Pharmacology study; no clinical outcome measured."
+      },
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled dosing study arm",
+        "amount": 60,
+        "unit": "mcg/kg",
+        "frequency": "single dose or repeated weekly/biweekly",
+        "duration": "28 to 49 days",
+        "route": "subcutaneous",
+        "population": "healthy adults aged 21-61",
+        "outcome": "sustained dose-dependent GH and IGF-1 rises",
+        "sourceType": "trial",
+        "sourceTitle": "Prolonged stimulation of GH and IGF-I secretion by CJC-1295 (J Clin Endocrinol Metab 2006)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16352683/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Pharmacology study; no clinical outcome measured."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -6333,10 +6910,71 @@
         }
       ],
       "evidenceGaps": [
-        "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only."
+        "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c."
+      ],
+      "publicClaims": [
+        {
+          "id": "mots-c-exercise-in-a-bottle",
+          "statement": "MOTS-c boosts exercise capacity and fat loss.",
+          "population": "people injecting MOTS-c",
+          "outcome": "physical performance and fat loss",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in mice. MOTS-c improved physical performance in young, middle-aged and old mice. FDA has found no human exposure data for MOTS-c drug products.",
+          "sources": [
+            "reynolds-2021-natcomms-mots-c-exercise",
+            "fda-503a-category2-safety-risks"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "reynolds-2021-natcomms-mots-c-exercise",
+                "fda-503a-category2-safety-risks"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "mots-c-banned-in-sport",
+          "statement": "MOTS-c is banned in sport.",
+          "population": "athletes",
+          "outcome": "anti-doping status",
+          "tier": "Established",
+          "qualifier": {
+            "population": "athletes under the World Anti-Doping Code (WADA 2026 Prohibited List)",
+            "outcome": "prohibited-substance status"
+          },
+          "note": "Yes. The WADA 2026 Prohibited List names MOTS-c as a prohibited metabolic modulator.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -6347,7 +6985,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "fda-503a-category2-safety-risks"
         },
         {
           "sourceType": "regulator",
@@ -6363,7 +7002,8 @@
           "publisher": "Nature Communications (Reynolds JC, Lai RW, Woodhead JST, et al., 2021)",
           "url": "https://www.nature.com/articles/s41467-020-20790-0",
           "publishedAt": "2021-01-20T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "reynolds-2021-natcomms-mots-c-exercise"
         },
         {
           "sourceType": "other",
@@ -6721,40 +7361,85 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Melanotan II has evidence relevant to regulatory safety warning reference.",
+          "claim": "FDA lists Melanotan II among bulk drug substances that may present significant safety risks in compounding, citing possible immune reactions and published case reports of melanoma, posterior reversible encephalopathy syndrome, sympathomimetic toxidrome and priapism.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:melanotan-ii"
+            "fda-503a-category2-safety-risks"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25 against the FDA Category 2 page; the earlier FDA warning pages no longer resolve (404)."
         }
       ],
       "evidenceGaps": [
-        "No FDA-approved indication; long-term safety of unregulated products is not established."
+        "No FDA-approved indication; long-term safety of unregulated products is not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online tanning communities promote self-injection despite regulator warnings and lack of approved manufacturing controls."
+      ],
+      "publicClaims": [
+        {
+          "id": "melanotan-ii-safe-tan",
+          "statement": "Melanotan II is a safe way to tan.",
+          "population": "people injecting Melanotan II",
+          "outcome": "tanning safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA cites published case reports of melanoma, brain swelling syndrome (PRES), toxic stimulant-like reactions and priapism. No controlled trial shows it is safe.",
+          "sources": [
+            "fda-503a-category2-safety-risks",
+            "paurobally-2011-bjd-melanotan-melanoma",
+            "dreyer-2019-bmjcr-melanotan-priapism"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks",
+                "paurobally-2011-bjd-melanotan-melanoma",
+                "dreyer-2019-bmjcr-melanotan-priapism"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
         {
           "sourceType": "regulator",
-          "title": "FDA regulator warning for Melanotan II",
-          "publisher": "FDA",
-          "url": "https://www.fda.gov/drugs/medication-health-fraud/fda-warns-consumers-not-use-melanotan-ii",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Category 2)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         },
         {
-          "sourceType": "regulator",
-          "title": "Understanding Unapproved Use of Approved Drugs / unapproved product context",
-          "publisher": "U.S. Food and Drug Administration",
-          "url": "https://www.fda.gov/drugs/information-health-care-professionals-drugs/understanding-unapproved-use-approved-drugs-labeling",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Melanotan-associated melanoma (Br J Dermatol 2011)",
+          "publisher": "British Journal of Dermatology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21564053/",
+          "publishedAt": "2011-06-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "paurobally-2011-bjd-melanotan-melanoma"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Melanotan-induced priapism: a hard-earned tan (BMJ Case Rep 2019)",
+          "publisher": "BMJ Case Reports (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30796078/",
+          "publishedAt": "2019-02-21T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dreyer-2019-bmjcr-melanotan-priapism"
         }
       ],
       "curationNotes": [
@@ -20968,10 +21653,68 @@
       ],
       "evidenceGaps": [
         "High-quality standardized clinical trials for many cosmetic claims remain limited.",
-        "Injectable human systemic outcome evidence is not established as approved therapy."
+        "Injectable human systemic outcome evidence is not established as approved therapy.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor marketing often blurs cosmetic topical data into injectable longevity claims."
+      ],
+      "publicClaims": [
+        {
+          "id": "ghk-cu-skin",
+          "statement": "Topical GHK-Cu improves skin.",
+          "population": "adults using cosmetic products",
+          "outcome": "skin firmness, wrinkles and repair",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "A narrative review describes lab, animal and small cosmetic studies reporting firmer skin and fewer fine lines. Large independent controlled trials are lacking.",
+          "sources": [
+            "pickart-2015-bmri-ghk-skin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pickart-2015-bmri-ghk-skin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ghk-cu-injectable-anti-aging",
+          "statement": "Injected GHK-Cu reverses aging.",
+          "population": "people injecting GHK-Cu",
+          "outcome": "aging and whole-body health",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says injected GHK-Cu may carry immune-reaction risks and that human data on its safety are limited. No human trial tests anti-aging benefits.",
+          "sources": [
+            "fda-503a-category2-safety-risks",
+            "pickart-2015-bmri-ghk-skin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks",
+                "pickart-2015-bmri-ghk-skin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -20982,7 +21725,8 @@
           "publisher": "BioMed Research International / PubMed Central",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4508379/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pickart-2015-bmri-ghk-skin"
         },
         {
           "sourceType": "database",
@@ -20999,6 +21743,15 @@
           "url": "https://go.drugbank.com/drugs/DB11296",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Category 2)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         }
       ],
       "curationNotes": [
@@ -21857,10 +22610,66 @@
         }
       ],
       "evidenceGaps": [
-        "Obesity development was discontinued after inadequate confirmatory efficacy; modern high-quality independent trials are limited."
+        "Obesity development was discontinued after inadequate confirmatory efficacy; modern high-quality independent trials are limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing often presents AOD-9604 as a proven fat-loss peptide despite failed confirmatory efficacy for approval."
+      ],
+      "publicClaims": [
+        {
+          "id": "aod-9604-fat-loss",
+          "statement": "AOD-9604 causes fat loss.",
+          "population": "adults with obesity",
+          "outcome": "weight loss",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA reports that most studies found no weight-loss benefit over placebo, including a 536-patient trial that missed its 12-week goal, after which the developer stopped obesity development.",
+          "sources": [
+            "fda-aod-pcac"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-aod-pcac"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "aod-9604-safe",
+          "statement": "AOD-9604 is safe.",
+          "population": "people using AOD-9604",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it lacks enough safety information to know whether it would cause harm, and notes serious adverse events that may be linked to it, though causality is unclear.",
+          "sources": [
+            "fda-503a-category2-safety-risks"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21871,7 +22680,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/183584/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-aod-pcac"
         },
         {
           "sourceType": "regulator",
@@ -21879,7 +22689,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         }
       ],
       "curationNotes": [
@@ -23599,10 +24410,68 @@
       ],
       "evidenceGaps": [
         "No modern adequate RCTs establishing clinical insomnia benefit for current commercial products.",
-        "Narcolepsy and opioid-withdrawal marketing claims lack adequate evidence."
+        "Narcolepsy and opioid-withdrawal marketing claims lack adequate evidence.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Wellness marketing for sleep contrasts with FDA staff conclusions of weak therapeutic value and compounding concerns."
+      ],
+      "publicClaims": [
+        {
+          "id": "emideltide-sleep",
+          "statement": "DSIP (emideltide) treats insomnia.",
+          "population": "adults with chronic insomnia",
+          "outcome": "sleep quality",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA found the IV studies inconclusive and no studies of the injected-under-the-skin form people use. A double-blind trial in 16 patients concluded it was unlikely to be of major benefit.",
+          "sources": [
+            "fda-pcac-briefing-193344",
+            "bes-1992-dsip-insomnia"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-193344",
+                "bes-1992-dsip-insomnia"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "emideltide-safe",
+          "statement": "DSIP is safe.",
+          "population": "people using DSIP",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it has no safety information for the route people use and lacks enough information to know whether it would cause harm.",
+          "sources": [
+            "fda-503a-category2-safety-risks"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -23613,7 +24482,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/193344/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-pcac-briefing-193344"
         },
         {
           "sourceType": "paper",
@@ -23621,7 +24491,17 @@
           "publisher": "PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/1299794/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "bes-1992-dsip-insomnia"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Category 2)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         }
       ],
       "curationNotes": [
@@ -23644,7 +24524,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Double-blind matched-pairs trial arm",
+        "amount": 25,
+        "unit": "nmol/kg",
+        "frequency": "once daily (afternoon), 3 days",
+        "duration": "3 nights",
+        "route": "intravenous",
+        "population": "16 adults with chronic insomnia",
+        "outcome": "weak effects; no change in subjective sleep quality",
+        "sourceType": "trial",
+        "sourceTitle": "Effects of DSIP on sleep of chronic insomniac patients (1992)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/1299794/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Unsupported",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -26174,11 +27073,96 @@
       ],
       "evidenceGaps": [
         "The hip-fracture trial underlying the FDA CHF summary was not independently re-fetched in the source packet; chronic wellness self-use lacks adequate outcome trials.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing for anti-aging and body composition often exceeds the controlled evidence, while FDA compounding risk language is more cautionary than some trial well-tolerated summaries in healthier cohorts.",
         "FDA's compounding-risk listing cites a congestive-heart-failure safety signal from a terminated hip-fracture-recovery trial, while the identified peer-reviewed controlled trial (healthy older adults, 25 mg/day, up to 2 years) reported the regimen as 'generally well tolerated' with no serious adverse effects and only mild edema/appetite/muscle-pain side effects. The underlying hip-fracture trial publication itself was not independently retrieved this session, so the population, dose, and event details behind the CHF signal could not be cross-checked against the FDA summary language."
+      ],
+      "publicClaims": [
+        {
+          "id": "ibutamoren-muscle",
+          "statement": "MK-677 builds muscle.",
+          "population": "healthy older adults",
+          "outcome": "lean mass and strength",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "Partly. In a 2-year randomized trial of 65 adults aged 60 to 81, MK-677 added about 1 kg of lean mass vs placebo, but strength and function did not change. No trial in younger lifters exists.",
+          "sources": [
+            "nass-2008-annals-mk677-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nass-2008-annals-mk677-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ibutamoren-blood-sugar",
+          "statement": "MK-677 raises blood sugar.",
+          "population": "healthy older adults",
+          "outcome": "fasting glucose and insulin sensitivity",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In the same trial, fasting glucose rose and insulin sensitivity fell on MK-677.",
+          "sources": [
+            "nass-2008-annals-mk677-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nass-2008-annals-mk677-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ibutamoren-safe",
+          "statement": "MK-677 is safe.",
+          "population": "people using MK-677",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it poses significant safety risks, citing a hip-fracture trial stopped early for a possible heart-failure signal.",
+          "sources": [
+            "fda-503a-category2-safety-risks",
+            "nass-2008-annals-mk677-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-503a-category2-safety-risks",
+                "nass-2008-annals-mk677-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -26189,7 +27173,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-503a-category2-safety-risks"
         },
         {
           "sourceType": "paper",
@@ -26197,7 +27182,8 @@
           "publisher": "Annals of Internal Medicine (Nass R, Pezzoli SS, Oliveri MC, et al., 2008)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18981485/",
           "publishedAt": "2008-11-04T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "nass-2008-annals-mk677-rct"
         },
         {
           "sourceType": "database",
@@ -26241,7 +27227,26 @@
         "no-claim-content-this-session",
         "unknown-honest-defaults"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 25,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "2 years",
+        "route": "oral",
+        "population": "65 healthy adults aged 60-81",
+        "outcome": "fat-free mass +1.1 kg vs -0.5 kg placebo; no strength change",
+        "sourceType": "trial",
+        "sourceTitle": "Effects of an oral ghrelin mimetic in healthy older adults (Ann Intern Med 2008)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/18981485/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
