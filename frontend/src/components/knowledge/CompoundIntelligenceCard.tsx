@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useId, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { HelpTip } from '@/components/ui/HelpTip';
 import { useProfile } from '@/lib/context';
@@ -12,6 +12,7 @@ import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
 import { CompoundRecordDetails, NOT_AVAILABLE } from './CompoundRecordDetails';
+import { redactDoses } from '@/lib/doseRedaction';
 
 // Some pathway / benefit / interaction entries in the source data are short
 // tags ("cellular-energy"); others are full sentences copied from the
@@ -83,11 +84,13 @@ interface CompoundIntelligenceCardProps {
 }
 
 export function CompoundIntelligenceCard({
-  entry,
+  entry: rawEntry,
   recommendationSurface,
   isSignedIn = false,
   titleAs: Heading = 'h3',
 }: CompoundIntelligenceCardProps) {
+  // Doses render only inside the Study details fold (06 §A); dose reports stay intact for it.
+  const entry = useMemo(() => redactDoses(rawEntry), [rawEntry]);
   const studyDesign = getReviewedStudyDesign(entry.canonicalName);
   const [showAllReferences, setShowAllReferences] = useState(false);
   const referenceListId = useId();

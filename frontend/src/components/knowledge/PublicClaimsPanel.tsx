@@ -1,9 +1,13 @@
 import type { ClaimVerdict, KnowledgePublicClaim } from '@/lib/types';
+import { formatAsOf, STATUS_COPY } from '@/lib/claimVerdicts';
+
+export { formatAsOf };
 
 /**
  * Growth spec Phase 1/2: claims as people state them, each with its verdict. A claim shows
- * a verdict, note and Hype Gap band only once reviewed and published; until then it reads
- * NOT YET GRADED with its sources. Never shows a dose.
+ * a verdict, note and Hype Gap band only after the two-reviewer AI council signs off
+ * (or Clint resolves an escalation); until then it reads NOT YET GRADED with its sources.
+ * Never shows a dose.
  */
 export const HYPE_METHOD_HREF = '/knowledge/methodology#hype-gap';
 export const VERDICT_METHOD_HREF = '/knowledge/methodology#verdicts';
@@ -27,13 +31,6 @@ function safeHref(value: string): string | null {
   }
 }
 
-export function formatAsOf(value?: string | null): string {
-  if (!value) return '';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-}
-
 export function VerdictChip({ verdict }: { verdict: ClaimVerdict }) {
   return (
     <span data-testid="verdict-chip"
@@ -54,11 +51,11 @@ function ClaimRow({ claim }: { claim: KnowledgePublicClaim }) {
       </div>
       {published && claim.qualifier && <p className="text-xs text-emerald-200/80">{claim.qualifier}</p>}
       {published && claim.note && <p className="text-sm text-white/65">{claim.note}</p>}
-      {!published && <p className="text-xs text-white/45">Pending reviewer sign-off.</p>}
+      {!published && <p className="text-xs text-white/45">{STATUS_COPY[claim.status ?? 'pending-council'] ?? STATUS_COPY['pending-council']}</p>}
       {published && claim.hypeBand && (
         <p className="text-xs text-white/60">
           Hype Gap: <span className="font-medium text-white/80">{claim.hypeBand}</span>{' '}
-          <a href={HYPE_METHOD_HREF} className="text-cyan-300 underline underline-offset-4">How this is measured</a>
+          <a href={HYPE_METHOD_HREF} className="text-cyan-300 underline underline-offset-4">How we measure hype</a>
         </p>
       )}
       {claim.sources.length > 0 && (
@@ -77,7 +74,13 @@ function ClaimRow({ claim }: { claim: KnowledgePublicClaim }) {
           })}
         </ul>
       )}
-      {asOf && <p className="text-[11px] text-white/40">As of {asOf} · version {claim.version}</p>}
+      {asOf && (
+        <p className="text-[11px] text-white/40">
+          Evidence as of {asOf} · v{claim.version}
+          {claim.reviewedBy === 'ai-council' && claim.reviewers.length > 0 && <> · Reviewed by the AI evidence council ({claim.reviewers.join(', ')})</>}
+          {claim.reviewedBy === 'owner' && <> · Decided by the owner after council disagreement</>}
+        </p>
+      )}
     </li>
   );
 }

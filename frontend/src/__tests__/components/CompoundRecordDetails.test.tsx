@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { CompoundRecordDetails, DOSE_FRAMING } from '@/components/knowledge/CompoundRecordDetails';
 import type { KnowledgeEntryDetails } from '@/lib/types';
+import { DOSE_TOKEN } from '@/lib/doseRedaction';
 
 function details(overrides: Partial<KnowledgeEntryDetails> = {}): KnowledgeEntryDetails {
   return {
@@ -75,5 +76,20 @@ describe('CompoundRecordDetails', () => {
     expect(within(reported).getByText('Reddit')).toBeInTheDocument();
     expect(within(reported).getByText('Grade: Anecdotal Signal')).toBeInTheDocument();
     expect(within(screen.getByTestId('doses-studies')).getByText('n/a')).toBeInTheDocument();
+  });
+});
+
+describe('dose fold (06 §A)', () => {
+  it('renders doses only inside the closed Study details fold', () => {
+    render(<CompoundRecordDetails details={details({
+      claims: [{ claim: 'TRIUMPH-1 −25.0% at 80 wk (12 mg)', tier: 'Strong', confidence: 'high', sources: [] }],
+    })} />);
+    const fold = screen.getByTestId('study-details-fold');
+    expect(fold).not.toHaveAttribute('open');
+    expect(within(fold).getByTestId('doses-studies')).toHaveTextContent('12 mg');
+    const outside = document.body.cloneNode(true) as HTMLElement;
+    outside.querySelectorAll('[data-testid="study-details-fold"]').forEach(n => n.remove());
+    expect(outside.textContent ?? '').not.toMatch(DOSE_TOKEN);
+    expect(outside.textContent).toContain('[dose: see Study details]');
   });
 });
