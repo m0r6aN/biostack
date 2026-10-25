@@ -5,7 +5,8 @@ using BioStack.KnowledgeWorker.Models;
 using Xunit;
 
 /// <summary>
-/// 2026-10-25 consolidation: testolone folded into vosilasarm and creatine-monohydrate into creatine.
+/// 2026-10-25 consolidation: testolone folded into vosilasarm. Creatine and creatine-monohydrate stay
+/// distinct per owner ruling D-D (2026-10-08).
 /// The retired names stay searchable as aliases on the survivors; the frontend redirects the old slugs.
 /// </summary>
 public sealed class DuplicateRecordConsolidationTests
@@ -19,7 +20,6 @@ public sealed class DuplicateRecordConsolidationTests
 
     [Theory]
     [InlineData("testolone", "vosilasarm", "Testolone")]
-    [InlineData("creatine-monohydrate", "creatine", "Creatine monohydrate")]
     public void Retired_slug_is_gone_and_survives_as_alias(string retired, string canonical, string alias)
     {
         var records = Records();
@@ -32,10 +32,10 @@ public sealed class DuplicateRecordConsolidationTests
     }
 
     [Fact]
-    public void Creatine_keeps_the_retired_record_slug_and_brand_as_aliases()
+    public void Creatine_and_creatine_monohydrate_remain_distinct_per_DD()
     {
-        var creatine = Records().Single(r => r.Identity.Slug == "creatine");
-        Assert.Contains("creatine-monohydrate", creatine.Identity.Aliases);
-        Assert.Contains("Creapure", creatine.Identity.Aliases);
+        var records = Records();
+        Assert.Single(records, r => r.Identity.Slug == "creatine");
+        Assert.Single(records, r => r.Identity.Slug == "creatine-monohydrate");
     }
 }

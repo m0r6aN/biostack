@@ -1,5 +1,6 @@
 /**
  * Compound records folded into a canonical record (2026-10-25 duplicate consolidation).
+ * Creatine and creatine-monohydrate are intentionally NOT merged (owner ruling D-D, 2026-10-08).
  * The retired slug and claim ids keep working through permanent redirects (next.config.ts),
  * and the sitemap never lists a retired slug, even if a stale row is still served by the API.
  */
@@ -18,15 +19,6 @@ export const MERGED_RECORDS: readonly MergedRecord[] = [
       'rad140-record-muscle': 'testolone-muscle',
       'rad140-record-safe': 'testolone-safe',
       'rad140-record-legal-supplement': 'testolone-legal-supplement',
-    },
-  },
-  {
-    from: 'creatine-monohydrate',
-    to: 'creatine',
-    claims: {
-      'creatine-monohydrate-performance': 'creatine-performance',
-      'creatine-monohydrate-hair-loss': 'creatine-hair-loss',
-      'creatine-monohydrate-unsafe': 'creatine-unsafe',
     },
   },
 ];
