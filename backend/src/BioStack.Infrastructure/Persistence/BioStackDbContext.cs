@@ -44,6 +44,9 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<CompoundGraphArtifact> CompoundGraphArtifacts { get; set; }
     public DbSet<CompoundGraphRelationship> CompoundGraphRelationships { get; set; }
     public DbSet<CompoundGraphFinding> CompoundGraphFindings { get; set; }
+    // Growth Phase 7: claim checker query log + "Submit a claim you saw" (migration 20261025010000).
+    public DbSet<ClaimCheckQuery> ClaimCheckQueries { get; set; }
+    public DbSet<ClaimSubmission> ClaimSubmissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -446,6 +449,30 @@ public sealed class BioStackDbContext : DbContext
                     (a, b) => JsonSerializer.Serialize(a, (JsonSerializerOptions?)null) == JsonSerializer.Serialize(b, (JsonSerializerOptions?)null),
                     v => v == null ? 0 : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null).GetHashCode(),
                     v => v == null ? null : JsonSerializer.Deserialize<KnowledgeEntryDetails>(JsonSerializer.Serialize(v, (JsonSerializerOptions?)null), (JsonSerializerOptions?)null)));
+        });
+
+        modelBuilder.Entity<ClaimCheckQuery>(entity =>
+        {
+            entity.HasKey(q => q.Id);
+            entity.Property(q => q.QueryHash).HasMaxLength(64).IsRequired();
+            entity.Property(q => q.MatchedClaimId).HasMaxLength(200);
+            entity.HasIndex(q => q.CreatedAtUtc);
+            entity.HasIndex(q => q.QueryHash);
+        });
+
+        modelBuilder.Entity<ClaimSubmission>(entity =>
+        {
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.CompoundSlug).HasMaxLength(100).IsRequired();
+            entity.Property(s => s.ClaimText).HasMaxLength(280).IsRequired();
+            entity.Property(s => s.SeenOn).HasMaxLength(16).IsRequired();
+            entity.Property(s => s.Experience).HasMaxLength(16);
+            entity.Property(s => s.ThemeText).HasMaxLength(140);
+            entity.Property(s => s.SubmitterKey).HasMaxLength(64).IsRequired();
+            entity.Property(s => s.Status).HasMaxLength(16).IsRequired();
+            entity.Property(s => s.Theme).HasMaxLength(64);
+            entity.HasIndex(s => new { s.Status, s.CreatedAtUtc });
+            entity.HasIndex(s => new { s.CompoundSlug, s.Theme, s.Status });
         });
 
         modelBuilder.Entity<LeadCapture>(entity =>
