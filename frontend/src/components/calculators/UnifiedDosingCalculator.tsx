@@ -4,8 +4,8 @@ import { useMemo, useState } from 'react';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
 import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
 import {
-  calculateUnifiedDosing,
   DEFAULT_UNIFIED_DOSING_INPUT,
+  EMPTY_NUMBER_PLACEHOLDER,
   formatDose,
   formatNumber,
   type ConcentrationUnit,
@@ -13,6 +13,8 @@ import {
   type MassUnit,
   type UnifiedDosingInput,
   type UnifiedDosingResult,
+  parseNumberInput,
+  tryCalculateUnifiedDosing,
 } from '@/lib/dosingCalculator';
 
 interface UnifiedDosingCalculatorProps {
@@ -36,16 +38,7 @@ export function UnifiedDosingCalculator({
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
   const [recordError, setRecordError] = useState<string | null>(null);
 
-  const calculation = useMemo(() => {
-    try {
-      return { result: calculateUnifiedDosing(input), error: null };
-    } catch (error) {
-      return {
-        result: null,
-        error: error instanceof Error ? error.message : 'Calculation failed',
-      };
-    }
-  }, [input]);
+  const calculation = useMemo(() => tryCalculateUnifiedDosing(input), [input]);
 
   async function handleRecord() {
     if (!onRecord || !calculation.result) {
@@ -190,8 +183,12 @@ export function UnifiedDosingCalculator({
               <div className="grid gap-3 sm:grid-cols-2">
                 <Metric label="Concentration" value={`${formatNumber(result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(result.concentrationMgPerMl, 4)} mg/mL`} />
                 <Metric label="Per dose" value={formatDose(result.dosePerAdministrationMcg)} detail={`${formatNumber(result.dosePerTenthMlMcg)} mcg per 0.1 mL`} />
-                <Metric label="Daily total" value={formatDose(result.dailyTotalMcg)} detail={`Average: ${formatDose(result.dailyAverageMcg)} / day`} />
-                <Metric label="Weekly total" value={formatDose(result.weeklyTotalMcg)} detail={`${result.administrationsPerWeek} administrations / week`} />
+                {Number.isFinite(input.splitCount) && (
+                  <>
+                    <Metric label="Daily total" value={formatDose(result.dailyTotalMcg)} detail={`Average: ${formatDose(result.dailyAverageMcg)} / day`} />
+                    <Metric label="Weekly total" value={formatDose(result.weeklyTotalMcg)} detail={`${result.administrationsPerWeek} administrations / week`} />
+                  </>
+                )}
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-black/20 p-4">
@@ -242,7 +239,8 @@ function NumberField({
           min="0"
           step={step}
           value={Number.isNaN(value) ? '' : value}
-          onChange={(event) => onChange(Number(event.target.value))}
+          onChange={(event) => onChange(parseNumberInput(event.target.value))}
+          placeholder={EMPTY_NUMBER_PLACEHOLDER}
           className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/30"
         />
         {suffix && <span className="border-l border-white/10 px-3 py-3 text-sm text-white/50">{suffix}</span>}
@@ -275,7 +273,8 @@ function NumberWithUnitField<TUnit extends string>({
           min="0"
           step="0.1"
           value={Number.isNaN(value) ? '' : value}
-          onChange={(event) => onValueChange(Number(event.target.value))}
+          onChange={(event) => onValueChange(parseNumberInput(event.target.value))}
+          placeholder={EMPTY_NUMBER_PLACEHOLDER}
           className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/30"
         />
         <select

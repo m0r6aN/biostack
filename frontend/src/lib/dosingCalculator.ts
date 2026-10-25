@@ -42,18 +42,53 @@ const MASS_TO_MCG: Record<MassUnit, number> = {
   g: 1_000_000,
 };
 
+/**
+ * Calculators open empty: no amount, volume, concentration, target or schedule is
+ * prefilled. Numeric fields use NaN to mean "not entered yet"; only units and the
+ * dose basis carry a starting selection.
+ */
 export const DEFAULT_UNIFIED_DOSING_INPUT: UnifiedDosingInput = {
-  powderAmount: 5,
+  powderAmount: Number.NaN,
   powderUnit: 'mg',
-  diluentVolumeMl: 2,
+  diluentVolumeMl: Number.NaN,
   concentrationSource: 'reconstitution',
-  knownConcentration: 2500,
+  knownConcentration: Number.NaN,
   concentrationUnit: 'mcg/mL',
-  desiredDose: 250,
+  desiredDose: Number.NaN,
   desiredDoseUnit: 'mcg',
   doseBasis: 'per-dose',
-  splitCount: 2,
+  splitCount: Number.NaN,
 };
+
+/** Neutral placeholder shown in empty numeric calculator fields. */
+export const EMPTY_NUMBER_PLACEHOLDER = 'Enter value';
+
+/** Maps a raw number-input string to a number, treating an empty field as "not entered" (NaN) rather than 0. */
+export function parseNumberInput(raw: string): number {
+  return raw.trim() === '' ? Number.NaN : Number(raw);
+}
+
+/** True when every value the calculation needs has been entered (validity is still checked by calculateUnifiedDosing). */
+export function isUnifiedDosingInputComplete(input: UnifiedDosingInput): boolean {
+  const required = [input.powderAmount, input.diluentVolumeMl, input.desiredDose];
+  if (input.concentrationSource === 'known') required.push(input.knownConcentration);
+  // A per-dose amount is one administration, so the per-administration math does not need a schedule.
+  if (input.doseBasis !== 'per-dose') required.push(input.splitCount);
+  return required.every((value) => Number.isFinite(value));
+}
+
+/** Runs the calculation only once the user has entered every required value; empty inputs yield no result and no error. */
+export function tryCalculateUnifiedDosing(input: UnifiedDosingInput): { result: UnifiedDosingResult | null; error: string } {
+  if (!isUnifiedDosingInputComplete(input)) return { result: null, error: '' };
+  // An unentered schedule on a per-dose basis does not change the per-administration result; 1 is only used
+  // internally so validation passes, and callers should not present schedule totals unless splitCount was entered.
+  const calcInput = Number.isFinite(input.splitCount) ? input : { ...input, splitCount: 1 };
+  try {
+    return { result: calculateUnifiedDosing(calcInput), error: '' };
+  } catch (error) {
+    return { result: null, error: error instanceof Error ? error.message : 'Calculation failed' };
+  }
+}
 
 export function calculateUnifiedDosing(input: UnifiedDosingInput): UnifiedDosingResult {
   const powderAmountMcg = toMcg(input.powderAmount, input.powderUnit);
