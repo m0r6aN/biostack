@@ -2530,10 +2530,68 @@
       ],
       "evidenceGaps": [
         "No FDA weight-management indication despite popular grouping with weight-loss GLP-1 drugs.",
-        "Product discontinuation/supply changes may limit practical access."
+        "Product discontinuation/supply changes may limit practical access.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online content sometimes treats all GLP-1 drugs as interchangeable weight-loss agents; exenatide labeling does not support that framing."
+      ],
+      "publicClaims": [
+        {
+          "id": "exenatide-t2d",
+          "statement": "Exenatide lowers blood sugar in type 2 diabetes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "glycemic control",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with type 2 diabetes",
+            "outcome": "improved glycemic control"
+          },
+          "note": "Yes. Byetta is FDA-approved, with diet and exercise, to improve blood-sugar control in adults with type 2 diabetes.",
+          "sources": [
+            "dailymed-byetta"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-byetta"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "exenatide-heart",
+          "statement": "Once-weekly exenatide is proven to cut heart attacks and strokes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "major cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not proven. The EXSCEL trial (14,752 patients, about 3 years) found it safe for the heart but not superior to placebo for major cardiovascular events (11.4% vs 12.2%, not significant).",
+          "sources": [
+            "holman-2017-nejm-exscel"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "holman-2017-nejm-exscel"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -2544,7 +2602,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53d03c03-ebf7-418d-88a8-533eabd2ee4f",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-byetta"
         },
         {
           "sourceType": "label",
@@ -2552,7 +2611,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bydureon-label-2024"
         },
         {
           "sourceType": "paper",
@@ -2560,7 +2620,8 @@
           "publisher": "PubMed PMID 28910237",
           "url": "https://pubmed.ncbi.nlm.nih.gov/28910237/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "holman-2017-nejm-exscel"
         }
       ],
       "curationNotes": [
@@ -3595,10 +3656,94 @@
         }
       ],
       "evidenceGaps": [
-        "Off-label longevity and anti-aging uses are not established as labeled indications; evidence outside type 2 diabetes should be read as separate contested claims."
+        "Off-label longevity and anti-aging uses are not established as labeled indications; evidence outside type 2 diabetes should be read as separate contested claims.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Popular longevity communities promote metformin in non-diabetic adults; that use is off-label and not an FDA-approved indication."
+      ],
+      "publicClaims": [
+        {
+          "id": "metformin-t2d",
+          "statement": "Metformin treats type 2 diabetes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "glycemic control",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults and children 10+ with type 2 diabetes",
+            "outcome": "improved glycemic control"
+          },
+          "note": "Yes. It is FDA-approved, with diet and exercise, to improve blood-sugar control in type 2 diabetes.",
+          "sources": [
+            "dailymed-metformin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-metformin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "metformin-risk-free",
+          "statement": "Metformin is risk-free.",
+          "population": "people taking metformin",
+          "outcome": "serious adverse effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label carries a boxed warning for lactic acidosis, which has caused deaths; risk rises with kidney problems, heavy alcohol use and some procedures.",
+          "sources": [
+            "dailymed-metformin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-metformin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "metformin-healthy-longevity",
+          "statement": "Healthy people should take metformin for longevity and fitness.",
+          "population": "healthy older adults",
+          "outcome": "muscle gains from exercise",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not supported. In a 14-week placebo-controlled trial of healthy adults 65+, metformin blunted the lean-mass and thigh-muscle gains from strength training. No completed trial shows it extends healthy lifespan.",
+          "sources": [
+            "walton-2019-agingcell-masters"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "walton-2019-agingcell-masters"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -3609,7 +3754,17 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c82a10fa-1e8e-46b6-890a-737de3f34ee1",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-metformin"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Metformin blunts muscle hypertrophy in response to progressive resistance exercise training in older adults: the MASTERS trial (Aging Cell 2019)",
+          "publisher": "Aging Cell (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31557380/",
+          "publishedAt": "2019-12-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "walton-2019-agingcell-masters"
         }
       ],
       "curationNotes": [
@@ -3633,7 +3788,26 @@
       "qualityFlags": [
         "agent-review-2026-10-14"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 1700,
+        "unit": "mg",
+        "frequency": "daily",
+        "duration": "14 weeks with resistance training",
+        "route": "oral",
+        "population": "94 healthy adults aged 65+",
+        "outcome": "smaller lean-mass and thigh-muscle gains than placebo",
+        "sourceType": "trial",
+        "sourceTitle": "MASTERS trial (Aging Cell 2019)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/31557380/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -3947,10 +4121,69 @@
         }
       ],
       "evidenceGaps": [
-        "Comparative effectiveness versus modern first-line agents and long-term hard outcome benefit vary by guideline context and patient selection."
+        "Comparative effectiveness versus modern first-line agents and long-term hard outcome benefit vary by guideline context and patient selection.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "GI tolerability limits real-world adherence; benefit depends heavily on meal composition and timing with the first bite of each main meal."
+      ],
+      "publicClaims": [
+        {
+          "id": "acarbose-t2d",
+          "statement": "Acarbose lowers blood sugar in type 2 diabetes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "glycemic control",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with type 2 diabetes",
+            "outcome": "improved glycemic control"
+          },
+          "note": "Yes. It is FDA-approved, with diet and exercise, to improve blood-sugar control in adults with type 2 diabetes.",
+          "sources": [
+            "dailymed-acarbose"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-acarbose"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "acarbose-longevity",
+          "statement": "Acarbose extends lifespan.",
+          "population": "adults seeking longevity",
+          "outcome": "lifespan",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in mice. It raised median lifespan in male mice (about 16-17%) far more than females (4-5%). No human lifespan trial exists.",
+          "sources": [
+            "harrison-2019-agingcell-acarbose"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "harrison-2019-agingcell-acarbose"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -3961,7 +4194,17 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=29939129-7d09-4c22-bf3e-491a8a97f4c4",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-acarbose"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Acarbose improves health and lifespan in aging HET3 mice (Aging Cell 2019)",
+          "publisher": "Aging Cell (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30688027/",
+          "publishedAt": "2019-04-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "harrison-2019-agingcell-acarbose"
         }
       ],
       "curationNotes": [
@@ -20002,10 +20245,68 @@
         }
       ],
       "evidenceGaps": [
-        "Comparative effectiveness versus other PDE5 inhibitors and long-term outcomes outside labeled populations depend on product-specific labeling and clinical context not fully summarized here."
+        "Comparative effectiveness versus other PDE5 inhibitors and long-term outcomes outside labeled populations depend on product-specific labeling and clinical context not fully summarized here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer interest in daily low-dose or performance-adjacent uses can outrun individualized cardiovascular risk assessment required by labeling."
+      ],
+      "publicClaims": [
+        {
+          "id": "tadalafil-ed-bph",
+          "statement": "Tadalafil treats erectile dysfunction and enlarged-prostate symptoms.",
+          "population": "adult men with ED or BPH",
+          "outcome": "erectile function and urinary symptoms",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adult men with ED and/or BPH",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Cialis is FDA-approved for erectile dysfunction, BPH symptoms, or both.",
+          "sources": [
+            "dailymed-cialis"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-cialis"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tadalafil-nitrates",
+          "statement": "Tadalafil is safe to combine with nitrates.",
+          "population": "men taking nitrate heart medicines or poppers",
+          "outcome": "dangerous blood-pressure drop",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label says using nitrates in any form with tadalafil is contraindicated because of dangerous drops in blood pressure.",
+          "sources": [
+            "dailymed-cialis"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-cialis"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -20016,7 +20317,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=bcd8f8ab-81a2-4891-83db-24a0b0e25895",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-cialis"
         }
       ],
       "curationNotes": [
@@ -20403,10 +20705,68 @@
       ],
       "evidenceGaps": [
         "Product labels (Viagra vs Revatio) differ in indication, strength, and administration details and must be read individually.",
-        "Non-prescription online sources may sell falsified products outside regulated pharmacy channels."
+        "Non-prescription online sources may sell falsified products outside regulated pharmacy channels.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Counterfeit ED products are a known public-health problem; regulated pharmacy dispensing is not equivalent to unverified online sources."
+      ],
+      "publicClaims": [
+        {
+          "id": "sildenafil-ed",
+          "statement": "Sildenafil treats erectile dysfunction.",
+          "population": "adult men with erectile dysfunction",
+          "outcome": "erectile function",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adult men with ED",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Viagra is FDA-approved for erectile dysfunction.",
+          "sources": [
+            "dailymed-sildenafil"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-sildenafil"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "sildenafil-nitrates",
+          "statement": "Sildenafil is safe to combine with nitrates or poppers.",
+          "population": "men using nitrates or nitrites",
+          "outcome": "dangerous blood-pressure drop",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label contraindicates use with organic nitrates or nitrites in any form because they strongly lower blood pressure together.",
+          "sources": [
+            "dailymed-sildenafil"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-sildenafil"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -20417,7 +20777,8 @@
           "publisher": "U.S. NLM / DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0b0be196-0c62-461c-94f4-9a35339b4501",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-sildenafil"
         },
         {
           "sourceType": "other",
@@ -20425,7 +20786,8 @@
           "publisher": "StatPearls / NCBI Bookshelf",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK558978/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "statpearls-sildenafil"
         }
       ],
       "curationNotes": [
@@ -20737,10 +21099,95 @@
         }
       ],
       "evidenceGaps": [
-        "Evidence for healthy-person cognitive enhancement is mixed and off-label; dependence/misuse risk and long-term neuropsychiatric effects in non-indicated populations are incompletely characterized."
+        "Evidence for healthy-person cognitive enhancement is mixed and off-label; dependence/misuse risk and long-term neuropsychiatric effects in non-indicated populations are incompletely characterized.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Nootropic communities promote non-prescription cognitive use despite Schedule IV control and labeled indications limited to specific sleep disorders."
+      ],
+      "publicClaims": [
+        {
+          "id": "modafinil-sleepiness",
+          "statement": "Modafinil treats excessive sleepiness from narcolepsy, sleep apnea or shift work.",
+          "population": "adults with narcolepsy, obstructive sleep apnea or shift work disorder",
+          "outcome": "wakefulness",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with narcolepsy, OSA or shift work disorder",
+            "outcome": "improved wakefulness"
+          },
+          "note": "Yes. Provigil is FDA-approved to improve wakefulness in these conditions; in sleep apnea it does not replace treating the airway.",
+          "sources": [
+            "dailymed-provigil"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-provigil"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "modafinil-smart-drug",
+          "statement": "Modafinil is a powerful smart drug for healthy people.",
+          "population": "healthy, rested adults",
+          "outcome": "cognitive performance",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "The effect is small. A meta-analysis of 14 studies in healthy, rested adults found a small overall boost, mostly in memory updating.",
+          "sources": [
+            "roberts-2020-enp-cognitive-enhancers-meta"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "roberts-2020-enp-cognitive-enhancers-meta"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "modafinil-no-rx",
+          "statement": "Modafinil is a harmless, non-controlled drug.",
+          "population": "people buying modafinil without a prescription",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It is a Schedule IV controlled substance, and the label warns of serious rash including Stevens-Johnson syndrome.",
+          "sources": [
+            "dailymed-provigil"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-provigil"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -20751,7 +21198,17 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-provigil"
+        },
+        {
+          "sourceType": "paper",
+          "title": "How effective are pharmaceuticals for cognitive enhancement in healthy adults? Meta-analyses of modafinil, methylphenidate and d-amphetamine (Eur Neuropsychopharmacol 2020)",
+          "publisher": "European Neuropsychopharmacology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/32709551/",
+          "publishedAt": "2020-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "roberts-2020-enp-cognitive-enhancers-meta"
         }
       ],
       "curationNotes": [
@@ -21101,21 +21558,79 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Bupropion is FDA-approved for depression-related indications and smoking cessation with boxed suicidality warning and seizure risk.",
+          "claim": "Bupropion (Wellbutrin XL) is FDA-approved for major depressive disorder and prevention of seasonal affective disorder, with a boxed suicidality warning and dose-related seizure risk; smoking-cessation labeling is product-specific and not covered by the cited label.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "dailymed-bupropion"
           ],
           "legacyTier": "Strong",
-          "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+          "gradeRationale": "Corrected 2026-10-25: the cited Wellbutrin XL label does not include smoking cessation."
         }
       ],
       "evidenceGaps": [
-        "Formulation-specific kinetics (IR/SR/XL) change tolerability and seizure-risk context; products are not automatically interchangeable without labeled guidance."
+        "Formulation-specific kinetics (IR/SR/XL) change tolerability and seizure-risk context; products are not automatically interchangeable without labeled guidance.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Off-label appetite or stimulant-like use online understates seizure and psychiatric warnings."
+      ],
+      "publicClaims": [
+        {
+          "id": "bupropion-depression",
+          "statement": "Bupropion treats depression.",
+          "population": "adults with major depressive disorder",
+          "outcome": "depression",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with MDD or a history of SAD",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Wellbutrin XL is FDA-approved for major depression and to prevent seasonal affective disorder.",
+          "sources": [
+            "dailymed-bupropion"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-bupropion"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bupropion-no-seizure-risk",
+          "statement": "Bupropion carries no seizure risk.",
+          "population": "people taking bupropion",
+          "outcome": "seizures",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns that seizure risk is dose-related and says to raise the dose gradually.",
+          "sources": [
+            "dailymed-bupropion"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-bupropion"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21126,7 +21641,8 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-bupropion"
         }
       ],
       "curationNotes": [
@@ -21453,10 +21969,68 @@
         }
       ],
       "evidenceGaps": [
-        "Brand/generic switching and absorption conditions (food, coffee, GI disease) can change TSH control; product-specific labeling matters."
+        "Brand/generic switching and absorption conditions (food, coffee, GI disease) can change TSH control; product-specific labeling matters.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Internet metabolic optimization use in euthyroid people conflicts with labeled warnings against weight-loss use."
+      ],
+      "publicClaims": [
+        {
+          "id": "levothyroxine-hypothyroid",
+          "statement": "Levothyroxine replaces thyroid hormone in hypothyroidism.",
+          "population": "people with hypothyroidism",
+          "outcome": "thyroid hormone replacement",
+          "tier": "Established",
+          "qualifier": {
+            "population": "people with hypothyroidism",
+            "outcome": "hormone replacement"
+          },
+          "note": "Yes. Synthroid is FDA-approved as replacement therapy for hypothyroidism, with dosing adjusted to lab monitoring.",
+          "sources": [
+            "dailymed-levothyroxine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-levothyroxine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "levothyroxine-weight-loss",
+          "statement": "Thyroid hormone is a safe weight-loss aid.",
+          "population": "people without thyroid disease",
+          "outcome": "weight loss",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The boxed warning says thyroid hormones should not be used for obesity or weight loss; doses large enough to cause weight loss can cause serious or life-threatening toxicity.",
+          "sources": [
+            "dailymed-levothyroxine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-levothyroxine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21467,7 +22041,8 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e11ad30-1041-4520-10b0-8f9d30d30fcc",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-levothyroxine"
         }
       ],
       "curationNotes": [
@@ -42381,9 +42956,69 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not restate contraindications, dose limits, or monitoring intervals from the full label."
+        "This record does not restate contraindications, dose limits, or monitoring intervals from the full label.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "atorvastatin-cv-risk",
+          "statement": "Atorvastatin lowers heart attack and stroke risk.",
+          "population": "adults with high cholesterol or cardiovascular risk",
+          "outcome": "heart attack and stroke",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with cardiovascular risk factors or disease",
+            "outcome": "reduced cardiovascular events"
+          },
+          "note": "Yes. Lipitor is FDA-approved to reduce the risk of heart attack, stroke and related events in at-risk adults, and to lower LDL cholesterol.",
+          "sources": [
+            "dailymed-lipitor"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-lipitor"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "atorvastatin-muscle-pain",
+          "statement": "Statins usually cause the muscle pain people blame on them.",
+          "population": "adults taking statins",
+          "outcome": "muscle pain or weakness",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Mostly not. Pooled data from 19 large blinded trials found only about 1 in 15 muscle complaints on statins was due to the drug, mainly in year one. Rare serious muscle injury does occur.",
+          "sources": [
+            "ctt-2022-lancet-statin-muscle",
+            "dailymed-lipitor"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ctt-2022-lancet-statin-muscle",
+                "dailymed-lipitor"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -42393,7 +43028,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a60cc18b-0631-4cf0-b021-9f52224ece65",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-lipitor"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effect of statin therapy on muscle symptoms: an individual participant data meta-analysis of large-scale, randomised, double-blind trials (Lancet 2022)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36049498/",
+          "publishedAt": "2022-09-10T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ctt-2022-lancet-statin-muscle"
         }
       ],
       "curationNotes": [
@@ -42673,9 +43318,67 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not restate renal-function limits, pregnancy restrictions, or monitoring intervals."
+        "This record does not restate renal-function limits, pregnancy restrictions, or monitoring intervals.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "lisinopril-bp-hf",
+          "statement": "Lisinopril treats high blood pressure and heart failure.",
+          "population": "adults with hypertension or heart failure",
+          "outcome": "blood pressure and heart failure outcomes",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with hypertension, heart failure or recent MI",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Zestril is FDA-approved for hypertension, as add-on therapy for heart failure, and after heart attack.",
+          "sources": [
+            "dailymed-zestril"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-zestril"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "lisinopril-pregnancy",
+          "statement": "Lisinopril is safe during pregnancy.",
+          "population": "pregnant people",
+          "outcome": "fetal harm",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The boxed warning says drugs acting on the renin-angiotensin system can injure or kill a developing fetus; stop when pregnancy is detected.",
+          "sources": [
+            "dailymed-zestril"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-zestril"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -42685,7 +43388,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=838c2d78-d2d8-4981-9ec9-e50ef9e1a5d8",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-zestril"
         }
       ],
       "curationNotes": [
@@ -42957,10 +43661,68 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not establish an appropriate duration or which interacting drugs apply to a person."
+        "This record does not establish an appropriate duration or which interacting drugs apply to a person.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "OTC frequent-heartburn labeling and prescription acid-disorder labeling are different use contexts."
+      ],
+      "publicClaims": [
+        {
+          "id": "omeprazole-acid",
+          "statement": "Omeprazole treats ulcers and acid reflux.",
+          "population": "adults with ulcers or GERD",
+          "outcome": "healing and symptom relief",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with labeled acid-related disorders",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Prilosec is FDA-approved for duodenal and gastric ulcers, H. pylori eradication and acid-related conditions.",
+          "sources": [
+            "dailymed-prilosec"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-prilosec"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "omeprazole-otc-daily",
+          "statement": "Over-the-counter omeprazole is meant for daily long-term use.",
+          "population": "adults using OTC omeprazole for heartburn",
+          "outcome": "duration of self-treatment",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The OTC label is a 14-day course; ask a doctor if you need it longer or more than once every 4 months.",
+          "sources": [
+            "dailymed-prilosec-otc"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-prilosec-otc"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -42971,7 +43733,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b6761f84-53ac-4745-a8c8-1e5427d7e179",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-prilosec"
         },
         {
           "sourceType": "label",
@@ -42979,7 +43742,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=77ed80a2-a482-4838-ac55-4865b5c31d9f",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-prilosec-otc"
         }
       ],
       "curationNotes": [
@@ -43253,9 +44017,67 @@
         }
       ],
       "evidenceGaps": [
-        "This record does not restate age limits, discontinuation cautions, or interaction lists from the full label."
+        "This record does not restate age limits, discontinuation cautions, or interaction lists from the full label.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "sertraline-depression-anxiety",
+          "statement": "Sertraline treats depression and several anxiety disorders.",
+          "population": "adults with MDD, OCD, panic, PTSD or social anxiety",
+          "outcome": "symptoms",
+          "tier": "Established",
+          "qualifier": {
+            "population": "people with labeled psychiatric conditions",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Zoloft is FDA-approved for major depression, OCD, panic disorder, PTSD, social anxiety disorder and PMDD.",
+          "sources": [
+            "dailymed-zoloft"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-zoloft"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "sertraline-no-suicide-risk",
+          "statement": "Antidepressants like sertraline carry no added risk of suicidal thoughts in young people.",
+          "population": "children, teens and young adults",
+          "outcome": "suicidal thoughts and behavior",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The boxed warning says antidepressants raised suicidal thoughts and behavior in children and young adults in short-term studies; monitoring is advised.",
+          "sources": [
+            "dailymed-zoloft"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-zoloft"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -43265,7 +44087,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fda754f6-d0f3-4dce-a17a-927d64f912f7",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-zoloft"
         }
       ],
       "curationNotes": [
