@@ -127,7 +127,7 @@ Coordinator creates both at Gate 2 approval.
 - **Removing or consolidating the pre-existing duplicate `/calculators` redirect handling** between `middleware.ts` and `next.config.ts` — pre-existing, unrelated to this ticket, not touched.
 - **Vocabulary/copy-pass items** (audit §5, "Observation Debt," "Cohesion/Drift" tooltips, etc.) — separate backlog items.
 - **Live auth-callback-loop smoke test** (audit §10) — unrelated, separate verification task.
-- **Analytics/UTM instrumentation** — the audit explicitly marks this "for later — do not implement" (§"Analytics & Instrumentation Recommendations"); this parcel only guarantees generic query-string passthrough already required for mode preservation (Constraints), not new tracking.
+- **Analytics/UTM instrumentation** — not planned: owner ruling 2026-10-24 bans tracking params on links; the audit also marked this "do not implement" (§"Analytics & Instrumentation Recommendations"); this parcel only guarantees generic query-string passthrough already required for mode preservation (Constraints), not new tracking.
 
 ## Required Tests
 

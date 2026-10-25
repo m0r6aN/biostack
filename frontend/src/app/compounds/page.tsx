@@ -546,7 +546,7 @@ function CompoundsPageContent() {
                         Loading knowledge...
                       </div>
                     ) : knowledgeEntry ? (
-                      <CompoundIntelligenceCard entry={knowledgeEntry} recommendationSurface="compound-detail" />
+                      <CompoundIntelligenceCard entry={knowledgeEntry} surface="compound-detail" />
                     ) : (
                       <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)] text-center text-sm text-white/50">
                         No reference entry for this compound

@@ -1196,7 +1196,7 @@ export default function CompoundDossierPage({ params }: PageProps) {
         </div>
       ) : entry ? (
         <>
-          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
+          <CompoundIntelligenceCard entry={entry} surface="knowledge-detail" />
           <CompoundRelationshipsSection
             compoundName={entry.canonicalName}
             aliases={entry.aliases}

@@ -521,7 +521,7 @@ When evidence or claims originate from commercially interested sources:
 - Document the conflict or sponsor relationship where known.
 - Prefer independent replication before assigning higher tiers.
 - Do not allow affiliate copy to establish evidence.
-- Separate shopping or affiliate surfaces from evidence-grade explanations.
+- BioStack has no shopping or affiliate surfaces (owner ruling 2026-10-24); never add product or retailer links next to evidence.
 - Avoid wording that turns evidence labels into purchase prompts.
 
 ## Marketing Claims Discipline

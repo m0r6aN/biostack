@@ -189,7 +189,7 @@ export default function KnowledgePage() {
               <CompoundIntelligenceCard
                 key={result.canonicalName}
                 entry={result}
-                recommendationSurface="knowledge-search"
+                surface="knowledge-search"
               />
             ))}
           </div>

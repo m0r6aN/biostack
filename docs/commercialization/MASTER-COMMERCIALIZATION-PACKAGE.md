@@ -515,7 +515,7 @@ Five linking chains to maintain:
 
 ## Section H — Lead Gen Funnel
 
-> **Full funnel detail including all email capture touchpoints, 7-day email sequence, referral mechanics, and full retention sequences:** `07-lead-gen-funnel.md`
+> **Full funnel detail including all email capture touchpoints, 7-day email sequence, share mechanics, and full retention sequences:** `07-lead-gen-funnel.md`
 
 ### Recommended Lead Magnet
 
