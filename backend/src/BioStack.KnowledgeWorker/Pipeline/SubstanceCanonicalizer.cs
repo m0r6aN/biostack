@@ -25,6 +25,15 @@ public sealed class SubstanceCanonicalizer : ISubstanceCanonicalizer
 
     public SubstanceCanonicalizer(IClaimSignOffSource signOffs) => _signOffs = signOffs;
 
+    internal const int MaxPathwayTagLength = 120;
+
+    /// <summary>True for a pathway/mechanism tag; false for empty values and prose sentences.</summary>
+    internal static bool IsPathwayTag(string value) =>
+        value.Length > 0
+        && value.Length <= MaxPathwayTagLength
+        && !value.EndsWith('.')
+        && !value.Contains(". ", StringComparison.Ordinal);
+
     public KnowledgeEntry ToKnowledgeEntry(SubstanceRecord record)
     {
         if (record is null) throw new ArgumentNullException(nameof(record));
