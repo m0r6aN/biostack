@@ -19,6 +19,7 @@ on:
       - "frontend/src/lib/research/source-rights/**"
       - "infra/azure/source-acquisition-jobs.bicep"
       - "infra/azure/source-acquisition-role.bicep"
+      - "infra/azure/knowledge-schedules.bicep"
       - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
       - "research/input/sources/pilot-source-registry.json"
       - "research/research-requests/market-interest-coverage-2026-07-24.v1.json"
@@ -42,6 +43,7 @@ on:
       - "scripts/sync-source-rights.mjs"
       - "frontend/src/lib/research/source-rights/**"
       - "infra/azure/source-acquisition-jobs.bicep"
+      - "infra/azure/knowledge-schedules.bicep"
       - "infra/azure/source-acquisition-role.bicep"
       - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
       - "research/input/sources/pilot-source-registry.json"
@@ -92,6 +94,7 @@ jobs:
           az bicep version
           az bicep build --file infra/azure/source-acquisition-role.bicep
           az bicep build --file infra/azure/source-acquisition-jobs.bicep
+          az bicep build --file infra/azure/knowledge-schedules.bicep
 
       - name: Build worker image
         run: >-
