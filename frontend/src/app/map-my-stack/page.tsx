@@ -165,7 +165,6 @@ export default function MapMyStackPage() {
                   'Missing support compounds',
                   'Optimization suggestions',
                   'Avoid / caution signals',
-                  'Retail bundle insertion points',
                 ]}
               />
             ) : (

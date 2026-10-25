@@ -15,14 +15,16 @@ import { useAuth } from '@/lib/AuthProvider';
 import { getCompoundSearchSuggestions, resolveCompoundSearchCommit } from '@/lib/compoundSearch';
 import { useProfile } from '@/lib/context';
 import {
-  calculateUnifiedDosing,
   DEFAULT_UNIFIED_DOSING_INPUT,
+  EMPTY_NUMBER_PLACEHOLDER,
   formatDose,
   formatNumber,
   toMcg,
   type ConcentrationUnit,
   type MassUnit,
   type UnifiedDosingInput,
+  parseNumberInput,
+  tryCalculateUnifiedDosing,
 } from '@/lib/dosingCalculator';
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
@@ -75,7 +77,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [compound, setCompound] = useState('BPC-157');
   const [additionalCompound, setAdditionalCompound] = useState('TB-500');
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
-  const [conversion, setConversion] = useState({ amount: 1000, fromUnit: 'mcg' as MassUnit, toUnit: 'mg' as MassUnit });
+  const [conversion, setConversion] = useState({ amount: Number.NaN, fromUnit: 'mcg' as MassUnit, toUnit: 'mg' as MassUnit });
   const [knowledge, setKnowledge] = useState<KnowledgeEntry[]>([]);
   const [knowledgeStatus, setKnowledgeStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [stackCompounds, setStackCompounds] = useState<CompoundRecord[]>([]);
@@ -100,21 +102,16 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     [savedPayload]
   );
 
-  const dosing = useMemo(() => {
-    try {
-      return { result: calculateUnifiedDosing(input), error: '' };
-    } catch (error) {
-      return { result: null, error: error instanceof Error ? error.message : 'Calculation failed' };
-    }
-  }, [input]);
+  const dosing = useMemo(() => tryCalculateUnifiedDosing(input), [input]);
 
   const conversionResult = useMemo(() => {
+    if (!Number.isFinite(conversion.amount)) return { value: Number.NaN, error: '', empty: true };
     try {
       const from = toMcg(conversion.amount, conversion.fromUnit);
       const divisor = toMcg(1, conversion.toUnit);
-      return { value: from / divisor, error: '' };
+      return { value: from / divisor, error: '', empty: false };
     } catch {
-      return { value: 0, error: 'Conversion failed' };
+      return { value: 0, error: 'Conversion failed', empty: false };
     }
   }, [conversion]);
 
@@ -142,7 +139,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
   const primaryAnswer = dosing.result
     ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
-    : 'Enter valid numbers to calculate';
+    : dosing.error ? 'Enter valid numbers to calculate' : 'Enter your values to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL for the entered amount` : dosing.error;
   const overlapResult = useMemo(
     () => summarizeCompoundOverlap(compatibilityState, compatibility, compound, additionalCompound, knowledge),
@@ -307,7 +304,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     setMode(artifact.calculatorType);
     if (artifact.calculatorType === 'convert') {
       setConversion({
-        amount: numberFromInput(artifact.inputs.amount, 1000),
+        amount: numberFromInput(artifact.inputs.amount, Number.NaN),
         fromUnit: massUnitFromInput(artifact.inputs.fromUnit, 'mcg'),
         toUnit: massUnitFromInput(artifact.inputs.toUnit, 'mg'),
       });
@@ -349,7 +346,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
           startDate: new Date().toISOString(),
           endDate: null,
           status: 'Active',
-          notes: `Tracked from tools. ${primaryAnswer}`,
+          notes: dosing.result ? `Tracked from tools. ${primaryAnswer}` : 'Tracked from tools.',
           sourceType: 'Manual',
           goal: '',
           source: 'Tools',
@@ -448,7 +445,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <ResultPanel mode={mode} primary={mode === 'convert' ? `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}` : primaryAnswer} secondary={mode === 'convert' ? `${formatNumber(conversion.amount)} ${conversion.fromUnit}` : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
+          <ResultPanel mode={mode} primary={mode === 'convert' ? (conversionResult.empty ? 'Enter a value to convert' : `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}`) : primaryAnswer} secondary={mode === 'convert' ? (conversionResult.empty ? '' : `${formatNumber(conversion.amount)} ${conversion.fromUnit}`) : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
           {mode !== 'convert' && (
             <VialVisualizer powderAmount={input.powderAmount} powderUnit={input.powderUnit} diluentVolumeMl={input.diluentVolumeMl} mode={mode} concentrationSource={input.concentrationSource} />
           )}
@@ -501,7 +498,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
             <div className="grid gap-3 sm:grid-cols-2">
-              <button type="button" onClick={saveCalculation} className="rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300">
+              <button type="button" onClick={saveCalculation} disabled={mode === 'convert' ? conversionResult.empty : !dosing.result} className="rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-50">
                 Save this calculation
               </button>
               <button type="button" onClick={() => void trackInStack()} disabled={trackState === 'tracking'} className="rounded-lg border border-white/12 px-4 py-3 text-center text-sm font-semibold text-white/82 transition-colors hover:border-white/24 hover:text-white disabled:opacity-60">
@@ -813,7 +810,7 @@ function NumberField({ label, help, value, onChange, suffix, step = '0.1' }: { l
       <span className="mb-2 block text-sm text-white/62">{label}</span>
       {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step={step} value={Number.isNaN(value) ? '' : value} onChange={(event) => onChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step={step} value={Number.isNaN(value) ? '' : value} onChange={(event) => onChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         {suffix && <span className="border-l border-white/10 px-3 py-3 text-sm text-white/50">{suffix}</span>}
       </div>
     </label>
@@ -837,7 +834,7 @@ function NumberWithUnitField<TUnit extends string>({ label, help, value, unit, u
       <span className="mb-2 block text-sm text-white/62">{label}</span>
       {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
@@ -896,7 +893,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
       </span>
       {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         <select aria-label={`${label} unit`} value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>

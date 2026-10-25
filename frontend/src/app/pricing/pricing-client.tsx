@@ -121,10 +121,10 @@ export default function PricingClient() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/35">Clinics / Coaches</p>
               <h2 className="mt-3 text-2xl font-semibold text-white">Scale protocol intelligence across clients.</h2>
               <p className="mt-3 max-w-3xl text-sm leading-7 text-white/60">
-                Built to support client seats, white-label surfaces, retail bundles, and co-branded protocol views without turning the product into an ad board.
+                Built to support client seats, white-label surfaces, and co-branded protocol views without turning the product into an ad board.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                {['client licenses', 'co-branded views', 'retail bundle slots', 'affiliate attribution ready'].map((item) => (
+                {['client licenses', 'co-branded views'].map((item) => (
                   <span key={item} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/55">
                     {item}
                   </span>

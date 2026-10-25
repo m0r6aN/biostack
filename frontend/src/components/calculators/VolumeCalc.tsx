@@ -10,8 +10,8 @@ interface VolumeCalcProps {
 
 export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
   const [inputs, setInputs] = useState({
-    desiredDoseMcg: 100,
-    concentrationMcgPerMl: 100,
+    desiredDoseMcg: Number.NaN,
+    concentrationMcgPerMl: Number.NaN,
   });
   const [result, setResult] = useState<CalculatorResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,9 +43,10 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
             <input
               type="number"
               step="0.1"
-              value={inputs.desiredDoseMcg}
+              value={Number.isNaN(inputs.desiredDoseMcg) ? '' : inputs.desiredDoseMcg}
+              placeholder="Enter value"
               onChange={(e) =>
-                setInputs({ ...inputs, desiredDoseMcg: parseFloat(e.target.value) })
+                setInputs({ ...inputs, desiredDoseMcg: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
@@ -58,9 +59,10 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
             <input
               type="number"
               step="0.1"
-              value={inputs.concentrationMcgPerMl}
+              value={Number.isNaN(inputs.concentrationMcgPerMl) ? '' : inputs.concentrationMcgPerMl}
+              placeholder="Enter value"
               onChange={(e) =>
-                setInputs({ ...inputs, concentrationMcgPerMl: parseFloat(e.target.value) })
+                setInputs({ ...inputs, concentrationMcgPerMl: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
@@ -68,7 +70,7 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
 
           <button
             onClick={handleCalculate}
-            disabled={isLoading}
+            disabled={isLoading || !Number.isFinite(inputs.desiredDoseMcg) || !Number.isFinite(inputs.concentrationMcgPerMl)}
             className="w-full px-5 py-3 bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/10 disabled:text-white/30 text-slate-950 rounded-xl font-medium transition-all"
           >
             {isLoading ? 'Calculating...' : 'Calculate'}

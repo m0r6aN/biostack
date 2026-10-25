@@ -10,8 +10,8 @@ interface ReconstitutionCalcProps {
 
 export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
   const [inputs, setInputs] = useState({
-    peptideAmountMg: 10,
-    diluentVolumeMl: 1,
+    peptideAmountMg: Number.NaN,
+    diluentVolumeMl: Number.NaN,
   });
   const [result, setResult] = useState<CalculatorResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,9 +43,10 @@ export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
             <input
               type="number"
               step="0.1"
-              value={inputs.peptideAmountMg}
+              value={Number.isNaN(inputs.peptideAmountMg) ? '' : inputs.peptideAmountMg}
+              placeholder="Enter value"
               onChange={(e) =>
-                setInputs({ ...inputs, peptideAmountMg: parseFloat(e.target.value) })
+                setInputs({ ...inputs, peptideAmountMg: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
@@ -58,9 +59,10 @@ export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
             <input
               type="number"
               step="0.1"
-              value={inputs.diluentVolumeMl}
+              value={Number.isNaN(inputs.diluentVolumeMl) ? '' : inputs.diluentVolumeMl}
+              placeholder="Enter value"
               onChange={(e) =>
-                setInputs({ ...inputs, diluentVolumeMl: parseFloat(e.target.value) })
+                setInputs({ ...inputs, diluentVolumeMl: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
@@ -68,7 +70,7 @@ export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
 
           <button
             onClick={handleCalculate}
-            disabled={isLoading}
+            disabled={isLoading || !Number.isFinite(inputs.peptideAmountMg) || !Number.isFinite(inputs.diluentVolumeMl)}
             className="w-full px-5 py-3 bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/10 disabled:text-white/30 text-slate-950 rounded-xl font-medium transition-all"
           >
             {isLoading ? 'Calculating...' : 'Calculate'}

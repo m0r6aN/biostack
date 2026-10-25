@@ -226,7 +226,8 @@ describe('EvidenceTierBadge', () => {
 describe('AffiliateDisclosure', () => {
   it('renders disclosure text', () => {
     render(<AffiliateDisclosure />);
-    expect(screen.getByText(/affiliate links/i)).toBeInTheDocument();
+    expect(screen.getByText('Links open third-party retailer search results.')).toBeInTheDocument();
+    expect(screen.queryByText(/affiliate/i)).not.toBeInTheDocument();
   });
 
   it('applies custom className', () => {
@@ -382,6 +383,19 @@ describe('SafetyDisclaimer', () => {
   });
 });
 
+function fillAll(values: string[]) {
+  screen.getAllByPlaceholderText('Enter value').forEach((field, index) => {
+    fireEvent.change(field, { target: { value: values[index] } });
+  });
+}
+
+function enterUnified() {
+  fireEvent.change(screen.getByLabelText('Powder amount'), { target: { value: '5' } });
+  fireEvent.change(screen.getByLabelText(/^Diluent volume/), { target: { value: '2' } });
+  fireEvent.change(screen.getByLabelText('Desired dose'), { target: { value: '250' } });
+  fireEvent.change(screen.getByLabelText(/^Doses per week/), { target: { value: '2' } });
+}
+
 // ─── VolumeCalc ───────────────────────────────────────────────────────────────
 
 describe('VolumeCalc', () => {
@@ -391,18 +405,28 @@ describe('VolumeCalc', () => {
     expect(screen.getByText(/desired amount/i)).toBeInTheDocument();
   });
 
+  it('opens with empty fields and keeps Calculate disabled until values are entered', () => {
+    render(<VolumeCalc onCalculate={vi.fn()} />);
+    const fields = screen.getAllByPlaceholderText('Enter value');
+    expect(fields).toHaveLength(2);
+    fields.forEach((field) => expect(field).toHaveValue(null));
+    expect(screen.getByText('Calculate')).toBeDisabled();
+  });
+
   it('calls onCalculate and shows result', async () => {
     const result: CalculatorResult = { input: 100, output: 1.0, unit: 'mL', formula: '100/100', disclaimer: '' };
     const onCalculate = vi.fn().mockResolvedValue(result);
     render(<VolumeCalc onCalculate={onCalculate} />);
+    fillAll(['100', '100']);
     await act(async () => { fireEvent.click(screen.getByText('Calculate')); });
-    expect(onCalculate).toHaveBeenCalledOnce();
+    expect(onCalculate).toHaveBeenCalledWith({ desiredDoseMcg: 100, concentrationMcgPerMl: 100 });
     expect(screen.getByText(/volume required/i)).toBeInTheDocument();
   });
 
   it('shows error when onCalculate throws', async () => {
     const onCalculate = vi.fn().mockRejectedValue(new Error('Server error'));
     render(<VolumeCalc onCalculate={onCalculate} />);
+    fillAll(['100', '100']);
     await act(async () => { fireEvent.click(screen.getByText('Calculate')); });
     expect(screen.getByText('Server error')).toBeInTheDocument();
   });
@@ -421,8 +445,10 @@ describe('ReconstitutionCalc', () => {
     const result: CalculatorResult = { input: 10, output: 10, unit: 'mg/mL', formula: '10/1', disclaimer: '' };
     const onCalculate = vi.fn().mockResolvedValue(result);
     render(<ReconstitutionCalc onCalculate={onCalculate} />);
+    expect(screen.getByText('Calculate')).toBeDisabled();
+    fillAll(['10', '1']);
     await act(async () => { fireEvent.click(screen.getByText('Calculate')); });
-    expect(onCalculate).toHaveBeenCalledOnce();
+    expect(onCalculate).toHaveBeenCalledWith({ peptideAmountMg: 10, diluentVolumeMl: 1 });
     expect(screen.getByText(/concentration/i)).toBeInTheDocument();
   });
 });
@@ -474,6 +500,9 @@ describe('ConversionCalc', () => {
     const result: CalculatorResult = { input: 1000, output: 1, unit: 'mg', formula: '1000 mcg → 1 mg', disclaimer: '' };
     const onCalculate = vi.fn().mockResolvedValue(result);
     render(<ConversionCalc onCalculate={onCalculate} />);
+    expect(screen.getByPlaceholderText('Enter value')).toHaveValue(null);
+    expect(screen.getByText('Convert')).toBeDisabled();
+    fillAll(['1000']);
     await act(async () => { fireEvent.click(screen.getByText('Convert')); });
     expect(onCalculate).toHaveBeenCalledOnce();
     expect(screen.getByText('Result')).toBeInTheDocument();
@@ -482,6 +511,7 @@ describe('ConversionCalc', () => {
   it('shows error message when onCalculate throws', async () => {
     const onCalculate = vi.fn().mockRejectedValue(new Error('Conversion error'));
     render(<ConversionCalc onCalculate={onCalculate} />);
+    fillAll(['1000']);
     await act(async () => { fireEvent.click(screen.getByText('Convert')); });
     expect(screen.getByText('Conversion error')).toBeInTheDocument();
   });
@@ -506,8 +536,32 @@ describe('UnifiedDosingCalculator', () => {
     expect(screen.getByText('Attach to Protocol')).toBeInTheDocument();
   });
 
+  it('opens with no prefilled dose values, a neutral placeholder, and no result or error', () => {
+    render(<UnifiedDosingCalculator />);
+
+    expect(screen.getByLabelText('Powder amount')).toHaveValue(null);
+    expect(screen.getByLabelText(/^Diluent volume/)).toHaveValue(null);
+    expect(screen.getByLabelText('Desired dose')).toHaveValue(null);
+    expect(screen.getByLabelText(/^Doses per week/)).toHaveValue(null);
+    expect(screen.getAllByPlaceholderText('Enter value').length).toBeGreaterThanOrEqual(4);
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+    expect(screen.queryByText('Calculated U-100 syringe draw')).not.toBeInTheDocument();
+    expect(screen.queryByText(/must be positive/i)).not.toBeInTheDocument();
+  });
+
+  it('treats a cleared field as not entered rather than zero', () => {
+    render(<UnifiedDosingCalculator />);
+    enterUnified();
+    expect(screen.getByRole('meter', { name: /calculated draw/i })).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Desired dose'), { target: { value: '' } });
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+    expect(screen.queryByText(/must be positive/i)).not.toBeInTheDocument();
+  });
+
   it('renders a syringe draw visualizer mapped to U-100 units', () => {
     render(<UnifiedDosingCalculator />);
+    enterUnified();
 
     const syringe = screen.getByRole('meter', { name: /calculated draw/i });
     expect(syringe).toHaveAttribute('aria-valuenow', '10');
@@ -518,6 +572,7 @@ describe('UnifiedDosingCalculator', () => {
 
   it('warns when the calculated draw exceeds one U-100 syringe', () => {
     render(<UnifiedDosingCalculator />);
+    enterUnified();
 
     fireEvent.change(screen.getByLabelText('Desired dose'), { target: { value: '3000' } });
 
