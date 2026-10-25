@@ -1,7 +1,5 @@
-import { ContextualRecommendations } from '@/components/recommendations/ContextualRecommendations';
 import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
 import { useEntitlements } from '@/lib/entitlements';
-import { getContextTagsForOverlapFlags, getRecommendationsForOverlapFlags } from '@/lib/recommendations';
 import { InteractionFlag } from '@/lib/types';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import Link from 'next/link';
@@ -25,9 +23,6 @@ export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
   if (inputCount < 2) {
     return null;
   }
-
-  const recommendationTags = getContextTagsForOverlapFlags(flags);
-  const recommendations = getRecommendationsForOverlapFlags(flags, 3, 'overlap-results');
 
   if (flags.length === 0) {
     return (
@@ -85,12 +80,6 @@ export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
           </Link>
         </div>
       )}
-
-      <ContextualRecommendations
-        recommendations={recommendations}
-        surface="overlap-results"
-        contextTags={recommendationTags}
-      />
 
       <SafetyDisclaimer type="observation" />
     </div>

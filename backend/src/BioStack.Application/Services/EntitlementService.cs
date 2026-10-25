@@ -16,8 +16,7 @@ public sealed class EntitlementService : IEntitlementService
     [
         "retail_admin",
         "client_seat",
-        "white_label",
-        "affiliate_enabled"
+        "white_label"
     ];
 
     private readonly BioStackDbContext _db;
@@ -63,8 +62,7 @@ public sealed class EntitlementService : IEntitlementService
                 FullOverlapAnalysis: false,
                 ProtocolBuilder: false,
                 ObservabilityCorrelations: false,
-                SavedAdvancedProtocolViews: false,
-                AffiliateSurfaces: true),
+                SavedAdvancedProtocolViews: false),
             FutureRoles: FutureRoles);
     }
 
@@ -79,8 +77,7 @@ public sealed class EntitlementService : IEntitlementService
                 FullOverlapAnalysis: true,
                 ProtocolBuilder: true,
                 ObservabilityCorrelations: true,
-                SavedAdvancedProtocolViews: true,
-                AffiliateSurfaces: true),
+                SavedAdvancedProtocolViews: true),
             FutureRoles: FutureRoles);
     }
 }

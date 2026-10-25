@@ -255,7 +255,7 @@ Conclusion: personalization is partly real, partly mocked, and dosage personaliz
 5. Compound add flow is guided by category and benefits, but ends at a manual `CompoundRecord` without dose/schedule/tier.
 6. Mission Control surfaces overlap flags but does not provide a strong next action.
 7. Trend charts are isolated from compound and phase events.
-8. Affiliate-style contextual recommendations in `frontend/src/lib/recommendations.ts` may dilute intelligence surfaces unless kept secondary.
+8. (Resolved 2026-10-24: the contextual product recommendations and their retail links were removed by owner ruling.)
 9. Frontend update/delete compound API paths do not match backend routes: frontend calls `/api/v1/compounds/{id}` at `frontend/src/lib/api.ts:120-132`, while backend exposes update/delete under `/api/v1/profiles/{profileId}/compounds/{id}` at `backend/src/BioStack.Api/Endpoints/CompoundEndpoints.cs:10-22`.
 10. Goal UI is ahead of backend and relies on fallback/mock behavior.
 

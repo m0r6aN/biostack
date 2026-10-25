@@ -3,7 +3,6 @@ import { useId, useMemo, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { HelpTip } from '@/components/ui/HelpTip';
 import { useProfile } from '@/lib/context';
-import type { RecommendationSurface } from '@/lib/recommendations';
 import { toSlug } from '@/lib/research/slugs';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
@@ -71,9 +70,12 @@ function referenceLink(value: string): { href: string; label: string } | null {
   }
 }
 
+
+export type CardSurface = 'compound-detail' | 'knowledge-detail' | 'knowledge-search';
 interface CompoundIntelligenceCardProps {
   entry: KnowledgeEntry;
-  recommendationSurface?: Exclude<RecommendationSurface, 'overlap-results'>;
+  /** Which page the card renders on; controls the dossier link and add-to-protocol affordances. */
+  recommendationSurface?: CardSurface;
   /**
    * Whether the visitor is signed in — only meaningful on the dossier
    * ('knowledge-detail') surface, which offers an "Add to protocol" action

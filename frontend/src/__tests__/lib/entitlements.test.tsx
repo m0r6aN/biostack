@@ -36,7 +36,6 @@ describe('entitlements checkout plan', () => {
         protocolBuilder: false,
         observabilityCorrelations: false,
         savedAdvancedProtocolViews: false,
-        affiliateSurfaces: true,
       },
       futureRoles: [],
     });

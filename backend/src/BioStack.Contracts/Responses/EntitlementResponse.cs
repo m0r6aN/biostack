@@ -14,5 +14,4 @@ public sealed record EntitlementFeaturesResponse(
     bool FullOverlapAnalysis,
     bool ProtocolBuilder,
     bool ObservabilityCorrelations,
-    bool SavedAdvancedProtocolViews,
-    bool AffiliateSurfaces);
+    bool SavedAdvancedProtocolViews);

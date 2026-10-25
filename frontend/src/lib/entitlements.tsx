@@ -14,9 +14,8 @@ export const FREE_ENTITLEMENTS: Entitlements = {
     protocolBuilder: false,
     observabilityCorrelations: false,
     savedAdvancedProtocolViews: false,
-    affiliateSurfaces: true,
   },
-  futureRoles: ['retail_admin', 'client_seat', 'white_label', 'affiliate_enabled'],
+  futureRoles: ['retail_admin', 'client_seat', 'white_label'],
 };
 
 export const PRO_ENTITLEMENTS: Entitlements = {
@@ -29,7 +28,6 @@ export const PRO_ENTITLEMENTS: Entitlements = {
     protocolBuilder: true,
     observabilityCorrelations: true,
     savedAdvancedProtocolViews: true,
-    affiliateSurfaces: true,
   },
   futureRoles: FREE_ENTITLEMENTS.futureRoles,
 };

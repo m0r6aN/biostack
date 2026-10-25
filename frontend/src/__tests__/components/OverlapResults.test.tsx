@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 describe('OverlapResults', () => {
-  it('shows contextual recommendations only after overlap insight exists', () => {
+  it('shows the overlap insight with no product links or retail copy', () => {
     render(
       <OverlapResults
         inputCount={2}
@@ -20,16 +20,12 @@ describe('OverlapResults', () => {
     );
 
     expect(screen.getByText('Potential redundancy')).toBeInTheDocument();
-    expect(screen.getByText('Common additions')).toBeInTheDocument();
-    expect(screen.getByText('Collagen peptides')).toBeInTheDocument();
-    expect(
-      screen.getByText('Some people look at these examples in similar recovery-oriented overlap contexts.')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Links open third-party retailer search results.')).toBeInTheDocument();
-    expect(screen.getAllByText('View example products')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Common additions')).not.toBeInTheDocument();
+    expect(screen.queryByText(/View example products|Example source|third-party retailer/)).not.toBeInTheDocument();
+    expect(document.querySelector('a[target="_blank"]')).toBeNull();
   });
 
-  it('does not render the recommendations block when no overlaps exist', () => {
+  it('renders the empty state when no overlaps exist', () => {
     render(<OverlapResults flags={[]} inputCount={2} />);
 
     expect(screen.queryByText('Common additions')).not.toBeInTheDocument();

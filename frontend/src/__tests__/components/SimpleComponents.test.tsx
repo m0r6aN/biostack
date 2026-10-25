@@ -13,15 +13,12 @@ import { GoalBadge } from '@/components/goals/GoalBadge';
 import { GoalDisplay } from '@/components/goals/GoalDisplay';
 import { EvidenceTierBadge } from '@/components/knowledge/EvidenceTierBadge';
 import { LoadingSkeleton } from '@/components/LoadingState';
-import { AffiliateDisclosure } from '@/components/recommendations/AffiliateDisclosure';
-import { RecommendationCard } from '@/components/recommendations/RecommendationCard';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
 import { SuggestionCard } from '@/components/suggestions/SuggestionCard';
 import { TimelineEventCard } from '@/components/timeline/TimelineEventCard';
 import { TimelineFilter } from '@/components/timeline/TimelineFilter';
 import { BrandGlowCard } from '@/components/ui/BrandGlowCard';
 import type { EarnedSuggestion } from '@/lib/earnedSuggestions';
-import type { ContextualRecommendation } from '@/lib/recommendations';
 import type { CalculatorResult, CheckIn, CompoundRecord, GoalDefinition, InteractionFlag, TimelineEvent } from '@/lib/types';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -218,51 +215,6 @@ describe('EvidenceTierBadge', () => {
   it('falls back to raw tier value for unknown tiers', () => {
     render(<EvidenceTierBadge tier="experimental" />);
     expect(screen.getByText('experimental')).toBeInTheDocument();
-  });
-});
-
-// ─── AffiliateDisclosure ───────────────────────────────────────────────────────
-
-describe('AffiliateDisclosure', () => {
-  it('renders disclosure text', () => {
-    render(<AffiliateDisclosure />);
-    expect(screen.getByText('Links open third-party retailer search results.')).toBeInTheDocument();
-    expect(screen.queryByText(/affiliate/i)).not.toBeInTheDocument();
-  });
-
-  it('applies custom className', () => {
-    const { container } = render(<AffiliateDisclosure className="my-custom-class" />);
-    expect(container.firstChild).toHaveClass('my-custom-class');
-  });
-});
-
-// ─── RecommendationCard ────────────────────────────────────────────────────────
-
-const makeRecommendation = (overrides: Partial<ContextualRecommendation> = {}): ContextualRecommendation => ({
-  id: 'rec1',
-  displayName: 'Creatine',
-  contextTags: ['performance'],
-  shortDescriptor: 'A popular performance supplement.',
-  affiliateUrl: 'https://example.com/creatine',
-  disclosureRequired: false,
-  ...overrides,
-});
-
-describe('RecommendationCard', () => {
-  it('renders recommendation name and descriptor', () => {
-    render(<RecommendationCard recommendation={makeRecommendation()} />);
-    expect(screen.getByText('Creatine')).toBeInTheDocument();
-    expect(screen.getByText('A popular performance supplement.')).toBeInTheDocument();
-  });
-
-  it('renders whyItAppears when provided', () => {
-    render(<RecommendationCard recommendation={makeRecommendation({ whyItAppears: 'Relevant to your context.' })} />);
-    expect(screen.getByText('Relevant to your context.')).toBeInTheDocument();
-  });
-
-  it('renders source name when provided', () => {
-    render(<RecommendationCard recommendation={makeRecommendation({ sourceName: 'Amazon' })} />);
-    expect(screen.getByText(/Amazon/)).toBeInTheDocument();
   });
 });
 
