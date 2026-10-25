@@ -44,7 +44,12 @@ public sealed class KnowledgeService : IKnowledgeService
             entry.MechanismSummary,
             entry.EvidenceTier,
             entry.SourceReferences,
-            entry.Notes,
+            // Growth spec Phase 0 (approved by Clint 2026-10-24): Notes holds internal curation /
+            // pipeline text ("ClassB-only source; regulated fields intentionally limited…"), so the
+            // public projection never carries it. The field stays in the contract (empty) so the
+            // response shape is unchanged for existing clients. This is the one exception to
+            // ruling 9's "return every field"; it is pipeline metadata, not record content.
+            string.Empty,
             entry.Pathways,
             entry.Benefits,
             // Everything gathered is shown (owner ruling 9, 2026-10-24). Dose fields are
@@ -67,7 +72,8 @@ public sealed class KnowledgeService : IKnowledgeService
             entry.OptimizationSupplements,
             entry.OptimizationSleep,
             entry.OptimizationExercise,
-            entry.Details
+            entry.Details,
+            CompoundSlug.ForDossier(entry.CanonicalName)
         );
     }
 
@@ -105,6 +111,7 @@ public sealed class KnowledgeService : IKnowledgeService
         return response with
         {
             CanonicalName = primary.CanonicalName.Trim(),
+            Slug = CompoundSlug.ForDossier(primary.CanonicalName),
             Aliases = MergePublicLists(entries, entry => entry.Aliases),
             SourceReferences = MergePublicLists(entries, entry => entry.SourceReferences),
             Pathways = MergePublicLists(entries, entry => entry.Pathways),

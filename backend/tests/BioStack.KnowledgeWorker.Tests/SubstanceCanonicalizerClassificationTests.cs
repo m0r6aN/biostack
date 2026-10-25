@@ -86,6 +86,35 @@ public sealed class SubstanceCanonicalizerClassificationTests
         Assert.Equal(expected, Canonicalize(schemaValue).Classification);
     }
 
+    [Fact]
+    public void Pathways_KeepTags_AndDropProseSentences()
+    {
+        var record = SubstanceRecordFactory.Minimal("Ibutamoren");
+        record.Mechanism.Pathways.Add("ghrelin-receptor-agonism");
+        record.Mechanism.PrimaryMechanisms.Add("Ibutamoren (MK-677 / MK-0677) is a small-molecule, orally bioavailable ghrelin-receptor agonist, not a peptide.");
+        record.Mechanism.Targets.Add("growth hormone secretagogue receptor (GHS-R1a)");
+
+        var entry = new SubstanceCanonicalizer().ToKnowledgeEntry(record);
+
+        Assert.Equal(new[] { "ghrelin-receptor-agonism", "growth hormone secretagogue receptor (GHS-R1a)" }, entry.Pathways);
+    }
+
+    [Fact]
+    public void ShippedSeed_HasNoProsePathways()
+    {
+        var path = Path.Combine(TestPaths.BackendRoot(), "src", "BioStack.KnowledgeWorker", "Seeds", "substances-seed.json");
+        using var doc = JsonDocument.Parse(File.ReadAllText(path));
+        var canonicalizer = new SubstanceCanonicalizer();
+        foreach (var element in doc.RootElement.EnumerateArray())
+        {
+            var record = JsonSerializer.Deserialize<BioStack.KnowledgeWorker.Models.SubstanceRecord>(element.GetRawText(), SeedJson)!;
+            var entry = canonicalizer.ToKnowledgeEntry(record);
+            Assert.All(entry.Pathways, p => Assert.True(SubstanceCanonicalizer.IsPathwayTag(p), $"{entry.CanonicalName}: {p}"));
+        }
+    }
+
+    private static readonly JsonSerializerOptions SeedJson = new() { PropertyNameCaseInsensitive = true };
+
     private static KnowledgeEntry Canonicalize(string schemaValue)
     {
         var record = SubstanceRecordFactory.Minimal("Glycine");

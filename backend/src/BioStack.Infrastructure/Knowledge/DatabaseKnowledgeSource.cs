@@ -40,10 +40,11 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        return entries
-            .OrderBy(k => k.Id)
-            .FirstOrDefault(k =>
-                k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)));
+        var ordered = entries.OrderBy(k => k.Id).ToList();
+        return ordered.FirstOrDefault(k =>
+                   k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)))
+               // Public dossier URLs use a slug (/knowledge/creatine-monohydrate, /knowledge/nad-plus).
+               ?? ordered.FirstOrDefault(k => CompoundSlug.ForDossier(k.CanonicalName) == CompoundSlug.ForDossier(normalizedName));
     }
 
     public async Task<List<KnowledgeEntry>> GetAllCompoundsAsync(CancellationToken cancellationToken = default)

@@ -41,6 +41,36 @@ public sealed class KnowledgeServicePublicBoundaryTests
     }
 
     [Fact]
+    public async Task PublicProjection_NeverExposesInternalPipelineNotes()
+    {
+        var entry = CreateLegacyEntry();
+        entry.Notes = "ClassB-only source; regulated fields intentionally limited.";
+        var source = new Mock<IKnowledgeSource>();
+        source.Setup(service => service.GetCompoundAsync("Example", It.IsAny<CancellationToken>())).ReturnsAsync(entry);
+        source.Setup(service => service.ListPublicCompoundsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new List<KnowledgeEntry> { entry });
+        source.Setup(service => service.SearchCompoundsByPathwayAsync("p", It.IsAny<CancellationToken>())).ReturnsAsync(new List<KnowledgeEntry> { entry });
+        var service = new KnowledgeService(source.Object);
+
+        Assert.Equal(string.Empty, (await service.GetCompoundAsync("Example"))!.Notes);
+        Assert.Equal(string.Empty, Assert.Single(await service.GetAllCompoundsAsync()).Notes);
+        Assert.Equal(string.Empty, Assert.Single(await service.SearchByPathwayAsync("p")).Notes);
+    }
+
+    [Fact]
+    public async Task PublicProjection_AddsDossierSlug()
+    {
+        var entry = CreateLegacyEntry();
+        entry.CanonicalName = "Lion's mane";
+        var source = new Mock<IKnowledgeSource>();
+        source.Setup(service => service.GetCompoundAsync("lions-mane", It.IsAny<CancellationToken>())).ReturnsAsync(entry);
+        source.Setup(service => service.ListPublicCompoundsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new List<KnowledgeEntry> { entry });
+        var service = new KnowledgeService(source.Object);
+
+        Assert.Equal("lions-mane", (await service.GetCompoundAsync("lions-mane"))!.Slug);
+        Assert.Equal("lions-mane", Assert.Single(await service.GetAllCompoundsAsync()).Slug);
+    }
+
+    [Fact]
     public async Task GetAllCompoundsAsync_UsesTheSamePublicProjection()
     {
         var source = new Mock<IKnowledgeSource>();

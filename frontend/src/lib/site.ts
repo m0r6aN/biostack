@@ -22,12 +22,15 @@ type PublicPageMetadataInput = {
   title: string;
   description: string;
   path: `/${string}` | '/';
+  /** Per-page share image (e.g. a generated dossier card). Defaults to the site image. */
+  image?: { url: string; width: number; height: number; alt: string };
 };
 
 export function createPublicPageMetadata({
   title,
   description,
   path,
+  image = OPEN_GRAPH_IMAGE,
 }: PublicPageMetadataInput): Metadata {
   return {
     title,
@@ -43,13 +46,13 @@ export function createPublicPageMetadata({
       siteName: SITE_NAME,
       title,
       description,
-      images: [OPEN_GRAPH_IMAGE],
+      images: [image],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [OPEN_GRAPH_IMAGE_PATH],
+      images: [image.url],
     },
   };
 }
