@@ -63,7 +63,7 @@ export function AlertSettings() {
 
       <section aria-label="Watching" className="space-y-2">
         <h2 className="text-lg font-medium text-white">Watching</h2>
-        {watches.length === 0 ? <p className="text-sm text-white/60">Nothing yet. Tap &ldquo;Watch for changes&rdquo; on any compound, claim or /vs page.</p> : (
+        {watches.length === 0 ? <p className="text-sm text-white/60">Nothing watched yet. Watch a compound and we&rsquo;ll tell you when the evidence moves, not when the hype does.</p> : (
           <ul className="space-y-1">
             {watches.map(w => (
               <li key={w.id} className="flex items-center justify-between text-sm">

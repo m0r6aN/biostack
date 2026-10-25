@@ -40,7 +40,7 @@ export default async function ChangelogPage({ params }: PageProps) {
       </div>
       {rows.length === 0 ? (
         <p data-testid="changelog-empty" className="text-white/60">
-          {anyPublished ? 'No verdict changes since the first published verdict.' : 'No published verdicts on this record yet.'}
+          {anyPublished ? 'First verdict. Nothing has moved it yet.' : 'No published verdicts on this record yet.'}
         </p>
       ) : (
         <ol className="space-y-4" data-testid="changelog">
