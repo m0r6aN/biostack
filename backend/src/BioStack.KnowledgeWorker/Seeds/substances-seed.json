@@ -270,10 +270,98 @@
       ],
       "evidenceGaps": [
         "Product-specific labeled populations and CV indications differ across Ozempic, Wegovy, and Rybelsus and must be read from the matching label.",
-        "Long-term real-world compounding quality is outside approved-product evidence."
+        "Long-term real-world compounding quality is outside approved-product evidence.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "High public demand has driven compounded and gray-market semaglutide sales that FDA does not treat as equivalent to approved products."
+      ],
+      "publicClaims": [
+        {
+          "id": "semaglutide-weight-loss",
+          "statement": "Semaglutide causes major weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with overweight or obesity without diabetes (STEP 1, 68 weeks)",
+            "outcome": "percent body-weight change vs placebo"
+          },
+          "note": "In a 68-week randomized, placebo-controlled trial, people on semaglutide lost about 15% of their body weight vs about 2% on placebo. Nausea and diarrhea were the most common side effects.",
+          "sources": [
+            "wilding-2021-nejm-step1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "wilding-2021-nejm-step1"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "semaglutide-heart-events",
+          "statement": "Semaglutide lowers the risk of heart attack and stroke.",
+          "population": "adults with heart disease and excess weight",
+          "outcome": "major cardiovascular events",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with existing cardiovascular disease and overweight or obesity, without diabetes (SELECT)",
+            "outcome": "cardiovascular death, nonfatal heart attack or nonfatal stroke"
+          },
+          "note": "In SELECT (17,604 adults followed about 40 months), major cardiovascular events occurred in 6.5% on semaglutide vs 8.0% on placebo. This was shown in people who already had heart disease, not in everyone.",
+          "sources": [
+            "lincoff-2023-nejm-select"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "lincoff-2023-nejm-select"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "semaglutide-research-same-as-approved",
+          "statement": "'Research-use' semaglutide sold online is the same as the approved medicine.",
+          "population": "people buying research-labeled or unapproved versions online",
+          "outcome": "product identity, quality and safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says companies have illegally sold unapproved semaglutide labeled 'for research purposes', that unapproved versions skip FDA review for safety, effectiveness and quality, and that some could contain too little, too much or none of the active ingredient.",
+          "sources": [
+            "fda-unapproved-glp1-concerns"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-unapproved-glp1-concerns"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -301,6 +389,33 @@
           "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/medications-containing-semaglutide-marketed-type-2-diabetes-or-weight-loss",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Once-Weekly Semaglutide in Adults with Overweight or Obesity (STEP 1; N Engl J Med 2021;384:989-1002)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33567185/",
+          "publishedAt": "2021-03-18T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wilding-2021-nejm-step1"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes (SELECT; N Engl J Med 2023;389:2221-2232)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37952131/",
+          "publishedAt": "2023-12-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lincoff-2023-nejm-select"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -326,7 +441,43 @@
         "product-specific-labels",
         "compiled-from-evidence-packet"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (STEP 1)",
+        "amount": 2.4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "68 weeks",
+        "route": "subcutaneous",
+        "population": "adults with overweight or obesity without diabetes",
+        "outcome": "-14.9% body weight vs -2.4% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Once-Weekly Semaglutide in Adults with Overweight or Obesity (N Engl J Med 2021)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/33567185/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": "With lifestyle intervention."
+      },
+      {
+        "side": "study",
+        "context": "Cardiovascular outcomes trial arm (SELECT)",
+        "amount": 2.4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "mean follow-up 39.8 months",
+        "route": "subcutaneous",
+        "population": "17,604 adults with cardiovascular disease and overweight or obesity, without diabetes",
+        "outcome": "major cardiovascular events 6.5% vs 8.0% placebo (HR 0.80)",
+        "sourceType": "trial",
+        "sourceTitle": "Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes (N Engl J Med 2023)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/37952131/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -671,10 +822,127 @@
         }
       ],
       "evidenceGaps": [
-        "Long-term outcomes, peri-procedural management, and compounded-product quality issues continue to evolve and are not fully captured in this summary."
+        "Long-term outcomes, peri-procedural management, and compounded-product quality issues continue to evolve and are not fully captured in this summary.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Compounded or research-labeled tirzepatide products should not be treated as equivalent to approved Mounjaro/Zepbound."
+      ],
+      "publicClaims": [
+        {
+          "id": "tirzepatide-weight-loss",
+          "statement": "Tirzepatide causes major weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity, or overweight with a weight-related condition, without diabetes (SURMOUNT-1, 72 weeks)",
+            "outcome": "percent body-weight change vs placebo"
+          },
+          "note": "In a 72-week randomized, placebo-controlled trial, average weight loss on tirzepatide ranged from 15% to 21% depending on the dose, vs 3% on placebo. Gastrointestinal side effects were most common, mainly while the dose was being increased.",
+          "sources": [
+            "jastreboff-2022-nejm-surmount1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "jastreboff-2022-nejm-surmount1"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tirzepatide-beats-semaglutide",
+          "statement": "Tirzepatide causes more weight loss than semaglutide.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction vs semaglutide",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity without diabetes (SURMOUNT-5, open-label, 72 weeks)",
+            "outcome": "percent body-weight change vs semaglutide"
+          },
+          "note": "In a 72-week head-to-head trial of 751 adults, average weight loss was 20.2% on tirzepatide vs 13.7% on semaglutide. The trial was open-label, so participants knew which drug they were taking.",
+          "sources": [
+            "aronne-2025-nejm-surmount5"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "aronne-2025-nejm-surmount5"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tirzepatide-sleep-apnea",
+          "statement": "Tirzepatide improves obstructive sleep apnea.",
+          "population": "adults with sleep apnea and obesity",
+          "outcome": "breathing interruptions during sleep",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with moderate-to-severe obstructive sleep apnea and obesity (SURMOUNT-OSA, 52 weeks)",
+            "outcome": "apnea-hypopnea index change vs placebo"
+          },
+          "note": "In two 52-week randomized trials, tirzepatide cut breathing interruptions by about 20 to 24 more events per hour than placebo in people with moderate-to-severe sleep apnea and obesity.",
+          "sources": [
+            "malhotra-2024-nejm-surmount-osa"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "malhotra-2024-nejm-surmount-osa"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tirzepatide-research-same-as-approved",
+          "statement": "'Research-use' tirzepatide sold online is the same as the approved medicine.",
+          "population": "people buying research-labeled or unapproved versions online",
+          "outcome": "product identity, quality and safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says companies have illegally sold unapproved tirzepatide labeled 'for research purposes', that unapproved versions skip FDA review for safety, effectiveness and quality, and that some could contain too little, too much or none of the active ingredient.",
+          "sources": [
+            "fda-unapproved-glp1-concerns"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-unapproved-glp1-concerns"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -702,6 +970,42 @@
           "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/medications-containing-semaglutide-marketed-type-2-diabetes-or-weight-loss",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1; N Engl J Med 2022)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35658024/",
+          "publishedAt": "2022-07-21T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "jastreboff-2022-nejm-surmount1"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Tirzepatide as Compared with Semaglutide for the Treatment of Obesity (SURMOUNT-5; N Engl J Med 2025;393:26-36)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40353578/",
+          "publishedAt": "2025-07-03T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "aronne-2025-nejm-surmount5"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Tirzepatide for the Treatment of Obstructive Sleep Apnea and Obesity (SURMOUNT-OSA; N Engl J Med 2024;391:1193-1205)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/38912654/",
+          "publishedAt": "2024-10-03T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "malhotra-2024-nejm-surmount-osa"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -723,7 +1027,60 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SURMOUNT-1)",
+        "amount": 5,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "72 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity without diabetes",
+        "outcome": "-15.0% body weight vs -3.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Tirzepatide Once Weekly for the Treatment of Obesity (N Engl J Med 2022)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/35658024/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SURMOUNT-1)",
+        "amount": 10,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "72 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity without diabetes",
+        "outcome": "-19.5% body weight vs -3.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Tirzepatide Once Weekly for the Treatment of Obesity (N Engl J Med 2022)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/35658024/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SURMOUNT-1)",
+        "amount": 15,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "72 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity without diabetes",
+        "outcome": "-20.9% body weight vs -3.1% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Tirzepatide Once Weekly for the Treatment of Obesity (N Engl J Med 2022)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/35658024/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -993,11 +1350,72 @@
         }
       ],
       "evidenceGaps": [
-        "Real-world compounded or research-labeled liraglutide-class injectables lack FDA review for quality; supply-chain authenticity is a persistent problem."
+        "Real-world compounded or research-labeled liraglutide-class injectables lack FDA review for quality; supply-chain authenticity is a persistent problem.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Illegal online sellers market GLP-1 injectables without valid prescriptions, sometimes as research peptides.",
         "Illegal online sellers market GLP-1 agonist injectables — the drug class that includes liraglutide — without requiring a valid prescription, and some sellers evade enforcement by labeling products 'peptides' intended 'for research purposes only' and 'not for human consumption.' Substandard and falsified GLP-1 products have been identified in multiple countries. Separately, FDA states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label."
+      ],
+      "publicClaims": [
+        {
+          "id": "liraglutide-weight-loss",
+          "statement": "Liraglutide causes weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity, or overweight with a weight-related condition (SCALE, 56 weeks)",
+            "outcome": "body-weight change vs placebo"
+          },
+          "note": "In a 56-week randomized trial, people on liraglutide lost an average of 8.4 kg vs 2.8 kg on placebo, together with diet and exercise. The effect is smaller than with newer weekly drugs. Nausea and diarrhea were most common.",
+          "sources": [
+            "pi-sunyer-2015-nejm-scale"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "pi-sunyer-2015-nejm-scale"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "liraglutide-heart-events",
+          "statement": "Liraglutide lowers cardiovascular risk in type 2 diabetes.",
+          "population": "adults with type 2 diabetes at high cardiovascular risk",
+          "outcome": "major cardiovascular events",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with type 2 diabetes at high cardiovascular risk (LEADER)",
+            "outcome": "cardiovascular death, nonfatal heart attack or nonfatal stroke"
+          },
+          "note": "In LEADER (9,340 adults followed a median 3.8 years), major cardiovascular events occurred in 13.0% on liraglutide vs 14.9% on placebo, and cardiovascular deaths were also lower.",
+          "sources": [
+            "marso-2016-nejm-leader"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "marso-2016-nejm-leader"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -1122,6 +1540,24 @@
           "publishedAt": null,
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "fda-unapproved-glp1-concerns"
+        },
+        {
+          "sourceType": "paper",
+          "title": "A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management (SCALE; N Engl J Med 2015;373:11-22)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26132939/",
+          "publishedAt": "2015-07-02T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "pi-sunyer-2015-nejm-scale"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER; N Engl J Med 2016)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27295427/",
+          "publishedAt": "2016-07-28T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "marso-2016-nejm-leader"
         }
       ],
       "curationNotes": [
@@ -1158,7 +1594,26 @@
         "authority-support-pass-2026-08-29",
         "compiled-from-evidence-packet"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SCALE)",
+        "amount": 3.0,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "56 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity or overweight with comorbidity; 61% had prediabetes",
+        "outcome": "-8.4 kg vs -2.8 kg placebo",
+        "sourceType": "trial",
+        "sourceTitle": "A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management (N Engl J Med 2015)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/26132939/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": "With diet and exercise."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -1556,10 +2011,68 @@
         }
       ],
       "evidenceGaps": [
-        "No dedicated FDA weight-management indication comparable to some other incretin products."
+        "No dedicated FDA weight-management indication comparable to some other incretin products.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer media often frames Trulicity as a weight-loss drug despite label limits to T2D-related indications."
+      ],
+      "publicClaims": [
+        {
+          "id": "dulaglutide-heart-events",
+          "statement": "Dulaglutide lowers cardiovascular risk in type 2 diabetes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "major cardiovascular events",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults aged 50+ with type 2 diabetes and prior cardiovascular disease or risk factors (REWIND)",
+            "outcome": "cardiovascular death, nonfatal heart attack or nonfatal stroke"
+          },
+          "note": "In REWIND (9,901 adults aged 50 or older followed a median 5.4 years), major cardiovascular events occurred in 12.0% on dulaglutide vs 13.4% on placebo.",
+          "sources": [
+            "gerstein-2019-lancet-rewind"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "gerstein-2019-lancet-rewind"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "dulaglutide-lowers-death",
+          "statement": "Dulaglutide lowers the risk of dying from any cause.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "all-cause mortality",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. In REWIND, deaths from any cause were 10.8% on dulaglutide vs 12.0% on placebo, a difference that was not statistically significant.",
+          "sources": [
+            "gerstein-2019-lancet-rewind"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "gerstein-2019-lancet-rewind"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -1579,6 +2092,15 @@
           "url": "https://link.springer.com/article/10.1007/s13300-021-01200-0",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Dulaglutide and cardiovascular outcomes in type 2 diabetes (REWIND; Lancet 2019;394:121-130)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31189511/",
+          "publishedAt": "2019-07-13T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "gerstein-2019-lancet-rewind"
         }
       ],
       "curationNotes": [
@@ -1601,7 +2123,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Cardiovascular outcomes trial arm (REWIND)",
+        "amount": 1.5,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "median 5.4 years",
+        "route": "subcutaneous",
+        "population": "9,901 adults aged 50+ with type 2 diabetes",
+        "outcome": "major cardiovascular events 12.0% vs 13.4% placebo (HR 0.88)",
+        "sourceType": "trial",
+        "sourceTitle": "Dulaglutide and cardiovascular outcomes in type 2 diabetes (Lancet 2019)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/31189511/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -21619,10 +22160,39 @@
         }
       ],
       "evidenceGaps": [
-        "Phase 3 outcomes, long-term safety, and approved labeling are not established; available public summaries are early-phase."
+        "Phase 3 outcomes, long-term safety, and approved labeling are not established; available public summaries are early-phase.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Research-chemical vendors market amycretin for human use despite investigational-only status."
+      ],
+      "publicClaims": [
+        {
+          "id": "amycretin-weight-loss",
+          "statement": "Amycretin causes weight loss.",
+          "population": "adults with overweight or obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "An early-phase, single-site trial of 125 adults found up to 22% to 24% weight loss over 36 weeks vs little change on placebo, but many participants withdrew. Larger trials are needed.",
+          "sources": [
+            "pubmed-amycretin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-amycretin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21664,7 +22234,26 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 1b/2a randomized trial arm (Part C)",
+        "amount": 20,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "36 weeks",
+        "route": "subcutaneous",
+        "population": "adults aged 18-55 with overweight or obesity",
+        "outcome": "-22.0% body weight vs +1.9% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Amycretin phase 1b/2a randomised controlled study (Lancet 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40550231/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Escalated from 0.3 mg to the maintenance dose."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -22297,10 +22886,68 @@
         }
       ],
       "evidenceGaps": [
-        "Regulatory approval status can change; this record keeps regulatoryStatus not-established until an approved label is verified."
+        "Regulatory approval status can change; this record keeps regulatoryStatus not-established until an approved label is verified.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Gray-market vendors may overstate benefits relative to controlled trial populations and omit investigational status."
+      ],
+      "publicClaims": [
+        {
+          "id": "cagrilintide-semaglutide-weight-loss",
+          "statement": "Cagrilintide with semaglutide causes major weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity, or overweight with a weight-related condition, without diabetes (REDEFINE 1, 68 weeks)",
+            "outcome": "percent body-weight change vs placebo"
+          },
+          "note": "In a 68-week phase 3 trial of 3,417 adults, average weight loss was 20.4% on the combination vs 3.0% on placebo. Gastrointestinal side effects affected 80% vs 40%. The combination is investigational.",
+          "sources": [
+            "acc-redefine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "acc-redefine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "cagrilintide-alone-weight-loss",
+          "statement": "Cagrilintide on its own causes weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "A 26-week phase 2 dose-finding trial found 6% to 11% weight loss on cagrilintide alone vs 3% on placebo. Larger trials have tested it mainly as part of a combination.",
+          "sources": [
+            "lau-2021-lancet-cagrilintide-phase2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "lau-2021-lancet-cagrilintide-phase2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -22351,7 +22998,43 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (REDEFINE 1), combined with semaglutide 2.4 mg",
+        "amount": 2.4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "68 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity or overweight with comorbidity, without diabetes",
+        "outcome": "-20.4% body weight (combination) vs -3.0% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (N Engl J Med 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40544433/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 dose-finding trial arm",
+        "amount": 4.5,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "26 weeks",
+        "route": "subcutaneous",
+        "population": "adults with overweight or obesity",
+        "outcome": "-10.8% body weight vs -3.0% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Once-weekly cagrilintide for weight management (Lancet 2021)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/34798060/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "Doses from 0.3 to 4.5 mg were tested."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -27648,21 +28331,82 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "No FDA label; strongest human data are from China-based development programs. Cardiovascular outcomes and multi-year safety in broader populations are not established for US practice."
+        "No FDA label; strongest human data are from China-based development programs. Cardiovascular outcomes and multi-year safety in broader populations are not established for US practice.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Gray-market vendors sell mazdutide for research use only while consumer blogs discuss self-injection dosing despite lack of US approval."
+      ],
+      "publicClaims": [
+        {
+          "id": "mazdutide-weight-loss",
+          "statement": "Mazdutide causes weight loss.",
+          "population": "adults with obesity or overweight",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "Chinese adults with obesity or overweight (GLORY-1, 48 weeks)",
+            "outcome": "percent body-weight change vs placebo"
+          },
+          "note": "In a 48-week phase 3 randomized trial of 610 Chinese adults, average weight loss was 11% to 14% on mazdutide vs essentially none on placebo. Results outside Chinese populations are not yet published.",
+          "sources": [
+            "ji-2025-nejm-glory1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ji-2025-nejm-glory1"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "mazdutide-fda-approved",
+          "statement": "Mazdutide is FDA-approved.",
+          "population": "people buying mazdutide in the US",
+          "outcome": "US regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not FDA-approved. It is approved in China for weight management and type 2 diabetes; FDA lists mazdutide among unapproved drugs illegally sold as 'research' products.",
+          "sources": [
+            "fda-unapproved-glp1-concerns",
+            "mazdutide-first-approval-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-unapproved-glp1-concerns",
+                "mazdutide-first-approval-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
         {
           "sourceType": "other",
-          "title": "Mazdutide: First Approval",
+          "title": "Mazdutide: First Approval (Drugs 2025)",
           "publisher": "Drugs (Springer/Adis) / PubMed PMID 41028652",
           "url": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
           "publishedAt": "2025-12-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "mazdutide-first-approval-2025"
         },
         {
           "sourceType": "paper",
@@ -27680,6 +28424,15 @@
           "publishedAt": null,
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "fda-unapproved-glp1-concerns"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Once-Weekly Mazdutide in Chinese Adults with Obesity or Overweight (GLORY-1; N Engl J Med 2025;392:2215-2225)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40421736/",
+          "publishedAt": "2025-06-12T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ji-2025-nejm-glory1"
         }
       ],
       "curationNotes": [
@@ -27702,7 +28455,43 @@
       "qualityFlags": [
         "agent-review-2026-10-14"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (GLORY-1)",
+        "amount": 4,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "610 Chinese adults with obesity or overweight",
+        "outcome": "-11.00% body weight vs +0.30% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Once-Weekly Mazdutide in Chinese Adults with Obesity or Overweight (N Engl J Med 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40421736/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (GLORY-1)",
+        "amount": 6,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "48 weeks",
+        "route": "subcutaneous",
+        "population": "610 Chinese adults with obesity or overweight",
+        "outcome": "-14.01% body weight vs +0.30% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Once-Weekly Mazdutide in Chinese Adults with Obesity or Overweight (N Engl J Med 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40421736/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -29025,10 +29814,65 @@
       ],
       "evidenceGaps": [
         "No FDA-approved prescribing information; labeled contraindications and interaction tables are not established.",
-        "Phase 3 and regulatory outcomes remain pending relative to any future labeled use."
+        "Phase 3 and regulatory outcomes remain pending relative to any future labeled use.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Research-chemical vendors may market investigational dual agonists using trial headlines; supervised trial evidence does not validate unsupervised gray-market use."
+      ],
+      "publicClaims": [
+        {
+          "id": "pemvidutide-mash",
+          "statement": "Pemvidutide resolves fatty liver disease (MASH).",
+          "population": "adults with MASH and moderate-to-advanced fibrosis",
+          "outcome": "MASH resolution on biopsy",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "At 24 weeks in a phase 2b trial of 212 adults, MASH resolved in 52% to 58% on pemvidutide vs 20% on placebo. Longer trials are needed.",
+          "sources": [
+            "noureddin-2025-lancet-impact"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "noureddin-2025-lancet-impact"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "pemvidutide-fibrosis",
+          "statement": "Pemvidutide reverses liver fibrosis.",
+          "population": "adults with MASH and fibrosis",
+          "outcome": "fibrosis improvement on biopsy",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. In the same 24-week trial, fibrosis improvement was not significantly better than placebo (33% to 36% vs 28%).",
+          "sources": [
+            "noureddin-2025-lancet-impact"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "noureddin-2025-lancet-impact"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -29056,6 +29900,15 @@
           "url": "https://clinicaltrials.gov/study/NCT04561245",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Weekly pemvidutide vs placebo for MASH (IMPACT): 24-week results from a phase 2b study (Lancet 2025;406:2644-2655)",
+          "publisher": "The Lancet (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41237796/",
+          "publishedAt": "2025-12-06T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "noureddin-2025-lancet-impact"
         }
       ],
       "curationNotes": [
@@ -29082,7 +29935,43 @@
         "no-claim-content-this-session",
         "unknown-honest-defaults"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 2b randomized trial arm (IMPACT)",
+        "amount": 1.2,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "24 weeks",
+        "route": "subcutaneous",
+        "population": "212 adults with biopsy-confirmed MASH, fibrosis stage F2-F3",
+        "outcome": "MASH resolution 58% vs 20% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Pemvidutide for MASH (IMPACT) 24-week results (Lancet 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41237796/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "No dose titration."
+      },
+      {
+        "side": "study",
+        "context": "Phase 2b randomized trial arm (IMPACT)",
+        "amount": 1.8,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "24 weeks",
+        "route": "subcutaneous",
+        "population": "212 adults with biopsy-confirmed MASH, fibrosis stage F2-F3",
+        "outcome": "MASH resolution 52% vs 20% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Pemvidutide for MASH (IMPACT) 24-week results (Lancet 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41237796/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": "No dose titration."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -31418,10 +32307,94 @@
       "evidenceGaps": [
         "No FDA-approved prescribing information.",
         "Long-term labeled safety, contraindications, and drug interactions remain pending regulatory review.",
-        "Gray-market products are not trial-grade clinical supply."
+        "Gray-market products are not trial-grade clinical supply.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online research-peptide vendors market survodutide using investigational trial headlines without approved-product safeguards."
+      ],
+      "publicClaims": [
+        {
+          "id": "survodutide-weight-loss",
+          "statement": "Survodutide causes weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity without diabetes (SYNCHRONIZE-1, 76 weeks)",
+            "outcome": "percent body-weight change vs placebo"
+          },
+          "note": "In a 76-week phase 3 randomized trial of 725 adults, average weight loss was 12% to 13% on survodutide vs 5% on placebo. Gastrointestinal side effects affected 81% to 90% of people on survodutide vs 48% on placebo. It is still investigational.",
+          "sources": [
+            "leroux-2026-nejm-synchronize1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "leroux-2026-nejm-synchronize1"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "survodutide-mash",
+          "statement": "Survodutide treats fatty liver disease (MASH).",
+          "population": "adults with MASH and liver fibrosis",
+          "outcome": "MASH improvement on biopsy",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 48-week phase 2 trial found more MASH improvement on survodutide (43% to 62%) than placebo (14%). Phase 3 results are needed before this is established.",
+          "sources": [
+            "sanyal-2024-nejm-survodutide-mash"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "sanyal-2024-nejm-survodutide-mash"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "survodutide-approved",
+          "statement": "Survodutide is an approved medicine.",
+          "population": "people buying survodutide",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not approved. FDA lists survodutide among unapproved drugs that companies have illegally sold as 'research' products.",
+          "sources": [
+            "fda-unapproved-glp1-concerns"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-unapproved-glp1-concerns"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31432,7 +32405,8 @@
           "publisher": "New England Journal of Medicine / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38847460/",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "sanyal-2024-nejm-survodutide-mash"
         },
         {
           "sourceType": "other",
@@ -31457,6 +32431,24 @@
           "url": "https://europepmc.org/article/MED/38330987",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Survodutide Once Weekly for the Treatment of Adults with Obesity (SYNCHRONIZE-1; N Engl J Med 2026)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42253238/",
+          "publishedAt": "2026-08-20T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "leroux-2026-nejm-synchronize1"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-unapproved-glp1-concerns"
         }
       ],
       "curationNotes": [
@@ -31483,7 +32475,43 @@
         "no-claim-content-this-session",
         "unknown-honest-defaults"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SYNCHRONIZE-1)",
+        "amount": 3.6,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "76 weeks",
+        "route": "subcutaneous",
+        "population": "725 adults with obesity without diabetes",
+        "outcome": "-12.2% body weight vs -5.4% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Survodutide Once Weekly for the Treatment of Adults with Obesity (N Engl J Med 2026)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42253238/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 3 randomized trial arm (SYNCHRONIZE-1)",
+        "amount": 6.0,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "76 weeks",
+        "route": "subcutaneous",
+        "population": "725 adults with obesity without diabetes",
+        "outcome": "-13.0% body weight vs -5.4% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Survodutide Once Weekly for the Treatment of Adults with Obesity (N Engl J Med 2026)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42253238/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -31699,10 +32727,38 @@
         }
       ],
       "evidenceGaps": [
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Oral VENTURE-Oral outcome figures remain largely sponsor-disclosed without posted ClinicalTrials.gov results or peer-reviewed publication at last evidence-packet check."
+      ],
+      "publicClaims": [
+        {
+          "id": "vk2735-weight-loss",
+          "statement": "VK2735 causes weight loss.",
+          "population": "adults with obesity or overweight",
+          "outcome": "body-weight reduction",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 13-week phase 2 trial found 9% to 15% weight loss on VK2735 vs 2% on placebo. Thirteen weeks is short, and long-term results are not yet published.",
+          "sources": [
+            "bays-2026-obesity-venture"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "bays-2026-obesity-venture"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31713,7 +32769,8 @@
           "publisher": "Obesity / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/41508550/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "bays-2026-obesity-venture"
         },
         {
           "sourceType": "database",
@@ -31745,7 +32802,43 @@
       "qualityFlags": [
         "batch-c"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm (VENTURE)",
+        "amount": 2.5,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "13 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity or overweight and a weight-related comorbidity, without diabetes",
+        "outcome": "-9.1% body weight vs -1.7% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Weekly Subcutaneous VK2735 for Weight Management: VENTURE (Obesity 2026)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41508550/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm (VENTURE)",
+        "amount": 15,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "13 weeks",
+        "route": "subcutaneous",
+        "population": "adults with obesity or overweight and a weight-related comorbidity, without diabetes",
+        "outcome": "-14.7% body weight vs -1.7% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Weekly Subcutaneous VK2735 for Weight Management: VENTURE (Obesity 2026)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41508550/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
