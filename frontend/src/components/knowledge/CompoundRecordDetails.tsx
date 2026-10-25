@@ -2,6 +2,9 @@
 
 import type { KnowledgeDoseReport, KnowledgeEntryDetails, KnowledgeSafetyItem } from '@/lib/types';
 import { tierKey, tierLabel } from '@/lib/evidenceTiers';
+import { PublicClaimsPanel } from './PublicClaimsPanel';
+import { StudyDetailsFold } from './StudyDetailsFold';
+import { redactDoses } from '@/lib/doseRedaction';
 
 /**
  * Full record detail for one compound: known vs unknown, dangers, doses found on both
@@ -105,7 +108,9 @@ export function knownAndUnknown(details: KnowledgeEntryDetails): { known: string
   return { known, unknown };
 }
 
-export function CompoundRecordDetails({ details }: { details: KnowledgeEntryDetails }) {
+export function CompoundRecordDetails({ details: raw }: { details: KnowledgeEntryDetails }) {
+  // 06 §A: doses appear only inside the Study details fold; dose reports are kept intact for it.
+  const details = redactDoses(raw);
   const studyDoses = details.doseReports.filter(d => d.side !== 'reported');
   const reportedDoses = details.doseReports.filter(d => d.side === 'reported');
   const { known, unknown } = knownAndUnknown(details);
@@ -116,6 +121,7 @@ export function CompoundRecordDetails({ details }: { details: KnowledgeEntryDeta
 
   return (
     <div className="space-y-4" data-testid="compound-record-details">
+      <PublicClaimsPanel claims={details.publicClaims ?? []} />
       <section aria-label="Known and unknown" className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-xl border border-emerald-400/15 bg-emerald-500/[0.04] p-3">
           <p className="text-xs uppercase tracking-[0.15em] text-emerald-300/70 mb-2">Known</p>
@@ -167,14 +173,16 @@ export function CompoundRecordDetails({ details }: { details: KnowledgeEntryDeta
         </section>
       )}
 
-      <section aria-label="Doses found" className="space-y-2">
-        <Heading>Doses found</Heading>
-        <p className="text-xs text-white/50">{DOSE_FRAMING}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <DoseColumn testId="doses-studies" title="Studies, trials and professional sources" rows={studyDoses} />
-          <DoseColumn testId="doses-reported" title="Reddit, Facebook, Instagram, forums and blogs" rows={reportedDoses} />
-        </div>
-      </section>
+      <StudyDetailsFold>
+        <section aria-label="Doses found" className="space-y-2">
+          <Heading>Doses found</Heading>
+          <p className="text-xs text-white/50">{DOSE_FRAMING}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <DoseColumn testId="doses-studies" title="Studies, trials and professional sources" rows={studyDoses} />
+            <DoseColumn testId="doses-reported" title="Reddit, Facebook, Instagram, forums and blogs" rows={reportedDoses} />
+          </div>
+        </section>
+      </StudyDetailsFold>
 
       {details.claims.length > 0 && (
         <section aria-label="Claims and grades">
