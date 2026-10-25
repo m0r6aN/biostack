@@ -462,6 +462,17 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 // Contact-form delivery reuses the Azure Communication Email config path above.
 builder.Services.AddSingleton<IContactMessageSender, AzureCommunicationEmailContactMessageSender>();
 
+// Growth Phase 6: evidence alerts. Off unless EvidenceAlerts__Enabled=true; reuses the
+// AzureCommunicationEmail:* or Smtp:* transport, otherwise alerts stay in-app only.
+var evidenceAlertOptions = new BioStack.Api.Alerts.EvidenceAlertOptions();
+builder.Configuration.GetSection("EvidenceAlerts").Bind(evidenceAlertOptions);
+builder.Services.AddSingleton(evidenceAlertOptions);
+if (hasAzureEmail) builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.AzureCommunicationAlertEmailSender>();
+else if (hasSmtp) builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.SmtpAlertEmailSender>();
+else builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.NoAlertEmailSender>();
+builder.Services.AddScoped<BioStack.Api.Alerts.EvidenceAlertService>();
+builder.Services.AddHostedService<BioStack.Api.Alerts.EvidenceAlertHostedService>();
+
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 builder.Services.AddScoped<ICompoundGraphStore, CompoundGraphStore>();
@@ -622,6 +633,7 @@ app.MapPolicyGateEndpoints();
 app.MapReceiptEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
+app.MapWatchlistEndpoints();
 app.MapContactEndpoints();
 app.MapProviderAccessEndpoints();
 app.MapAdminEndpoints();

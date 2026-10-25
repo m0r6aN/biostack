@@ -1,5 +1,6 @@
 'use client';
 
+import { WatchButton } from '@/components/alerts/WatchButton';
 import { useState } from 'react';
 import type { KnowledgeEntry } from '@/lib/types';
 import { displayVerdict, formatAsOf, headlineClaim, isPublished, shareText } from '@/lib/claimVerdicts';
@@ -73,6 +74,7 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
             className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
             Story card
           </a>
+          <WatchButton targetType="compound" targetId={compoundSlug(entry.canonicalName)} returnTo={path} />
         </div>
       </div>
 
