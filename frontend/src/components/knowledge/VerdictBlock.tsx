@@ -91,6 +91,7 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
               {embedCopied ? 'Embed copied' : 'Embed'}
             </button>
           )}
+          <WatchButton targetType="compound" targetId={compoundSlug(entry.canonicalName)} returnTo={path} />
         </div>
       </div>
 
