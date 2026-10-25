@@ -40154,21 +40154,77 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral magnesium oxide dietary supplement tablet.",
-          "tier": "Established",
+          "claim": "Magnesium oxide tends to be less bioavailable than more soluble magnesium forms (aspartate, citrate, lactate, chloride), per NIH ODS; high supplemental intakes can cause diarrhea, nausea and cramping.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:magnesium-oxide"
+            "ods-magnesium-hp",
+            "dailymed-magnesium-oxide"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Comparative bioavailability across magnesium salts and any disease-treatment effect are not established."
+        "Comparative bioavailability across magnesium salts and any disease-treatment effect are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Supplement labels and clinical magnesium research are not interchangeable."
+      ],
+      "publicClaims": [
+        {
+          "id": "magnesium-oxide-best-absorbed",
+          "statement": "Magnesium oxide is the best-absorbed form of magnesium.",
+          "population": "adults taking magnesium supplements",
+          "outcome": "bioavailability",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. NIH ODS says the aspartate, citrate, lactate and chloride forms tend to be absorbed better than magnesium oxide.",
+          "sources": [
+            "ods-magnesium-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-magnesium-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "magnesium-oxide-harmless",
+          "statement": "Extra magnesium from supplements is harmless.",
+          "population": "adults taking magnesium supplements",
+          "outcome": "adverse effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. High supplement doses can cause diarrhea, nausea and cramps. Very high doses can cause toxicity, including irregular heartbeat and, rarely, death.",
+          "sources": [
+            "ods-magnesium-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-magnesium-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -40179,7 +40235,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dc57893c-068a-37d8-e053-2a95a90aa054",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-magnesium-oxide"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Magnesium: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-magnesium-hp"
         }
       ],
       "curationNotes": [
@@ -40428,20 +40494,79 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral cyanocobalamin dietary supplement.",
+          "claim": "Vitamin B12 is used to treat deficiency; injections are typically used when deficiency is caused by pernicious anemia or other malabsorption, per NIH ODS.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:vitamin-b12"
+            "ods-vitaminb12-hp",
+            "dailymed-cyanocobalamin"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "This record does not establish which people need evaluation for deficiency or which route is appropriate."
+        "This record does not establish which people need evaluation for deficiency or which route is appropriate.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "vitamin-b12-deficiency",
+          "statement": "Vitamin B12 treats B12 deficiency.",
+          "population": "people with B12 deficiency, including pernicious anemia",
+          "outcome": "B12 status",
+          "tier": "Established",
+          "qualifier": {
+            "population": "people with diagnosed B12 deficiency",
+            "outcome": "correcting deficiency"
+          },
+          "note": "Yes. Injections are typically used for deficiency from pernicious anemia or poor absorption. Metformin and acid-reducing drugs can contribute to low B12.",
+          "sources": [
+            "ods-vitaminb12-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ods-vitaminb12-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-b12-energy",
+          "statement": "B12 boosts energy and athletic performance.",
+          "population": "people with normal B12 levels",
+          "outcome": "energy and endurance",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. NIH ODS says B12 supplements do not appear to improve performance or endurance in people with enough B12.",
+          "sources": [
+            "ods-vitaminb12-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitaminb12-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -40451,7 +40576,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3c810a40-9e90-4ca7-b364-20d9ac61b120",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-cyanocobalamin"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Vitamin B12: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-vitaminb12-hp"
         }
       ],
       "curationNotes": [
@@ -40699,20 +40834,76 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral vitamin C dietary supplement tablet.",
-          "tier": "Established",
+          "claim": "In the general population, regular vitamin C does not appear to prevent colds but may modestly shorten them; starting it after symptoms begin does not appear to help, per NIH ODS.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:vitamin-c"
+            "ods-vitaminc-hp",
+            "dailymed-vitamin-c"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Disease-prevention effects and person-specific upper limits are not established by this record."
+        "Disease-prevention effects and person-specific upper limits are not established by this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "vitamin-c-prevents-colds",
+          "statement": "Vitamin C prevents colds.",
+          "population": "general adult population",
+          "outcome": "cold incidence",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No, for most people. Regular use does not appear to lower cold risk, except possibly in people under heavy physical stress or with low vitamin C.",
+          "sources": [
+            "ods-vitaminc-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitaminc-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-c-shorter-colds",
+          "statement": "Taking vitamin C regularly makes colds shorter.",
+          "population": "general adult population",
+          "outcome": "cold duration and symptoms",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Modestly, if already taken regularly. Starting after symptoms begin does not appear to help.",
+          "sources": [
+            "ods-vitaminc-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "ods-vitaminc-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -40722,7 +40913,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d74dd994-2520-4d17-8d9d-fa06e9e8de96",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-vitamin-c"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Vitamin C: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-vitaminc-hp"
         }
       ],
       "curationNotes": [
@@ -40970,20 +41171,76 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral zinc sulfate dietary supplement tablet.",
+          "claim": "Prolonged high-dose zinc can interfere with copper absorption, lower immune function and HDL cholesterol, per NIH ODS.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:zinc-sulfate"
+            "ods-zinc-hp",
+            "dailymed-zinc-sulfate"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Immune outcomes and the intake at which copper balance is affected are not established by this record."
+        "Immune outcomes and the intake at which copper balance is affected are not established by this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "zinc-sulfate-colds",
+          "statement": "Zinc shortens colds.",
+          "population": "adults with colds",
+          "outcome": "cold duration",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. Reviews find zinc shortens colds but does not prevent them; certainty is low, and most trials used lozenges, not zinc sulfate tablets.",
+          "sources": [
+            "ods-zinc-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "ods-zinc-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "zinc-sulfate-harmless",
+          "statement": "Long-term high-dose zinc is harmless.",
+          "population": "adults taking zinc supplements for weeks or longer",
+          "outcome": "copper status and immunity",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. NIH ODS says weeks of high-dose zinc can cause low copper, weaker immune function and lower HDL cholesterol.",
+          "sources": [
+            "ods-zinc-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-zinc-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -40993,7 +41250,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b569e760-ee63-40e3-b425-8d498ec164a5",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-zinc-sulfate"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Zinc: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-zinc-hp"
         }
       ],
       "curationNotes": [
@@ -41251,20 +41518,76 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral ferrous sulfate dietary supplement tablet.",
+          "claim": "FDA requires solid iron supplements to warn that accidental iron overdose is a leading cause of fatal poisoning in children under 6; high supplemental doses can cause nausea and constipation, per NIH ODS.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:ferrous-sulfate"
+            "ods-iron-hp",
+            "dailymed-ferrous-sulfate"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "This record does not establish who needs iron or how laboratory monitoring should be done."
+        "This record does not establish who needs iron or how laboratory monitoring should be done.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "ferrous-sulfate-child-safe",
+          "statement": "Iron pills are harmless if a child gets into them.",
+          "population": "children under 6",
+          "outcome": "accidental poisoning",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA requires iron supplements to warn that accidental iron overdose is a leading cause of fatal poisoning in young children.",
+          "sources": [
+            "ods-iron-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-iron-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ferrous-sulfate-no-side-effects",
+          "statement": "Iron supplements have no side effects.",
+          "population": "adults taking iron supplements",
+          "outcome": "gastrointestinal effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. High doses commonly cause nausea and constipation.",
+          "sources": [
+            "ods-iron-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-iron-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -41274,7 +41597,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7693c763-401d-4665-a984-fbbea72da33e",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-ferrous-sulfate"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Iron: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-iron-hp"
         }
       ],
       "curationNotes": [
@@ -41522,21 +41855,80 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral folic acid tablet.",
-          "tier": "Early Evidence",
+          "claim": "The USPSTF recommends daily folic acid for women who are planning or capable of pregnancy, starting before conception, to reduce neural tube defect risk, per NIH ODS.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
-            "src:folic-acid"
+            "ods-folate-hp",
+            "dailymed-folic-acid"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Neural-tube and anemia outcomes depend on population and timing and are not established as personal guidance here."
+        "Neural-tube and anemia outcomes depend on population and timing and are not established as personal guidance here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Supplement folic acid and prescription-strength folic acid are often conflated."
+      ],
+      "publicClaims": [
+        {
+          "id": "folic-acid-ntd",
+          "statement": "Folic acid before and in early pregnancy lowers the risk of neural tube defects.",
+          "population": "women planning or capable of pregnancy",
+          "outcome": "neural tube defects",
+          "tier": "Established",
+          "qualifier": {
+            "population": "women planning or capable of pregnancy",
+            "outcome": "neural tube defect prevention"
+          },
+          "note": "Yes. The USPSTF recommends a daily folic acid supplement starting at least a month before conception, and FDA requires enriched grains to be fortified.",
+          "sources": [
+            "ods-folate-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ods-folate-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "folic-acid-b12",
+          "statement": "High-dose folic acid is harmless with low B12.",
+          "population": "people with B12 deficiency",
+          "outcome": "anemia and nerve damage",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Unclear, and caution is warranted. Folic acid can correct the anemia but not the nerve damage of B12 deficiency, and may worsen symptoms.",
+          "sources": [
+            "ods-folate-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "ods-folate-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -41547,7 +41939,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0baa10dd-6d1d-4946-8236-566451132da3",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-folic-acid"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Folate: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-folate-hp"
         }
       ],
       "curationNotes": [
@@ -41796,20 +42198,50 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral pyridoxine hydrochloride dietary supplement tablet.",
+          "claim": "Chronic high-dose oral pyridoxine can cause severe, progressive sensory neuropathy, per NIH ODS; high food intakes have not been reported to cause harm.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:vitamin-b6"
+            "ods-vitaminb6-hp",
+            "dailymed-pyridoxine"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "The intake associated with neuropathy and the relevance of drug interactions are not established for an individual here."
+        "The intake associated with neuropathy and the relevance of drug interactions are not established for an individual here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "vitamin-b6-harmless",
+          "statement": "High-dose vitamin B6 supplements are harmless.",
+          "population": "adults taking B6 supplements long term",
+          "outcome": "nerve damage",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Long-term high-dose pyridoxine can cause severe nerve damage with loss of coordination. Symptoms usually stop when it is discontinued early.",
+          "sources": [
+            "ods-vitaminb6-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitaminb6-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -41819,7 +42251,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b46908f4-5a46-44a0-a1fb-fe47f8192a1a",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-pyridoxine"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Vitamin B6: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-vitaminb6-hp"
         }
       ],
       "curationNotes": [
@@ -42067,20 +42509,50 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for an oral riboflavin dietary supplement tablet.",
-          "tier": "Established",
+          "claim": "The American Academy of Neurology and American Headache Society concluded riboflavin is probably effective for preventing migraine in adults; two small trials in children found no benefit, per NIH ODS.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:riboflavin"
+            "ods-riboflavin-hp",
+            "dailymed-riboflavin"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Clinical outcomes sometimes discussed for riboflavin are not established by this label-based record."
+        "Clinical outcomes sometimes discussed for riboflavin are not established by this label-based record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "riboflavin-migraine",
+          "statement": "Riboflavin helps prevent migraines.",
+          "population": "adults with episodic migraine",
+          "outcome": "migraine frequency",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Probably, in adults. Neurology and headache societies rate it probably effective, on low-quality evidence. Two small trials in children found no benefit.",
+          "sources": [
+            "ods-riboflavin-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "ods-riboflavin-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -42090,7 +42562,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=78f9ddab-300e-486a-ab81-23f465280e33",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-riboflavin"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Riboflavin: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-riboflavin-hp"
         }
       ],
       "curationNotes": [
@@ -42351,21 +42833,77 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A DailyMed label exists for prescription extended-release niacin tablets.",
-          "tier": "Early Evidence",
+          "claim": "Extended-release niacin is a prescription lipid drug; in trials of people on statins, adding niacin did not reduce cardiovascular events despite further lipid changes, per NIH ODS.",
+          "tier": "Established",
           "confidence": "moderate",
           "sources": [
-            "src:niacin"
+            "ods-niacin-hp",
+            "dailymed-niacin-er"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Supplement niacin and prescription niacin are different regulatory objects. This record does not reconcile them."
+        "Supplement niacin and prescription niacin are different regulatory objects. This record does not reconcile them.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Cardiovascular outcome benefit of adding niacin has been controversial and is not settled here."
+      ],
+      "publicClaims": [
+        {
+          "id": "niacin-heart-statins",
+          "statement": "Adding niacin to a statin prevents heart attacks and strokes.",
+          "population": "people with or at risk of cardiovascular disease on statins",
+          "outcome": "cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Large trials found no fewer cardiovascular events, even though HDL rose and LDL and triglycerides fell. One trial saw more ischemic strokes.",
+          "sources": [
+            "ods-niacin-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-niacin-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "niacin-flush-free",
+          "statement": "All niacin forms cause the same effects.",
+          "population": "people choosing a niacin supplement",
+          "outcome": "flushing",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Nicotinic acid can cause skin flushing; nicotinamide does not, because its structure differs.",
+          "sources": [
+            "ods-niacin-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-niacin-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -42376,7 +42914,17 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6e604319-e164-4056-ab80-b78b98c519c7",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-niacin-er"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Niacin: Fact Sheet for Health Professionals",
+          "publisher": "NIH Office of Dietary Supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ods-niacin-hp"
         }
       ],
       "curationNotes": [
@@ -47978,21 +48526,77 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses vitamin K2 from a clinical perspective without establishing a supplement indication.",
+          "claim": "NIH ODS says it is unclear whether any form of vitamin K supplementation reduces osteoporosis risk; MK-4 trials, mostly in Japanese postmenopausal women, reported fewer fractures, while other trials were mixed.",
           "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:vitamin-k2"
+            "ods-vitamink-hp",
+            "pubmed-38890875-k2-review"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Form differences, outcome trials, and anticoagulant interaction magnitude are unresolved."
+        "Form differences, outcome trials, and anticoagulant interaction magnitude are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Bone and cardiovascular supplement claims exceed what this record can verify."
+      ],
+      "publicClaims": [
+        {
+          "id": "vitamin-k2-fractures",
+          "statement": "Vitamin K2 prevents osteoporosis and fractures.",
+          "population": "postmenopausal women and older adults",
+          "outcome": "bone density and fractures",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Unclear. Some trials of the MK-4 form, mostly in Japan, reported fewer fractures, but others found no effect on bone density.",
+          "sources": [
+            "ods-vitamink-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "ods-vitamink-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-k2-warfarin",
+          "statement": "Vitamin K supplements do not matter if you take warfarin.",
+          "population": "people taking warfarin",
+          "outcome": "anticoagulation",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Warfarin works against vitamin K, so people on it need to keep their vitamin K intake consistent.",
+          "sources": [
+            "ods-vitamink-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitamink-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -48003,7 +48607,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38890875/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38890875-k2-review"
         },
         {
           "sourceType": "regulator",
@@ -48011,7 +48616,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-vitamink-hp"
         }
       ],
       "curationNotes": [
@@ -48259,21 +48865,77 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses biotin nutrition and therapeutic discussions without establishing a cosmetic indication.",
-          "tier": "Plausible Theory",
+          "claim": "Biotin supplements are promoted for hair, skin and nails, but NIH ODS says the claims rest, at best, on a few case reports and small studies; very high intakes can distort biotin-streptavidin lab tests.",
+          "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:biotin"
+            "ods-biotin-hp",
+            "pubmed-28701385-biotin-review"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Benefit in non-deficient people and the assay-interference threshold are not established here."
+        "Benefit in non-deficient people and the assay-interference threshold are not established here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Hair and nail marketing is broader than the deficiency-related evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "biotin-hair-nails",
+          "statement": "Biotin improves hair, skin and nails.",
+          "population": "people without biotin deficiency",
+          "outcome": "hair, skin and nail health",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. NIH ODS says the claims are supported, at best, by a few case reports and small studies.",
+          "sources": [
+            "ods-biotin-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "ods-biotin-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "biotin-lab-tests",
+          "statement": "High-dose biotin does not affect lab tests.",
+          "population": "people taking high-dose biotin",
+          "outcome": "lab test accuracy",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Very high intakes can cause falsely normal or abnormal results on common hormone tests, including thyroid tests, and have led to misdiagnosis.",
+          "sources": [
+            "ods-biotin-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-biotin-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -48284,7 +48946,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/28701385/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-28701385-biotin-review"
         },
         {
           "sourceType": "regulator",
@@ -48292,7 +48955,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-biotin-hp"
         }
       ],
       "curationNotes": [
@@ -56240,21 +56904,77 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses vitamin A deficiency and excessive intake without establishing a supplement plan.",
-          "tier": "Unsupported",
+          "claim": "Preformed vitamin A above the upper limit can cause birth defects, and beta-carotene supplements increased lung cancer in smokers in the ATBC and CARET trials, per NIH ODS.",
+          "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:vitamin-a"
+            "ods-vitamina-hp",
+            "pubmed-38030585-vita-maternal"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a label or review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Population-specific upper limits and the distinction between preformed retinol and carotenoids are not settled as personal guidance."
+        "Population-specific upper limits and the distinction between preformed retinol and carotenoids are not settled as personal guidance.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Preformed retinol and carotenoid precursors are often conflated."
+      ],
+      "publicClaims": [
+        {
+          "id": "vitamin-a-pregnancy",
+          "statement": "High-dose vitamin A is safe during pregnancy.",
+          "population": "pregnant or possibly pregnant women",
+          "outcome": "birth defects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Preformed vitamin A above the upper limit can cause birth defects, so experts advise against high-dose supplements in pregnancy.",
+          "sources": [
+            "ods-vitamina-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitamina-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-a-lung-cancer",
+          "statement": "Beta-carotene supplements prevent lung cancer in smokers.",
+          "population": "current and former smokers",
+          "outcome": "lung cancer",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. In the ATBC trial, beta-carotene raised lung cancer risk in male smokers by 18%, and overall deaths were 8% higher.",
+          "sources": [
+            "ods-vitamina-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitamina-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -56265,7 +56985,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38030585/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38030585-vita-maternal"
         },
         {
           "sourceType": "regulator",
@@ -56273,7 +56994,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-vitamina-hp"
         }
       ],
       "curationNotes": [
