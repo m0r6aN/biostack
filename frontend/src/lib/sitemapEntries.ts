@@ -4,7 +4,10 @@ import { absoluteSiteUrl } from '@/lib/site';
 
 export type SitemapCompound = {
   canonicalName?: string;
-  details?: { lastReviewedAt?: string | null } | null;
+  details?: {
+    lastReviewedAt?: string | null;
+    publicClaims?: Array<{ id: string; published: boolean; verdict: string; publishedAt?: string | null }>;
+  } | null;
 };
 
 export function compoundSitemapEntries(entries: SitemapCompound[]): MetadataRoute.Sitemap {
@@ -22,6 +25,15 @@ export function compoundSitemapEntries(entries: SitemapCompound[]): MetadataRout
       // lastmod is the record's review (version) date; omitted when the record has none.
       ...(reviewed && !Number.isNaN(reviewed.getTime()) ? { lastModified: reviewed } : {}),
     });
+    // Phase 3: published claim pages only (ungraded claim pages are noindex).
+    for (const claim of entry.details?.publicClaims ?? []) {
+      if (!claim.published || claim.verdict === 'NOT YET GRADED') continue;
+      const at = claim.publishedAt ? new Date(claim.publishedAt) : null;
+      result.push({
+        url: absoluteSiteUrl(`${path}/claims/${claim.id}`),
+        ...(at && !Number.isNaN(at.getTime()) ? { lastModified: at } : {}),
+      });
+    }
   }
   return result;
 }

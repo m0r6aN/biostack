@@ -43,7 +43,7 @@ export function VerdictChip({ verdict }: { verdict: ClaimVerdict }) {
   );
 }
 
-function ClaimRow({ claim }: { claim: KnowledgePublicClaim }) {
+export function ClaimRow({ claim, href }: { claim: KnowledgePublicClaim; href?: string }) {
   const published = claim.published && claim.verdict !== 'NOT YET GRADED';
   const asOf = published ? formatAsOf(claim.publishedAt ?? claim.verifiedAt) : '';
   return (
@@ -51,6 +51,7 @@ function ClaimRow({ claim }: { claim: KnowledgePublicClaim }) {
       <div className="flex flex-wrap items-center gap-2">
         <VerdictChip verdict={published ? claim.verdict : 'NOT YET GRADED'} />
         <p className="text-sm text-white/85">&ldquo;{claim.statement}&rdquo;</p>
+        {href && <a href={href} className="text-xs text-cyan-300 underline underline-offset-4">Claim page</a>}
       </div>
       {published && claim.qualifier && <p className="text-xs text-emerald-200/80">{claim.qualifier}</p>}
       {published && claim.note && <p className="text-sm text-white/65">{claim.note}</p>}
