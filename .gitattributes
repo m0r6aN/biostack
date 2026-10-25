@@ -11,3 +11,6 @@ research/source-authorization/*.json -text
 research/source-authorization/snapshots/*.json -text
 research/input/sources/pilot-source-registry.json -text
 backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision*.schema.json -text
+
+# Seed corpus: LF so `git diff --check` (offline-kit CI) does not flag every edited line as trailing whitespace.
+backend/src/BioStack.KnowledgeWorker/Seeds/substances-seed.json text eol=lf
