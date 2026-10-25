@@ -13,14 +13,16 @@ public sealed class CorpusIdentityInventoryBuilderTests
 
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
-        // Go-live library 2026-10-14 expanded the seed corpus from the BIO-LOCAL-014 count of 99 to 158.
-        Assert.Equal(158, snapshot.SeedRecordCount);
+        // Go-live library 2026-10-14 expanded the seed corpus from the BIO-LOCAL-014 count of 99 to 158;
+        // the 2026-10-25 consolidation folded testolone into vosilasarm and creatine-monohydrate into creatine (156).
+        Assert.Equal(156, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(30, snapshot.SourceRegistryRecordCount);
         Assert.Equal(16, snapshot.SeedCandidateOverlapCount);
-        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142.
-        Assert.Equal(142, snapshot.SeedOnlyCanonicalIds.Count);
+        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142, less the two
+        // seed-only records folded in by the 2026-10-25 consolidation = 140.
+        Assert.Equal(140, snapshot.SeedOnlyCanonicalIds.Count);
         Assert.Equal(0, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);
@@ -28,45 +30,11 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
         Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
         Assert.Equal(2, snapshot.RegistryAuthorizedEvidencePacketCount);
-        // The creatine pair remains distinct. The 2026-10-14 library adds the magnesium-oxide
-        // overlap and the testolone/vosilasarm token aliases.
-        Assert.Equal(8, snapshot.IdentityTokenCollisions.Count);
-        Assert.Equal(
-            [
-                "creatine",
-                "creatine-monohydrate",
-                "ep0062",
-                "magnesium-oxide",
-                "rad-140",
-                "rad140",
-                "testolone",
-                "vosilasarm",
-            ],
-            snapshot.IdentityTokenCollisions.Select(collision => collision.Key));
-        Assert.Equal(
-            ["candidate:creatine", "seed:creatine", "seed:creatine-monohydrate"],
-            snapshot.IdentityTokenCollisions[0].Owners);
-        Assert.Equal(
-            ["candidate:creatine", "seed:creatine-monohydrate"],
-            snapshot.IdentityTokenCollisions[1].Owners);
-        Assert.Equal(
-            ["seed:testolone", "seed:vosilasarm"],
-            snapshot.IdentityTokenCollisions[2].Owners);
-        Assert.Equal(
-            ["candidate:magnesium", "seed:magnesium", "seed:magnesium-oxide"],
-            snapshot.IdentityTokenCollisions[3].Owners);
-        Assert.Equal(
-            ["seed:testolone", "seed:vosilasarm"],
-            snapshot.IdentityTokenCollisions[4].Owners);
-        Assert.Equal(
-            ["seed:testolone", "seed:vosilasarm"],
-            snapshot.IdentityTokenCollisions[5].Owners);
-        Assert.Equal(
-            ["seed:testolone", "seed:vosilasarm"],
-            snapshot.IdentityTokenCollisions[6].Owners);
-        Assert.Equal(
-            ["seed:testolone", "seed:vosilasarm"],
-            snapshot.IdentityTokenCollisions[7].Owners);
+        // The 2026-10-25 consolidation folded testolone into vosilasarm and creatine-monohydrate
+        // into creatine, so their token collisions are gone; only the magnesium-oxide overlap remains.
+        var collision = Assert.Single(snapshot.IdentityTokenCollisions);
+        Assert.Equal("magnesium-oxide", collision.Key);
+        Assert.Equal(["candidate:magnesium", "seed:magnesium", "seed:magnesium-oxide"], collision.Owners);
         Assert.Empty(snapshot.ExternalIdentifierCollisions);
         Assert.False(snapshot.ModelInvoked);
         Assert.False(snapshot.NetworkAccessed);

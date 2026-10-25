@@ -37,7 +37,7 @@ public sealed class ResearchScheduleTests
         var batch = ResearchSchedulePlanner.Plan(Seed(), Array.Empty<DiscoveryCandidate>(),
             new ResearchScheduleSettings(true, false, 30, 1000, 0), Now)!;
         Assert.True(Validator.Validate(ResearchArtifactKind.ResearchRequestBatch, batch).IsValid);
-        Assert.Equal(158, ((JsonArray)batch["requests"]!).Count);
+        Assert.Equal(156, ((JsonArray)batch["requests"]!).Count);
         Assert.All((JsonArray)batch["requests"]!, r => Assert.StartsWith("update-", r!["requestId"]!.GetValue<string>()));
     }
 
@@ -81,7 +81,7 @@ public sealed class ResearchScheduleTests
             foreach (var file in Directory.GetFiles(output))
                 foreach (var r in JsonNode.Parse(File.ReadAllText(file))!["requests"]!.AsArray())
                     Assert.True(names.Add(r!["compoundName"]!.GetValue<string>()), "requested twice within the stale window");
-            Assert.Equal(158, names.Count);
+            Assert.Equal(156, names.Count);
         }
         finally
         {
