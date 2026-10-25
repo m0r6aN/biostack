@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0.100@sha256:c7445f141c04f1a6b454181bd098dcfa606c61ba0bd213d0a702489e5bd4cd71 AS build
 WORKDIR /src
 
+COPY backend/Directory.Build.props backend/Directory.Build.props
 COPY backend/NuGet.Config backend/NuGet.Config
 COPY backend/packages/ backend/packages/
 COPY backend/src/BioStack.Domain/BioStack.Domain.csproj backend/src/BioStack.Domain/
