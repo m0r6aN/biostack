@@ -40,7 +40,7 @@ public static partial class PublicSourcePolicy
         // Trial registries
         "clinicaltrials.gov", "isrctn.com", "trialsearch.who.int", "clinicaltrialsregister.eu", "gsk-studyregister.com",
         // Regulators, labels and government health / reference data
-        "fda.gov", "nih.gov", "nlm.nih.gov", "cdc.gov", "dea.gov", "federalregister.gov", "ncats.io",
+        "fda.gov", "nih.gov", "nlm.nih.gov", "cdc.gov", "dea.gov", "deadiversion.usdoj.gov", "federalregister.gov", "ncats.io",
         "ema.europa.eu", "europa.eu", "who.int", "canada.ca", "tga.gov.au", "gov.uk", "australianprescriber.tg.org.au",
         "go.drugbank.com",
         // Anti-doping agencies
