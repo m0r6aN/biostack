@@ -8364,10 +8364,129 @@
         }
       ],
       "evidenceGaps": [
-        "Performance-enhancement and supra-physiologic dosing contexts lack the safety assurances of labeled replacement therapy and are outside approved use."
+        "Performance-enhancement and supra-physiologic dosing contexts lack the safety assurances of labeled replacement therapy and are outside approved use.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Ongoing debate exists around cardiovascular risk magnitude of testosterone therapy in older men; follow current labeling and specialty guidance rather than this summary alone."
+      ],
+      "publicClaims": [
+        {
+          "id": "testosterone-cypionate-low-t",
+          "statement": "Testosterone treats confirmed low testosterone in men.",
+          "population": "men with symptoms and consistently low morning testosterone",
+          "outcome": "testosterone levels and deficiency symptoms",
+          "tier": "Established",
+          "qualifier": {
+            "population": "men with confirmed hypogonadism",
+            "outcome": "restoring testosterone to normal"
+          },
+          "note": "Yes, for diagnosed hypogonadism. It is FDA-approved for this, and the Endocrine Society says to diagnose only after symptoms plus repeated low morning tests.",
+          "sources": [
+            "dailymed-depo-testosterone",
+            "endocrine-society-2018-testosterone-guideline"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-depo-testosterone",
+                "endocrine-society-2018-testosterone-guideline"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "testosterone-cypionate-heart-attack",
+          "statement": "Testosterone therapy causes heart attacks and strokes.",
+          "population": "men with low testosterone and heart risk",
+          "outcome": "major cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not in the largest trial. TRAVERSE (5,246 men with low testosterone and heart disease or high risk, about 33 months) found no increase in heart attack, stroke or cardiovascular death vs placebo. It did see more atrial fibrillation, kidney injury and lung clots, and the label warns testosterone can raise blood pressure.",
+          "sources": [
+            "lincoff-2023-nejm-traverse",
+            "dailymed-depo-testosterone"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "lincoff-2023-nejm-traverse",
+                "dailymed-depo-testosterone"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "testosterone-cypionate-shutdown",
+          "statement": "Injected testosterone can shut down your own testosterone and sperm production.",
+          "population": "men using testosterone",
+          "outcome": "natural testosterone and sperm production",
+          "tier": "Established",
+          "qualifier": {
+            "population": "men taking outside testosterone",
+            "outcome": "suppressed natural testosterone; sperm suppression at large doses"
+          },
+          "note": "Yes. The label says outside testosterone suppresses the pituitary signal (LH) for natural production and, at large doses, can suppress sperm production.",
+          "sources": [
+            "dailymed-depo-testosterone"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-depo-testosterone"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "testosterone-cypionate-otc",
+          "statement": "Testosterone is legal to buy without a prescription.",
+          "population": "people buying testosterone online",
+          "outcome": "legal status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. DEA lists testosterone as a Schedule III controlled substance, and this injection is a prescription drug.",
+          "sources": [
+            "dea-controlled-substances-alpha",
+            "dailymed-depo-testosterone"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dea-controlled-substances-alpha",
+                "dailymed-depo-testosterone"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -8378,7 +8497,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cfbb53d4-b868-4a28-8436-f9112eb01c39",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-depo-testosterone"
         },
         {
           "sourceType": "guideline",
@@ -8386,7 +8506,26 @@
           "publisher": "Endocrine Society",
           "url": "https://pubmed.ncbi.nlm.nih.gov/29562364/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "endocrine-society-2018-testosterone-guideline"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Cardiovascular Safety of Testosterone-Replacement Therapy (TRAVERSE; N Engl J Med 2023)",
+          "publisher": "The New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37326322/",
+          "publishedAt": "2023-07-13T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lincoff-2023-nejm-traverse"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Controlled Substances - Alphabetical Order (DEA Diversion Control Division)",
+          "publisher": "U.S. Drug Enforcement Administration",
+          "url": "https://www.deadiversion.usdoj.gov/schedules/orangebook/c_cs_alpha.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dea-controlled-substances-alpha"
         }
       ],
       "curationNotes": [
@@ -8438,18 +8577,18 @@
     },
     "regulatory": {
       "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved",
+      "regulatoryStatus": "FDA approval withdrawn June 28, 2023 (withdrawn for reasons of safety or effectiveness); Schedule III controlled substance",
       "labelStatusByUseCase": [
         {
-          "useCase": "approved catabolic weight loss contexts per label",
-          "labelStatus": "on-label"
+          "useCase": "formerly labeled adjunct to promote weight gain after catabolic illness (approval withdrawn 2023)",
+          "labelStatus": "not-indicated"
         }
       ],
       "jurisdiction": "US",
-      "approvedIndications": [
-        "approved catabolic weight loss contexts per label"
-      ],
-      "offLabelNotes": []
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "No US-approved oxandrolone product remains; FDA withdrew all approvals in 2023."
+      ]
     },
     "mechanism": {
       "mechanismSummary": "Oxandrolone is represented by its commonly described anabolic androgenic steroid mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
@@ -8503,12 +8642,13 @@
     "indications": [
       {
         "useCase": "adjunct to promote weight gain after catabolic illness and related labeled contexts per oxandrolone products",
-        "labelStatus": "on-label",
+        "labelStatus": "not-indicated",
         "population": "Per product labeling; Schedule III anabolic steroid.",
-        "benefitSummary": "People look up oxandrolone (Oxandrin) as an oral anabolic steroid historically labeled as an adjunct to promote weight gain after extensive surgery, chronic infection, severe trauma, or prolonged corticosteroid catabolism, and for bone-pain osteoporosis contexts on some labels. Physique enhancement is not a labeled use and carries androgen class harms.",
+        "benefitSummary": "Oxandrolone (Oxandrin) was once labeled as an adjunct to promote weight gain after surgery, infection, trauma or long steroid use. FDA withdrew approval in 2023, citing no substantial evidence of effectiveness against serious liver and lipid risks. Physique use was never a labeled use.",
         "evidenceTier": "Established",
         "sources": [
-          "src:oxandrolone"
+          "fedreg-2023-13733-oxandrolone-withdrawal",
+          "fedreg-2023-19796-oxandrolone-safety-determination"
         ]
       }
     ],
@@ -8687,21 +8827,107 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Oxandrolone has evidence relevant to approved catabolic weight loss contexts per label.",
+          "claim": "FDA withdrew approval of oxandrolone tablets (Oxandrin NDA 013718 and four generic ANDAs) as of June 28, 2023, and later determined they were withdrawn for reasons of safety or effectiveness; FDA will not approve generics that refer to Oxandrin.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "src:oxandrolone"
+            "fedreg-2023-13733-oxandrolone-withdrawal",
+            "fedreg-2023-19796-oxandrolone-safety-determination"
           ],
           "legacyTier": "Strong",
-          "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
+          "gradeRationale": "Corrected 2026-10-25: the record said FDA-approved; Federal Register notices show approval was withdrawn in 2023."
         }
       ],
       "evidenceGaps": [
-        "Product availability has varied by manufacturer discontinuations; verify current US marketed status. Non-medical bodybuilding regimens are outside labeled evidence."
+        "Product availability has varied by manufacturer discontinuations; verify current US marketed status. Non-medical bodybuilding regimens are outside labeled evidence.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Athletic communities continue diversion for lean mass despite controlled-substance status and hepatotoxicity warnings for oral 17-aa androgens."
+      ],
+      "publicClaims": [
+        {
+          "id": "oxandrolone-approved",
+          "statement": "Oxandrolone is an FDA-approved medicine.",
+          "population": "people looking up oxandrolone (Anavar)",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No longer. FDA withdrew approval of all oxandrolone tablets in 2023 and found they were withdrawn for reasons of safety or effectiveness.",
+          "sources": [
+            "fedreg-2023-13733-oxandrolone-withdrawal",
+            "fedreg-2023-19796-oxandrolone-safety-determination"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fedreg-2023-13733-oxandrolone-withdrawal",
+                "fedreg-2023-19796-oxandrolone-safety-determination"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "oxandrolone-mild-safe",
+          "statement": "Oxandrolone (Anavar) is a mild, safe steroid.",
+          "population": "people using oxandrolone for physique goals",
+          "outcome": "safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA's 2023 determination cites label warnings for peliosis hepatis (blood-filled liver cysts) that can cause liver failure, liver tumors, and cholesterol changes that raise atherosclerosis risk, and an advisory committee found no evidence of efficacy.",
+          "sources": [
+            "fedreg-2023-19796-oxandrolone-safety-determination"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fedreg-2023-19796-oxandrolone-safety-determination"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "oxandrolone-otc",
+          "statement": "Oxandrolone is legal to buy without a prescription.",
+          "population": "people buying oxandrolone online",
+          "outcome": "legal status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. DEA lists oxandrolone as a Schedule III controlled substance, and no approved US product remains on the market.",
+          "sources": [
+            "dea-controlled-substances-alpha",
+            "fedreg-2023-13733-oxandrolone-withdrawal"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dea-controlled-substances-alpha",
+                "fedreg-2023-13733-oxandrolone-withdrawal"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -8713,6 +8939,33 @@
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f622616e-4c11-4149-bf00-5ea5ce97800b",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Withdrawal of Approval of One New Drug Application for OXANDRIN (Oxandrolone) Tablets and Four Abbreviated New Drug Applications for Oxandrolone Tablets (88 FR, June 28, 2023)",
+          "publisher": "Federal Register (U.S. Food and Drug Administration)",
+          "url": "https://www.federalregister.gov/documents/2023/06/28/2023-13733/gemini-laboratories-llc-et-al-withdrawal-of-approval-of-one-new-drug-application-for-oxandrin",
+          "publishedAt": "2023-06-28T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fedreg-2023-13733-oxandrolone-withdrawal"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Determination That Oxandrin (Oxandrolone) Tablets Were Withdrawn From Sale for Reasons of Safety or Effectiveness (88 FR, September 13, 2023)",
+          "publisher": "Federal Register (U.S. Food and Drug Administration)",
+          "url": "https://www.federalregister.gov/documents/2023/09/13/2023-19796/determination-that-oxandrin-oxandrolone-tablets-25-milligrams-and-10-milligrams-were-withdrawn-from",
+          "publishedAt": "2023-09-13T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fedreg-2023-19796-oxandrolone-safety-determination"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Controlled Substances - Alphabetical Order (DEA Diversion Control Division)",
+          "publisher": "U.S. Drug Enforcement Administration",
+          "url": "https://www.deadiversion.usdoj.gov/schedules/orangebook/c_cs_alpha.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dea-controlled-substances-alpha"
         }
       ],
       "curationNotes": [
@@ -9019,10 +9272,65 @@
         }
       ],
       "evidenceGaps": [
-        "Modern US label status and approved indications for specific nandrolone decanoate products should be re-verified; physique-enhancement outcome claims are not treated as approved therapeutic evidence here."
+        "Modern US label status and approved indications for specific nandrolone decanoate products should be re-verified; physique-enhancement outcome claims are not treated as approved therapeutic evidence here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Bodybuilding communities promote nandrolone for joint comfort and mass despite controlled-substance status and well-known androgen adverse effects."
+      ],
+      "publicClaims": [
+        {
+          "id": "nandrolone-lean-mass",
+          "statement": "Nandrolone builds lean muscle.",
+          "population": "adults on dialysis",
+          "outcome": "lean body mass and function",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 6-month placebo-controlled trial in 29 dialysis patients found larger lean-mass gains (+4.5 vs +1.9 kg) and faster walking and stair times; grip strength did not change. It was not a study of healthy lifters.",
+          "sources": [
+            "johansen-1999-jama-nandrolone-dialysis"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "johansen-1999-jama-nandrolone-dialysis"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "nandrolone-otc",
+          "statement": "Nandrolone is legal to buy without a prescription.",
+          "population": "people buying nandrolone online",
+          "outcome": "legal status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. DEA lists nandrolone as a Schedule III controlled substance.",
+          "sources": [
+            "dea-controlled-substances-alpha"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dea-controlled-substances-alpha"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -9050,6 +9358,24 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Nandrolone-decanoate",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Anabolic effects of nandrolone decanoate in patients receiving dialysis: a randomized controlled trial (JAMA 1999)",
+          "publisher": "JAMA (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10208142/",
+          "publishedAt": "1999-04-14T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "johansen-1999-jama-nandrolone-dialysis"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Controlled Substances - Alphabetical Order (DEA Diversion Control Division)",
+          "publisher": "U.S. Drug Enforcement Administration",
+          "url": "https://www.deadiversion.usdoj.gov/schedules/orangebook/c_cs_alpha.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dea-controlled-substances-alpha"
         }
       ],
       "curationNotes": [
@@ -9072,7 +9398,26 @@
       "qualityFlags": [
         "agent-review-2026-10-14"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 100,
+        "unit": "mg",
+        "frequency": "once weekly",
+        "duration": "6 months",
+        "route": "intramuscular",
+        "population": "29 adults on dialysis",
+        "outcome": "lean body mass +4.5 kg vs +1.9 kg placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Nandrolone decanoate in patients receiving dialysis (JAMA 1999)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/10208142/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -9379,10 +9724,96 @@
         }
       ],
       "evidenceGaps": [
-        "Off-label non-oncology uses (for example bodybuilding estrogen control) are not established as safe or effective by this record and are outside labeled oncology care."
+        "Off-label non-oncology uses (for example bodybuilding estrogen control) are not established as safe or effective by this record and are outside labeled oncology care.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Public interest in low-dose off-label use for men conflicts with the oncology-centered evidence and risk base."
+      ],
+      "publicClaims": [
+        {
+          "id": "anastrozole-breast-cancer",
+          "statement": "Anastrozole treats hormone-receptor-positive breast cancer after menopause.",
+          "population": "postmenopausal women with hormone-receptor-positive breast cancer",
+          "outcome": "breast cancer treatment",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with hormone-receptor-positive breast cancer",
+            "outcome": "labeled breast cancer treatment"
+          },
+          "note": "Yes. It is FDA-approved for adjuvant and advanced treatment of hormone-receptor-positive breast cancer in postmenopausal women.",
+          "sources": [
+            "dailymed-anastrozole"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-anastrozole"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "anastrozole-raises-testosterone",
+          "statement": "Anastrozole raises testosterone in men.",
+          "population": "older men with low testosterone",
+          "outcome": "testosterone levels",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In a 1-year trial of 88 men over 60, testosterone rose by month 3 and stayed above placebo, while estradiol fell. This is not an approved use.",
+          "sources": [
+            "burnett-bowie-2009-clinendo-anastrozole-older-men"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "burnett-bowie-2009-clinendo-anastrozole-older-men"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "anastrozole-men-body-bone",
+          "statement": "Anastrozole improves muscle, strength or bones in men.",
+          "population": "older men with low testosterone",
+          "outcome": "body composition, strength and bone density",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. In the same trial body composition and strength did not change, and spine bone density fell vs placebo.",
+          "sources": [
+            "burnett-bowie-2009-clinendo-anastrozole-older-men",
+            "burnett-bowie-2009-jcem-anastrozole-bmd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "burnett-bowie-2009-clinendo-anastrozole-older-men",
+                "burnett-bowie-2009-jcem-anastrozole-bmd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -9393,7 +9824,26 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=acbfaaa9-503c-4691-9828-76a7146ed6de",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-anastrozole"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of aromatase inhibition in hypogonadal older men: a randomized, double-blind, placebo-controlled trial (Clin Endocrinol 2009)",
+          "publisher": "Clinical Endocrinology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18616708/",
+          "publishedAt": "2009-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "burnett-bowie-2009-clinendo-anastrozole-older-men"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of aromatase inhibition on bone mineral density and bone turnover in older men with low testosterone levels (J Clin Endocrinol Metab 2009)",
+          "publisher": "Journal of Clinical Endocrinology & Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19820017/",
+          "publishedAt": "2009-12-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "burnett-bowie-2009-jcem-anastrozole-bmd"
         }
       ],
       "curationNotes": [
@@ -9415,7 +9865,26 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 1,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "1 year",
+        "route": "oral",
+        "population": "88 men aged 60+ with low testosterone",
+        "outcome": "testosterone up, estradiol down; no change in body composition or strength; spine BMD fell",
+        "sourceType": "trial",
+        "sourceTitle": "Aromatase inhibition in hypogonadal older men (Clin Endocrinol 2009)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/18616708/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -9718,10 +10187,68 @@
         }
       ],
       "evidenceGaps": [
-        "Off-label fertility and bodybuilding estrogen-control uses are not equivalent to labeled oncology evidence and carry distinct risk tradeoffs."
+        "Off-label fertility and bodybuilding estrogen-control uses are not equivalent to labeled oncology evidence and carry distinct risk tradeoffs.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Non-oncology self-directed use of aromatase inhibitors is a persistent misuse pattern despite prescription controls."
+      ],
+      "publicClaims": [
+        {
+          "id": "letrozole-breast-cancer",
+          "statement": "Letrozole treats hormone-receptor-positive breast cancer after menopause.",
+          "population": "postmenopausal women with hormone-receptor-positive breast cancer",
+          "outcome": "breast cancer treatment",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with hormone-receptor-positive breast cancer",
+            "outcome": "labeled breast cancer treatment"
+          },
+          "note": "Yes. It is FDA-approved for adjuvant, extended adjuvant and advanced breast cancer treatment in postmenopausal women.",
+          "sources": [
+            "dailymed-letrozole"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-letrozole"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "letrozole-pcos-fertility",
+          "statement": "Letrozole helps women with PCOS get pregnant.",
+          "population": "infertile women with polycystic ovary syndrome",
+          "outcome": "ovulation and live birth",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In one large NIH trial of 750 women, letrozole led to more live births than clomiphene (27.5% vs 19.1%) and more ovulation. This is not an FDA-labeled use.",
+          "sources": [
+            "legro-2014-nejm-letrozole-pcos"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "legro-2014-nejm-letrozole-pcos"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -9732,7 +10259,17 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=82b77d74-085f-45ac-a7dd-1f5c038bf406",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-letrozole"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Letrozole versus clomiphene for infertility in the polycystic ovary syndrome (N Engl J Med 2014)",
+          "publisher": "The New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25006718/",
+          "publishedAt": "2014-07-10T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "legro-2014-nejm-letrozole-pcos"
         }
       ],
       "curationNotes": [
@@ -10053,17 +10590,106 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "dailymed-hcg"
+            "dailymed-hcg",
+            "dailymed-pregnyl"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
         }
       ],
       "evidenceGaps": [
-        "Off-label performance or post-cycle hormone uses lack the same labeled evidence base as fertility indications."
+        "Off-label performance or post-cycle hormone uses lack the same labeled evidence base as fertility indications.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Gray-market hCG and research-labeled products may not match approved Pregnyl/Novarel quality."
+      ],
+      "publicClaims": [
+        {
+          "id": "hcg-weight-loss",
+          "statement": "hCG helps you lose weight (the hCG diet).",
+          "population": "people trying the hCG diet",
+          "outcome": "weight loss",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says hCG is not approved for weight loss and any loss comes from the very-low-calorie diet, not hCG. The prescription label says there is no substantial evidence it adds weight loss or reduces hunger.",
+          "sources": [
+            "fda-avoid-hcg-diet-products",
+            "dailymed-pregnyl"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-avoid-hcg-diet-products",
+                "dailymed-pregnyl"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "hcg-otc-drops",
+          "statement": "Over-the-counter hCG drops are legal and effective.",
+          "population": "people buying hCG drops, pellets or sprays",
+          "outcome": "legal status and effect",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says all 'homeopathic' hCG weight-loss products are illegally marketed, unapproved drugs, and that hCG is not approved for use without a prescription.",
+          "sources": [
+            "fda-hcg-weight-loss-qa",
+            "fda-avoid-hcg-diet-products"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-hcg-weight-loss-qa",
+                "fda-avoid-hcg-diet-products"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "hcg-male-hypogonadism",
+          "statement": "hCG can treat some men whose low testosterone starts in the pituitary.",
+          "population": "men with hypogonadotropic hypogonadism",
+          "outcome": "testosterone production",
+          "tier": "Established",
+          "qualifier": {
+            "population": "selected men with hypogonadotropic hypogonadism",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes, for selected cases. The label lists hypogonadism caused by a pituitary deficiency as an approved use. It doesn't cover other low-testosterone causes.",
+          "sources": [
+            "dailymed-pregnyl"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-pregnyl"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -10074,7 +10700,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ac6918ff-9dc3-40d9-8619-54b26e4bdfc8",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-hcg"
         },
         {
           "sourceType": "label",
@@ -10082,7 +10709,26 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e94155f-19be-4944-b197-be4edbb4faf9",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-pregnyl"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Avoid Dangerous HCG Diet Products (FDA Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/avoid-dangerous-hcg-diet-products",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-avoid-hcg-diet-products"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Questions and Answers on HCG Products for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/medication-health-fraud/questions-and-answers-hcg-products-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-hcg-weight-loss-qa"
         }
       ],
       "curationNotes": [
@@ -10461,10 +11107,96 @@
       ],
       "evidenceGaps": [
         "Frequency and causality of persistent post-discontinuation sexual/neuropsychiatric symptoms remain debated.",
-        "Topical compounded finasteride evidence quality varies and is not interchangeable with oral labeled products without specific data."
+        "Topical compounded finasteride evidence quality varies and is not interchangeable with oral labeled products without specific data.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Patient communities report persistent sexual side effects (sometimes called post-finasteride syndrome); regulators include warnings while absolute risk and mechanism remain contested."
+      ],
+      "publicClaims": [
+        {
+          "id": "finasteride-hair-loss",
+          "statement": "Finasteride treats male pattern hair loss.",
+          "population": "men with male pattern hair loss",
+          "outcome": "hair loss",
+          "tier": "Established",
+          "qualifier": {
+            "population": "men with androgenetic alopecia",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Propecia is FDA-approved for male pattern hair loss in men only. It is not indicated for women.",
+          "sources": [
+            "fda-propecia-label-2021"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "fda-propecia-label-2021"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "finasteride-side-effects-stop",
+          "statement": "Finasteride side effects always go away when you stop.",
+          "population": "men taking finasteride",
+          "outcome": "persistent side effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not always. The label lists sexual side effects that continued after stopping, plus depression and suicidal thoughts, from post-marketing reports. How often this happens is not established.",
+          "sources": [
+            "dailymed-proscar",
+            "fda-compounded-topical-finasteride-alert-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-proscar",
+                "fda-compounded-topical-finasteride-alert-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "finasteride-topical-safe",
+          "statement": "Topical finasteride is FDA-approved and has no whole-body side effects.",
+          "population": "people using compounded topical finasteride",
+          "outcome": "approval and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says there is no FDA-approved topical finasteride, that it is absorbed through skin, and that reports describe erectile dysfunction, depression and suicidal thoughts, most persisting after stopping.",
+          "sources": [
+            "fda-compounded-topical-finasteride-alert-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-compounded-topical-finasteride-alert-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -10475,7 +11207,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6f988153-fc74-4ca4-b29a-111f750c4a4b",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-proscar"
         },
         {
           "sourceType": "label",
@@ -10483,7 +11216,17 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2021/020788s028lbl.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-propecia-label-2021"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA alerts health care providers, compounders and consumers of potential risks associated with compounded topical finasteride products (April 22, 2025)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/fda-alerts-health-care-providers-compounders-and-consumers-potential-risks-associated-compounded",
+          "publishedAt": "2025-04-22T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-compounded-topical-finasteride-alert-2025"
         }
       ],
       "curationNotes": [
@@ -10814,10 +11557,65 @@
       ],
       "evidenceGaps": [
         "Anti-aging and body-composition marketing claims exceed consistent high-quality outcome evidence.",
-        "Product quality can vary in supplement markets."
+        "Product quality can vary in supplement markets.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "OTC availability in the US contrasts with banned-status in sport and prescription-only framing in some other regions."
+      ],
+      "publicClaims": [
+        {
+          "id": "dhea-anti-aging-muscle",
+          "statement": "DHEA supplements build muscle and slow aging.",
+          "population": "older adults with low DHEA",
+          "outcome": "body composition, strength and quality of life",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. A 2-year placebo-controlled trial in 144 older men and women found no effect on body composition, strength, fitness, insulin sensitivity or quality of life.",
+          "sources": [
+            "nair-2006-nejm-dhea-elderly"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nair-2006-nejm-dhea-elderly"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "dhea-sport",
+          "statement": "DHEA is allowed in sport.",
+          "population": "competitive athletes",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The WADA 2026 Prohibited List names prasterone (DHEA) as a banned anabolic steroid.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -10837,6 +11635,24 @@
           "url": "https://go.drugbank.com/drugs/DB01708",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "DHEA in elderly women and DHEA or testosterone in elderly men (N Engl J Med 2006)",
+          "publisher": "The New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/17050889/",
+          "publishedAt": "2006-10-19T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nair-2006-nejm-dhea-elderly"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -14044,7 +14860,9 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "src:testolone"
+            "fda-warrior-labz-warning-letter-2023",
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -14054,17 +14872,105 @@
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "src:testolone"
+            "clbc-lorusso-rad140-phase1-2021"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Claim reports a negative or conflicting human finding."
         }
       ],
       "evidenceGaps": [
-        "No controlled human trial establishes efficacy or long-term safety of testolone/RAD-140 for muscle growth, fat loss, or general performance in healthy adults."
+        "No controlled human trial establishes efficacy or long-term safety of testolone/RAD-140 for muscle growth, fat loss, or general performance in healthy adults.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Oncology trial signals must not be generalized to gray-market bodybuilding use; product mislabeling is common among SARM-marketed supplements."
+      ],
+      "publicClaims": [
+        {
+          "id": "rad140-record-muscle",
+          "statement": "Testolone (RAD-140) builds muscle in people.",
+          "population": "healthy adults",
+          "outcome": "muscle mass and strength",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The only human trial was a small cancer study in 22 women with metastatic breast cancer; no human study measured muscle gain.",
+          "sources": [
+            "clbc-lorusso-rad140-phase1-2021"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "clbc-lorusso-rad140-phase1-2021"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "rad140-record-safe",
+          "statement": "Testolone (RAD-140) is safe.",
+          "population": "people using RAD-140",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. In its only human trial, 73% of patients had severe (grade 3 or 4) side effects, most often liver-enzyme rises, and a case report describes liver injury in a young man using it as a supplement.",
+          "sources": [
+            "clbc-lorusso-rad140-phase1-2021",
+            "ladna-2023-jmcr-rad140-dili"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "clbc-lorusso-rad140-phase1-2021",
+                "ladna-2023-jmcr-rad140-dili"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "rad140-record-legal-supplement",
+          "statement": "Testolone (RAD-140) is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "fda-warrior-labz-warning-letter-2023"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "fda-warrior-labz-warning-letter-2023"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -14075,15 +14981,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "FDA: Bodybuilding products containing SARMs cause harm",
-          "publisher": "U.S. Food and Drug Administration",
-          "url": "https://www.fda.gov/drugs/medication-health-fraud/selective-androgen-receptor-modulators-sarms",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-warrior-labz-warning-letter-2023"
         },
         {
           "sourceType": "paper",
@@ -14091,7 +14990,35 @@
           "publisher": "Journal of Medical Case Reports / PMC",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10054042",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ladna-2023-jmcr-rad140-dili"
+        },
+        {
+          "sourceType": "paper",
+          "title": "A First-in-Human Phase 1 Study of a Novel SARM, RAD140, in ER+/HER2- Metastatic Breast Cancer (Clin Breast Cancer 2022)",
+          "publisher": "Clinical Breast Cancer (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34565686/",
+          "publishedAt": "2022-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "clbc-lorusso-rad140-phase1-2021"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -14400,17 +15327,77 @@
           "tier": "Hype Exceeds Evidence",
           "confidence": "moderate",
           "sources": [
-            "fda-sarms"
+            "fda-sarms-teens-consumer-update"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
         }
       ],
       "evidenceGaps": [
-        "Published controlled human efficacy and long-term safety trials are sparse; much information is preclinical, corporate historical disclosure, or anecdotal."
+        "Published controlled human efficacy and long-term safety trials are sparse; much information is preclinical, corporate historical disclosure, or anecdotal.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor claims of reliable muscle gain and fat loss overstate the human evidence and understate FDA SARM warnings."
+      ],
+      "publicClaims": [
+        {
+          "id": "andarine-muscle",
+          "statement": "Andarine (S-4) builds muscle.",
+          "population": "gym users",
+          "outcome": "muscle mass and strength",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in rats. In castrated rats it restored muscle mass and strength and protected bone. No published human trial of andarine was located.",
+          "sources": [
+            "gao-2005-endocrinology-s4-rats"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "gao-2005-endocrinology-s4-rats"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "andarine-legal-supplement",
+          "statement": "Andarine is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -14421,7 +15408,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         },
         {
           "sourceType": "database",
@@ -14430,6 +15418,33 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Andarine",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Selective androgen receptor modulator treatment improves muscle strength and body composition and prevents bone loss in orchidectomized rats (Endocrinology 2005)",
+          "publisher": "Endocrinology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16099859/",
+          "publishedAt": "2005-11-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "gao-2005-endocrinology-s4-rats"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -21122,35 +22137,32 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "AC-262536 (Accadine/Accadrine, CAS 870888-46-3, C18H18N2O, MW 278.4) is a non-steroidal selective androgen receptor modulator originally developed by Acadia Pharmaceuticals; it exhibits endo-exo isomerism with the endo form being pharmacologically active, and it is not an approved pharmaceutical product.",
+          "claim": "AC-262536 is a non-steroidal selective androgen receptor modulator characterized in a 2007 pharmacology study; it is not an approved pharmaceutical product.",
           "tier": "Established",
           "confidence": "high",
-          "sources": [
-            "caymanchem-ac262536",
-            "wikipedia-ac262536"
-          ],
-          "legacyTier": "Moderate",
-          "gradeRationale": "High-confidence regulatory or label fact backed by an authoritative source."
-        },
-        {
-          "claim": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
-          "tier": "Early Evidence",
-          "confidence": "moderate",
           "sources": [
             "vanoeveren-2007-ac262536-pharm",
-            "wikipedia-ac262536",
-            "medchemexpress-ac262536"
+            "fda-sarms-teens-consumer-update"
           ],
-          "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "legacyTier": "Moderate",
+          "gradeRationale": "Rewritten 2026-10-25: vendor and Wikipedia citations removed; identity facts limited to what the cited paper and FDA page support."
         },
         {
-          "claim": "AC-262536 has no approved medical use and is not a licensed pharmaceutical product in the United States; FDA states that SARMs as a class 'are not FDA approved' and 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,' and AC-262536 has additionally been documented as encountered in the illicit/novel-designer-drug market.",
+          "claim": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone; in castrated male rats it produced anabolic effects on the levator ani muscle while producing substantially weaker effects on prostate gland weight, indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
+          "tier": "Plausible Theory",
+          "confidence": "moderate",
+          "sources": [
+            "vanoeveren-2007-ac262536-pharm"
+          ],
+          "legacyTier": "Insufficient",
+          "gradeRationale": "Re-tiered 2026-10-25: cell and rat data only, so Plausible Theory, not Early Evidence; vendor and Wikipedia citations removed."
+        },
+        {
+          "claim": "AC-262536 has no approved medical use and is not a licensed pharmaceutical product in the United States; FDA states that SARMs as a class 'are not FDA approved' and 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.'",
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "fda-sarms-consumer-update",
-            "wikipedia-ac262536"
+            "fda-sarms-teens-consumer-update"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -21160,7 +22172,7 @@
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "fda-sarms-consumer-update"
+            "fda-sarms-teens-consumer-update"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Claim reports a negative or conflicting human finding."
@@ -21170,32 +22182,88 @@
           "tier": "Plausible Theory",
           "confidence": "high",
           "sources": [
-            "moreplatesmoredates-ac262536",
             "vanoeveren-2007-ac262536-pharm"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Only mechanistic or preclinical rationale found (was Insufficient)."
         },
         {
-          "claim": "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' — claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings.",
+          "claim": "AC-262536 is sold online as a bodybuilding 'SARM' with muscle-building claims; the only published data are from cells and rats, and FDA says SARMs cannot be legally sold as supplements.",
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "sarmguide-ac262536-review",
-            "moreplatesmoredates-ac262536",
-            "fda-sarms-consumer-update"
+            "vanoeveren-2007-ac262536-pharm",
+            "fda-sarms-teens-consumer-update"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
+          "gradeRationale": "Rewritten 2026-10-25: vendor and blog citations removed; quoted marketing claims could no longer be sourced."
         }
       ],
       "evidenceGaps": [
         "No published human clinical trials of AC-262536 were identified; pharmacology rests on limited preclinical work (including PMID 18164613 characterization).",
-        "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished."
+        "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online marketing claims muscle, testosterone, and neurologic benefits from rodent data and omit FDA class-wide SARM warnings and the absence of human trials.",
         "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' — claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings."
+      ],
+      "publicClaims": [
+        {
+          "id": "ac-262536-muscle",
+          "statement": "AC-262536 builds muscle.",
+          "population": "gym users",
+          "outcome": "muscle growth",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in rats and cells. A 2-week study in castrated rats found anabolic effects with weaker prostate effects than testosterone. No human trial exists.",
+          "sources": [
+            "vanoeveren-2007-ac262536-pharm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "vanoeveren-2007-ac262536-pharm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ac-262536-legal-supplement",
+          "statement": "AC-262536 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21206,7 +22274,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         },
         {
           "sourceType": "other",
@@ -21214,7 +22283,17 @@
           "publisher": "Journal of Steroid Biochemistry and Molecular Biology",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18164613/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "vanoeveren-2007-ac262536-pharm"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -21790,10 +22869,70 @@
       ],
       "evidenceGaps": [
         "No human clinical trial, case series, or compound-specific FDA enforcement letter was identified in the source packet.",
-        "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits."
+        "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor pages present rat muscle-sparing data in ways that imply human performance benefit without human evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "lgd-3303-muscle",
+          "statement": "LGD-3303 builds muscle.",
+          "population": "gym users",
+          "outcome": "muscle growth",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in rats. In castrated rats it had strong effects on a muscle used as an anabolic marker and weaker prostate effects. No human trial exists.",
+          "sources": [
+            "vajda-2009-jpet-lgd3303-pkpd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "vajda-2009-jpet-lgd3303-pkpd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "lgd-3303-legal-supplement",
+          "statement": "LGD-3303 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarm-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarm-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -21804,7 +22943,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "fda-sarm-consumer-update"
         },
         {
           "sourceType": "other",
@@ -21812,7 +22952,8 @@
           "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases (NIH) - NCBI Bookshelf (NBK619971)",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "nih-livertox-sarms"
         },
         {
           "sourceType": "other",
@@ -21820,7 +22961,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/LGD-3303",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "pubchem-cid-25195253"
         },
         {
           "sourceType": "other",
@@ -21836,7 +22978,8 @@
           "publisher": "U.S. Anti-Doping Agency (USADA) — the official national anti-doping organization for the United States, implementing the WADA Code",
           "url": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "usada-sarms-prohibited-class"
         },
         {
           "sourceType": "paper",
@@ -21873,6 +23016,15 @@
           "publishedAt": null,
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "wada-2026-prohibited-list"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
