@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { WatchButton } from '@/components/alerts/WatchButton';
 import { ClaimRow } from '@/components/knowledge/PublicClaimsPanel';
 import { VERDICT_FOOTNOTE } from '@/components/knowledge/VerdictBlock';
 import { isPublished } from '@/lib/claimVerdicts';
@@ -59,6 +60,7 @@ export default async function ClaimPage({ params }: PageProps) {
       <h1 className="text-2xl font-semibold text-white">{entry.canonicalName}: &ldquo;{claim.statement}&rdquo;</h1>
       <ul><ClaimRow claim={claim} /></ul>
       <p className="text-xs text-white/45">{VERDICT_FOOTNOTE}</p>
+      <WatchButton targetType="claim" targetId={claim.id} returnTo={`${compoundHref}/claims/${claim.id}`} />
       <nav className="flex flex-wrap gap-4 text-sm">
         <Link href={compoundHref} className="text-cyan-300 underline underline-offset-4">Full {entry.canonicalName} record</Link>
         <Link href={`${compoundHref}/changelog`} className="text-cyan-300 underline underline-offset-4">Changelog</Link>

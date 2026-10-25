@@ -35,6 +35,9 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<LeadCapture> LeadCaptures { get; set; }
     public DbSet<ProviderAccessRequest> ProviderAccessRequests { get; set; }
     public DbSet<ProviderAccessAuditEntry> ProviderAccessAuditEntries { get; set; }
+    public DbSet<EvidenceWatch> EvidenceWatches { get; set; }
+    public DbSet<EvidenceAlertPreference> EvidenceAlertPreferences { get; set; }
+    public DbSet<EvidenceAlertLogEntry> EvidenceAlertLog { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
@@ -478,6 +481,38 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(audit => audit.FromOwner).HasMaxLength(160);
             entity.Property(audit => audit.ToOwner).HasMaxLength(160);
             entity.HasIndex(audit => audit.RequestId);
+        });
+
+        // Growth Phase 6: watchlist + evidence alerts (migration 20261025000000).
+        modelBuilder.Entity<EvidenceWatch>(entity =>
+        {
+            entity.HasKey(w => w.Id);
+            entity.Property(w => w.TargetType).HasMaxLength(16).IsRequired();
+            entity.Property(w => w.TargetId).HasMaxLength(200).IsRequired();
+            entity.HasIndex(w => new { w.UserId, w.TargetType, w.TargetId }).IsUnique();
+            entity.HasIndex(w => new { w.TargetType, w.TargetId });
+        });
+
+        modelBuilder.Entity<EvidenceAlertPreference>(entity =>
+        {
+            entity.HasKey(p => p.UserId);
+            entity.Property(p => p.Frequency).HasMaxLength(16).IsRequired();
+            entity.Property(p => p.UnsubscribeToken).HasMaxLength(64).IsRequired();
+            entity.HasIndex(p => p.UnsubscribeToken).IsUnique();
+        });
+
+        modelBuilder.Entity<EvidenceAlertLogEntry>(entity =>
+        {
+            entity.HasKey(a => a.Id);
+            entity.Property(a => a.AlertType).HasMaxLength(32).IsRequired();
+            entity.Property(a => a.CompoundSlug).HasMaxLength(200).IsRequired();
+            entity.Property(a => a.ClaimId).HasMaxLength(200).IsRequired();
+            entity.Property(a => a.OldVerdict).HasMaxLength(32).IsRequired();
+            entity.Property(a => a.NewVerdict).HasMaxLength(32).IsRequired();
+            entity.Property(a => a.Reason).HasMaxLength(500).IsRequired();
+            entity.Property(a => a.Delivery).HasMaxLength(16).IsRequired();
+            entity.HasIndex(a => new { a.UserId, a.ClaimId, a.Version, a.AlertType }).IsUnique();
+            entity.HasIndex(a => new { a.UserId, a.CreatedAtUtc });
         });
 
         modelBuilder.Entity<Subscription>(entity =>
