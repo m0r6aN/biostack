@@ -409,6 +409,8 @@ public sealed class BioStackDbContext : DbContext
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.CanonicalName).HasMaxLength(255).IsRequired();
+            entity.Property(e => e.RetiredAtUtc).IsRequired(false);
+            entity.Property(e => e.SupersededBy).HasMaxLength(255).IsRequired(false);
             entity.Property(e => e.Aliases).HasConversion(
                 v => string.Join("|", v),
                 v => v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());

@@ -206,3 +206,19 @@ from a successful request alone.
 - The promotion gate reduces blast radius going forward (it can no longer push all 57 seed
   records unconditionally), but it does not change the overwrite/recovery behavior for records it
   allows through, or the separate startup bootstrap scope.
+
+## Retiring records no longer in the seed (2026-10-25, ledger G1)
+
+Refresh upserts every seed and discovered record. Afterwards it soft-retires any published `KnowledgeEntries` row whose canonical name is no longer in the seed, in discovered records, or among this run's rejected records.
+
+- **Soft retirement.** The row stays in storage with `RetiredAtUtc` set (migration `20261025020000_AddKnowledgeEntryRetirement`). Every public read skips it: the list, compound detail, pathway search, and `GetAllCompoundsAsync`.
+- **Merged records.** When the retired name is an alias of a current record, `SupersededBy` is set to that record. For example, Testolone is an alias of Vosilasarm. A lookup by the old name or its slug (`/api/v1/knowledge/compounds/testolone`) then returns the successor. The frontend redirect in `frontend/src/lib/mergedRecords.ts` still applies.
+- **DryRun.** Each retirement appears as a `would-retire` row in the per-record plan, and `WouldRetire=` appears in the summary. Nothing is written.
+- **Re-adding.** A retired record that comes back in the seed is published again on the next Refresh.
+- **Safety.** Nothing is retired when any of these hold:
+  - the seed produced no records;
+  - any record failed to write or preview;
+  - a rejected record has no readable name;
+  - more than `Worker:MaxRetirementsPerRun` rows would retire (default 10).
+
+  The last case fails the run with `retire-blocked` rows in the plan. Set the option to `0` to turn retirement off.
