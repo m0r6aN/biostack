@@ -18136,10 +18136,65 @@
         }
       ],
       "evidenceGaps": [
-        "Controlled human evidence that exogenous NAD+ or clinic IV protocols extend lifespan or reverse aging in humans is not established."
+        "Controlled human evidence that exogenous NAD+ or clinic IV protocols extend lifespan or reverse aging in humans is not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Anti-aging marketing often equates NAD+ IV drips with proven longevity therapy despite limited outcome data."
+      ],
+      "publicClaims": [
+        {
+          "id": "nad-precursor-raises-levels",
+          "statement": "NAD+ precursor supplements raise NAD+ levels.",
+          "population": "healthy middle-aged and older adults",
+          "outcome": "blood NAD+ metabolism",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Yes, for nicotinamide riboside. A 6-week placebo-controlled crossover trial found it was well tolerated and raised NAD+ metabolism.",
+          "sources": [
+            "martens-2018-natcommun-nr"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "martens-2018-natcommun-nr"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "nad-reverses-aging",
+          "statement": "NAD+ supplements or IV drips reverse aging.",
+          "population": "adults seeking anti-aging effects",
+          "outcome": "aging outcomes",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The trial above gave only early hints on blood pressure and artery stiffness, and no trial was located showing NAD+ itself, by pill or IV, reverses aging.",
+          "sources": [
+            "martens-2018-natcommun-nr"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "martens-2018-natcommun-nr"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -18167,6 +18222,15 @@
           "url": "https://www.fda.gov/food/dietary-supplements/information-consumers-using-dietary-supplements",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Chronic nicotinamide riboside supplementation is well-tolerated and elevates NAD+ in healthy middle-aged and older adults (Nat Commun 2018)",
+          "publisher": "Nature Communications (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29599478/",
+          "publishedAt": "2018-03-29T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "martens-2018-natcommun-nr"
         }
       ],
       "curationNotes": [
@@ -18457,10 +18521,67 @@
         }
       ],
       "evidenceGaps": [
-        "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review."
+        "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Discordance between earlier smaller sepsis signals (ETASS) and the larger negative TESTS trial complicates efficacy interpretation."
+      ],
+      "publicClaims": [
+        {
+          "id": "thymosin-alpha-1-sepsis",
+          "statement": "Thymosin alpha-1 improves survival in sepsis.",
+          "population": "adults with sepsis",
+          "outcome": "28-day mortality",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not in the largest trial. The phase 3 TESTS trial (1,106 adults) found no difference in 28-day deaths (23.4% vs 24.1%). An earlier, smaller single-blind trial reported a borderline benefit.",
+          "sources": [
+            "pubmed-tests-2025",
+            "pubmed-etass-2013"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "pubmed-tests-2025",
+                "pubmed-etass-2013"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "thymosin-alpha-1-fda-approved",
+          "statement": "Thymosin alpha-1 is an FDA-approved immune booster.",
+          "population": "people buying compounded or research thymosin alpha-1",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says it has approved no drug products containing thymosin alpha-1, and flagged a website advertising a compounded injection as 'FDA-approved'.",
+          "sources": [
+            "fda-ta1-bulks-183892"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-ta1-bulks-183892"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -18471,7 +18592,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/183892/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "fda-ta1-bulks-183892"
         },
         {
           "sourceType": "other",
@@ -18479,7 +18601,8 @@
           "publisher": "PubMed / U.S. National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/39814420/",
           "publishedAt": "2025-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "pubmed-tests-2025"
         },
         {
           "sourceType": "other",
@@ -18487,7 +18610,8 @@
           "publisher": "PubMed / U.S. National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
           "publishedAt": "2013-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "pubmed-etass-2013"
         },
         {
           "sourceType": "other",
@@ -18503,7 +18627,8 @@
           "publisher": "DrugBank",
           "url": "https://go.drugbank.com/drugs/DB04900",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-28T21:30:00Z"
+          "lastCheckedAt": "2026-08-28T21:30:00Z",
+          "id": "drugbank-db04900"
         },
         {
           "sourceType": "paper",
@@ -20185,13 +20310,13 @@
         },
         {
           "claim": "FDA's compounding safety review states that nonclinical (animal/preclinical) research findings suggest LL-37 has detrimental effects on male reproduction and can be protumorigenic in some tissues; these are nonclinical safety signals, not confirmed human adverse effects, and no human dose-response or incidence data for these signals were identified.",
-          "tier": "Early Evidence",
+          "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "fda-ll37-bulk-nominated-withdrawn"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Re-tiered 2026-10-25: nonclinical safety signals only, so Plausible Theory, not Early Evidence."
         },
         {
           "claim": "In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients (144 in the full analysis set) with hard-to-heal venous leg ulcers, topical LL-37 (0.5 or 1.6 mg/mL, twice weekly) did not significantly improve complete wound closure versus placebo in the overall population (26.5% and 24.7% vs 25.3%, p>0.05); a post-hoc subgroup analysis in larger ulcers (≥10 cm²) found the 0.5 mg/mL dose significantly improved wound closure (28.1% vs 8.1%, p=0.0458) and healing rate versus placebo. The study drug was reported well tolerated, with six serious adverse events judged possibly (none probably) treatment-related and no deaths.",
@@ -20216,10 +20341,65 @@
         }
       ],
       "evidenceGaps": [
-        "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans."
+        "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Post-hoc subgroup benefit in larger ulcers from the 2021 RCT is unconfirmed; gray-market framing treats LL-37 as a general host-defense supplement despite FDA safety caveats."
+      ],
+      "publicClaims": [
+        {
+          "id": "ll-37-wound-healing",
+          "statement": "LL-37 heals stubborn wounds.",
+          "population": "adults with hard-to-heal venous leg ulcers",
+          "outcome": "ulcer healing",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not shown. A phase 2b placebo-controlled trial in 148 patients found no significant healing benefit overall; only a post hoc subgroup with large wounds looked better.",
+          "sources": [
+            "mahlapuu-2021-wrr-pmc9298190"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "mahlapuu-2021-wrr-pmc9298190"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ll-37-injection-safety",
+          "statement": "LL-37 injections have been shown safe in people.",
+          "population": "people using compounded or research LL-37",
+          "outcome": "safety",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it lacks enough safety information to know whether LL-37 would cause harm in people, and animal findings suggest harm to male reproduction and possible tumor promotion.",
+          "sources": [
+            "fda-ll37-bulk-nominated-withdrawn"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-ll37-bulk-nominated-withdrawn"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -20230,7 +20410,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "fda-ll37-bulk-nominated-withdrawn"
         },
         {
           "sourceType": "other",
@@ -20238,7 +20419,8 @@
           "publisher": "Wound Repair and Regeneration (Mahlapuu M, et al., 2021, PMC9298190)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9298190/",
           "publishedAt": "2021-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "mahlapuu-2021-wrr-pmc9298190"
         },
         {
           "sourceType": "other",
@@ -20246,7 +20428,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ll-37",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T02:21:10Z"
+          "lastCheckedAt": "2026-08-29T02:21:10Z",
+          "id": "pubchem-cid-16198951"
         }
       ],
       "curationNotes": [
@@ -23924,11 +24107,66 @@
       ],
       "evidenceGaps": [
         "No completed placebo-controlled human telomere-length outcome trial of epitalon tetrapeptide identified in packet sources.",
-        "Epithalamin human data cannot be assumed to transfer to epitalon."
+        "Epithalamin human data cannot be assumed to transfer to epitalon.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Telomerase activation is marketed as benefit and flagged by FDA as theoretical carcinogenicity concern.",
         "Naming confusion between Epitalon and Epithalamin persists in commerce."
+      ],
+      "publicClaims": [
+        {
+          "id": "epitalon-anti-aging",
+          "statement": "Epitalon slows aging in people.",
+          "population": "adults seeking longevity benefits",
+          "outcome": "aging and lifespan",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No placebo-controlled human trial of aging outcomes was located, and an FDA review found a lack of evidence of effectiveness for its proposed use.",
+          "sources": [
+            "fda-pcac-briefing-193345-epitalon"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-193345-epitalon"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "epitalon-safety",
+          "statement": "Epitalon has been shown safe in people.",
+          "population": "people injecting epitalon",
+          "outcome": "safety",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The FDA briefing concludes there are no clinical data to support its safety in humans and notes possible immune reactions to injected peptide.",
+          "sources": [
+            "fda-pcac-briefing-193345-epitalon"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-193345-epitalon"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -23939,7 +24177,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/193345/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-pcac-briefing-193345-epitalon"
         },
         {
           "sourceType": "database",
@@ -24267,10 +24506,95 @@
       ],
       "evidenceGaps": [
         "No adequate controlled trials support marketed chronic recovery/body-composition benefits.",
-        "No FDA-approved US product label for routine therapy."
+        "No FDA-approved US product label for routine therapy.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor chronic-use protocols versus diagnostic single-stimulus evidence base are frequently conflated."
+      ],
+      "publicClaims": [
+        {
+          "id": "ghrp-2-gh-release",
+          "statement": "GHRP-2 triggers growth hormone release.",
+          "population": "healthy adults and adults tested for GH deficiency",
+          "outcome": "acute growth hormone release",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults given a single test dose",
+            "outcome": "acute growth hormone peak"
+          },
+          "note": "Yes, acutely. A diagnostic study found GH peaked within an hour of GHRP-2 in every subject, and it is used as a GH-deficiency test in some countries. That is not evidence of long-term benefit.",
+          "sources": [
+            "chihara-2007-ghrp2-diagnostic"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "chihara-2007-ghrp2-diagnostic"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ghrp-2-safe",
+          "statement": "Compounded GHRP-2 is safe.",
+          "population": "people injecting compounded GHRP-2",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA placed GHRP-2 in its significant-safety-risk category, citing reports of serious adverse events including higher insulin needs, infection, pancreatitis and deaths in critically ill study subjects (causality not established).",
+          "sources": [
+            "fda-ghrp2-category2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-ghrp2-category2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ghrp-2-sport",
+          "statement": "GHRP-2 is allowed in sport.",
+          "population": "competitive athletes",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The WADA 2026 Prohibited List names GHRP-2 (pralmorelin) as a banned growth-hormone-releasing peptide.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -24281,7 +24605,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-ghrp2-category2"
         },
         {
           "sourceType": "paper",
@@ -24289,7 +24614,8 @@
           "publisher": "PubMed / European Journal of Endocrinology",
           "url": "https://pubmed.ncbi.nlm.nih.gov/17609397/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "chihara-2007-ghrp2-diagnostic"
         },
         {
           "sourceType": "database",
@@ -24298,6 +24624,15 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5493556",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -24621,10 +24956,92 @@
       ],
       "evidenceGaps": [
         "No approved product and no adequate chronic wellness RCTs for marketed claims.",
-        "Some cited investigational uses remain single-source or narrowly scoped."
+        "Some cited investigational uses remain single-source or narrowly scoped.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Strong gray-market demand versus FDA compounding risk classification and thin chronic outcome evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "ghrp-6-gh-release",
+          "statement": "GHRP-6 triggers growth hormone release.",
+          "population": "healthy young men",
+          "outcome": "acute growth hormone release",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Yes, acutely, in a small study of 9 healthy men; most of the effect depended on the body's own GHRH. No trial shows long-term body-composition benefit.",
+          "sources": [
+            "pandya-1998-ghrp6-ghrh"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pandya-1998-ghrp6-ghrh"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ghrp-6-safe",
+          "statement": "Compounded GHRP-6 is safe.",
+          "population": "people injecting compounded GHRP-6",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA placed GHRP-6 in its significant-safety-risk category, noting limited data that already show effects on cortisol and higher blood sugar from lower insulin sensitivity.",
+          "sources": [
+            "fda-ghrp6-category2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-ghrp6-category2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ghrp-6-sport",
+          "statement": "GHRP-6 is allowed in sport.",
+          "population": "competitive athletes",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The WADA 2026 Prohibited List names GHRP-6 as a banned growth-hormone-releasing peptide.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -24635,7 +25052,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-ghrp6-category2"
         },
         {
           "sourceType": "paper",
@@ -24643,7 +25061,8 @@
           "publisher": "PubMed PMID 9543138",
           "url": "https://pubmed.ncbi.nlm.nih.gov/9543138/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pandya-1998-ghrp6-ghrh"
         },
         {
           "sourceType": "database",
@@ -24652,6 +25071,15 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Ghrp-6",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "World Anti-Doping Code International Standard: Prohibited List 2026",
+          "publisher": "World Anti-Doping Agency (WADA)",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         }
       ],
       "curationNotes": [
@@ -24674,7 +25102,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Single-dose crossover study",
+        "amount": 1,
+        "unit": "mcg/kg",
+        "frequency": "single bolus",
+        "duration": "one session",
+        "route": "intravenous",
+        "population": "9 healthy men aged 20-30",
+        "outcome": "GH rise; mostly blocked by a GHRH antagonist",
+        "sourceType": "trial",
+        "sourceTitle": "GHRP-6 requires endogenous GHRH (J Clin Endocrinol Metab 1998)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/9543138/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -25806,13 +26253,13 @@
         },
         {
           "claim": "In a rat model of myocardial ischemia/reperfusion injury (left coronary artery ligation), subcutaneous hexarelin (100 mcg/kg/day for 7 days) improved cardiac systolic function, reduced malondialdehyde production, and increased surviving cardiomyocytes versus control, an effect blocked by a GHSR antagonist and attributed to interleukin-1 pathway modulation. This is preclinical rodent data and does not establish a cardioprotective effect in humans.",
-          "tier": "Contradicted",
+          "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "kong-2017-ihj-rat-cardioprotection"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "Claim reports a negative or conflicting human finding."
+          "gradeRationale": "Re-tiered 2026-10-25: animal or cell data only, so Plausible Theory."
         },
         {
           "claim": "Hexarelin has no FDA-approved drug product and, unlike some other GH secretagogue peptides (e.g. ipamorelin, GHRP-6), does not currently appear on FDA's published Category 2 list of bulk drug substances that may present significant safety risks for compounding; its regulatory status for 503A/503B compounding has not been affirmatively confirmed and should be re-checked against the live FDA list at review time.",
@@ -25869,11 +26316,93 @@
       ],
       "evidenceGaps": [
         "Human evidence is largely limited to acute IV pharmacodynamic studies; chronic subcutaneous self-use safety/efficacy is not established.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor cardioprotection claims rest mainly on animal ischemia models, not human outcome trials.",
         "Vendor marketing content presents hexarelin's CD36-mediated cardioprotection as an established effect ('cardioprotective effects in ischemia-reperfusion and heart failure studies'), while the only located supporting study is a rat ischemia/reperfusion model; no human cardioprotection trial was found in this pass."
+      ],
+      "publicClaims": [
+        {
+          "id": "hexarelin-gh-release",
+          "statement": "Hexarelin triggers growth hormone release.",
+          "population": "healthy adult men",
+          "outcome": "acute growth hormone release",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Yes, acutely. A small placebo-controlled rising-dose study in 12 men found dose-dependent GH peaks about 30 minutes after injection. No trial shows long-term benefit.",
+          "sources": [
+            "imbimbo-1994-ejcp-dose-response"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "imbimbo-1994-ejcp-dose-response"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "hexarelin-heart",
+          "statement": "Hexarelin protects the heart.",
+          "population": "adults seeking heart benefits",
+          "outcome": "heart protection",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in rats. A rat heart-injury study found better heart function; no human outcome trial was located.",
+          "sources": [
+            "kong-2017-ihj-rat-cardioprotection"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "kong-2017-ihj-rat-cardioprotection"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "hexarelin-sport",
+          "statement": "Hexarelin is allowed in sport.",
+          "population": "competitive athletes",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The WADA 2026 Prohibited List names examorelin (hexarelin) as a banned growth-hormone-releasing peptide.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -25884,7 +26413,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk-drugs-category2-listing"
         },
         {
           "sourceType": "paper",
@@ -25892,7 +26422,8 @@
           "publisher": "European Journal of Clinical Pharmacology (Imbimbo BP, Mant T, Edwards M, Amin D, Dalton N, Boutignon F, Lenaerts V, Wuthrich P, Deghenghi R, 1994)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/7957536/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "imbimbo-1994-ejcp-dose-response"
         },
         {
           "sourceType": "paper",
@@ -25900,7 +26431,8 @@
           "publisher": "International Heart Journal (J-STAGE)",
           "url": "https://www.jstage.jst.go.jp/article/ihj/58/2/58_16-241/_article",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "kong-2017-ihj-rat-cardioprotection"
         },
         {
           "sourceType": "database",
@@ -25908,7 +26440,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Hexarelin",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-6918297"
         },
         {
           "sourceType": "paper",
@@ -25916,7 +26449,8 @@
           "publisher": "The Journal of Clinical Endocrinology & Metabolism (Massoud AF, Hindmarsh PC, Brook CG, 1996)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/8954038/",
           "publishedAt": "1996-12-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "massoud-1996-jcem-cortisol-prolactin-doseresponse"
         },
         {
           "sourceType": "paper",
@@ -25924,7 +26458,8 @@
           "publisher": "Clinical Endocrinology (Oxford) (Rahim A, O'Neill PA, Shalet SM, 1999)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/10341859/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "rahim-1999-clinendo-chronic-hpa-axis"
         },
         {
           "sourceType": "regulator",
@@ -25960,7 +26495,26 @@
         "no-claim-content-this-session",
         "unknown-honest-defaults"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Placebo-controlled rising-dose study arm",
+        "amount": 2,
+        "unit": "mcg/kg",
+        "frequency": "single bolus",
+        "duration": "one session",
+        "route": "intravenous",
+        "population": "12 healthy adult men",
+        "outcome": "peak GH about 55 ng/mL vs about 4 on placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Growth hormone-releasing activity of hexarelin in humans (Eur J Clin Pharmacol 1994)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/7957536/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -26420,13 +26974,13 @@
         },
         {
           "claim": "In a 7-day continuous-infusion study in guinea pigs, LR3IGF-I (120 micrograms/day) significantly increased the fractional weight of adrenals, gut, kidneys and spleen, but overall body growth (weight gain, feed intake, feed conversion efficiency, carcass composition) was not significantly affected in any treatment group, including higher-dose native IGF-I or IGF-II. This is animal-model, non-human pharmacology data and must not be read as evidence of human muscle-growth, fat-loss, or performance benefit.",
-          "tier": "Early Evidence",
+          "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "conlon-1995-guinea-pig"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Re-tiered 2026-10-25: animal or cell data only, so Plausible Theory."
         },
         {
           "claim": "No published human clinical trial of IGF-1 LR3 for any therapeutic or performance endpoint was identified. Muscle-growth, fat-loss, hyperplasia and recovery claims rest on animal work and on the unrelated Increlex pediatric IGF-1-deficiency data, not on human evidence for these uses.",
@@ -26462,11 +27016,67 @@
       ],
       "evidenceGaps": [
         "No direct controlled human efficacy/safety trial of IGF-1 LR3 was located in the source packet; CAS identifiers conflict across vendor vs FDA UNII sources.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Performance marketing often blurs IGF-1 LR3 with approved mecasermin evidence.",
         "Commercial/vendor chemical listings (e.g., ChemicalBook) cite CAS 946870-92-4 for IGF-1 LR3, while FDA's UNII/Substance Registration System record (UNII M9L22Y19H9) lists CAS 143045-27-6 for the same substance name. The discrepancy is unresolved pending independent reconciliation against a validated CAS registry source."
+      ],
+      "publicClaims": [
+        {
+          "id": "igf-1-lr3-muscle",
+          "statement": "IGF-1 LR3 builds muscle in people.",
+          "population": "gym users",
+          "outcome": "muscle growth",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Not shown in people. In a 7-day guinea pig study it enlarged some organs but did not change body growth or composition. No human trial was located.",
+          "sources": [
+            "conlon-1995-guinea-pig"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "conlon-1995-guinea-pig"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "igf-1-lr3-sport",
+          "statement": "IGF-1 LR3 is allowed in sport.",
+          "population": "competitive athletes",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The WADA 2026 Prohibited List bans IGF-1 and its analogues.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -26477,7 +27087,8 @@
           "publisher": "U.S. Food and Drug Administration / National Library of Medicine DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a8b27a1b-a611-4f91-ad22-76d4b390c3ae",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-increlex-label"
         },
         {
           "sourceType": "regulator",
@@ -26485,7 +27096,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk-substances-cat2"
         },
         {
           "sourceType": "database",
@@ -26493,7 +27105,8 @@
           "publisher": "U.S. Food and Drug Administration / Global Substance Registration System",
           "url": "https://precision.fda.gov/uniisearch/srs/unii/M9L22Y19H9",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-unii-srs-m9l22y19h9"
         },
         {
           "sourceType": "database",
@@ -26509,7 +27122,8 @@
           "publisher": "World Anti-Doping Agency (WADA)",
           "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": "2025-09-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "wada-2026-prohibited-list"
         },
         {
           "sourceType": "paper",
@@ -26971,25 +27585,25 @@
         },
         {
           "claim": "In vitro, nanomolar concentrations of KPV inhibit NF-kappaB and MAP kinase inflammatory signaling and reduce pro-inflammatory cytokine secretion in human intestinal epithelial cell lines and T cells, and KPV is taken up into cells via the peptide transporter PepT1.",
-          "tier": "Early Evidence",
+          "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "crook-2008-gastro-pept1-kpv",
             "fda-pcac-briefing-193346"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
+          "gradeRationale": "Re-tiered 2026-10-25: animal or cell data only, so Plausible Theory."
         },
         {
-          "claim": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); a second, independent 2008 study (Dalmasso et al., Inflammatory Bowel Diseases, PMID 18092346) corroborates similar anti-inflammatory effects of KPV in DSS-colitis and CD45RB-transfer-colitis mouse models, including significantly reduced myeloperoxidase activity and improved recovery. This is animal-model evidence only, not evidence of efficacy in humans.",
-          "tier": "Early Evidence",
+          "claim": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); a second, independent 2008 study (Kannengiesser et al., Inflammatory Bowel Diseases, PMID 18092346) corroborates similar anti-inflammatory effects of KPV in DSS-colitis and CD45RB-transfer-colitis mouse models, including significantly reduced myeloperoxidase activity and improved recovery. This is animal-model evidence only, not evidence of efficacy in humans.",
+          "tier": "Plausible Theory",
           "confidence": "moderate",
           "sources": [
             "crook-2008-gastro-pept1-kpv",
             "dalmasso-2008-ibd-murine-colitis"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Re-tiered 2026-10-25: animal or cell data only, so Plausible Theory. Author of PubMed 18092346 corrected to Kannengiesser."
         },
         {
           "claim": "FDA lists KPV in the 'bulk drug substances nominated but withdrawn' table for 503A compounding evaluation, stating it has not identified any human exposure data for KPV administered via any route and lacks information on whether KPV would cause harm if administered to humans.",
@@ -27017,11 +27631,69 @@
       ],
       "evidenceGaps": [
         "No completed human clinical trial evidence for KPV efficacy or safety was located.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "PCAC committee vote dynamics versus FDA staff recommendation create unresolved regulatory trajectory questions while consumer marketing continues.",
         "FDA staff's PCAC briefing document (fda.gov/media/193346/download) recommended against adding KPV to the 503A Bulks List, but the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend inclusion despite that staff recommendation and despite documented absence of human safety data; this advisory tension is material to the compound's regulatory trajectory and is not resolved by the current (unchanged) live FDA withdrawn-nomination page."
+      ],
+      "publicClaims": [
+        {
+          "id": "kpv-gut-inflammation",
+          "statement": "KPV treats gut inflammation (IBD) in people.",
+          "population": "people with inflammatory bowel disease",
+          "outcome": "gut inflammation",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in mice and cells. Two 2008 mouse colitis studies found less inflammation; no human trial was located.",
+          "sources": [
+            "crook-2008-gastro-pept1-kpv",
+            "dalmasso-2008-ibd-murine-colitis"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "crook-2008-gastro-pept1-kpv",
+                "dalmasso-2008-ibd-murine-colitis"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "kpv-human-safety",
+          "statement": "KPV has been tested for safety in people.",
+          "population": "people using KPV",
+          "outcome": "human safety data",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says it has not identified any human exposure data for KPV by any route.",
+          "sources": [
+            "fda-bulk-substances-withdrawn"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-bulk-substances-withdrawn"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -27032,7 +27704,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk-substances-withdrawn"
         },
         {
           "sourceType": "paper",
@@ -27040,7 +27713,8 @@
           "publisher": "Gastroenterology (Dalmasso G, Charrier-Hisamuddin L, Nguyen HT, Yan Y, Sitaraman S, Merlin D; PubMed ID 18061177)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18061177/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "crook-2008-gastro-pept1-kpv"
         },
         {
           "sourceType": "database",
@@ -27048,7 +27722,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/125672",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-125672"
         },
         {
           "sourceType": "regulator",
@@ -27056,7 +27731,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/193346/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-pcac-briefing-193346"
         },
         {
           "sourceType": "paper",
@@ -27064,7 +27740,8 @@
           "publisher": "Inflammatory Bowel Diseases (Dalmasso G, et al., 2008; PubMed ID 18092346)",
           "url": "https://europepmc.org/article/MED/18092346",
           "publishedAt": "2008-03-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dalmasso-2008-ibd-murine-colitis"
         }
       ],
       "curationNotes": [
@@ -28796,10 +29473,67 @@
       ],
       "evidenceGaps": [
         "No published controlled human efficacy or safety trial of pegylated MGF (PEG-MGF) was located.",
-        "Vendor recovery claims are not derived from product labeling or human protocols."
+        "Vendor recovery claims are not derived from product labeling or human protocols.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Research-peptide marketing promotes PEG-MGF for hypertrophy and tissue repair while preclinical MGF data are conflicting and human PEG-MGF data are absent."
+      ],
+      "publicClaims": [
+        {
+          "id": "peg-mgf-muscle",
+          "statement": "PEG-MGF builds muscle in people.",
+          "population": "gym users",
+          "outcome": "muscle growth",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No human trial was located, and lab results conflict: one study found MGF peptide boosted human muscle cells, while two drug companies could not reproduce any effect on muscle cells.",
+          "sources": [
+            "pubmed-24253050",
+            "kandalla-2011-mad-mgf-e"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "pubmed-24253050",
+                "kandalla-2011-mad-mgf-e"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "peg-mgf-human-safety",
+          "statement": "PEG-MGF has been tested for safety in people.",
+          "population": "people injecting PEG-MGF",
+          "outcome": "human safety data",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says it has not identified any human exposure data for PEG-MGF by any route.",
+          "sources": [
+            "fda-peg-mgf"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-peg-mgf"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -28810,7 +29544,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-peg-mgf"
         },
         {
           "sourceType": "paper",
@@ -28818,7 +29553,8 @@
           "publisher": "American Journal of Physiology / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/24253050/",
           "publishedAt": "2014-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-24253050"
         },
         {
           "sourceType": "paper",
@@ -28826,7 +29562,8 @@
           "publisher": "PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/21354439/",
           "publishedAt": "2011-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "kandalla-2011-mad-mgf-e"
         }
       ],
       "curationNotes": [
@@ -30061,10 +30798,66 @@
       ],
       "evidenceGaps": [
         "No FDA-approved US label or large international double-blind RCT program equivalent to modern anxiolytic standards was located.",
-        "Dependence/withdrawal claims in marketing are not supported by dedicated trial endpoints in the retrieved literature."
+        "Dependence/withdrawal claims in marketing are not supported by dedicated trial endpoints in the retrieved literature.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor marketing equates selank to benzodiazepines without dependence risk, overstating a small unreplicated evidence base."
+      ],
+      "publicClaims": [
+        {
+          "id": "selank-anxiety",
+          "statement": "Selank is a proven anxiety treatment.",
+          "population": "adults with generalized anxiety",
+          "outcome": "anxiety symptoms",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Anecdotal Signal",
+          "qualifier": null,
+          "note": "Not proven. One small Russian study of 62 patients found effects similar to the benzodiazepine medazepam; no placebo-controlled trial outside Russia was located.",
+          "sources": [
+            "pubmed-18454096"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "pubmed-18454096"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "selank-safety",
+          "statement": "Selank has been shown safe in people.",
+          "population": "people using compounded selank",
+          "outcome": "safety",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it lacks important information on safety issues raised by selank given to humans.",
+          "sources": [
+            "fda-bulk-selank"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-bulk-selank"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30075,7 +30868,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk-selank"
         },
         {
           "sourceType": "paper",
@@ -30083,7 +30877,8 @@
           "publisher": "Zhurnal Nevrologii i Psikhiatrii / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18454096/",
           "publishedAt": "2008-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-18454096"
         },
         {
           "sourceType": "other",
@@ -30091,7 +30886,8 @@
           "publisher": "NCBI / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Selank",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-selank"
         }
       ],
       "curationNotes": [
@@ -30284,14 +31080,14 @@
           "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
         },
         {
-          "claim": "Russian clinical literature and a 2018 meta-analysis report stroke-related outcomes, but underlying trials are not uniformly modern double-blind international RCTs.",
+          "claim": "Russian clinical studies, including a 2018 study in ischemic stroke, report faster functional recovery with semax, but the underlying trials are not modern double-blind international RCTs.",
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "fda-semax"
+            "gusev-2018-semax-ischemic-stroke"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Re-sourced 2026-10-25: the claim cited a '2018 meta-analysis' sourced only to an FDA page; no such meta-analysis was located. The 2018 Gusev study is cited instead."
         },
         {
           "claim": "Not FDA-approved; bulk nomination withdrawn.",
@@ -30307,10 +31103,66 @@
       "evidenceGaps": [
         "No FDA-approved US label.",
         "Controlled human evidence in healthy adults for general nootropic use was not located.",
-        "Stroke meta-analysis authors called for more rigorous multicenter double-blind confirmation."
+        "Stroke meta-analysis authors called for more rigorous multicenter double-blind confirmation.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "US gray-market nootropic marketing extrapolates stroke and animal data to healthy-adult cognitive enhancement without adequate controlled support."
+      ],
+      "publicClaims": [
+        {
+          "id": "semax-stroke-cognition",
+          "statement": "Semax boosts brain recovery and cognition.",
+          "population": "adults after stroke or seeking cognitive gains",
+          "outcome": "functional recovery and cognition",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Anecdotal Signal",
+          "qualifier": null,
+          "note": "Thin. Russian stroke studies report higher BDNF and faster recovery, but no rigorous placebo-controlled trial outside Russia was located, and no trial in healthy people.",
+          "sources": [
+            "gusev-2018-semax-ischemic-stroke"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "gusev-2018-semax-ischemic-stroke"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "semax-safety",
+          "statement": "Semax has been shown safe in people.",
+          "population": "people using compounded semax",
+          "outcome": "safety",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. FDA says it has no or limited safety information for proposed routes and cannot judge whether it would cause harm.",
+          "sources": [
+            "fda-semax"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-semax"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30321,7 +31173,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-semax"
         },
         {
           "sourceType": "other",
@@ -30329,7 +31182,17 @@
           "publisher": "NCBI / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Semax",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-semax"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The efficacy of semax in the treatment of patients at different stages of ischemic stroke (Zh Nevrol Psikhiatr Im S S Korsakova 2018)",
+          "publisher": "Zhurnal Nevrologii i Psikhiatrii imeni S.S. Korsakova (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29798983/",
+          "publishedAt": "2018-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "gusev-2018-semax-ischemic-stroke"
         }
       ],
       "curationNotes": [
