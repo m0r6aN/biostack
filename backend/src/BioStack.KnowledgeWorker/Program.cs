@@ -161,6 +161,15 @@ var builder = Host.CreateDefaultBuilder(args)
                 new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5), AutomaticDecompression = System.Net.DecompressionMethods.All },
                 disposeHandler: true) { Timeout = TimeSpan.FromSeconds(60) })));
 
+        var hypeOptions = new BioStack.KnowledgeWorker.Hype.HypeOptions();
+        context.Configuration.GetSection("Hype").Bind(hypeOptions);
+        services.AddSingleton(hypeOptions);
+        services.AddScoped<IHypeSignalsJob>(sp => new HypeSignalsJob(
+            sp.GetRequiredService<WorkerOptions>(),
+            hypeOptions,
+            BioStack.KnowledgeWorker.Hype.HypeSources.Create(hypeOptions, () => new HttpClient { Timeout = TimeSpan.FromSeconds(30) },
+                warning => sp.GetRequiredService<ILoggerFactory>().CreateLogger("HypeSignals").LogWarning("{Warning}", warning))));
+
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();
     });
