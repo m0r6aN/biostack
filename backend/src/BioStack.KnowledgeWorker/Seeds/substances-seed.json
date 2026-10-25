@@ -2421,6 +2421,91 @@
       ],
       "controversies": [
         "Gray-market research-peptide sellers present trial results as consumer weight-loss products; identity and dose are unverifiable."
+      ],
+      "publicClaims": [
+        {
+          "id": "retatrutide-weight-loss",
+          "statement": "Retatrutide causes major weight loss.",
+          "population": "adults with obesity",
+          "outcome": "body-weight reduction",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with obesity without diabetes (phase 3 TRIUMPH-1, 80 weeks)",
+            "outcome": "percent body-weight change versus placebo"
+          },
+          "note": "In randomized, placebo-controlled trials, including a phase 3 trial of 2,339 adults, people on retatrutide lost far more weight than people on placebo. It is still investigational, not an approved medicine.",
+          "sources": [
+            "nejm-retatrutide",
+            "triumph-1",
+            "ctgov-nct05929066"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "nejm-retatrutide",
+                "triumph-1",
+                "ctgov-nct05929066"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "retatrutide-fda-approved",
+          "statement": "Retatrutide is FDA-approved.",
+          "population": "people in the United States",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "note": "Not FDA-approved. Lilly describes it as investigational and not available in the consumer market.",
+          "sources": [
+            "lilly-medical-retatrutide"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "lilly-medical-retatrutide"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "retatrutide-no-side-effects",
+          "statement": "Retatrutide has no side effects.",
+          "population": "adults in clinical trials",
+          "outcome": "adverse events",
+          "tier": "Contradicted",
+          "note": "Trials report side effects. In the phase 3 TRIUMPH-1 trial the most common were gastrointestinal.",
+          "sources": [
+            "triumph-1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "triumph-1"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -2431,7 +2516,8 @@
           "publisher": "New England Journal of Medicine",
           "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
           "publishedAt": "2023-06-26T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "nejm-retatrutide"
         },
         {
           "sourceType": "trial-registry",
@@ -2439,15 +2525,17 @@
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT04881760",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "ctgov-nct04881760"
         },
         {
           "sourceType": "paper",
-          "title": "Retatrutide for obesity: TRIUMPH-1 phase 3 randomized trial (NCT05929066)",
-          "publisher": "PubMed",
+          "title": "Retatrutide, a Triple Hormone Receptor Agonist, for Treatment of Obesity (TRIUMPH-1, phase 3; PMID 42814954)",
+          "publisher": "New England Journal of Medicine (via PubMed)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/42814954/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "publishedAt": "2026-09-29T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "triumph-1"
         },
         {
           "sourceType": "trial-registry",
@@ -2455,7 +2543,8 @@
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT05929066",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "ctgov-nct05929066"
         },
         {
           "sourceType": "paper",
@@ -2463,7 +2552,8 @@
           "publisher": "ACR Convergence",
           "url": "https://acrabstracts.org/abstract/retatrutide-once-weekly-for-the-treatment-of-knee-osteoarthritis-pain-and-obesity-results-from-a-68-week-phase-3-randomized-clinical-trial/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "triumph-4"
         },
         {
           "sourceType": "trial-registry",
@@ -2471,7 +2561,8 @@
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT05931367",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "ctgov-nct05931367"
         },
         {
           "sourceType": "manufacturer",
@@ -2479,7 +2570,8 @@
           "publisher": "Lilly Medical",
           "url": "https://medical.lilly.com/us/products/answers/is-retatrutide-available-in-the-consumer-market-381272",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "lilly-medical-retatrutide"
         },
         {
           "sourceType": "paper",
@@ -2487,12 +2579,14 @@
           "publisher": "JAMA Network Open",
           "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2855285",
           "publishedAt": "2026-10-14T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "jama-netw-open-2026-reddit"
         }
       ],
       "curationNotes": [
         "Agent review 2026-10-14: investigational triple agonist with phase 2 obesity data; regulatory status not-established.",
-        "2026-10-24: added TRIUMPH-1, TRIUMPH-4, Lilly regulatory statement, JAMA Netw Open self-report study, and trial dose reports."
+        "2026-10-24: added TRIUMPH-1, TRIUMPH-4, Lilly regulatory statement, JAMA Netw Open self-report study, and trial dose reports.",
+        "2026-10-24: public claims rebuilt with verdicts derived from the 7-tier grade (growth spec 02); TRIUMPH-1 source updated to the NEJM publication; all pending reviewer sign-off."
       ],
       "lastReviewedAt": "2026-10-24T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -5366,6 +5460,117 @@
       ],
       "controversies": [
         "Online marketing often presents BPC-157 as a proven healing peptide despite limited clinical evidence and unapproved status."
+      ],
+      "publicClaims": [
+        {
+          "id": "bpc-157-heals-injuries",
+          "statement": "BPC-157 heals tendon, ligament and muscle injuries.",
+          "population": "people with musculoskeletal injuries",
+          "outcome": "injury healing",
+          "tier": "Plausible Theory",
+          "note": "Healing evidence is in animals. A 2025 systematic review found 35 preclinical studies and 1 clinical study; a 2026 review found only uncontrolled human reports, with very low certainty.",
+          "sources": [
+            "vasireddi-2025-systematic-review",
+            "poolton-2026-systematic-review"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Plausible Theory",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "vasireddi-2025-systematic-review",
+                "poolton-2026-systematic-review"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bpc-157-knee-pain",
+          "statement": "A BPC-157 knee injection relieves knee pain.",
+          "population": "adults with knee pain",
+          "outcome": "knee pain relief",
+          "tier": "Anecdotal Signal",
+          "note": "Barely tested: one retrospective chart review that phoned 16 patients, with no control group and no validated pain scale.",
+          "sources": [
+            "lee-padgett-2021-knee",
+            "poolton-2026-systematic-review"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Anecdotal Signal",
+              "verdict": "THIN",
+              "sources": [
+                "lee-padgett-2021-knee",
+                "poolton-2026-systematic-review"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bpc-157-proven-safe",
+          "statement": "BPC-157 is proven safe.",
+          "population": "people using BPC-157",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "note": "Not shown. FDA says it lacks sufficient information to know whether BPC-157 would cause harm in humans. The only dedicated human safety study gave it to 2 people.",
+          "sources": [
+            "fda-bulk",
+            "lee-burgess-2025-iv-pilot",
+            "poolton-2026-systematic-review"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "fda-bulk",
+                "lee-burgess-2025-iv-pilot",
+                "poolton-2026-systematic-review"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bpc-157-fda-approved",
+          "statement": "BPC-157 is FDA-approved.",
+          "population": "people in the United States",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "note": "Not FDA-approved. FDA lists BPC-157 among bulk drug substances for compounding that may present significant safety risks.",
+          "sources": [
+            "fda-bulk"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-bulk"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -5376,7 +5581,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk"
         },
         {
           "sourceType": "review",
@@ -5384,11 +5590,49 @@
           "publisher": "Pharmaceuticals (PMC)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11859134/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pmc-bpc"
+        },
+        {
+          "id": "poolton-2026-systematic-review",
+          "sourceType": "review",
+          "title": "Human evidence for BPC-157 in orthopaedic and regenerative medicine: a systematic review of efficacy and safety (PMID 42885452)",
+          "publisher": "Acta Orthopaedica Belgica (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42885452/",
+          "publishedAt": "2026-10-08T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "id": "vasireddi-2025-systematic-review",
+          "sourceType": "review",
+          "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review (PMID 40756949)",
+          "publisher": "HSS Journal (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+          "publishedAt": "2025-07-31T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "id": "lee-padgett-2021-knee",
+          "sourceType": "paper",
+          "title": "Intra-Articular Injection of BPC 157 for Multiple Types of Knee Pain (retrospective, n=16; PMID 34324435)",
+          "publisher": "Alternative Therapies in Health and Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34324435/",
+          "publishedAt": "2021-07-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "id": "lee-burgess-2025-iv-pilot",
+          "sourceType": "paper",
+          "title": "Safety of Intravenous Infusion of BPC157 in Humans: A Pilot Study (n=2; PMID 40131143)",
+          "publisher": "Alternative Therapies in Health and Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40131143/",
+          "publishedAt": "2025-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: research peptide; Limited tier; not-established regulatory; identity/injection and human-data gaps emphasized."
+        "Agent review 2026-10-14: research peptide; Limited tier; not-established regulatory; identity/injection and human-data gaps emphasized.",
+        "2026-10-24: public claims built from two systematic reviews (PMID 42885452, 40756949), the primary human reports (PMID 34324435, 40131143) and the FDA bulk-substance page; all pending reviewer sign-off."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -5695,7 +5939,7 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "src:tb-500"
+            "wada-prohibited-list"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -5705,7 +5949,8 @@
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "src:tb-500"
+            "fda-bulk",
+            "frontiers-tb4-2021"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Claim describes promotional or online certainty beyond the cited evidence."
@@ -5716,17 +5961,99 @@
       ],
       "controversies": [
         "Alias and formulation ambiguity between TB-500 and thymosin beta-4 confounds interpretation of preclinical and clinical literature."
+      ],
+      "publicClaims": [
+        {
+          "id": "tb-500-is-thymosin-beta-4",
+          "statement": "TB-500 is thymosin beta-4.",
+          "population": "people using TB-500",
+          "outcome": "compound identity",
+          "tier": "Contradicted",
+          "note": "TB-500 is a short synthetic fragment of thymosin beta-4, not the full protein. Studies of full thymosin beta-4 do not show what the fragment does.",
+          "sources": [
+            "fda-bulk",
+            "mendias-2026-sports-med"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-bulk",
+                "mendias-2026-sports-med"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tb-500-heals-injuries",
+          "statement": "TB-500 speeds up injury healing.",
+          "population": "people with tendon or soft-tissue injuries",
+          "outcome": "injury healing",
+          "tier": "Plausible Theory",
+          "note": "Healing evidence is in animals, such as a 2026 rat Achilles tendon study. FDA says it has not identified any human exposure data for the fragment.",
+          "sources": [
+            "bicer-2026-rat-achilles",
+            "fda-bulk"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Plausible Theory",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "bicer-2026-rat-achilles",
+                "fda-bulk"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tb-500-allowed-in-sport",
+          "statement": "TB-500 is allowed in tested sport.",
+          "population": "athletes in WADA-tested sport",
+          "outcome": "anti-doping status",
+          "tier": "Contradicted",
+          "note": "Prohibited at all times. The WADA Prohibited List names thymosin-beta-4 and its derivatives, e.g. TB-500.",
+          "sources": [
+            "wada-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "wada-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-24T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source re-read on 2026-10-24. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
         {
           "sourceType": "regulator",
-          "title": "WADA Prohibited List — thymosin-beta4 and derivatives e.g. TB-500",
+          "title": "WADA 2026 Prohibited List, S2.3: \"Thymosin-ß4 and its derivatives e.g. TB-500\"",
           "publisher": "World Anti-Doping Agency",
-          "url": "https://www.wada-ama.org/en/prohibited-list",
+          "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "wada-prohibited-list"
         },
         {
           "sourceType": "review",
@@ -5734,11 +6061,40 @@
           "publisher": "Frontiers in Endocrinology",
           "url": "https://www.frontiersin.org/articles/10.3389/fendo.2021.767785/full",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "frontiers-tb4-2021"
+        },
+        {
+          "id": "fda-bulk",
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks: \"Thymosin beta-4, fragment (LKKTETQ), also known as TB-500\"",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": "2026-04-22T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "id": "mendias-2026-sports-med",
+          "sourceType": "review",
+          "title": "Safety and Efficacy of Approved and Unapproved Peptide Therapies for Musculoskeletal Injuries and Athletic Performance (PMID 41966639)",
+          "publisher": "Sports Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41966639/",
+          "publishedAt": "2026-08-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
+        },
+        {
+          "id": "bicer-2026-rat-achilles",
+          "sourceType": "paper",
+          "title": "Effects of BPC-157 and TB-500 on Achilles tendon healing in rats (PMID 42542926)",
+          "publisher": "Joint Diseases and Related Surgery (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42542926/",
+          "publishedAt": "2026-07-23T00:00:00Z",
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: narrowed to research/anti-doping reference; no human dosing or benefit claim asserted for vendor TB-500."
+        "Agent review 2026-10-14: narrowed to research/anti-doping reference; no human dosing or benefit claim asserted for vendor TB-500.",
+        "2026-10-24: sources given ids (WADA list PDF, FDA bulk-substance page, PMID 41966639, 42542926); legacy claims now cite them; public claims added, pending reviewer sign-off."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"

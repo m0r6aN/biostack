@@ -112,7 +112,8 @@ public sealed class CouncilReviewJob : ICouncilReviewJob
                 batch.ToJsonString(JsonOptions), cancellationToken);
         }
 
-        var escalations = outcomes.Where(o => o.Kind == CouncilOutcomeKind.EscalateToOwner).ToList();
+        var escalations = outcomes.Where(o => o.Kind == CouncilOutcomeKind.EscalateToOwner
+            || o.Claims.Any(c => c.Outcome == ClaimCouncilOutcomes.Escalated)).ToList();
         if (escalations.Count > 0)
         {
             var dir = ResolveCwd(_council.EscalationDirectory);
@@ -191,6 +192,25 @@ public sealed class CouncilReviewJob : ICouncilReviewJob
                         ["proposedTier"] = x.ProposedTier, ["basis"] = x.Basis,
                     }).ToArray()),
                     ["legalRisks"] = new JsonArray(o.LegalRisks.Select(r => (JsonNode?)r).ToArray()),
+                    ["claims"] = new JsonArray(o.Claims.Select(c => (JsonNode?)new JsonObject
+                    {
+                        ["claimId"] = c.ClaimId,
+                        ["currentTier"] = c.CurrentTier,
+                        ["outcome"] = c.Outcome,
+                        ["decision"] = c.Decision,
+                        ["tier"] = c.Tier,
+                        ["reviewers"] = new JsonArray(c.Reviewers.Select(r => (JsonNode?)new JsonObject
+                        {
+                            ["reviewerId"] = r.Reviewer.ReviewerId, ["provider"] = r.Reviewer.Provider, ["model"] = r.Reviewer.Model,
+                            ["decision"] = r.Verdict?.Decision, ["proposedTier"] = r.Verdict?.ProposedTier,
+                            ["rationale"] = r.Verdict?.Rationale ?? string.Empty,
+                        }).ToArray()),
+                        ["ownerOptions"] = new JsonArray(c.OwnerOptions.Select(x => (JsonNode?)new JsonObject
+                        {
+                            ["optionId"] = x.OptionId, ["summary"] = x.Summary, ["decision"] = x.Decision,
+                            ["proposedTier"] = x.ProposedTier, ["basis"] = x.Basis,
+                        }).ToArray()),
+                    }).ToArray()),
                 },
             }).ToArray()),
         };
@@ -230,6 +250,18 @@ public sealed class CouncilReviewJob : ICouncilReviewJob
                     },
                 }).ToArray()),
                 ["legalRisksLogged"] = new JsonArray(o.LegalRisks.Select(r => (JsonNode?)r).ToArray()),
+                ["claims"] = new JsonArray(o.Claims.Where(c => c.Outcome == ClaimCouncilOutcomes.Escalated).Select(c => (JsonNode?)new JsonObject
+                {
+                    ["claimId"] = c.ClaimId,
+                    ["currentTier"] = c.CurrentTier,
+                    ["options"] = new JsonArray(c.OwnerOptions.Select(x => (JsonNode?)new JsonObject
+                    {
+                        ["optionId"] = x.OptionId, ["summary"] = x.Summary, ["proposedTier"] = x.ProposedTier, ["basis"] = x.Basis,
+                    }).ToArray()),
+                    ["howToDecide"] = "If the chosen tier differs from currentTier, add a new claim version at that tier. Then set " +
+                                      "ownerDecision on the claim's latest version in the seed: {\"optionId\": <letter>, \"decidedAt\": <now>, " +
+                                      "\"decidedBy\": \"owner:clinton-morgan\"}. That publishes the claim at its tier on the next Seed/Refresh.",
+                }).ToArray()),
             }).ToArray()),
         };
 
@@ -243,6 +275,11 @@ public sealed class CouncilReviewJob : ICouncilReviewJob
             foreach (var n in o.Notes) sb.AppendLine($"- {n}");
             sb.AppendLine();
             foreach (var x in o.OwnerOptions) sb.AppendLine($"- **Option {x.OptionId}.** {x.Summary}. _{x.Basis}_");
+            foreach (var c in o.Claims.Where(c => c.Outcome == ClaimCouncilOutcomes.Escalated))
+            {
+                sb.AppendLine().AppendLine($"### Claim `{c.ClaimId}` (currently {c.CurrentTier})").AppendLine();
+                foreach (var x in c.OwnerOptions) sb.AppendLine($"- **Option {x.OptionId}.** {x.Summary}. _{x.Basis}_");
+            }
             if (o.LegalRisks.Count > 0)
             {
                 sb.AppendLine().AppendLine("Known risks logged (not blocking):");

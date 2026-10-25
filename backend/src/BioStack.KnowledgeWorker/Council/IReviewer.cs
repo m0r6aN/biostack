@@ -30,7 +30,11 @@ public static class ReviewerPrompt
         "reader what they should take. List any legal or compliance concern separately in legalRisks; legal items " +
         "never decide the outcome. Reply with ONLY a JSON object: {\"decision\": \"approve\" | \"request-changes\" | " +
         "\"reject\", \"proposedTier\": <overall tier label>, \"concerns\": [string], \"legalRisks\": [string], " +
-        "\"rationale\": string}.";
+        "\"rationale\": string, \"claims\": [...]}. If the record has evidence.publicClaims, add one entry to " +
+        "\"claims\" per public claim: {\"id\": <claim id>, \"decision\": \"approve\" | \"request-changes\" | \"reject\", " +
+        "\"proposedTier\": <tier the cited sources support for that claim>, \"rationale\": string}. Approve a claim only " +
+        "when its tier is supported by its own cited sources, its note says nothing the sources do not, and it carries " +
+        "no dose and no advice; otherwise request changes with the tier you would give.";
 
     public static string User(CouncilReviewItem item)
         => "Review this BioStack compound record. Current overall tier: " + item.CurrentOverallTier + ".\n" +
@@ -53,7 +57,31 @@ public static class ReviewerPrompt
             ?? throw new ReviewerResponseException($"Reviewer proposedTier '{rawTier}' is not on the 7-tier scale.");
         return new ReviewerVerdict(reviewerId, provider, model, decision, tier,
             Strings(obj["concerns"]), Strings(obj["legalRisks"]),
-            obj["rationale"]?.GetValue<string>()?.Trim() ?? string.Empty);
+            obj["rationale"]?.GetValue<string>()?.Trim() ?? string.Empty)
+        {
+            Claims = ParseClaims(obj["claims"]),
+        };
+    }
+
+    /// <summary>
+    /// Per-claim verdicts. An entry with an unknown decision or an off-scale tier is dropped,
+    /// so that claim is treated as unreviewed (incomplete) rather than failing the whole record.
+    /// </summary>
+    private static IReadOnlyList<ClaimReviewVerdict> ParseClaims(JsonNode? node)
+    {
+        if (node is not JsonArray items) return Array.Empty<ClaimReviewVerdict>();
+        var list = new List<ClaimReviewVerdict>();
+        foreach (var item in items.OfType<JsonObject>())
+        {
+            string Read(string key) => item[key] is JsonValue v && v.TryGetValue<string>(out var str) ? str.Trim() : string.Empty;
+            var id = Read("id");
+            var decision = Read("decision").ToLowerInvariant();
+            var tier = RecordEvidenceTiers.All.FirstOrDefault(t => t.Equals(Read("proposedTier"), StringComparison.OrdinalIgnoreCase));
+            if (id.Length == 0 || !CouncilDecisions.All.Contains(decision) || tier is null) continue;
+            if (list.Any(c => c.ClaimId == id)) continue;
+            list.Add(new ClaimReviewVerdict(id, decision, tier, Read("rationale")));
+        }
+        return list;
     }
 
     private static IReadOnlyList<string> Strings(JsonNode? node)

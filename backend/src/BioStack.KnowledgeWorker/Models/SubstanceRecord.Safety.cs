@@ -146,10 +146,75 @@ public sealed class Evidence
     [JsonPropertyName("claimSpecificEvidence")] public List<ClaimEvidence> ClaimSpecificEvidence { get; set; } = new();
     [JsonPropertyName("evidenceGaps")]          public List<string>        EvidenceGaps          { get; set; } = new();
     [JsonPropertyName("controversies")]         public List<string>        Controversies         { get; set; } = new();
+    /// <summary>Claims as they circulate online, graded on the 7-tier scale and versioned (growth spec 02).</summary>
+    [JsonPropertyName("publicClaims")]          public List<PublicClaim>   PublicClaims          { get; set; } = new();
+}
+
+/// <summary>A claim as people state it online, with its grade, sources and version history.</summary>
+public sealed class PublicClaim
+{
+    [JsonPropertyName("id")]            public string       Id            { get; set; } = string.Empty;
+    [JsonPropertyName("statement")]     public string       Statement     { get; set; } = string.Empty;
+    [JsonPropertyName("population")]    public string       Population    { get; set; } = string.Empty;
+    [JsonPropertyName("outcome")]       public string       Outcome       { get; set; } = string.Empty;
+    [JsonPropertyName("tier")]          public string       Tier          { get; set; } = string.Empty;
+    /// <summary>Required when tier is Hype Exceeds Evidence: the tier the evidence itself earns.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("evidenceBasis")] public string?      EvidenceBasis { get; set; }
+    /// <summary>Trial population and outcome for the PROVEN IN HUMANS qualifier.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("qualifier")]     public ClaimQualifier? Qualifier  { get; set; }
+    [JsonPropertyName("note")]          public string       Note          { get; set; } = string.Empty;
+    [JsonPropertyName("sources")]       public List<string> Sources       { get; set; } = new();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("hype")]          public HypeAssessment? Hype       { get; set; }
+    [JsonPropertyName("versions")]      public List<PublicClaimVersion> Versions { get; set; } = new();
+}
+
+public sealed class ClaimQualifier
+{
+    [JsonPropertyName("population")] public string Population { get; set; } = string.Empty;
+    [JsonPropertyName("outcome")]    public string Outcome    { get; set; } = string.Empty;
+}
+
+/// <summary>Hype Gap v0 editorial score: rubric level (Rare/Niche/Common/Everywhere/Viral) and intensity 0.8–1.3.</summary>
+public sealed class HypeAssessment
+{
+    [JsonPropertyName("rubric")]    public string    Rubric    { get; set; } = string.Empty;
+    [JsonPropertyName("intensity")] public double    Intensity { get; set; } = 1.0;
+    [JsonPropertyName("scoredAt")]  public DateTime? ScoredAt  { get; set; }
+    [JsonPropertyName("scoredBy")]  public string    ScoredBy  { get; set; } = string.Empty;
+    [JsonPropertyName("rationale")] public string    Rationale { get; set; } = string.Empty;
+}
+
+/// <summary>The owner's pick on an escalated claim (option letter from the council escalation file).</summary>
+public sealed class ClaimOwnerDecision
+{
+    [JsonPropertyName("optionId")]  public string    OptionId  { get; set; } = string.Empty;
+    [JsonPropertyName("decidedAt")] public DateTime? DecidedAt { get; set; }
+    [JsonPropertyName("decidedBy")] public string    DecidedBy { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// One entry of a claim's version history. Old versions are never deleted. Sign-off is not
+/// stored here: it comes from the two-reviewer AI council's review-decision batches.
+/// </summary>
+public sealed class PublicClaimVersion
+{
+    [JsonPropertyName("version")]      public int          Version      { get; set; }
+    /// <summary>initial, update, correction or edit (edit = typo fix, no bump).</summary>
+    [JsonPropertyName("kind")]         public string       Kind         { get; set; } = string.Empty;
+    [JsonPropertyName("tier")]         public string       Tier         { get; set; } = string.Empty;
+    [JsonPropertyName("verdict")]      public string       Verdict      { get; set; } = string.Empty;
+    [JsonPropertyName("sources")]      public List<string> Sources      { get; set; } = new();
+    [JsonPropertyName("verifiedAt")]   public DateTime?    VerifiedAt   { get; set; }
+    [JsonPropertyName("verifiedBy")]   public string       VerifiedBy   { get; set; } = string.Empty;
+    [JsonPropertyName("changeReason")] public string       ChangeReason { get; set; } = string.Empty;
+    /// <summary>Set only when Clint resolves a council escalation for this version; publishes the claim at its tier.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("ownerDecision")] public ClaimOwnerDecision? OwnerDecision { get; set; }
 }
 
 public sealed class SourceRecord
 {
+    /// <summary>Optional id that claim and public-claim "sources" arrays point at.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] [JsonPropertyName("id")]            public string?   Id            { get; set; }
     [JsonPropertyName("sourceType")]    public string    SourceType    { get; set; } = string.Empty;
     [JsonPropertyName("title")]         public string    Title         { get; set; } = string.Empty;
     [JsonPropertyName("publisher")]     public string?   Publisher     { get; set; }
