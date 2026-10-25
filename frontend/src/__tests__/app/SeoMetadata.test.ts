@@ -71,9 +71,13 @@ describe('public SEO metadata', () => {
 
     const entries = await sitemap();
 
-    expect(entries.map((entry) => new URL(entry.url).pathname)).toEqual(
+    const paths = entries.map((entry) => new URL(entry.url).pathname);
+    // Growth Phase 4: the /vs index and curated head-to-head pairs are always listed.
+    expect(paths.filter((p) => p !== '/vs' && !p.startsWith('/vs/'))).toEqual(
       publicPages.map(({ path }) => path),
     );
+    expect(paths).toContain('/vs/bpc-157/tb-500');
+    expect(paths).not.toContain('/vs/tb-500/bpc-157');
     expect(entries.every((entry) => new URL(entry.url).origin === SITE_ORIGIN)).toBe(true);
     expect(entries.some((entry) => entry.url.includes('biostack.app'))).toBe(false);
   });
