@@ -23952,10 +23952,69 @@
       ],
       "evidenceGaps": [
         "ELAINE 1 primary endpoint was not statistically significant; phase III confirmation was not shown to change regulatory status in the sourced packet.",
-        "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed."
+        "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online descriptions calling lasofoxifene FDA-approved for osteoporosis are inaccurate per the sourced regulatory history."
+      ],
+      "publicClaims": [
+        {
+          "id": "lasofoxifene-approved",
+          "statement": "Lasofoxifene is an approved drug.",
+          "population": "people buying lasofoxifene",
+          "outcome": "regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It is not approved in the US, and its EU authorization (Fablyn) is no longer valid.",
+          "sources": [
+            "ema-epar-fablyn",
+            "peterson-2011-annpharmacother-lasofoxifene"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ema-epar-fablyn",
+                "peterson-2011-annpharmacother-lasofoxifene"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "lasofoxifene-breast-cancer",
+          "statement": "Lasofoxifene treats ESR1-mutated metastatic breast cancer.",
+          "population": "people with ER+/HER2- metastatic breast cancer with an ESR1 mutation",
+          "outcome": "tumor control",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Unproven. It is still in trials, including a phase 3 test with abemaciclib against fulvestrant plus abemaciclib.",
+          "sources": [
+            "ctgov-nct05696626-elaine3",
+            "ctgov-nct04432454-elaine2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "ctgov-nct05696626-elaine3",
+                "ctgov-nct04432454-elaine2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -23966,7 +24025,8 @@
           "publisher": "European Medicines Agency",
           "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/fablyn",
           "publishedAt": "2009-02-24T00:00:00Z",
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "ema-epar-fablyn"
         },
         {
           "sourceType": "other",
@@ -23974,7 +24034,8 @@
           "publisher": "Annals of Oncology (Bardia A, Neven P, Streich G, et al., 2024); open-access copy via Washington University in St. Louis Digital Commons",
           "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "elaine1-wustl-fulltext"
         },
         {
           "sourceType": "other",
@@ -23982,7 +24043,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Lasofoxifene",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "pubchem-cid-216416"
         },
         {
           "sourceType": "other",
@@ -23990,7 +24052,8 @@
           "publisher": "DrugBank Online",
           "url": "https://go.drugbank.com/drugs/DB06202",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "drugbank-db06202"
         },
         {
           "sourceType": "paper",
@@ -25102,13 +25165,13 @@
         },
         {
           "claim": "In a two-year, double-blind, placebo-controlled phase III trial in 1,284 men on ADT for prostate cancer (646 toremifene 80 mg/day, 638 placebo), new vertebral fractures occurred in 2.5% vs 4.9% (relative risk reduction 50%, p = 0.05), and bone mineral density rose at spine, hip and femoral neck (p < 0.0001); venous thromboembolic events were more frequent with toremifene (2.6% vs 1.1%). This supports a bone effect in older ADT-treated men and does not establish efficacy or safety for young men using toremifene for post-cycle recovery.",
-          "tier": "Contradicted",
+          "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
             "smith-2010-jurol-toremifene-fracture"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Claim reports a negative or conflicting human finding."
+          "gradeRationale": "Re-tiered 2026-10-25: one phase 3 trial showed fewer vertebral fractures (borderline p = 0.05) and higher bone density, so this is not a contradiction; use is unapproved."
         },
         {
           "claim": "Toremifene is promoted on bodybuilding sites as a post-cycle-therapy SERM said to restore natural testosterone, raise free testosterone, prevent gynecomastia and outperform tamoxifen. No controlled human trial in anabolic-steroid-using or post-cycle populations was identified; the only large randomized trial outside breast cancer studied older men on ADT. Community-reported doses: n/a (no citable source).",
@@ -25123,10 +25186,70 @@
         }
       ],
       "evidenceGaps": [
-        "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use."
+        "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Unapproved 80 mg ADT-fracture indication remains distinct from the approved 60 mg metastatic breast cancer indication."
+      ],
+      "publicClaims": [
+        {
+          "id": "toremifene-breast-cancer",
+          "statement": "Toremifene treats advanced breast cancer.",
+          "population": "postmenopausal women with ER-positive or unknown metastatic breast cancer",
+          "outcome": "tumor control",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with ER+ or unknown metastatic breast cancer",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Fareston is FDA-approved for this use. A boxed warning covers QT prolongation that can cause dangerous heart rhythms.",
+          "sources": [
+            "dailymed-fareston-label"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-fareston-label"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "toremifene-pct",
+          "statement": "Toremifene restores natural testosterone after a steroid cycle.",
+          "population": "men coming off anabolic steroids",
+          "outcome": "testosterone recovery",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not tested. No controlled trial in steroid users was found; outside breast cancer, the large trial studied older men on prostate-cancer hormone therapy.",
+          "sources": [
+            "smith-2010-jurol-toremifene-fracture",
+            "dailymed-fareston-label"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "smith-2010-jurol-toremifene-fracture",
+                "dailymed-fareston-label"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -25137,7 +25260,8 @@
           "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
           "url": "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=2cab8dd1-3a10-48e6-86ce-0e5275ed49e5",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "dailymed-fareston-label"
         },
         {
           "sourceType": "regulator",
@@ -25145,7 +25269,8 @@
           "publisher": "U.S. Food and Drug Administration, Center for Drug Evaluation and Research",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2024/020497Orig1s018ltr.pdf",
           "publishedAt": "2024-12-13T00:00:00Z",
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "fda-fareston-2024-supplement-letter"
         },
         {
           "sourceType": "other",
@@ -25153,7 +25278,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Toremifene",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "pubchem-cid-3005573"
         },
         {
           "sourceType": "paper",
@@ -25784,10 +25910,69 @@
         }
       ],
       "evidenceGaps": [
-        "Controlled human dosing, efficacy, and long-term safety data were not identified."
+        "Controlled human dosing, efficacy, and long-term safety data were not identified.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor marketing claims of potent anabolic effects with minimal prostate impact exceed the published human evidence base."
+      ],
+      "publicClaims": [
+        {
+          "id": "acp-105-muscle",
+          "statement": "ACP-105 builds muscle in people.",
+          "population": "people using SARMs",
+          "outcome": "muscle mass and strength",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Unknown. No controlled human trials were found.",
+          "sources": [
+            "pubchem-acp-105",
+            "fda-sarms"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "pubchem-acp-105",
+                "fda-sarms"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "acp-105-legal-supplement",
+          "statement": "ACP-105 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as supplements, are unapproved even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk.",
+          "sources": [
+            "fda-sarms",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -25798,7 +25983,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms"
         },
         {
           "sourceType": "database",
@@ -25806,7 +25992,17 @@
           "publisher": "NCBI / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ACP-105",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-acp-105"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -26014,10 +26210,68 @@
         }
       ],
       "evidenceGaps": [
-        "Long-term real-world outcomes outside trial populations and comparative effectiveness versus other EPP strategies remain specialized-center questions."
+        "Long-term real-world outcomes outside trial populations and comparative effectiveness versus other EPP strategies remain specialized-center questions.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Cosmetic gray-market Melanotan I use is often conflated with the approved EPP implant despite different products, regulation, and risk."
+      ],
+      "publicClaims": [
+        {
+          "id": "afamelanotide-epp",
+          "statement": "Afamelanotide increases pain-free light exposure in erythropoietic protoporphyria (EPP).",
+          "population": "adults with EPP and prior phototoxic reactions",
+          "outcome": "pain-free light exposure",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with EPP",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Scenesse is an FDA-approved implant for this use, inserted by a trained clinician.",
+          "sources": [
+            "dailymed-scenesse"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-scenesse"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "afamelanotide-tanning",
+          "statement": "Afamelanotide is an approved tanning or sun-protection product.",
+          "population": "people seeking a tan or sun protection",
+          "outcome": "tanning and sun protection",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Its only FDA approval is for EPP. It is not approved for cosmetic tanning or general sun protection.",
+          "sources": [
+            "dailymed-scenesse"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-scenesse"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -26028,7 +26282,8 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=94f53286-11dd-7fbb-e053-2a95a90a7c48",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-scenesse"
         },
         {
           "sourceType": "label",
@@ -26036,7 +26291,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/210797s000lbl.pdf",
           "publishedAt": "2019-10-08T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-scenesse-label-2019"
         }
       ],
       "curationNotes": [
@@ -26799,10 +27055,68 @@
         }
       ],
       "evidenceGaps": [
-        "Standalone bazedoxifene osteoporosis data exist in literature and some non-US labels; US availability and indications are combination-specific."
+        "Standalone bazedoxifene osteoporosis data exist in literature and some non-US labels; US availability and indications are combination-specific.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumers may confuse standalone SERM research or non-US brands with US DUAVEE combination labeling and risk."
+      ],
+      "publicClaims": [
+        {
+          "id": "bazedoxifene-duavee",
+          "statement": "Bazedoxifene with conjugated estrogens treats hot flashes and helps prevent osteoporosis.",
+          "population": "postmenopausal women with a uterus",
+          "outcome": "vasomotor symptoms and bone loss",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with a uterus",
+            "outcome": "labeled uses of DUAVEE"
+          },
+          "note": "Yes, as DUAVEE. It is labeled for moderate to severe hot flashes and for preventing postmenopausal osteoporosis. A boxed warning covers endometrial cancer, cardiovascular disorders and probable dementia.",
+          "sources": [
+            "dailymed-duavee"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-duavee"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "bazedoxifene-alone-approved",
+          "statement": "Bazedoxifene on its own is FDA-approved.",
+          "population": "people buying bazedoxifene",
+          "outcome": "US regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. In the US it is approved only combined with conjugated estrogens as DUAVEE.",
+          "sources": [
+            "dailymed-duavee"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-duavee"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -26813,7 +27127,8 @@
           "publisher": "DailyMed / NLM",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16705d8-4472-4f83-96ac-69fa2be066cb",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-duavee"
         },
         {
           "sourceType": "other",
@@ -26821,7 +27136,8 @@
           "publisher": "StatPearls / NCBI Bookshelf",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK585122/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "statpearls-bazedoxifene"
         }
       ],
       "curationNotes": [
@@ -28252,7 +28568,7 @@
           "tier": "Early Evidence",
           "confidence": "moderate",
           "sources": [
-            "src:elamipretide"
+            "dailymed-forzinity"
           ],
           "legacyTier": "Moderate",
           "gradeRationale": "Human evidence exists but is not settled (was Moderate)."
@@ -28262,7 +28578,8 @@
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "src:elamipretide"
+            "ctgov-nct03323749-mmpower3",
+            "karaa-2024-ojrd-mmpower3-posthoc"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "Claim reports a negative or conflicting human finding."
@@ -28270,10 +28587,67 @@
       ],
       "evidenceGaps": [
         "Confirmatory clinical-benefit evidence for Barth syndrome remains part of the accelerated-approval framework.",
-        "No adequate evidence supports general anti-aging or athletic SS-31 uses."
+        "No adequate evidence supports general anti-aging or athletic SS-31 uses.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Approved rare-disease product versus failed PMM program versus gray-market wellness branding are often conflated online."
+      ],
+      "publicClaims": [
+        {
+          "id": "elamipretide-barth",
+          "statement": "Elamipretide improves muscle strength in Barth syndrome.",
+          "population": "patients with Barth syndrome weighing at least 30 kg",
+          "outcome": "muscle strength",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Likely. Forzinity has FDA accelerated approval based on knee-muscle strength, an intermediate endpoint. A confirmatory trial is still required.",
+          "sources": [
+            "dailymed-forzinity"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "dailymed-forzinity"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "elamipretide-mito-myopathy",
+          "statement": "Elamipretide treats primary mitochondrial myopathy.",
+          "population": "adults with primary mitochondrial myopathy",
+          "outcome": "walking distance and fatigue",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The phase 3 MMPOWER-3 trial showed no significant benefit overall. A subgroup signal is still being studied.",
+          "sources": [
+            "ctgov-nct03323749-mmpower3",
+            "karaa-2024-ojrd-mmpower3-posthoc"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ctgov-nct03323749-mmpower3",
+                "karaa-2024-ojrd-mmpower3-posthoc"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -28284,7 +28658,8 @@
           "publisher": "U.S. National Library of Medicine / DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=146bf34c-76f2-48db-ac07-fb29cce2cd75",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-forzinity"
         },
         {
           "sourceType": "regulator",
@@ -28292,7 +28667,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2025/215244Orig1s000Approv.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-forzinity-approval-package"
         },
         {
           "sourceType": "database",
@@ -28300,7 +28676,17 @@
           "publisher": "ClinicalTrials.gov",
           "url": "https://clinicaltrials.gov/study/NCT03323749",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ctgov-nct03323749-mmpower3"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Genotype-specific effects of elamipretide in patients with primary mitochondrial myopathy: a post hoc analysis of the MMPOWER-3 trial (Orphanet J Rare Dis 2024)",
+          "publisher": "Orphanet Journal of Rare Diseases (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39574155/",
+          "publishedAt": "2024-11-21T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "karaa-2024-ojrd-mmpower3-posthoc"
         }
       ],
       "curationNotes": [
@@ -30307,7 +30693,7 @@
           "tier": "Plausible Theory",
           "confidence": "low",
           "sources": [
-            "src:glutathione"
+            "arjinpathana-2012-oral-glutathione-whitening"
           ],
           "legacyTier": "Limited",
           "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
@@ -30317,7 +30703,8 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "src:glutathione"
+            "fda-glutathione-compounding-concerns",
+            "fda-optimal-balance-glutathione-recall"
           ],
           "legacyTier": "Insufficient",
           "gradeRationale": "High-confidence regulatory or label fact backed by an authoritative source."
@@ -30325,10 +30712,67 @@
       ],
       "evidenceGaps": [
         "No adequate RCTs establish IV glutathione for detox or skin lightening as standard approved care.",
-        "Oral bioavailability and clinical outcome consistency vary by formulation."
+        "Oral bioavailability and clinical outcome consistency vary by formulation.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Med-spa marketing of IV glutathione contrasts with FDA compounding/endotoxin warnings and limited efficacy data."
+      ],
+      "publicClaims": [
+        {
+          "id": "glutathione-oral-skin",
+          "statement": "Oral glutathione lightens skin.",
+          "population": "healthy adults",
+          "outcome": "skin melanin index",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Weak evidence. In one 4-week trial of 60 students, melanin dropped more than with placebo at only 2 of 6 skin sites.",
+          "sources": [
+            "arjinpathana-2012-oral-glutathione-whitening"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "arjinpathana-2012-oral-glutathione-whitening"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "glutathione-iv-safe",
+          "statement": "Glutathione IV drips are safe.",
+          "population": "people getting compounded glutathione injections",
+          "outcome": "adverse reactions",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not guaranteed. FDA linked compounded injectable glutathione to adverse events from high endotoxin levels, and a pharmacy recalled glutathione vials.",
+          "sources": [
+            "fda-glutathione-compounding-concerns",
+            "fda-optimal-balance-glutathione-recall"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-glutathione-compounding-concerns",
+                "fda-optimal-balance-glutathione-recall"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30339,7 +30783,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/fda-highlights-concerns-using-dietary-ingredient-glutathione-compound-sterile-injectables",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-glutathione-compounding-concerns"
         },
         {
           "sourceType": "regulator",
@@ -30347,7 +30792,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/optimal-balance-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded-glutathione-200",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-optimal-balance-glutathione-recall"
         },
         {
           "sourceType": "paper",
@@ -30355,7 +30801,8 @@
           "publisher": "PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/20524875/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "arjinpathana-2012-oral-glutathione-whitening"
         },
         {
           "sourceType": "database",
@@ -30363,7 +30810,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Glutathione",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-124886"
         }
       ],
       "curationNotes": [
@@ -30609,11 +31057,70 @@
       ],
       "evidenceGaps": [
         "Current Canada marketing status of Lutrepulse was not independently re-verified beyond a 2016 monograph; chronic self-administration safety is not established.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Human vs veterinary product status is often confused in online marketing; only veterinary gonadorelin products were confirmed on US DailyMed in the source packet.",
         "Only veterinary gonadorelin products (FACTREL and four others, confirmed via a live DailyMed search 2026-08-29) are currently listed on US DailyMed; a human indication (LUTREPULSE, ovulation induction) is documented only via a Canadian Health Canada product monograph. RxList independently confirms 2026-08-29 that the historical US human Factrel product is discontinued, resolving the narrow question of whether a human gonadorelin product is currently US-marketed (it is not). The claim wording has been updated to state the ovulation-induction indication is Canada-only/historical. Residual open question: whether LUTREPULSE remains currently active in Canada was not independently re-verified this session (source is a 2016 monograph)."
+      ],
+      "publicClaims": [
+        {
+          "id": "gonadorelin-fda-human",
+          "statement": "Gonadorelin is an FDA-approved human drug.",
+          "population": "people buying compounded or research gonadorelin",
+          "outcome": "US regulatory status",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The only current FDA-approved gonadorelin product is a veterinary drug for cattle. The old human product application is discontinued.",
+          "sources": [
+            "dailymed-factrel-veterinary",
+            "drugsfda-factrel-nda018123"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-factrel-veterinary",
+                "drugsfda-factrel-nda018123"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "gonadorelin-trt-testes",
+          "statement": "Gonadorelin prevents testicular shrinkage and preserves fertility on testosterone therapy.",
+          "population": "men on testosterone therapy",
+          "outcome": "testicular size and fertility",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No controlled trial in men on testosterone was found. Pump studies are in men with congenital hypogonadotropic hypogonadism.",
+          "sources": [
+            "zhang-2019-pulsatile-gonadorelin-chh",
+            "jiang-pmc12336735-chh-gnrh-pump"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "zhang-2019-pulsatile-gonadorelin-chh",
+                "jiang-pmc12336735-chh-gnrh-pump"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30624,7 +31131,8 @@
           "publisher": "U.S. Food and Drug Administration / DailyMed (NIH)",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1451663c-b85a-4b45-8b27-6d572d0032f9",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-factrel-veterinary"
         },
         {
           "sourceType": "paper",
@@ -30632,7 +31140,8 @@
           "publisher": "American Journal of Men's Health (Zhang L, Cai K, Wang Y, Ji W, Cheng Z, Chen G, Liao Z, 2019)",
           "url": "https://journals.sagepub.com/doi/10.1177/1557988318818280",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "zhang-2019-pulsatile-gonadorelin-chh"
         },
         {
           "sourceType": "database",
@@ -30640,7 +31149,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Gonadorelin",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-638793"
         },
         {
           "sourceType": "other",
@@ -30648,7 +31158,8 @@
           "publisher": "Translational Andrology and Urology (Jiang H, Li BJ, Jin DC, Zhong QL, Zhu T, Li YF)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12336735/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "jiang-pmc12336735-chh-gnrh-pump"
         },
         {
           "sourceType": "regulator",
@@ -30888,11 +31399,68 @@
       ],
       "evidenceGaps": [
         "Primary COPD trial full sex-specific results and some phase-1 PK papers were not fully re-fetched in the source packet; long-term safety is unknown.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online performance marketing may overstate lean-mass findings from short investigational trials.",
         "A secondary source (Wikipedia) states GSK2881078 increased muscle strength in men with COPD but does not confirm an effect in women, while the primary Thorax journal publication reporting full quantitative leg-press/lean-mass results and any sex-differentiated statistical findings could not be accessed in this research pass (PMC/publisher pages returned bot-verification pages). The claim is retained as Limited-tier and review-gated pending direct access to the primary article."
+      ],
+      "publicClaims": [
+        {
+          "id": "gsk2881078-lean-mass",
+          "statement": "GSK2881078 increases lean mass in older adults.",
+          "population": "healthy older men and postmenopausal women",
+          "outcome": "lean mass",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In a short phase 1 study, yes. Lean mass rose more than with placebo at all doses, with transient liver-enzyme rises. This does not show better strength or function.",
+          "sources": [
+            "neil-2018-jcem-gsk2881078-lean-mass"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "neil-2018-jcem-gsk2881078-lean-mass"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "gsk2881078-safe-sarm",
+          "statement": "GSK2881078 is a safe, legal SARM to buy.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs are not approved for any use and are linked to heart attack, stroke and liver damage. GSK tested this compound only under medical supervision.",
+          "sources": [
+            "fda-sarms-bodybuilding-alert",
+            "neil-2018-jcem-gsk2881078-lean-mass"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-bodybuilding-alert",
+                "neil-2018-jcem-gsk2881078-lean-mass"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30903,7 +31471,8 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/gsk-2881078",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-86709174"
         },
         {
           "sourceType": "database",
@@ -30911,7 +31480,8 @@
           "publisher": "National Center for Advancing Translational Sciences (NIH)",
           "url": "https://drugs.ncats.io/drug/47M5ZXU844",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ncats-inxight-47m5zxu844"
         },
         {
           "sourceType": "paper",
@@ -30919,7 +31489,8 @@
           "publisher": "The Journal of Clinical Endocrinology & Metabolism (Clark RV, et al., 2018)",
           "url": "https://academic.oup.com/jcem/article/103/9/3215/5047294",
           "publishedAt": "2018-09-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "clark-2018-jcem-lean-mass"
         },
         {
           "sourceType": "other",
@@ -30927,7 +31498,8 @@
           "publisher": "ClinicalTrials.gov / GlaxoSmithKline",
           "url": "https://clinicaltrials.gov/api/v2/studies/NCT03359473",
           "publishedAt": "2020-07-15T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "clinicaltrials-nct03359473"
         },
         {
           "sourceType": "other",
@@ -30935,7 +31507,8 @@
           "publisher": "GlaxoSmithKline",
           "url": "https://www.gsk-studyregister.com/en/trial-details/?id=200182",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "gsk-study-register-200182"
         },
         {
           "sourceType": "regulator",
@@ -30943,7 +31516,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms-bodybuilding-alert"
         },
         {
           "sourceType": "other",
@@ -30951,7 +31525,8 @@
           "publisher": "LiverTox: Clinical and Research Information on Drug-Induced Liver Injury, NCBI Bookshelf (National Institute of Diabetes and Digestive and Kidney Diseases)",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "livertox-sarms-nbk619971"
         },
         {
           "sourceType": "paper",
@@ -30959,7 +31534,17 @@
           "publisher": "Journal of Patient-Reported Outcomes (Tabberer M, Williamson N, Tatlock S, Gater A, Grimes R, Akinseye C, Neil D, Mahon-Smith A, Nelsen L, 2024)",
           "url": "https://doi.org/10.1186/s41687-024-00712-0",
           "publishedAt": "2024-04-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "tabberer-2024-jpro-copd-qualitative"
+        },
+        {
+          "sourceType": "paper",
+          "title": "GSK2881078, a SARM, Produces Dose-Dependent Increases in Lean Mass in Healthy Older Men and Women (J Clin Endocrinol Metab 2018)",
+          "publisher": "The Journal of Clinical Endocrinology & Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29982690/",
+          "publishedAt": "2018-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "neil-2018-jcem-gsk2881078-lean-mass"
         }
       ],
       "curationNotes": [
@@ -32369,10 +32954,65 @@
       ],
       "evidenceGaps": [
         "Human data are largely short pharmacodynamic infusion studies; chronic disease-endpoint evidence and gray-market self-use safety are lacking.",
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Compounding status and online fertility marketing may outpace the limited controlled evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "kisspeptin-10-lh",
+          "statement": "Kisspeptin-10 raises LH in men.",
+          "population": "healthy men",
+          "outcome": "short-term LH release",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In small, short-term studies, yes. IV kisspeptin-10 raised LH and LH pulse frequency in healthy men.",
+          "sources": [
+            "george-2011-jcem-kisspeptin10-lh"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "george-2011-jcem-kisspeptin10-lh"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "kisspeptin-10-hypogonadism",
+          "statement": "Kisspeptin-10 is a proven treatment for low testosterone.",
+          "population": "men with hypogonadism",
+          "outcome": "testosterone and symptoms",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "No. FDA found insufficient evidence of effectiveness, poor characterization and unknown immunogenicity risk, and recommended against allowing it in compounding. It is not part of any approved drug.",
+          "sources": [
+            "fda-pcac-briefing-kisspeptin-182089"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-pcac-briefing-kisspeptin-182089"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -32383,7 +33023,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/media/182089/download",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-pcac-briefing-kisspeptin-182089"
         },
         {
           "sourceType": "regulator",
@@ -32391,7 +33032,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bulk-substances-safety-risks"
         },
         {
           "sourceType": "paper",
@@ -32399,7 +33041,8 @@
           "publisher": "The Journal of Clinical Endocrinology & Metabolism (Jayasena CN, Nijher GM, Comninos AN, et al., 2011)",
           "url": "https://academic.oup.com/jcem/article/96/8/E1228/2833644",
           "publishedAt": "2011-08-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "jayasena-2011-jcem-lh-pulse"
         },
         {
           "sourceType": "database",
@@ -32407,7 +33050,17 @@
           "publisher": "National Center for Biotechnology Information / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Kisspeptin-10",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubchem-cid-25240297"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Kisspeptin-10 is a potent stimulator of LH and increases pulse frequency in men (J Clin Endocrinol Metab 2011)",
+          "publisher": "The Journal of Clinical Endocrinology & Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21632807/",
+          "publishedAt": "2011-08-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "george-2011-jcem-kisspeptin10-lh"
         }
       ],
       "curationNotes": [
@@ -33231,10 +33884,67 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "No completed Phase 3 efficacy/safety package, no multi-year weight-maintenance data, and no dedicated cardiovascular or renal outcomes trial data were identified at review."
+        "No completed Phase 3 efficacy/safety package, no multi-year weight-maintenance data, and no dedicated cardiovascular or renal outcomes trial data were identified at review.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Some commercial sites list MariTide as purchasable despite investigational status and no FDA approval — treat those listings as misinformation."
+      ],
+      "publicClaims": [
+        {
+          "id": "maridebart-cafraglutide-weight",
+          "statement": "Monthly maridebart cafraglutide (MariTide) causes substantial weight loss.",
+          "population": "adults with obesity, with or without type 2 diabetes",
+          "outcome": "52-week weight change",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "In a phase 2 trial, yes. Weight fell about 12-16% versus 2.5% with placebo in obesity. Stomach side effects were common.",
+          "sources": [
+            "jastreboff-2025-nejm-maritide-ph2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "jastreboff-2025-nejm-maritide-ph2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "maridebart-cafraglutide-available",
+          "statement": "MariTide is an approved weight-loss drug you can get now.",
+          "population": "people seeking MariTide",
+          "outcome": "approval and availability",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It is investigational, and phase 3 trials are still under way.",
+          "sources": [
+            "ctgov-nct06858839-maritide-ph3",
+            "jastreboff-2025-nejm-maritide-ph2"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ctgov-nct06858839-maritide-ph3",
+                "jastreboff-2025-nejm-maritide-ph2"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -33245,7 +33955,8 @@
           "publisher": "New England Journal of Medicine / PubMed (PMID 40549887)",
           "url": "https://pubmed.ncbi.nlm.nih.gov/40549887/",
           "publishedAt": "2025-09-04T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "jastreboff-2025-nejm-maritide-ph2"
         },
         {
           "sourceType": "database",
@@ -33253,7 +33964,8 @@
           "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
           "url": "https://clinicaltrials.gov/study/NCT06858839",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ctgov-nct06858839-maritide-ph3"
         },
         {
           "sourceType": "other",
@@ -33261,7 +33973,8 @@
           "publisher": "DrugBank",
           "url": "https://go.drugbank.com/drugs/DB19339",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "drugbank-db19339"
         }
       ],
       "curationNotes": [
@@ -34387,10 +35100,68 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "Long-term breast-cancer outcome characterization and effects beyond labeled VVA symptoms remain partly incomplete relative to some other SERMs; bone-density signals are studied but not the primary labeled claim."
+        "Long-term breast-cancer outcome characterization and effects beyond labeled VVA symptoms remain partly incomplete relative to some other SERMs; bone-density signals are studied but not the primary labeled claim.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Non-hormonal positioning in consumer materials can understate estrogen-agonist endometrial and VTE boxed-warning risks."
+      ],
+      "publicClaims": [
+        {
+          "id": "ospemifene-vva",
+          "statement": "Ospemifene treats painful sex and vaginal dryness after menopause.",
+          "population": "postmenopausal women with vulvar and vaginal atrophy",
+          "outcome": "dyspareunia and vaginal dryness",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with vulvar and vaginal atrophy",
+            "outcome": "labeled treatment"
+          },
+          "note": "Yes. Osphena is FDA-approved for moderate to severe painful intercourse and vaginal dryness from menopause.",
+          "sources": [
+            "dailymed-osphena"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-osphena"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ospemifene-no-uterine-risk",
+          "statement": "Ospemifene has no endometrial or clotting risks.",
+          "population": "postmenopausal women",
+          "outcome": "endometrial cancer, stroke and blood clots",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Its boxed warning covers endometrial cancer and cardiovascular disorders, including stroke and blood clots.",
+          "sources": [
+            "dailymed-osphena"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-osphena"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -34401,7 +35172,8 @@
           "publisher": "U.S. National Library of Medicine / DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9accbcc9-78ee-4f84-9b7e-704f2ab1c413",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-osphena"
         },
         {
           "sourceType": "label",
@@ -34409,7 +35181,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/203505s015lbl.pdf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-osphena-label-2019"
         }
       ],
       "curationNotes": [
