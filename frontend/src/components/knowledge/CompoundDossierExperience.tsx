@@ -8,6 +8,7 @@ import { KnowledgeEntry } from '@/lib/types';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { VerdictBlock } from '@/components/knowledge/VerdictBlock';
 import { HeadToHeadLinks } from '@/components/knowledge/HeadToHeadLinks';
+import { CommunityColumns } from '@/components/knowledge/CommunityColumns';
 import { CompoundRelationshipsSection } from '@/components/knowledge/CompoundRelationshipsSection';
 import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
@@ -118,6 +119,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
           <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" isSignedIn={Boolean(user)}
             titleAs={(entry.details?.publicClaims?.length ?? 0) > 0 ? 'h2' : 'h1'} />
           <HeadToHeadLinks name={entry.canonicalName} />
+          <CommunityColumns entry={entry} />
           <CompoundRelationshipsSection
             compoundName={entry.canonicalName}
             aliases={entry.aliases}
