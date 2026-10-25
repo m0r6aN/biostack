@@ -16,6 +16,7 @@ public sealed class ClaimBatch5Tests
     private static readonly Regex DoseText = new(@"\d+(\.\d+)?\s?(mg|mcg|µg|ug|iu|units?|ml|nmol)\b", RegexOptions.IgnoreCase);
 
     [Theory]
+    [InlineData("Creatine monohydrate", 3)]
     [InlineData("Creatine", 3)]
     [InlineData("Caffeine", 3)]
     [InlineData("Beta-alanine", 2)]

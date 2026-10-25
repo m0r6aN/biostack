@@ -35,20 +35,20 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal(4, report.Payload.Comparison.CandidateCaseCount);
         Assert.Equal("1.0.0", report.Payload.CorpusInventory.SnapshotVersion);
         // Go-live library 2026-10-14 expanded the seed corpus from the BIO-LOCAL-014 count of 99 to 158;
-        // the 2026-10-25 consolidation folded testolone into vosilasarm and creatine-monohydrate into creatine (156).
-        Assert.Equal(156, report.Payload.CorpusInventory.SeedRecordCount);
+        // the 2026-10-25 consolidation folded testolone into vosilasarm (157); creatine stays distinct per D-D.
+        Assert.Equal(157, report.Payload.CorpusInventory.SeedRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.CandidateRecordCount);
         Assert.Equal(78, report.Payload.CorpusInventory.EvidencePacketCount);
         Assert.Equal(30, report.Payload.CorpusInventory.SourceRegistryRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
-        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142, less the two
-        // seed-only records folded in by the 2026-10-25 consolidation = 140.
-        Assert.Equal(140, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
+        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142, less the
+        // seed-only testolone record folded into vosilasarm on 2026-10-25 = 141.
+        Assert.Equal(141, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
         Assert.Equal(0, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(report.Payload.CorpusInventory.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, report.Payload.CorpusInventory.EvidenceWithoutCandidateCanonicalIds.Count);
-        // After the 2026-10-25 consolidation only the magnesium-oxide token overlap remains.
-        Assert.Equal("magnesium-oxide", Assert.Single(report.Payload.CorpusInventory.IdentityTokenCollisions).Key);
+        // After the 2026-10-25 testolone consolidation: the two creatine collisions (D-D) and magnesium-oxide.
+        Assert.Equal(3, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
         Assert.Empty(report.Payload.CorpusInventory.ExternalIdentifierCollisions);
         Assert.Equal(7, report.Payload.CorpusInventory.ApprovedRightsSourceCount);
         Assert.Equal(7, report.Payload.CorpusInventory.ActiveOperationsSourceCount);

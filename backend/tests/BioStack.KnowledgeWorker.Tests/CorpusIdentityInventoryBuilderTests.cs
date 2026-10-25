@@ -14,15 +14,15 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
         // Go-live library 2026-10-14 expanded the seed corpus from the BIO-LOCAL-014 count of 99 to 158;
-        // the 2026-10-25 consolidation folded testolone into vosilasarm and creatine-monohydrate into creatine (156).
-        Assert.Equal(156, snapshot.SeedRecordCount);
+        // the 2026-10-25 consolidation folded testolone into vosilasarm (157); creatine stays distinct per D-D.
+        Assert.Equal(157, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(30, snapshot.SourceRegistryRecordCount);
         Assert.Equal(16, snapshot.SeedCandidateOverlapCount);
-        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142, less the two
-        // seed-only records folded in by the 2026-10-25 consolidation = 140.
-        Assert.Equal(140, snapshot.SeedOnlyCanonicalIds.Count);
+        // The 59 records added by the 2026-10-14 library are seed-only: 83 + 59 = 142, less the
+        // seed-only testolone record folded into vosilasarm on 2026-10-25 = 141.
+        Assert.Equal(141, snapshot.SeedOnlyCanonicalIds.Count);
         Assert.Equal(0, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);
@@ -30,11 +30,21 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
         Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
         Assert.Equal(2, snapshot.RegistryAuthorizedEvidencePacketCount);
-        // The 2026-10-25 consolidation folded testolone into vosilasarm and creatine-monohydrate
-        // into creatine, so their token collisions are gone; only the magnesium-oxide overlap remains.
-        var collision = Assert.Single(snapshot.IdentityTokenCollisions);
-        Assert.Equal("magnesium-oxide", collision.Key);
-        Assert.Equal(["candidate:magnesium", "seed:magnesium", "seed:magnesium-oxide"], collision.Owners);
+        // The creatine pair remains distinct (owner ruling D-D). The 2026-10-25 consolidation folded
+        // testolone into vosilasarm, removing its five token collisions; magnesium-oxide remains.
+        Assert.Equal(3, snapshot.IdentityTokenCollisions.Count);
+        Assert.Equal(
+            ["creatine", "creatine-monohydrate", "magnesium-oxide"],
+            snapshot.IdentityTokenCollisions.Select(collision => collision.Key));
+        Assert.Equal(
+            ["candidate:creatine", "seed:creatine", "seed:creatine-monohydrate"],
+            snapshot.IdentityTokenCollisions[0].Owners);
+        Assert.Equal(
+            ["candidate:creatine", "seed:creatine-monohydrate"],
+            snapshot.IdentityTokenCollisions[1].Owners);
+        Assert.Equal(
+            ["candidate:magnesium", "seed:magnesium", "seed:magnesium-oxide"],
+            snapshot.IdentityTokenCollisions[2].Owners);
         Assert.Empty(snapshot.ExternalIdentifierCollisions);
         Assert.False(snapshot.ModelInvoked);
         Assert.False(snapshot.NetworkAccessed);
