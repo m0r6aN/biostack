@@ -32,5 +32,7 @@ public sealed record KnowledgeEntryResponse(
     List<string> OptimizationSupplements,
     string OptimizationSleep,
     string OptimizationExercise,
-    KnowledgeEntryDetails? Details = null
+    KnowledgeEntryDetails? Details = null,
+    // Additive (growth spec Phase 0): URL slug of the public dossier, /knowledge/{Slug}.
+    string Slug = ""
 );

@@ -90,8 +90,8 @@ describe('public SEO metadata', () => {
     const entries = await sitemap();
     const paths = entries.map((entry) => new URL(entry.url).pathname);
 
-    expect(paths).toContain('/knowledge/BPC-157');
-    expect(paths).toContain('/knowledge/TB-500');
+    expect(paths).toContain('/knowledge/bpc-157');
+    expect(paths).toContain('/knowledge/tb-500');
   });
 
   it.each(publicPages)(

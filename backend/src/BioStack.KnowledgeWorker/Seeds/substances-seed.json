@@ -681,19 +681,19 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "DailyMed: MOUNJARO (tirzepatide) injection",
+          "title": "MOUNJARO (tirzepatide) injection — prescribing information [Eli Lilly and Company]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=tirzepatide",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d2d7da5d-ad07-4228-955f-cf7e355c8cc0",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "label",
-          "title": "DailyMed: ZEPBOUND (tirzepatide) injection",
+          "title": "ZEPBOUND (tirzepatide) injection — prescribing information [Eli Lilly and Company]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Zepbound",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=487cd7e7-434c-4925-99fa-aa80b1cc776b",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "regulator",
@@ -705,7 +705,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualified dual incretin agonist label record; compounded-product nonequivalence retained."
+        "Agent review 2026-10-14: qualified dual incretin agonist label record; compounded-product nonequivalence retained.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -2963,15 +2964,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Metformin",
+          "title": "Metformin hydrochloride tablet — prescribing information (generic label) [Zydus Pharmaceuticals USA]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Metformin",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c82a10fa-1e8e-46b6-890a-737de3f34ee1",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources."
+        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources.",
+        "2026-10-24: replaced DailyMed search-results URL with a specific DailyMed SPL label (no reference-listed-drug label is listed; generic manufacturer label used)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -3314,15 +3316,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "ACARBOSE tablet prescribing information (DailyMed search)",
+          "title": "Acarbose tablet — prescribing information (generic label) [Heritage / Avet Pharmaceuticals]",
           "publisher": "DailyMed / NLM",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=ACARBOSE",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=29939129-7d09-4c22-bf3e-491a8a97f4c4",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: accepted FDA-labeled T2D record; expanded labeled GI/hepatic risks and interactions; removed launch-seed uncertainty wording."
+        "Agent review 2026-10-14: accepted FDA-labeled T2D record; expanded labeled GI/hepatic risks and interactions; removed launch-seed uncertainty wording.",
+        "2026-10-24: replaced DailyMed search-results URL with a specific DailyMed SPL label (no reference-listed-drug label is listed; generic manufacturer label used)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -4045,15 +4048,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "VYLEESI (bremelanotide) injection label (DailyMed search)",
+          "title": "VYLEESI (bremelanotide) injection — prescribing information [Cosette Pharmaceuticals]",
           "publisher": "DailyMed / NLM",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=VYLEESI",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: accepted FDA-labeled HSDD peptide; BP/nausea/naltrexone interaction details sharpened."
+        "Agent review 2026-10-14: accepted FDA-labeled HSDD peptide; BP/nausea/naltrexone interaction details sharpened.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -6784,11 +6788,11 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "DailyMed: DEPO-TESTOSTERONE (testosterone cypionate) injection",
+          "title": "DEPO-TESTOSTERONE (testosterone cypionate) injection — prescribing information [Pharmacia & Upjohn / Pfizer]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Testosterone+cypionate",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cfbb53d4-b868-4a28-8436-f9112eb01c39",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "guideline",
@@ -6800,7 +6804,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualified labeled TRT record; non-prescribed physique uses left as explicit off-label legal/medical risk."
+        "Agent review 2026-10-14: qualified labeled TRT record; non-prescribed physique uses left as explicit off-label legal/medical risk.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -7117,23 +7122,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Oxandrolone",
+          "title": "OXANDRIN (oxandrolone) tablet — prescribing information, 2007 [Savient Pharmaceuticals]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Oxandrolone",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f622616e-4c11-4149-bf00-5ea5ce97800b",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
-        },
-        {
-          "sourceType": "label",
-          "title": "Oxandrolone tablets prescribing information — DailyMed search",
-          "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=oxandrolone",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources."
+        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -7805,15 +7803,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "ANASTROZOLE tablet prescribing information (DailyMed search)",
+          "title": "ARIMIDEX (anastrozole) tablet — prescribing information [ANI Pharmaceuticals]",
           "publisher": "DailyMed / NLM",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=ANASTROZOLE",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=acbfaaa9-503c-4691-9828-76a7146ed6de",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: accepted labeled aromatase inhibitor; expanded bone/CV risks and estrogen/tamoxifen interactions."
+        "Agent review 2026-10-14: accepted labeled aromatase inhibitor; expanded bone/CV risks and estrogen/tamoxifen interactions.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -8143,15 +8142,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Letrozole",
+          "title": "FEMARA (letrozole) tablet — prescribing information [Novartis]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Letrozole",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=82b77d74-085f-45ac-a7dd-1f5c038bf406",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active."
+        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -8484,19 +8484,19 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for chorionic gonadotropin (hCG)",
+          "title": "NOVAREL (chorionic gonadotropin) for injection — prescribing information [Ferring Pharmaceuticals]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chorionic+gonadotropin",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ac6918ff-9dc3-40d9-8619-54b26e4bdfc8",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "label",
-          "title": "Prescribing information for Human chorionic gonadotropin",
+          "title": "PREGNYL (chorionic gonadotropin) for injection — prescribing information [Organon]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Human+chorionic+gonadotropin",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e94155f-19be-4944-b197-be4edbb4faf9",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "internal-curation",
@@ -8516,7 +8516,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active."
+        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -8900,11 +8901,11 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information / DailyMed search for Finasteride",
+          "title": "PROSCAR (finasteride) tablet — prescribing information [Organon]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Finasteride",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6f988153-fc74-4ca4-b29a-111f750c4a4b",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "label",
@@ -8916,7 +8917,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: accepted Strong labeled BPH/alopecia evidence; expanded teratogenicity, PSA, and sexual/mood risk language."
+        "Agent review 2026-10-14: accepted Strong labeled BPH/alopecia evidence; expanded teratogenicity, PSA, and sexual/mood risk language.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -9627,11 +9629,11 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "DailyMed: tamoxifen citrate tablet prescribing information",
+          "title": "SOLTAMOX (tamoxifen citrate) oral solution — prescribing information [Mayne Pharma]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Tamoxifen",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e6ff055-590c-41e6-9530-1fdf04cdbd02",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "paper",
@@ -9643,7 +9645,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualified from launch seed and label-backed SERM evidence; non-oncology marketing uses left as evidence gaps."
+        "Agent review 2026-10-14: qualified from launch seed and label-backed SERM evidence; non-oncology marketing uses left as evidence gaps.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -15660,23 +15663,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Omega-3 ethyl esters",
+          "title": "LOVAZA (omega-3-acid ethyl esters) capsule — prescribing information [Waylis Therapeutics]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Omega-3+ethyl+esters",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=21cfa4ce-0b05-47ed-b268-339eb1b83b75",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
-        },
-        {
-          "sourceType": "label",
-          "title": "LOVAZA (omega-3-acid ethyl esters) — DailyMed search",
-          "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=omega-3-acid+ethyl+esters",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources."
+        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -16042,15 +16038,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "DailyMed search and prescribing information for Tadalafil / Cialis / Adcirca",
+          "title": "CIALIS (tadalafil) tablet — prescribing information [Eli Lilly and Company]",
           "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Tadalafil",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=bcd8f8ab-81a2-4891-83db-24a0b0e25895",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualified from launch seed using labeled PDE5-inhibitor class facts; dose/schedule left product-specific."
+        "Agent review 2026-10-14: qualified from launch seed using labeled PDE5-inhibitor class facts; dose/schedule left product-specific.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -16441,12 +16438,12 @@
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "regulator",
-          "title": "DailyMed search and product labels for sildenafil (Viagra/Revatio and generics)",
+          "sourceType": "label",
+          "title": "VIAGRA (sildenafil citrate) tablet — prescribing information [Pfizer]",
           "publisher": "U.S. NLM / DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Sildenafil",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0b0be196-0c62-461c-94f4-9a35339b4501",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         },
         {
           "sourceType": "other",
@@ -16458,7 +16455,8 @@
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: FDA-labeled PDE5 inhibitor; nitrate contraindication emphasized."
+        "Agent review 2026-10-14: FDA-labeled PDE5 inhibitor; nitrate contraindication emphasized.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -16775,23 +16773,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Modafinil",
+          "title": "PROVIGIL (modafinil) tablet — prescribing information [Cephalon]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Modafinil",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
-        },
-        {
-          "sourceType": "label",
-          "title": "PROVIGIL (modafinil) tablets — DailyMed search",
-          "publisher": "DailyMed / U.S. National Library of Medicine",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=modafinil",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources."
+        "Agent review 2026-10-14: qualifying fields verified or narrowed against primary sources.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -17157,15 +17148,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "BUPROPION hydrochloride prescribing information (DailyMed search)",
+          "title": "WELLBUTRIN XL (bupropion hydrochloride) extended-release tablet — prescribing information [Bausch Health]",
           "publisher": "DailyMed / NLM",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=BUPROPION",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: accepted labeled NDRI; seizure, MAOI, and suicidality boxed-warning content sharpened."
+        "Agent review 2026-10-14: accepted labeled NDRI; seizure, MAOI, and suicidality boxed-warning content sharpened.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -17497,15 +17489,16 @@
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Levothyroxine",
+          "title": "SYNTHROID (levothyroxine sodium) tablet — prescribing information [AbbVie]",
           "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Levothyroxine",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e11ad30-1041-4520-10b0-8f9d30d30fcc",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active."
+        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active.",
+        "2026-10-24: replaced DailyMed search-results URL(s) with the specific DailyMed SPL label document (NDA holder label where listed)."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"
@@ -25844,8 +25837,13 @@
       "primaryMechanisms": [
         "Ibutamoren (MK-677 / MK-0677) is a small-molecule, orally bioavailable ghrelin-receptor (growth hormone secretagogue receptor) agonist, not a peptide, with PubChem CID 178024 and molecular formula C27H36N4O5S."
       ],
-      "pathways": [],
-      "targets": [],
+      "pathways": [
+        "GH-IGF-1 axis",
+        "ghrelin signaling"
+      ],
+      "targets": [
+        "ghrelin receptor (GHSR)"
+      ],
       "effectTags": [],
       "goalTags": []
     },
@@ -25995,7 +25993,6 @@
           "tier": "Hype Exceeds Evidence",
           "confidence": "high",
           "sources": [
-            "revolutionhealth-mk677-marketing",
             "nass-2008-annals-mk677-rct",
             "fda-bulk-substances-category2-ibutamoren"
           ],
@@ -26045,18 +26042,11 @@
           "url": "https://www.fda.gov/media/182087/download",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "other",
-          "title": "Peptide Therapy - MK-677",
-          "publisher": "Revolution Health & Wellness (clinic/vendor blog)",
-          "url": "https://revolutionhealth.org/blogs/news/peptide-therapy-mk-677",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active."
+        "Agent review 2026-10-14: qualifying fields completed; ops marked reviewed/active.",
+        "2026-10-24: removed clinic/vendor blog source (revolutionhealth.org) per public sourcing rule; added GHSR pathway/target tags matching the GHRP-2/GHRP-6 records."
       ],
       "lastReviewedAt": "2026-10-14T00:00:00Z",
       "reviewStatus": "reviewed"

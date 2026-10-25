@@ -22,4 +22,14 @@ public static class CompoundSlug
         var replaced = KebabSanitize.Replace(lower, "-");
         return KebabTrim.Replace(replaced, string.Empty);
     }
+
+    /// <summary>
+    /// Public dossier slug (<c>/knowledge/{slug}</c>), matching the curated records'
+    /// <c>identity.slug</c>: apostrophes are dropped before kebab-casing ("Lion's mane" →
+    /// "lions-mane", "NAD+" → "nad"). Must stay identical to <c>compoundSlug()</c> in
+    /// <c>frontend/src/lib/compoundSlug.ts</c>. <see cref="From"/> is unchanged so graph slugs
+    /// persisted by the worker keep resolving.
+    /// </summary>
+    public static string ForDossier(string? input) =>
+        From(input?.Replace("'", string.Empty).Replace("\u2019", string.Empty));
 }
