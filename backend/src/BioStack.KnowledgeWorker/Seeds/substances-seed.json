@@ -47166,20 +47166,49 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses glycine supplementation for performance and recovery without establishing a recommendation.",
-          "tier": "Unsupported",
+          "claim": "A 2024 review found glycine performance, recovery and sleep benefits rest mainly on cell and animal work and limited human data; it concluded more randomized human trials are needed.",
+          "tier": "Plausible Theory",
           "confidence": "low",
           "sources": [
-            "src:glycine"
+            "pubmed-39453231-glycine-perf"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Performance, sleep, and long-term safety data are heterogeneous."
+        "Performance, sleep, and long-term safety data are heterogeneous.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "glycine-performance",
+          "statement": "Glycine improves athletic performance and recovery.",
+          "population": "athletes and active adults",
+          "outcome": "performance, recovery and sleep",
+          "tier": "Plausible Theory",
+          "qualifier": null,
+          "note": "Unproven. Support comes mostly from cell and animal studies. A 2024 review called for randomized human trials before any recommendation.",
+          "sources": [
+            "pubmed-39453231-glycine-perf"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Plausible Theory",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "pubmed-39453231-glycine-perf"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -47189,7 +47218,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/39453231/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-39453231-glycine-perf"
         }
       ],
       "curationNotes": [
@@ -48255,20 +48285,75 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis of randomized trials examines cognitive and affective effects of L-theanine.",
+          "claim": "A meta-analysis of 31 RCTs found a single dose of L-theanine improved choice reaction time in healthy adults; stress reduction was modest and driven by high-risk-of-bias studies, and anxiety effects were inconsistent.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:l-theanine"
+            "pubmed-42410082-theanine-ma"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Effect sizes, caffeine co-exposure, and long-term safety are not settled."
+        "Effect sizes, caffeine co-exposure, and long-term safety are not settled.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "l-theanine-attention",
+          "statement": "L-theanine sharpens attention.",
+          "population": "healthy adults",
+          "outcome": "reaction time and attention",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Short term, likely. A meta-analysis of 31 trials found faster choice reaction time after a single dose.",
+          "sources": [
+            "pubmed-42410082-theanine-ma"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-42410082-theanine-ma"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "l-theanine-anxiety",
+          "statement": "L-theanine treats anxiety.",
+          "population": "healthy and clinical populations",
+          "outcome": "anxiety",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. Anxiety effects were inconsistent and mostly not significant; stress effects were modest and came mainly from studies at high risk of bias.",
+          "sources": [
+            "pubmed-42410082-theanine-ma"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "pubmed-42410082-theanine-ma"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -48278,7 +48363,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/42410082/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-42410082-theanine-ma"
         }
       ],
       "curationNotes": [
@@ -49204,20 +49290,75 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review examines tyrosine under stress or cognitive demand without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2015 review concluded tyrosine may enhance cognitive performance in short-term stressful or demanding situations, with limited potential for treating clinical disorders or boosting exercise.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:l-tyrosine"
+            "pubmed-26424423-tyrosine"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Which stressors, populations, and durations show an effect is not settled."
+        "Which stressors, populations, and durations show an effect is not settled.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "l-tyrosine-stress-cognition",
+          "statement": "L-tyrosine helps you think under acute stress.",
+          "population": "healthy adults in stressful or demanding tasks",
+          "outcome": "short-term cognitive performance",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A review found benefits in short-term stressful or demanding situations, but study results vary.",
+          "sources": [
+            "pubmed-26424423-tyrosine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-26424423-tyrosine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "l-tyrosine-exercise",
+          "statement": "L-tyrosine boosts exercise performance.",
+          "population": "active adults",
+          "outcome": "exercise performance",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Probably not. The same review judged its potential for exercise minimal.",
+          "sources": [
+            "pubmed-26424423-tyrosine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "pubmed-26424423-tyrosine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -49227,7 +49368,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/26424423/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-26424423-tyrosine"
         }
       ],
       "curationNotes": [
@@ -49476,21 +49618,76 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines L-tryptophan and mood without establishing a treatment recommendation.",
+          "claim": "A systematic review of 11 RCTs in healthy adults found 4 showing less anxiety or better mood with tryptophan; effects on aggression were not seen.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:l-tryptophan"
+            "pubmed-32272859-trp-mood"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Mood effect size, product quality, and serotonergic interaction risk are not settled."
+        "Mood effect size, product quality, and serotonergic interaction risk are not settled.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Historical product-contamination harm is distinct from the amino acid itself and still affects safety interpretation."
+      ],
+      "publicClaims": [
+        {
+          "id": "l-tryptophan-mood",
+          "statement": "L-tryptophan improves mood.",
+          "population": "healthy adults",
+          "outcome": "mood and anxiety",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. Four of 11 trials in healthy adults found less anxiety or better mood. Evidence in depression is weaker.",
+          "sources": [
+            "pubmed-32272859-trp-mood"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-32272859-trp-mood"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "l-tryptophan-safe-with-ssri",
+          "statement": "Tryptophan is safe to combine with antidepressants.",
+          "population": "people taking serotonergic drugs",
+          "outcome": "serotonin syndrome",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Combined with serotonin-boosting drugs it can rarely cause serotonin syndrome. Supplements were also linked to the 1989 eosinophilia-myalgia syndrome outbreak.",
+          "sources": [
+            "fernstrom-2012-jnutr-trp-side-effects"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fernstrom-2012-jnutr-trp-side-effects"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -49501,7 +49698,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/32272859/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-32272859-trp-mood"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects and side effects associated with the non-nutritional use of tryptophan by humans (J Nutr 2012)",
+          "publisher": "The Journal of Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23077193/",
+          "publishedAt": "2012-12-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fernstrom-2012-jnutr-trp-side-effects"
         }
       ],
       "curationNotes": [
@@ -49751,21 +49958,51 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses 5-HTP physiology and toxicology without establishing a treatment indication.",
+          "claim": "A Cochrane review found only 2 of 108 trials (64 patients) of adequate quality; they suggested 5-HTP or tryptophan beat placebo for depression, but evidence was insufficient to be conclusive.",
           "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:5-htp"
+            "shaw-2002-cochrane-trp-5htp-depression",
+            "pubmed-33375373-5htp-review"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Clinical efficacy, product quality, and interaction magnitude are not established."
+        "Clinical efficacy, product quality, and interaction magnitude are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Mood claims are broader than the toxicology-focused evidence cited here."
+      ],
+      "publicClaims": [
+        {
+          "id": "5-htp-depression",
+          "statement": "5-HTP is a proven natural antidepressant.",
+          "population": "adults with depression",
+          "outcome": "depressive symptoms",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not proven. Only 2 small trials were of adequate quality. Reviewers said proven antidepressants should come first and safety needs study.",
+          "sources": [
+            "shaw-2002-cochrane-trp-5htp-depression"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "shaw-2002-cochrane-trp-5htp-depression"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -49776,7 +50013,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/33375373/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-33375373-5htp-review"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Tryptophan and 5-hydroxytryptophan for depression (Cochrane Database Syst Rev 2002)",
+          "publisher": "Cochrane Database of Systematic Reviews (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/11869656/",
+          "publishedAt": "2002-01-21T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "shaw-2002-cochrane-trp-5htp-depression"
         }
       ],
       "curationNotes": [
@@ -51386,20 +51633,49 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines taurine and lipid or glycemic markers without establishing a treatment recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A meta-analysis of 9 RCTs in adults with overweight or obesity found long-term taurine lowered triglycerides, total cholesterol and fasting insulin.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:taurine"
+            "pubmed-39796489-taurine-ma"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Clinical-event outcomes, product context, and long-term safety are not established."
+        "Clinical-event outcomes, product context, and long-term safety are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "taurine-metabolic",
+          "statement": "Taurine improves blood sugar and lipids in obesity.",
+          "population": "adults with overweight or obesity",
+          "outcome": "lipids, glycemia and insulin sensitivity",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A meta-analysis of 9 small trials found lower triglycerides, cholesterol and fasting insulin. Results varied across studies.",
+          "sources": [
+            "pubmed-39796489-taurine-ma"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-39796489-taurine-ma"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -51409,7 +51685,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/39796489/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-39796489-taurine-ma"
         }
       ],
       "curationNotes": [
@@ -55226,21 +55503,81 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines omega-3 fatty acids in cardiovascular prevention without establishing a supplement recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2022 meta-analysis of 15 RCTs found small reductions in major cardiovascular events, heart attack and cardiovascular death, mainly from prescription EPA ethyl ester, and a higher risk of atrial fibrillation; no differences in stroke or all-cause death.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:omega-3-fatty-acids"
+            "pubmed-36103100-omega3-cvd-ma",
+            "ods-omega3fattyacids-hp"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "EPA-only versus EPA+DHA products, atrial-fibrillation risk, and supplement-versus-drug status are unresolved."
+        "EPA-only versus EPA+DHA products, atrial-fibrillation risk, and supplement-versus-drug status are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Cardiovascular-event findings depend on formulation and are not transferable to every fish-oil product."
+      ],
+      "publicClaims": [
+        {
+          "id": "omega-3-heart",
+          "statement": "Fish oil supplements prevent heart disease.",
+          "population": "adults with or at risk of cardiovascular disease",
+          "outcome": "cardiovascular events",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Modestly, and mostly for prescription EPA. A meta-analysis of 15 trials found small drops in major events and heart attacks, but no change in stroke or overall deaths.",
+          "sources": [
+            "pubmed-36103100-omega3-cvd-ma",
+            "ods-omega3fattyacids-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-36103100-omega3-cvd-ma",
+                "ods-omega3fattyacids-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "omega-3-no-risk",
+          "statement": "Omega-3 supplements carry no heart risks.",
+          "population": "adults with or at high risk of cardiovascular disease",
+          "outcome": "atrial fibrillation",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. High-dose omega-3s slightly raised atrial fibrillation risk in large trials.",
+          "sources": [
+            "pubmed-36103100-omega3-cvd-ma",
+            "ods-omega3fattyacids-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "pubmed-36103100-omega3-cvd-ma",
+                "ods-omega3fattyacids-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -55251,7 +55588,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/36103100/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-36103100-omega3-cvd-ma"
         },
         {
           "sourceType": "regulator",
@@ -55259,7 +55597,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-omega3fattyacids-hp"
         }
       ],
       "curationNotes": [
@@ -55508,20 +55847,76 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses choline as an essential nutrient without establishing a supplement recommendation.",
+          "claim": "High choline intakes are associated with fishy body odor, vomiting, sweating, low blood pressure and liver toxicity, and little research supports choline for slowing dementia, per NIH ODS.",
           "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:choline"
+            "ods-choline-hp",
+            "pubmed-19906248-choline"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Cognitive outcomes and person-specific upper limits are not established by this record."
+        "Cognitive outcomes and person-specific upper limits are not established by this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "choline-dementia",
+          "statement": "Choline supplements slow memory decline or Alzheimer disease.",
+          "population": "older adults and people with Alzheimer disease",
+          "outcome": "cognitive decline",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. NIH ODS says little research supports this; links come mainly from observational studies.",
+          "sources": [
+            "ods-choline-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "ods-choline-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "choline-harmless",
+          "statement": "Extra choline is harmless.",
+          "population": "adults taking choline supplements",
+          "outcome": "adverse effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. High intakes are linked to fishy body odor, vomiting, sweating, low blood pressure and liver toxicity.",
+          "sources": [
+            "ods-choline-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-choline-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -55531,7 +55926,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/19906248/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-19906248-choline"
         },
         {
           "sourceType": "regulator",
@@ -55539,7 +55935,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-choline-hp"
         }
       ],
       "curationNotes": [
@@ -55788,20 +56185,50 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed scoping review examines pantothenic acid evidence without establishing a treatment recommendation.",
+          "claim": "Pantethine, a form of pantothenic acid, lowered lipids in small trials at large amounts, but pantothenic acid itself does not appear to have the same effect, per NIH ODS.",
           "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:pantothenic-acid"
+            "ods-pantothenicacid-hp",
+            "pubmed-38187802-pa-nnr"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Deficiency is rare, and clinical outcome data remain limited."
+        "Deficiency is rare, and clinical outcome data remain limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "pantothenic-acid-cholesterol",
+          "statement": "Pantothenic acid (vitamin B5) lowers cholesterol.",
+          "population": "adults with high cholesterol",
+          "outcome": "blood lipids",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown for plain B5. Small trials of the related form pantethine found lower lipids, but pantothenic acid itself does not appear to work the same way.",
+          "sources": [
+            "ods-pantothenicacid-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "ods-pantothenicacid-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -55811,7 +56238,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38187802/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38187802-pa-nnr"
         },
         {
           "sourceType": "regulator",
@@ -55819,7 +56247,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-pantothenicacid-hp"
         }
       ],
       "curationNotes": [
@@ -56068,21 +56497,56 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed clinical review discusses thiamine deficiency disorders without establishing an oral supplement plan.",
-          "tier": "Unsupported",
+          "claim": "Supplemental thiamin, often given by injection, treats thiamin deficiency (beriberi); chronic alcohol use disorder is the most common cause of deficiency in industrialized countries and raises Wernicke-Korsakoff risk, per NIH ODS.",
+          "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:thiamine"
+            "ods-thiamin-hp",
+            "pubmed-33305487-thiamine-dd"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "This record does not establish who has deficiency or which route of replacement is appropriate."
+        "This record does not establish who has deficiency or which route of replacement is appropriate.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Oral supplement use and medical deficiency treatment are different contexts."
+      ],
+      "publicClaims": [
+        {
+          "id": "thiamine-deficiency",
+          "statement": "Thiamine treats thiamine deficiency, including beriberi.",
+          "population": "people with thiamine deficiency",
+          "outcome": "deficiency disorders",
+          "tier": "Established",
+          "qualifier": {
+            "population": "people with diagnosed thiamine deficiency",
+            "outcome": "treating deficiency"
+          },
+          "note": "Yes. Supplemental thiamine, often by injection, quickly cures beriberi. People with chronic alcohol use disorder are at highest risk of deficiency and Wernicke-Korsakoff syndrome.",
+          "sources": [
+            "ods-thiamin-hp",
+            "pubmed-33305487-thiamine-dd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ods-thiamin-hp",
+                "pubmed-33305487-thiamine-dd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -56093,7 +56557,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/33305487/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-33305487-thiamine-dd"
         },
         {
           "sourceType": "regulator",
@@ -56101,7 +56566,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-thiamin-hp"
         }
       ],
       "curationNotes": [
@@ -56353,17 +56819,46 @@
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:iodine"
+            "ods-iodine-hp"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Source re-linked 2026-10-25 to the NIH ODS record; it cited a placeholder id."
         }
       ],
       "evidenceGaps": [
-        "Who should avoid supplemental iodine, and whether a person is deficient, are not established by this fact sheet."
+        "Who should avoid supplemental iodine, and whether a person is deficient, are not established by this fact sheet.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Radiation-emergency iodide labeling is often misread as a nutritional supplement endorsement."
+      ],
+      "publicClaims": [
+        {
+          "id": "iodine-more-better",
+          "statement": "More iodine is always better for the thyroid.",
+          "population": "adults taking iodine supplements",
+          "outcome": "thyroid function",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Too much iodine can cause goiter, high TSH and hypothyroidism, the same problems as deficiency, and can trigger hyperthyroidism.",
+          "sources": [
+            "ods-iodine-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-iodine-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -56374,7 +56869,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-iodine-hp"
         }
       ],
       "curationNotes": [
@@ -56622,21 +57118,77 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses selenium and human health without establishing a prevention recommendation.",
-          "tier": "Unsupported",
+          "claim": "Randomized trials, including SELECT, found that selenium supplementation does not reduce prostate or other cancer risk; chronic excess causes selenosis, per NIH ODS.",
+          "tier": "Contradicted",
           "confidence": "low",
           "sources": [
-            "src:selenium"
+            "ods-selenium-hp",
+            "pubmed-22381456-selenium"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Prevention benefit and the exposure at which harm appears are not established for a person."
+        "Prevention benefit and the exposure at which harm appears are not established for a person.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Prevention discussions include both possible benefit and harm signals, which this record does not adjudicate."
+      ],
+      "publicClaims": [
+        {
+          "id": "selenium-cancer",
+          "statement": "Selenium supplements prevent cancer.",
+          "population": "adults, including men 50 and older",
+          "outcome": "cancer incidence",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Randomized trials, including SELECT in more than 35,000 men, found no reduction in prostate or other cancers.",
+          "sources": [
+            "ods-selenium-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-selenium-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "selenium-harmless",
+          "statement": "Extra selenium is harmless.",
+          "population": "adults taking selenium supplements",
+          "outcome": "selenosis",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Chronic high intake causes selenosis: hair and nail loss, garlic breath, rash, nausea, fatigue and nerve problems.",
+          "sources": [
+            "ods-selenium-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-selenium-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -56647,7 +57199,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/22381456/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-22381456-selenium"
         },
         {
           "sourceType": "regulator",
@@ -56655,7 +57208,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-selenium-hp"
         }
       ],
       "curationNotes": [
@@ -57243,21 +57797,79 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed review discusses vitamin E and cardiovascular disease without establishing a supplement recommendation.",
-          "tier": "Unsupported",
+          "claim": "Clinical trials have not shown that routine vitamin E supplements prevent cardiovascular disease; a meta-analysis linked vitamin E use to higher hemorrhagic stroke risk, per NIH ODS.",
+          "tier": "Contradicted",
           "confidence": "low",
           "sources": [
-            "src:vitamin-e"
+            "ods-vitamine-hp",
+            "pubmed-19451807-vite-cvd"
           ],
           "legacyTier": "Unknown",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Unknown)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Prevention benefit, bleeding risk, and person-specific upper limits are not established here."
+        "Prevention benefit, bleeding risk, and person-specific upper limits are not established here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Cardiovascular prevention signals conflict with antioxidant marketing."
+      ],
+      "publicClaims": [
+        {
+          "id": "vitamin-e-heart",
+          "statement": "Vitamin E supplements prevent heart disease.",
+          "population": "middle-aged and older adults",
+          "outcome": "cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Trials have not shown fewer heart attacks, strokes or cardiovascular deaths. Vitamin E use was linked to more hemorrhagic strokes.",
+          "sources": [
+            "ods-vitamine-hp",
+            "pubmed-19451807-vite-cvd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitamine-hp",
+                "pubmed-19451807-vite-cvd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-e-prostate",
+          "statement": "Vitamin E helps prevent prostate cancer.",
+          "population": "healthy men 50 and older",
+          "outcome": "prostate cancer",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The SELECT trial was stopped when vitamin E did not prevent prostate cancer. Later follow-up found a 17% higher risk in men who took it.",
+          "sources": [
+            "ods-vitamine-hp"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-vitamine-hp"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -57268,7 +57880,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/19451807/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-19451807-vite-cvd"
         },
         {
           "sourceType": "regulator",
@@ -57276,7 +57889,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-vitamine-hp"
         }
       ],
       "curationNotes": [
