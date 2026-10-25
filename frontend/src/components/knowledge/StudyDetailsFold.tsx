@@ -10,7 +10,7 @@ export const STUDY_DETAILS_TOP_LINE =
 
 export function StudyDetailsFold({ children }: { children: ReactNode }) {
   return (
-    <details data-testid="study-details-fold" className="rounded-xl border border-white/10 bg-white/[0.02] p-3 group">
+    <details id="study-details" data-testid="study-details-fold" className="rounded-xl border border-white/10 bg-white/[0.02] p-3 group">
       <summary className="cursor-pointer text-sm font-medium text-white/75 focus-visible:outline-2 focus-visible:outline-cyan-300">
         {STUDY_DETAILS_LABEL}
       </summary>
