@@ -16207,10 +16207,96 @@
       ],
       "evidenceGaps": [
         "Alternate forms often lack equal head-to-head outcome evidence versus monohydrate.",
-        "Long-term data in CKD populations remain limited."
+        "Long-term data in CKD populations remain limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing of superior creatine forms versus monohydrate frequently outpaces comparative evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "creatine-monohydrate-performance",
+          "statement": "Creatine improves strength and high-intensity exercise performance.",
+          "population": "healthy adults who train",
+          "outcome": "high-intensity performance and training gains",
+          "tier": "Established",
+          "qualifier": {
+            "population": "healthy exercising adults",
+            "outcome": "high-intensity, repeated-effort performance"
+          },
+          "note": "Yes. The ISSN position stand finds creatine consistently raises muscle creatine and improves high-intensity performance and training adaptations; NIH ODS reaches a similar view.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position",
+            "ods-exercise-athletic-performance"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "kreider-2017-jissn-creatine-position",
+                "ods-exercise-athletic-performance"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-monohydrate-hair-loss",
+          "statement": "Creatine causes hair loss.",
+          "population": "resistance-trained men",
+          "outcome": "DHT levels and hair health",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not supported. A 12-week randomized trial in resistance-trained men found no difference vs placebo in DHT, the DHT-to-testosterone ratio, or hair density and thickness.",
+          "sources": [
+            "lak-2025-jissn-creatine-hair-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "lak-2025-jissn-creatine-hair-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-monohydrate-unsafe",
+          "statement": "Creatine is unsafe for healthy people.",
+          "population": "healthy adults",
+          "outcome": "safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The ISSN position stand reports short- and long-term use is safe and well tolerated in healthy people. People with kidney disease should ask a clinician first.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "kreider-2017-jissn-creatine-position"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -16221,7 +16307,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-exercise-athletic-performance"
         },
         {
           "sourceType": "guideline",
@@ -16229,7 +16316,17 @@
           "publisher": "Journal of the International Society of Sports Nutrition",
           "url": "https://pubmed.ncbi.nlm.nih.gov/28615996/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "kreider-2017-jissn-creatine-position"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Does creatine cause hair loss? A 12-week randomized controlled trial (J Int Soc Sports Nutr 2025)",
+          "publisher": "Journal of the International Society of Sports Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+          "publishedAt": "2025-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lak-2025-jissn-creatine-hair-rct"
         }
       ],
       "curationNotes": [
@@ -16252,7 +16349,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 5,
+        "unit": "g",
+        "frequency": "once daily",
+        "duration": "12 weeks",
+        "route": "oral",
+        "population": "45 resistance-trained men aged 18-40",
+        "outcome": "no change in DHT or hair outcomes vs placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Does creatine cause hair loss? (J Int Soc Sports Nutr 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -16536,29 +16652,109 @@
           "tier": "Established",
           "confidence": "high",
           "sources": [
-            "ods-caffeine"
+            "guest-2021-jissn-caffeine-position",
+            "fda-spilling-beans-caffeine"
           ],
           "legacyTier": "Strong",
-          "gradeRationale": "Consistent human or authoritative evidence for the stated claim (was Strong)."
+          "gradeRationale": "Re-sourced 2026-10-25: the NIH ODS caffeine fact sheet URL returns 404."
         }
       ],
       "evidenceGaps": [
-        "Inter-individual CYP1A2 genetics and habitual use change response and withdrawal."
+        "Inter-individual CYP1A2 genetics and habitual use change response and withdrawal.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Energy-drink marketing can obscure total caffeine load from multiple sources."
+      ],
+      "publicClaims": [
+        {
+          "id": "caffeine-performance",
+          "statement": "Caffeine improves exercise performance.",
+          "population": "healthy exercising adults",
+          "outcome": "endurance, strength and sprint performance",
+          "tier": "Established",
+          "qualifier": {
+            "population": "healthy exercising adults",
+            "outcome": "acute performance, most consistently aerobic endurance"
+          },
+          "note": "Yes, in many but not all studies. The ISSN finds small to moderate benefits across many sports, with the most consistent gains in aerobic endurance; response varies by person.",
+          "sources": [
+            "guest-2021-jissn-caffeine-position"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "guest-2021-jissn-caffeine-position"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "caffeine-moderate-safe",
+          "statement": "Moderate daily caffeine is safe for most healthy adults.",
+          "population": "healthy adults",
+          "outcome": "adverse effects",
+          "tier": "Established",
+          "qualifier": {
+            "population": "most healthy adults",
+            "outcome": "no general negative effects at moderate intake"
+          },
+          "note": "Yes for most adults. FDA cites a moderate daily amount as not generally linked to negative effects, but sensitivity varies, and pregnancy, medicines and some conditions change the picture.",
+          "sources": [
+            "fda-spilling-beans-caffeine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "fda-spilling-beans-caffeine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "caffeine-pure-powder",
+          "statement": "Pure caffeine powder is a safe way to take caffeine.",
+          "population": "people buying bulk caffeine powders or liquids",
+          "outcome": "overdose risk",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says pure and highly concentrated caffeine products have been linked to at least two US deaths and are nearly impossible to measure safely with kitchen tools.",
+          "sources": [
+            "fda-pure-concentrated-caffeine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-pure-concentrated-caffeine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
-        {
-          "sourceType": "other",
-          "title": "Caffeine: Fact Sheet for Health Professionals",
-          "publisher": "NIH Office of Dietary Supplements",
-          "url": "https://ods.od.nih.gov/factsheets/Caffeine-HealthProfessional/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
         {
           "sourceType": "database",
           "title": "PubChem Compound Summary: Caffeine",
@@ -16569,11 +16765,30 @@
         },
         {
           "sourceType": "regulator",
-          "title": "NIH Office of Dietary Supplements fact sheet relevant to Caffeine",
-          "publisher": "NIH Office of Dietary Supplements",
-          "url": "https://ods.od.nih.gov/factsheets/Caffeine-HealthProfessional/",
+          "title": "Spilling the Beans: How Much Caffeine Is Too Much? (FDA Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-spilling-beans-caffeine"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Pure and Highly Concentrated Caffeine",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/food/dietary-supplement-ingredient-directory/pure-and-highly-concentrated-caffeine",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-pure-concentrated-caffeine"
+        },
+        {
+          "sourceType": "paper",
+          "title": "International society of sports nutrition position stand: caffeine and exercise performance (J Int Soc Sports Nutr 2021)",
+          "publisher": "Journal of the International Society of Sports Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33388079/",
+          "publishedAt": "2021-01-02T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "guest-2021-jissn-caffeine-position"
         }
       ],
       "curationNotes": [
@@ -16869,10 +17084,65 @@
         }
       ],
       "evidenceGaps": [
-        "Effect sizes depend on protocol, total work duration, and training status; not all performance domains benefit."
+        "Effect sizes depend on protocol, total work duration, and training status; not all performance domains benefit.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing sometimes overgeneralizes beta-alanine as universal endurance fuel rather than a context-specific buffering aid."
+      ],
+      "publicClaims": [
+        {
+          "id": "beta-alanine-performance",
+          "statement": "Beta-alanine improves high-intensity exercise.",
+          "population": "healthy exercising adults",
+          "outcome": "exercise performance",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Probably, for some efforts. The ISSN finds a few weeks of use raises muscle carnosine and improves performance, most clearly in all-out efforts lasting about 1 to 4 minutes.",
+          "sources": [
+            "pubmed-beta-alanine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-beta-alanine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "beta-alanine-tingling-harm",
+          "statement": "The tingling from beta-alanine means it is harmful.",
+          "population": "healthy adults taking beta-alanine",
+          "outcome": "safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The ISSN says tingling (paraesthesia) is the only reported side effect and that beta-alanine appears safe in healthy people; smaller split doses reduce the tingling.",
+          "sources": [
+            "pubmed-beta-alanine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "pubmed-beta-alanine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -17212,10 +17482,40 @@
         }
       ],
       "evidenceGaps": [
-        "Performance effect sizes vary by dose form (citrulline vs citrulline malate), training status, and study quality."
+        "Performance effect sizes vary by dose form (citrulline vs citrulline malate), training status, and study quality.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Sports-supplement marketing may overstate ergogenic benefits relative to mixed trial results."
+      ],
+      "publicClaims": [
+        {
+          "id": "l-citrulline-strength-power",
+          "statement": "Citrulline gives a big strength and power boost.",
+          "population": "healthy adults",
+          "outcome": "strength and power performance",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "The benefit is small. A meta-analysis of 12 studies (198 people) found a small effect vs placebo, and every single study's range crossed no effect.",
+          "sources": [
+            "trexler-2019-sportsmed-citrulline-meta"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "trexler-2019-sportsmed-citrulline-meta"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -17226,7 +17526,8 @@
           "publisher": "PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/#query=L-citrulline",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-04-20T00:00:00Z",
+          "id": "pubchem-citrulline"
         },
         {
           "sourceType": "paper",
@@ -17539,10 +17840,68 @@
         }
       ],
       "evidenceGaps": [
-        "Exercise-performance and weight-loss benefits in unselected adults remain mixed across trials; product form (L-carnitine vs acetyl-L-carnitine) confounds comparisons."
+        "Exercise-performance and weight-loss benefits in unselected adults remain mixed across trials; product form (L-carnitine vs acetyl-L-carnitine) confounds comparisons.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Supplement marketing often overstates fat-loss effects relative to controlled evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "l-carnitine-fat-loss",
+          "statement": "L-carnitine burns fat and causes weight loss.",
+          "population": "adults trying to lose weight",
+          "outcome": "weight loss",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "The effect is small and fades. A meta-analysis of 9 trials (911 people) found about 1.3 kg more weight loss than control, shrinking over time; NIH ODS calls the results equivocal.",
+          "sources": [
+            "pooyandjoo-2016-obesrev-carnitine-weight",
+            "nih-ods-carnitine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pooyandjoo-2016-obesrev-carnitine-weight",
+                "nih-ods-carnitine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "l-carnitine-performance",
+          "statement": "L-carnitine reliably improves exercise performance.",
+          "population": "healthy and active adults",
+          "outcome": "exercise performance",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not reliably. NIH ODS summarizes trials in athletes and active adults as mixed: some found gains, others found no effect on endurance, VO2max or performance.",
+          "sources": [
+            "nih-ods-carnitine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nih-ods-carnitine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -17553,7 +17912,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Carnitine-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "nih-ods-carnitine"
         },
         {
           "sourceType": "database",
@@ -17562,6 +17922,15 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/#query=L-carnitine",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-04-20T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis of randomized controlled trials (Obes Rev 2016)",
+          "publisher": "Obesity Reviews (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27335245/",
+          "publishedAt": "2016-10-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "pooyandjoo-2016-obesrev-carnitine-weight"
         }
       ],
       "curationNotes": [
@@ -17874,22 +18243,74 @@
       ],
       "evidenceGaps": [
         "Disease-treatment claims are often stronger in marketing than in consistent high-quality outcome evidence.",
-        "Form (ubiquinone vs ubiquinol) differences complicate cross-trial comparison."
+        "Form (ubiquinone vs ubiquinol) differences complicate cross-trial comparison.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Supplement marketing sometimes overstates heart-failure or statin-myalgia benefits relative to heterogeneous trial results."
+      ],
+      "publicClaims": [
+        {
+          "id": "coq10-heart-failure",
+          "statement": "CoQ10 helps people with heart failure.",
+          "population": "adults with moderate to severe chronic heart failure",
+          "outcome": "major cardiovascular events",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 2-year trial of 420 patients found fewer major cardiac events (15% vs 26%) on top of standard care, but no short-term change in symptoms or walking. NIH calls heart-failure evidence inconclusive.",
+          "sources": [
+            "mortensen-2014-jacchf-qsymbio",
+            "nccih-coenzyme-q10"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "mortensen-2014-jacchf-qsymbio",
+                "nccih-coenzyme-q10"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "coq10-statin-muscle-pain",
+          "statement": "CoQ10 fixes statin muscle pain.",
+          "population": "adults on statins with muscle symptoms",
+          "outcome": "muscle pain",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "Unclear. A 2025 meta-analysis of 7 small trials found less pain overall (4 positive, 3 not), while NIH says the overall evidence does not support it.",
+          "sources": [
+            "kovacic-2025-jns-coq10-statin-myopathy",
+            "nccih-coenzyme-q10"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "kovacic-2025-jns-coq10-statin-myopathy",
+                "nccih-coenzyme-q10"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
-        {
-          "sourceType": "regulator",
-          "title": "Coenzyme Q10 - Fact Sheet for Health Professionals",
-          "publisher": "NIH Office of Dietary Supplements",
-          "url": "https://ods.od.nih.gov/factsheets/CoenzymeQ10-HealthProfessional/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
         {
           "sourceType": "database",
           "title": "PubChem Compound Summary for Coenzyme Q10",
@@ -17897,6 +18318,33 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Coenzyme-Q10",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Coenzyme Q10 (NCCIH)",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/coenzyme-q10",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-coenzyme-q10"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The effect of coenzyme Q10 on morbidity and mortality in chronic heart failure: results from Q-SYMBIO (JACC Heart Fail 2014)",
+          "publisher": "JACC: Heart Failure (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25282031/",
+          "publishedAt": "2014-12-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "mortensen-2014-jacchf-qsymbio"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of coenzyme Q10 supplementation on myopathy in statin-treated patients: a systematic review and meta-analysis (J Nutr Sci 2025)",
+          "publisher": "Journal of Nutritional Science (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41158831/",
+          "publishedAt": "2025-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "kovacic-2025-jns-coq10-statin-myopathy"
         }
       ],
       "curationNotes": [
@@ -17919,7 +18367,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 100,
+        "unit": "mg",
+        "frequency": "three times daily",
+        "duration": "2 years",
+        "route": "oral",
+        "population": "420 adults with moderate to severe heart failure",
+        "outcome": "major cardiac events 15% vs 26% placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Q-SYMBIO (JACC Heart Fail 2014)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/25282031/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -18213,10 +18680,66 @@
         }
       ],
       "evidenceGaps": [
-        "Product bioavailability differs widely (standard vs phytosome salts); many trials are small or region-specific."
+        "Product bioavailability differs widely (standard vs phytosome salts); many trials are small or region-specific.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing sometimes equates berberine to prescription metformin-class therapy despite different regulatory status and evidence quality."
+      ],
+      "publicClaims": [
+        {
+          "id": "berberine-blood-sugar",
+          "statement": "Berberine lowers blood sugar in type 2 diabetes.",
+          "population": "adults with type 2 diabetes",
+          "outcome": "fasting glucose and HbA1c",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "A meta-analysis of 37 trials (3,048 patients, many from China) found lower fasting glucose and HbA1c, larger when baseline levels were higher. Trials vary in quality and products.",
+          "sources": [
+            "pubmed-berberine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-berberine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "berberine-natures-ozempic",
+          "statement": "Berberine works like Ozempic for weight loss.",
+          "population": "adults wanting weight loss",
+          "outcome": "weight loss vs GLP-1 drugs",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No trial comparing berberine with semaglutide was found; the evidence located covers modest blood-sugar changes, not GLP-1-scale weight loss.",
+          "sources": [
+            "pubmed-berberine"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "pubmed-berberine"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -18226,14 +18749,6 @@
           "title": "PubChem Compound Summary: Berberine",
           "publisher": "NCBI / PubChem",
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Berberine",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "regulator",
-          "title": "NIH Office of Dietary Supplements fact sheet relevant to Berberine",
-          "publisher": "NIH Office of Dietary Supplements",
-          "url": "https://ods.od.nih.gov/factsheets/Berberine-HealthProfessional/",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
@@ -18578,10 +19093,94 @@
         }
       ],
       "evidenceGaps": [
-        "Popular immune, mood, and general-wellness claims often exceed what controlled trials support in unselected populations."
+        "Popular immune, mood, and general-wellness claims often exceed what controlled trials support in unselected populations.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Optimal 25-hydroxyvitamin D targets and supplementation strategies remain debated across specialty guidelines."
+      ],
+      "publicClaims": [
+        {
+          "id": "vitamin-d3-bone",
+          "statement": "Vitamin D is needed for calcium absorption and bone health.",
+          "population": "general population",
+          "outcome": "calcium absorption and bone health",
+          "tier": "Established",
+          "qualifier": {
+            "population": "general population",
+            "outcome": "required nutrient for bone"
+          },
+          "note": "Yes. NIH ODS describes vitamin D as required for calcium absorption and bone growth and remodeling; deficiency causes rickets and osteomalacia.",
+          "sources": [
+            "ods-vitamin-d"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ods-vitamin-d"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-d3-cancer-heart",
+          "statement": "Vitamin D supplements prevent cancer and heart disease.",
+          "population": "healthy adults 50 and older",
+          "outcome": "invasive cancer and major cardiovascular events",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The VITAL trial (25,871 adults, about 5 years) found no drop in cancer or major cardiovascular events vs placebo.",
+          "sources": [
+            "manson-2019-nejm-vital"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "manson-2019-nejm-vital"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "vitamin-d3-fractures",
+          "statement": "Vitamin D supplements prevent fractures in healthy adults.",
+          "population": "healthy adults not selected for deficiency or osteoporosis",
+          "outcome": "fractures",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. In VITAL, vitamin D did not lower total, nonvertebral or hip fractures. People with deficiency or osteoporosis were not the focus.",
+          "sources": [
+            "leboff-2022-nejm-vital-fractures"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "leboff-2022-nejm-vital-fractures"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -18592,7 +19191,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-vitamin-d"
         },
         {
           "sourceType": "paper",
@@ -18600,7 +19200,17 @@
           "publisher": "New England Journal of Medicine / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/30415629/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "manson-2019-nejm-vital"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Supplemental Vitamin D and Incident Fractures in Midlife and Older Adults (N Engl J Med 2022)",
+          "publisher": "The New England Journal of Medicine (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35939577/",
+          "publishedAt": "2022-07-28T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "leboff-2022-nejm-vital-fractures"
         }
       ],
       "curationNotes": [
@@ -18623,7 +19233,26 @@
       "qualityFlags": [
         "classB-only"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 2000,
+        "unit": "IU",
+        "frequency": "once daily",
+        "duration": "median 5.3 years",
+        "route": "oral",
+        "population": "25,871 US adults (men 50+, women 55+)",
+        "outcome": "no reduction in cancer, cardiovascular events or fractures",
+        "sourceType": "trial",
+        "sourceTitle": "VITAL (N Engl J Med 2019; 2022)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30415629/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Established",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -18913,10 +19542,94 @@
         }
       ],
       "evidenceGaps": [
-        "Cardiovascular outcome benefits differ across omega-3 products and doses; do not extrapolate ethyl-ester triglyceride labeling to all fish-oil supplements."
+        "Cardiovascular outcome benefits differ across omega-3 products and doses; do not extrapolate ethyl-ester triglyceride labeling to all fish-oil supplements.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer fish-oil marketing often blurs prescription ethyl esters with low-dose supplements and overstates heart-benefit certainty."
+      ],
+      "publicClaims": [
+        {
+          "id": "omega-3-ee-triglycerides",
+          "statement": "Prescription omega-3 ethyl esters lower very high triglycerides.",
+          "population": "adults with severe hypertriglyceridemia",
+          "outcome": "triglyceride levels",
+          "tier": "Established",
+          "qualifier": {
+            "population": "adults with severe hypertriglyceridemia",
+            "outcome": "triglyceride lowering"
+          },
+          "note": "Yes. Lovaza is FDA-approved, with diet, to lower triglycerides in adults with severe hypertriglyceridemia.",
+          "sources": [
+            "dailymed-lovaza"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-lovaza"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "omega-3-ee-heart-attacks",
+          "statement": "Lovaza prevents heart attacks.",
+          "population": "adults with high triglycerides",
+          "outcome": "cardiovascular events",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The label says its effect on cardiovascular death and illness has not been determined.",
+          "sources": [
+            "dailymed-lovaza"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "dailymed-lovaza"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "omega-3-ee-no-rhythm-risk",
+          "statement": "Omega-3 ethyl esters have no heart-rhythm side effects.",
+          "population": "adults with atrial fibrillation or flutter",
+          "outcome": "atrial fibrillation recurrence",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The label warns of a possible link to more frequent atrial fibrillation or flutter episodes in people who already have it, especially in the first months.",
+          "sources": [
+            "dailymed-lovaza"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "dailymed-lovaza"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -18927,7 +19640,8 @@
           "publisher": "DailyMed",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=21cfa4ce-0b05-47ed-b268-339eb1b83b75",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-lovaza"
         }
       ],
       "curationNotes": [
@@ -26300,19 +27014,105 @@
           "tier": "Contradicted",
           "confidence": "moderate",
           "sources": [
-            "src:creatine"
+            "lak-2025-jissn-creatine-hair-rct"
           ],
           "legacyTier": "Moderate",
-          "gradeRationale": "Claim reports a negative or conflicting human finding."
+          "gradeRationale": "Source added 2026-10-25: the 2025 RCT the claim describes (PubMed 40265319) was not in the record."
         }
       ],
       "evidenceGaps": [
         "Benefits for pure endurance performance and broad cognitive/wellness marketing claims are less consistent than strength/power evidence.",
-        "Safety evidence in established CKD remains limited relative to healthy populations."
+        "Safety evidence in established CKD remains limited relative to healthy populations.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Online hair-loss claims persist despite controlled data not showing a clear DHT/hair-loss effect in the cited trial.",
         "Creatine vs creatine monohydrate naming overlap can confuse product comparisons."
+      ],
+      "publicClaims": [
+        {
+          "id": "creatine-performance",
+          "statement": "Creatine improves strength and high-intensity exercise performance.",
+          "population": "healthy adults who train",
+          "outcome": "high-intensity performance and training gains",
+          "tier": "Established",
+          "qualifier": {
+            "population": "healthy exercising adults",
+            "outcome": "high-intensity, repeated-effort performance"
+          },
+          "note": "Yes. The ISSN position stand finds creatine consistently raises muscle creatine and improves high-intensity performance and training adaptations; NIH ODS reaches a similar view.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position",
+            "ods-exercise-athletic-performance"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "kreider-2017-jissn-creatine-position",
+                "ods-exercise-athletic-performance"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-hair-loss",
+          "statement": "Creatine causes hair loss.",
+          "population": "resistance-trained men",
+          "outcome": "DHT levels and hair health",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not supported. A 12-week randomized trial in resistance-trained men found no difference vs placebo in DHT, the DHT-to-testosterone ratio, or hair density and thickness.",
+          "sources": [
+            "lak-2025-jissn-creatine-hair-rct"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "lak-2025-jissn-creatine-hair-rct"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "creatine-unsafe",
+          "statement": "Creatine is unsafe for healthy people.",
+          "population": "healthy adults",
+          "outcome": "safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. The ISSN position stand reports short- and long-term use is safe and well tolerated in healthy people. People with kidney disease should ask a clinician first.",
+          "sources": [
+            "kreider-2017-jissn-creatine-position"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "kreider-2017-jissn-creatine-position"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -26323,7 +27123,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-exercise-athletic-performance"
         },
         {
           "sourceType": "guideline",
@@ -26331,7 +27132,8 @@
           "publisher": "Journal of the International Society of Sports Nutrition",
           "url": "https://pubmed.ncbi.nlm.nih.gov/28615996/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "kreider-2017-jissn-creatine-position"
         },
         {
           "sourceType": "regulator",
@@ -26340,6 +27142,15 @@
           "url": "https://www.fda.gov/media/143525/download",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Does creatine cause hair loss? A 12-week randomized controlled trial (J Int Soc Sports Nutr 2025)",
+          "publisher": "Journal of the International Society of Sports Nutrition (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+          "publishedAt": "2025-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "lak-2025-jissn-creatine-hair-rct"
         }
       ],
       "curationNotes": [
@@ -26362,7 +27173,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled trial arm",
+        "amount": 5,
+        "unit": "g",
+        "frequency": "once daily",
+        "duration": "12 weeks",
+        "route": "oral",
+        "population": "45 resistance-trained men aged 18-40",
+        "outcome": "no change in DHT or hair outcomes vs placebo",
+        "sourceType": "trial",
+        "sourceTitle": "Does creatine cause hair loss? (J Int Soc Sports Nutr 2025)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40265319/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -30843,10 +31673,94 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "Form-specific efficacy and tolerability differ (glycinate vs citrate vs oxide); do not generalize claims across salts without form-specific evidence."
+        "Form-specific efficacy and tolerability differ (glycinate vs citrate vs oxide); do not generalize claims across salts without form-specific evidence.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Consumer sleep and anxiety claims vary widely by product marketing; controlled evidence strength is indication- and form-dependent."
+      ],
+      "publicClaims": [
+        {
+          "id": "magnesium-blood-pressure",
+          "statement": "Magnesium supplements lower blood pressure.",
+          "population": "adults with normal or high blood pressure",
+          "outcome": "blood pressure",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Slightly. A meta-analysis of 34 trials found about 2 points lower systolic pressure; NIH ODS calls the effect marginal.",
+          "sources": [
+            "zhang-2016-hypertension-mg-bp",
+            "ods-magnesium"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "zhang-2016-hypertension-mg-bp",
+                "ods-magnesium"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "magnesium-insomnia",
+          "statement": "Magnesium fixes insomnia.",
+          "population": "older adults with insomnia",
+          "outcome": "sleep onset and total sleep",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Early Evidence",
+          "qualifier": null,
+          "note": "Weak evidence. Three small trials (151 older adults) found people fell asleep about 17 minutes faster, with no clear change in total sleep; the reviewers rated the evidence low to very low quality.",
+          "sources": [
+            "mah-2021-bmccmt-mg-insomnia"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "mah-2021-bmccmt-mg-insomnia"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "magnesium-excess-harmless",
+          "statement": "Extra magnesium from supplements is harmless.",
+          "population": "adults taking magnesium supplements",
+          "outcome": "adverse effects",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. NIH ODS says high supplement doses can cause diarrhea, nausea and cramping, and very high doses can cause toxicity, including irregular heartbeat; there is a set upper limit for supplements.",
+          "sources": [
+            "ods-magnesium"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "ods-magnesium"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -30857,7 +31771,8 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-magnesium"
         },
         {
           "sourceType": "database",
@@ -30868,12 +31783,22 @@
           "lastCheckedAt": "2026-10-14T00:00:00Z"
         },
         {
-          "sourceType": "regulator",
-          "title": "NIH Office of Dietary Supplements fact sheet relevant to Magnesium",
-          "publisher": "NIH Office of Dietary Supplements",
-          "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Effects of Magnesium Supplementation on Blood Pressure: A Meta-Analysis of Randomized Double-Blind Placebo-Controlled Trials (Hypertension 2016)",
+          "publisher": "Hypertension (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27402922/",
+          "publishedAt": "2016-08-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "zhang-2016-hypertension-mg-bp"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Oral magnesium supplementation for insomnia in older adults: a Systematic Review & Meta-Analysis (BMC Complement Med Ther 2021)",
+          "publisher": "BMC Complementary Medicine and Therapies (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33865376/",
+          "publishedAt": "2021-04-17T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "mah-2021-bmccmt-mg-insomnia"
         }
       ],
       "curationNotes": [
@@ -31812,10 +32737,93 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [],
       "evidenceGaps": [
-        "Long-term safety evidence is limited. A preliminary non-peer-reviewed 2025 observational report linked chronic use in adults with insomnia to higher heart-failure incidence; association is not established as causal and should not be stated as proven risk pending peer-reviewed confirmation."
+        "Long-term safety evidence is limited. A preliminary non-peer-reviewed 2025 observational report linked chronic use in adults with insomnia to higher heart-failure incidence; association is not established as causal and should not be stated as proven risk pending peer-reviewed confirmation.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Marketing often overstates sleep benefits and understates pediatric ingestion risk and product-content variability."
+      ],
+      "publicClaims": [
+        {
+          "id": "melatonin-jet-lag",
+          "statement": "Melatonin helps with jet lag.",
+          "population": "air travelers crossing time zones",
+          "outcome": "jet lag symptoms",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. NIH NCCIH says small studies suggest melatonin may beat placebo for jet lag after eastward flights; evidence quality is low.",
+          "sources": [
+            "nccih-melatonin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-melatonin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "melatonin-insomnia",
+          "statement": "Melatonin is a proven treatment for chronic insomnia.",
+          "population": "adults with chronic insomnia",
+          "outcome": "sleep",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not established. NCCIH notes sleep-medicine and physician guidelines found not enough strong evidence to recommend it for chronic insomnia; CBT-I is the first-line treatment.",
+          "sources": [
+            "nccih-melatonin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-melatonin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "melatonin-label-accurate",
+          "statement": "Melatonin gummies contain the amount on the label.",
+          "population": "people buying over-the-counter melatonin gummies",
+          "outcome": "label accuracy",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Often not. A 2023 study found 22 of 25 gummy products were mislabeled, ranging from none detectable to about 3.5 times the labeled amount.",
+          "sources": [
+            "cohen-2023-jama-melatonin-gummies",
+            "nccih-melatonin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "cohen-2023-jama-melatonin-gummies",
+                "nccih-melatonin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31826,7 +32834,8 @@
           "publisher": "NIH National Center for Complementary and Integrative Health",
           "url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "nccih-melatonin"
         },
         {
           "sourceType": "regulator",
@@ -31851,6 +32860,15 @@
           "url": "https://www.fda.gov/food/dietary-supplements/information-consumers-using-dietary-supplements",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Quantity of Melatonin and CBD in Melatonin Gummies Sold in the US (JAMA 2023)",
+          "publisher": "JAMA (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37097362/",
+          "publishedAt": "2023-04-25T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "cohen-2023-jama-melatonin-gummies"
         }
       ],
       "curationNotes": [
