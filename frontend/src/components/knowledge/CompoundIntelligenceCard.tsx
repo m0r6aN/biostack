@@ -13,6 +13,7 @@ import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
 import { CompoundRecordDetails, NOT_AVAILABLE } from './CompoundRecordDetails';
 import { redactDoses } from '@/lib/doseRedaction';
+import { isAllowlistedSourceUrl } from '@/lib/outboundLinks';
 
 // Some pathway / benefit / interaction entries in the source data are short
 // tags ("cellular-energy"); others are full sentences copied from the
@@ -64,6 +65,8 @@ function referenceLink(value: string): { href: string; label: string } | null {
   try {
     const url = new URL(value);
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    // 06 §B: only allowlisted source domains become outbound links.
+    if (!isAllowlistedSourceUrl(url.href)) return null;
     const isPubMedSearch = url.hostname === 'pubmed.ncbi.nlm.nih.gov' && url.searchParams.has('term');
     return { href: url.href, label: isPubMedSearch ? `PubMed search: ${url.searchParams.get('term') || 'query'}` : value };
   } catch {

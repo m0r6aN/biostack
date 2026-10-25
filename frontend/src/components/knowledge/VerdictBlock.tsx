@@ -4,6 +4,8 @@ import { useState } from 'react';
 import type { KnowledgeEntry } from '@/lib/types';
 import { displayVerdict, formatAsOf, headlineClaim, isPublished, shareText } from '@/lib/claimVerdicts';
 import { HYPE_METHOD_HREF, VerdictChip } from './PublicClaimsPanel';
+import { cardImageUrl } from '@/lib/verdictCard';
+import { compoundSlug } from '@/lib/compoundSlug';
 
 export const VERDICT_FOOTNOTE = 'A verdict describes the research, not what\u2019s right for you.';
 
@@ -16,11 +18,21 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
   const claims = entry.details?.publicClaims ?? [];
   const headline = headlineClaim(claims);
   const [shared, setShared] = useState('');
+  const [copied, setCopied] = useState(false);
   if (!headline) return null;
 
   const published = isPublished(headline);
   const verdict = displayVerdict(headline);
   const asOf = published ? formatAsOf(headline.publishedAt ?? headline.verifiedAt) : '';
+
+  async function onCopy() {
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}${path}`);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   async function onShare() {
     const url = typeof window === 'undefined' ? `https://biostack.cc${path}` : `${window.location.origin}${path}`;
@@ -45,11 +57,23 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold text-white">{entry.canonicalName}</h1>
           <p className="text-base text-white/85" data-testid="headline-claim">&ldquo;{headline.statement}&rdquo;</p>
+          <a href={`/knowledge/${compoundSlug(entry.canonicalName)}/claims/${headline.id}`} className="text-xs text-cyan-300 underline underline-offset-4">Claim page</a>
         </div>
-        <button type="button" onClick={onShare}
-          className="rounded-lg border border-white/20 px-3 py-1.5 text-xs font-medium text-white/85 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
-          {shared || 'Settle it'}
-        </button>
+        <div className="flex flex-wrap gap-2" data-testid="share-sheet">
+          <button type="button" onClick={onShare}
+            className="rounded-lg border border-white/20 px-3 py-1.5 text-xs font-medium text-white/85 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
+            {shared || 'Settle it'}
+          </button>
+          <button type="button" onClick={onCopy}
+            className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
+            {copied ? 'Copied' : 'Copy link'}
+          </button>
+          <a href={cardImageUrl('compound', compoundSlug(entry.canonicalName), headline.version, 'story')}
+            download={`${compoundSlug(entry.canonicalName)}-biostack-story.png`}
+            className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-cyan-300">
+            Story card
+          </a>
+        </div>
       </div>
 
       <div className="space-y-1.5">

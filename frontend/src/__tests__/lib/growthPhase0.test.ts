@@ -65,8 +65,8 @@ describe('dossier metadata', () => {
 
   it('points og:image at the generated card, versioned by review date', () => {
     const versioned = entry({ details: { lastReviewedAt: '2026-10-14T00:00:00Z' } as KnowledgeEntry['details'] });
-    expect(dossierCardUrl(versioned)).toBe('/og/knowledge/retatrutide?v=2026-10-14');
-    expect(dossierCardUrl(entry())).toBe('/og/knowledge/retatrutide');
+    expect(dossierCardUrl(versioned)).toBe('/og/compound/retatrutide?v=2026-10-14');
+    expect(dossierCardUrl(entry())).toBe('/og/compound/retatrutide');
 
     const metadata = createPublicPageMetadata({
       title: 't',
@@ -74,8 +74,8 @@ describe('dossier metadata', () => {
       path: '/knowledge/retatrutide',
       image: { url: dossierCardUrl(versioned), width: 1200, height: 630, alt: 'a' },
     });
-    expect(metadata.openGraph?.images).toEqual([{ url: '/og/knowledge/retatrutide?v=2026-10-14', width: 1200, height: 630, alt: 'a' }]);
-    expect(metadata.twitter?.images).toEqual(['/og/knowledge/retatrutide?v=2026-10-14']);
+    expect(metadata.openGraph?.images).toEqual([{ url: '/og/compound/retatrutide?v=2026-10-14', width: 1200, height: 630, alt: 'a' }]);
+    expect(metadata.twitter?.images).toEqual(['/og/compound/retatrutide?v=2026-10-14']);
   });
 });
 

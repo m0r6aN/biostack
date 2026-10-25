@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import { compoundSitemapEntries, type SitemapCompound } from '@/lib/sitemapEntries';
 import { absoluteSiteUrl } from '@/lib/site';
+import { CURATED_PAIRS, vsPath } from '@/lib/vsPairs';
 
 // Generated per request (cached for an hour) rather than at build time: the production build
 // runs without API access, which froze the sitemap at the 15 static routes and listed no
@@ -50,5 +51,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...STATIC_PATHS.map((path) => ({ url: absoluteSiteUrl(path || '/') })),
     ...compoundSitemapEntries(compounds),
+    // Only curated /vs pairs are indexable (growth Phase 4).
+    { url: absoluteSiteUrl('/vs') },
+    ...CURATED_PAIRS.map(([a, b]) => ({ url: absoluteSiteUrl(vsPath(a, b)) })),
   ];
 }

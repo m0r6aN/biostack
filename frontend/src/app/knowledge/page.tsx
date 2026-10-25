@@ -15,6 +15,7 @@ import { toSlug } from '@/lib/research/slugs';
 import { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import { LibraryGrowthLists } from '@/components/growth/LibraryGrowthLists';
 
 export default function KnowledgePage() {
   const { user, loading: authLoading } = useAuth();
@@ -128,6 +129,8 @@ export default function KnowledgePage() {
             Every dossier is graded by evidence strength and lists its sources. Search for something specific, or browse the full library below.
           </p>
         </div>
+
+        <LibraryGrowthLists />
 
         {/* ── Disclaimer ──────────────────────────────────────── */}
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-400/15 bg-amber-500/[0.06] text-amber-200/70 text-xs">

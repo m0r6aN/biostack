@@ -54,10 +54,15 @@ describe('Knowledge presentation', () => {
   });
 
   it('renders HTTP and HTTPS citations as links and all other references as text', () => {
-    const references = ['http://example.org/paper', 'https://example.org/review', 'A retained citation'];
+    const references = ['http://pubmed.ncbi.nlm.nih.gov/1/', 'https://www.nejm.org/doi/full/x', 'A retained citation'];
     show({ sourceReferences: references });
     expect(screen.getAllByRole('link')).toHaveLength(2);
     expect(screen.getByText('A retained citation').closest('a')).toBeNull();
+  });
+
+  it('does not link a reference outside the source-domain allowlist (06 §B)', () => {
+    show({ sourceReferences: ['https://www.peptidedeck.com/bpc-157'] });
+    expect(screen.queryAllByRole('link')).toHaveLength(0);
   });
 
   it.each(['javascript:alert(1)', 'data:text/html,test', 'file:///tmp/report', '/relative', 'https://user:password@example.org'])('does not activate unsafe or non-public reference %s', ref => {

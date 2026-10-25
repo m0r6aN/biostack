@@ -34,6 +34,17 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/tools', req.url), 308);
   }
 
+  // Growth Phase 4: /vs/{a}/{b} is alphabetical-canonical; the reverse order 301s (03 §4).
+  const vs = /^\/(vs|og\/vs|embed\/vs)\/([^/]+)\/([^/]+)(\/.*)?$/.exec(pathname);
+  if (vs) {
+    const [x, y] = [vs[2].toLowerCase(), vs[3].toLowerCase()].sort();
+    if (x !== vs[2] || y !== vs[3]) {
+      const target = new URL(`/${vs[1]}/${x}/${y}${vs[4] ?? ''}`, req.url);
+      target.search = req.nextUrl.search;
+      return NextResponse.redirect(target, 301);
+    }
+  }
+
   if (isPublicRoutePath(pathname)) {
     return NextResponse.next();
   }

@@ -5,6 +5,7 @@ import { tierKey, tierLabel } from '@/lib/evidenceTiers';
 import { PublicClaimsPanel } from './PublicClaimsPanel';
 import { StudyDetailsFold } from './StudyDetailsFold';
 import { redactDoses } from '@/lib/doseRedaction';
+import { isAllowlistedSourceUrl } from '@/lib/outboundLinks';
 
 /**
  * Full record detail for one compound: known vs unknown, dangers, doses found on both
@@ -28,6 +29,8 @@ function safeHref(value: string): string | null {
   try {
     const url = new URL(value);
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    // 06 §B: only allowlisted source domains become outbound links.
+    if (!isAllowlistedSourceUrl(url.href)) return null;
     return url.href;
   } catch {
     return null;
