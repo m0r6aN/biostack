@@ -115,7 +115,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
       ) : entry ? (
         <>
           <VerdictBlock entry={entry} path={`/knowledge/${encodeURIComponent(safeDecodeSlug(slug))}`} />
-          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" isSignedIn={Boolean(user)}
+          <CompoundIntelligenceCard entry={entry} surface="knowledge-detail" isSignedIn={Boolean(user)}
             titleAs={(entry.details?.publicClaims?.length ?? 0) > 0 ? 'h2' : 'h1'} />
           <HeadToHeadLinks name={entry.canonicalName} />
           <CompoundRelationshipsSection

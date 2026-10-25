@@ -383,7 +383,7 @@ Each step is a single, concrete action. Each step reveals a new layer of the pro
 
 ---
 
-## 9. Referral and Share Loop Ideas
+## 9. Share Loop Ideas
 
 ### What Is Shareable About a BioStack Protocol?
 
@@ -411,13 +411,10 @@ Encourage users to share their stack view links in relevant subreddits and Disco
 ### Community and Comparison Mechanics
 
 **Anonymous protocol benchmarks (future feature, not current):**
-If enough users opt in to anonymous data sharing, BioStack can surface aggregate patterns: "Users tracking [Compound] most commonly pair it with [Compound B]." This creates a discovery mechanic that drives Knowledge Base engagement and referral discussion.
+If enough users opt in to anonymous data sharing, BioStack can surface aggregate patterns: "Users tracking [Compound] most commonly pair it with [Compound B]." This creates a discovery mechanic that drives Knowledge Base engagement.
 
 **Community-driven evidence tier discussion:**
 Users who have strong views on compound evidence can be invited to submit notes or flag outdated research. This creates a contributor relationship that is more durable than pure consumption and generates word-of-mouth from users who feel ownership over the product's quality.
-
-**Referral program (simple, clean):**
-"Invite a friend who's serious about their protocol. They sign up, you both get [X months of Pro] free." No complex mechanics. No viral coefficient optimization theater. A straightforward bilateral reward for a genuine referral. Works best after a user has been active for 30+ days and genuinely values the product.
 
 ---
 

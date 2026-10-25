@@ -40,7 +40,7 @@ Two independent data concerns on the same page:
 │   ├── loading  → DossierSkeleton (existing)
 │   ├── error    → rose error card (existing)
 │   └── success  →
-│       <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
+│       <CompoundIntelligenceCard entry={entry} surface="knowledge-detail" />
 │       {entry loaded?
 │         <CompoundRelationshipsSection
 │           compoundName={entry.canonicalName}
@@ -179,7 +179,7 @@ apiClient.getKnowledgeEntry(safeDecodeSlug(slug))
 // Success render
 {entry ? (
   <>
-    <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
+    <CompoundIntelligenceCard entry={entry} surface="knowledge-detail" />
     <CompoundRelationshipsSection
       compoundName={entry.canonicalName}
       aliases={entry.aliases}

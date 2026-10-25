@@ -282,7 +282,7 @@ Observer (Free) requires no Stripe product. Handle in application logic.
   - `invoice.payment_succeeded` — confirm billing and log
 - **Metadata to store on Stripe Customer object:**
   - `app_user_id` (internal UUID)
-  - `signup_source` (organic / referral / etc.)
+  - `signup_source` (organic / shared link / etc.)
 
 ### Entitlement Mapping
 

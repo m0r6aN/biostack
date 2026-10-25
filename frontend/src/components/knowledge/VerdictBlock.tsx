@@ -1,5 +1,6 @@
 'use client';
 
+import { WatchButton } from '@/components/alerts/WatchButton';
 import { useState } from 'react';
 import type { KnowledgeEntry } from '@/lib/types';
 import { displayVerdict, formatAsOf, headlineClaim, isPublished, shareText } from '@/lib/claimVerdicts';

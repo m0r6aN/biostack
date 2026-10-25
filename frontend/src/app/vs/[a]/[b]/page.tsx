@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { VsLedger } from '@/components/vs/VsLedger';
 import { VsShare } from '@/components/vs/VsShare';
+import { WatchButton } from '@/components/alerts/WatchButton';
 import { fetchKnowledgeEntry } from '@/lib/knowledgeServer';
 import { createPublicPageMetadata } from '@/lib/site';
 import { isCuratedPair, rulingFor, vsAsOf, vsPath, vsSide } from '@/lib/vsPairs';
@@ -46,6 +47,7 @@ export default async function VsPage({ params }: PageProps) {
       <h1 className="text-2xl font-semibold text-white">{ea.canonicalName} vs {eb.canonicalName}</h1>
       <VsLedger a={ea} b={eb} left={left} right={right} ruling={ruling} curated={curated} />
       <VsShare a={ea.canonicalName} b={eb.canonicalName} path={vsPath(a, b)} />
+      <WatchButton targetType="vs" targetId={`${a}/${b}`} returnTo={vsPath(a, b)} />
       {asOf && <p className="text-xs text-white/45">Evidence as of {asOf}</p>}
       <p className="text-xs text-white/40">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
     </main>
