@@ -9963,10 +9963,101 @@
         }
       ],
       "evidenceGaps": [
-        "Unsupervised bodybuilding or post-cycle uses are not labeled indications and lack controlled evidence equivalent to oncology trials."
+        "Unsupervised bodybuilding or post-cycle uses are not labeled indications and lack controlled evidence equivalent to oncology trials.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Risk-benefit and duration decisions (e.g., adjuvant length) remain specialist-managed and are not summarized as consumer guidance here."
+      ],
+      "publicClaims": [
+        {
+          "id": "tamoxifen-breast-cancer-prevention",
+          "statement": "Tamoxifen lowers breast cancer risk in high-risk women.",
+          "population": "women at high risk of breast cancer",
+          "outcome": "invasive breast cancer incidence",
+          "tier": "Established",
+          "qualifier": {
+            "population": "women at high risk of breast cancer (NSABP P-1; FDA-labeled use)",
+            "outcome": "invasive breast cancer incidence vs placebo"
+          },
+          "note": "In the NSABP P-1 trial, tamoxifen cut invasive breast cancer risk by 49% vs placebo over about 69 months. This is an FDA-labeled use.",
+          "sources": [
+            "fisher-1998-jnci-nsabp-p1",
+            "dailymed-soltamox"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "fisher-1998-jnci-nsabp-p1",
+                "dailymed-soltamox"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tamoxifen-uterine-clot-risk",
+          "statement": "Tamoxifen raises the risk of uterine cancer and blood clots.",
+          "population": "women taking tamoxifen",
+          "outcome": "uterine cancer, stroke and pulmonary embolism",
+          "tier": "Established",
+          "qualifier": {
+            "population": "women in the NSABP P-1 prevention trial and the FDA-labeled population",
+            "outcome": "uterine malignancy and thromboembolic events"
+          },
+          "note": "Yes. The FDA label carries a boxed warning for uterine cancers, stroke and pulmonary embolism, including fatal cases; in P-1, endometrial cancer risk was about 2.5 times higher than with placebo.",
+          "sources": [
+            "dailymed-soltamox",
+            "fisher-1998-jnci-nsabp-p1"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-soltamox",
+                "fisher-1998-jnci-nsabp-p1"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "tamoxifen-pct",
+          "statement": "Tamoxifen restores natural testosterone after a steroid cycle.",
+          "population": "men after anabolic steroid use",
+          "outcome": "testosterone recovery",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No controlled trial in men coming off anabolic steroids was located, and this is not an FDA-labeled use.",
+          "sources": [
+            "dailymed-soltamox"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "dailymed-soltamox"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -9977,7 +10068,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e6ff055-590c-41e6-9530-1fdf04cdbd02",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-24T00:00:00Z"
+          "lastCheckedAt": "2026-10-24T00:00:00Z",
+          "id": "dailymed-soltamox"
         },
         {
           "sourceType": "paper",
@@ -9985,7 +10077,8 @@
           "publisher": "Journal of the National Cancer Institute / PubMed",
           "url": "https://pubmed.ncbi.nlm.nih.gov/9747868/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fisher-1998-jnci-nsabp-p1"
         }
       ],
       "curationNotes": [
@@ -10392,10 +10485,68 @@
       ],
       "evidenceGaps": [
         "Male infertility effectiveness is not established as a labeled claim.",
-        "PCT-after-steroid marketing claims are not validated as standard labeled care."
+        "PCT-after-steroid marketing claims are not validated as standard labeled care.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Widespread off-label male/PCT use versus explicit label limits creates mixed public messaging."
+      ],
+      "publicClaims": [
+        {
+          "id": "clomiphene-ovulation",
+          "statement": "Clomiphene helps women ovulate.",
+          "population": "women with ovulatory dysfunction seeking pregnancy",
+          "outcome": "ovulation and pregnancy",
+          "tier": "Established",
+          "qualifier": {
+            "population": "women with ovulatory dysfunction desiring pregnancy (FDA-labeled use)",
+            "outcome": "ovulation and pregnancy"
+          },
+          "note": "Yes. This is its FDA-labeled use. In the label trials about 30% of treated patients became pregnant; multiple pregnancies occurred in about 8% of reported pregnancies.",
+          "sources": [
+            "dailymed-clomid"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "dailymed-clomid"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "clomiphene-male-testosterone",
+          "statement": "Clomiphene raises testosterone in men.",
+          "population": "men with low testosterone",
+          "outcome": "testosterone levels",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "A meta-analysis of randomized trials found clomiphene or enclomiphene raised testosterone, LH and FSH vs placebo in hypogonadal men. Trial results varied widely, symptom benefits are less clear, and this is not an FDA-labeled use.",
+          "sources": [
+            "clomiphene-enclomiphene-male-meta-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "clomiphene-enclomiphene-male-meta-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -10406,7 +10557,8 @@
           "publisher": "DailyMed / U.S. National Library of Medicine",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2ca373c1-4dba-4126-8616-5c533d606fe5",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "dailymed-clomid"
         },
         {
           "sourceType": "review",
@@ -10415,6 +10567,15 @@
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12510335/",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Clomiphene or enclomiphene citrate for the treatment of male hypogonadism: a systematic review and meta-analysis of randomized controlled trials (Arch Endocrinol Metab 2025)",
+          "publisher": "Archives of Endocrinology and Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41066380/",
+          "publishedAt": "2025-10-09T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "clomiphene-enclomiphene-male-meta-2025"
         }
       ],
       "curationNotes": [
@@ -10734,10 +10895,70 @@
       ],
       "evidenceGaps": [
         "Off-label adult AAS-user gynecomastia protocols are not supported by controlled trials in that population.",
-        "Full interaction and monitoring details require the complete EVISTA label."
+        "Full interaction and monitoring details require the complete EVISTA label.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Bodybuilding forums promote self-directed raloxifene for gynecomastia while citing pediatric anecdotes that do not generalize; VTE risk is established in labeled postmenopausal use."
+      ],
+      "publicClaims": [
+        {
+          "id": "raloxifene-vertebral-fracture",
+          "statement": "Raloxifene prevents spine fractures.",
+          "population": "postmenopausal women with osteoporosis",
+          "outcome": "new vertebral fractures",
+          "tier": "Established",
+          "qualifier": {
+            "population": "postmenopausal women with osteoporosis (MORE, 3 years; FDA-labeled use)",
+            "outcome": "new vertebral fracture vs placebo"
+          },
+          "note": "In the 3-year MORE trial, new spine fractures occurred in 6.6% on the lower of two tested doses vs 10.1% on placebo. It did not reduce non-spine fractures, and it tripled the risk of blood clots.",
+          "sources": [
+            "ettinger-1999-jama-more",
+            "dailymed-evista-label"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "ettinger-1999-jama-more",
+                "dailymed-evista-label"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "raloxifene-gynecomastia",
+          "statement": "Raloxifene treats gynecomastia in steroid users.",
+          "population": "men using anabolic steroids",
+          "outcome": "breast tissue reduction",
+          "tier": "Anecdotal Signal",
+          "qualifier": null,
+          "note": "Only indirect evidence. The cited data come from a retrospective review of 38 adolescents with pubertal gynecomastia, not from adult steroid users, and this is not a labeled use.",
+          "sources": [
+            "lawrence-2004-jpediatr-pubertal-gynecomastia"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Anecdotal Signal",
+              "verdict": "THIN",
+              "sources": [
+                "lawrence-2004-jpediatr-pubertal-gynecomastia"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -10748,7 +10969,8 @@
           "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
           "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
           "publishedAt": null,
-          "lastCheckedAt": "2026-08-29T01:58:43Z"
+          "lastCheckedAt": "2026-08-29T01:58:43Z",
+          "id": "dailymed-evista-label"
         },
         {
           "sourceType": "other",
@@ -10790,6 +11012,15 @@
           "publishedAt": "2004-07-01T00:00:00Z",
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "lawrence-2004-jpediatr-pubertal-gynecomastia"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Reduction of vertebral fracture risk in postmenopausal women with osteoporosis treated with raloxifene: MORE 3-year randomized trial (JAMA 1999)",
+          "publisher": "JAMA (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10517716/",
+          "publishedAt": "1999-08-18T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ettinger-1999-jama-more"
         }
       ],
       "curationNotes": [
@@ -11168,10 +11399,67 @@
       ],
       "evidenceGaps": [
         "No approved US product label is attached in current provenance.",
-        "Long-term comparative safety versus testosterone therapy needs ongoing specialist literature review."
+        "Long-term comparative safety versus testosterone therapy needs ongoing specialist literature review.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Compounded enclomiphene is widely marketed for men while regulatory approval status remains a critical boundary for readers."
+      ],
+      "publicClaims": [
+        {
+          "id": "enclomiphene-testosterone",
+          "statement": "Enclomiphene raises testosterone in men.",
+          "population": "men with secondary hypogonadism",
+          "outcome": "testosterone, LH and FSH",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Small studies and a meta-analysis found enclomiphene raised testosterone into the normal range while raising LH and FSH, unlike testosterone gel. Long-term outcomes are not established.",
+          "sources": [
+            "wiehle-2013-enclomiphene-pkpd",
+            "clomiphene-enclomiphene-male-meta-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "wiehle-2013-enclomiphene-pkpd",
+                "clomiphene-enclomiphene-male-meta-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "enclomiphene-preserves-fertility",
+          "statement": "Enclomiphene raises testosterone without hurting fertility.",
+          "population": "men with secondary hypogonadism",
+          "outcome": "sperm production",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Early data suggest it does not suppress the hormones that drive sperm production the way testosterone therapy does, but fertility outcomes have not been tested in large trials.",
+          "sources": [
+            "wiehle-2013-enclomiphene-pkpd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "wiehle-2013-enclomiphene-pkpd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -11179,10 +11467,11 @@
         {
           "sourceType": "paper",
           "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study",
-          "publisher": "PubMed Central",
+          "publisher": "BJU International (via PubMed Central)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "publishedAt": "2013-07-12T00:00:00Z",
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "wiehle-2013-enclomiphene-pkpd"
         },
         {
           "sourceType": "review",
@@ -11191,6 +11480,15 @@
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Clomiphene or enclomiphene citrate for the treatment of male hypogonadism: a systematic review and meta-analysis of randomized controlled trials (Arch Endocrinol Metab 2025)",
+          "publisher": "Archives of Endocrinology and Metabolism (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41066380/",
+          "publishedAt": "2025-10-09T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "clomiphene-enclomiphene-male-meta-2025"
         }
       ],
       "curationNotes": [
@@ -11213,7 +11511,26 @@
       "qualityFlags": [
         "agent-reviewed"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized pharmacodynamic study arm (highest dose)",
+        "amount": 25,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "6 weeks",
+        "route": "oral",
+        "population": "men with secondary hypogonadism",
+        "outcome": "mean total testosterone about 604 ng/dL at day 42",
+        "sourceType": "trial",
+        "sourceTitle": "Testosterone Restoration by Enclomiphene Citrate (2013)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23875626/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -11492,40 +11809,120 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "Ostarine has evidence relevant to regulatory safety warning reference.",
+          "claim": "Ostarine (enobosarm) is not FDA-approved. FDA says SARMs cannot be legally marketed as dietary supplements or drugs and are associated with serious health problems including liver injury and increased heart attack or stroke risk.",
           "tier": "Established",
           "confidence": "low",
           "sources": [
-            "src:ostarine"
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Regulatory or label fact backed by an authoritative source (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25; the earlier FDA SARM pages no longer resolve (404) and were replaced with live FDA pages."
         }
       ],
       "evidenceGaps": [
-        "No FDA-approved indication; long-term safety of consumer SARM products is not established."
+        "No FDA-approved indication; long-term safety of consumer SARM products is not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Sports-supplement vendors market ostarine as a legal alternative to steroids despite regulator warnings and anti-doping bans."
+      ],
+      "publicClaims": [
+        {
+          "id": "ostarine-lean-mass",
+          "statement": "Ostarine builds lean muscle.",
+          "population": "older adults and people with cancer",
+          "outcome": "lean body mass",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Two phase 2 trials, 12 weeks in 120 older adults and about 16 weeks in people with cancer, found small lean-mass gains vs placebo. No trial tests it in young lifters, and it is not approved for any use.",
+          "sources": [
+            "dalton-2011-jcsm-enobosarm",
+            "dobs-2013-lancetonc-enobosarm-cancer"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "dalton-2011-jcsm-enobosarm",
+                "dobs-2013-lancetonc-enobosarm-cancer"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ostarine-legal-supplement",
+          "statement": "Ostarine is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
       "sourceRecords": [
         {
           "sourceType": "regulator",
-          "title": "FDA regulator warning for Ostarine",
-          "publisher": "FDA",
-          "url": "https://www.fda.gov/drugs/medication-health-fraud/selective-androgen-receptor-modulators-sarms",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         },
         {
           "sourceType": "regulator",
-          "title": "FDA warns of dangers associated with unapproved SARMs",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
           "publisher": "U.S. Food and Drug Administration",
-          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-dangerous-and-potentially-life-threatening-side-effects-experimental-androgen-receptor",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The SARM GTx-024 (enobosarm) improves lean body mass and physical function in healthy elderly men and postmenopausal women: phase II trial (J Cachexia Sarcopenia Muscle 2011)",
+          "publisher": "Journal of Cachexia, Sarcopenia and Muscle (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22031847/",
+          "publishedAt": "2011-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dalton-2011-jcsm-enobosarm"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of enobosarm on muscle wasting and physical function in patients with cancer: a double-blind, randomised controlled phase 2 trial (Lancet Oncol 2013)",
+          "publisher": "The Lancet Oncology (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23499390/",
+          "publishedAt": "2013-04-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "dobs-2013-lancetonc-enobosarm-cancer"
         }
       ],
       "curationNotes": [
@@ -11548,7 +11945,43 @@
       "qualityFlags": [
         "agent-review-2026-10-14"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 3,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "12 weeks",
+        "route": "oral",
+        "population": "120 healthy adults over 60 (men and postmenopausal women)",
+        "outcome": "lean body mass increase vs placebo (P<0.001)",
+        "sourceType": "trial",
+        "sourceTitle": "GTx-024 (enobosarm) phase II trial (J Cachexia Sarcopenia Muscle 2011)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22031847/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Phase 2 randomized trial arm",
+        "amount": 1,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "about 16 weeks",
+        "route": "oral",
+        "population": "159 adults with cancer",
+        "outcome": "median lean mass +1.5 kg (placebo no significant change)",
+        "sourceType": "trial",
+        "sourceTitle": "Enobosarm in patients with cancer (Lancet Oncol 2013)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23499390/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -11850,10 +12283,97 @@
         }
       ],
       "evidenceGaps": [
-        "Long-term human safety remains incompletely characterized; most consumer use is outside regulated trials."
+        "Long-term human safety remains incompletely characterized; most consumer use is outside regulated trials.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Sports-supplement and research-chem marketing frequently mislabels SARMs as legal supplements."
+      ],
+      "publicClaims": [
+        {
+          "id": "ligandrol-muscle",
+          "statement": "Ligandrol (LGD-4033) builds muscle.",
+          "population": "healthy young men",
+          "outcome": "lean body mass",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "One 21-day placebo-controlled study of 76 men found dose-dependent lean-mass gains. Strength and health outcomes were not shown, and longer trials were never published.",
+          "sources": [
+            "basaria-2013-jgerontol-lgd4033"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "basaria-2013-jgerontol-lgd4033"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ligandrol-no-side-effects",
+          "statement": "Ligandrol has no side effects.",
+          "population": "people using LGD-4033",
+          "outcome": "hormones and cholesterol",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Even in that 3-week study it lowered testosterone and HDL (\"good\") cholesterol in a dose-dependent way. FDA links SARMs to liver injury and other serious problems.",
+          "sources": [
+            "basaria-2013-jgerontol-lgd4033",
+            "fda-sarms-teens-consumer-update"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "basaria-2013-jgerontol-lgd4033",
+                "fda-sarms-teens-consumer-update"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ligandrol-legal-supplement",
+          "statement": "Ligandrol is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "fda-warning-letter-sarms-america-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "fda-warning-letter-sarms-america-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -11872,7 +12392,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         },
         {
           "sourceType": "regulator",
@@ -11881,6 +12402,33 @@
           "url": "https://www.fda.gov/drugs/medication-health-fraud/selective-androgen-receptor-modulators-sarms",
           "publishedAt": "2024-01-01T00:00:00Z",
           "lastCheckedAt": "2026-04-20T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The safety, pharmacokinetics, and effects of LGD-4033 in healthy young men (J Gerontol A Biol Sci Med Sci 2013)",
+          "publisher": "Journals of Gerontology Series A (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+          "publishedAt": "2013-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "basaria-2013-jgerontol-lgd4033"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warning Letter: Dynamic Health Group dba SARMs America (MARCS-CMS 719257), December 12, 2025",
+          "publisher": "U.S. Food and Drug Administration (warning letter)",
+          "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/dynamic-health-group-dba-sarms-america-719257-12122025",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-warning-letter-sarms-america-2025"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -11901,7 +12449,60 @@
       "needsReview": false,
       "reviewReasons": [],
       "qualityFlags": []
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled study arm",
+        "amount": 0.1,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "21 days",
+        "route": "oral",
+        "population": "76 healthy men aged 21-50",
+        "outcome": "dose-dependent lean mass gain; testosterone and HDL suppressed",
+        "sourceType": "trial",
+        "sourceTitle": "LGD-4033 in healthy young men (J Gerontol A Biol Sci Med Sci 2013)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled study arm",
+        "amount": 0.3,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "21 days",
+        "route": "oral",
+        "population": "76 healthy men aged 21-50",
+        "outcome": "dose-dependent lean mass gain; testosterone and HDL suppressed",
+        "sourceType": "trial",
+        "sourceTitle": "LGD-4033 in healthy young men (J Gerontol A Biol Sci Med Sci 2013)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      },
+      {
+        "side": "study",
+        "context": "Randomized placebo-controlled study arm",
+        "amount": 1.0,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "21 days",
+        "route": "oral",
+        "population": "76 healthy men aged 21-50",
+        "outcome": "dose-dependent lean mass gain; testosterone and HDL suppressed",
+        "sourceType": "trial",
+        "sourceTitle": "LGD-4033 in healthy young men (J Gerontol A Biol Sci Med Sci 2013)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Early Evidence",
+        "notes": ""
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
@@ -12950,10 +13551,68 @@
         }
       ],
       "evidenceGaps": [
-        "All efficacy claims for muscle growth in humans remain anecdotal or marketing-based without controlled trials."
+        "All efficacy claims for muscle growth in humans remain anecdotal or marketing-based without controlled trials.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Preclinical osteoblast/myostatin-pathway findings are not a substitute for human outcome evidence."
+      ],
+      "publicClaims": [
+        {
+          "id": "yk-11-myostatin-muscle",
+          "statement": "YK-11 blocks myostatin and builds muscle.",
+          "population": "gym users",
+          "outcome": "muscle growth",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in cells. A lab study in mouse muscle cells found YK-11 raised follistatin, a myostatin blocker, and boosted muscle-cell development. No animal-outcome or human study shows muscle gain.",
+          "sources": [
+            "kanno-2013-bpb-yk11-follistatin"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "kanno-2013-bpb-yk11-follistatin"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "yk-11-legal-supplement",
+          "statement": "YK-11 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -12976,11 +13635,30 @@
         },
         {
           "sourceType": "paper",
-          "title": "Selective Androgen Receptor Modulator YK11 upregulates osteoblastic proliferation and differentiation (preclinical)",
-          "publisher": "PubMed",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/29246726/",
+          "title": "Selective androgen receptor modulator, YK11, regulates myogenic differentiation of C2C12 myoblasts by follistatin expression (Biol Pharm Bull 2013)",
+          "publisher": "Biological & Pharmaceutical Bulletin (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23995658/",
+          "publishedAt": "2013-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "kanno-2013-bpb-yk11-follistatin"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -22552,10 +23230,70 @@
         }
       ],
       "evidenceGaps": [
-        "Human long-term safety is not established; animal cancer findings drove program discontinuation."
+        "Human long-term safety is not established; animal cancer findings drove program discontinuation.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Bodybuilding marketing frames cardarine as a safe endurance SARM-like aid despite PPAR-delta mechanism, WADA alerts, and carcinogenicity data."
+      ],
+      "publicClaims": [
+        {
+          "id": "cardarine-safe-endurance",
+          "statement": "Cardarine (GW501516) is a safe endurance booster.",
+          "population": "athletes and gym users",
+          "outcome": "endurance and safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. WADA says its developer stopped research after serious toxicities appeared in preclinical studies and that it will never be approved. No human trial shows performance benefit.",
+          "sources": [
+            "wada-gw501516"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "wada-gw501516"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "cardarine-legal-supplement",
+          "statement": "Cardarine is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA's 2025 warning letter calls products sold as 'Cardarine GW501516' unapproved new drugs, and FDA says SARM-type bodybuilding products cannot be legally sold as supplements.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "fda-warning-letter-sarms-america-2025"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "fda-warning-letter-sarms-america-2025"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -22566,7 +23304,8 @@
           "publisher": "World Anti-Doping Agency",
           "url": "https://www.wada-ama.org/en/news/wada-issues-alert-gw501516",
           "publishedAt": "2013-03-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "wada-gw501516"
         },
         {
           "sourceType": "regulator",
@@ -22574,7 +23313,26 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/dynamic-health-group-dba-sarms-america-719257-12122025",
           "publishedAt": "2025-12-12T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-warning-letter-sarms-america-2025"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -29572,10 +30330,67 @@
       ],
       "evidenceGaps": [
         "No peer-reviewed human efficacy, PK, or safety trial specific to RAD-150/TLB-150.",
-        "Safety statements rely on SARM-class evidence, not RAD-150 RCTs."
+        "Safety statements rely on SARM-class evidence, not RAD-150 RCTs.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Vendor pages advertise human dosing and superiority versus RAD140 while research suppliers label material not for human use."
+      ],
+      "publicClaims": [
+        {
+          "id": "rad-150-muscle",
+          "statement": "RAD-150 builds muscle in people.",
+          "population": "gym users",
+          "outcome": "muscle mass",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No published human study of RAD-150 was located; claims come from sellers.",
+          "sources": [
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "rad-150-legal-supplement",
+          "statement": "RAD-150 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -29586,7 +30401,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         },
         {
           "sourceType": "other",
@@ -29603,6 +30419,15 @@
           "url": "https://pubchem.ncbi.nlm.nih.gov/compound/68547459",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         }
       ],
       "curationNotes": [
@@ -29815,10 +30640,67 @@
       ],
       "evidenceGaps": [
         "No published controlled human efficacy or safety trial of S-23 for muscle-building, fat-loss, or contraception was located.",
-        "Most efficacy characterization remains preclinical/animal."
+        "Most efficacy characterization remains preclinical/animal.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Enthusiast marketing calls S-23 a top SARM for lean mass while human controlled efficacy data are absent."
+      ],
+      "publicClaims": [
+        {
+          "id": "s-23-muscle",
+          "statement": "S-23 builds muscle in people.",
+          "population": "gym users",
+          "outcome": "muscle mass",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. No human efficacy or safety trial of S-23 was located; it is an unapproved SARM.",
+          "sources": [
+            "fda-sarms-teens-consumer-update"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "fda-sarms-teens-consumer-update"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "s-23-legal-supplement",
+          "statement": "S-23 is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -29829,7 +30711,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
         },
         {
           "sourceType": "regulator",
@@ -29837,7 +30720,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         },
         {
           "sourceType": "other",
@@ -31180,10 +32064,69 @@
       ],
       "evidenceGaps": [
         "No human PK, efficacy, or long-term safety trials.",
-        "All consumer benefit language traces to animal data or marketing."
+        "All consumer benefit language traces to animal data or marketing.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Performance blogs market mouse fat-loss/endurance findings as human benefits despite absent human trials."
+      ],
+      "publicClaims": [
+        {
+          "id": "sr9009-fat-loss-endurance",
+          "statement": "SR9009 (Stenabolic) burns fat and boosts endurance.",
+          "population": "people using SR9009",
+          "outcome": "fat loss and endurance",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Plausible Theory",
+          "qualifier": null,
+          "note": "Shown only in mice. In obese mice, a REV-ERB agonist reduced fat mass and improved blood lipids and glucose. No controlled human trial was located.",
+          "sources": [
+            "nature-sr9009"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "ANIMAL ONLY",
+              "sources": [
+                "nature-sr9009"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "sr9009-banned-in-sport",
+          "statement": "SR9009 is banned in sport.",
+          "population": "athletes",
+          "outcome": "anti-doping status",
+          "tier": "Established",
+          "qualifier": {
+            "population": "athletes under the World Anti-Doping Code (WADA 2026 Prohibited List)",
+            "outcome": "prohibited-substance status"
+          },
+          "note": "Yes. The WADA 2026 Prohibited List names SR9009 as a prohibited metabolic modulator.",
+          "sources": [
+            "wada-2026-prohibited-list"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Established",
+              "verdict": "PROVEN IN HUMANS",
+              "sources": [
+                "wada-2026-prohibited-list"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -31194,7 +32137,8 @@
           "publisher": "Nature",
           "url": "https://www.nature.com/articles/nature11030",
           "publishedAt": "2012-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "nature-sr9009"
         },
         {
           "sourceType": "other",
@@ -31987,10 +32931,98 @@
         }
       ],
       "evidenceGaps": [
-        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record."
+        "No claim-level evidence was sourced this session; only the candidate/evidence-packet identifier-name citation(s) recorded in BIO-LOCAL-007-seed-gap-inventory.md were used to compile this record.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Oncology development context and gray-market bodybuilding marketing refer to the same molecule but non-transferable evidence bases."
+      ],
+      "publicClaims": [
+        {
+          "id": "testolone-muscle",
+          "statement": "Testolone (RAD-140) builds muscle in people.",
+          "population": "healthy adults",
+          "outcome": "muscle mass and strength",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. The only human trial was a small cancer study in 22 women with metastatic breast cancer; no human study measured muscle gain.",
+          "sources": [
+            "clbc-lorusso-rad140-phase1-2021"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "clbc-lorusso-rad140-phase1-2021"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "testolone-safe",
+          "statement": "Testolone (RAD-140) is safe.",
+          "population": "people using RAD-140",
+          "outcome": "safety",
+          "tier": "Hype Exceeds Evidence",
+          "evidenceBasis": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. In its only human trial, 73% of patients had severe (grade 3 or 4) side effects, most often liver-enzyme rises, and case reports describe liver injury in young men using it as a supplement.",
+          "sources": [
+            "clbc-lorusso-rad140-phase1-2021",
+            "ladna-2023-jmcr-rad140-dili"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Hype Exceeds Evidence",
+              "verdict": "THIN",
+              "sources": [
+                "clbc-lorusso-rad140-phase1-2021",
+                "ladna-2023-jmcr-rad140-dili"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "testolone-legal-supplement",
+          "statement": "Testolone (RAD-140) is a legal, safe supplement.",
+          "population": "people buying SARMs online",
+          "outcome": "legal status and safety",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. FDA says SARMs cannot be legally sold as dietary supplements or drugs in the US, are unapproved drugs even when labeled 'research use only', and are linked to liver injury, heart attack and stroke risk, and infertility.",
+          "sources": [
+            "fda-sarms-teens-consumer-update",
+            "fda-bodybuilding-sarms-harm",
+            "fda-warrior-labz-warning-letter-2023"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "fda-sarms-teens-consumer-update",
+                "fda-bodybuilding-sarms-harm",
+                "fda-warrior-labz-warning-letter-2023"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -32001,7 +33033,8 @@
           "publisher": "U.S. Food and Drug Administration",
           "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "fda-warrior-labz-warning-letter-2023"
         },
         {
           "sourceType": "database",
@@ -32013,19 +33046,47 @@
         },
         {
           "sourceType": "paper",
-          "title": "First-in-Human Phase 1 Study of SARM RAD140 in ER+/HER2- Metastatic Breast Cancer",
-          "publisher": "Clinical Breast Cancer",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/34509381/",
-          "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
-        },
-        {
-          "sourceType": "paper",
           "title": "Severe liver injury following use of RAD-140",
           "publisher": "Australian Prescriber",
           "url": "https://australianprescriber.tg.org.au/articles/severe-liver-injury-following-use-of-rad-140-a-selective-androgen-receptor-modulator-for-body-building.html",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-14T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "A First-in-Human Phase 1 Study of a Novel SARM, RAD140, in ER+/HER2- Metastatic Breast Cancer (Clin Breast Cancer 2022)",
+          "publisher": "Clinical Breast Cancer (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34565686/",
+          "publishedAt": "2022-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "clbc-lorusso-rad140-phase1-2021"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Idiosyncratic drug-induced liver injury related to use of novel SARM RAD140 (Testalone): a case report (J Med Case Rep 2023)",
+          "publisher": "Journal of Medical Case Reports (via PubMed)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36978171/",
+          "publishedAt": "2023-03-29T00:00:00Z",
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "ladna-2023-jmcr-rad140-dili"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns About Using Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults (Consumer Update)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-sarms-teens-consumer-update"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "fda-bodybuilding-sarms-harm"
         }
       ],
       "curationNotes": [
@@ -32049,7 +33110,26 @@
       "qualityFlags": [
         "batch-c"
       ]
-    }
+    },
+    "doseReports": [
+      {
+        "side": "study",
+        "context": "Phase 1 dose-escalation cohort (maximum tolerated dose)",
+        "amount": 100,
+        "unit": "mg",
+        "frequency": "once daily",
+        "duration": "until progression",
+        "route": "oral",
+        "population": "22 women with ER+/HER2- metastatic breast cancer",
+        "outcome": "clinical benefit rate 18.2% at 24 weeks; frequent liver-enzyme rises",
+        "sourceType": "trial",
+        "sourceTitle": "First-in-Human Phase 1 Study of RAD140 (Clin Breast Cancer 2022)",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/34565686/",
+        "retrievedAt": "2026-10-25T00:00:00Z",
+        "grade": "Anecdotal Signal",
+        "notes": "Cancer study, not a muscle study."
+      }
+    ]
   },
   {
     "schemaVersion": "1.0.0",
