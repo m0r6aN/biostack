@@ -3,6 +3,12 @@ import { IntelligenceProofSection } from '@/components/marketing/IntelligencePro
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { createPublicPageMetadata, SITE_DESCRIPTION, SITE_TITLE } from '@/lib/site';
+import { GrowthLists } from '@/components/growth/GrowthLists';
+import { buildGrowthFeed } from '@/lib/growthFeed';
+
+// Growth Phase 5: the first screen settles an argument (search, today's claim, myth,
+// Hype Gap, trending, head to head); tracking and tiers move below it.
+export const revalidate = 3600;
 
 export const metadata = createPublicPageMetadata({
   title: SITE_TITLE,
@@ -10,7 +16,8 @@ export const metadata = createPublicPageMetadata({
   path: '/',
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const feed = await buildGrowthFeed();
   const softwareSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -29,6 +36,7 @@ export default function HomePage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
+        <GrowthLists feed={feed} />
         <LandingHero />
         <IntelligenceProofSection />
 

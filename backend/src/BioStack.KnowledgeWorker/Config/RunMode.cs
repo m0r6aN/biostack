@@ -75,6 +75,13 @@ public enum RunMode
     /// against the corpus, and writes a report, a research-request batch and draft records.
     /// </summary>
     Discovery = 10,
+
+    /// <summary>
+    /// Database-free Hype Gap signal collection (growth spec). Queries the configured public-volume
+    /// sources (X recent counts, YouTube Data API) for compounds with public claims and writes an
+    /// editor-input report. Never edits records or sets hype scores. No-op with no source configured.
+    /// </summary>
+    HypeSignals = 11,
 }
 
 public static class WorkerRunModePolicy
@@ -87,5 +94,6 @@ public static class WorkerRunModePolicy
             or RunMode.ProtocolIntelligenceEvaluation
             or RunMode.ResearchPlanning
             or RunMode.CouncilReview
-            or RunMode.Discovery;
+            or RunMode.Discovery
+            or RunMode.HypeSignals;
 }
