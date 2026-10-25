@@ -44,6 +44,14 @@ describe('VerdictBlock', () => {
     expect(block).not.toHaveTextContent('Large trials');
   });
 
+  it('keeps the share sheet complete: Copy link, Story card, Embed and Watch', () => {
+    render(<VerdictBlock entry={entry([claim()])} path="/knowledge/retatrutide" />);
+    expect(screen.getByRole('button', { name: 'Copy link' })).toBeInTheDocument();
+    expect(screen.getByText('Story card')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Embed' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Sign in to watch' }).getAttribute('href')).toBe('/auth/signin?callbackUrl=%2Fknowledge%2Fretatrutide');
+  });
+
   it('renders nothing without public claims', () => {
     const { container } = render(<VerdictBlock entry={entry([])} path="/k" />);
     expect(container).toBeEmptyDOMElement();
