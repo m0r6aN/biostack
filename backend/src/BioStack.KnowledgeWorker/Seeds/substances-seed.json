@@ -46885,21 +46885,79 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines ashwagandha supplementation for anxiety and stress.",
+          "claim": "NCCIH says some ashwagandha preparations may help insomnia and stress, while evidence on anxiety is unclear; most trials are small and use varied preparations.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:ashwagandha"
+            "nccih-ashwagandha",
+            "pubmed-36017529-ashwa-anxiety"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Extract standardization, long-term safety, and thyroid or liver risk are not established."
+        "Extract standardization, long-term safety, and thyroid or liver risk are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Benefit estimates vary with extract, duration, and study quality."
+      ],
+      "publicClaims": [
+        {
+          "id": "ashwagandha-stress-sleep",
+          "statement": "Ashwagandha reduces stress and helps sleep.",
+          "population": "adults with stress or insomnia",
+          "outcome": "stress and sleep",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly, for some preparations. Trials are mostly small and use different products. Effects on anxiety are unclear.",
+          "sources": [
+            "nccih-ashwagandha",
+            "pubmed-36017529-ashwa-anxiety"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-ashwagandha",
+                "pubmed-36017529-ashwa-anxiety"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ashwagandha-liver-safe",
+          "statement": "Ashwagandha has no serious safety concerns.",
+          "population": "adults using ashwagandha",
+          "outcome": "liver injury and interactions",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Rare cases link it to liver injury, long-term safety is unknown, and it should be avoided in pregnancy and with thyroid or autoimmune disorders.",
+          "sources": [
+            "nccih-ashwagandha"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-ashwagandha"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -46910,7 +46968,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/36017529/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-36017529-ashwa-anxiety"
         },
         {
           "sourceType": "regulator",
@@ -46918,7 +46977,17 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Ashwagandha-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-ashwagandha-hp"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Ashwagandha: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/ashwagandha",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-ashwagandha"
         }
       ],
       "curationNotes": [
@@ -51935,21 +52004,79 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed overview of systematic reviews examines curcumin-containing nutraceuticals without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "NCCIH says there is not enough evidence to conclude turmeric or curcumin benefits any health purpose; initial knee osteoarthritis evidence is positive but needs higher-quality trials.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:turmeric"
+            "nccih-turmeric",
+            "pubmed-29890252-curcumin-overview"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Primary-trial quality, formulation bioavailability, and outcome consistency are limited."
+        "Primary-trial quality, formulation bioavailability, and outcome consistency are limited.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Positive reviews often rest on low-quality primary trials."
+      ],
+      "publicClaims": [
+        {
+          "id": "turmeric-knee-oa",
+          "statement": "Turmeric or curcumin eases knee osteoarthritis pain.",
+          "population": "adults with knee osteoarthritis",
+          "outcome": "pain and stiffness",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. Meta-analyses are positive, but higher-quality trials are needed. Products vary widely in curcumin content.",
+          "sources": [
+            "nccih-turmeric",
+            "pubmed-29890252-curcumin-overview"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-turmeric",
+                "pubmed-29890252-curcumin-overview"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "turmeric-high-absorption-safe",
+          "statement": "\"Highly absorbable\" curcumin supplements are safer and better.",
+          "population": "people using enhanced-bioavailability curcumin",
+          "outcome": "liver injury",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. NCCIH says liver damage has been reported with enhanced-bioavailability curcumin products.",
+          "sources": [
+            "nccih-turmeric"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-turmeric"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -51960,7 +52087,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/29890252/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-29890252-curcumin-overview"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Turmeric: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/turmeric",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-turmeric"
         }
       ],
       "curationNotes": [
@@ -52209,20 +52346,78 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed umbrella review examines orally consumed ginger without establishing a personal recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "NCCIH says ginger may help nausea and vomiting of pregnancy and possibly menstrual cramps, while most motion-sickness studies have not shown benefit.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:ginger"
+            "nccih-ginger",
+            "pubmed-35147170-ginger-umbrella"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Preparation, pregnancy-specific safety, and anticoagulant interaction magnitude are unresolved."
+        "Preparation, pregnancy-specific safety, and anticoagulant interaction magnitude are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "ginger-pregnancy-nausea",
+          "statement": "Ginger helps pregnancy nausea.",
+          "population": "pregnant people with nausea and vomiting",
+          "outcome": "nausea and vomiting",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Likely helpful, per NCCIH. Check with a clinician before using supplements in pregnancy.",
+          "sources": [
+            "nccih-ginger",
+            "pubmed-35147170-ginger-umbrella"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-ginger",
+                "pubmed-35147170-ginger-umbrella"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ginger-motion-sickness",
+          "statement": "Ginger prevents motion sickness.",
+          "population": "people prone to motion sickness",
+          "outcome": "motion sickness",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Mostly no. NCCIH says most studies of ginger for motion sickness have not shown it helps.",
+          "sources": [
+            "nccih-ginger"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-ginger"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -52232,7 +52427,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/35147170/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-35147170-ginger-umbrella"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Ginger: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/ginger",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-ginger"
         }
       ],
       "curationNotes": [
@@ -52481,20 +52686,78 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines garlic and cardiovascular discussions without establishing a treatment recommendation.",
+          "claim": "NCCIH says garlic supplements may modestly lower total and LDL cholesterol in people with high cholesterol, with limited evidence for small blood pressure reductions.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:garlic"
+            "nccih-garlic",
+            "pubmed-35193446-garlic-cvd"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Preparation standardization and clinically meaningful event reduction are not established."
+        "Preparation standardization and clinically meaningful event reduction are not established.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "garlic-cholesterol",
+          "statement": "Garlic supplements lower cholesterol.",
+          "population": "adults with high cholesterol",
+          "outcome": "total and LDL cholesterol",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Slightly. NCCIH says supplements may reduce total and LDL cholesterol to a small extent.",
+          "sources": [
+            "nccih-garlic",
+            "pubmed-35193446-garlic-cvd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-garlic",
+                "pubmed-35193446-garlic-cvd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "garlic-immune",
+          "statement": "Garlic boosts the immune system against colds and flu.",
+          "population": "adults",
+          "outcome": "colds and flu",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. A 2022 review found only two small, weak studies suggesting a benefit.",
+          "sources": [
+            "nccih-garlic"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-garlic"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -52504,7 +52767,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/35193446/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-35193446-garlic-cvd"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Garlic: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/garlic",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-garlic"
         }
       ],
       "curationNotes": [
@@ -52752,21 +53025,79 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines elderberry for viral respiratory illnesses without establishing a recommendation.",
-          "tier": "Unsupported",
+          "claim": "NCCIH says preliminary research suggests elderberry may relieve flu or cold symptoms; FDA and FTC have acted against unsubstantiated COVID-19 claims.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:elderberry"
+            "nccih-elderberry",
+            "pubmed-33827515-elderberry"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Prevention evidence, product standardization, and immune-safety questions are unresolved."
+        "Prevention evidence, product standardization, and immune-safety questions are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Symptom-duration findings are uncertain and should not be read as prevention proof."
+      ],
+      "publicClaims": [
+        {
+          "id": "elderberry-cold-flu",
+          "statement": "Elderberry relieves cold and flu symptoms.",
+          "population": "adults with colds or flu",
+          "outcome": "symptom relief",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. Only a small number of preliminary studies support it.",
+          "sources": [
+            "nccih-elderberry",
+            "pubmed-33827515-elderberry"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-elderberry",
+                "pubmed-33827515-elderberry"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "elderberry-covid",
+          "statement": "Elderberry prevents or treats COVID-19.",
+          "population": "people seeking COVID-19 protection",
+          "outcome": "COVID-19",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "No evidence. FDA and the FTC acted against companies making these claims. Raw or unripe berries are toxic unless cooked.",
+          "sources": [
+            "nccih-elderberry"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-elderberry"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -52777,7 +53108,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/33827515/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-33827515-elderberry"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Elderberry: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/elderberry",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-elderberry"
         }
       ],
       "curationNotes": [
@@ -53025,21 +53366,53 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines echinacea for upper respiratory infections without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "NCCIH says echinacea may slightly reduce the chance of catching a cold, while it is unclear whether it shortens colds.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:echinacea"
+            "nccih-echinacea",
+            "pubmed-31126553-echinacea-uri"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Species, plant part, and product heterogeneity limit any pooled estimate."
+        "Species, plant part, and product heterogeneity limit any pooled estimate.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Prevention and treatment effects are not consistent across preparations."
+      ],
+      "publicClaims": [
+        {
+          "id": "echinacea-colds",
+          "statement": "Echinacea prevents and shortens colds.",
+          "population": "adults",
+          "outcome": "cold risk and duration",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Slightly lowers the chance of a cold, maybe. Whether it shortens colds is unclear. Allergic reactions can be severe.",
+          "sources": [
+            "nccih-echinacea",
+            "pubmed-31126553-echinacea-uri"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-echinacea",
+                "pubmed-31126553-echinacea-uri"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -53050,7 +53423,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/31126553/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-31126553-echinacea-uri"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Echinacea: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/echinacea",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-echinacea"
         }
       ],
       "curationNotes": [
@@ -53299,20 +53682,52 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines silymarin in NAFLD/NASH without establishing a treatment recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "NCCIH says milk thistle trials in liver diseases have been conflicting or too limited for conclusions; NCCIH-funded trials in hepatitis C and NASH showed no benefit from silymarin.",
+          "tier": "Unsupported",
           "confidence": "low",
           "sources": [
-            "src:milk-thistle"
+            "nccih-milk-thistle",
+            "pubmed-38579127-silymarin-nafld"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Histologic outcomes, extract standardization, and drug interactions are unresolved."
+        "Histologic outcomes, extract standardization, and drug interactions are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
-      "controversies": []
+      "controversies": [],
+      "publicClaims": [
+        {
+          "id": "milk-thistle-liver",
+          "statement": "Milk thistle heals or protects the liver.",
+          "population": "people with liver disease",
+          "outcome": "liver outcomes",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Not shown. Trials are conflicting or limited, and NIH-funded trials in hepatitis C and NASH found no benefit.",
+          "sources": [
+            "nccih-milk-thistle",
+            "pubmed-38579127-silymarin-nafld"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-milk-thistle",
+                "pubmed-38579127-silymarin-nafld"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
+      ]
     },
     "provenance": {
       "sourceRecords": [
@@ -53322,7 +53737,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38579127/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38579127-silymarin-nafld"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Milk Thistle: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/milk-thistle",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-milk-thistle"
         }
       ],
       "curationNotes": [
@@ -53570,21 +53995,53 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines saw palmetto for lower urinary tract symptoms without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "NCCIH says saw palmetto alone provides little or no benefit for urinary symptoms of BPH, citing a 2023 review of 27 studies and two NIH-funded trials.",
+          "tier": "Contradicted",
           "confidence": "low",
           "sources": [
-            "src:saw-palmetto"
+            "nccih-saw-palmetto",
+            "pubmed-34488251-serenoa-luts"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Symptom benefit versus placebo remains uncertain in higher-quality syntheses."
+        "Symptom benefit versus placebo remains uncertain in higher-quality syntheses.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Older positive reviews conflict with later syntheses showing little difference from placebo."
+      ],
+      "publicClaims": [
+        {
+          "id": "saw-palmetto-bph",
+          "statement": "Saw palmetto relieves enlarged-prostate urinary symptoms.",
+          "population": "men with BPH",
+          "outcome": "urinary symptoms",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. A 2023 review of 27 studies found little or no benefit, and two NIH-funded trials, one at up to three times the usual dose, found none.",
+          "sources": [
+            "nccih-saw-palmetto",
+            "pubmed-34488251-serenoa-luts"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-saw-palmetto",
+                "pubmed-34488251-serenoa-luts"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -53595,7 +54052,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/34488251/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-34488251-serenoa-luts"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Saw Palmetto: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/saw-palmetto",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-saw-palmetto"
         }
       ],
       "curationNotes": [
@@ -53843,21 +54310,79 @@
       "overallTier": "Plausible Theory",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed meta-analysis examines black cohosh extracts for menopausal symptoms without establishing a recommendation.",
-          "tier": "Plausible Theory",
+          "claim": "A 2023 meta-analysis of 22 studies found black cohosh products potentially beneficial for overall menopause symptoms and hot flashes, not anxiety or depression, per NCCIH.",
+          "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:black-cohosh"
+            "pubmed-37192826-black-cohosh",
+            "nccih-black-cohosh"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Rationale is mechanistic or indirect; direct human outcome evidence is weak (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Extract identity, estrogen-sensitive-condition safety, and liver-injury causality are unresolved."
+        "Extract identity, estrogen-sensitive-condition safety, and liver-injury causality are unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Symptom meta-analyses and liver-safety case reports point in different directions."
+      ],
+      "publicClaims": [
+        {
+          "id": "black-cohosh-hot-flashes",
+          "statement": "Black cohosh eases menopausal hot flashes.",
+          "population": "women with menopausal symptoms",
+          "outcome": "hot flashes",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Possibly. A 2023 review found improvements in hot flashes and overall symptoms, but not mood.",
+          "sources": [
+            "pubmed-37192826-black-cohosh",
+            "nccih-black-cohosh"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "pubmed-37192826-black-cohosh",
+                "nccih-black-cohosh"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "black-cohosh-liver",
+          "statement": "Black cohosh has no liver risk.",
+          "population": "women using black cohosh",
+          "outcome": "liver injury",
+          "tier": "Unsupported",
+          "qualifier": null,
+          "note": "Uncertain. Rare, sometimes serious liver damage has been reported with products labeled black cohosh, some of which contained the wrong herb.",
+          "sources": [
+            "nccih-black-cohosh"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Unsupported",
+              "verdict": "THIN",
+              "sources": [
+                "nccih-black-cohosh"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -53868,7 +54393,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/37192826/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-37192826-black-cohosh"
         },
         {
           "sourceType": "regulator",
@@ -53876,7 +54402,17 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/BlackCohosh-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-blackcohosh-hp"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Black Cohosh: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/black-cohosh",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-black-cohosh"
         }
       ],
       "curationNotes": [
@@ -54125,21 +54661,53 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed umbrella review examines valerian for insomnia and does not establish efficacy.",
-          "tier": "Unsupported",
+          "claim": "Evidence that valerian helps sleep is inconsistent, and the American Academy of Sleep Medicine recommended against it for chronic insomnia, per NCCIH.",
+          "tier": "Contradicted",
           "confidence": "low",
           "sources": [
-            "src:valerian"
+            "nccih-valerian",
+            "pubmed-38359657-valerian-umbrella"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Objective sleep outcomes and extract standardization are insufficient."
+        "Objective sleep outcomes and extract standardization are insufficient.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Subjective sleep ratings and objective measurements do not agree."
+      ],
+      "publicClaims": [
+        {
+          "id": "valerian-insomnia",
+          "statement": "Valerian treats insomnia.",
+          "population": "adults with chronic insomnia",
+          "outcome": "sleep",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Evidence is inconsistent, and the American Academy of Sleep Medicine recommends against it for chronic insomnia.",
+          "sources": [
+            "nccih-valerian",
+            "pubmed-38359657-valerian-umbrella"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-valerian",
+                "pubmed-38359657-valerian-umbrella"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -54150,7 +54718,8 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/38359657/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-38359657-valerian-umbrella"
         },
         {
           "sourceType": "regulator",
@@ -54158,7 +54727,17 @@
           "publisher": "NIH Office of Dietary Supplements",
           "url": "https://ods.od.nih.gov/factsheets/Valerian-HealthProfessional/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "ods-valerian-hp"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Valerian: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/valerian",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-valerian"
         }
       ],
       "curationNotes": [
@@ -54407,21 +54986,77 @@
       "overallTier": "Unsupported",
       "claimSpecificEvidence": [
         {
-          "claim": "A Cochrane review examines Ginkgo biloba for cognitive impairment and dementia without establishing a personal recommendation.",
-          "tier": "Unsupported",
+          "claim": "NCCIH says ginkgo has not been shown effective for any condition studied; in large trials including GEM (3,000+ older adults over a median of 6 years) it did not reduce dementia risk.",
+          "tier": "Contradicted",
           "confidence": "low",
           "sources": [
-            "src:ginkgo"
+            "nccih-ginkgo",
+            "pubmed-12519586-ginkgo-cochrane"
           ],
           "legacyTier": "Insufficient",
-          "gradeRationale": "No adequate source-verified support found for the specific claim (was Insufficient)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Effect size in dementia, product standardization, and bleeding magnitude remain unresolved."
+        "Effect size in dementia, product standardization, and bleeding magnitude remain unresolved.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Cognitive benefit and bleeding risk are both discussed and neither is settled as a use recommendation."
+      ],
+      "publicClaims": [
+        {
+          "id": "ginkgo-dementia",
+          "statement": "Ginkgo prevents dementia.",
+          "population": "older adults with normal cognition or mild impairment",
+          "outcome": "dementia incidence",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. Three large trials, including the 6-year GEM study in more than 3,000 people, found no reduction in dementia or Alzheimer disease.",
+          "sources": [
+            "nccih-ginkgo"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-ginkgo"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "ginkgo-bleeding",
+          "statement": "Ginkgo is safe with blood thinners.",
+          "population": "people taking anticoagulants such as warfarin",
+          "outcome": "bleeding",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "Not assured. NCCIH says ginkgo may raise bleeding risk with anticoagulants. Fresh seeds are toxic.",
+          "sources": [
+            "nccih-ginkgo"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-ginkgo"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -54432,7 +55067,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/12519586/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-12519586-ginkgo-cochrane"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Ginkgo: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/ginkgo",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-ginkgo"
         }
       ],
       "curationNotes": [
@@ -54684,21 +55329,79 @@
       "overallTier": "Early Evidence",
       "claimSpecificEvidence": [
         {
-          "claim": "A PubMed systematic review examines St John's wort for major depressive disorder without establishing a personal recommendation.",
+          "claim": "St. John's wort appears more effective than placebo and similar to standard antidepressants for mild to moderate depression over up to 12 weeks, per NCCIH, but interacts dangerously with many drugs.",
           "tier": "Early Evidence",
           "confidence": "low",
           "sources": [
-            "src:st-johns-wort"
+            "nccih-st-johns-wort",
+            "pubmed-27589952-sjw-mdd"
           ],
           "legacyTier": "Limited",
-          "gradeRationale": "Preliminary human evidence with documented limits (was Limited)."
+          "gradeRationale": "Rewritten 2026-10-25: the placeholder claim only noted that a review exists, and cited a placeholder source."
         }
       ],
       "evidenceGaps": [
-        "Extract standardization, severe-depression evidence, and the full interaction list are not restated here."
+        "Extract standardization, severe-depression evidence, and the full interaction list are not restated here.",
+        "Community-reported doses: n/a (no citable source)."
       ],
       "controversies": [
         "Symptom findings in mild-to-moderate depression do not remove the interaction risk."
+      ],
+      "publicClaims": [
+        {
+          "id": "st-johns-wort-depression",
+          "statement": "St. John's wort helps mild to moderate depression.",
+          "population": "adults with mild to moderate depression",
+          "outcome": "depressive symptoms",
+          "tier": "Early Evidence",
+          "qualifier": null,
+          "note": "Likely, short term. Studies show it beats placebo and matches standard antidepressants for up to 12 weeks. Benefit in severe depression is uncertain.",
+          "sources": [
+            "nccih-st-johns-wort",
+            "pubmed-27589952-sjw-mdd"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Early Evidence",
+              "verdict": "PROMISING",
+              "sources": [
+                "nccih-st-johns-wort",
+                "pubmed-27589952-sjw-mdd"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        },
+        {
+          "id": "st-johns-wort-interactions",
+          "statement": "St. John's wort is a harmless natural remedy.",
+          "population": "people taking other medicines",
+          "outcome": "drug interactions",
+          "tier": "Contradicted",
+          "qualifier": null,
+          "note": "No. It can weaken many crucial drugs, including birth control pills, transplant drugs, HIV drugs, some heart and seizure drugs, and some antidepressants, sometimes dangerously.",
+          "sources": [
+            "nccih-st-johns-wort"
+          ],
+          "versions": [
+            {
+              "version": 1,
+              "kind": "initial",
+              "tier": "Contradicted",
+              "verdict": "MYTH",
+              "sources": [
+                "nccih-st-johns-wort"
+              ],
+              "verifiedAt": "2026-10-25T00:00:00Z",
+              "verifiedBy": "automated research agent; not a reviewer",
+              "changeReason": "Initial grade; every source retrieved and read on 2026-10-25. Publishes after two-reviewer AI council consensus."
+            }
+          ]
+        }
       ]
     },
     "provenance": {
@@ -54709,7 +55412,17 @@
           "publisher": "PubMed / National Library of Medicine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/27589952/",
           "publishedAt": null,
-          "lastCheckedAt": "2026-10-14T00:00:00Z"
+          "lastCheckedAt": "2026-10-14T00:00:00Z",
+          "id": "pubmed-27589952-sjw-mdd"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "St. John's Wort: Usefulness and Safety",
+          "publisher": "National Center for Complementary and Integrative Health (NIH)",
+          "url": "https://www.nccih.nih.gov/health/st-johns-wort",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "nccih-st-johns-wort"
         }
       ],
       "curationNotes": [
