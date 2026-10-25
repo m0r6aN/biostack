@@ -20332,10 +20332,10 @@
       ],
       "jurisdiction": "US",
       "approvedIndications": [
-        "metastatic breast cancer in postmenopausal women with ER-positive or unknown tumors (Fareston)"
+        "metastatic breast cancer in postmenopausal women with ER-positive or unknown tumors (generic toremifene citrate; brand Fareston discontinued)"
       ],
       "offLabelNotes": [
-        "Toremifene 80 mg for fracture prevention in men on ADT received a Complete Response Letter and remains unapproved for that use.",
+        "Toremifene 80 mg for fracture prevention in men on ADT is not an approved use; the content of FDA's correspondence on that application is unknown (no regulator source located).",
         "Bodybuilding PCT marketing claims are not labeled indications and lack controlled trials in that population."
       ]
     },
@@ -20518,12 +20518,14 @@
       "overallTier": "Established",
       "claimSpecificEvidence": [
         {
-          "claim": "FDA-approved indication for toremifene (as Fareston, toremifene citrate) is treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors, at an oral dose of 60 mg once daily; the product remains an active approved NDA (020497), most recently updated by a December 2024 labeling supplement.",
+          "claim": "Toremifene's FDA-approved indication is treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors. The brand product FARESTON (NDA 020497) is now listed in Drugs@FDA as Discontinued, with an FDA determination that it was not discontinued for safety or effectiveness reasons; generic toremifene citrate tablets (ANDA 208813 and ANDA 212818) remain listed as prescription products.",
           "tier": "Established",
           "confidence": "high",
           "sources": [
             "dailymed-fareston-label",
-            "fda-fareston-sndsa-2024ltr"
+            "drugsfda-fareston-nda020497",
+            "drugsfda-toremifene-anda208813",
+            "drugsfda-toremifene-anda212818"
           ],
           "legacyTier": "Strong",
           "gradeRationale": "High-confidence regulatory, label or agency fact backed by an authoritative source."
@@ -20636,12 +20638,30 @@
         },
         {
           "sourceType": "regulator",
-          "title": "Drugs@FDA: FARESTON (toremifene citrate) NDA 020497 application overview",
+          "title": "Drugs@FDA: FARESTON (toremifene citrate) NDA 020497 application overview (marketing status: Discontinued; FDA determined it was not discontinued for safety or effectiveness reasons)",
           "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
           "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020497",
           "publishedAt": null,
           "lastCheckedAt": "2026-10-25T00:00:00Z",
           "id": "drugsfda-fareston-nda020497"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: toremifene citrate tablets ANDA 208813 (Rising) application overview (marketing status: Prescription)",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=208813",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-toremifene-anda208813"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Drugs@FDA: toremifene citrate tablets ANDA 212818 (MSN) application overview (marketing status: Prescription)",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212818",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-10-25T00:00:00Z",
+          "id": "drugsfda-toremifene-anda212818"
         }
       ],
       "curationNotes": [
