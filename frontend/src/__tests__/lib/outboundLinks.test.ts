@@ -9,13 +9,6 @@ const SRC = join(__dirname, '..', '..');
 // form placeholders and server-side API endpoints.
 const NON_LINK_HOSTS = new Set(['biostack.cc', 'www.biostack.cc', 'schema.org', 'www.w3.org', 'localhost', 'example.com', 'api.openai.com']);
 
-// Known doc-vs-code contradiction, flagged for Clint (06 §B blocker: no vendor links anywhere
-// public): the overlap tool's "View example products" retailer search links. Kept as-is
-// pending a ruling; remove this entry when they go.
-const KNOWN_CONTRADICTIONS: Record<string, string[]> = {
-  'lib/recommendations.ts': ['www.amazon.com', 'www.iherb.com', 'www.vitacost.com'],
-};
-
 function files(dir: string): string[] {
   return readdirSync(dir).flatMap(name => {
     const p = join(dir, name);
@@ -43,7 +36,6 @@ describe('outbound link allowlist', () => {
         for (const m of text.matchAll(/https?:\/\/([A-Za-z0-9.-]+)[^\s'"`)<>]*/g)) {
           const host = m[1].toLowerCase();
           if (NON_LINK_HOSTS.has(host) || isAllowlistedSourceUrl(m[0])) continue;
-          if (KNOWN_CONTRADICTIONS[rel]?.includes(host)) continue;
           offenders.push(`${rel}: ${m[0]}`);
         }
       }

@@ -78,7 +78,7 @@ export type CardSurface = 'compound-detail' | 'knowledge-detail' | 'knowledge-se
 interface CompoundIntelligenceCardProps {
   entry: KnowledgeEntry;
   /** Which page the card renders on; controls the dossier link and add-to-protocol affordances. */
-  recommendationSurface?: CardSurface;
+  surface?: CardSurface;
   /**
    * Whether the visitor is signed in — only meaningful on the dossier
    * ('knowledge-detail') surface, which offers an "Add to protocol" action
@@ -90,7 +90,7 @@ interface CompoundIntelligenceCardProps {
 
 export function CompoundIntelligenceCard({
   entry: rawEntry,
-  recommendationSurface,
+  surface,
   isSignedIn = false,
   titleAs: Heading = 'h3',
 }: CompoundIntelligenceCardProps) {
@@ -110,8 +110,8 @@ export function CompoundIntelligenceCard({
   // to a record the visitor already added — link it back to the full public
   // dossier. The dossier itself (knowledge-detail) and the knowledge-search
   // results (already a list of dossiers) don't need a link to themselves.
-  const showDossierLink = recommendationSurface === 'compound-detail';
-  const showAddToProtocol = recommendationSurface === 'knowledge-detail';
+  const showDossierLink = surface === 'compound-detail';
+  const showAddToProtocol = surface === 'knowledge-detail';
   const details = entry.details ?? null;
   const sourceCount = details ? details.sources.length : entry.sourceReferences.length;
   const reviewLabel = details?.reviewStatus
