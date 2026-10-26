@@ -1,0 +1,221 @@
+{
+  "recordedAtUtc": "2026-10-26T13:40:16.244947+00:00",
+  "branch": "codex/api-global-rate-limit-smoke",
+  "scope": "Authorized eleven bogus verification POSTs, read-only production smoke and revision-mode inspection; proposed limiter change only.",
+  "liveAuthVerificationLimit": {
+    "startedAtUtc": "2026-10-26T09:28:53.897076-04:00",
+    "completedAtUtc": "2026-10-26T09:28:55.800693-04:00",
+    "endpoint": "https://api.biostack.cc/api/v1/auth/verify",
+    "method": "POST",
+    "bogusTokenOnly": true,
+    "requestCount": 11,
+    "singleClientIp": true,
+    "forwardedHeadersSupplied": false,
+    "signInStartCalled": false,
+    "results": [
+      {
+        "request": 1,
+        "status": 400,
+        "elapsedSeconds": 0.203
+      },
+      {
+        "request": 2,
+        "status": 400,
+        "elapsedSeconds": 0.172
+      },
+      {
+        "request": 3,
+        "status": 400,
+        "elapsedSeconds": 0.187
+      },
+      {
+        "request": 4,
+        "status": 400,
+        "elapsedSeconds": 0.203
+      },
+      {
+        "request": 5,
+        "status": 400,
+        "elapsedSeconds": 0.157
+      },
+      {
+        "request": 6,
+        "status": 400,
+        "elapsedSeconds": 0.156
+      },
+      {
+        "request": 7,
+        "status": 400,
+        "elapsedSeconds": 0.14
+      },
+      {
+        "request": 8,
+        "status": 400,
+        "elapsedSeconds": 0.188
+      },
+      {
+        "request": 9,
+        "status": 400,
+        "elapsedSeconds": 0.156
+      },
+      {
+        "request": 10,
+        "status": 400,
+        "elapsedSeconds": 0.141
+      },
+      {
+        "request": 11,
+        "status": 400,
+        "elapsedSeconds": 0.203
+      }
+    ],
+    "eleventhRejected": false,
+    "firstTenWereBadRequest": true
+  },
+  "liveAuthFinding": {
+    "severity": "medium",
+    "expectedEleventhStatus": 429,
+    "observedEleventhStatus": 400,
+    "conclusion": "Live per-IP auth verification limit was not demonstrated. All eleven requests returned 400. Root cause remains unconfirmed.",
+    "confidence": "High for observed status codes; root cause unknown."
+  },
+  "productionSmoke": {
+    "checkedAtUtc": "2026-10-26T13:33:28.179Z",
+    "apiOrigin": "https://api.biostack.cc",
+    "webOrigin": "https://biostack.cc",
+    "expectedActiveRecords": 157,
+    "observedActiveRecords": 208,
+    "passed": false,
+    "results": [
+      {
+        "name": "API readiness",
+        "url": "https://api.biostack.cc/health/ready",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "healthy": true
+        },
+        "elapsedMs": 314
+      },
+      {
+        "name": "Active compound list",
+        "url": "https://api.biostack.cc/api/v1/knowledge/compounds",
+        "status": 200,
+        "passed": false,
+        "error": "Expected 157 active records, got 208",
+        "elapsedMs": 388
+      },
+      {
+        "name": "Vosilasarm",
+        "url": "https://api.biostack.cc/api/v1/knowledge/compounds/vosilasarm",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "canonicalName": "Vosilasarm",
+          "sources": 7
+        },
+        "elapsedMs": 50
+      },
+      {
+        "name": "Retatrutide",
+        "url": "https://api.biostack.cc/api/v1/knowledge/compounds/retatrutide",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "canonicalName": "Retatrutide",
+          "sources": 8
+        },
+        "elapsedMs": 61
+      },
+      {
+        "name": "Testolone alias search",
+        "url": "https://api.biostack.cc/api/v1/knowledge/compounds/testolone",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "resolvesTo": "Vosilasarm",
+          "listSearchMatches": 1
+        },
+        "elapsedMs": 153
+      },
+      {
+        "name": "Web homepage",
+        "url": "https://biostack.cc/",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "bioStackHtml": true
+        },
+        "elapsedMs": 205
+      },
+      {
+        "name": "Web robots.txt",
+        "url": "https://biostack.cc/robots.txt",
+        "status": 200,
+        "passed": true,
+        "details": {
+          "robotsDirectives": true
+        },
+        "elapsedMs": 40
+      }
+    ]
+  },
+  "rollbackDrill": {
+    "runbook": "docs/operations/production-operations-runbook.md section 3",
+    "status": "stopped-before-change",
+    "reason": "API is in Single revision mode. The user explicitly required stopping before changing mode.",
+    "before": {
+      "latestReady": "biostackmissionctrl-api--0000233",
+      "mode": "Single",
+      "traffic": [
+        {
+          "latestRevision": true,
+          "weight": 100
+        }
+      ]
+    },
+    "after": {
+      "latestReadyRevision": "biostackmissionctrl-api--0000233",
+      "mode": "Single",
+      "traffic": [
+        {
+          "latestRevision": true,
+          "weight": 100
+        }
+      ]
+    },
+    "requestedRollbackRevision": "biostackmissionctrl-api--0000232",
+    "requestedReturnRevision": "biostackmissionctrl-api--0000233",
+    "switches": [],
+    "rollbackSwitchElapsedMs": null,
+    "returnSwitchElapsedMs": null,
+    "trafficOrModeChanged": false
+  },
+  "validation": {
+    "globalLimiterIntegrationTest": "Passed 1/1, including 300 shared requests, 301st 429, separate IP, spoofed forwarding header, health exemptions and stricter auth verify 11th 429.",
+    "smokeScriptTests": "Passed 3/3.",
+    "fullApiSuite": {
+      "command": "dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --configuration Release --verbosity minimal",
+      "passed": 553,
+      "failed": 2,
+      "skipped": 0,
+      "total": 555,
+      "duration": "4m50s",
+      "failures": [
+        {
+          "test": "SpineChainIntegrityTests.File_backed_sqlite_default_watermark_still_catches_trailing_delete",
+          "reason": "IOException deleting SQLite file in cleanup (line 337); test source unchanged."
+        },
+        {
+          "test": "SpineChainIntegrityTests.Deleting_rows_and_the_relocated_default_watermark_together_remains_a_disclosed_residual",
+          "reason": "IOException deleting SQLite file in cleanup (line 398); test source unchanged."
+        }
+      ]
+    }
+  },
+  "limits": [
+    "The limiter is in-process and per application instance; the live proxy/IP partition behavior and cross-replica budgets are not proven by the integration test.",
+    "The smoke script deliberately retains the requested 157-record assertion; 208 observed in production is a failing result.",
+    "No sign-in start requests, production code deployment, revision switch or mode change was performed."
+  ]
+}
