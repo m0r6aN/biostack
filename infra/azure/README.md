@@ -77,6 +77,28 @@ Repository builds prove configuration and wiring only. Before release, execute t
 
 `knowledge-schedules.bicep` deploys the scheduled KnowledgeWorker jobs: daily update planning, weekly discovery planning, daily Research compile, and a daily Refresh dry-run followed by an apply. The database connection string is a Key Vault reference resolved by a user-assigned identity; no secret is a parameter value. See `docs/operations/knowledge-schedules.md`.
 
+## Health probes and replica floor (ledger G3)
+
+The API exposes two health endpoints:
+
+- `/health` is **liveness**. It has no dependency checks, so a database outage never restarts replicas.
+- `/health/ready` is **readiness**. It reports the database as reachable or not, within 5 s, and never includes connection details.
+
+The probes are defined in `container-app-probes.json`:
+
+| App | Startup | Liveness | Readiness |
+|---|---|---|---|
+| API | `/health`, allows up to about 3 min for migrations | `/health` | `/health/ready` |
+| Web | TCP | TCP | `/robots.txt` |
+
+The API and web apps are created by `deploy-container-apps.ps1` through the CLI, not Bicep. A Bicep resource for them would replace their whole configuration, so the probes are merged into the live spec instead:
+
+```bash
+infra/azure/apply-container-app-probes.sh <rg> <api-app> <web-app> 1 --dry-run   # show the merge
+infra/azure/apply-container-app-probes.sh <rg> <api-app> <web-app> 1             # apply
+```
+
+The fourth argument is `minReplicas`. With `1`, one replica per app is always on: there are no cold starts, and that replica is billed continuously. With `0`, apps scale to zero, which is cheaper, but the first request after an idle period waits for a cold start. A 46.8 s first request was observed on 2026-10-25. Image updates in `deploy.yml` keep the probes.
 ## Claim-submission salt (ledger G2)
 
 In Production the API refuses to start unless `ClaimSubmissions__Salt` is set to a private value of at least 32 characters. The public development default is rejected. Set it up once:
