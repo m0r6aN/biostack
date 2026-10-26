@@ -61,7 +61,15 @@ builder.Host.UseDefaultServiceProvider(options =>
 });
 
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+// Ledger G5: outside Development, logs are redacted single-line JSON for Log Analytics alerting.
+if (builder.Environment.IsDevelopment() || builder.Configuration.GetValue<bool>("Logging:PlainConsole"))
+{
+    builder.Logging.AddConsole();
+}
+else
+{
+    BioStack.Infrastructure.Logging.BioStackLoggingExtensions.AddBioStackJsonConsole(builder.Logging);
+}
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());

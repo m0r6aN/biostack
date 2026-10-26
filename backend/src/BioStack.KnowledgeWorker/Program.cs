@@ -26,7 +26,15 @@ var builder = Host.CreateDefaultBuilder(args)
     .ConfigureLogging((context, logging) =>
     {
         logging.ClearProviders();
-        logging.AddConsole();
+        // Ledger G5: redacted single-line JSON outside Development (job-failure alerts read it).
+        if (context.HostingEnvironment.IsDevelopment() || context.Configuration.GetValue<bool>("Logging:PlainConsole"))
+        {
+            logging.AddConsole();
+        }
+        else
+        {
+            BioStack.Infrastructure.Logging.BioStackLoggingExtensions.AddBioStackJsonConsole(logging);
+        }
 
         if (Enum.TryParse<LogLevel>(
                 context.Configuration["Worker:LogLevel"],

@@ -77,6 +77,25 @@ Repository builds prove configuration and wiring only. Before release, execute t
 
 `knowledge-schedules.bicep` deploys the scheduled KnowledgeWorker jobs: daily update planning, weekly discovery planning, daily Research compile, and a daily Refresh dry-run followed by an apply. The database connection string is a Key Vault reference resolved by a user-assigned identity; no secret is a parameter value. See `docs/operations/knowledge-schedules.md`.
 
+## Structured logs and alerts (ledger G5)
+
+Outside Development, the API and KnowledgeWorker write one JSON object per log line to stdout (`RedactingJsonConsoleFormatter`), with the fields `time`, `level`, `category`, `message`, `props` and `exception`. Before a line is written, emails, IPv4/IPv6 addresses, JWTs, bearer tokens, Stripe keys and `password=`/`token=`/`code=`/`sig=`/`AccountKey=`/`salt=` values are replaced. Scopes are not written. Set `Logging__PlainConsole=true` to fall back to plain text.
+
+Container Apps ships stdout to the environment's Log Analytics workspace. `monitoring-alerts.bicep` emails the owner on:
+
+| Rule | Signal |
+|---|---|
+| `biostack-api-5xx` | API `Requests` metric with `statusCodeCategory=5xx` above the threshold (default 10) in 5 minutes |
+| `biostack-probe-failures` | Probe failures for the API or web app in the system logs |
+| `biostack-job-failures` | Executions of jobs whose names start with a configured prefix (default `biostack`) ending in `BackoffLimitExceeded` or `DeadlineExceeded` |
+| `biostack-api-error-logs` | More than 20 `Error`/`Critical` JSON log lines from the API in 10 minutes |
+
+```bash
+cid=$(az containerapp env show -n <env> -g <rg> --query properties.appLogsConfiguration.logAnalyticsConfiguration.customerId -o tsv)
+ws=$(az monitor log-analytics workspace list --query "[?customerId=='$cid'].id" -o tsv)
+az deployment group create -g <rg> -f infra/azure/monitoring-alerts.bicep \
+  -p logAnalyticsWorkspaceId="$ws" apiAppName=<api-app> webAppName=<web-app> alertEmail=<owner email>
+```
 ## Health probes and replica floor (ledger G3)
 
 The API exposes two health endpoints:
