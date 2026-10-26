@@ -57,9 +57,11 @@ foreach ($network in $TrustedProxyNetworks) {
         throw "TrustedProxyNetworks must contain valid CIDRs: '$network'."
     }
 }
-$trustedProxyEnvVars = for ($index = 0; $index -lt $TrustedProxyNetworks.Count; $index++) {
-    "RateLimit__TrustedProxyNetworks__${index}=$($TrustedProxyNetworks[$index])"
-}
+$trustedProxyEnvVars = @(
+    for ($index = 0; $index -lt $TrustedProxyNetworks.Count; $index++) {
+        "RateLimit__TrustedProxyNetworks__${index}=$($TrustedProxyNetworks[$index])"
+    }
+)
 
 if (-not $DataProtectionBlobUri.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DataProtectionBlobUri.Contains("?")) {
