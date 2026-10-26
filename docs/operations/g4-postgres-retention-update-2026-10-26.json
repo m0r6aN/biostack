@@ -1,0 +1,21 @@
+{
+  "verifiedAtUtc": "2026-10-26T13:01:51.8779027Z",
+  "sourceServer": "biostackmcpg20260407e2",
+  "previousRetentionDays": 7,
+  "backupRetentionDays": 35,
+  "geoRedundantBackup": "Disabled",
+  "earliestRestorePointUtc": "2026-10-16T19:56:29.8055590+00:00",
+  "serverState": "Ready",
+  "productionSku": {
+    "name": "Standard_B1ms",
+    "tier": "Burstable"
+  },
+  "productionNetwork": {
+    "delegatedSubnetResourceId": null,
+    "privateDnsZoneArmResourceId": null,
+    "publicNetworkAccess": "Enabled"
+  },
+  "apiReadinessStatus": 200,
+  "drillReceipt": "g4-postgres-restore-drill-2026-10-26.json",
+  "command": "az postgres flexible-server update -n biostackmcpg20260407e2 -g biostack-rg --backup-retention 35 --subscription 909e0322-c3c0-4bce-ae53-b3d2ed735bd4"
+}
