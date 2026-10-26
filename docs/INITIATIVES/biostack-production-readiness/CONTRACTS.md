@@ -1,10 +1,12 @@
 # Contracts
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 | ID | Owner | Contract | Current state | Amendment rule |
 |---|---|---|---|---|
 | C1 | Product/billing | `contracts/product-contract.v1.json` defines launch plans, monthly prices, entitlements, route aliases and health paths; no annual promise | implemented in v1.0.0; live approval blocked | Version bump plus generated mirrors, decision entry and dependent tests |
 | C2 | Auth/API | Magic-link session, protected-route return path and owner-scoped access | code evidence partial; live unverified | Auth/security review and scenario updates |
-| C3 | Consent/legal | Versioned observational consent precedes authenticated writes | API enforced; frontend/human approval failing | Legal/privacy approval and versioned migration |
+| C3 | Consent/legal | Versioned observational consent precedes authenticated writes | API enforced; consent text sign-off pending | AI council review + Clint sign-off, and versioned migration (legal items are known risks) |
 | C4 | Deployment | Tests pass before OIDC login; immutable SHA images; smoke then rollback | pre-mutation gate works; smoke/rollback absent | Platform review and rehearsed procedure |
 | C5 | Evidence | Status is environment-, commit-, config-, command- and date-specific | adopted here | Coordinator approval; never silently upgrade status |
 
