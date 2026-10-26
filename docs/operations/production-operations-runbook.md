@@ -90,13 +90,53 @@ Rollback: move traffic back only to a revision using the same application name, 
 
 ## 3. Rollback
 
-Deploys are immutable SHA-tagged images, so rollback is a revision flip — no rebuild:
+Check revision mode before choosing the rollback operation:
+```bash
+az containerapp show -n <api-app> -g "$RG" --query properties.configuration.activeRevisionsMode -o tsv
 ```
-az containerapp revision list -n <api-app> -g $RG -o table          # find last-good revision
-az containerapp ingress traffic set -n <api-app> -g $RG \
-  --revision-weight <last-good-revision>=100                        # instant traffic shift
+
+Production uses **Single** revision mode. Roll back by deploying the last-good revision's
+immutable image, preserving the current environment variables, secrets and probes. Do not
+change revision mode for a drill. Record the current image first so it can be restored:
+```bash
+CURRENT_IMAGE=$(az containerapp show -n <api-app> -g "$RG" --query 'properties.template.containers[0].image' -o tsv)
+ROLLBACK_IMAGE=$(az containerapp revision show -n <api-app> -g "$RG" --revision <last-good-revision> --query 'properties.template.containers[0].image' -o tsv)
+az containerapp update -n <api-app> -g "$RG" --image "$ROLLBACK_IMAGE" --output none
+node scripts/verify-containerapp-deployment.mjs --name <api-app> --resource-group "$RG" --expected-image "$ROLLBACK_IMAGE" --health-path /health/ready
+node scripts/smoke-prod.mjs
+az containerapp update -n <api-app> -g "$RG" --image "$CURRENT_IMAGE" --output none
+node scripts/verify-containerapp-deployment.mjs --name <api-app> --resource-group "$RG" --expected-image "$CURRENT_IMAGE" --health-path /health/ready
+node scripts/smoke-prod.mjs
 ```
-Same for the web app. Verify with the pinned smoke used in deploy.yml (`scripts/verify-containerapp-deployment.mjs`).
+Time each update through readiness and smoke completion. On a failed rollback smoke,
+restore the captured current image immediately and verify it before continuing. Two revision
+names can reference the same image: record that explicitly; redeploying them does not prove
+compatibility between different application versions. Record the image/digest, created revision,
+elapsed time and smoke result in a receipt under `docs/operations/`.
+
+In **Multiple** revision mode, a last-good active revision can instead receive traffic via
+`az containerapp ingress traffic set -n <api-app> -g "$RG" --revision-weight <last-good-revision>=100`.
+Same mode-specific procedure applies to the web app. The full production smoke checks both
+API and web; its expected active-compound count must track additions and retirements.
+
+### Ingress trust for per-IP controls
+
+`ClientIpResolver` serves both rate-limit partitions and claim-submitter hashing. Configure
+only measured ingress networks using `RateLimit__TrustedProxyNetworks__0=<CIDR>` (additional
+entries use consecutive indices), or `deploy-container-apps.ps1 -TrustedProxyNetworks @('<CIDR>')`
+under PowerShell 7.4 or newer. Existing `RateLimit:TrustedProxies` exact addresses still work.
+There is no implicit trust of private/CGNAT ranges. The resolver checks each network with
+`System.Net.IPNetwork.Contains`, normalizes IPv4-mapped socket addresses, and walks the
+forwarded chain from the right to the first untrusted address. Invalid CIDRs grant no trust;
+the deployment script rejects them before making changes.
+
+On 2026-10-26 the managed environment exposed no VNet/CIDR in its ARM settings. Read-only
+`/proc/net/tcp6` snapshots showed API port 5000 peers `100.100.0.36` and `100.100.0.174`, both in
+`100.100.0.0/24`; that narrow observed ingress range is the production setting. This is an
+observed platform allocation, not a guaranteed Azure subnet contract: remeasure after an
+environment/network change and repeat the 11 bogus-token auth-verification test. Do not
+broaden trust to all `100.64.0.0/10` or all private addresses. Azure appends the verified
+visitor address at the right of X-Forwarded-For; never select a caller-supplied leftmost value.
 
 **Rollback triggers (decide BEFORE deploying):** failed pinned smoke; 5xx > 5% in the 15 min after cutover; spine hash-chain verification failure; any Class-boundary regression on the public knowledge response (re-run the `.audit/prod-bpc157-*` probe).
 

@@ -179,6 +179,20 @@ builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
+    // Apply an aggregate IP budget before the narrower endpoint policies. Match a
+    // path segment so /apiary is excluded; /health and /health/ready stay unlimited.
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        httpContext.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase)
+            ? RateLimitPartition.GetFixedWindowLimiter(
+                ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
+                _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 300,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0,
+                })
+            : RateLimitPartition.GetNoLimiter("outside-api"));
+
     // PR-PROV-001 SG4: structured, non-PII rejection signal for the provider-access intake
     // endpoint only, so abuse volume is observable without adding any new stored PII (no IP,
     // email, or other request content is logged — only that a rejection occurred and when).
