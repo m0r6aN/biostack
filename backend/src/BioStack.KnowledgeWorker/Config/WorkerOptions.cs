@@ -71,6 +71,13 @@ public sealed class WorkerOptions
     public int MaxBatchSize { get; set; } = 50;
 
     /// <summary>
+    /// Refresh soft-retires published records that are no longer in the seed or discovered
+    /// records. If more than this many would retire in one run, none are retired and the run
+    /// fails, so a truncated or wrong seed can never unpublish the library. 0 disables retirement.
+    /// </summary>
+    public int MaxRetirementsPerRun { get; set; } = 10;
+
+    /// <summary>
     /// Path to the curated substance identity seed file (JSON).
     /// Relative to the worker's working directory or absolute.
     /// </summary>

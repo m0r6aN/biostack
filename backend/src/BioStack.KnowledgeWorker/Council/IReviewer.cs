@@ -108,7 +108,6 @@ public sealed class OpenAiCompatibleReviewer(CouncilReviewerOptions options, str
         var body = new JsonObject
         {
             ["model"] = options.Model,
-            ["temperature"] = 0,
             ["response_format"] = new JsonObject { ["type"] = "json_object" },
             ["messages"] = new JsonArray(
                 new JsonObject { ["role"] = "system", ["content"] = ReviewerPrompt.System },
@@ -142,7 +141,6 @@ public sealed class AnthropicReviewer(CouncilReviewerOptions options, string id,
         {
             ["model"] = options.Model,
             ["max_tokens"] = 2000,
-            ["temperature"] = 0,
             ["system"] = ReviewerPrompt.System,
             ["messages"] = new JsonArray(new JsonObject { ["role"] = "user", ["content"] = ReviewerPrompt.User(item) }),
         };

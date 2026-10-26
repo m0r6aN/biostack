@@ -17,6 +17,13 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$DataProtectionKeyVaultKeyIdentifier,
 
+    # Versionless Key Vault secret URI holding the claim-submission salt (ledger G2), e.g.
+    # https://kv-biostack-eus2.vault.azure.net/secrets/claim-submissions-salt. The API refuses
+    # to start in Production without it. Grant the API identity read access first
+    # (claim-submissions-salt.bicep).
+    [Parameter(Mandatory = $true)]
+    [string]$ClaimSubmissionsSaltSecretUri,
+
     [string]$DataProtectionManagedIdentityClientId = "",
     [string]$DataProtectionManagedIdentityResourceId = "",
 
@@ -44,6 +51,11 @@ $dataProtectionApplicationName = "BioStack.Api.SessionCookie.v1"
 if (-not $DataProtectionBlobUri.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DataProtectionBlobUri.Contains("?")) {
     throw "DataProtectionBlobUri must be an HTTPS Blob object URI without a SAS token or query string."
+}
+
+if (-not $ClaimSubmissionsSaltSecretUri.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase) -or
+    -not $ClaimSubmissionsSaltSecretUri.Contains("/secrets/")) {
+    throw "ClaimSubmissionsSaltSecretUri must be an HTTPS Key Vault secret URI (https://<vault>.vault.azure.net/secrets/<name>)."
 }
 
 if (-not $DataProtectionKeyVaultKeyIdentifier.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase)) {
@@ -133,6 +145,10 @@ $apiSecrets = @(
     "jwt-secret=$JwtSecret"
 )
 
+# Key Vault reference: the salt value never passes through this script or the shell history.
+$saltIdentityRef = if ($usesUserAssignedIdentity) { $DataProtectionManagedIdentityResourceId } else { "system" }
+$apiSecrets += "claim-submissions-salt=keyvaultref:$ClaimSubmissionsSaltSecretUri,identityref:$saltIdentityRef"
+
 if (-not [string]::IsNullOrWhiteSpace($SmtpPassword)) {
     $apiSecrets += "smtp-password=$SmtpPassword"
 }
@@ -148,7 +164,8 @@ $apiEnvVars = @(
     "Jwt__Secret=secretref:jwt-secret",
     "DataProtection__ApplicationName=$dataProtectionApplicationName",
     "DataProtection__BlobUri=$DataProtectionBlobUri",
-    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier"
+    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier",
+    "ClaimSubmissions__Salt=secretref:claim-submissions-salt"
 )
 
 if ($usesUserAssignedIdentity) {
@@ -266,7 +283,8 @@ $apiFinalEnvVars = @(
     "Jwt__Secret=secretref:jwt-secret",
     "DataProtection__ApplicationName=$dataProtectionApplicationName",
     "DataProtection__BlobUri=$DataProtectionBlobUri",
-    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier"
+    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier",
+    "ClaimSubmissions__Salt=secretref:claim-submissions-salt"
 )
 
 if ($usesUserAssignedIdentity) {

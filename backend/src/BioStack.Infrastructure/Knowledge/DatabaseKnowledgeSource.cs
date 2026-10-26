@@ -31,26 +31,57 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
             .OrderBy(k => k.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (canonicalMatch is not null)
+        if (canonicalMatch is not null && canonicalMatch.RetiredAtUtc is null)
         {
             return canonicalMatch;
         }
 
         var entries = await _dbContext.KnowledgeEntries
             .AsNoTracking()
+            .Where(k => k.RetiredAtUtc == null)
             .ToListAsync(cancellationToken);
 
         var ordered = entries.OrderBy(k => k.Id).ToList();
-        return ordered.FirstOrDefault(k =>
+
+        // A retired record that names its successor resolves to it, so old links and slugs
+        // (e.g. /knowledge/testolone) keep working after a merge.
+        if (canonicalMatch?.SupersededBy is { Length: > 0 } successor)
+        {
+            var successorMatch = ordered.FirstOrDefault(k =>
+                string.Equals(k.CanonicalName, successor, StringComparison.OrdinalIgnoreCase));
+            if (successorMatch is not null)
+            {
+                return successorMatch;
+            }
+        }
+
+        var match = ordered.FirstOrDefault(k =>
                    k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)))
                // Public dossier URLs use a slug (/knowledge/creatine-monohydrate, /knowledge/nad-plus).
                ?? ordered.FirstOrDefault(k => CompoundSlug.ForDossier(k.CanonicalName) == CompoundSlug.ForDossier(normalizedName));
+        if (match is not null)
+        {
+            return match;
+        }
+
+        // The slug of a retired, superseded record (/knowledge/testolone) resolves to its successor.
+        var requestedSlug = CompoundSlug.ForDossier(normalizedName);
+        var retired = await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .Where(k => k.RetiredAtUtc != null && k.SupersededBy != null)
+            .Select(k => new { k.CanonicalName, k.SupersededBy })
+            .ToListAsync(cancellationToken);
+        var superseded = retired.FirstOrDefault(r => CompoundSlug.ForDossier(r.CanonicalName) == requestedSlug);
+        return superseded is null
+            ? null
+            : ordered.FirstOrDefault(k => string.Equals(k.CanonicalName, superseded.SupersededBy, StringComparison.OrdinalIgnoreCase));
     }
 
     public async Task<List<KnowledgeEntry>> GetAllCompoundsAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.KnowledgeEntries
             .AsNoTracking()
+            .Where(k => k.RetiredAtUtc == null)
             .ToListAsync(cancellationToken);
     }
 
@@ -60,6 +91,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         // Dose, schedule, pairing, and optimization columns stay on the full-entity read.
         var rows = await _dbContext.KnowledgeEntries
             .AsNoTracking()
+            .Where(entry => entry.RetiredAtUtc == null)
             .Select(entry => new
             {
                 entry.Id,
@@ -106,6 +138,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
         var entries = await _dbContext.KnowledgeEntries
             .AsNoTracking()
+            .Where(k => k.RetiredAtUtc == null)
             .ToListAsync(cancellationToken);
 
         return entries
@@ -187,6 +220,38 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         return count;
     }
 
+    public async Task<IReadOnlyList<KnowledgeEntryIdentity>> ListActiveIdentitiesAsync(CancellationToken cancellationToken = default)
+    {
+        var rows = await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .Where(k => k.RetiredAtUtc == null)
+            .OrderBy(k => k.CanonicalName)
+            .Select(k => new { k.CanonicalName, k.Aliases })
+            .ToListAsync(cancellationToken);
+        return rows.Select(r => new KnowledgeEntryIdentity(r.CanonicalName, r.Aliases)).ToList();
+    }
+
+    public async Task<bool> RetireCompoundAsync(string canonicalName, string? supersededBy, DateTime retiredAtUtc, CancellationToken cancellationToken = default)
+    {
+        var normalized = (canonicalName ?? string.Empty).Trim().ToLowerInvariant();
+        var rows = await _dbContext.KnowledgeEntries
+            .Where(k => k.CanonicalName.ToLower() == normalized && k.RetiredAtUtc == null)
+            .ToListAsync(cancellationToken);
+        if (rows.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var row in rows)
+        {
+            row.RetiredAtUtc = retiredAtUtc;
+            row.SupersededBy = string.IsNullOrWhiteSpace(supersededBy) ? null : supersededBy.Trim();
+        }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
     private static bool ApplyChanges(KnowledgeEntry existing, KnowledgeEntry incoming)
     {
         incoming.Id = existing.Id;
@@ -211,6 +276,10 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         changed |= SetIfDifferent(existing.OptimizationExercise, incoming.OptimizationExercise, value => existing.OptimizationExercise = value);
         changed |= SetIfDifferent(existing.TieredDosing, incoming.TieredDosing, value => existing.TieredDosing = value, TieredDosingEquals);
         changed |= SetIfDifferent(existing.Details, incoming.Details, value => existing.Details = value, DetailsEquals);
+
+        // A record that is back in the seed is published again.
+        changed |= SetIfDifferent(existing.RetiredAtUtc, null, value => existing.RetiredAtUtc = value);
+        changed |= SetIfDifferent(existing.SupersededBy, null, value => existing.SupersededBy = value);
 
         changed |= SetListIfDifferent(existing.Aliases, incoming.Aliases, value => existing.Aliases = value);
         changed |= SetListIfDifferent(existing.SourceReferences, incoming.SourceReferences, value => existing.SourceReferences = value);

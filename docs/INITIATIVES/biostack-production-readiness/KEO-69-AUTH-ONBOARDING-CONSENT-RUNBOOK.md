@@ -1,5 +1,7 @@
 # KEO-69 Auth, Onboarding, Consent, and Return-Path Runbook
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 ## Deterministic boundary
 
 This lane hardens repository-verifiable behavior. It does not prove production email delivery, deployed callback configuration, approved consent wording, or a live browser session.
@@ -37,9 +39,9 @@ Before deployment, verify all of the following without copying secret values int
 - The API identity has `Storage Blob Data Contributor` at the dedicated container and `Key Vault Crypto User` at the wrapping key/vault. Production startup's protect/unprotect probe passes after role propagation.
 - Migration `20260713230000_AddVersionedConsentDecline` is present. Its reviewed SQL adds only `ConsentDeclinedAtUtc` and `ConsentDeclinedVersion` to `AppUsers`.
 
-## Human approval gate
+## Consent sign-off gate
 
-The consent page copy is implementation-ready but not legally approved by this lane. A human owner must approve the exact text and the `bio-observational-v1` disclosure version before live acceptance. Any material text change must either remain compatible with that version or deliberately bump the server version and require re-acceptance.
+The consent page copy is implementation-ready. The two-reviewer AI council reviews the exact text and the `bio-observational-v1` disclosure version, and Clint signs off before live acceptance (owner rulings 2026-10-25; no legal review). Any material text change must either remain compatible with that version or deliberately bump the server version and require re-acceptance.
 
 ## Authorized live evidence scenarios
 

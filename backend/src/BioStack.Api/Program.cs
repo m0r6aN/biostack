@@ -73,6 +73,7 @@ else
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+BioStack.Api.Security.ClaimSubmissionSaltConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionDataProtectionConfiguration.Configure(
     builder.Services,
     builder.Configuration,
@@ -568,7 +569,8 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddCheck<BioStack.Api.Health.DatabaseReadinessHealthCheck>("database", tags: new[] { BioStack.Api.Health.HealthEndpoints.ReadyTag });
 
 var app = builder.Build();
 
@@ -605,7 +607,16 @@ if (!app.Environment.IsProduction())
     });
 }
 
-app.MapHealthChecks(ProductContract.Current.Health.LivenessPath);
+// Liveness runs no dependency checks: a database outage must not restart healthy replicas.
+app.MapHealthChecks(ProductContract.Current.Health.LivenessPath, new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = _ => false,
+});
+// Readiness: the database is reachable (Container Apps readiness probe, deploy smoke).
+app.MapHealthChecks(BioStack.Api.Health.HealthEndpoints.ReadinessPath, new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = registration => registration.Tags.Contains(BioStack.Api.Health.HealthEndpoints.ReadyTag),
+});
 
 app.MapGet(ProductContract.Current.Health.KeonDependencyPath, async (IKeonRuntimeClient keon, CancellationToken ct) =>
 {

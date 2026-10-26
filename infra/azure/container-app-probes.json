@@ -1,0 +1,19 @@
+{
+  "_comment": "Ledger gate G3. Container Apps health probes for the API and web apps. Applied by apply-container-app-probes.sh, which merges them into the live app spec (the API and web apps are created by deploy-container-apps.ps1, not Bicep, so a Bicep resource would overwrite their whole configuration). Image updates in deploy.yml keep these probes.",
+  "api": {
+    "port": 5000,
+    "probes": [
+      { "type": "Startup",   "httpGet": { "path": "/health",       "port": 5000 }, "initialDelaySeconds": 3, "periodSeconds": 5,  "timeoutSeconds": 3, "failureThreshold": 36 },
+      { "type": "Liveness",  "httpGet": { "path": "/health",       "port": 5000 }, "periodSeconds": 15, "timeoutSeconds": 3, "failureThreshold": 3 },
+      { "type": "Readiness", "httpGet": { "path": "/health/ready", "port": 5000 }, "periodSeconds": 10, "timeoutSeconds": 6, "failureThreshold": 3, "successThreshold": 1 }
+    ]
+  },
+  "web": {
+    "port": 3000,
+    "probes": [
+      { "type": "Startup",   "tcpSocket": { "port": 3000 }, "initialDelaySeconds": 2, "periodSeconds": 5, "timeoutSeconds": 3, "failureThreshold": 24 },
+      { "type": "Liveness",  "tcpSocket": { "port": 3000 }, "periodSeconds": 15, "timeoutSeconds": 3, "failureThreshold": 3 },
+      { "type": "Readiness", "httpGet": { "path": "/robots.txt", "port": 3000 }, "periodSeconds": 10, "timeoutSeconds": 5, "failureThreshold": 3, "successThreshold": 1 }
+    ]
+  }
+}

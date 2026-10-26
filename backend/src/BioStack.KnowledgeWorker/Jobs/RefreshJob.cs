@@ -35,6 +35,7 @@ public sealed class RefreshJob : IngestionJobBase, IRefreshJob
 
     protected override string JobName    => "RefreshJob";
     protected override string ChangeType => "refresh";
+    protected override bool RetiresMissingRecords => true;
 
     protected override IEnumerable<string> AdditionalRecordFiles()
         => BioStack.KnowledgeWorker.Discovery.DiscoveredRecordStore.Files(DiscoveryJob.DiscoveredDirectories(Options));

@@ -27,6 +27,7 @@ public sealed class IngestionContext
     private int _publishedPendingReview;
     private int _flaggedForReview;
     private int _failed;
+    private int _retired;
 
     public int ScannedCount           => _scanned;
     public int CreatedCount           => _created;
@@ -37,6 +38,8 @@ public sealed class IngestionContext
     public int PublishedPendingReviewCount => _publishedPendingReview;
     public int FlaggedForReviewCount  => _flaggedForReview;
     public int FailedCount            => _failed;
+    /// <summary>Records soft-retired (or, in DryRun, that would be) because they are no longer in the seed.</summary>
+    public int RetiredCount           => _retired;
 
     private readonly List<PromotionPlanRow> _planRows = new();
 
@@ -64,6 +67,7 @@ public sealed class IngestionContext
     public void IncrementPublishedPendingReview() => Interlocked.Increment(ref _publishedPendingReview);
     public void IncrementFlaggedForReview()  => Interlocked.Increment(ref _flaggedForReview);
     public void IncrementFailed()            => Interlocked.Increment(ref _failed);
+    public void IncrementRetired()           => Interlocked.Increment(ref _retired);
 
     public void RecordPlanRow(string canonicalName, string action, string reason)
     {
@@ -87,8 +91,8 @@ public sealed class IngestionContext
             Logger.LogInformation(
                 "[{Job}] DRY-RUN summary — Scanned={Scanned} WouldCreate={Created} WouldUpdate={Updated} "
                 + "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} PendingReview={PendingReview} FlaggedForReview={Flagged} "
-                + "Failed={Failed} (no writes were made)",
-                jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _failed);
+                + "WouldRetire={Retired} Failed={Failed} (no writes were made)",
+                jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _retired, _failed);
             Logger.LogInformation("[{Job}] DRY-RUN per-record plan:\n{Table}", jobName, BuildPlanTable());
             return;
         }
@@ -96,8 +100,8 @@ public sealed class IngestionContext
         Logger.LogInformation(
             "[{Job}] Run complete — Scanned={Scanned} Created={Created} Updated={Updated} " +
             "Unchanged={Unchanged} SkippedUnpromoted={SkippedUnpromoted} PendingReview={PendingReview} FlaggedForReview={Flagged} " +
-            "Failed={Failed} DryRun={DryRun}",
-            jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _failed, DryRun);
+            "Retired={Retired} Failed={Failed} DryRun={DryRun}",
+            jobName, _scanned, _created, _updated, _unchanged, _skippedUnpromoted, _publishedPendingReview, _flaggedForReview, _retired, _failed, DryRun);
     }
 
     /// <summary>Renders <see cref="PlanRows"/> as a simple fixed-width text table.</summary>
