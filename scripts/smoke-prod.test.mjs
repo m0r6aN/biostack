@@ -17,21 +17,21 @@ function responses(count, { alias = vosilasarm, readinessStatus = 200 } = {}) {
 }
 
 test('passes all seven checks for the expected corpus and canonical alias lookup', async () => {
-  const result = await runProductionSmoke({ fetchImpl: responses(157) });
+  const result = await runProductionSmoke({ fetchImpl: responses(208) });
   assert.equal(result.passed, true);
   assert.equal(result.results.length, 7);
 });
 
 test('fails corpus drift without skipping the remaining smoke checks', async () => {
-  const result = await runProductionSmoke({ fetchImpl: responses(208) });
+  const result = await runProductionSmoke({ fetchImpl: responses(209) });
   assert.equal(result.passed, false);
-  assert.equal(result.observedActiveRecords, 208);
-  assert.match(result.results[1].error, /Expected 157 active records, got 208/);
+  assert.equal(result.observedActiveRecords, 209);
+  assert.match(result.results[1].error, /Expected 208 active records, got 209/);
   assert.equal(result.results.filter(r => r.passed).length, 6);
 });
 
 test('fails an unhealthy API and an alias that resolves to the retired name', async () => {
-  const result = await runProductionSmoke({ fetchImpl: responses(157, { readinessStatus: 503, alias: { ...vosilasarm, canonicalName: 'Testolone' } }) });
+  const result = await runProductionSmoke({ fetchImpl: responses(208, { readinessStatus: 503, alias: { ...vosilasarm, canonicalName: 'Testolone' } }) });
   assert.equal(result.passed, false);
   assert.equal(result.results[0].status, 503);
   assert.equal(result.results[4].passed, false);

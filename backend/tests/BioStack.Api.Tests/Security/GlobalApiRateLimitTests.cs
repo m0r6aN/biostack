@@ -22,6 +22,7 @@ public sealed class GlobalApiRateLimitTests
                 builder.UseSetting("Jwt:Secret", "global-api-limit-test-secret-at-least-32-chars");
                 builder.UseSetting("Jwt:Issuer", "biostack");
                 builder.UseSetting("Jwt:Audience", "biostack-ui");
+                builder.UseSetting("RateLimit:TrustedProxyNetworks:0", "100.100.0.0/24");
             });
             using var client = factory.CreateClient(); // Start the real application pipeline.
 
@@ -64,7 +65,9 @@ public sealed class GlobalApiRateLimitTests
                     http.Request.ContentType = "application/json";
                     http.Request.ContentLength = body.Length;
                     http.Request.Body = new MemoryStream(body);
-                    http.Connection.RemoteIpAddress = IPAddress.Parse("203.0.113.12");
+                    // Azure ingress peers rotate, but the appended visitor must retain one budget.
+                    http.Connection.RemoteIpAddress = IPAddress.Parse($"100.100.0.{174 + index % 2}");
+                    http.Request.Headers["X-Forwarded-For"] = $"203.0.113.{index + 1}, 198.51.100.22";
                 });
                 Assert.Equal(index < 10 ? 400 : 429, verification.Response.StatusCode);
             }

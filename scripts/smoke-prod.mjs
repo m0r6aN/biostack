@@ -3,7 +3,8 @@ import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-export const EXPECTED_ACTIVE_RECORDS = 157;
+// Update this count when compounds are added or retired.
+export const EXPECTED_ACTIVE_RECORDS = 208;
 
 function requireCompound(value, canonicalName) {
   if (value?.canonicalName !== canonicalName) throw new Error(`Expected ${canonicalName}, got ${value?.canonicalName ?? 'no canonical name'}`);

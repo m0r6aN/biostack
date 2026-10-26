@@ -14,12 +14,14 @@ public static class ClientIpResolver
             return "unknown";
         }
 
-        // Loopback and RateLimit:TrustedProxies only. Private and CGNAT ranges are not trusted.
+        // Trust only loopback, explicit addresses, and explicitly configured CIDRs.
+        // Private and CGNAT ranges are never trusted implicitly.
         var trusted = TrustedProxyAddresses(configuration);
-        if (IsTrustedProxy(remote, trusted) &&
+        var networks = TrustedProxyNetworks(configuration);
+        if (IsTrustedProxy(remote, trusted, networks) &&
             httpContext.Request.Headers.TryGetValue(ForwardedForHeader, out var forwarded))
         {
-            var client = RightmostUntrustedForwardedAddress(forwarded.ToString(), trusted);
+            var client = RightmostUntrustedForwardedAddress(forwarded.ToString(), trusted, networks);
             if (client is not null)
             {
                 return Normalize(client);
@@ -40,14 +42,26 @@ public static class ClientIpResolver
         return normalized.Length is 0 or > 254 ? null : normalized;
     }
 
-    private static bool IsTrustedProxy(IPAddress remote, HashSet<string> trusted)
+    private static bool IsTrustedProxy(IPAddress remote, HashSet<string> trusted, System.Net.IPNetwork[] networks)
     {
         if (IPAddress.IsLoopback(remote))
         {
             return true;
         }
 
-        return trusted.Contains(Normalize(remote));
+        var address = remote.IsIPv4MappedToIPv6 ? remote.MapToIPv4() : remote;
+        return trusted.Contains(Normalize(address)) || networks.Any(network => network.Contains(address));
+    }
+
+    private static System.Net.IPNetwork[] TrustedProxyNetworks(IConfiguration configuration)
+    {
+        var configured = configuration.GetSection("RateLimit:TrustedProxyNetworks").Get<string[]>() ?? [];
+        // Invalid entries grant no trust, matching the exact-address setting's fail-closed behavior.
+        return configured
+            .Select(value => System.Net.IPNetwork.TryParse(value, out var network) ? (System.Net.IPNetwork?)network : null)
+            .Where(network => network.HasValue)
+            .Select(network => network!.Value)
+            .ToArray();
     }
 
     private static HashSet<string> TrustedProxyAddresses(IConfiguration configuration)
@@ -65,7 +79,7 @@ public static class ClientIpResolver
         return parsed;
     }
 
-    private static IPAddress? RightmostUntrustedForwardedAddress(string header, HashSet<string> trusted)
+    private static IPAddress? RightmostUntrustedForwardedAddress(string header, HashSet<string> trusted, System.Net.IPNetwork[] networks)
     {
         var hops = header.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         for (var index = hops.Length - 1; index >= 0; index--)
@@ -75,7 +89,7 @@ public static class ClientIpResolver
                 return null;
             }
 
-            if (!IsTrustedProxy(address, trusted))
+            if (!IsTrustedProxy(address, trusted, networks))
             {
                 return address;
             }

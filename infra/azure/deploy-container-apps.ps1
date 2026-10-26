@@ -27,6 +27,9 @@ param(
     [string]$DataProtectionManagedIdentityClientId = "",
     [string]$DataProtectionManagedIdentityResourceId = "",
 
+    # Explicit ingress CIDRs, discovered for this environment. No broad private-network default.
+    [string[]]$TrustedProxyNetworks = @(),
+
     # PostgreSQL is the required production provider. SQLite was a temporary
     # bootstrap option: it stores data on ephemeral revision storage (no mount
     # is defined in this script), so a deploy or restart destroys it.
@@ -47,6 +50,16 @@ param(
 $ErrorActionPreference = "Stop"
 
 $dataProtectionApplicationName = "BioStack.Api.SessionCookie.v1"
+
+foreach ($network in $TrustedProxyNetworks) {
+    $parsedNetwork = [System.Net.IPNetwork]::Parse("0.0.0.0/0")
+    if (-not [System.Net.IPNetwork]::TryParse($network, [ref]$parsedNetwork)) {
+        throw "TrustedProxyNetworks must contain valid CIDRs: '$network'."
+    }
+}
+$trustedProxyEnvVars = for ($index = 0; $index -lt $TrustedProxyNetworks.Count; $index++) {
+    "RateLimit__TrustedProxyNetworks__${index}=$($TrustedProxyNetworks[$index])"
+}
 
 if (-not $DataProtectionBlobUri.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DataProtectionBlobUri.Contains("?")) {
@@ -167,6 +180,7 @@ $apiEnvVars = @(
     "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier",
     "ClaimSubmissions__Salt=secretref:claim-submissions-salt"
 )
+$apiEnvVars += @($trustedProxyEnvVars)
 
 if ($usesUserAssignedIdentity) {
     $apiEnvVars += "DataProtection__ManagedIdentityClientId=$DataProtectionManagedIdentityClientId"
@@ -286,6 +300,7 @@ $apiFinalEnvVars = @(
     "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier",
     "ClaimSubmissions__Salt=secretref:claim-submissions-salt"
 )
+$apiFinalEnvVars += @($trustedProxyEnvVars)
 
 if ($usesUserAssignedIdentity) {
     $apiFinalEnvVars += "DataProtection__ManagedIdentityClientId=$DataProtectionManagedIdentityClientId"
