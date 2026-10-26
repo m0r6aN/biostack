@@ -24,4 +24,23 @@ public interface IKnowledgeSource
     /// and per-record table reflect a real diff instead of always reading zero.
     /// </summary>
     Task<KnowledgeUpsertDisposition> PreviewUpsertAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Records that are currently published (not retired), as canonical name plus aliases.
+    /// Refresh uses this to find records that are no longer in the seed. The default returns
+    /// nothing, so sources without retirement support never retire anything.
+    /// </summary>
+    Task<IReadOnlyList<KnowledgeEntryIdentity>> ListActiveIdentitiesAsync(CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<KnowledgeEntryIdentity>>(Array.Empty<KnowledgeEntryIdentity>());
+
+    /// <summary>
+    /// Soft-retires a published record: it stays in storage (for audit and redirects) but is
+    /// excluded from every public read. <paramref name="supersededBy"/> names the record that
+    /// absorbed it, so a lookup by the retired name resolves to the successor.
+    /// </summary>
+    Task<bool> RetireCompoundAsync(string canonicalName, string? supersededBy, DateTime retiredAtUtc, CancellationToken cancellationToken = default)
+        => throw new NotSupportedException("This knowledge source does not support retirement.");
 }
+
+/// <summary>Canonical name and aliases of a stored knowledge entry.</summary>
+public sealed record KnowledgeEntryIdentity(string CanonicalName, IReadOnlyList<string> Aliases);

@@ -119,8 +119,8 @@ public sealed class AiCouncilTests
         {
             Reviewers =
             {
-                new CouncilReviewerOptions { Id = "a", Provider = "openai-compatible", Model = "gpt-x", Endpoint = "https://llm.example/v1/", ApiKey = "key-a" },
-                new CouncilReviewerOptions { Id = "b", Provider = "anthropic", Model = "claude-x", ApiKey = "key-b" },
+                new CouncilReviewerOptions { Id = "a", Provider = "openai-compatible", Model = "gpt-6-astra", Endpoint = "https://llm.example/v1/", ApiKey = "key-a" },
+                new CouncilReviewerOptions { Id = "b", Provider = "anthropic", Model = "claude-opus-5-5", ApiKey = "key-b" },
             },
         };
         var reviewers = ReviewerFactory.Create(options, handler);
@@ -129,10 +129,19 @@ public sealed class AiCouncilTests
 
         Assert.Equal("https://llm.example/v1/chat/completions", handler.Requests[0].Uri);
         Assert.Equal("Bearer key-a", handler.Requests[0].Headers["Authorization"]);
-        Assert.Equal("gpt-x", JsonNode.Parse(handler.Requests[0].Body)!["model"]!.GetValue<string>());
+        Assert.Equal("gpt-6-astra", JsonNode.Parse(handler.Requests[0].Body)!["model"]!.GetValue<string>());
         Assert.Equal("https://api.anthropic.com/v1/messages", handler.Requests[1].Uri);
         Assert.Equal("key-b", handler.Requests[1].Headers["x-api-key"]);
         Assert.Equal("2023-06-01", handler.Requests[1].Headers["anthropic-version"]);
+        Assert.Equal("claude-opus-5-5", JsonNode.Parse(handler.Requests[1].Body)!["model"]!.GetValue<string>());
+        // These production models reject custom sampling parameters.
+        foreach (var request in handler.Requests)
+        {
+            var body = JsonNode.Parse(request.Body)!.AsObject();
+            Assert.False(body.ContainsKey("temperature"));
+            Assert.False(body.ContainsKey("top_p"));
+            Assert.False(body.ContainsKey("top_k"));
+        }
         Assert.Equal("approve", va.Decision);
         Assert.Equal("Early Evidence", vb.ProposedTier);
     }

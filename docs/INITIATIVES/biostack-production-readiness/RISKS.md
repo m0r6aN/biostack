@@ -1,10 +1,12 @@
 # Risks
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 | ID | Risk | Severity | Mitigation/owner | Status |
 |---|---|---|---|---|
 | R1 | Main deploy is red from test drift and worker exhaustion | critical | focused CI repair, bounded workers, rerun exact SHA / T1,T5 | open |
 | R2 | Billing code and live Stripe configuration may diverge | critical | config review + lifecycle test / T3 | open |
-| R3 | Unapproved policy/consent creates legal exposure | critical | human approval + versioned acceptance / T6 | open |
+| R3 | Unapproved policy/consent creates legal exposure | critical | known risk (no legal review); AI council review + Clint sign-off of consent text, versioned acceptance / T6 | open (non-blocking) |
 | R4 | Missing backup/restore, probes, monitoring and rollback hides or prolongs outage | critical | operational parcels and drills / T5 | open |
 | R5 | Auth/ownership failure could expose customer data | critical | live auth and isolation/security review / T1,T2,T6 | open |
 | R6 | Provider leads lack notification/SLA/retention ownership | high | operational contract / T4 | open |

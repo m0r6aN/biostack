@@ -52,6 +52,12 @@ public abstract class IngestionJobBase : IIngestionJob
     /// </summary>
     protected virtual IEnumerable<string> AdditionalRecordFiles() => Array.Empty<string>();
 
+    /// <summary>
+    /// When true (RefreshJob), published records missing from the seed and discovered records
+    /// are soft-retired after the upserts. SeedJob never retires.
+    /// </summary>
+    protected virtual bool RetiresMissingRecords => false;
+
     public async Task<JobRunResult> RunAsync(IngestionContext context, CancellationToken cancellationToken = default)
     {
         context.Logger.LogInformation(
@@ -130,8 +136,136 @@ public abstract class IngestionJobBase : IIngestionJob
             }
         }
 
+        if (RetiresMissingRecords && !cancellationToken.IsCancellationRequested)
+        {
+            await RetireMissingAsync(result, context, cancellationToken);
+        }
+
         context.LogSummary(JobName);
         return JobRunResult.FromContext(context);
+    }
+
+    /// <summary>
+    /// Soft-retires published rows whose record is no longer in the seed or discovered records.
+    /// A retired name that is an alias of a current record is marked superseded by it, so
+    /// lookups and redirects by the old name resolve to the successor. Fails safe: nothing is
+    /// retired when the seed produced no records, when any record failed to write or preview,
+    /// when a rejected record has no readable name, or when more than <see cref="WorkerOptions.MaxRetirementsPerRun"/> rows would retire.
+    /// </summary>
+    private async Task RetireMissingAsync(PipelineResult result, IngestionContext context, CancellationToken ct)
+    {
+        if (Options.MaxRetirementsPerRun <= 0)
+        {
+            return;
+        }
+
+        if (result.Accepted.Count == 0)
+        {
+            context.Logger.LogWarning("[{Job}] Retirement skipped: the seed produced no accepted records.", JobName);
+            return;
+        }
+
+        if (context.FailedCount > result.Rejected.Count)
+        {
+            context.Logger.LogWarning("[{Job}] Retirement skipped: some records failed to write or preview in this run.", JobName);
+            return;
+        }
+
+        if (result.Rejected.Any(r => string.IsNullOrWhiteSpace(r.CanonicalNameOrEmpty)))
+        {
+            context.Logger.LogWarning("[{Job}] Retirement skipped: a rejected record has no readable name, so its stored row cannot be told apart.", JobName);
+            return;
+        }
+
+        static string Key(string name) => name.Trim().ToLowerInvariant();
+
+        var known = new HashSet<string>(StringComparer.Ordinal);
+        var successorByAlias = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var prepared in result.Accepted)
+        {
+            var canonical = prepared.Record.Identity.CanonicalName;
+            known.Add(Key(canonical));
+            foreach (var alias in prepared.Record.Identity.Aliases ?? new List<string>())
+            {
+                if (!string.IsNullOrWhiteSpace(alias))
+                {
+                    successorByAlias.TryAdd(Key(alias), canonical);
+                }
+            }
+        }
+
+        foreach (var rejected in result.Rejected)
+        {
+            known.Add(Key(rejected.CanonicalNameOrEmpty));
+        }
+
+        IReadOnlyList<KnowledgeEntryIdentity> active;
+        try
+        {
+            active = await KnowledgeSource.ListActiveIdentitiesAsync(ct);
+        }
+        catch (Exception ex)
+        {
+            context.IncrementFailed();
+            context.Logger.LogError(ex, "[{Job}] Retirement failed: could not list published records.", JobName);
+            return;
+        }
+
+        var candidates = active
+            .Where(a => !known.Contains(Key(a.CanonicalName)))
+            .Select(a => (Name: a.CanonicalName, SupersededBy: successorByAlias.GetValueOrDefault(Key(a.CanonicalName))))
+            .ToList();
+
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        if (candidates.Count > Options.MaxRetirementsPerRun)
+        {
+            context.IncrementFailed();
+            foreach (var c in candidates)
+            {
+                context.RecordPlanRow(c.Name, "retire-blocked",
+                    $"{candidates.Count} records would retire; limit is {Options.MaxRetirementsPerRun} (Worker:MaxRetirementsPerRun)");
+            }
+            context.Logger.LogError(
+                "[{Job}] Retirement blocked: {Count} published records are missing from the seed (limit {Limit}). Nothing was retired.",
+                JobName, candidates.Count, Options.MaxRetirementsPerRun);
+            return;
+        }
+
+        var now = DateTime.UtcNow;
+        foreach (var (name, supersededBy) in candidates)
+        {
+            var reason = supersededBy is null
+                ? "no longer in the seed or discovered records"
+                : $"merged into {supersededBy}; lookups by this name resolve to it";
+
+            if (context.DryRun)
+            {
+                context.IncrementRetired();
+                context.RecordPlanRow(name, "would-retire", reason);
+                context.Logger.LogInformation("[{Job}] DRY-RUN would retire '{Name}': {Reason}", JobName, name, reason);
+                continue;
+            }
+
+            try
+            {
+                if (await KnowledgeSource.RetireCompoundAsync(name, supersededBy, now, ct))
+                {
+                    context.IncrementRetired();
+                    context.RecordPlanRow(name, "retired", reason);
+                    context.Logger.LogInformation("[{Job}] RETIRED '{Name}': {Reason}", JobName, name, reason);
+                }
+            }
+            catch (Exception ex)
+            {
+                context.IncrementFailed();
+                context.RecordPlanRow(name, "retire-failed", $"{ex.GetType().Name}: see the corresponding error log");
+                context.Logger.LogError(ex, "[{Job}] RETIRE FAIL name='{Name}'", JobName, name);
+            }
+        }
     }
 
     private async Task ApplyAsync(PreparedRecord prepared, IngestionContext context, CancellationToken ct)

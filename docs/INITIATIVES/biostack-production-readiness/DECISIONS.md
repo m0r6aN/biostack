@@ -1,9 +1,11 @@
 # Decisions
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 | ID | Decision | Status | Owner/evidence |
 |---|---|---|---|
 | D1 | Launch packaging implemented as monthly-only; annual checkout is not offered | implemented, human/live-config approval pending | Product + billing owner; PR #181 |
-| D2 | Release verdict remains NO-GO/HOLD until every blocking gate has evidence | active | Release owner |
+| D2 | Release verdict remains NO-GO/HOLD until every blocking gate has evidence | active | Clinton Morgan (sole owner) |
 | D3 | `a37726a` is the current evidence baseline | active | Coordinator reconciliation |
 | D4 | Latest failed deployment did not mutate Azure because pre-deploy tests failed | observed | Run `29166449446` |
 | D5 | Legal placeholders remain contained/noindex, not approved policy | active | Legal/privacy approval required |

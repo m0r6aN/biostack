@@ -36,6 +36,12 @@ public sealed class KnowledgeEntry
     // Full record detail (safety, claims, doses from both sides, sources, field authority).
     public KnowledgeEntryDetails? Details { get; set; }
 
+    // Soft retirement. Refresh sets these when a record is no longer in the seed or
+    // discovered records. Retired rows are kept for audit and redirects, but public reads skip them.
+    // SupersededBy names the record that absorbed this one (e.g. Testolone -> Vosilasarm).
+    public DateTime? RetiredAtUtc { get; set; }
+    public string? SupersededBy { get; set; }
+
     // Optimization
     public string OptimizationProtein { get; set; } = string.Empty;
     public string OptimizationCarbs { get; set; } = string.Empty;

@@ -99,3 +99,16 @@ infra/azure/apply-container-app-probes.sh <rg> <api-app> <web-app> 1            
 ```
 
 The fourth argument is `minReplicas`. With `1`, one replica per app is always on: there are no cold starts, and that replica is billed continuously. With `0`, apps scale to zero, which is cheaper, but the first request after an idle period waits for a cold start. A 46.8 s first request was observed on 2026-10-25. Image updates in `deploy.yml` keep the probes.
+## Claim-submission salt (ledger G2)
+
+In Production the API refuses to start unless `ClaimSubmissions__Salt` is set to a private value of at least 32 characters. The public development default is rejected. Set it up once:
+
+1. `az keyvault secret set --vault-name <vault> --name claim-submissions-salt --value "$(openssl rand -hex 32)"`
+   - Create it once and never rotate it casually. Rotating it splits each submitter's history.
+2. `az deployment group create -g <rg> -f infra/azure/claim-submissions-salt.bicep -p keyVaultName=<vault> apiAppName=<api-app>`
+   - This grants the API's system identity *Key Vault Secrets User* on that one secret.
+3. Point the API at the secret. Either:
+   - pass `-ClaimSubmissionsSaltSecretUri https://<vault>.vault.azure.net/secrets/claim-submissions-salt` to `deploy-container-apps.ps1`, or
+   - on an existing app, run:
+     - `az containerapp secret set -n <api-app> -g <rg> --secrets "claim-submissions-salt=keyvaultref:<uri>,identityref:system"`
+     - `az containerapp update -n <api-app> -g <rg> --set-env-vars "ClaimSubmissions__Salt=secretref:claim-submissions-salt"`

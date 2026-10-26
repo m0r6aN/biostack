@@ -1,5 +1,7 @@
 # BioStack Production Readiness
 
+> **2026-10-25 owner rulings (supersede this file where they conflict):** Clinton Morgan is the sole owner, operator and decision maker; his sign-off is final. No human-gated approval: the two-reviewer AI council (`docs/operations/ai-council-review.md`) is the content/approval gate, and disagreement escalates to Clint with options. No legal review: legal items are known risks, not blockers. Current gates: `docs/launch-readiness-ledger.md`.
+
 Durable coordination state for initiative `biostack-production-readiness`.
 
 **Status:** active, release blocked. **Recommendation:** **NO-GO / HOLD**.
@@ -15,4 +17,4 @@ The original hosted evidence baseline is `main@a37726a4df9b73378e46232b849f409db
 - [Decisions](DECISIONS.md), [Risks](RISKS.md), [Evidence](EVIDENCE.md)
 - [Session handoff](SESSION-HANDOFF.md), [Final handoff](FINAL-HANDOFF.md)
 
-Only the release owner may change the recommendation after all blocking gates have environment-specific evidence.
+Only Clinton Morgan changes the recommendation. The ranked remaining gates are in `docs/launch-readiness-ledger.md`.

@@ -65,6 +65,7 @@ builder.Logging.AddConsole();
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+BioStack.Api.Security.ClaimSubmissionSaltConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionDataProtectionConfiguration.Configure(
     builder.Services,
     builder.Configuration,

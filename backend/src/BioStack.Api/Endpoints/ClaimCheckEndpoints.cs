@@ -3,6 +3,7 @@ namespace BioStack.Api.Endpoints;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using BioStack.Api.Security;
 using BioStack.Application.Services;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Persistence;
@@ -93,9 +94,11 @@ public static partial class ClaimCheckEndpoints
         try { basis = $"u:{user.GetCurrentUserId()}"; }
         catch (Exception ex) when (ex is UnauthorizedAccessException or InvalidOperationException)
         {
-            basis = $"a:{http.Connection.RemoteIpAddress}:{DateTime.UtcNow:yyyy-MM-dd}";
+            // Same proxy-aware client address the rate limiter uses; behind the Container Apps
+            // ingress the raw socket address is the proxy, which would merge every anonymous submitter.
+            basis = $"a:{ClientIpResolver.PartitionKey(http, config)}:{DateTime.UtcNow:yyyy-MM-dd}";
         }
-        var salt = config["ClaimSubmissions:Salt"] ?? "biostack-claim-submissions";
+        var salt = ClaimSubmissionSaltConfiguration.Resolve(config);
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{salt}|{basis}"))).ToLowerInvariant()[..32];
     }
 }
