@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import path from "path";
+import { calculatorSecurityHeaders } from "./src/lib/calculatorSecurity";
 import { mergedRecordRedirects } from "./src/lib/mergedRecords";
 
 const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050').replace(/\/$/, '');
@@ -33,6 +34,8 @@ const nextConfig: NextConfig = {
           { key: 'Referrer-Policy', value: 'no-referrer' },
         ],
       },
+      // Calculator pages: same-origin network only, no third-party scripts (see src/lib/calculatorSecurity.ts).
+      ...calculatorSecurityHeaders(),
     ];
   },
   async redirects() {

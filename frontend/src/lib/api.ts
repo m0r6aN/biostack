@@ -25,7 +25,6 @@ import {
     ProtocolConsolePayload,
     ProtocolAnalyzerResult,
     Protocol,
-    ProtocolComputationRecord,
     ProtocolDriftSnapshot,
     ProtocolPatternSnapshot,
     ProtocolSequenceExpectationSnapshot,
@@ -262,21 +261,6 @@ export class ApiClient {
     return this.request<ProtocolReviewCompletedEvent>(`/api/v1/protocols/${protocolId}/review/complete`, {
       method: 'POST',
       body: JSON.stringify({ runId, notes }),
-    });
-  }
-
-  async recordProtocolComputation(
-    protocolId: string,
-    payload: {
-      runId?: string | null;
-      type: string;
-      inputSnapshot: string;
-      outputResult: string;
-    }
-  ): Promise<ProtocolComputationRecord> {
-    return this.request<ProtocolComputationRecord>(`/api/v1/protocols/${protocolId}/computations`, {
-      method: 'POST',
-      body: JSON.stringify(payload),
     });
   }
 

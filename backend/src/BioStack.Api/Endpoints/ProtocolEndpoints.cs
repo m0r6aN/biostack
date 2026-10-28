@@ -63,10 +63,6 @@ public static class ProtocolEndpoints
             .WithName("CompleteProtocolReview")
             .RequireConsent();
 
-        protocolGroup.MapPost("/{id}/computations", RecordComputation)
-            .WithName("RecordProtocolComputation")
-            .RequireConsent();
-
         protocolGroup.MapPost("/{id}/runs", StartRun)
             .WithName("StartProtocolRun")
             .RequireConsent();
@@ -287,23 +283,6 @@ public static class ProtocolEndpoints
         catch (FeatureLimitExceededException ex)
         {
             return ProductGate(ex);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
-    }
-
-    private static async Task<IResult> RecordComputation(Guid id, CreateProtocolComputationRequest request, IProtocolService protocolService, CancellationToken ct)
-    {
-        try
-        {
-            var computation = await protocolService.RecordComputationAsync(id, request, ct);
-            return Results.Created($"/api/v1/protocols/{id}/computations/{computation.Id}", computation);
-        }
-        catch (InvalidOperationException ex) when (ex.Message.Contains("type", StringComparison.OrdinalIgnoreCase))
-        {
-            return Results.BadRequest(new { error = ex.Message });
         }
         catch (InvalidOperationException)
         {
