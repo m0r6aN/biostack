@@ -52,6 +52,7 @@ public sealed class BioStackDbContext : DbContext
     // Growth Phase 7: claim checker query log + "Submit a claim you saw" (migration 20261025010000).
     public DbSet<ClaimCheckQuery> ClaimCheckQueries { get; set; }
     public DbSet<ClaimSubmission> ClaimSubmissions { get; set; }
+    public DbSet<AccountDeletionRecord> AccountDeletionRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -515,6 +516,12 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(s => s.Theme).HasMaxLength(64);
             entity.HasIndex(s => new { s.Status, s.CreatedAtUtc });
             entity.HasIndex(s => new { s.CompoundSlug, s.Theme, s.Status });
+        });
+
+        // Non-identifying by design: no user key of any kind (see AccountDeletionRecord).
+        modelBuilder.Entity<AccountDeletionRecord>(entity =>
+        {
+            entity.HasKey(r => r.Id);
         });
 
         modelBuilder.Entity<LeadCapture>(entity =>

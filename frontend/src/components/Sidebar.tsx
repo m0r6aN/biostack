@@ -182,6 +182,7 @@ const navItems = [
   { label: 'Audit Receipts',       href: '/governance/receipts', icon: <IconReceipts />,      adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
   { label: 'Account Security',     href: '/account/security', icon: <IconSecurity />,         adminOnly: false, exact: false },
+  { label: 'Your Data',            href: '/account/data',     icon: <IconSecurity />,         adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
   { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: true,  exact: false },
 ];

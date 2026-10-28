@@ -98,6 +98,14 @@ public static partial class ClaimCheckEndpoints
             // ingress the raw socket address is the proxy, which would merge every anonymous submitter.
             basis = $"a:{ClientIpResolver.PartitionKey(http, config)}:{DateTime.UtcNow:yyyy-MM-dd}";
         }
+        return HashSubmitterBasis(basis, config);
+    }
+
+    /// <summary>The key a signed-in user's submissions carry. Account export and deletion recompute it to find them.</summary>
+    internal static string SubmitterKeyForUser(Guid userId, IConfiguration config) => HashSubmitterBasis($"u:{userId}", config);
+
+    private static string HashSubmitterBasis(string basis, IConfiguration config)
+    {
         var salt = ClaimSubmissionSaltConfiguration.Resolve(config);
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{salt}|{basis}"))).ToLowerInvariant()[..32];
     }
