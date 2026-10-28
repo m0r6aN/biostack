@@ -20,6 +20,7 @@ import { TimelineFilter } from '@/components/timeline/TimelineFilter';
 import { BrandGlowCard } from '@/components/ui/BrandGlowCard';
 import type { EarnedSuggestion } from '@/lib/earnedSuggestions';
 import type { CalculatorResult, CheckIn, CompoundRecord, GoalDefinition, InteractionFlag, TimelineEvent } from '@/lib/types';
+import type { ComponentProps } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -483,9 +484,39 @@ describe('UnifiedDosingCalculator', () => {
     expect(screen.getByText('Custom description')).toBeInTheDocument();
   });
 
-  it('shows Attach to Protocol button when onRecord is provided', () => {
-    render(<UnifiedDosingCalculator onRecord={vi.fn()} />);
-    expect(screen.getByText('Attach to Protocol')).toBeInTheDocument();
+  it('has no way to attach or record a calculation, even if a legacy onRecord prop is passed', () => {
+    const onRecord = vi.fn();
+    const legacyProps = { onRecord } as unknown as ComponentProps<typeof UnifiedDosingCalculator>;
+    render(<UnifiedDosingCalculator {...legacyProps} />);
+    enterUnified();
+    expect(screen.queryByText(/attach to protocol/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /attach|record|save/i })).not.toBeInTheDocument();
+    expect(onRecord).not.toHaveBeenCalled();
+  });
+
+  it('shows the safety notice and the U-100-only notice before any result is calculated', () => {
+    render(<UnifiedDosingCalculator />);
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+    expect(screen.getByText(/mathematical calculation only/i)).toBeInTheDocument();
+    expect(screen.getByText(/U-100 syringes only/i)).toBeInTheDocument();
+    expect(screen.getByText(/U-40 and U-50 syringes are not supported/i)).toBeInTheDocument();
+  });
+
+  it('renders the safety notice ahead of the result in document order', () => {
+    render(<UnifiedDosingCalculator />);
+    enterUnified();
+    const notice = screen.getByText(/mathematical calculation only/i);
+    const meter = screen.getByRole('meter', { name: /calculated draw/i });
+    expect(notice.compareDocumentPosition(meter) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('rejects a fractional number of doses with a clear message instead of rounding', () => {
+    render(<UnifiedDosingCalculator />);
+    enterUnified();
+    fireEvent.click(screen.getByRole('button', { name: /daily total/i }));
+    fireEvent.change(screen.getByLabelText(/^Doses per day/), { target: { value: '2.5' } });
+    expect(screen.getByText(/whole number of doses/i)).toBeInTheDocument();
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
   });
 
   it('opens with no prefilled dose values, a neutral placeholder, and no result or error', () => {

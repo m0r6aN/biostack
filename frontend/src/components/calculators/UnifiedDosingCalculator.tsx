@@ -12,7 +12,6 @@ import {
   type DoseBasis,
   type MassUnit,
   type UnifiedDosingInput,
-  type UnifiedDosingResult,
   parseNumberInput,
   tryCalculateUnifiedDosing,
 } from '@/lib/dosingCalculator';
@@ -20,9 +19,6 @@ import {
 interface UnifiedDosingCalculatorProps {
   title?: string;
   description?: string;
-  attachedMessage?: string | null;
-  isRecording?: boolean;
-  onRecord?: (input: UnifiedDosingInput, result: UnifiedDosingResult) => Promise<void>;
 }
 
 const massUnits: MassUnit[] = ['mcg', 'mg', 'g'];
@@ -31,27 +27,10 @@ const concentrationUnits: ConcentrationUnit[] = ['mcg/mL', 'mg/mL'];
 export function UnifiedDosingCalculator({
   title = 'Reconstitution & Dosing Calculator',
   description = 'Calculate concentration, dose volume, unit conversions, and daily or weekly split math in one place.',
-  attachedMessage,
-  isRecording = false,
-  onRecord,
 }: UnifiedDosingCalculatorProps) {
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
-  const [recordError, setRecordError] = useState<string | null>(null);
 
   const calculation = useMemo(() => tryCalculateUnifiedDosing(input), [input]);
-
-  async function handleRecord() {
-    if (!onRecord || !calculation.result) {
-      return;
-    }
-
-    try {
-      setRecordError(null);
-      await onRecord(input, calculation.result);
-    } catch (error) {
-      setRecordError(error instanceof Error ? error.message : 'Could not attach calculation');
-    }
-  }
 
   const result = calculation.result;
 
@@ -64,16 +43,6 @@ export function UnifiedDosingCalculator({
           <p className="mt-2 max-w-3xl text-sm leading-6 text-white/55">{description}</p>
         </div>
 
-        {onRecord && (
-          <button
-            type="button"
-            onClick={handleRecord}
-            disabled={!result || isRecording}
-            className="rounded-lg bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/35"
-          >
-            {isRecording ? 'Attaching...' : 'Attach to Protocol'}
-          </button>
-        )}
       </div>
 
       <div className="mt-5 grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
@@ -170,6 +139,9 @@ export function UnifiedDosingCalculator({
         </div>
 
         <div className="space-y-4">
+          <SafetyDisclaimer type="calculation" />
+          <p className="text-xs text-white/45">Draw volumes are shown for U-100 syringes only (100 units = 1 mL). U-40 and U-50 syringes are not supported.</p>
+
           {calculation.error && (
             <div className="rounded-lg border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
               {calculation.error}
@@ -196,21 +168,9 @@ export function UnifiedDosingCalculator({
                 <p className="mt-2 text-xs leading-5 text-white/65">{result.formula}</p>
               </div>
 
-              <SafetyDisclaimer type="calculation" />
             </>
           )}
 
-          {attachedMessage && (
-            <p className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-sm font-semibold text-emerald-100">
-              {attachedMessage}
-            </p>
-          )}
-
-          {recordError && (
-            <p className="rounded-lg border border-amber-400/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
-              {recordError}
-            </p>
-          )}
         </div>
       </div>
     </section>

@@ -48,6 +48,19 @@ describe('active /tools calculator visuals', () => {
     expect(screen.getByRole('button', { name: 'Save this calculation' })).toBeDisabled();
   });
 
+  it('shows the safety notice and U-100-only notice before any result, and ahead of the result once entered', () => {
+    render(<ToolsPage />);
+    const notice = screen.getByText(/mathematical calculation only/i);
+    expect(notice).toBeVisible();
+    expect(screen.getByText(/U-100 syringes only/i)).toBeVisible();
+    expect(screen.getByText(/U-40 and U-50 syringes are not supported/i)).toBeVisible();
+    expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+
+    enterValues({ powder: '5', liquid: '2', amount: '250' });
+    const meter = screen.getByRole('meter', { name: /calculated draw/i });
+    expect(notice.compareDocumentPosition(meter) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it.each([375, 768, 1280])('keeps the vial, syringe, beginner help, and worded summary visible at %spx', (width) => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });
     render(<ToolsPage />);

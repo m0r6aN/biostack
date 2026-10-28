@@ -15,7 +15,7 @@ public sealed class CalculatorService : ICalculatorService
         if (request.DiluentVolumeMl <= 0)
             throw new ArgumentException("Diluent volume must be greater than 0");
 
-        decimal concentrationMcgPerMl = (request.PeptideAmountMg * 1000m) / request.DiluentVolumeMl;
+        decimal concentrationMcgPerMl = Checked(() => (request.PeptideAmountMg * 1000m) / request.DiluentVolumeMl);
 
         var result = CalculatorResult.Create(
             request.PeptideAmountMg,
@@ -35,7 +35,7 @@ public sealed class CalculatorService : ICalculatorService
         if (request.ConcentrationMcgPerMl <= 0)
             throw new ArgumentException("Concentration must be greater than 0");
 
-        decimal volumeMl = request.DesiredDoseMcg / request.ConcentrationMcgPerMl;
+        decimal volumeMl = Checked(() => request.DesiredDoseMcg / request.ConcentrationMcgPerMl);
 
         var result = CalculatorResult.Create(
             request.DesiredDoseMcg,
@@ -53,12 +53,9 @@ public sealed class CalculatorService : ICalculatorService
         if (request.Amount <= 0)
             throw new ArgumentException("Amount must be greater than 0");
 
-        decimal factor = request.ConversionFactor ?? ResolveConversionFactor(request.FromUnit, request.ToUnit);
+        decimal factor = ResolveConversionFactor(request.FromUnit, request.ToUnit);
 
-        if (factor <= 0)
-            throw new ArgumentException("Conversion factor must be greater than 0");
-
-        decimal convertedAmount = request.Amount * factor;
+        decimal convertedAmount = Checked(() => request.Amount * factor);
 
         var result = CalculatorResult.Create(
             request.Amount,
@@ -71,9 +68,25 @@ public sealed class CalculatorService : ICalculatorService
         return MapToResponse(result);
     }
 
+    /// <summary>Turns decimal overflow into a validation error (HTTP 400) instead of an unhandled 500.</summary>
+    private static decimal Checked(Func<decimal> compute)
+    {
+        try
+        {
+            return compute();
+        }
+        catch (OverflowException)
+        {
+            throw new ArgumentException("Value is outside the range this calculator can compute reliably. Recheck the entered numbers and units.");
+        }
+    }
+
     private static decimal ResolveConversionFactor(string from, string to)
     {
-        var key = $"{from.ToLowerInvariant()}->{to.ToLowerInvariant()}";
+        if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to))
+            throw new ArgumentException("Units are required. Supported units: mcg, mg, g.");
+
+        var key = $"{from.Trim().ToLowerInvariant()}->{to.Trim().ToLowerInvariant()}";
         return key switch
         {
             "mg->mcg" => 1000m,
@@ -82,7 +95,10 @@ public sealed class CalculatorService : ICalculatorService
             "mg->g" => 0.001m,
             "g->mcg" => 1_000_000m,
             "mcg->g" => 0.000001m,
-            _ => throw new ArgumentException($"No known conversion factor for {from} to {to}. Provide a conversionFactor.")
+            "mg->mg" => 1m,
+            "mcg->mcg" => 1m,
+            "g->g" => 1m,
+            _ => throw new ArgumentException($"Unsupported conversion from {from} to {to}. Supported units: mcg, mg, g.")
         };
     }
 

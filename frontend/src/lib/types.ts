@@ -989,7 +989,6 @@ export interface ConversionRequest {
   amount: number;
   fromUnit: string;
   toUnit: string;
-  conversionFactor: number;
 }
 
 // API Response types

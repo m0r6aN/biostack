@@ -439,14 +439,12 @@ export class ApiClient {
   async calculateConversion(
     request: ConversionRequest
   ): Promise<CalculatorResult> {
-    const payload =
-      request.conversionFactor && request.conversionFactor > 0
-        ? request
-        : {
-            amount: request.amount,
-            fromUnit: request.fromUnit,
-            toUnit: request.toUnit,
-          };
+    // Only amount and units are sent. The server owns the unit table; a client can never supply a factor.
+    const payload = {
+      amount: request.amount,
+      fromUnit: request.fromUnit,
+      toUnit: request.toUnit,
+    };
 
     return this.request('/api/v1/calculators/conversion', {
       method: 'POST',
