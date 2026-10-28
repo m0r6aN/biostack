@@ -34,7 +34,9 @@ public sealed record ScheduleItemResponse(
     string Detail,
     string? Icon,
     string? Accent,
-    string? Status);
+    string? Status,
+    // The user's own dose entry ("250 mcg · twice weekly"); null when they have not entered one.
+    string? Dose = null);
 
 public sealed record DayScheduleResponse(
     string DateIso,

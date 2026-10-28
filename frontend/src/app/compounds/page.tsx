@@ -13,6 +13,7 @@ import { ApiError, apiClient } from '@/lib/api';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { useProfile } from '@/lib/context';
 import { cn } from '@/lib/utils';
+import { formatUserDoseWithTime } from '@/lib/userDose';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -521,6 +522,9 @@ function CompoundsPageContent() {
                           )}
                           {selectedCompound.source && <p><span className="text-white/40">Source:</span> {selectedCompound.source}</p>}
                           {selectedCompound.pricePaid && <p><span className="text-white/40">Price:</span> ${selectedCompound.pricePaid}</p>}
+                          {formatUserDoseWithTime(selectedCompound) && (
+                            <p><span className="text-white/40">Your dose:</span> {formatUserDoseWithTime(selectedCompound)}</p>
+                          )}
                           <p><span className="text-white/40">Status:</span> {selectedCompound.status}</p>
                           <p><span className="text-white/40">Start Date:</span> {selectedCompound.startDate}</p>
                           {selectedCompound.notes && (

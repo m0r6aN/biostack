@@ -2,6 +2,7 @@ namespace BioStack.Application.Services;
 
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
+using BioStack.Domain.ValueObjects;
 using BioStack.Infrastructure.Repositories;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -28,6 +29,7 @@ public sealed class CompoundService : ICompoundService
     public async Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default)
     {
         var name = ValidateName(request.Name);
+        var dose = ValidateDose(request.DoseAmount, request.DoseUnit, request.DoseFrequency, request.DoseTime);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         await EnsureActiveCompoundLimitAsync(personId, request.Status, excludedCompoundId: null, cancellationToken);
 
@@ -45,6 +47,10 @@ public sealed class CompoundService : ICompoundService
             Goal = request.Goal,
             Source = request.Source,
             PricePaid = request.PricePaid,
+            DoseAmount = dose.Amount,
+            DoseUnit = dose.Unit,
+            DoseFrequency = dose.Frequency,
+            DoseTime = dose.Time,
             CreatedAtUtc = DateTime.UtcNow,
             UpdatedAtUtc = DateTime.UtcNow
         };
@@ -82,6 +88,7 @@ public sealed class CompoundService : ICompoundService
     public async Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default)
     {
         var name = ValidateName(request.Name);
+        var dose = ValidateDose(request.DoseAmount, request.DoseUnit, request.DoseFrequency, request.DoseTime);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
         if (compound is null || compound.PersonId != personId)
@@ -98,6 +105,10 @@ public sealed class CompoundService : ICompoundService
         compound.Goal = request.Goal;
         compound.Source = request.Source;
         compound.PricePaid = request.PricePaid;
+        compound.DoseAmount = dose.Amount;
+        compound.DoseUnit = dose.Unit;
+        compound.DoseFrequency = dose.Frequency;
+        compound.DoseTime = dose.Time;
         compound.UpdatedAtUtc = DateTime.UtcNow;
 
         await _compoundRepository.UpdateAsync(compound, cancellationToken);
@@ -116,6 +127,23 @@ public sealed class CompoundService : ICompoundService
         }
 
         return name.Trim();
+    }
+
+    // The dose is the user's own entry. This only checks that it is a storable, positive number in an
+    // allowed unit; there are intentionally no range checks or warnings (nothing here may read as a
+    // recommended dose). Throws DoseValidationException, mapped to a 400 by the endpoints.
+    private static (decimal? Amount, string? Unit, string? Frequency, string? Time) ValidateDose(
+        decimal? amount, string? unit, string? frequency, string? time)
+    {
+        var error = UserDose.Validate(
+            amount, unit, frequency, time,
+            out var normalizedAmount, out var normalizedUnit, out var normalizedFrequency, out var normalizedTime);
+        if (error is { } failure)
+        {
+            throw new DoseValidationException(failure.Field, failure.Message);
+        }
+
+        return (normalizedAmount, normalizedUnit, normalizedFrequency, normalizedTime);
     }
 
     // Calendar-only values remain midnight; unspecified timestamps are interpreted
@@ -179,7 +207,11 @@ public sealed class CompoundService : ICompoundService
             compound.UpdatedAtUtc,
             compound.Goal,
             compound.Source,
-            compound.PricePaid
+            compound.PricePaid,
+            compound.DoseAmount,
+            compound.DoseUnit,
+            compound.DoseFrequency,
+            compound.DoseTime
         );
     }
 }
@@ -190,4 +222,15 @@ public interface ICompoundService
     Task<IEnumerable<CompoundResponse>> GetCompoundsByProfileAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default);
     Task DeleteCompoundAsync(Guid personId, Guid id, CancellationToken cancellationToken = default);
+}
+
+/// <summary>A user-entered dose field failed validation. <see cref="Field"/> is the camelCase wire field name.</summary>
+public sealed class DoseValidationException : Exception
+{
+    public DoseValidationException(string field, string message) : base(message)
+    {
+        Field = field;
+    }
+
+    public string Field { get; }
 }

@@ -14,6 +14,7 @@ import type {
 } from '@/lib/types';
 import { useState, type ReactNode } from 'react';
 import { isReducedInteractionIntelligence } from '@/lib/types';
+import { formatUserDoseWithTime } from '@/lib/userDose';
 
 interface ProviderObservationalSummaryProps {
   protocol: Protocol;
@@ -289,6 +290,7 @@ function SubstanceCard({ item }: { item: ProtocolItem }) {
         <MiniFact label="Start" value={formatDate(compound?.startDate)} />
         <MiniFact label="Stop" value={compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'} />
         <MiniFact label="Goal" value={compound?.goal || NOT_RECORDED} />
+        <MiniFact label="User-entered dose" value={formatUserDoseWithTime(compound) ?? NOT_RECORDED} />
         <MiniFact label="User-entered schedule/frequency" value={scheduleText} />
       </dl>
     </article>
@@ -445,7 +447,7 @@ function buildActiveSubstanceLines(activeItems: ProtocolItem[]) {
   return activeItems.map((item) => {
     const compound = item.compound;
     const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
-    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}`;
+    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered dose: ${formatUserDoseWithTime(compound) ?? NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}`;
   });
 }
 

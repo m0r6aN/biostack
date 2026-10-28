@@ -16,6 +16,12 @@ public sealed class CompoundRecord
     public string Goal { get; set; } = string.Empty;
     public string Source { get; set; } = string.Empty;
     public decimal? PricePaid { get; set; }
+
+    // User-entered structured dose (all optional). Never suggested, prefilled or computed by BioStack.
+    public decimal? DoseAmount { get; set; }
+    public string? DoseUnit { get; set; }
+    public string? DoseFrequency { get; set; }
+    public string? DoseTime { get; set; }
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
 

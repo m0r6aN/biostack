@@ -16,5 +16,9 @@ public sealed record CompoundResponse(
     DateTime UpdatedAtUtc,
     string Goal = "",
     string Source = "",
-    decimal? PricePaid = null
+    decimal? PricePaid = null,
+    decimal? DoseAmount = null,
+    string? DoseUnit = null,
+    string? DoseFrequency = null,
+    string? DoseTime = null
 );

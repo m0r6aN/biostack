@@ -5,6 +5,7 @@ using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
+using BioStack.Domain.ValueObjects;
 using BioStack.Infrastructure.Repositories;
 
 /// <summary>
@@ -445,17 +446,31 @@ public sealed class ProtocolPortalService : IProtocolPortalService
                 continue;
 
             items.Add(new ScheduleItemResponse(
-                Time: "As scheduled",
+                Time: string.IsNullOrWhiteSpace(c.DoseTime) ? "As scheduled" : c.DoseTime,
                 Name: c.Name,
                 Detail: string.IsNullOrWhiteSpace(c.Notes) ? c.Category.ToString() : c.Notes,
                 Icon: IconFor(c.Category),
                 Accent: AccentFor(c.Category),
-                Status: dayLogged ? "completed" : "upcoming"));
+                Status: dayLogged ? "completed" : "upcoming",
+                Dose: FormatUserDose(c)));
         }
 
         return items
             .OrderBy(i => i.Name, StringComparer.OrdinalIgnoreCase)
             .ToList();
+    }
+
+    // The user's own entry, echoed back verbatim. Never computed or suggested by BioStack.
+    private static string? FormatUserDose(CompoundRecord compound)
+    {
+        var parts = new[]
+        {
+            UserDose.FormatAmount(compound.DoseAmount, compound.DoseUnit),
+            string.IsNullOrWhiteSpace(compound.DoseFrequency) ? null : compound.DoseFrequency,
+        }.Where(part => part is not null);
+
+        var text = string.Join(" · ", parts);
+        return text.Length == 0 ? null : text;
     }
 
     private static List<CompoundRecord> ResolveScheduledCompounds(PortalContext ctx)
@@ -470,6 +485,10 @@ public sealed class ProtocolPortalService : IProtocolPortalService
                     PersonId = ctx.Profile.Id,
                     Name = item.CompoundNameSnapshot,
                     Notes = item.CompoundNotesSnapshot,
+                    DoseAmount = item.CompoundDoseAmountSnapshot,
+                    DoseUnit = item.CompoundDoseUnitSnapshot,
+                    DoseFrequency = item.CompoundDoseFrequencySnapshot,
+                    DoseTime = item.CompoundDoseTimeSnapshot,
                     StartDate = item.CompoundStartDateSnapshot,
                     EndDate = item.CompoundEndDateSnapshot,
                     Category = Enum.TryParse<CompoundCategory>(item.CompoundCategorySnapshot, out var cat)

@@ -1,7 +1,15 @@
 'use client';
 
 import { CompoundRecord } from '@/lib/types';
+import {
+  doseFormFromCompound,
+  doseFormToPayload,
+  validateDoseForm,
+  type DoseFormErrors,
+  type DoseFormValues,
+} from '@/lib/userDose';
 import { useId, useState } from 'react';
+import { DoseFields } from './DoseFields';
 
 interface CompoundEditFormProps {
   compound: CompoundRecord;
@@ -45,6 +53,8 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
   const [startDate, setStartDate] = useState(toDateInputValue(compound.startDate));
   const [dateEdited, setDateEdited] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [dose, setDose] = useState<DoseFormValues>(() => doseFormFromCompound(compound));
+  const [doseErrors, setDoseErrors] = useState<DoseFormErrors>({});
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key !== 'Enter') return;
@@ -69,9 +79,16 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
       setFormError('Choose a start date before saving the date change.');
       return;
     }
+    const nextDoseErrors = validateDoseForm(dose);
+    if (Object.keys(nextDoseErrors).length > 0) {
+      setDoseErrors(nextDoseErrors);
+      return;
+    }
+    setDoseErrors({});
     setFormError(null);
     try {
       await onSubmit({
+        ...doseFormToPayload(dose),
         personId: compound.personId,
         name: trimmedName,
         category,
@@ -133,6 +150,15 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
           className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all"
         />
       </div>
+      <DoseFields
+        idPrefix={`${formId}-edit`}
+        values={dose}
+        errors={doseErrors}
+        onChange={(next) => {
+          setDose(next);
+          if (Object.keys(doseErrors).length > 0) setDoseErrors({});
+        }}
+      />
       <div>
         <label htmlFor={`${formId}-edit-notes`} className="block text-sm font-medium text-white/70 mb-2">Notes</label>
         <textarea
