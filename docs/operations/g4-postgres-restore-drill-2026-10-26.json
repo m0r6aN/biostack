@@ -1,0 +1,132 @@
+{
+  "drillDate": "2026-10-26",
+  "verifiedAtUtc": "2026-10-26T12:39:59.289687+00:00",
+  "status": "Passed",
+  "sourceServer": "biostackmcpg20260407e2",
+  "sourceResourceId": "/subscriptions/909e0322-c3c0-4bce-ae53-b3d2ed735bd4/resourceGroups/biostack-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/biostackmcpg20260407e2",
+  "region": "East US 2",
+  "backupRetentionDays": 7,
+  "geoRedundantBackup": "Disabled",
+  "earliestRestorePointUtc": "2026-10-19T19:59:50.422089+00:00",
+  "restorePointUtc": "2026-10-26T11:17:18+00:00",
+  "temporaryServer": "biostack-g4-restore-20261026-gp",
+  "temporarySku": "Standard_D4ds_v5",
+  "temporaryZone": "2",
+  "restoreTiming": {
+    "targetName": "biostack-g4-restore-20261026-gp",
+    "requestedAtUtc": "2026-10-26T12:26:21.220134+00:00",
+    "restorePointUtc": "2026-10-26T11:17:18Z",
+    "firstObservedSuccessUtc": "2026-10-26T12:36:22.849964+00:00",
+    "elapsedSecondsToObservedSuccess": 601.62983,
+    "operation": {
+      "name": "107ce3c7-0199-4e49-9384-be683cac4da4",
+      "status": "Succeeded",
+      "startTime": "2026-10-26T12:26:25.253Z",
+      "observedAtUtc": "2026-10-26T12:36:22.849964+00:00"
+    },
+    "azureActivityCompletedAtUtc": "2026-10-26T12:36:28.998340+00:00",
+    "requestToCompletionSeconds": 607.778206,
+    "azureOperationDurationSeconds": 603.74534,
+    "elapsedFromFirstAttemptSeconds": 1125.698349
+  },
+  "rowCountComparison": {
+    "queriedAtUtc": "2026-10-26T12:38:07.265811+00:00",
+    "production": {
+      "knowledgeRowsTotal": 209,
+      "knowledgeRowsActive": 208,
+      "knowledgeRowsRetired": 1,
+      "embeddedSourceRowsTotal": 564,
+      "embeddedSourceRowsActive": 564,
+      "sourceReferenceRowsTotal": 567,
+      "sourceReferenceRowsActive": 564,
+      "knowledgeContentMd5": "8bde1a0c27ccf94843dbf626ac983412"
+    },
+    "readOnly": true,
+    "sourceCountDefinition": "KnowledgeEntryDetails.Sources entries stored inside KnowledgeEntries.Details JSON; source references also counted from SourceReferences. Schema inventory found no separate source table.",
+    "restored": {
+      "knowledgeRowsTotal": 209,
+      "knowledgeRowsActive": 208,
+      "knowledgeRowsRetired": 1,
+      "embeddedSourceRowsTotal": 564,
+      "embeddedSourceRowsActive": 564,
+      "sourceReferenceRowsTotal": 567,
+      "sourceReferenceRowsActive": 564,
+      "knowledgeContentMd5": "8bde1a0c27ccf94843dbf626ac983412"
+    },
+    "countsMatch": true,
+    "contentFingerprintMatches": true,
+    "targetHost": "biostack-g4-restore-20261026-gp.postgres.database.azure.com"
+  },
+  "cleanup": {
+    "verifiedAtUtc": "2026-10-26T12:39:15.135638+00:00",
+    "allTemporaryServersAbsent": true,
+    "remaining": [],
+    "productionState": "Ready",
+    "productionSku": {
+      "name": "Standard_B1ms",
+      "tier": "Burstable"
+    },
+    "productionBackup": {
+      "backupRetentionDays": 7,
+      "earliestRestoreDate": "2026-10-19T19:59:50.422089+00:00",
+      "geoRedundantBackup": "Disabled"
+    },
+    "productionNetwork": {
+      "delegatedSubnetResourceId": null,
+      "privateDnsZoneArmResourceId": null,
+      "publicNetworkAccess": "Enabled"
+    }
+  },
+  "productionUnmodified": true,
+  "productionSqlReadOnly": true,
+  "productionConfigurationUnchanged": true,
+  "failedAttempts": [
+    {
+      "time": "2026-10-26T12:25:21.1517155Z",
+      "resourceId": "/subscriptions/909e0322-c3c0-4bce-ae53-b3d2ed735bd4/resourcegroups/biostack-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/biostack-g4-restore-20261026-b2s",
+      "operation": "Microsoft.DBforPostgreSQL/flexibleServers/write",
+      "status": "Failed",
+      "message": "{\"status\":\"Failed\",\"error\":{\"code\":\"ResourceOperationFailure\",\"message\":\"The resource operation completed with terminal provisioning state 'Failed'.\",\"details\":[{\"code\":\"SkuNotAvailable\",\"message\":\"Specified SKU is not supported in this region. Please choose a different SKU.\"}]}}",
+      "correlationId": "369e43b0-750f-47fe-806d-206ca2c5e5c4"
+    },
+    {
+      "time": "2026-10-26T12:22:37.9909344Z",
+      "resourceId": "/subscriptions/909e0322-c3c0-4bce-ae53-b3d2ed735bd4/resourcegroups/biostack-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/biostack-g4-restore-20261026-1221",
+      "operation": "Microsoft.DBforPostgreSQL/flexibleServers/write",
+      "status": "Failed",
+      "message": "{\"status\":\"Failed\",\"error\":{\"code\":\"ResourceOperationFailure\",\"message\":\"The resource operation completed with terminal provisioning state 'Failed'.\",\"details\":[{\"code\":\"SkuNotAvailable\",\"message\":\"Specified SKU is not supported in this region. Please choose a different SKU.\"}]}}",
+      "correlationId": "4f727696-0daf-4eb2-98e0-93875b44291d"
+    },
+    {
+      "time": "2026-10-26T12:19:48.8957809Z",
+      "resourceId": "/subscriptions/909e0322-c3c0-4bce-ae53-b3d2ed735bd4/resourcegroups/biostack-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/biostack-g4-restore-20261026-121718",
+      "operation": "Microsoft.DBforPostgreSQL/flexibleServers/write",
+      "status": "Failed",
+      "message": "{\"status\":\"Failed\",\"error\":{\"code\":\"ResourceOperationFailure\",\"message\":\"The resource operation completed with terminal provisioning state 'Failed'.\",\"details\":[{\"code\":\"SkuNotAvailable\",\"message\":\"Specified SKU is not supported in this region. Please choose a different SKU.\"}]}}",
+      "correlationId": "59159c1b-13f2-4141-8447-d982306cb4b3"
+    }
+  ],
+  "scope": "Native Azure point-in-time restore and direct read-only SQL comparison. No scratch API deployed.",
+  "evidenceDirectory": "D:\\Repos\\BioStack\\.audit\\g4-restore-drill-20261026",
+  "cleanupRequested": {
+    "requestedAtUtc": "2026-10-26T12:38:17.446725+00:00",
+    "targets": [
+      {
+        "name": "biostack-g4-restore-20261026-121718",
+        "alreadyAbsent": true
+      },
+      {
+        "name": "biostack-g4-restore-20261026-1221",
+        "alreadyAbsent": true
+      },
+      {
+        "name": "biostack-g4-restore-20261026-b2s",
+        "alreadyAbsent": true
+      },
+      {
+        "name": "biostack-g4-restore-20261026-gp",
+        "deleteHttpStatus": 202
+      }
+    ]
+  }
+}

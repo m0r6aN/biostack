@@ -69,11 +69,17 @@ Rollback: move traffic back only to a revision using the same application name, 
 - **Restore drill (quarterly):** restore PITR to a new server, point a staging Container App revision at it, run the deterministic verifier (`BioStack.ProtocolOperationsExportBundleVerifierCli`) against a known export bundle, record the receipt in `.audit/`.
 - Spine integrity: after any restore, run the hash-chain verification (tamper-evident spine, PR #ec6b759) before re-enabling traffic — a restored DB with a broken chain must fail closed.
 
+**Production backup policy (verified 2026-10-26):** `biostackmcpg20260407e2` retains automated backups for **35 days**; geo-redundant backup remains **Disabled**. Retention was raised from 7 days after the restore drill; see the [retention-change receipt](g4-postgres-retention-update-2026-10-26.json). Azure then reported the earliest restore point as `2026-10-16T19:56:29.805559Z`. Check `backup.earliestRestoreDate` before choosing a restore point: the configured 35-day retention is not a claim that 35 days of history is already available. The drill receipt preserves the 7-day setting observed during that drill.
+
+**Restore compute selection:** restore the temporary copy onto **`Standard_D4ds_v5`**, tier **`GeneralPurpose`**, in **East US 2, availability zone 2**. The 2026-10-26 drill received `SkuNotAvailable` for both `Standard_B1ms` and `Standard_B2s`; the General Purpose copy succeeded in **10 minutes 8 seconds** (18 minutes 46 seconds including failed attempts). The basic `az postgres flexible-server restore` command inherits the source compute size and has no SKU argument. For this restore, use an ARM create request with `properties.createMode: PointInTimeRestore`, the source server resource ID and UTC restore point, plus the explicit SKU and availability zone. This selects compute for the temporary copy; production stays on `Standard_B1ms`.
+
+The [2026-10-26 restore-drill receipt](g4-postgres-restore-drill-2026-10-26.json) records the native PITR operation, failed attempts, matching knowledge/source counts and content fingerprint, and verified deletion of every temporary server. Sources are embedded in `KnowledgeEntries.Details.Sources`, rather than a separate source table.
+
 ### 1-B SQLite (only acceptable with an Azure Files mount)
 - Nightly snapshot: Container Apps job mounting the same share: `sqlite3 /app/data/biostack.db ".backup /app/data/backups/biostack-$(date +%F).db"`, then copy to blob storage. Never file-copy a hot SQLite db without `.backup` — WAL corruption.
 - Restore: stop revision traffic, replace the file, restart, run spine verification, re-enable.
 
-**Dry-run status:** commands validated for syntax only; no live execution from this session (requires prod credentials — Clint-only).
+**Execution status (2026-10-26):** the native PostgreSQL PITR and read-only SQL comparison were executed successfully; see the dated receipt above for the exact drill scope and evidence.
 
 ## 2. Monitoring
 
