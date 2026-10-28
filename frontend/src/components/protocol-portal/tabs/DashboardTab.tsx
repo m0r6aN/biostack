@@ -1,7 +1,10 @@
 'use client';
 
 import { ArrowRight, Check, MessageSquarePlus, TestTube } from 'lucide-react';
-import type { DaySchedule, ScheduleItem } from '@/lib/types';
+import type { DaySchedule, DoseLogEntry, ScheduleItem } from '@/lib/types';
+import { DoseHistory } from '../DoseHistory';
+import { DoseLogForm } from '../DoseLogForm';
+import { ScheduleItemDetails } from '../ScheduleItemDetails';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { cn } from '@/lib/utils';
 import { accentClasses } from '../accents';
@@ -13,6 +16,11 @@ interface DashboardTabProps {
   onViewLabs: () => void;
   onLogDoses: () => void;
   onSaveCareTeamNote: () => void;
+  /** Amounts the user logged, newest first. */
+  history?: DoseLogEntry[];
+  /** Logs the amount the user typed for one compound on the day shown. */
+  onLogAmount?: (item: ScheduleItem, entry: { amount: number; unit: string; note: string }) => Promise<void>;
+  onDeleteLoggedAmount?: (entry: DoseLogEntry) => void;
 }
 
 export function DashboardTab({
@@ -21,6 +29,9 @@ export function DashboardTab({
   onViewLabs,
   onLogDoses,
   onSaveCareTeamNote,
+  history,
+  onLogAmount,
+  onDeleteLoggedAmount,
 }: DashboardTabProps) {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -41,8 +52,15 @@ export function DashboardTab({
         </div>
 
         <div className="space-y-3">
+          {today.items.length === 0 && (
+            <p className="text-sm text-white/55">Nothing on your schedule is due on this day.</p>
+          )}
           {today.items.map((item, index) => (
-            <ScheduleItemRow key={`${item.name}-${index}`} item={item} />
+            <ScheduleItemRow
+              key={`${item.name}-${index}`}
+              item={item}
+              onLogAmount={onLogAmount && item.compoundId ? (entry) => onLogAmount(item, entry) : undefined}
+            />
           ))}
         </div>
       </GlassCard>
@@ -66,21 +84,31 @@ export function DashboardTab({
           />
         </div>
       </GlassCard>
+
+      {history && onDeleteLoggedAmount && <DoseHistory entries={history} onDelete={onDeleteLoggedAmount} />}
     </div>
   );
 }
 
-function ScheduleItemRow({ item }: { item: ScheduleItem }) {
+function ScheduleItemRow({
+  item,
+  onLogAmount,
+}: {
+  item: ScheduleItem;
+  onLogAmount?: (entry: { amount: number; unit: string; note: string }) => Promise<void>;
+}) {
   const accent = accentClasses(item.accent);
 
   return (
-    <div className="flex items-center justify-between rounded-xl bg-white/[0.03] p-3">
-      <div className="flex items-center gap-3">
+    <div className="flex items-start justify-between rounded-xl bg-white/[0.03] p-3">
+      <div className="flex items-start gap-3">
         <ScheduleIcon iconKey={item.icon} className={cn('h-5 w-5 shrink-0', accent.text)} />
         <div>
           <div className="font-medium text-white">{item.name}</div>
           {item.dose && <div className="text-xs font-medium text-emerald-200/80">Your dose: {item.dose}</div>}
           <div className="text-xs text-white/45">{item.detail}</div>
+          <ScheduleItemDetails item={item} />
+          {onLogAmount && <DoseLogForm item={item} onLog={onLogAmount} />}
         </div>
       </div>
       <div className="text-right">

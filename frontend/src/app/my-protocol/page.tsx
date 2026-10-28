@@ -23,6 +23,8 @@ import { useProfile } from '@/lib/context';
 import type {
   DaySchedule,
   DietFramework,
+  DoseLogEntry,
+  ScheduleItem,
   Milestone,
   MonitoringProtocol,
   ProtocolOverview,
@@ -54,6 +56,7 @@ interface PortalViewData {
   diet: DietFramework | null;
   monitoring: MonitoringProtocol | null;
   milestones: Milestone[];
+  doseHistory: DoseLogEntry[];
 }
 
 const EMPTY_DIET: DietFramework = {
@@ -120,7 +123,7 @@ export default function MyProtocolPage() {
       const subscription = await apiClient.getCurrentSubscription();
       const currentTier = normalizeTier(subscription.tier);
 
-      const [active, today, supplements, resources, operatorSections, monitoring] = await Promise.all([
+      const [active, today, supplements, resources, operatorSections, monitoring, doseHistory] = await Promise.all([
         apiClient.getProtocolPortalActive(currentProfileId),
         apiClient.getProtocolPortalSchedule(currentProfileId),
         apiClient.getProtocolPortalSupplements(currentProfileId),
@@ -135,6 +138,10 @@ export default function MyProtocolPage() {
         hasTier(currentTier, 'commander')
           ? apiClient.getProtocolPortalMonitoring(currentProfileId)
           : Promise.resolve(null),
+        // The logged-amount history is additive: the rest of the portal still loads without it.
+        Promise.resolve()
+          .then(() => apiClient.getProtocolDoseHistory(currentProfileId, { limit: 50 }))
+          .catch((): DoseLogEntry[] => []),
       ]);
 
       setTier(currentTier);
@@ -148,6 +155,7 @@ export default function MyProtocolPage() {
         diet: operatorSections?.[1] ?? null,
         milestones: operatorSections?.[2] ?? [],
         monitoring,
+        doseHistory: doseHistory ?? [],
       });
       setActivePhaseNumber(active.overview.currentPhase.number);
       setError(null);
@@ -193,6 +201,48 @@ export default function MyProtocolPage() {
       setToast('Today’s scheduled items were logged.');
     } catch {
       setToast('Today’s scheduled items could not be logged.');
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  // Logs the amount the user typed. The server never fills in or changes it.
+  async function handleLogAmount(
+    item: ScheduleItem,
+    entry: { amount: number; unit: string; note: string },
+  ) {
+    if (!currentProfileId || !data || !item.compoundId) return;
+    try {
+      await apiClient.logProtocolDoses(currentProfileId, data.today.dateIso, [
+        { compoundId: item.compoundId, amount: entry.amount, unit: entry.unit, note: entry.note || null },
+      ]);
+    } catch (cause) {
+      setToast('That amount could not be logged.');
+      throw cause;
+    }
+    const [active, today, doseHistory] = await Promise.all([
+      apiClient.getProtocolPortalActive(currentProfileId),
+      apiClient.getProtocolPortalSchedule(currentProfileId, data.today.dateIso),
+      apiClient.getProtocolDoseHistory(currentProfileId, { limit: 50 }),
+    ]);
+    setData((current) => current ? { ...current, stats: active.stats, today, doseHistory } : current);
+    setToast(`Logged ${entry.amount} ${entry.unit} for ${item.name}.`);
+  }
+
+  async function handleDeleteLoggedAmount(entry: DoseLogEntry) {
+    if (!currentProfileId || !data || busy) return;
+    try {
+      setBusy('history');
+      await apiClient.deleteProtocolDoseEntry(currentProfileId, entry.id);
+      const [active, today, doseHistory] = await Promise.all([
+        apiClient.getProtocolPortalActive(currentProfileId),
+        apiClient.getProtocolPortalSchedule(currentProfileId, data.today.dateIso),
+        apiClient.getProtocolDoseHistory(currentProfileId, { limit: 50 }),
+      ]);
+      setData((current) => current ? { ...current, stats: active.stats, today, doseHistory } : current);
+      setToast('That logged amount was deleted.');
+    } catch {
+      setToast('That logged amount could not be deleted.');
     } finally {
       setBusy(null);
     }
@@ -301,6 +351,9 @@ export default function MyProtocolPage() {
               onViewLabs={() => setActiveTab('monitoring')}
               onLogDoses={() => void handleLogDoses()}
               onSaveCareTeamNote={() => setContactOpen(true)}
+              history={data.doseHistory}
+              onLogAmount={handleLogAmount}
+              onDeleteLoggedAmount={(entry) => void handleDeleteLoggedAmount(entry)}
             />
           )}
 

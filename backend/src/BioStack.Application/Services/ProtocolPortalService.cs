@@ -23,12 +23,16 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     public const string CareTeamNoteMarker = "ProtocolPortalCareTeamNote";
 
     private const int AdherenceWindowDays = 7;
+    private const int MaxDoseLogLoad = 1000;
+    private const int MaxEntriesPerLogRequest = 50;
+    private const int MaxFutureTakenAtHours = 24;
 
     private readonly IProtocolRepository _protocolRepository;
     private readonly IProtocolPhaseRepository _phaseRepository;
     private readonly ICompoundRecordRepository _compoundRepository;
     private readonly ICheckInRepository _checkInRepository;
     private readonly ITimelineEventRepository _timelineRepository;
+    private readonly IDoseLogEntryRepository _doseLogRepository;
     private readonly IProtocolPortalBaseline _baseline;
     private readonly IOwnershipGuard _ownershipGuard;
     private readonly IFeatureGate _featureGate;
@@ -39,6 +43,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         ICompoundRecordRepository compoundRepository,
         ICheckInRepository checkInRepository,
         ITimelineEventRepository timelineRepository,
+        IDoseLogEntryRepository doseLogRepository,
         IProtocolPortalBaseline baseline,
         IOwnershipGuard ownershipGuard,
         IFeatureGate featureGate)
@@ -48,6 +53,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         _compoundRepository = compoundRepository;
         _checkInRepository = checkInRepository;
         _timelineRepository = timelineRepository;
+        _doseLogRepository = doseLogRepository;
         _baseline = baseline;
         _ownershipGuard = ownershipGuard;
         _featureGate = featureGate;
@@ -78,9 +84,9 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
     // ── Aggregate ───────────────────────────────────────────────────────────
 
-    public async Task<ProtocolPortalResponse> GetPortalAsync(Guid profileId, CancellationToken ct = default)
+    public async Task<ProtocolPortalResponse> GetPortalAsync(Guid profileId, string? timeZoneId = null, CancellationToken ct = default)
     {
-        var ctx = await LoadContextAsync(profileId, ct);
+        var ctx = await LoadContextAsync(profileId, timeZoneId, ct);
         await EnsureCommanderAsync(
             "portal_aggregate_commander",
             "the complete protocol portal aggregate",
@@ -132,26 +138,26 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
     // ── Granular endpoints ──────────────────────────────────────────────────
 
-    public async Task<ProtocolActiveResponse> GetActiveAsync(Guid profileId, CancellationToken ct = default)
+    public async Task<ProtocolActiveResponse> GetActiveAsync(Guid profileId, string? timeZoneId = null, CancellationToken ct = default)
     {
-        var ctx = await LoadContextAsync(profileId, ct);
+        var ctx = await LoadContextAsync(profileId, timeZoneId, ct);
         return new ProtocolActiveResponse(
             BuildOverviewSection(ctx).Data!,
             BuildStatsSection(ctx).Data!);
     }
 
-    public async Task<DayScheduleResponse> GetScheduleAsync(Guid profileId, DateOnly? date, CancellationToken ct = default)
+    public async Task<DayScheduleResponse> GetScheduleAsync(Guid profileId, DateOnly? date, string? timeZoneId = null, CancellationToken ct = default)
     {
-        var ctx = await LoadContextAsync(profileId, ct);
+        var ctx = await LoadContextAsync(profileId, timeZoneId, ct);
         var target = date?.ToDateTime(TimeOnly.MinValue) ?? ctx.Today;
         return BuildDayScheduleSection(ctx, target).Data!;
     }
 
-    public async Task<IReadOnlyList<WeekDayResponse>> GetWeekAsync(Guid profileId, DateOnly? start, CancellationToken ct = default)
+    public async Task<IReadOnlyList<WeekDayResponse>> GetWeekAsync(Guid profileId, DateOnly? start, string? timeZoneId = null, CancellationToken ct = default)
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
         await EnsureOperatorAsync("portal_calendar_operator", "the weekly calendar", ct);
-        var ctx = await LoadContextAsync(profileId, ct);
+        var ctx = await LoadContextAsync(profileId, timeZoneId, ct);
         var weekStart = start?.ToDateTime(TimeOnly.MinValue) ?? StartOfWeek(ctx.Today);
         return BuildWeekSection(ctx, weekStart).Data!;
     }
@@ -180,7 +186,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
         await EnsureOperatorAsync("portal_milestones_operator", "progress & milestones", ct);
-        var ctx = await LoadContextAsync(profileId, ct);
+        var ctx = await LoadContextAsync(profileId, null, ct);
         return BuildMilestonesSection(ctx).Data!;
     }
 
@@ -198,6 +204,12 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
         if (!TryParseDate(request.Date, out var date))
             throw new InvalidOperationException("A valid date (YYYY-MM-DD) is required.");
+
+        if (request.Entries is { Count: > 0 } entries)
+        {
+            await LogDoseEntriesAsync(profileId, date, entries, ct);
+            return;
+        }
 
         // Persist a real dose-log marker as a timeline event (idempotent per day).
         var existing = (await _timelineRepository.GetByPersonIdAsync(profileId, ct))
@@ -220,6 +232,101 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         await _timelineRepository.AddAsync(@event, ct);
         await _timelineRepository.SaveChangesAsync(ct);
     }
+
+    // Records, per compound, the amount the user says they actually took. Every field is the user's own
+    // entry; nothing is defaulted, suggested or computed here. All entries are validated before any is saved.
+    private async Task LogDoseEntriesAsync(Guid profileId, DateTime date, IReadOnlyList<LogDoseEntryRequest> entries, CancellationToken ct)
+    {
+        if (entries.Count > MaxEntriesPerLogRequest)
+            throw new DoseValidationException("entries", $"Log at most {MaxEntriesPerLogRequest} amounts at a time.");
+
+        var compounds = (await _compoundRepository.GetByPersonIdAsync(profileId, ct)).ToDictionary(c => c.Id);
+        var now = DateTime.UtcNow;
+        var rows = new List<DoseLogEntry>();
+
+        for (var index = 0; index < entries.Count; index++)
+        {
+            var entry = entries[index];
+            var prefix = $"entries[{index}].";
+
+            if (!compounds.TryGetValue(entry.CompoundId, out var compound))
+                throw new InvalidOperationException("That compound was not found on this profile.");
+
+            if (entry.Amount is null || string.IsNullOrWhiteSpace(entry.Unit))
+                throw new DoseValidationException(prefix + "amount", "Enter the amount you took and its unit.");
+
+            var failure = UserDose.Validate(entry.Amount, entry.Unit, null, null, out var amount, out var unit, out _, out _);
+            if (failure is { } error)
+                throw new DoseValidationException(prefix + error.Field, error.Message);
+
+            string? note = null;
+            if (!string.IsNullOrWhiteSpace(entry.Note))
+            {
+                note = entry.Note.Trim();
+                if (note.Length > UserDose.LogNoteMaxLength)
+                    throw new DoseValidationException(prefix + "note", $"Note must be {UserDose.LogNoteMaxLength} characters or fewer.");
+            }
+
+            var takenAt = entry.TakenAtUtc is { } supplied
+                ? (supplied.Kind == DateTimeKind.Local ? supplied.ToUniversalTime() : DateTime.SpecifyKind(supplied, DateTimeKind.Utc))
+                : now;
+            if (takenAt > now.AddHours(MaxFutureTakenAtHours))
+                throw new DoseValidationException(prefix + "takenAtUtc", "The time taken cannot be in the future.");
+
+            rows.Add(new DoseLogEntry
+            {
+                Id = Guid.NewGuid(),
+                PersonId = profileId,
+                CompoundRecordId = compound.Id,
+                LogDate = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc),
+                TakenAtUtc = takenAt,
+                Amount = amount!.Value,
+                Unit = unit!,
+                Note = note,
+                CreatedAtUtc = now,
+            });
+        }
+
+        foreach (var row in rows)
+            await _doseLogRepository.AddAsync(row, ct);
+        await _doseLogRepository.SaveChangesAsync(ct);
+    }
+
+    public async Task<IReadOnlyList<DoseLogEntryResponse>> GetDoseHistoryAsync(
+        Guid profileId, DateOnly? from, DateOnly? to, int? limit, CancellationToken ct = default)
+    {
+        await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
+        var take = Math.Clamp(limit ?? 200, 1, 1000);
+        var rows = await _doseLogRepository.GetByPersonIdAsync(
+            profileId,
+            from?.ToDateTime(TimeOnly.MinValue),
+            to?.ToDateTime(TimeOnly.MinValue),
+            take,
+            ct);
+        return rows.Select(row => ToResponse(row, row.CompoundRecord?.Name ?? string.Empty)).ToList();
+    }
+
+    public async Task DeleteDoseEntryAsync(Guid profileId, Guid entryId, CancellationToken ct = default)
+    {
+        await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
+        var entry = await _doseLogRepository.GetByIdAsync(entryId, ct);
+        if (entry is null || entry.PersonId != profileId)
+            throw new InvalidOperationException("Logged amount not found.");
+
+        await _doseLogRepository.DeleteAsync(entry, ct);
+        await _doseLogRepository.SaveChangesAsync(ct);
+    }
+
+    private static DoseLogEntryResponse ToResponse(DoseLogEntry entry, string compoundName)
+        => new(
+            entry.Id,
+            entry.CompoundRecordId,
+            compoundName,
+            IsoDate(entry.LogDate),
+            DateTime.SpecifyKind(entry.TakenAtUtc, DateTimeKind.Utc),
+            entry.Amount,
+            entry.Unit,
+            entry.Note);
 
     public async Task SaveCareTeamNoteAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default)
     {
@@ -260,7 +367,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
     // ── Context loading ─────────────────────────────────────────────────────
 
-    private async Task<PortalContext> LoadContextAsync(Guid profileId, CancellationToken ct)
+    private async Task<PortalContext> LoadContextAsync(Guid profileId, string? timeZoneId, CancellationToken ct)
     {
         var profile = await _ownershipGuard.GetOwnedProfileAsync(profileId, ct);
         var protocols = (await _protocolRepository.GetByPersonIdAsync(profileId, ct)).ToList();
@@ -281,7 +388,12 @@ public sealed class ProtocolPortalService : IProtocolPortalService
             .ToList();
         var timeline = (await _timelineRepository.GetByPersonIdAsync(profileId, ct)).ToList();
 
-        return new PortalContext(profile, activeProtocol, phases, compounds, checkIns, timeline, DateTime.UtcNow.Date);
+        var doseLog = await _doseLogRepository.GetByPersonIdAsync(profileId, null, null, MaxDoseLogLoad, ct);
+
+        // "Today" is the user's calendar date in the time zone their browser reports (there is no stored
+        // profile time zone); without one it is the UTC date, as before.
+        return new PortalContext(profile, activeProtocol, phases, compounds, checkIns, timeline, doseLog,
+            UserFrequency.ResolveToday(DateTime.UtcNow, timeZoneId));
     }
 
     // ── Section builders (operational → real or honest empty-state) ─────────
@@ -356,11 +468,15 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     {
         // Adherence from real dose-log timeline events only — never fabricated.
         var windowStart = ctx.Today.AddDays(-(AdherenceWindowDays - 1));
+        // A day counts when it was marked taken or when the user logged at least one amount on it.
         var loggedDays = ctx.Timeline
             .Where(e => e.RelatedEntityType == DoseLogMarker
                 && e.OccurredAtUtc.Date >= windowStart
                 && e.OccurredAtUtc.Date <= ctx.Today)
             .Select(e => e.OccurredAtUtc.Date)
+            .Concat(ctx.DoseLog
+                .Where(e => e.LogDate.Date >= windowStart && e.LogDate.Date <= ctx.Today)
+                .Select(e => e.LogDate.Date))
             .Distinct()
             .Count();
 
@@ -440,19 +556,55 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         var items = new List<ScheduleItemResponse>();
         foreach (var c in sources)
         {
-            var startOk = c.StartDate is null || c.StartDate.Value.Date <= date.Date;
-            var endOk = c.EndDate is null || c.EndDate.Value.Date >= date.Date;
-            if (!startOk || !endOk)
+            // Due-day maths is pure calendar-date arithmetic, so daylight saving never moves a dose to another day.
+            var due = UserFrequency.GetDue(
+                date,
+                c.FrequencyKind,
+                c.FrequencyIntervalDays,
+                UserFrequency.ParseWeekdays(c.FrequencyWeekdays),
+                c.FrequencyStartDate,
+                c.StartDate,
+                c.EndDate,
+                c.CreatedAtUtc);
+            if (due == FrequencyDue.NotDue)
                 continue;
 
+            var logged = ctx.DoseLog
+                .Where(e => e.CompoundRecordId == c.Id && e.LogDate.Date == date.Date)
+                .OrderBy(e => e.TakenAtUtc)
+                .Select(e => ToResponse(e, c.Name))
+                .ToList();
+
+            var cadence = UserFrequency.Describe(
+                c.FrequencyKind, c.FrequencyIntervalDays, UserFrequency.ParseWeekdays(c.FrequencyWeekdays), c.FrequencyTimesPerWeek);
+            var times = UserFrequency.ParseTimes(c.FrequencyTimesOfDay);
+            var timeLabel = times.Count > 0
+                ? string.Join(", ", times)
+                : string.IsNullOrWhiteSpace(c.DoseTime) ? "As scheduled" : c.DoseTime;
+
             items.Add(new ScheduleItemResponse(
-                Time: string.IsNullOrWhiteSpace(c.DoseTime) ? "As scheduled" : c.DoseTime,
+                Time: timeLabel,
                 Name: c.Name,
                 Detail: string.IsNullOrWhiteSpace(c.Notes) ? c.Category.ToString() : c.Notes,
                 Icon: IconFor(c.Category),
                 Accent: AccentFor(c.Category),
-                Status: dayLogged ? "completed" : "upcoming",
-                Dose: FormatUserDose(c)));
+                Status: dayLogged || logged.Count > 0 ? "completed" : "upcoming",
+                Dose: FormatUserDose(c),
+                CompoundId: c.Id,
+                DoseAmount: c.DoseAmount,
+                DoseUnit: c.DoseUnit,
+                Cadence: cadence,
+                Due: due switch
+                {
+                    FrequencyDue.WeeklyTarget => "weekly_target",
+                    FrequencyDue.AsNeeded => "as_needed",
+                    _ => "scheduled",
+                },
+                Logged: logged,
+                WeekLogged: due == FrequencyDue.WeeklyTarget
+                    ? ctx.DoseLog.Count(e => e.CompoundRecordId == c.Id
+                        && e.LogDate.Date >= StartOfWeek(date) && e.LogDate.Date <= StartOfWeek(date).AddDays(6))
+                    : null));
         }
 
         return items
@@ -513,7 +665,8 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         for (var offset = 0; offset < 7; offset++)
         {
             var date = start.AddDays(offset);
-            var count = BuildScheduleItems(ctx, date).Count;
+            // Weekly targets and as-needed entries have no fixed day, so they do not count towards a day's total.
+            var count = BuildScheduleItems(ctx, date).Count(item => item.Due == "scheduled");
             anyItems |= count > 0;
             days.Add(new WeekDayResponse(
                 IsoDate(date),
@@ -691,20 +844,23 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         IReadOnlyList<CompoundRecord> Compounds,
         IReadOnlyList<CheckIn> CheckIns,
         IReadOnlyList<TimelineEvent> Timeline,
+        IReadOnlyList<DoseLogEntry> DoseLog,
         DateTime Today);
 }
 
 public interface IProtocolPortalService
 {
-    Task<ProtocolPortalResponse> GetPortalAsync(Guid profileId, CancellationToken ct = default);
-    Task<ProtocolActiveResponse> GetActiveAsync(Guid profileId, CancellationToken ct = default);
-    Task<DayScheduleResponse> GetScheduleAsync(Guid profileId, DateOnly? date, CancellationToken ct = default);
-    Task<IReadOnlyList<WeekDayResponse>> GetWeekAsync(Guid profileId, DateOnly? start, CancellationToken ct = default);
+    Task<ProtocolPortalResponse> GetPortalAsync(Guid profileId, string? timeZoneId = null, CancellationToken ct = default);
+    Task<ProtocolActiveResponse> GetActiveAsync(Guid profileId, string? timeZoneId = null, CancellationToken ct = default);
+    Task<DayScheduleResponse> GetScheduleAsync(Guid profileId, DateOnly? date, string? timeZoneId = null, CancellationToken ct = default);
+    Task<IReadOnlyList<WeekDayResponse>> GetWeekAsync(Guid profileId, DateOnly? start, string? timeZoneId = null, CancellationToken ct = default);
     Task<DietFrameworkResponse> GetDietAsync(Guid profileId, CancellationToken ct = default);
     Task<SupplementPlanResponse> GetSupplementsAsync(Guid profileId, CancellationToken ct = default);
     Task<MonitoringProtocolResponse> GetMonitoringAsync(Guid profileId, CancellationToken ct = default);
     Task<IReadOnlyList<MilestoneResponse>> GetMilestonesAsync(Guid profileId, CancellationToken ct = default);
     Task<IReadOnlyList<ResourceEntryResponse>> GetResourcesAsync(Guid profileId, CancellationToken ct = default);
     Task LogDosesAsync(Guid profileId, LogProtocolDosesRequest request, CancellationToken ct = default);
+    Task<IReadOnlyList<DoseLogEntryResponse>> GetDoseHistoryAsync(Guid profileId, DateOnly? from, DateOnly? to, int? limit, CancellationToken ct = default);
+    Task DeleteDoseEntryAsync(Guid profileId, Guid entryId, CancellationToken ct = default);
     Task SaveCareTeamNoteAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default);
 }

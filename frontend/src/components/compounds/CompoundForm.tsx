@@ -12,7 +12,15 @@ import {
   type DoseFormErrors,
   type DoseFormValues,
 } from '@/lib/userDose';
+import {
+  EMPTY_FREQUENCY_FORM,
+  frequencyFormToPayload,
+  validateFrequencyForm,
+  type FrequencyFormErrors,
+  type FrequencyFormValues,
+} from '@/lib/userFrequency';
 import { DoseFields } from './DoseFields';
+import { FrequencyFields } from './FrequencyFields';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 interface CompoundFormProps {
@@ -36,6 +44,9 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
   // The dose is the user's own entry and always starts blank (never prefilled from the calculator or library).
   const [dose, setDose] = useState<DoseFormValues>(EMPTY_DOSE_FORM);
   const [doseErrors, setDoseErrors] = useState<DoseFormErrors>({});
+  // The schedule is the user's own choice and always starts blank too.
+  const [frequency, setFrequency] = useState<FrequencyFormValues>(EMPTY_FREQUENCY_FORM);
+  const [frequencyErrors, setFrequencyErrors] = useState<FrequencyFormErrors>({});
   const hasAppliedPrefillRef = useRef(false);
   const hasUserEditedRef = useRef(false);
   const [formData, setFormData] = useState({
@@ -134,16 +145,20 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
       return;
     }
     const nextDoseErrors = validateDoseForm(dose);
-    if (Object.keys(nextDoseErrors).length > 0) {
+    const nextFrequencyErrors = validateFrequencyForm(frequency);
+    if (Object.keys(nextDoseErrors).length > 0 || Object.keys(nextFrequencyErrors).length > 0) {
       setDoseErrors(nextDoseErrors);
+      setFrequencyErrors(nextFrequencyErrors);
       return;
     }
     setDoseErrors({});
+    setFrequencyErrors({});
     setFormError(null);
     try {
       await onSubmit({
         ...formData,
         ...doseFormToPayload(dose),
+        ...frequencyFormToPayload(frequency),
         name: trimmedName,
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
@@ -164,6 +179,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
         sourceType: 'Manual',
       });
       setDose(EMPTY_DOSE_FORM);
+      setFrequency(EMPTY_FREQUENCY_FORM);
     } catch (err) {
       console.error('Form submission error:', err);
     }
@@ -341,6 +357,17 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
           setDose(next);
           if (Object.keys(doseErrors).length > 0) setDoseErrors({});
         }}
+      />
+
+      <FrequencyFields
+        idPrefix={formId}
+        values={frequency}
+        errors={frequencyErrors}
+        onChange={(next) => {
+          setFrequency(next);
+          if (Object.keys(frequencyErrors).length > 0) setFrequencyErrors({});
+        }}
+        legacyText={dose.frequency.trim() || null}
       />
 
       <div>

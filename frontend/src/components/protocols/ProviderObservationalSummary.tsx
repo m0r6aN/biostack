@@ -1,6 +1,7 @@
 'use client';
 
 import type {
+    DoseLogEntry,
     InteractionFinding,
     InteractionPairSummary,
     InteractionResult,
@@ -15,6 +16,7 @@ import type {
 import { useState, type ReactNode } from 'react';
 import { isReducedInteractionIntelligence } from '@/lib/types';
 import { formatUserDoseWithTime } from '@/lib/userDose';
+import { describeFrequency } from '@/lib/userFrequency';
 
 interface ProviderObservationalSummaryProps {
   protocol: Protocol;
@@ -22,11 +24,15 @@ interface ProviderObservationalSummaryProps {
   patterns?: ProtocolPatternSnapshot | null;
   drift?: ProtocolDriftSnapshot | null;
   sequence?: ProtocolSequenceExpectationSnapshot | null;
+  /** Amounts the user logged. Only entries for this protocol's compounds are shown. */
+  doseLog?: DoseLogEntry[] | null;
   generatedAt?: Date;
 }
 
 const NOT_RECORDED = 'Not recorded in this saved protocol snapshot.';
 const NO_ACTIVE_SUBSTANCES = 'No active substances recorded';
+const NO_LOGGED_AMOUNTS = 'No logged amounts recorded';
+const MAX_LOGGED_AMOUNTS = 20;
 const NO_RECENT_CHECK_INS = 'No recent check-ins recorded';
 const NO_OBSERVED_PATTERNS = 'No observed patterns available yet';
 const NO_INTERACTION_NOTES = 'No interaction or overlap notes available';
@@ -47,6 +53,7 @@ export function ProviderObservationalSummary({
   patterns,
   drift,
   sequence,
+  doseLog,
   generatedAt,
 }: ProviderObservationalSummaryProps) {
   const generatedDate = formatGeneratedAt(generatedAt ?? new Date());
@@ -72,6 +79,10 @@ export function ProviderObservationalSummary({
   }
   const interactionNoteCount = findings.length + interactions.length + flaggedPairs.length;
   const patternNotes = collectPatternNotes(patterns, drift, sequence, review);
+  const protocolCompoundIds = new Set(protocol.items.map((item) => item.compoundRecordId));
+  // Only shown when the page supplied the user's log, so a summary without one reads exactly as before.
+  const showLoggedAmounts = doseLog != null;
+  const loggedAmounts = (doseLog ?? []).filter((entry) => protocolCompoundIds.has(entry.compoundId)).slice(0, MAX_LOGGED_AMOUNTS);
   const [copyState, setCopyState] = useState<'idle' | 'success' | 'error'>('idle');
   const summaryText = buildProviderSummaryText({
     protocol,
@@ -85,6 +96,7 @@ export function ProviderObservationalSummary({
     flaggedPairs,
     patternNotes,
     generatedDate,
+    loggedAmounts: showLoggedAmounts ? loggedAmounts : null,
   });
 
   const handleCopySummary = async () => {
@@ -169,6 +181,21 @@ export function ProviderObservationalSummary({
           </div>
         )}
       </SummarySection>
+
+      {showLoggedAmounts && <SummarySection title="Logged amounts" metadata={formatCount(loggedAmounts.length, 'logged amount')} label={USER_ENTERED_LABEL} fullWidth>
+        {loggedAmounts.length === 0 ? (
+          <Placeholder>{NO_LOGGED_AMOUNTS}</Placeholder>
+        ) : (
+          <ul aria-label="Logged amounts" className="space-y-2">
+            {loggedAmounts.map((entry) => (
+              <li key={entry.id} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700">
+                <span className="font-semibold text-slate-950">{entry.compoundName}</span>: {entry.amount} {entry.unit} on {formatDate(entry.logDate)}
+                {entry.note ? ` (${entry.note})` : ''}
+              </li>
+            ))}
+          </ul>
+        )}
+      </SummarySection>}
 
       <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Recent check-ins" metadata={formatCount(observations.length, 'recent check-in')} label={USER_ENTERED_LABEL}>
@@ -292,6 +319,7 @@ function SubstanceCard({ item }: { item: ProtocolItem }) {
         <MiniFact label="Goal" value={compound?.goal || NOT_RECORDED} />
         <MiniFact label="User-entered dose" value={formatUserDoseWithTime(compound) ?? NOT_RECORDED} />
         <MiniFact label="User-entered schedule/frequency" value={scheduleText} />
+        {describeFrequency(compound) && <MiniFact label="User-chosen frequency" value={describeFrequency(compound) ?? NOT_RECORDED} />}
       </dl>
     </article>
   );
@@ -393,6 +421,7 @@ interface ProviderSummaryTextInput {
   flaggedPairs: InteractionPairSummary[];
   patternNotes: string[];
   generatedDate: string;
+  loggedAmounts: DoseLogEntry[] | null;
 }
 
 type ProtocolActualTrend = NonNullable<Protocol['actualComparison']>['actualTrends'][number];
@@ -409,6 +438,7 @@ function buildProviderSummaryText({
   flaggedPairs,
   patternNotes,
   generatedDate,
+  loggedAmounts,
 }: ProviderSummaryTextInput) {
   return [
     'Observational summary',
@@ -430,6 +460,9 @@ function buildProviderSummaryText({
       `Protocol updated: ${formatDate(protocol.updatedAtUtc)}`,
       ...(run ? [`Run window: ${formatDate(run.startedAtUtc)} — ${run.endedAtUtc ? formatDate(run.endedAtUtc) : 'ongoing'}`] : []),
     ]),
+    ...(loggedAmounts
+      ? [formatTextSection('Logged amounts', buildLoggedAmountLines(loggedAmounts), formatCount(loggedAmounts.length, 'logged amount'))]
+      : []),
     formatTextSection('Recent check-ins', buildObservationLines(observations), formatCount(observations.length, 'recent check-in')),
     formatTextSection('Observed patterns', buildPatternLines(trends, patternNotes)),
     formatTextSection('Interaction and overlap notes', buildInteractionLines(findings, interactions, flaggedPairs), formatCount(findings.length + interactions.length + flaggedPairs.length, 'interaction/overlap note')),
@@ -447,8 +480,14 @@ function buildActiveSubstanceLines(activeItems: ProtocolItem[]) {
   return activeItems.map((item) => {
     const compound = item.compound;
     const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
-    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered dose: ${formatUserDoseWithTime(compound) ?? NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}`;
+    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered dose: ${formatUserDoseWithTime(compound) ?? NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}${describeFrequency(compound) ? `; User-chosen frequency: ${describeFrequency(compound)}` : ''}`;
   });
+}
+
+function buildLoggedAmountLines(entries: DoseLogEntry[]) {
+  if (entries.length === 0) return [NO_LOGGED_AMOUNTS];
+
+  return entries.map((entry) => `${entry.compoundName}: ${entry.amount} ${entry.unit} on ${formatDate(entry.logDate)}${entry.note ? ` (${entry.note})` : ''}`);
 }
 
 function buildObservationLines(observations: ProtocolRunObservation[]) {

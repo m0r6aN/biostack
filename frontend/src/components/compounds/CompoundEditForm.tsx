@@ -9,7 +9,16 @@ import {
   type DoseFormValues,
 } from '@/lib/userDose';
 import { useId, useState } from 'react';
+import {
+  frequencyFormFromCompound,
+  frequencyFormToPayload,
+  needsStructuredFrequency,
+  validateFrequencyForm,
+  type FrequencyFormErrors,
+  type FrequencyFormValues,
+} from '@/lib/userFrequency';
 import { DoseFields } from './DoseFields';
+import { FrequencyFields } from './FrequencyFields';
 
 interface CompoundEditFormProps {
   compound: CompoundRecord;
@@ -55,6 +64,10 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
   const [formError, setFormError] = useState<string | null>(null);
   const [dose, setDose] = useState<DoseFormValues>(() => doseFormFromCompound(compound));
   const [doseErrors, setDoseErrors] = useState<DoseFormErrors>({});
+  const [frequency, setFrequency] = useState<FrequencyFormValues>(() => frequencyFormFromCompound(compound));
+  const [frequencyErrors, setFrequencyErrors] = useState<FrequencyFormErrors>({});
+  // Older entries only have free text: prompt for a structured frequency, but never choose one for the user.
+  const legacyFrequencyText = needsStructuredFrequency(compound) ? compound.doseFrequency?.trim() || null : null;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key !== 'Enter') return;
@@ -80,15 +93,19 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
       return;
     }
     const nextDoseErrors = validateDoseForm(dose);
-    if (Object.keys(nextDoseErrors).length > 0) {
+    const nextFrequencyErrors = validateFrequencyForm(frequency);
+    if (Object.keys(nextDoseErrors).length > 0 || Object.keys(nextFrequencyErrors).length > 0) {
       setDoseErrors(nextDoseErrors);
+      setFrequencyErrors(nextFrequencyErrors);
       return;
     }
     setDoseErrors({});
+    setFrequencyErrors({});
     setFormError(null);
     try {
       await onSubmit({
         ...doseFormToPayload(dose),
+        ...frequencyFormToPayload(frequency),
         personId: compound.personId,
         name: trimmedName,
         category,
@@ -158,6 +175,16 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
           setDose(next);
           if (Object.keys(doseErrors).length > 0) setDoseErrors({});
         }}
+      />
+      <FrequencyFields
+        idPrefix={`${formId}-edit`}
+        values={frequency}
+        errors={frequencyErrors}
+        onChange={(next) => {
+          setFrequency(next);
+          if (Object.keys(frequencyErrors).length > 0) setFrequencyErrors({});
+        }}
+        legacyText={legacyFrequencyText}
       />
       <div>
         <label htmlFor={`${formId}-edit-notes`} className="block text-sm font-medium text-white/70 mb-2">Notes</label>

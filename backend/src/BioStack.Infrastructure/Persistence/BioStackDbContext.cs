@@ -22,6 +22,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<ProfileGoal> ProfileGoals { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
+    public DbSet<DoseLogEntry> DoseLogEntries { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
     public DbSet<Protocol> Protocols { get; set; }
     public DbSet<ProtocolRun> ProtocolRuns { get; set; }
@@ -218,11 +219,35 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(c => c.DoseUnit).HasMaxLength(16);
             entity.Property(c => c.DoseFrequency).HasMaxLength(UserDose.FrequencyMaxLength);
             entity.Property(c => c.DoseTime).HasMaxLength(UserDose.TimeMaxLength);
+            entity.Property(c => c.FrequencyKind).HasMaxLength(16);
+            entity.Property(c => c.FrequencyWeekdays).HasMaxLength(20);
+            entity.Property(c => c.FrequencyTimesOfDay).HasMaxLength(60);
             entity.Property(c => c.Notes).HasMaxLength(2000);
             entity.HasOne(c => c.PersonProfile)
                 .WithMany(p => p.Compounds)
                 .HasForeignKey(c => c.PersonId);
             entity.HasIndex(c => c.PersonId);
+        });
+
+        modelBuilder.Entity<DoseLogEntry>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.PersonId).IsRequired();
+            entity.Property(e => e.CompoundRecordId).IsRequired();
+            entity.Property(e => e.Amount).HasPrecision(UserDose.AmountPrecision, UserDose.AmountScale).IsRequired();
+            entity.Property(e => e.Unit).HasMaxLength(16).IsRequired();
+            entity.Property(e => e.Note).HasMaxLength(UserDose.LogNoteMaxLength);
+            // Removed with the profile and with the compound (account/compound deletion leaves no logged amounts behind).
+            entity.HasOne(e => e.PersonProfile)
+                .WithMany(p => p.DoseLogEntries)
+                .HasForeignKey(e => e.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(e => e.CompoundRecord)
+                .WithMany(c => c.DoseLogEntries)
+                .HasForeignKey(e => e.CompoundRecordId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(e => new { e.PersonId, e.LogDate });
+            entity.HasIndex(e => e.CompoundRecordId);
         });
 
         modelBuilder.Entity<CheckIn>(entity =>

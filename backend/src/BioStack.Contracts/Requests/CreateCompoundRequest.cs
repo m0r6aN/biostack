@@ -16,5 +16,11 @@ public sealed record CreateCompoundRequest(
     decimal? DoseAmount = null,
     string? DoseUnit = null,
     string? DoseFrequency = null,
-    string? DoseTime = null
+    string? DoseTime = null,
+    string? FrequencyKind = null,
+    int? FrequencyIntervalDays = null,
+    IReadOnlyList<int>? FrequencyWeekdays = null,
+    int? FrequencyTimesPerWeek = null,
+    DateTime? FrequencyStartDate = null,
+    IReadOnlyList<string>? FrequencyTimesOfDay = null
 );

@@ -22,8 +22,20 @@ public sealed class CompoundRecord
     public string? DoseUnit { get; set; }
     public string? DoseFrequency { get; set; }
     public string? DoseTime { get; set; }
+
+    // User-chosen structured frequency (all optional). When FrequencyKind is null the compound is shown
+    // daily as before, labelled with DoseFrequency (the user's own free text).
+    public string? FrequencyKind { get; set; }
+    public int? FrequencyIntervalDays { get; set; }
+    /// <summary>Comma-separated weekday numbers, 0 = Sunday .. 6 = Saturday.</summary>
+    public string? FrequencyWeekdays { get; set; }
+    public int? FrequencyTimesPerWeek { get; set; }
+    public DateTime? FrequencyStartDate { get; set; }
+    /// <summary>Comma-separated HH:mm times of day (24-hour, the user's own wall-clock times).</summary>
+    public string? FrequencyTimesOfDay { get; set; }
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public PersonProfile? PersonProfile { get; set; }
+    public ICollection<DoseLogEntry> DoseLogEntries { get; set; } = new List<DoseLogEntry>();
 }
