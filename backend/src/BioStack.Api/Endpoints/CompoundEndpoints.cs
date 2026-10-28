@@ -58,6 +58,13 @@ public static class CompoundEndpoints
         {
             return ProductGate(ex);
         }
+        catch (DoseValidationException ex)
+        {
+            return Results.ValidationProblem(new Dictionary<string, string[]>
+            {
+                [ex.Field] = [ex.Message],
+            });
+        }
         catch (ArgumentException ex)
         {
             return Results.ValidationProblem(new Dictionary<string, string[]>
@@ -81,6 +88,13 @@ public static class CompoundEndpoints
         catch (FeatureLimitExceededException ex)
         {
             return ProductGate(ex);
+        }
+        catch (DoseValidationException ex)
+        {
+            return Results.ValidationProblem(new Dictionary<string, string[]>
+            {
+                [ex.Field] = [ex.Message],
+            });
         }
         catch (ArgumentException ex)
         {

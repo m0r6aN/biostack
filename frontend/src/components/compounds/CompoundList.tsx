@@ -1,6 +1,7 @@
 import { CompoundRecord } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
+import { formatUserDoseWithTime } from '@/lib/userDose';
 import { CompoundStatusBadge } from './CompoundStatusBadge';
 
 interface CompoundListProps {
@@ -35,6 +36,9 @@ export function CompoundList({ compounds, onSelect }: CompoundListProps) {
                 <span className="text-xs text-white/35">•</span>
                 <span className="text-xs text-white/40">{formatDate(compound.startDate)}</span>
               </div>
+              {formatUserDoseWithTime(compound) && (
+                <p className="text-xs text-white/65 mt-2">Your dose: {formatUserDoseWithTime(compound)}</p>
+              )}
               {compound.notes && (
                 <p className="text-xs text-white/65 mt-2">{compound.notes}</p>
               )}

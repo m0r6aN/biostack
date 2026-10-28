@@ -16,6 +16,10 @@ public sealed class ProtocolItem
     public string CompoundGoalSnapshot { get; set; } = string.Empty;
     public string CompoundSourceSnapshot { get; set; } = string.Empty;
     public decimal? CompoundPricePaidSnapshot { get; set; }
+    public decimal? CompoundDoseAmountSnapshot { get; set; }
+    public string? CompoundDoseUnitSnapshot { get; set; }
+    public string? CompoundDoseFrequencySnapshot { get; set; }
+    public string? CompoundDoseTimeSnapshot { get; set; }
 
     public Protocol? Protocol { get; set; }
     public CompoundRecord? CompoundRecord { get; set; }

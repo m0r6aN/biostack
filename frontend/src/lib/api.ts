@@ -56,6 +56,15 @@ import {
 // host, where the biostack.cc session cookie cannot travel.
 const API_URL = getApiBaseUrl();
 
+/** First message of an ASP.NET validation problem ({ errors: { field: [message] } }), if any. */
+function firstValidationError(errors: unknown): string | undefined {
+  if (!errors || typeof errors !== 'object') return undefined;
+  for (const messages of Object.values(errors as Record<string, unknown>)) {
+    if (Array.isArray(messages) && typeof messages[0] === 'string' && messages[0]) return messages[0];
+  }
+  return undefined;
+}
+
 export class ApiError extends Error {
   status: number;
   code?: string;
@@ -102,7 +111,7 @@ export class ApiClient {
 
       try {
         const body = await response.json();
-        message = body.message || body.error || message;
+        message = body.message || body.error || firstValidationError(body.errors) || message;
         details = body;
       } catch {
       }

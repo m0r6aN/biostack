@@ -53,6 +53,11 @@ export interface CompoundRecord {
   goal?: string;
   source?: string;
   pricePaid?: number;
+  /** The user's own dose entry. Optional; never suggested, prefilled or computed by BioStack. */
+  doseAmount?: number | null;
+  doseUnit?: string | null;
+  doseFrequency?: string | null;
+  doseTime?: string | null;
 }
 
 export interface CurrentSubscription {
@@ -1221,6 +1226,8 @@ export interface ScheduleItem {
   icon?: string;
   accent?: ProtocolAccent;
   status?: 'completed' | 'upcoming' | 'skipped';
+  /** The user's own dose entry, e.g. "250 mcg · twice weekly". Absent when they have not entered one. */
+  dose?: string | null;
 }
 
 export interface DaySchedule {

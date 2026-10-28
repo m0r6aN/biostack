@@ -5,6 +5,14 @@ import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { classificationsForCategory } from '@/lib/compoundCategories';
 import { toSlug } from '@/lib/research/slugs';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import {
+  EMPTY_DOSE_FORM,
+  doseFormToPayload,
+  validateDoseForm,
+  type DoseFormErrors,
+  type DoseFormValues,
+} from '@/lib/userDose';
+import { DoseFields } from './DoseFields';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 interface CompoundFormProps {
@@ -25,6 +33,9 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
   const [showAllCompounds, setShowAllCompounds] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  // The dose is the user's own entry and always starts blank (never prefilled from the calculator or library).
+  const [dose, setDose] = useState<DoseFormValues>(EMPTY_DOSE_FORM);
+  const [doseErrors, setDoseErrors] = useState<DoseFormErrors>({});
   const hasAppliedPrefillRef = useRef(false);
   const hasUserEditedRef = useRef(false);
   const [formData, setFormData] = useState({
@@ -122,10 +133,17 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
       setFormError('Enter a compound name before adding it.');
       return;
     }
+    const nextDoseErrors = validateDoseForm(dose);
+    if (Object.keys(nextDoseErrors).length > 0) {
+      setDoseErrors(nextDoseErrors);
+      return;
+    }
+    setDoseErrors({});
     setFormError(null);
     try {
       await onSubmit({
         ...formData,
+        ...doseFormToPayload(dose),
         name: trimmedName,
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
@@ -145,6 +163,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
         notes: '',
         sourceType: 'Manual',
       });
+      setDose(EMPTY_DOSE_FORM);
     } catch (err) {
       console.error('Form submission error:', err);
     }
@@ -313,6 +332,16 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
           <option value="Completed">Completed</option>
         </select>
       </div>
+
+      <DoseFields
+        idPrefix={formId}
+        values={dose}
+        errors={doseErrors}
+        onChange={(next) => {
+          setDose(next);
+          if (Object.keys(doseErrors).length > 0) setDoseErrors({});
+        }}
+      />
 
       <div>
         <label htmlFor={`${formId}-notes`} className="block text-sm font-medium text-white/70 mb-2">Notes</label>

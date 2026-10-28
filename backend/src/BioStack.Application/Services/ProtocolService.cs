@@ -80,7 +80,11 @@ public sealed class ProtocolService : IProtocolService
                 CompoundNotesSnapshot = compound.Notes,
                 CompoundGoalSnapshot = compound.Goal,
                 CompoundSourceSnapshot = compound.Source,
-                CompoundPricePaidSnapshot = compound.PricePaid
+                CompoundPricePaidSnapshot = compound.PricePaid,
+                CompoundDoseAmountSnapshot = compound.DoseAmount,
+                CompoundDoseUnitSnapshot = compound.DoseUnit,
+                CompoundDoseFrequencySnapshot = compound.DoseFrequency,
+                CompoundDoseTimeSnapshot = compound.DoseTime
             }).ToList()
         };
 
@@ -2644,7 +2648,11 @@ public sealed class ProtocolService : IProtocolService
             CompoundNotesSnapshot = compound.Notes,
             CompoundGoalSnapshot = compound.Goal,
             CompoundSourceSnapshot = compound.Source,
-            CompoundPricePaidSnapshot = compound.PricePaid
+            CompoundPricePaidSnapshot = compound.PricePaid,
+            CompoundDoseAmountSnapshot = compound.DoseAmount,
+            CompoundDoseUnitSnapshot = compound.DoseUnit,
+            CompoundDoseFrequencySnapshot = compound.DoseFrequency,
+            CompoundDoseTimeSnapshot = compound.DoseTime
         };
     }
 
@@ -2666,6 +2674,10 @@ public sealed class ProtocolService : IProtocolService
             Goal = string.IsNullOrWhiteSpace(item.CompoundGoalSnapshot) ? compound?.Goal ?? string.Empty : item.CompoundGoalSnapshot,
             Source = string.IsNullOrWhiteSpace(item.CompoundSourceSnapshot) ? compound?.Source ?? string.Empty : item.CompoundSourceSnapshot,
             PricePaid = item.CompoundPricePaidSnapshot ?? compound?.PricePaid,
+            DoseAmount = item.CompoundDoseAmountSnapshot ?? compound?.DoseAmount,
+            DoseUnit = item.CompoundDoseUnitSnapshot ?? compound?.DoseUnit,
+            DoseFrequency = item.CompoundDoseFrequencySnapshot ?? compound?.DoseFrequency,
+            DoseTime = item.CompoundDoseTimeSnapshot ?? compound?.DoseTime,
             CreatedAtUtc = compound?.CreatedAtUtc ?? DateTime.UtcNow,
             UpdatedAtUtc = compound?.UpdatedAtUtc ?? DateTime.UtcNow
         };
@@ -2802,7 +2814,11 @@ public sealed class ProtocolService : IProtocolService
             compound.UpdatedAtUtc,
             compound.Goal,
             compound.Source,
-            compound.PricePaid
+            compound.PricePaid,
+            compound.DoseAmount,
+            compound.DoseUnit,
+            compound.DoseFrequency,
+            compound.DoseTime
         );
     }
 }

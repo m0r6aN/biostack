@@ -1,5 +1,6 @@
 'use client';
 
+import { formatUserDoseWithTime } from '@/lib/userDose';
 import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
@@ -397,6 +398,9 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                           <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/55">{item.compound.status}</span>
                         )}
                       </div>
+                      {formatUserDoseWithTime(item.compound) && (
+                        <p className="mt-3 text-sm text-white/70">Your dose: {formatUserDoseWithTime(item.compound)}</p>
+                      )}
                       {(item.compound?.startDate || item.compound?.notes) && (
                         <p className="mt-3 text-sm text-white/55">
                           {item.compound.startDate ? `Started ${item.compound.startDate}` : ''}

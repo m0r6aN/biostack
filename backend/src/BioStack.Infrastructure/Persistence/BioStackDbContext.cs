@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Entities.Graph;
+using BioStack.Domain.ValueObjects;
 using BioStack.Infrastructure.Persistence.Entities;
 
 public sealed class BioStackDbContext : DbContext
@@ -213,6 +214,10 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(c => c.Goal).HasMaxLength(255);
             entity.Property(c => c.Source).HasMaxLength(255);
             entity.Property(c => c.PricePaid).HasPrecision(18, 2);
+            entity.Property(c => c.DoseAmount).HasPrecision(UserDose.AmountPrecision, UserDose.AmountScale);
+            entity.Property(c => c.DoseUnit).HasMaxLength(16);
+            entity.Property(c => c.DoseFrequency).HasMaxLength(UserDose.FrequencyMaxLength);
+            entity.Property(c => c.DoseTime).HasMaxLength(UserDose.TimeMaxLength);
             entity.Property(c => c.Notes).HasMaxLength(2000);
             entity.HasOne(c => c.PersonProfile)
                 .WithMany(p => p.Compounds)
@@ -339,6 +344,10 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(item => item.CompoundGoalSnapshot).HasMaxLength(255);
             entity.Property(item => item.CompoundSourceSnapshot).HasMaxLength(255);
             entity.Property(item => item.CompoundPricePaidSnapshot).HasPrecision(18, 2);
+            entity.Property(item => item.CompoundDoseAmountSnapshot).HasPrecision(UserDose.AmountPrecision, UserDose.AmountScale);
+            entity.Property(item => item.CompoundDoseUnitSnapshot).HasMaxLength(16);
+            entity.Property(item => item.CompoundDoseFrequencySnapshot).HasMaxLength(UserDose.FrequencyMaxLength);
+            entity.Property(item => item.CompoundDoseTimeSnapshot).HasMaxLength(UserDose.TimeMaxLength);
             entity.HasOne(item => item.CompoundRecord)
                 .WithMany()
                 .HasForeignKey(item => item.CompoundRecordId)

@@ -79,6 +79,7 @@ function ScheduleItemRow({ item }: { item: ScheduleItem }) {
         <ScheduleIcon iconKey={item.icon} className={cn('h-5 w-5 shrink-0', accent.text)} />
         <div>
           <div className="font-medium text-white">{item.name}</div>
+          {item.dose && <div className="text-xs font-medium text-emerald-200/80">Your dose: {item.dose}</div>}
           <div className="text-xs text-white/45">{item.detail}</div>
         </div>
       </div>
