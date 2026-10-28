@@ -45,7 +45,7 @@ public sealed class CompoundCreateBoundaryTests
         repository.Setup(x => x.AddAsync(It.IsAny<CompoundRecord>(), It.IsAny<CancellationToken>())).Callback<CompoundRecord, CancellationToken>((c, _) => saved = c).Returns(Task.CompletedTask);
         timeline.Setup(x => x.AddAsync(It.IsAny<TimelineEvent>(), It.IsAny<CancellationToken>())).Callback<TimelineEvent, CancellationToken>((e, _) => addedEvent = e).Returns(Task.CompletedTask);
         var profileId = Guid.NewGuid();
-        await new CompoundService(repository.Object, timeline.Object, guard.Object, feature.Object).CreateCompoundAsync(profileId, request);
+        await new CompoundService(repository.Object, timeline.Object, guard.Object, feature.Object, Mock.Of<ICatalogItemResolver>()).CreateCompoundAsync(profileId, request);
         Assert.NotNull(saved);
         Assert.Equal(profileId, saved.PersonId);
         foreach (var date in new[] { saved.StartDate, saved.EndDate, addedEvent?.OccurredAtUtc }.Where(x => x.HasValue)) Assert.Equal(DateTimeKind.Utc, date!.Value.Kind);
@@ -65,7 +65,7 @@ public sealed class CompoundCreateBoundaryTests
         var existing = new CompoundRecord { Id = id, PersonId = profileId };
         repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(existing);
         var request = new UpdateCompoundRequest("Fixture", CompoundCategory.Peptide, new DateTime(2026, 9, 14), null, CompoundStatus.Paused, "", SourceType.Manual);
-        await new CompoundService(repository.Object, Mock.Of<ITimelineEventRepository>(), Mock.Of<IOwnershipGuard>(), Mock.Of<IFeatureGate>()).UpdateCompoundAsync(profileId, id, request);
+        await new CompoundService(repository.Object, Mock.Of<ITimelineEventRepository>(), Mock.Of<IOwnershipGuard>(), Mock.Of<IFeatureGate>(), Mock.Of<ICatalogItemResolver>()).UpdateCompoundAsync(profileId, id, request);
         Assert.Equal(new DateTime(2026, 9, 14, 0, 0, 0, DateTimeKind.Utc), existing.StartDate);
         Assert.Equal(DateTimeKind.Utc, existing.StartDate!.Value.Kind);
         Assert.Null(existing.EndDate);

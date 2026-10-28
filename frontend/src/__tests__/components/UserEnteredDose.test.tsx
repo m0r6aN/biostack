@@ -52,7 +52,7 @@ const knowledgeEntry = (name: string): KnowledgeEntry =>
 async function openAddForm() {
   render(<CompoundsPage />);
   await screen.findByText('No Compounds Yet');
-  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
 }
 
 function fillBasics(name = 'BPC-157') {
@@ -61,7 +61,7 @@ function fillBasics(name = 'BPC-157') {
 }
 
 function submitForm() {
-  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!);
+  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound' }).at(-1)!);
 }
 
 beforeEach(() => {
@@ -89,7 +89,7 @@ describe('compound form: user-entered dose', () => {
     await openAddForm();
 
     const options = within(screen.getByLabelText('Dose unit')).getAllByRole('option').map((option) => option.textContent);
-    expect(options).toEqual(['Unit', 'mcg', 'mg', 'g', 'IU', 'mL', 'units']);
+    expect(options).toEqual(['Unit', 'mcg', 'mg', 'g', 'IU', 'mL', 'units', 'capsule', 'tablet', 'softgel', 'scoop', 'drop', 'serving', 'gummy']);
   });
 
   it('never prefills the dose from the library, even for a deep-linked compound that has a published dosage', async () => {

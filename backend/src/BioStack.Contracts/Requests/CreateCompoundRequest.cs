@@ -22,5 +22,11 @@ public sealed record CreateCompoundRequest(
     IReadOnlyList<int>? FrequencyWeekdays = null,
     int? FrequencyTimesPerWeek = null,
     DateTime? FrequencyStartDate = null,
-    IReadOnlyList<string>? FrequencyTimesOfDay = null
+    IReadOnlyList<string>? FrequencyTimesOfDay = null,
+    // Catalog link the user picked (a catalog slug). The server validates it against the live catalog and
+    // derives the category and verification state itself; a client-sent category is ignored when linked.
+    // On update: null keeps the existing link, an empty string removes it.
+    string? CatalogSlug = null,
+    // Per-item provider-summary toggle. null = default on at create, unchanged on update.
+    bool? IncludeInProviderSummary = null
 );

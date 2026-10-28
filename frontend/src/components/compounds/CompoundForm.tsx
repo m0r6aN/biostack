@@ -36,6 +36,11 @@ interface CompoundFormProps {
   initialCompoundSlug?: string;
 }
 
+// A pick can only link when the API gave the record's dossier slug (the server validates it again).
+function linkFor(entry: KnowledgeEntry): { slug: string; name: string } | null {
+  return entry.slug ? { slug: entry.slug, name: entry.canonicalName } : null;
+}
+
 export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlug }: CompoundFormProps) {
   const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
@@ -47,6 +52,10 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
   // The schedule is the user's own choice and always starts blank too.
   const [frequency, setFrequency] = useState<FrequencyFormValues>(EMPTY_FREQUENCY_FORM);
   const [frequencyErrors, setFrequencyErrors] = useState<FrequencyFormErrors>({});
+  // The catalog record the user explicitly picked (dropdown, typeahead row or dossier deep-link). Set only
+  // by a pick, never by typing. The server validates the slug, takes the category from the record and
+  // derives the verification state; the form never decides any of that.
+  const [linked, setLinked] = useState<{ slug: string; name: string } | null>(null);
   const hasAppliedPrefillRef = useRef(false);
   const hasUserEditedRef = useRef(false);
   const [formData, setFormData] = useState({
@@ -75,6 +84,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
           if (match) {
             hasAppliedPrefillRef.current = true;
             setFormData(prev => ({ ...prev, category: match.classification, name: match.canonicalName }));
+            setLinked(linkFor(match));
           }
         }
       } catch (err) {
@@ -125,6 +135,23 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
     return [...matches, ...rest];
   }, [categoryCompounds, formData.goal, goalMatchCount]);
 
+  const linkTo = (entry: KnowledgeEntry) => {
+    setLinked(linkFor(entry));
+    setFormData(prev => ({ ...prev, name: entry.canonicalName, category: prev.category || entry.classification }));
+    if (formError) setFormError(null);
+  };
+
+  // Typeahead over the whole library: canonical names and aliases, substring match, client-side only.
+  // Nothing is sent anywhere while typing.
+  const typeaheadMatches = useMemo(() => {
+    const query = formData.name.trim().toLowerCase();
+    if (query.length < 2 || (linked && linked.name.toLowerCase() === query)) return [];
+    return knowledgeBase
+      .filter(k => k.canonicalName.toLowerCase().includes(query) || (k.aliases ?? []).some(a => a.toLowerCase().includes(query)))
+      .sort((a, b) => a.canonicalName.localeCompare(b.canonicalName))
+      .slice(0, 6);
+  }, [knowledgeBase, formData.name, linked]);
+
   const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key !== 'Enter') return;
     const target = e.target as HTMLElement;
@@ -160,6 +187,8 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
         ...doseFormToPayload(dose),
         ...frequencyFormToPayload(frequency),
         name: trimmedName,
+        // Only the pick the user made; the server derives the category source and verification state.
+        ...(linked && linked.name === trimmedName ? { catalogSlug: linked.slug } : {}),
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
         startDate: new Date(`${formData.startDate}T00:00:00Z`).toISOString(),
@@ -180,6 +209,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
       });
       setDose(EMPTY_DOSE_FORM);
       setFrequency(EMPTY_FREQUENCY_FORM);
+      setLinked(null);
     } catch (err) {
       console.error('Form submission error:', err);
     }
@@ -194,7 +224,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
           <select
             id={`${formId}-category`}
             value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value, goal: '', name: '' })}
+            onChange={(e) => { setLinked(null); setFormData({ ...formData, category: e.target.value, goal: '', name: '' }); }}
             required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -215,7 +245,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             id={`${formId}-goal`}
             aria-describedby={formData.goal && compoundGoalDisplay(formData.goal).context ? `${formId}-goal-context` : undefined}
             value={formData.goal}
-            onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
+            onChange={(e) => { setLinked(null); setFormData({ ...formData, goal: e.target.value, name: '' }); }}
             disabled={!formData.category}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white disabled:opacity-50 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -238,7 +268,11 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             id={`${formId}-compound`}
             aria-describedby={formData.goal && goalMatchCount > 0 ? `${formId}-compound-results` : undefined}
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              const entry = knowledgeBase.find(k => k.canonicalName === e.target.value);
+              setLinked(entry ? linkFor(entry) : null);
+              setFormData({ ...formData, name: e.target.value });
+            }}
             disabled={!formData.category}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white disabled:opacity-50 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -265,6 +299,8 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             type="text"
             value={formData.name}
             onChange={(e) => {
+              // Typing never links. Editing a linked name away from the record's name drops the link.
+              if (linked && linked.name !== e.target.value) setLinked(null);
               setFormData({ ...formData, name: e.target.value });
               if (formError) setFormError(null);
             }}
@@ -273,6 +309,32 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
           <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can&apos;t find your compound in the list above.</p>
+          {typeaheadMatches.length > 0 && (
+            <ul aria-label="Matches in BioStack's library" className="mt-2 divide-y divide-white/5 overflow-hidden rounded-xl border border-white/10 bg-[#0F141B]">
+              {typeaheadMatches.map(entry => (
+                <li key={entry.slug ?? entry.canonicalName}>
+                  <button
+                    type="button"
+                    onClick={() => linkTo(entry)}
+                    className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left text-sm text-white hover:bg-white/[0.04]"
+                  >
+                    <span>{entry.canonicalName}</span>
+                    <span className="text-xs text-white/45">{entry.classification}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          {linked ? (
+            <p role="status" className="mt-2 text-xs text-emerald-300">
+              In BioStack: linked to {linked.name}. Its category comes from the library record.{' '}
+              <button type="button" className="underline" onClick={() => setLinked(null)}>Unlink</button>
+            </p>
+          ) : formData.name.trim().length > 0 ? (
+            <p role="status" className="mt-2 text-xs text-white/55">
+              Not linked to BioStack&apos;s library. It will be tracked as Unverified, and for Observer plans it counts toward the active research or unconfirmed item limit until it is confirmed.
+            </p>
+          ) : null}
           {formError && (
             <p role="alert" className="mt-2 text-xs text-red-300">{formError}</p>
           )}

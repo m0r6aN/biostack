@@ -8,6 +8,7 @@ import {
     CalculatorResult,
     CheckIn,
     CompoundRecord,
+    TakingResponse,
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
@@ -46,7 +47,6 @@ import {
     DaySchedule,
     WeekDay,
     DietFramework,
-    SupplementPlan,
     MonitoringProtocol,
     Milestone,
     Entitlements,
@@ -192,6 +192,10 @@ export class ApiClient {
     return this.request<CompoundRecord[]>(
       `/api/v1/profiles/${profileId}/compounds`
     );
+  }
+
+  async getTaking(profileId: string): Promise<TakingResponse> {
+    return this.request<TakingResponse>(`/api/v1/profiles/${profileId}/taking`);
   }
 
   async createCompound(
@@ -629,10 +633,6 @@ export class ApiClient {
 
   async getProtocolPortalDiet(profileId: string): Promise<DietFramework> {
     return this.request(`/api/v1/profiles/${profileId}/protocol/diet`);
-  }
-
-  async getProtocolPortalSupplements(profileId: string): Promise<SupplementPlan> {
-    return this.request(`/api/v1/profiles/${profileId}/protocol/supplements`);
   }
 
   async getProtocolPortalMonitoring(profileId: string): Promise<MonitoringProtocol> {

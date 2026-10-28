@@ -79,7 +79,7 @@ const pricingContent: Record<ProductPlanCode, Omit<PricingTier, 'name' | 'taglin
     highlights: [
       'Free calculators',
       'Public compounds and evidence library',
-      'Up to 8 active compounds',
+      'Up to 8 active research or unconfirmed items; confirmed supplements, vitamins, minerals and amino acids don\u2019t count',
       'Basic compound tracking',
       'Protocol overview and daily schedule',
       'Supplement and resource records',

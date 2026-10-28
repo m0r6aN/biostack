@@ -16,7 +16,7 @@ export type ProtocolTabId =
   | 'dashboard'
   | 'calendar'
   | 'diet'
-  | 'supplements'
+  | 'taking'
   | 'monitoring'
   | 'progress'
   | 'resources';
@@ -31,7 +31,7 @@ export const PROTOCOL_TABS: TabDef[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'calendar', label: 'Calendar & Schedule', icon: Calendar },
   { id: 'diet', label: 'Diet & Lifestyle', icon: Apple },
-  { id: 'supplements', label: 'Supplementation', icon: Pill },
+  { id: 'taking', label: "Everything I'm Taking", icon: Pill },
   { id: 'monitoring', label: 'Monitoring & Labs', icon: LineChart },
   { id: 'progress', label: 'Progress & Milestones', icon: Gauge },
   { id: 'resources', label: 'Resources', icon: BookOpen },

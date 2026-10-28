@@ -222,6 +222,9 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(c => c.FrequencyKind).HasMaxLength(16);
             entity.Property(c => c.FrequencyWeekdays).HasMaxLength(20);
             entity.Property(c => c.FrequencyTimesOfDay).HasMaxLength(60);
+            entity.Property(c => c.CatalogSlug).HasMaxLength(160);
+            entity.Property(c => c.VerificationState).HasMaxLength(16);
+            entity.Property(c => c.CategorySource).HasMaxLength(16);
             entity.Property(c => c.Notes).HasMaxLength(2000);
             entity.HasOne(c => c.PersonProfile)
                 .WithMany(p => p.Compounds)

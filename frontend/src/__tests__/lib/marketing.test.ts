@@ -45,7 +45,7 @@ describe('marketing content', () => {
   it('Observer tier does not advertise the paid analyzer', () => {
     const observer = pricingTiers.find((t) => t.name === 'Observer')!;
     expect(observer.highlights).toContain('Free calculators');
-    expect(observer.highlights).toContain('Up to 8 active compounds');
+    expect(observer.highlights).toContain('Up to 8 active research or unconfirmed items; confirmed supplements, vitamins, minerals and amino acids don\u2019t count');
     expect(observer.highlights).toContain('Local tool history');
     expect(observer.highlights.join(' ').toLowerCase()).not.toContain('analyzer');
     expect(observer.highlights.every((h) => !h.includes(' 5 '))).toBe(true);

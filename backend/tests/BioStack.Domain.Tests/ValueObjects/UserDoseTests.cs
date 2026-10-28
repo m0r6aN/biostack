@@ -16,7 +16,7 @@ public sealed class UserDoseTests
     [Fact]
     public void AllowedUnits_AreExactlyTheAgreedSet()
     {
-        Assert.Equal(new[] { "mcg", "mg", "g", "IU", "mL", "units" }, UserDose.AllowedUnits);
+        Assert.Equal(new[] { "mcg", "mg", "g", "IU", "mL", "units", "capsule", "tablet", "softgel", "scoop", "drop", "serving", "gummy" }, UserDose.AllowedUnits);
     }
 
     [Fact]
@@ -62,6 +62,13 @@ public sealed class UserDoseTests
     [InlineData("iu", "IU")]
     [InlineData("ML", "mL")]
     [InlineData("Units", "units")]
+    [InlineData("CAPSULE", "capsule")]
+    [InlineData("Tablet", "tablet")]
+    [InlineData("SOFTGEL", "softgel")]
+    [InlineData("Scoop", "scoop")]
+    [InlineData("Drop", "drop")]
+    [InlineData("Serving", "serving")]
+    [InlineData("Gummy", "gummy")]
     public void Unit_IsNormalisedToCanonicalSpelling(string input, string expected)
     {
         var error = UserDose.Validate(1m, input, null, null, out _, out var unit, out _, out _);
@@ -72,7 +79,6 @@ public sealed class UserDoseTests
 
     [Theory]
     [InlineData("kg")]
-    [InlineData("tablet")]
     [InlineData("ug")]
     [InlineData("cc")]
     public void Unit_OutsideTheAllowedSet_IsRejected(string unit)

@@ -13,7 +13,7 @@ import { describe, expect, it } from 'vitest';
 
 describe('user-entered dose helpers', () => {
   it('offers exactly the agreed units', () => {
-    expect([...DOSE_UNITS]).toEqual(['mcg', 'mg', 'g', 'IU', 'mL', 'units']);
+    expect([...DOSE_UNITS]).toEqual(['mcg', 'mg', 'g', 'IU', 'mL', 'units', 'capsule', 'tablet', 'softgel', 'scoop', 'drop', 'serving', 'gummy']);
   });
 
   it('starts blank and a blank form is valid and produces an all-null payload', () => {
@@ -45,6 +45,10 @@ describe('user-entered dose helpers', () => {
 
   it.each(['0.0001', '0.5', '100000', '1e6'])('accepts the amount %s: there is no recommended range', (amount) => {
     expect(validateDoseForm({ amount, unit: 'mcg', frequency: '', time: '' })).toEqual({});
+  });
+
+  it.each(['capsule', 'tablet', 'softgel', 'scoop', 'drop', 'serving', 'gummy'])('accepts the user-entered unit %s', (unit) => {
+    expect(validateDoseForm({ amount: '1', unit, frequency: '', time: '' })).toEqual({});
   });
 
   it('requires an amount with a unit and a unit with an amount', () => {

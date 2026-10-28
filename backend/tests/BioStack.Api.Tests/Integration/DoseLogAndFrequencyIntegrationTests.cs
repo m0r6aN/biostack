@@ -791,6 +791,71 @@ public sealed class DoseLogAndFrequencyIntegrationTests : IAsyncLifetime
         Assert.Equal("1 of 7 days logged", portal.Stats.Single(s => s.Label.StartsWith("Adherence")).Caption);
     }
 
+    [Fact]
+    public async Task Schedule_IncludesActiveItemsAddedAfterSavingProtocol_WithoutDuplicates()
+    {
+        var profileId = await CreateProfileAsync();
+        var existing = await CreateAsync(profileId, Request("Original", kind: "weekdays", weekdays: [1]));
+        var save = await _client.PostAsJsonAsync($"/api/v1/profiles/{profileId}/protocols", new SaveProtocolRequest("Saved"), JsonOptions);
+        Assert.Equal(HttpStatusCode.Created, save.StatusCode);
+        await UpsertCommanderSubscriptionAsync();
+
+        var before = await ScheduleAsync(profileId, Monday);
+        Assert.Equal(existing.Id, Assert.Single(before.Items).CompoundId);
+        var beforeWeek = (await _client.GetFromJsonAsync<List<WeekDayResponse>>(Url(profileId, "schedule/week?start=2026-10-04"), JsonOptions))!;
+        Assert.Equal([0, 1, 0, 0, 0, 0, 0], beforeWeek.Select(d => d.ItemCount));
+
+        var added = await CreateAsync(profileId, Request("Added later", kind: "weekdays", weekdays: [1], amount: 2m, unit: "capsule"));
+        var paused = await CreateAsync(profileId, Request("Paused", kind: "daily"));
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var record = await db.CompoundRecords.SingleAsync(c => c.Id == paused.Id);
+            record.Status = CompoundStatus.Paused;
+            await db.SaveChangesAsync();
+        }
+
+        var after = await ScheduleAsync(profileId, Monday);
+        Assert.Equal(2, after.Items.Count);
+        Assert.Equal(1, after.Items.Count(item => item.CompoundId == existing.Id));
+        var extra = Assert.Single(after.Items, item => item.CompoundId == added.Id);
+        Assert.Equal(2m, extra.DoseAmount);
+        Assert.Equal("capsule", extra.DoseUnit);
+        Assert.DoesNotContain(after.Items, item => item.CompoundId == paused.Id);
+        var afterWeek = (await _client.GetFromJsonAsync<List<WeekDayResponse>>(Url(profileId, "schedule/week?start=2026-10-04"), JsonOptions))!;
+        Assert.Equal([0, 2, 0, 0, 0, 0, 0], afterWeek.Select(d => d.ItemCount));
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var record = await db.CompoundRecords.SingleAsync(c => c.Id == existing.Id);
+            record.Status = CompoundStatus.Paused;
+            await db.SaveChangesAsync();
+        }
+        var afterPause = await ScheduleAsync(profileId, Monday);
+        Assert.Equal(added.Id, Assert.Single(afterPause.Items).CompoundId);
+    }
+
+    [Theory]
+    [InlineData("capsule")]
+    [InlineData("tablet")]
+    [InlineData("softgel")]
+    [InlineData("scoop")]
+    [InlineData("drop")]
+    [InlineData("serving")]
+    [InlineData("gummy")]
+    public async Task NewUnits_RoundTripThroughCompoundAndDoseLog(string unit)
+    {
+        var profileId = await CreateProfileAsync();
+        var created = await CreateAsync(profileId, Request(amount: 2m, unit: unit));
+        Assert.Equal(unit, created.DoseUnit);
+        var response = await LogAsync(profileId, Monday, new LogDoseEntryRequest(created.Id, 2m, unit));
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        var entry = Assert.Single(await HistoryAsync(profileId));
+        Assert.Equal(2m, entry.Amount);
+        Assert.Equal(unit, entry.Unit);
+    }
+
     // ── helpers ─────────────────────────────────────────────────────────────
 
     private async Task<CompoundResponse> CreateAsync(Guid profileId, CreateCompoundRequest request)

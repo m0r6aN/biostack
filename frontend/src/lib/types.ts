@@ -67,6 +67,38 @@ export interface CompoundRecord {
   frequencyStartDate?: string | null;
   /** HH:mm, the user's own wall-clock times. */
   frequencyTimesOfDay?: string[] | null;
+  /**
+   * Catalog link (a /knowledge/{slug}). Sent only when the user picks a catalog record; on update,
+   * undefined keeps the existing link and '' removes it. The server validates it and takes the category
+   * from the catalog record.
+   */
+  catalogSlug?: string | null;
+  /** Response-only, derived by the server: 'catalog' (linked) or 'unverified'. Never sent by the client. */
+  verificationState?: 'catalog' | 'unverified' | string;
+  /** Response-only: 'catalog' (category copied from the catalog record) or 'user' (display only). */
+  categorySource?: 'catalog' | 'user' | string;
+  /** Per-item provider-summary toggle. Undefined = unchanged on update, on at create. */
+  includeInProviderSummary?: boolean;
+}
+
+/** An offer that an unlinked item may be a catalog record. Exact name or alias match only; never auto-linked. */
+export interface CatalogSuggestion {
+  slug: string;
+  name: string;
+  category: string;
+  matchedOn: 'name' | 'alias';
+}
+
+export interface TakingItem {
+  compound: CompoundRecord;
+  /** True only for an active item that occupies one of the Observer slots (server-derived). */
+  countsTowardCap: boolean;
+  suggestions: CatalogSuggestion[];
+}
+
+export interface TakingResponse {
+  items: TakingItem[];
+  cap: { limit: number | null; counted: number };
 }
 
 /** An amount the user says they actually took. Always the user's own entry. */
@@ -1306,21 +1338,6 @@ export interface DietFramework {
   lifestyle: string[];
 }
 
-export interface SupplementEntry {
-  name: string;
-  dose: string;
-  note?: string;
-  /** Highlight the most important entries (e.g. TUDCA). */
-  emphasis?: boolean;
-}
-
-export interface SupplementPlan {
-  title: string;
-  summary: string;
-  entries: SupplementEntry[];
-  additional: string[];
-}
-
 export interface AdjustmentRule {
   trigger: string;
   action: string;
@@ -1355,7 +1372,6 @@ export interface ProtocolPortalData {
   /** Keyed by ISO date for the day-detail modal. */
   daySchedules: Record<string, DaySchedule>;
   diet: DietFramework;
-  supplements: SupplementPlan;
   monitoring: MonitoringProtocol;
   milestones: Milestone[];
   resources: ResourceEntry[];

@@ -11,7 +11,8 @@ namespace BioStack.Domain.ValueObjects;
 public static class UserDose
 {
     /// <summary>Canonical unit spellings, in display order.</summary>
-    public static readonly IReadOnlyList<string> AllowedUnits = ["mcg", "mg", "g", "IU", "mL", "units"];
+    public static readonly IReadOnlyList<string> AllowedUnits =
+        ["mcg", "mg", "g", "IU", "mL", "units", "capsule", "tablet", "softgel", "scoop", "drop", "serving", "gummy"];
 
     public const int FrequencyMaxLength = 100;
     public const int TimeMaxLength = 100;

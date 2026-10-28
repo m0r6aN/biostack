@@ -34,7 +34,8 @@ public sealed class CompoundNameValidationTests
             repository.Object,
             Mock.Of<ITimelineEventRepository>(),
             guard.Object,
-            Mock.Of<IFeatureGate>());
+            Mock.Of<IFeatureGate>(),
+            Mock.Of<ICatalogItemResolver>());
 
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
             service.CreateCompoundAsync(Guid.NewGuid(), CreateRequest(name)));
@@ -59,7 +60,8 @@ public sealed class CompoundNameValidationTests
             repository.Object,
             Mock.Of<ITimelineEventRepository>(),
             Mock.Of<IOwnershipGuard>(),
-            feature.Object);
+            feature.Object,
+            Mock.Of<ICatalogItemResolver>());
 
         await service.CreateCompoundAsync(Guid.NewGuid(), CreateRequest("  BPC-157  "));
 
@@ -78,7 +80,8 @@ public sealed class CompoundNameValidationTests
             repository.Object,
             Mock.Of<ITimelineEventRepository>(),
             guard.Object,
-            Mock.Of<IFeatureGate>());
+            Mock.Of<IFeatureGate>(),
+            Mock.Of<ICatalogItemResolver>());
 
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
             service.UpdateCompoundAsync(Guid.NewGuid(), Guid.NewGuid(), UpdateRequest(name)));
@@ -101,7 +104,8 @@ public sealed class CompoundNameValidationTests
             repository.Object,
             Mock.Of<ITimelineEventRepository>(),
             Mock.Of<IOwnershipGuard>(),
-            Mock.Of<IFeatureGate>());
+            Mock.Of<IFeatureGate>(),
+            Mock.Of<ICatalogItemResolver>());
 
         await service.UpdateCompoundAsync(profileId, id, UpdateRequest("  Creatine  "));
 

@@ -17,7 +17,6 @@ vi.mock('@/lib/api', async (importOriginal) => ({
     getCurrentSubscription: vi.fn(),
     getProtocolPortalActive: vi.fn(),
     getProtocolPortalSchedule: vi.fn(),
-    getProtocolPortalSupplements: vi.fn(),
     getProtocolPortalResources: vi.fn(),
     getProtocolPortalWeek: vi.fn(),
     getProtocolPortalDiet: vi.fn(),
@@ -88,7 +87,6 @@ beforeEach(() => {
   });
   vi.mocked(apiClient.getProtocolPortalActive).mockResolvedValue({ overview, stats: [] });
   vi.mocked(apiClient.getProtocolPortalSchedule).mockResolvedValue(monday);
-  vi.mocked(apiClient.getProtocolPortalSupplements).mockResolvedValue({ title: 'Supplements', summary: '', entries: [], additional: [] });
   vi.mocked(apiClient.getProtocolPortalResources).mockResolvedValue([]);
   vi.mocked(apiClient.getProtocolDoseHistory).mockResolvedValue([]);
   vi.mocked(apiClient.logProtocolDoses).mockResolvedValue(undefined);
@@ -131,6 +129,20 @@ describe('/my-protocol: dose log pipeline (250 mcg twice weekly on Mon/Thu)', ()
     const history = screen.getByRole('list', { name: 'Logged amounts' });
     expect(within(history).getByText('BPC-157')).toBeInTheDocument();
     expect(within(history).getByText('250 mcg')).toBeInTheDocument();
+  });
+
+  it('does not report a successful log as failed when the subsequent refresh fails', async () => {
+    const user = userEvent.setup();
+    render(<MyProtocolPage />);
+    await screen.findByText('BPC-157');
+    await user.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await user.type(screen.getByLabelText('Amount taken'), '250');
+    await user.selectOptions(screen.getByLabelText('Unit taken'), 'mcg');
+    vi.mocked(apiClient.getProtocolPortalSchedule).mockRejectedValueOnce(new Error('refresh failed'));
+    await user.click(screen.getByRole('button', { name: 'Save amount' }));
+    expect(await screen.findByText('Amount logged, but the view could not be refreshed. Reload to see it.')).toBeInTheDocument();
+    expect(apiClient.logProtocolDoses).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole('button', { name: 'Save amount' })).not.toBeInTheDocument();
   });
 
   it('shows nothing due on a day the compound is not scheduled for', async () => {
