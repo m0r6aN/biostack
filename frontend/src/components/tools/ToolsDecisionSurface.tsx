@@ -323,8 +323,9 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   }
 
   async function trackInStack() {
-    const payload = saveCurrentArtifact();
-    setSavedPayload(payload);
+    // With no calculation entered there is nothing to save; tracking the compound must still work (and must not throw).
+    const hasCalculation = mode === 'convert' ? !conversionResult.empty : Boolean(dosing.result);
+    if (hasCalculation) setSavedPayload(saveCurrentArtifact());
 
     if (!user || !activeProfileId) {
       setSaveMessage(
@@ -355,9 +356,10 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
       }
 
       await checkCompatibility();
-      setSaveMessage(exists ? 'Already in your stack. Calculation saved.' : 'Tracked in your stack. Calculation saved.');
+      const saved = hasCalculation ? ' Calculation saved.' : '';
+      setSaveMessage(exists ? `Already in your stack.${saved}` : `Tracked in your stack.${saved}`);
     } catch {
-      setSaveMessage('Could not update your stack. Calculation stayed saved on this device.');
+      setSaveMessage(hasCalculation ? 'Could not update your stack. Calculation stayed saved on this device.' : 'Could not update your stack.');
     } finally {
       setTrackState('idle');
     }

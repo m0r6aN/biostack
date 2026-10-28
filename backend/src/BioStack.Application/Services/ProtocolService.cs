@@ -616,40 +616,6 @@ public sealed class ProtocolService : IProtocolService
         return MapRun(run);
     }
 
-    public async Task<ProtocolComputationRecordResponse> RecordComputationAsync(Guid protocolId, CreateProtocolComputationRequest request, CancellationToken cancellationToken = default)
-    {
-        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
-        if (protocol is null)
-            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
-        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
-
-        if (string.IsNullOrWhiteSpace(request.Type))
-            throw new InvalidOperationException("Computation type is required.");
-
-        if (request.RunId is not null)
-        {
-            var run = await _protocolRunRepository.GetWithProtocolAsync(request.RunId.Value, cancellationToken);
-            if (run is null || run.ProtocolId != protocol.Id)
-                throw new InvalidOperationException("Computation run must belong to the target protocol.");
-        }
-
-        var record = new ProtocolComputationRecord
-        {
-            Id = Guid.NewGuid(),
-            ProtocolId = protocol.Id,
-            ProtocolRunId = request.RunId,
-            Type = request.Type.Trim(),
-            InputSnapshot = request.InputSnapshot,
-            OutputResult = request.OutputResult,
-            TimestampUtc = DateTime.UtcNow
-        };
-
-        await _computationRepository.AddAsync(record, cancellationToken);
-        await _computationRepository.SaveChangesAsync(cancellationToken);
-
-        return MapComputation(record);
-    }
-
     public async Task<ProtocolReviewCompletedEventResponse> CompleteReviewAsync(Guid protocolId, CompleteProtocolReviewRequest request, CancellationToken cancellationToken = default)
     {
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
@@ -2810,18 +2776,6 @@ public sealed class ProtocolService : IProtocolService
         );
     }
 
-    private static ProtocolComputationRecordResponse MapComputation(ProtocolComputationRecord record)
-    {
-        return new ProtocolComputationRecordResponse(
-            record.Id,
-            record.ProtocolId,
-            record.ProtocolRunId,
-            record.Type,
-            record.InputSnapshot,
-            record.OutputResult,
-            record.TimestampUtc);
-    }
-
     private static ProtocolReviewCompletedEventResponse MapReviewCompletedEvent(ProtocolReviewCompletedEvent @event)
     {
         return new ProtocolReviewCompletedEventResponse(
@@ -2867,7 +2821,6 @@ public interface IProtocolService
     Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> CompleteRunAsync(Guid runId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> AbandonRunAsync(Guid runId, CancellationToken cancellationToken = default);
-    Task<ProtocolComputationRecordResponse> RecordComputationAsync(Guid protocolId, CreateProtocolComputationRequest request, CancellationToken cancellationToken = default);
     Task<ProtocolReviewCompletedEventResponse> CompleteReviewAsync(Guid protocolId, CompleteProtocolReviewRequest request, CancellationToken cancellationToken = default);
     Task<ProtocolResponse> EvolveFromRunAsync(Guid runId, EvolveProtocolFromRunRequest request, CancellationToken cancellationToken = default);
     Task<CurrentStackIntelligenceResponse> GetCurrentStackIntelligenceAsync(Guid personId, CancellationToken cancellationToken = default);

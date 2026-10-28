@@ -388,18 +388,6 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(protocol);
         Assert.Equal(profile.Id, protocol.PersonId);
         Assert.Contains(protocol.Items, item => item.CompoundRecordId == compound.Id);
-
-        var computationResponse = await _client.PostAsJsonAsync($"/api/v1/protocols/{protocol.Id}/computations", new CreateProtocolComputationRequest(
-            null,
-            "reconstitution",
-            """{"peptideAmountMg":5,"diluentVolumeMl":2.5}""",
-            """{"output":2000,"unit":"mcg/mL"}"""));
-
-        Assert.Equal(HttpStatusCode.Created, computationResponse.StatusCode);
-        var computation = await computationResponse.Content.ReadFromJsonAsync<ProtocolComputationRecordResponse>(JsonOptions);
-        Assert.NotNull(computation);
-        Assert.Equal(protocol.Id, computation.ProtocolId);
-        Assert.Equal("reconstitution", computation.Type);
     }
 
     [Fact]

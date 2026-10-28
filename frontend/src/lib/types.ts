@@ -478,16 +478,6 @@ export interface ProtocolConsoleObservationSignal {
   detail: string;
 }
 
-export interface ProtocolComputationRecord {
-  id: string;
-  protocolId: string;
-  runId: string | null;
-  type: string;
-  inputSnapshot: string;
-  outputResult: string;
-  timestampUtc: string;
-}
-
 export interface ProtocolReviewCompletedEvent {
   id: string;
   protocolId: string;

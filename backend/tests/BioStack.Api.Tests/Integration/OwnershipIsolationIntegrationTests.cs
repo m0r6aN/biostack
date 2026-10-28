@@ -201,7 +201,6 @@ public sealed class OwnershipIsolationIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.NotFound, (await _userA.PostAsync($"/api/v1/protocols/runs/{runBId}/complete", null)).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await _userA.PostAsync($"/api/v1/protocols/runs/{runBId}/abandon", null)).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await _userA.PostAsJsonAsync($"/api/v1/protocols/runs/{runBId}/evolve", new EvolveProtocolFromRunRequest("Blocked"), JsonOptions)).StatusCode);
-        Assert.Equal(HttpStatusCode.NotFound, (await _userA.PostAsJsonAsync($"/api/v1/protocols/{protocolBId}/computations", new CreateProtocolComputationRequest(null, "blocked", "{}", "{}"), JsonOptions)).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await _userA.PostAsJsonAsync($"/api/v1/protocols/{protocolBId}/review/complete", new CompleteProtocolReviewRequest(runBId, "blocked"), JsonOptions)).StatusCode);
     }
 

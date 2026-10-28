@@ -102,4 +102,20 @@ public class CalculatorEndpointsIntegrationTests : IAsyncLifetime
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
+
+    [Fact]
+    public void ProtocolComputationWriteRoute_IsNotRegistered()
+    {
+        // The unused POST /api/v1/protocols/{id}/computations endpoint was removed. Existing computation rows are
+        // still read by the timeline/drift analytics, but nothing can create new ones through the API.
+        var routes = _factory.Services
+            .GetServices<Microsoft.AspNetCore.Routing.EndpointDataSource>()
+            .SelectMany(source => source.Endpoints)
+            .OfType<Microsoft.AspNetCore.Routing.RouteEndpoint>()
+            .Select(endpoint => endpoint.RoutePattern.RawText ?? string.Empty)
+            .ToList();
+
+        Assert.NotEmpty(routes);
+        Assert.DoesNotContain(routes, route => route.Contains("computations", StringComparison.OrdinalIgnoreCase));
+    }
 }
