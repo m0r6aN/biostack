@@ -15,6 +15,7 @@ public static class UserDose
 
     public const int FrequencyMaxLength = 100;
     public const int TimeMaxLength = 100;
+    public const int LogNoteMaxLength = 500;
     public const int AmountPrecision = 18;
     public const int AmountScale = 4;
 

@@ -17,7 +17,7 @@ import { ScenarioComparisonCard } from '@/components/protocols/ScenarioCompariso
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
-import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, isReducedInteractionIntelligence } from '@/lib/types';
+import { DoseLogEntry, Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, isReducedInteractionIntelligence } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
@@ -59,6 +59,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const [patterns, setPatterns] = useState<ProtocolPatternSnapshot | null>(null);
   const [drift, setDrift] = useState<ProtocolDriftSnapshot | null>(null);
   const [sequence, setSequence] = useState<ProtocolSequenceExpectationSnapshot | null>(null);
+  const [doseLog, setDoseLog] = useState<DoseLogEntry[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [ending, setEnding] = useState(false);
@@ -82,6 +83,13 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       const previousProtocol = previousVersion ? await apiClient.getProtocol(previousVersion.id) : null;
       setProtocol(protocolData);
       setPriorProtocol(previousProtocol);
+
+      // The amounts the user logged for the provider summary. Additive: the page works without them.
+      setDoseLog(
+        await Promise.resolve()
+          .then(() => apiClient.getProtocolDoseHistory(protocolData.personId, { limit: 200 }))
+          .catch(() => null),
+      );
 
       try {
         const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
@@ -430,6 +438,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                 patterns={patterns}
                 drift={drift}
                 sequence={sequence}
+                doseLog={doseLog}
               />
             </section>
             <section id="comparison" className="scroll-mt-6">

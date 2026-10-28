@@ -36,7 +36,19 @@ public sealed record ScheduleItemResponse(
     string? Accent,
     string? Status,
     // The user's own dose entry ("250 mcg · twice weekly"); null when they have not entered one.
-    string? Dose = null);
+    string? Dose = null,
+    // Which compound this row is, and the user's own saved entry (for an explicit "same as my entry" button).
+    Guid? CompoundId = null,
+    decimal? DoseAmount = null,
+    string? DoseUnit = null,
+    // The user's chosen frequency, e.g. "Mon, Thu". Null for rows with only free text.
+    string? Cadence = null,
+    // "scheduled", "weekly_target" or "as_needed".
+    string? Due = null,
+    // Amounts the user logged for this compound on this day.
+    IReadOnlyList<DoseLogEntryResponse>? Logged = null,
+    // For "N times per week" entries: how many amounts the user logged in the Sunday-start week containing this day.
+    int? WeekLogged = null);
 
 public sealed record DayScheduleResponse(
     string DateIso,

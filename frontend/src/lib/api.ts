@@ -3,6 +3,7 @@ import {
     GOAL_DEFINITIONS,
 } from './goals';
 import { normalizeTimelineEvent } from './timeline';
+import { browserTimeZone } from './userFrequency';
 import {
     CalculatorResult,
     CheckIn,
@@ -38,6 +39,8 @@ import {
     StagedTranscriptCandidateReview,
     PromotionPreview,
     ProtocolPortalData,
+    DoseLogEntry,
+    DoseLogEntryInput,
     ProtocolOverview,
     ProtocolStat,
     DaySchedule,
@@ -63,6 +66,21 @@ function firstValidationError(errors: unknown): string | undefined {
     if (Array.isArray(messages) && typeof messages[0] === 'string' && messages[0]) return messages[0];
   }
   return undefined;
+}
+
+/**
+ * Query string for the portal reads. The browser's own time zone is sent so the server picks "today" for
+ * the user's calendar day; the server falls back to the UTC date when it is absent or unknown.
+ */
+function portalQuery(params: Record<string, string | undefined>): string {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value) query.set(key, value);
+  }
+  const timeZone = browserTimeZone();
+  if (timeZone) query.set('tz', timeZone);
+  const text = query.toString();
+  return text ? `?${text}` : '';
 }
 
 export class ApiError extends Error {
@@ -587,7 +605,7 @@ export class ApiClient {
   /** Aggregated portal payload for a profile's active protocol. */
   async getProtocolPortal(profileId: string): Promise<ProtocolPortalData> {
     return this.request<ProtocolPortalData>(
-      `/api/v1/profiles/${profileId}/protocol/portal`
+      `/api/v1/profiles/${profileId}/protocol/portal${portalQuery({})}`
     );
   }
 
@@ -596,19 +614,17 @@ export class ApiClient {
     overview: ProtocolOverview;
     stats: ProtocolStat[];
   }> {
-    return this.request(`/api/v1/profiles/${profileId}/protocol/active`);
+    return this.request(`/api/v1/profiles/${profileId}/protocol/active${portalQuery({})}`);
   }
 
   /** Observer-safe schedule for one specific day. */
   async getProtocolPortalSchedule(profileId: string, dateIso?: string): Promise<DaySchedule> {
-    const query = dateIso ? `?date=${encodeURIComponent(dateIso)}` : '';
-    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule${query}`);
+    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule${portalQuery({ date: dateIso })}`);
   }
 
   /** Operator-only weekly calendar. */
   async getProtocolPortalWeek(profileId: string, startIso?: string): Promise<WeekDay[]> {
-    const query = startIso ? `?start=${encodeURIComponent(startIso)}` : '';
-    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule/week${query}`);
+    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule/week${portalQuery({ start: startIso })}`);
   }
 
   async getProtocolPortalDiet(profileId: string): Promise<DietFramework> {
@@ -631,12 +647,29 @@ export class ApiClient {
     return this.request(`/api/v1/profiles/${profileId}/protocol/resources`);
   }
 
-  /** Log the day's scheduled doses as taken. */
-  async logProtocolDoses(profileId: string, dateIso: string): Promise<void> {
+  /**
+   * Log the day's scheduled doses as taken. With `entries` it instead records, per compound, the amount
+   * the user typed. The amounts are always the user's own; nothing here fills one in.
+   */
+  async logProtocolDoses(profileId: string, dateIso: string, entries?: DoseLogEntryInput[]): Promise<void> {
     return this.request(`/api/v1/profiles/${profileId}/protocol/doses/log`, {
       method: 'POST',
-      body: JSON.stringify({ date: dateIso }),
+      body: JSON.stringify(entries && entries.length > 0 ? { date: dateIso, entries } : { date: dateIso }),
     });
+  }
+
+  /** The amounts the user logged, newest first. */
+  async getProtocolDoseHistory(profileId: string, options?: { from?: string; to?: string; limit?: number }): Promise<DoseLogEntry[]> {
+    const params = new URLSearchParams();
+    if (options?.from) params.set('from', options.from);
+    if (options?.to) params.set('to', options.to);
+    if (options?.limit) params.set('limit', String(options.limit));
+    const query = params.toString();
+    return this.request(`/api/v1/profiles/${profileId}/protocol/doses/history${query ? `?${query}` : ''}`);
+  }
+
+  async deleteProtocolDoseEntry(profileId: string, entryId: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/doses/log/${entryId}`, { method: 'DELETE' });
   }
 
   /** Send a message to the care team. */

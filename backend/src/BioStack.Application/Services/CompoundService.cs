@@ -30,6 +30,8 @@ public sealed class CompoundService : ICompoundService
     {
         var name = ValidateName(request.Name);
         var dose = ValidateDose(request.DoseAmount, request.DoseUnit, request.DoseFrequency, request.DoseTime);
+        var frequency = ValidateFrequency(request.FrequencyKind, request.FrequencyIntervalDays, request.FrequencyWeekdays,
+            request.FrequencyTimesPerWeek, request.FrequencyStartDate, request.FrequencyTimesOfDay);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         await EnsureActiveCompoundLimitAsync(personId, request.Status, excludedCompoundId: null, cancellationToken);
 
@@ -51,6 +53,12 @@ public sealed class CompoundService : ICompoundService
             DoseUnit = dose.Unit,
             DoseFrequency = dose.Frequency,
             DoseTime = dose.Time,
+            FrequencyKind = frequency?.Kind,
+            FrequencyIntervalDays = frequency?.IntervalDays,
+            FrequencyWeekdays = UserFrequency.FormatWeekdays(frequency?.Weekdays ?? []),
+            FrequencyTimesPerWeek = frequency?.TimesPerWeek,
+            FrequencyStartDate = frequency?.StartDate,
+            FrequencyTimesOfDay = UserFrequency.FormatTimes(frequency?.TimesOfDay ?? []),
             CreatedAtUtc = DateTime.UtcNow,
             UpdatedAtUtc = DateTime.UtcNow
         };
@@ -89,6 +97,8 @@ public sealed class CompoundService : ICompoundService
     {
         var name = ValidateName(request.Name);
         var dose = ValidateDose(request.DoseAmount, request.DoseUnit, request.DoseFrequency, request.DoseTime);
+        var frequency = ValidateFrequency(request.FrequencyKind, request.FrequencyIntervalDays, request.FrequencyWeekdays,
+            request.FrequencyTimesPerWeek, request.FrequencyStartDate, request.FrequencyTimesOfDay);
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
         if (compound is null || compound.PersonId != personId)
@@ -109,6 +119,12 @@ public sealed class CompoundService : ICompoundService
         compound.DoseUnit = dose.Unit;
         compound.DoseFrequency = dose.Frequency;
         compound.DoseTime = dose.Time;
+        compound.FrequencyKind = frequency?.Kind;
+        compound.FrequencyIntervalDays = frequency?.IntervalDays;
+        compound.FrequencyWeekdays = UserFrequency.FormatWeekdays(frequency?.Weekdays ?? []);
+        compound.FrequencyTimesPerWeek = frequency?.TimesPerWeek;
+        compound.FrequencyStartDate = frequency?.StartDate;
+        compound.FrequencyTimesOfDay = UserFrequency.FormatTimes(frequency?.TimesOfDay ?? []);
         compound.UpdatedAtUtc = DateTime.UtcNow;
 
         await _compoundRepository.UpdateAsync(compound, cancellationToken);
@@ -144,6 +160,20 @@ public sealed class CompoundService : ICompoundService
         }
 
         return (normalizedAmount, normalizedUnit, normalizedFrequency, normalizedTime);
+    }
+
+    // The frequency is the user's own choice. Validation only checks the combination makes sense.
+    private static FrequencySpec? ValidateFrequency(
+        string? kind, int? intervalDays, IReadOnlyList<int>? weekdays, int? timesPerWeek, DateTime? startDate, IReadOnlyList<string>? timesOfDay)
+    {
+        var error = UserFrequency.Validate(
+            new FrequencyInput(kind, intervalDays, weekdays, timesPerWeek, startDate, timesOfDay), out var spec);
+        if (error is { } failure)
+        {
+            throw new DoseValidationException(failure.Field, failure.Message);
+        }
+
+        return spec;
     }
 
     // Calendar-only values remain midnight; unspecified timestamps are interpreted
@@ -211,7 +241,13 @@ public sealed class CompoundService : ICompoundService
             compound.DoseAmount,
             compound.DoseUnit,
             compound.DoseFrequency,
-            compound.DoseTime
+            compound.DoseTime,
+            compound.FrequencyKind,
+            compound.FrequencyIntervalDays,
+            UserFrequency.ParseWeekdays(compound.FrequencyWeekdays),
+            compound.FrequencyTimesPerWeek,
+            compound.FrequencyStartDate,
+            UserFrequency.ParseTimes(compound.FrequencyTimesOfDay)
         );
     }
 }

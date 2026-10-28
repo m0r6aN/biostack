@@ -2,6 +2,7 @@
 
 import type { DaySchedule } from '@/lib/types';
 import { ModalShell } from './ModalShell';
+import { ScheduleItemDetails } from './ScheduleItemDetails';
 
 interface DayDetailModalProps {
   day: DaySchedule;
@@ -28,6 +29,7 @@ export function DayDetailModal({ day, onClose }: DayDetailModalProps) {
               <div className="font-semibold text-white">{item.name}</div>
               {item.dose && <div className="text-xs font-medium text-emerald-200/80">Your dose: {item.dose}</div>}
               <div className="text-xs text-white/45">{item.detail}</div>
+              <ScheduleItemDetails item={item} />
             </div>
             <div className="whitespace-nowrap pt-0.5 text-right font-mono text-xs text-white/45">
               {item.time}

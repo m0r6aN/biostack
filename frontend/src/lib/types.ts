@@ -58,6 +58,35 @@ export interface CompoundRecord {
   doseUnit?: string | null;
   doseFrequency?: string | null;
   doseTime?: string | null;
+  /** The user's own structured frequency. Optional; a blank kind means "daily, labelled with doseFrequency". */
+  frequencyKind?: string | null;
+  frequencyIntervalDays?: number | null;
+  /** 0 = Sunday .. 6 = Saturday. */
+  frequencyWeekdays?: number[] | null;
+  frequencyTimesPerWeek?: number | null;
+  frequencyStartDate?: string | null;
+  /** HH:mm, the user's own wall-clock times. */
+  frequencyTimesOfDay?: string[] | null;
+}
+
+/** An amount the user says they actually took. Always the user's own entry. */
+export interface DoseLogEntry {
+  id: string;
+  compoundId: string;
+  compoundName: string;
+  /** The calendar day it was logged for (YYYY-MM-DD). */
+  logDate: string;
+  takenAtUtc: string;
+  amount: number;
+  unit: string;
+  note?: string | null;
+}
+
+export interface DoseLogEntryInput {
+  compoundId: string;
+  amount: number | null;
+  unit: string | null;
+  note?: string | null;
 }
 
 export interface CurrentSubscription {
@@ -1228,6 +1257,19 @@ export interface ScheduleItem {
   status?: 'completed' | 'upcoming' | 'skipped';
   /** The user's own dose entry, e.g. "250 mcg · twice weekly". Absent when they have not entered one. */
   dose?: string | null;
+  /** Which compound this row is. */
+  compoundId?: string | null;
+  /** The user's own saved entry, for an explicit "same as my saved entry" button. Never used to prefill. */
+  doseAmount?: number | null;
+  doseUnit?: string | null;
+  /** The user's chosen frequency, e.g. "Mon, Thu". Absent for entries that only have free text. */
+  cadence?: string | null;
+  /** "scheduled" (due this day), "weekly_target" (N times per week) or "as_needed". */
+  due?: 'scheduled' | 'weekly_target' | 'as_needed' | null;
+  /** Amounts the user logged for this compound on this day. */
+  logged?: DoseLogEntry[] | null;
+  /** For weekly targets: amounts logged in this week so far. */
+  weekLogged?: number | null;
 }
 
 export interface DaySchedule {

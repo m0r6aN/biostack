@@ -30,6 +30,8 @@ public static class ProtocolPortalEndpoints
         group.MapGet("/resources", GetResources).WithName("GetProtocolResources");
 
         group.MapPost("/doses/log", LogDoses).WithName("LogProtocolDoses").RequireConsent();
+        group.MapGet("/doses/history", GetDoseHistory).WithName("GetProtocolDoseHistory");
+        group.MapDelete("/doses/log/{entryId:guid}", DeleteDoseEntry).WithName("DeleteProtocolDoseEntry").RequireConsent();
 
         // Care-team messaging lives off the protocol group, under the profile.
         var careTeam = app.MapGroup("/api/v1/profiles/{profileId}/care-team")
@@ -38,11 +40,11 @@ public static class ProtocolPortalEndpoints
         careTeam.MapPost("/message", SendCareTeamMessage).WithName("SendCareTeamMessage").RequireConsent();
     }
 
-    private static async Task<IResult> GetPortal(Guid profileId, IProtocolPortalService service, CancellationToken ct)
+    private static async Task<IResult> GetPortal(Guid profileId, string? tz, IProtocolPortalService service, CancellationToken ct)
     {
         try
         {
-            return Results.Ok(await service.GetPortalAsync(profileId, ct));
+            return Results.Ok(await service.GetPortalAsync(profileId, tz, ct));
         }
         catch (FeatureLimitExceededException ex)
         {
@@ -54,11 +56,11 @@ public static class ProtocolPortalEndpoints
         }
     }
 
-    private static async Task<IResult> GetActive(Guid profileId, IProtocolPortalService service, CancellationToken ct)
+    private static async Task<IResult> GetActive(Guid profileId, string? tz, IProtocolPortalService service, CancellationToken ct)
     {
         try
         {
-            return Results.Ok(await service.GetActiveAsync(profileId, ct));
+            return Results.Ok(await service.GetActiveAsync(profileId, tz, ct));
         }
         catch (FeatureLimitExceededException ex)
         {
@@ -70,14 +72,14 @@ public static class ProtocolPortalEndpoints
         }
     }
 
-    private static async Task<IResult> GetSchedule(Guid profileId, string? date, IProtocolPortalService service, CancellationToken ct)
+    private static async Task<IResult> GetSchedule(Guid profileId, string? date, string? tz, IProtocolPortalService service, CancellationToken ct)
     {
         if (!TryParseDateParam(date, out var parsed))
             return Results.BadRequest(new { message = "date must be YYYY-MM-DD." });
 
         try
         {
-            return Results.Ok(await service.GetScheduleAsync(profileId, parsed, ct));
+            return Results.Ok(await service.GetScheduleAsync(profileId, parsed, tz, ct));
         }
         catch (FeatureLimitExceededException ex)
         {
@@ -89,14 +91,14 @@ public static class ProtocolPortalEndpoints
         }
     }
 
-    private static async Task<IResult> GetWeek(Guid profileId, string? start, IProtocolPortalService service, CancellationToken ct)
+    private static async Task<IResult> GetWeek(Guid profileId, string? start, string? tz, IProtocolPortalService service, CancellationToken ct)
     {
         if (!TryParseDateParam(start, out var parsed))
             return Results.BadRequest(new { message = "start must be YYYY-MM-DD." });
 
         try
         {
-            return Results.Ok(await service.GetWeekAsync(profileId, parsed, ct));
+            return Results.Ok(await service.GetWeekAsync(profileId, parsed, tz, ct));
         }
         catch (FeatureLimitExceededException ex)
         {
@@ -195,6 +197,10 @@ public static class ProtocolPortalEndpoints
             await service.LogDosesAsync(profileId, request, ct);
             return Results.NoContent();
         }
+        catch (DoseValidationException ex)
+        {
+            return Results.ValidationProblem(new Dictionary<string, string[]> { [ex.Field] = [ex.Message] });
+        }
         catch (FeatureLimitExceededException ex)
         {
             return ProductGate(ex);
@@ -202,6 +208,37 @@ public static class ProtocolPortalEndpoints
         catch (InvalidOperationException ex)
         {
             return Results.BadRequest(new { message = ex.Message });
+        }
+    }
+
+    private static async Task<IResult> GetDoseHistory(
+        Guid profileId, string? from, string? to, int? limit, IProtocolPortalService service, CancellationToken ct)
+    {
+        if (!TryParseDateParam(from, out var fromDate))
+            return Results.BadRequest(new { message = "from must be YYYY-MM-DD." });
+        if (!TryParseDateParam(to, out var toDate))
+            return Results.BadRequest(new { message = "to must be YYYY-MM-DD." });
+
+        try
+        {
+            return Results.Ok(await service.GetDoseHistoryAsync(profileId, fromDate, toDate, limit, ct));
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> DeleteDoseEntry(Guid profileId, Guid entryId, IProtocolPortalService service, CancellationToken ct)
+    {
+        try
+        {
+            await service.DeleteDoseEntryAsync(profileId, entryId, ct);
+            return Results.NoContent();
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
         }
     }
 

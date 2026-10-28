@@ -4,6 +4,7 @@ using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
+using BioStack.Domain.ValueObjects;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Repositories;
 
@@ -2678,6 +2679,13 @@ public sealed class ProtocolService : IProtocolService
             DoseUnit = item.CompoundDoseUnitSnapshot ?? compound?.DoseUnit,
             DoseFrequency = item.CompoundDoseFrequencySnapshot ?? compound?.DoseFrequency,
             DoseTime = item.CompoundDoseTimeSnapshot ?? compound?.DoseTime,
+            // The structured frequency is not snapshotted on protocol items; it follows the live record.
+            FrequencyKind = compound?.FrequencyKind,
+            FrequencyIntervalDays = compound?.FrequencyIntervalDays,
+            FrequencyWeekdays = compound?.FrequencyWeekdays,
+            FrequencyTimesPerWeek = compound?.FrequencyTimesPerWeek,
+            FrequencyStartDate = compound?.FrequencyStartDate,
+            FrequencyTimesOfDay = compound?.FrequencyTimesOfDay,
             CreatedAtUtc = compound?.CreatedAtUtc ?? DateTime.UtcNow,
             UpdatedAtUtc = compound?.UpdatedAtUtc ?? DateTime.UtcNow
         };
@@ -2818,7 +2826,13 @@ public sealed class ProtocolService : IProtocolService
             compound.DoseAmount,
             compound.DoseUnit,
             compound.DoseFrequency,
-            compound.DoseTime
+            compound.DoseTime,
+            compound.FrequencyKind,
+            compound.FrequencyIntervalDays,
+            UserFrequency.ParseWeekdays(compound.FrequencyWeekdays),
+            compound.FrequencyTimesPerWeek,
+            compound.FrequencyStartDate,
+            UserFrequency.ParseTimes(compound.FrequencyTimesOfDay)
         );
     }
 }

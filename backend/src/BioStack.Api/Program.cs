@@ -451,6 +451,7 @@ builder.Services.AddScoped<IProtocolComputationRecordRepository, ProtocolComputa
 builder.Services.AddScoped<IProtocolReviewCompletedEventRepository, ProtocolReviewCompletedEventRepository>();
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
+builder.Services.AddScoped<IDoseLogEntryRepository, DoseLogEntryRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
