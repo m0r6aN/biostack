@@ -1306,21 +1306,6 @@ export interface DietFramework {
   lifestyle: string[];
 }
 
-export interface SupplementEntry {
-  name: string;
-  dose: string;
-  note?: string;
-  /** Highlight the most important entries (e.g. TUDCA). */
-  emphasis?: boolean;
-}
-
-export interface SupplementPlan {
-  title: string;
-  summary: string;
-  entries: SupplementEntry[];
-  additional: string[];
-}
-
 export interface AdjustmentRule {
   trigger: string;
   action: string;
@@ -1355,7 +1340,6 @@ export interface ProtocolPortalData {
   /** Keyed by ISO date for the day-detail modal. */
   daySchedules: Record<string, DaySchedule>;
   diet: DietFramework;
-  supplements: SupplementPlan;
   monitoring: MonitoringProtocol;
   milestones: Milestone[];
   resources: ResourceEntry[];

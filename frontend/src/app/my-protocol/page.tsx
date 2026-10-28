@@ -15,7 +15,7 @@ import { DietLifestyleTab } from '@/components/protocol-portal/tabs/DietLifestyl
 import { MonitoringLabsTab } from '@/components/protocol-portal/tabs/MonitoringLabsTab';
 import { ProgressMilestonesTab } from '@/components/protocol-portal/tabs/ProgressMilestonesTab';
 import { ResourcesTab } from '@/components/protocol-portal/tabs/ResourcesTab';
-import { SupplementationTab } from '@/components/protocol-portal/tabs/SupplementationTab';
+import { TakingTab } from '@/components/protocol-portal/tabs/TakingTab';
 import { TierGate } from '@/components/protocol-portal/TierGate';
 import { Toast } from '@/components/protocol-portal/Toast';
 import { apiClient } from '@/lib/api';
@@ -31,7 +31,6 @@ import type {
   ProtocolStat,
   ProtocolTier,
   ResourceEntry,
-  SupplementPlan,
   WeekDay,
 } from '@/lib/types';
 import { Headset } from 'lucide-react';
@@ -50,7 +49,6 @@ interface PortalViewData {
   overview: ProtocolOverview;
   stats: ProtocolStat[];
   today: DaySchedule;
-  supplements: SupplementPlan;
   resources: ResourceEntry[];
   week: WeekDay[];
   diet: DietFramework | null;
@@ -123,10 +121,9 @@ export default function MyProtocolPage() {
       const subscription = await apiClient.getCurrentSubscription();
       const currentTier = normalizeTier(subscription.tier);
 
-      const [active, today, supplements, resources, operatorSections, monitoring, doseHistory] = await Promise.all([
+      const [active, today, resources, operatorSections, monitoring, doseHistory] = await Promise.all([
         apiClient.getProtocolPortalActive(currentProfileId),
         apiClient.getProtocolPortalSchedule(currentProfileId),
-        apiClient.getProtocolPortalSupplements(currentProfileId),
         apiClient.getProtocolPortalResources(currentProfileId),
         hasTier(currentTier, 'operator')
           ? Promise.all([
@@ -149,7 +146,6 @@ export default function MyProtocolPage() {
         overview: active.overview,
         stats: active.stats,
         today,
-        supplements,
         resources,
         week: operatorSections?.[0] ?? [],
         diet: operatorSections?.[1] ?? null,
@@ -170,6 +166,14 @@ export default function MyProtocolPage() {
   useEffect(() => {
     void loadPortal();
   }, [loadPortal]);
+
+  useEffect(() => {
+    let mounted = true;
+    if (new URLSearchParams(window.location.search).get('tab') === 'taking') {
+      queueMicrotask(() => { if (mounted) setActiveTab('taking'); });
+    }
+    return () => { mounted = false; };
+  }, []);
 
   const activePhase = useMemo(() => {
     if (!data) return null;
@@ -220,13 +224,19 @@ export default function MyProtocolPage() {
       setToast('That amount could not be logged.');
       throw cause;
     }
-    const [active, today, doseHistory] = await Promise.all([
-      apiClient.getProtocolPortalActive(currentProfileId),
-      apiClient.getProtocolPortalSchedule(currentProfileId, data.today.dateIso),
-      apiClient.getProtocolDoseHistory(currentProfileId, { limit: 50 }),
-    ]);
-    setData((current) => current ? { ...current, stats: active.stats, today, doseHistory } : current);
-    setToast(`Logged ${entry.amount} ${entry.unit} for ${item.name}.`);
+    // Once the POST succeeds, a refresh failure must not report the log as failed: retrying
+    // the form in that case could record the same amount twice.
+    try {
+      const [active, today, doseHistory] = await Promise.all([
+        apiClient.getProtocolPortalActive(currentProfileId),
+        apiClient.getProtocolPortalSchedule(currentProfileId, data.today.dateIso),
+        apiClient.getProtocolDoseHistory(currentProfileId, { limit: 50 }),
+      ]);
+      setData((current) => current ? { ...current, stats: active.stats, today, doseHistory } : current);
+      setToast(`Logged ${entry.amount} ${entry.unit} for ${item.name}.`);
+    } catch {
+      setToast('Amount logged, but the view could not be refreshed. Reload to see it.');
+    }
   }
 
   async function handleDeleteLoggedAmount(entry: DoseLogEntry) {
@@ -377,7 +387,9 @@ export default function MyProtocolPage() {
             </TierGate>
           )}
 
-          {activeTab === 'supplements' && <SupplementationTab supplements={data.supplements} />}
+          {activeTab === 'taking' && (
+            <TakingTab key={currentProfileId} profileId={currentProfileId} onLogAmount={handleLogAmount} />
+          )}
 
           {activeTab === 'monitoring' && (
             <TierGate requiredTier="commander" currentTier={tier}>

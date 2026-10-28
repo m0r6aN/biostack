@@ -28,7 +28,6 @@ vi.mock('@/lib/api', () => ({
     getProtocolPortal: vi.fn(),
     getProtocolPortalActive: vi.fn(),
     getProtocolPortalSchedule: vi.fn(),
-    getProtocolPortalSupplements: vi.fn(),
     getProtocolPortalResources: vi.fn(),
     getProtocolPortalWeek: vi.fn(),
     getProtocolPortalDiet: vi.fn(),
@@ -68,7 +67,7 @@ vi.mock('@/components/protocol-portal/tabs/DietLifestyleTab', () => ({ DietLifes
 vi.mock('@/components/protocol-portal/tabs/MonitoringLabsTab', () => ({ MonitoringLabsTab: () => <div>Live monitoring</div> }));
 vi.mock('@/components/protocol-portal/tabs/ProgressMilestonesTab', () => ({ ProgressMilestonesTab: () => <div>Live milestones</div> }));
 vi.mock('@/components/protocol-portal/tabs/ResourcesTab', () => ({ ResourcesTab: () => <div>Live resources</div> }));
-vi.mock('@/components/protocol-portal/tabs/SupplementationTab', () => ({ SupplementationTab: () => <div>Live supplements</div> }));
+vi.mock('@/components/protocol-portal/tabs/TakingTab', () => ({ TakingTab: () => <div>Live items</div> }));
 vi.mock('@/components/protocol-portal/DayDetailModal', () => ({ DayDetailModal: () => <div>Day detail</div> }));
 vi.mock('@/components/protocol-portal/ContactCareTeamModal', () => ({
   ContactCareTeamModal: ({ onSubmit }: { onSubmit: (message: string) => Promise<void> }) => (
@@ -110,7 +109,6 @@ describe('/my-protocol live integration', () => {
     });
     vi.mocked(apiClient.getProtocolPortalActive).mockResolvedValue({ overview, stats: [] });
     vi.mocked(apiClient.getProtocolPortalSchedule).mockResolvedValue(today);
-    vi.mocked(apiClient.getProtocolPortalSupplements).mockResolvedValue({ title: 'Supplements', summary: '', entries: [], additional: [] });
     vi.mocked(apiClient.getProtocolPortalResources).mockResolvedValue([]);
     vi.mocked(apiClient.getProtocolPortalWeek).mockResolvedValue([]);
     vi.mocked(apiClient.getProtocolPortalDiet).mockResolvedValue({ title: 'Diet', summary: '', targets: [], rationale: '', lifestyle: [] });
@@ -126,11 +124,20 @@ describe('/my-protocol live integration', () => {
     expect(await screen.findByText('Live Protocol')).toBeInTheDocument();
     expect(apiClient.getProtocolPortalActive).toHaveBeenCalledWith('profile-1');
     expect(apiClient.getProtocolPortalSchedule).toHaveBeenCalledWith('profile-1');
-    expect(apiClient.getProtocolPortalSupplements).toHaveBeenCalledWith('profile-1');
     expect(apiClient.getProtocolPortalResources).toHaveBeenCalledWith('profile-1');
     expect(apiClient.getProtocolPortal).not.toHaveBeenCalled();
     expect(apiClient.getProtocolPortalWeek).not.toHaveBeenCalled();
     expect(apiClient.getProtocolPortalMonitoring).not.toHaveBeenCalled();
+  });
+
+  it('opens the taking tab from a deep link', async () => {
+    window.history.replaceState({}, '', '/my-protocol?tab=taking');
+    try {
+      render(<MyProtocolPage />);
+      expect(await screen.findByText('Live items')).toBeInTheDocument();
+    } finally {
+      window.history.replaceState({}, '', '/');
+    }
   });
 
   it('renders an upgrade card for an Observer opening an Operator tab', async () => {

@@ -46,7 +46,6 @@ import {
     DaySchedule,
     WeekDay,
     DietFramework,
-    SupplementPlan,
     MonitoringProtocol,
     Milestone,
     Entitlements,
@@ -629,10 +628,6 @@ export class ApiClient {
 
   async getProtocolPortalDiet(profileId: string): Promise<DietFramework> {
     return this.request(`/api/v1/profiles/${profileId}/protocol/diet`);
-  }
-
-  async getProtocolPortalSupplements(profileId: string): Promise<SupplementPlan> {
-    return this.request(`/api/v1/profiles/${profileId}/protocol/supplements`);
   }
 
   async getProtocolPortalMonitoring(profileId: string): Promise<MonitoringProtocol> {

@@ -76,18 +76,6 @@ public sealed record DietFrameworkResponse(
     string Rationale,
     IReadOnlyList<string> Lifestyle);
 
-public sealed record SupplementEntryResponse(
-    string Name,
-    string Dose,
-    string? Note,
-    bool? Emphasis);
-
-public sealed record SupplementPlanResponse(
-    string Title,
-    string Summary,
-    IReadOnlyList<SupplementEntryResponse> Entries,
-    IReadOnlyList<string> Additional);
-
 public sealed record AdjustmentRuleResponse(
     string Trigger,
     string Action);
@@ -127,7 +115,6 @@ public sealed record ProtocolPortalResponse(
     IReadOnlyList<WeekDayResponse> Week,
     IReadOnlyDictionary<string, DayScheduleResponse> DaySchedules,
     DietFrameworkResponse Diet,
-    SupplementPlanResponse Supplements,
     MonitoringProtocolResponse Monitoring,
     IReadOnlyList<MilestoneResponse> Milestones,
     IReadOnlyList<ResourceEntryResponse> Resources,

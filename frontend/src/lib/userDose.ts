@@ -2,7 +2,7 @@
 // dose: it only (a) lists the allowed units, (b) checks the number is positive and finite, and
 // (c) formats what the user typed. Keep it that way: no recommended ranges, no "typical" values.
 
-export const DOSE_UNITS = ['mcg', 'mg', 'g', 'IU', 'mL', 'units'] as const;
+export const DOSE_UNITS = ['mcg', 'mg', 'g', 'IU', 'mL', 'units', 'capsule', 'tablet', 'softgel', 'scoop', 'drop', 'serving', 'gummy'] as const;
 export type DoseUnit = (typeof DOSE_UNITS)[number];
 
 export const DOSE_FREQUENCY_MAX_LENGTH = 100;

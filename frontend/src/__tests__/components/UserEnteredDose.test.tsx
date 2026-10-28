@@ -89,7 +89,7 @@ describe('compound form: user-entered dose', () => {
     await openAddForm();
 
     const options = within(screen.getByLabelText('Dose unit')).getAllByRole('option').map((option) => option.textContent);
-    expect(options).toEqual(['Unit', 'mcg', 'mg', 'g', 'IU', 'mL', 'units']);
+    expect(options).toEqual(['Unit', 'mcg', 'mg', 'g', 'IU', 'mL', 'units', 'capsule', 'tablet', 'softgel', 'scoop', 'drop', 'serving', 'gummy']);
   });
 
   it('never prefills the dose from the library, even for a deep-linked compound that has a published dosage', async () => {

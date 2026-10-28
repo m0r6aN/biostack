@@ -150,28 +150,6 @@ export const MOCK_PROTOCOL_PORTAL: ProtocolPortalData = {
     ],
   },
 
-  supplements: {
-    title: 'Daily Supplementation Guide',
-    summary: 'Foundational support — always active',
-    entries: [
-      { name: 'L-Carnitine', dose: '3 g daily', note: 'Fatty acid transport · Synergizes with MOTS-c' },
-      { name: 'Phosphatidylcholine', dose: '3 g daily', note: 'Cell membrane integrity & liver fat export' },
-      { name: 'Vitamin E', dose: '400 IU daily', note: 'Protects mitochondrial & liver membranes' },
-      { name: 'Selenium', dose: '200 mcg daily', note: 'Glutathione peroxidase support' },
-      {
-        name: 'TUDCA',
-        dose: '500 mg with 2 largest meals (1,000 mg total)',
-        note: 'Most important for Retatrutide biliary protection',
-        emphasis: true,
-      },
-      { name: 'NAC', dose: '1,000 mg daily', note: 'Glutathione replenishment & oxidative stress reduction' },
-      { name: 'Methyl B-Complex + B12 + Folate', dose: 'daily', note: 'Liver methylation & detoxification' },
-      { name: 'Magnesium Glycinate', dose: '500 mg (evening)', note: 'Sleep quality + enzymatic cofactor' },
-      { name: 'Zinc', dose: '30 mg daily', note: 'Liver detoxification enzyme support' },
-    ],
-    additional: ['Omega-3 (2–4 g)', 'Creatine 5 g', 'CoQ10 200–300 mg'],
-  },
-
   monitoring: {
     baselineCompleted:
       'Full CMP, lipid panel, HbA1c, HOMA-IR, GGT, ferritin, Vitamin D, liver ultrasound with elastography.',

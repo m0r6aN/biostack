@@ -11,6 +11,7 @@ const SOURCES = [
   'src/components/protocol-portal/DoseLogForm.tsx',
   'src/components/protocol-portal/DoseHistory.tsx',
   'src/components/protocol-portal/ScheduleItemDetails.tsx',
+  'src/components/protocol-portal/tabs/TakingTab.tsx',
 ];
 
 describe('BioStack never suggests, prefills or computes a dose or schedule', () => {

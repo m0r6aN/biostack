@@ -60,7 +60,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     }
 
     // ── Tier gating ─────────────────────────────────────────────────────────
-    // Per spec: Overview/stats/today/supplements/resources = Observer,
+    // Per spec: Overview/stats/today/resources = Observer,
     // calendar-week/diet/milestones = Operator, monitoring = Commander.
 
     private async Task EnsureTierAsync(ProductTier required, string code, string surface, CancellationToken ct)
@@ -98,7 +98,6 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         var today = BuildDayScheduleSection(ctx, ctx.Today);
         var week = BuildWeekSection(ctx, StartOfWeek(ctx.Today));
         var diet = BuildDietSection();
-        var supplements = BuildSupplementsSection();
         var monitoring = BuildMonitoringSection();
         var milestones = BuildMilestonesSection(ctx);
         var resources = BuildResourcesSection();
@@ -117,7 +116,6 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         Record("today", today, meta);
         Record("week", week, meta);
         Record("diet", diet, meta);
-        Record("supplements", supplements, meta);
         Record("monitoring", monitoring, meta);
         Record("milestones", milestones, meta);
         Record("resources", resources, meta);
@@ -129,7 +127,6 @@ public sealed class ProtocolPortalService : IProtocolPortalService
             week.Data!,
             daySchedules,
             diet.Data!,
-            supplements.Data!,
             monitoring.Data!,
             milestones.Data!,
             resources.Data!,
@@ -167,12 +164,6 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
         await EnsureOperatorAsync("portal_diet_operator", "the diet framework", ct);
         return _baseline.Diet;
-    }
-
-    public async Task<SupplementPlanResponse> GetSupplementsAsync(Guid profileId, CancellationToken ct = default)
-    {
-        await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
-        return _baseline.Supplements;
     }
 
     public async Task<MonitoringProtocolResponse> GetMonitoringAsync(Guid profileId, CancellationToken ct = default)
@@ -627,10 +618,11 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
     private static List<CompoundRecord> ResolveScheduledCompounds(PortalContext ctx)
     {
-        // Prefer the active protocol's item snapshots; fall back to active compound records.
+        // Keep protocol items, and include active records added since the protocol was saved.
         if (ctx.ActiveProtocol is { Items.Count: > 0 })
         {
-            return ctx.ActiveProtocol.Items
+            var protocolItemIds = ctx.ActiveProtocol.Items.Select(item => item.CompoundRecordId).ToHashSet();
+            var scheduled = ctx.ActiveProtocol.Items
                 .Select(item => item.CompoundRecord ?? new CompoundRecord
                 {
                     Id = item.CompoundRecordId,
@@ -652,6 +644,9 @@ public sealed class ProtocolPortalService : IProtocolPortalService
                 })
                 .Where(c => c.Status == CompoundStatus.Active)
                 .ToList();
+            scheduled.AddRange(ctx.Compounds.Where(c =>
+                c.Status == CompoundStatus.Active && !protocolItemIds.Contains(c.Id)));
+            return scheduled;
         }
 
         return ctx.Compounds.Where(c => c.Status == CompoundStatus.Active).ToList();
@@ -712,9 +707,6 @@ public sealed class ProtocolPortalService : IProtocolPortalService
 
     private PortalSection<DietFrameworkResponse> BuildDietSection()
         => PortalSection<DietFrameworkResponse>.Curated(_baseline.Diet, _baseline.Version);
-
-    private PortalSection<SupplementPlanResponse> BuildSupplementsSection()
-        => PortalSection<SupplementPlanResponse>.Curated(_baseline.Supplements, _baseline.Version);
 
     private PortalSection<MonitoringProtocolResponse> BuildMonitoringSection()
         => PortalSection<MonitoringProtocolResponse>.Curated(_baseline.Monitoring, _baseline.Version);
@@ -855,7 +847,6 @@ public interface IProtocolPortalService
     Task<DayScheduleResponse> GetScheduleAsync(Guid profileId, DateOnly? date, string? timeZoneId = null, CancellationToken ct = default);
     Task<IReadOnlyList<WeekDayResponse>> GetWeekAsync(Guid profileId, DateOnly? start, string? timeZoneId = null, CancellationToken ct = default);
     Task<DietFrameworkResponse> GetDietAsync(Guid profileId, CancellationToken ct = default);
-    Task<SupplementPlanResponse> GetSupplementsAsync(Guid profileId, CancellationToken ct = default);
     Task<MonitoringProtocolResponse> GetMonitoringAsync(Guid profileId, CancellationToken ct = default);
     Task<IReadOnlyList<MilestoneResponse>> GetMilestonesAsync(Guid profileId, CancellationToken ct = default);
     Task<IReadOnlyList<ResourceEntryResponse>> GetResourcesAsync(Guid profileId, CancellationToken ct = default);

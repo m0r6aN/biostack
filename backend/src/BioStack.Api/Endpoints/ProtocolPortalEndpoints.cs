@@ -24,7 +24,6 @@ public static class ProtocolPortalEndpoints
         group.MapGet("/schedule", GetSchedule).WithName("GetProtocolSchedule");
         group.MapGet("/schedule/week", GetWeek).WithName("GetProtocolScheduleWeek");
         group.MapGet("/diet", GetDiet).WithName("GetProtocolDiet");
-        group.MapGet("/supplements", GetSupplements).WithName("GetProtocolSupplements");
         group.MapGet("/monitoring", GetMonitoring).WithName("GetProtocolMonitoring");
         group.MapGet("/milestones", GetMilestones).WithName("GetProtocolMilestones");
         group.MapGet("/resources", GetResources).WithName("GetProtocolResources");
@@ -115,22 +114,6 @@ public static class ProtocolPortalEndpoints
         try
         {
             return Results.Ok(await service.GetDietAsync(profileId, ct));
-        }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
-    }
-
-    private static async Task<IResult> GetSupplements(Guid profileId, IProtocolPortalService service, CancellationToken ct)
-    {
-        try
-        {
-            return Results.Ok(await service.GetSupplementsAsync(profileId, ct));
         }
         catch (FeatureLimitExceededException ex)
         {

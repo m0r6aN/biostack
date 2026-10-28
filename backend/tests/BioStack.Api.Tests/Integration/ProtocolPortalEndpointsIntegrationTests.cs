@@ -95,11 +95,14 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
         foreach (var key in new[]
                  {
                      "overview", "stats", "today", "week", "daySchedules",
-                     "diet", "supplements", "monitoring", "milestones", "resources",
+                     "diet", "monitoring", "milestones", "resources",
                  })
         {
             Assert.True(root.TryGetProperty(key, out _), $"missing key: {key}");
         }
+
+        Assert.False(root.TryGetProperty("supplements", out _));
+        Assert.DoesNotContain("Daily Supplementation Guide", root.GetRawText(), StringComparison.Ordinal);
 
         // Additive provenance map present and includes curated + operational sections.
         Assert.True(root.TryGetProperty("sectionMeta", out var meta));
@@ -200,11 +203,11 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task GetSupplementsAndResources_ObserverTier_ReturnOk()
+    public async Task RetiredSupplementsEndpoint_ReturnsNotFound_ResourcesRemainAvailable()
     {
         var profile = await CreateProfileAsync("Observer Sections");
 
-        Assert.Equal(HttpStatusCode.OK,
+        Assert.Equal(HttpStatusCode.NotFound,
             (await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/supplements")).StatusCode);
         Assert.Equal(HttpStatusCode.OK,
             (await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/resources")).StatusCode);
@@ -332,11 +335,10 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
         // (2) Curated baseline must remain narrative-only and be flagged as such.
         Assert.False(string.IsNullOrWhiteSpace(portal.Diet.Title));
         Assert.NotEmpty(portal.Diet.Targets);
-        Assert.NotEmpty(portal.Supplements.Entries);
         Assert.NotEmpty(portal.Monitoring.AdjustmentRules);
         Assert.NotEmpty(portal.Milestones);
         Assert.NotEmpty(portal.Resources);
-        foreach (var key in new[] { "diet", "supplements", "monitoring", "milestones", "resources" })
+        foreach (var key in new[] { "diet", "monitoring", "milestones", "resources" })
         {
             Assert.Equal("curated_baseline", portal.SectionMeta[key].Status);
             Assert.Equal("knowledge_baseline", portal.SectionMeta[key].Source);
