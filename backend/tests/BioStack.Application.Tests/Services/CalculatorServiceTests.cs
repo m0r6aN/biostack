@@ -1,5 +1,6 @@
 namespace BioStack.Application.Tests.Services;
 
+using System.Text.Json;
 using Xunit;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
@@ -74,7 +75,7 @@ public class CalculatorServiceTests
     [Fact]
     public void CalculateConversion_WithValidInputs_ReturnsCorrectResult()
     {
-        var request = new ConversionRequest(1000m, "mg", "mcg", 1000m);
+        var request = new ConversionRequest(1000m, "mg", "mcg");
 
         var result = _service.CalculateConversion(request);
 
@@ -85,9 +86,9 @@ public class CalculatorServiceTests
     }
 
     [Fact]
-    public void CalculateConversion_WithoutExplicitFactor_UsesKnownUnitMapping()
+    public void CalculateConversion_UsesFixedUnitTable()
     {
-        var request = new ConversionRequest(2m, "mg", "mcg", null);
+        var request = new ConversionRequest(2m, "mg", "mcg");
 
         var result = _service.CalculateConversion(request);
 
@@ -98,29 +99,73 @@ public class CalculatorServiceTests
     }
 
     [Fact]
-    public void CalculateConversion_WithoutKnownFactor_ThrowsArgumentException()
+    public void CalculateConversion_WithUnsupportedUnit_ThrowsArgumentException()
     {
-        var request = new ConversionRequest(1m, "iu", "mg", null);
+        var request = new ConversionRequest(1m, "iu", "mg");
 
         var ex = Assert.Throws<ArgumentException>(() => _service.CalculateConversion(request));
-        Assert.Contains("No known conversion factor", ex.Message);
+        Assert.Contains("Unsupported conversion", ex.Message);
     }
 
     [Fact]
     public void CalculateConversion_WithZeroAmount_ThrowsArgumentException()
     {
-        var request = new ConversionRequest(0m, "mg", "mcg", 1000m);
+        var request = new ConversionRequest(0m, "mg", "mcg");
 
         var ex = Assert.Throws<ArgumentException>(() => _service.CalculateConversion(request));
         Assert.Contains("greater than 0", ex.Message);
     }
 
     [Fact]
-    public void CalculateConversion_WithZeroConversionFactor_ThrowsArgumentException()
+    public void ConversionRequest_HasNoClientSuppliedFactor()
     {
-        var request = new ConversionRequest(1000m, "mg", "mcg", 0m);
+        Assert.DoesNotContain(
+            typeof(ConversionRequest).GetProperties(),
+            p => p.Name.Contains("Factor", StringComparison.OrdinalIgnoreCase));
+    }
 
-        var ex = Assert.Throws<ArgumentException>(() => _service.CalculateConversion(request));
-        Assert.Contains("greater than 0", ex.Message);
+    [Fact]
+    public void ConversionRequest_WithConversionFactorInJson_IsRejectedAtDeserialization()
+    {
+        // Same System.Text.Json behavior ASP.NET minimal APIs use to bind the body. A request that tries to
+        // override the unit table must fail to bind (HTTP 400), not be ignored and not be honoured.
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        const string tampered = "{\"amount\":1,\"fromUnit\":\"mg\",\"toUnit\":\"mcg\",\"conversionFactor\":5}";
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<ConversionRequest>(tampered, options));
+    }
+
+    [Fact]
+    public void ConversionRequest_WithoutFactorInJson_Deserializes()
+    {
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        var request = JsonSerializer.Deserialize<ConversionRequest>("{\"amount\":1,\"fromUnit\":\"mg\",\"toUnit\":\"mcg\"}", options);
+
+        Assert.NotNull(request);
+        Assert.Equal(1000m, _service.CalculateConversion(request!).Output);
+    }
+
+    [Fact]
+    public void CalculateConversion_FormulaShowsOnlyTheTableFactor()
+    {
+        var result = _service.CalculateConversion(new ConversionRequest(1m, "MG", "mcg"));
+
+        Assert.Equal("MG to mcg = MG * 1000", result.Formula);
+    }
+
+    [Theory]
+    [InlineData("", "mg")]
+    [InlineData("mg", " ")]
+    public void CalculateConversion_WithBlankUnit_ThrowsArgumentException(string from, string to)
+    {
+        Assert.Throws<ArgumentException>(() => _service.CalculateConversion(new ConversionRequest(1m, from, to)));
+    }
+
+    [Fact]
+    public void Calculations_OnDecimalOverflow_ThrowArgumentExceptionNotOverflowException()
+    {
+        Assert.Throws<ArgumentException>(() => _service.CalculateConversion(new ConversionRequest(decimal.MaxValue, "g", "mcg")));
+        Assert.Throws<ArgumentException>(() => _service.CalculateReconstitution(new ReconstitutionRequest(decimal.MaxValue, 1m)));
+        Assert.Throws<ArgumentException>(() => _service.CalculateVolume(new VolumeRequest(decimal.MaxValue, 0.0000000000000000000000000001m)));
     }
 }

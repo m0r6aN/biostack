@@ -79,8 +79,8 @@ Provides three mathematical calculators with built-in safety disclaimers:
 2. **Volume**: Calculate injection volume from desired dose and concentration
    - Formula: `Volume = Desired Dose / Concentration`
 
-3. **Conversion**: Convert between units with provided conversion factors
-   - Formula: `Converted = Amount * ConversionFactor`
+3. **Conversion**: Convert between mcg, mg and g using the server's fixed unit table (clients cannot supply a conversion factor; requests that include one are rejected with 400)
+   - Formula: `Converted = Amount * (table factor for from->to)`
 
 All calculator outputs include: `"This is a mathematical calculation only. Not medical advice."`
 

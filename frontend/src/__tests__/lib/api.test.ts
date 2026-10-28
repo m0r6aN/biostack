@@ -58,57 +58,22 @@ describe('ApiClient', () => {
     await expect(client.getProfiles()).rejects.toThrow('API Error: 500 Server Error');
   });
 
-  it('omits a non-positive conversionFactor from the conversion payload', async () => {
+  it('never sends a conversionFactor, even if a caller passes one', async () => {
     fetchMock.mockResolvedValue({
       ok: true,
       status: 200,
       json: async () => ({ input: 1, output: 1000, unit: 'mcg', formula: '', disclaimer: '' }),
     });
 
-    await client.calculateConversion({
-      amount: 1,
-      fromUnit: 'mg',
-      toUnit: 'mcg',
-      conversionFactor: 0,
-    });
+    // A legacy caller (or a tampered one) smuggling a factor in: it must not reach the wire.
+    const legacy = { amount: 1, fromUnit: 'mg', toUnit: 'mcg', conversionFactor: 5 };
+    await client.calculateConversion(legacy);
 
     expect(fetchMock).toHaveBeenCalledWith(
       'https://api.example.test/api/v1/calculators/conversion',
       expect.objectContaining({
         method: 'POST',
-        body: JSON.stringify({
-          amount: 1,
-          fromUnit: 'mg',
-          toUnit: 'mcg',
-        }),
-      })
-    );
-  });
-
-  it('preserves an explicit conversionFactor when provided', async () => {
-    fetchMock.mockResolvedValue({
-      ok: true,
-      status: 200,
-      json: async () => ({ input: 1, output: 1000, unit: 'mcg', formula: '', disclaimer: '' }),
-    });
-
-    await client.calculateConversion({
-      amount: 1,
-      fromUnit: 'mg',
-      toUnit: 'mcg',
-      conversionFactor: 1000,
-    });
-
-    expect(fetchMock).toHaveBeenCalledWith(
-      'https://api.example.test/api/v1/calculators/conversion',
-      expect.objectContaining({
-        method: 'POST',
-        body: JSON.stringify({
-          amount: 1,
-          fromUnit: 'mg',
-          toUnit: 'mcg',
-          conversionFactor: 1000,
-        }),
+        body: JSON.stringify({ amount: 1, fromUnit: 'mg', toUnit: 'mcg' }),
       })
     );
   });

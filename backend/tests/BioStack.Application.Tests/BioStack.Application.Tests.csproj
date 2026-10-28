@@ -27,6 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Shared with the frontend: frontend/src/__tests__/lib/dosingCalculator.golden.test.ts reads the same file. -->
+    <Content Include="..\..\..\shared\calculator\golden-vectors.json" Link="Fixtures\calculator-golden-vectors.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\BioStack.Application\BioStack.Application.csproj" />
     <ProjectReference Include="..\..\src\BioStack.Cognition\BioStack.Cognition.csproj" />
   </ItemGroup>

@@ -1,0 +1,69 @@
+{
+  "_readme": "Golden vectors for the BioStack calculators. Used by BOTH frontend/src/__tests__/lib/dosingCalculator.golden.test.ts (TypeScript, dosingCalculator.ts) and backend/tests/BioStack.Application.Tests/Services/CalculatorGoldenVectorTests.cs (.NET decimal, CalculatorService). Every expected value was worked out by hand from the unit definitions (1 g = 1,000 mg = 1,000,000 mcg; concentration = mass / volume; volume = dose / concentration; U-100 syringe: 100 units = 1 mL), NOT copied from either implementation. Change a vector only with a written reason in the PR. Relative tolerance for comparisons: see tolerance.",
+  "version": 1,
+  "tolerance": { "relative": 1e-9 },
+
+  "massConversion": [
+    { "id": "mcg-to-mg", "amount": 1000, "from": "mcg", "to": "mg", "expected": 1 },
+    { "id": "mg-to-mcg", "amount": 1, "from": "mg", "to": "mcg", "expected": 1000 },
+    { "id": "g-to-mg", "amount": 1, "from": "g", "to": "mg", "expected": 1000 },
+    { "id": "mg-to-g", "amount": 2500, "from": "mg", "to": "g", "expected": 2.5 },
+    { "id": "g-to-mcg", "amount": 1, "from": "g", "to": "mcg", "expected": 1000000 },
+    { "id": "mcg-to-g", "amount": 500, "from": "mcg", "to": "g", "expected": 0.0005 },
+    { "id": "identity-mg", "amount": 7.5, "from": "mg", "to": "mg", "expected": 7.5 },
+    { "id": "tiny-mg-to-mcg", "amount": 0.000001, "from": "mg", "to": "mcg", "expected": 0.001 },
+    { "id": "huge-mg-to-mcg", "amount": 1000000000, "from": "mg", "to": "mcg", "expected": 1000000000000 }
+  ],
+
+  "reconstitution": [
+    { "id": "5mg-in-2ml", "powderMg": 5, "diluentMl": 2, "expectedMcgPerMl": 2500 },
+    { "id": "10mg-in-2ml", "powderMg": 10, "diluentMl": 2, "expectedMcgPerMl": 5000 },
+    { "id": "2mg-in-1ml", "powderMg": 2, "diluentMl": 1, "expectedMcgPerMl": 2000 },
+    { "id": "3mg-in-4ml", "powderMg": 3, "diluentMl": 4, "expectedMcgPerMl": 750 },
+    { "id": "tiny-powder", "powderMg": 0.001, "diluentMl": 1, "expectedMcgPerMl": 1 },
+    { "id": "huge-powder-small-volume", "powderMg": 1000, "diluentMl": 0.5, "expectedMcgPerMl": 2000000 }
+  ],
+
+  "volume": [
+    { "id": "250mcg-at-2500", "doseMcg": 250, "concentrationMcgPerMl": 2500, "expectedMl": 0.1 },
+    { "id": "100mcg-at-10", "doseMcg": 100, "concentrationMcgPerMl": 10, "expectedMl": 10 },
+    { "id": "1mcg-at-1000", "doseMcg": 1, "concentrationMcgPerMl": 1000, "expectedMl": 0.001 },
+    { "id": "equal-dose-and-concentration", "doseMcg": 1000000, "concentrationMcgPerMl": 1000000, "expectedMl": 1 },
+    { "id": "half-mcg-at-2000", "doseMcg": 0.5, "concentrationMcgPerMl": 2000, "expectedMl": 0.00025 }
+  ],
+
+  "u100": [
+    { "id": "0.1ml", "ml": 0.1, "expectedUnits": 10 },
+    { "id": "1ml", "ml": 1, "expectedUnits": 100 },
+    { "id": "0.01ml", "ml": 0.01, "expectedUnits": 1 },
+    { "id": "0.05ml", "ml": 0.05, "expectedUnits": 5 },
+    { "id": "0.25ml", "ml": 0.25, "expectedUnits": 25 },
+    { "id": "2ml-over-one-syringe", "ml": 2, "expectedUnits": 200 }
+  ],
+
+  "pipeline": [
+    { "id": "5mg-2ml-250mcg", "powderMg": 5, "diluentMl": 2, "doseMcg": 250, "expectedMcgPerMl": 2500, "expectedMl": 0.1, "expectedU100Units": 10 },
+    { "id": "10mg-2ml-1000mcg", "powderMg": 10, "diluentMl": 2, "doseMcg": 1000, "expectedMcgPerMl": 5000, "expectedMl": 0.2, "expectedU100Units": 20 },
+    { "id": "1mg-1ml-100mcg", "powderMg": 1, "diluentMl": 1, "doseMcg": 100, "expectedMcgPerMl": 1000, "expectedMl": 0.1, "expectedU100Units": 10 },
+    { "id": "4mg-2ml-500mcg", "powderMg": 4, "diluentMl": 2, "doseMcg": 500, "expectedMcgPerMl": 2000, "expectedMl": 0.25, "expectedU100Units": 25 },
+    { "id": "60mg-2ml-2000mcg", "powderMg": 60, "diluentMl": 2, "doseMcg": 2000, "expectedMcgPerMl": 30000, "expectedMl": 0.06666666666666667, "expectedU100Units": 6.666666666666667 }
+  ],
+
+  "rejections": [
+    { "id": "reconstitution-zero-powder", "kind": "reconstitution", "powderMg": 0, "diluentMl": 2 },
+    { "id": "reconstitution-negative-powder", "kind": "reconstitution", "powderMg": -5, "diluentMl": 2 },
+    { "id": "reconstitution-zero-diluent", "kind": "reconstitution", "powderMg": 5, "diluentMl": 0 },
+    { "id": "reconstitution-negative-diluent", "kind": "reconstitution", "powderMg": 5, "diluentMl": -2 },
+    { "id": "volume-zero-dose", "kind": "volume", "doseMcg": 0, "concentrationMcgPerMl": 2500 },
+    { "id": "volume-negative-dose", "kind": "volume", "doseMcg": -250, "concentrationMcgPerMl": 2500 },
+    { "id": "volume-zero-concentration", "kind": "volume", "doseMcg": 250, "concentrationMcgPerMl": 0 },
+    { "id": "volume-negative-concentration", "kind": "volume", "doseMcg": 250, "concentrationMcgPerMl": -2500 },
+    { "id": "conversion-zero-amount", "kind": "conversion", "amount": 0, "from": "mg", "to": "mcg" },
+    { "id": "conversion-negative-amount", "kind": "conversion", "amount": -1, "from": "mg", "to": "mcg" },
+    { "id": "conversion-iu-unsupported", "kind": "conversion", "amount": 1, "from": "iu", "to": "mg" },
+    { "id": "conversion-volume-unit-unsupported", "kind": "conversion", "amount": 1, "from": "mg", "to": "ml" }
+  ],
+
+  "unsupportedSyringes": ["U-40", "U-50", "u40", "u-50", "40", "50", "U-200", "U-500", "", "insulin"],
+  "supportedSyringes": ["U-100", "u-100", "u100", "100", " U-100 "]
+}

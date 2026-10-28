@@ -26,7 +26,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What does BioStack actually do?',
     answer:
-      'BioStack is a free, public library of what the research says about peptides and similar compounds, graded by evidence strength. Paid tiers add your own layer: log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
+      'BioStack is a free, public library of what the research says about peptides and similar compounds, graded by evidence strength. Paid tiers add your own layer: log compounds, use the unit-conversion and volume calculators, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
   },
   {
     question: 'Who is BioStack designed for?',

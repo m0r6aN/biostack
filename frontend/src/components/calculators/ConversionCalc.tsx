@@ -24,7 +24,7 @@ export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
     try {
       setIsLoading(true);
       setError(null);
-      const res = await onCalculate({ ...inputs, conversionFactor: 0 });
+      const res = await onCalculate(inputs);
       setResult(res);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Calculation failed');

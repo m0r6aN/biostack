@@ -7,6 +7,7 @@ import {
   parseNumberInput,
   toMcg,
   tryCalculateUnifiedDosing,
+  UNSUPPORTED_SYRINGE_MESSAGE,
 } from '@/lib/dosingCalculator';
 import { describe, expect, it } from 'vitest';
 
@@ -183,5 +184,110 @@ describe('calculator defaults', () => {
     expect(Number.isNaN(parseNumberInput(''))).toBe(true);
     expect(Number.isNaN(parseNumberInput('  '))).toBe(true);
     expect(parseNumberInput('2.5')).toBe(2.5);
+  });
+});
+
+// ── split count (whole number of doses) ───────────────────────────────────────
+const baseInput = {
+  powderAmount: 10,
+  powderUnit: 'mg' as const,
+  diluentVolumeMl: 2,
+  concentrationSource: 'reconstitution' as const,
+  knownConcentration: Number.NaN,
+  concentrationUnit: 'mcg/mL' as const,
+  desiredDose: 1,
+  desiredDoseUnit: 'mg' as const,
+  doseBasis: 'weekly-total' as const,
+  splitCount: 4,
+};
+
+describe('split count handling', () => {
+  it('uses a whole split count exactly as entered', () => {
+    expect(calculateUnifiedDosing({ ...baseInput, splitCount: 3 }).splitCount).toBe(3);
+  });
+
+  it('rejects a fractional split count instead of silently flooring it', () => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, splitCount: 2.9 })).toThrow('Split count must be a whole number of doses');
+    expect(() => calculateUnifiedDosing({ ...baseInput, splitCount: 0.5 })).toThrow('Split count must be a whole number of doses');
+  });
+
+  it.each([0, -1, Number.NaN, Number.POSITIVE_INFINITY])('rejects split count %s', (splitCount) => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, splitCount })).toThrow('Split count must be greater than 0');
+  });
+
+  it('surfaces the fractional split error through tryCalculateUnifiedDosing', () => {
+    const out = tryCalculateUnifiedDosing({ ...baseInput, splitCount: 2.5 });
+    expect(out.result).toBeNull();
+    expect(out.error).toMatch(/whole number/);
+  });
+});
+
+// ── syringe scale ─────────────────────────────────────────────────────────────
+describe('syringe scale (U-100 only)', () => {
+  it('computes normally when no syringe is named or U-100 is named', () => {
+    expect(calculateUnifiedDosing({ ...baseInput }).u100UnitsPerAdministration).toBeCloseTo(5);
+    expect(calculateUnifiedDosing({ ...baseInput, syringeType: 'U-100' }).u100UnitsPerAdministration).toBeCloseTo(5);
+  });
+
+  it.each(['U-40', 'U-50', 'u40', '50'])('rejects %s with an explicit unsupported-syringe error', (syringeType) => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, syringeType })).toThrow(UNSUPPORTED_SYRINGE_MESSAGE);
+  });
+
+  it('reports an unsupported syringe even before the other fields are filled in', () => {
+    const out = tryCalculateUnifiedDosing({ ...DEFAULT_UNIFIED_DOSING_INPUT, syringeType: 'U-40' });
+    expect(out.result).toBeNull();
+    expect(out.error).toBe(UNSUPPORTED_SYRINGE_MESSAGE);
+  });
+});
+
+// ── nonfinite and out-of-range values ─────────────────────────────────────────
+describe('nonfinite and extreme values', () => {
+  const badNumbers = [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, 0, -1, -1e-12];
+  it.each(badNumbers)('rejects %s for powder amount, diluent volume and desired dose', (bad) => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, powderAmount: bad })).toThrow();
+    expect(() => calculateUnifiedDosing({ ...baseInput, diluentVolumeMl: bad })).toThrow();
+    expect(() => calculateUnifiedDosing({ ...baseInput, desiredDose: bad })).toThrow();
+  });
+
+  it.each(badNumbers)('rejects %s for a known concentration', (bad) => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, concentrationSource: 'known', knownConcentration: bad })).toThrow();
+  });
+
+  it('never returns Infinity or 0 for a dose volume at extreme magnitudes', () => {
+    expect(() => calculateUnifiedDosing({ ...baseInput, powderAmount: 1e-300, desiredDose: 1e300 })).toThrow(/outside the range/);
+    expect(() => calculateUnifiedDosing({ ...baseInput, diluentVolumeMl: 1e-320 })).toThrow();
+    expect(() => calculateUnifiedDosing({ ...baseInput, desiredDose: 1e-320, desiredDoseUnit: 'mcg' })).toThrow();
+  });
+
+  it('handles tiny but valid values', () => {
+    const r = calculateUnifiedDosing({ ...baseInput, powderAmount: 0.001, diluentVolumeMl: 1, desiredDose: 1, desiredDoseUnit: 'mcg', doseBasis: 'per-dose', splitCount: 1 });
+    expect(r.concentrationMcgPerMl).toBeCloseTo(1, 12);
+    expect(r.volumePerAdministrationMl).toBeCloseTo(1, 12);
+    expect(r.u100UnitsPerAdministration).toBeCloseTo(100, 10);
+  });
+
+  it('handles very large but valid values', () => {
+    const r = calculateUnifiedDosing({ ...baseInput, powderAmount: 1e6, powderUnit: 'g', diluentVolumeMl: 1000, desiredDose: 1e6, desiredDoseUnit: 'mcg', doseBasis: 'per-dose', splitCount: 1 });
+    expect(r.powderAmountMcg).toBe(1e12);
+    expect(r.concentrationMcgPerMl).toBe(1e9);
+    expect(r.volumePerAdministrationMl).toBeCloseTo(1e-3, 15);
+  });
+});
+
+// ── per-dose / daily / weekly accounting ──────────────────────────────────────
+describe('dose basis accounting', () => {
+  it('daily total: splits the daily dose and multiplies out to the week', () => {
+    const r = calculateUnifiedDosing({ ...baseInput, doseBasis: 'daily-total', desiredDose: 1, splitCount: 2 });
+    expect(r.dosePerAdministrationMcg).toBe(500);
+    expect(r.administrationsPerWeek).toBe(14);
+    expect(r.dailyTotalMcg).toBe(1000);
+    expect(r.weeklyTotalMcg).toBe(7000);
+  });
+
+  it('weekly total: splits the weekly dose across the weekly doses', () => {
+    const r = calculateUnifiedDosing({ ...baseInput, doseBasis: 'weekly-total', desiredDose: 2, splitCount: 4 });
+    expect(r.dosePerAdministrationMcg).toBe(500);
+    expect(r.administrationsPerWeek).toBe(4);
+    expect(r.weeklyTotalMcg).toBe(2000);
   });
 });

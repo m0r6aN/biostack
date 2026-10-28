@@ -1,5 +1,6 @@
 'use client';
 
+import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
 import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
 import { VialVisualizer } from '@/components/calculators/VialVisualizer';
 import {
@@ -19,7 +20,7 @@ import {
   EMPTY_NUMBER_PLACEHOLDER,
   formatDose,
   formatNumber,
-  toMcg,
+  convertMass,
   type ConcentrationUnit,
   type MassUnit,
   type UnifiedDosingInput,
@@ -107,9 +108,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const conversionResult = useMemo(() => {
     if (!Number.isFinite(conversion.amount)) return { value: Number.NaN, error: '', empty: true };
     try {
-      const from = toMcg(conversion.amount, conversion.fromUnit);
-      const divisor = toMcg(1, conversion.toUnit);
-      return { value: from / divisor, error: '', empty: false };
+      return { value: convertMass(conversion.amount, conversion.fromUnit, conversion.toUnit), error: '', empty: false };
     } catch {
       return { value: 0, error: 'Conversion failed', empty: false };
     }
@@ -346,7 +345,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
           startDate: new Date().toISOString(),
           endDate: null,
           status: 'Active',
-          notes: dosing.result ? `Tracked from tools. ${primaryAnswer}` : 'Tracked from tools.',
+          // Never copy a calculated dose or draw volume into the user's stack record.
+          notes: 'Tracked from tools.',
           sourceType: 'Manual',
           goal: '',
           source: 'Tools',
@@ -445,6 +445,12 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+          <SafetyDisclaimer type="calculation" />
+          {mode !== 'convert' && (
+            <p className="text-xs leading-5 text-white/45">
+              Draw volumes are shown for U-100 syringes only (100 units = 1 mL). U-40 and U-50 syringes are not supported.
+            </p>
+          )}
           <ResultPanel mode={mode} primary={mode === 'convert' ? (conversionResult.empty ? 'Enter a value to convert' : `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}`) : primaryAnswer} secondary={mode === 'convert' ? (conversionResult.empty ? '' : `${formatNumber(conversion.amount)} ${conversion.fromUnit}`) : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
           {mode !== 'convert' && (
             <VialVisualizer powderAmount={input.powderAmount} powderUnit={input.powderUnit} diluentVolumeMl={input.diluentVolumeMl} mode={mode} concentrationSource={input.concentrationSource} />
