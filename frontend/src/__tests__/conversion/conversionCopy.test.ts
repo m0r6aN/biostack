@@ -9,10 +9,10 @@ const ALL_NEW_COPY = [
   // UpgradeBanner
   'Pattern memory, drift analysis, and sequence intelligence unlock with Commander',
   // Billing — Observer
-  'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
+  'Observer includes up to 8 active research or unconfirmed items. Confirmed supplements, vitamins, minerals and amino acids don\u2019t count. Existing data stays available if a paid plan ends.',
   // Billing — Operator card
   'Protocol scoring and analysis',
-  'See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.',
+  'See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active item limit.',
   'Full protocol analysis',
   'Current-stack relationship intelligence',
   'Weekly protocol calendar',
@@ -122,7 +122,7 @@ describe('conversion copy safety', () => {
   });
 
   it('free-tier compound limit references 8 not 5 in copy that mentions compounds', () => {
-    const limitLines = ALL_NEW_COPY.filter((l) => /\d+ active compound/.test(l));
+    const limitLines = ALL_NEW_COPY.filter((l) => /\d+ active (compound|research)/.test(l));
     for (const line of limitLines) {
       expect(line, `"${line}" still references old limit 5`).not.toMatch(/\b5\b/);
     }

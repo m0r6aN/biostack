@@ -12,6 +12,7 @@ const SOURCES = [
   'src/components/protocol-portal/DoseHistory.tsx',
   'src/components/protocol-portal/ScheduleItemDetails.tsx',
   'src/components/protocol-portal/tabs/TakingTab.tsx',
+  'src/components/protocols/ProviderObservationalSummary.tsx',
 ];
 
 describe('BioStack never suggests, prefills or computes a dose or schedule', () => {
@@ -44,5 +45,27 @@ describe('BioStack never suggests, prefills or computes a dose or schedule', () 
     // The only place a kind is ever set is the select the user changes.
     expect(fields.match(/set\(\{ kind:/g)).toHaveLength(1);
     expect(fields).toMatch(/onChange=\{\(e\) => set\(\{ kind: e\.target\.value \}\)\}/);
+  });
+
+  it('the add form links a catalog record by slug only: no library dose, unit, frequency or time is ever read', () => {
+    const source = read('src/components/compounds/CompoundForm.tsx');
+
+    expect(source).not.toMatch(/recommendedDosage|standardDosageRange|maxReportedDose|weeklyDosageSchedule|tieredDosing|incrementalEscalationSteps|preferredTimeOfDay/);
+    // KnowledgeEntry.frequency is the library's own text; the form must not read it
+    expect(source).not.toMatch(/\b(entry|match|k|c)\.frequency\b/);
+    // the only thing a pick copies into the form is the name (and the category when none was chosen)
+    const linkTo = source.slice(source.indexOf('const linkTo'), source.indexOf('const typeaheadMatches'));
+    expect(linkTo).not.toMatch(/setDose|setFrequency|dose|Dose/);
+    // the client never sends a verification state or a category source
+    expect(source).not.toMatch(/verificationState|categorySource/);
+  });
+
+  it('the taking list and provider summary never write a state or category: the server derives them', () => {
+    for (const path of ['src/components/protocol-portal/tabs/TakingTab.tsx', 'src/components/protocols/ProviderObservationalSummary.tsx']) {
+      const source = read(path);
+      // response-only fields are read for labels, and dropped from the update body
+      expect(source).not.toMatch(/verificationState:\s|categorySource:\s/);
+    }
+    expect(read('src/components/protocol-portal/tabs/TakingTab.tsx')).toMatch(/const \{ id, verificationState, categorySource, catalogSlug, \.\.\.rest \} = item;/);
   });
 });

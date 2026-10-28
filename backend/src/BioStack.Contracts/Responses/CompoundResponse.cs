@@ -26,5 +26,10 @@ public sealed record CompoundResponse(
     IReadOnlyList<int>? FrequencyWeekdays = null,
     int? FrequencyTimesPerWeek = null,
     DateTime? FrequencyStartDate = null,
-    IReadOnlyList<string>? FrequencyTimesOfDay = null
+    IReadOnlyList<string>? FrequencyTimesOfDay = null,
+    // Server-derived, response-only: "catalog" (linked) or "unverified"; "catalog" or "user".
+    string? CatalogSlug = null,
+    string? VerificationState = null,
+    string? CategorySource = null,
+    bool IncludeInProviderSummary = true
 );

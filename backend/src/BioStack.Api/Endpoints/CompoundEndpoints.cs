@@ -21,6 +21,13 @@ public static class CompoundEndpoints
         group.MapGet("/", GetCompounds)
             .WithName("GetCompounds");
 
+        // One call for the Everything I'm Taking tab: the user's items with catalog link status, read-time
+        // "now in BioStack" offers and the server-derived cap count.
+        app.MapGet("/api/v1/profiles/{profileId}/taking", GetTaking)
+            .WithTags("Compounds")
+            .RequireAuthorization()
+            .WithName("GetTaking");
+
         group.MapPost("/", CreateCompound)
             .WithName("CreateCompound")
             .RequireConsent();
@@ -40,6 +47,18 @@ public static class CompoundEndpoints
         {
             var compounds = await compoundService.GetCompoundsByProfileAsync(profileId, ct);
             return Results.Ok(compounds);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetTaking(Guid profileId, ICompoundService compoundService, CancellationToken ct)
+    {
+        try
+        {
+            return Results.Ok(await compoundService.GetTakingAsync(profileId, ct));
         }
         catch (InvalidOperationException)
         {

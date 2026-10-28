@@ -8,6 +8,7 @@ import {
     CalculatorResult,
     CheckIn,
     CompoundRecord,
+    TakingResponse,
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
@@ -191,6 +192,10 @@ export class ApiClient {
     return this.request<CompoundRecord[]>(
       `/api/v1/profiles/${profileId}/compounds`
     );
+  }
+
+  async getTaking(profileId: string): Promise<TakingResponse> {
+    return this.request<TakingResponse>(`/api/v1/profiles/${profileId}/taking`);
   }
 
   async createCompound(

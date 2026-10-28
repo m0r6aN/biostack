@@ -46,7 +46,7 @@ beforeEach(() => {
 async function openAddForm() {
   render(<CompoundsPage />);
   await screen.findByText('No Compounds Yet');
-  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
 }
 
 function fillBasics(name = 'BPC-157') {
@@ -55,7 +55,7 @@ function fillBasics(name = 'BPC-157') {
 }
 
 function submitForm() {
-  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!);
+  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound' }).at(-1)!);
 }
 
 describe('compound form: structured frequency', () => {

@@ -515,6 +515,7 @@ builder.Services.AddScoped<BioStack.Api.Auth.RequireConsentFilter>();
 builder.Services.AddScoped<IFeatureGate, FeatureGate>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
+builder.Services.AddScoped<ICatalogItemResolver, KnowledgeCatalogItemResolver>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolService, ProtocolService>();
 builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();

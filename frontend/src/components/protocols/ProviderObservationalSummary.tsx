@@ -1,6 +1,7 @@
 'use client';
 
 import type {
+    CompoundRecord,
     DoseLogEntry,
     InteractionFinding,
     InteractionPairSummary,
@@ -26,6 +27,12 @@ interface ProviderObservationalSummaryProps {
   sequence?: ProtocolSequenceExpectationSnapshot | null;
   /** Amounts the user logged. Only entries for this protocol's compounds are shown. */
   doseLog?: DoseLogEntry[] | null;
+  /**
+   * The user's current items (live records). When supplied: items the user switched off for the summary are
+   * left out, every item is labelled by how BioStack knows it, and active items outside this saved
+   * protocol appear under "Other items you take". Without it the summary reads exactly as before.
+   */
+  currentItems?: CompoundRecord[] | null;
   generatedAt?: Date;
 }
 
@@ -54,10 +61,18 @@ export function ProviderObservationalSummary({
   drift,
   sequence,
   doseLog,
+  currentItems,
   generatedAt,
 }: ProviderObservationalSummaryProps) {
   const generatedDate = formatGeneratedAt(generatedAt ?? new Date());
-  const activeItems = protocol.items.filter(isActiveItem);
+  const liveById = new Map((currentItems ?? []).map((record) => [record.id, record]));
+  const isExcluded = (compoundId: string) => liveById.get(compoundId)?.includeInProviderSummary === false;
+  const activeItems = protocol.items.filter(isActiveItem).filter((item) => !isExcluded(item.compoundRecordId));
+  const protocolIds = new Set(protocol.items.map((item) => item.compoundRecordId));
+  // Active items that are not part of this saved protocol (read-only, taken from the live records).
+  const otherItems = (currentItems ?? []).filter((record) =>
+    record.status.toLowerCase() === 'active' && !protocolIds.has(record.id) && record.includeInProviderSummary !== false);
+  const labelFor = (compoundId: string) => (currentItems ? provenanceLabel(liveById.get(compoundId)) : null);
   const goals = unique(protocol.items.map((item) => item.compound?.goal).filter(Boolean) as string[]);
   const observations = recentObservations(protocol.actualComparison?.observations ?? []);
   const trends = protocol.actualComparison?.actualTrends ?? [];
@@ -82,11 +97,15 @@ export function ProviderObservationalSummary({
   const protocolCompoundIds = new Set(protocol.items.map((item) => item.compoundRecordId));
   // Only shown when the page supplied the user's log, so a summary without one reads exactly as before.
   const showLoggedAmounts = doseLog != null;
-  const loggedAmounts = (doseLog ?? []).filter((entry) => protocolCompoundIds.has(entry.compoundId)).slice(0, MAX_LOGGED_AMOUNTS);
+  const loggedAmounts = (doseLog ?? [])
+    .filter((entry) => protocolCompoundIds.has(entry.compoundId) && !isExcluded(entry.compoundId))
+    .slice(0, MAX_LOGGED_AMOUNTS);
   const [copyState, setCopyState] = useState<'idle' | 'success' | 'error'>('idle');
   const summaryText = buildProviderSummaryText({
     protocol,
     activeItems,
+    otherItems: currentItems ? otherItems : null,
+    labelFor,
     goals,
     observations,
     trends,
@@ -176,11 +195,21 @@ export function ProviderObservationalSummary({
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             {activeItems.map((item) => (
-              <SubstanceCard key={item.id} item={item} />
+              <SubstanceCard key={item.id} item={item} label={labelFor(item.compoundRecordId)} />
             ))}
           </div>
         )}
       </SummarySection>
+
+      {currentItems && otherItems.length > 0 && (
+        <SummarySection title="Other items you take" metadata={formatCount(otherItems.length, 'other item')} label={USER_ENTERED_LABEL} fullWidth>
+          <div className="grid gap-3 md:grid-cols-2">
+            {otherItems.map((record) => (
+              <OtherItemCard key={record.id} record={record} label={provenanceLabel(record)} />
+            ))}
+          </div>
+        </SummarySection>
+      )}
 
       {showLoggedAmounts && <SummarySection title="Logged amounts" metadata={formatCount(loggedAmounts.length, 'logged amount')} label={USER_ENTERED_LABEL} fullWidth>
         {loggedAmounts.length === 0 ? (
@@ -298,7 +327,43 @@ function Fact({ label, value }: { label: string; value: string }) {
   );
 }
 
-function SubstanceCard({ item }: { item: ProtocolItem }) {
+/** How BioStack knows an item. Always "user-entered": values are shown verbatim from the user's entries. */
+function provenanceLabel(record?: CompoundRecord): string | null {
+  if (!record) return null;
+  const state = record.verificationState ?? (record.catalogSlug ? 'catalog' : 'unverified');
+  return state === 'catalog' && record.catalogSlug ? 'In BioStack — user-entered' : 'Unverified — user-entered';
+}
+
+const NO_BIOSTACK_DATA = 'No BioStack data for this item.';
+
+function ProvenanceBadge({ label }: { label: string }) {
+  return (
+    <span className="rounded-full border border-slate-300 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-600">{label}</span>
+  );
+}
+
+function OtherItemCard({ record, label }: { record: CompoundRecord; label: string | null }) {
+  const unverified = label?.startsWith('Unverified');
+  return (
+    <article className="rounded-xl border border-slate-200 bg-white p-4 print:break-inside-avoid print:p-3">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h4 className="font-bold text-slate-950">{record.name}</h4>
+          {label && <div className="mt-1"><ProvenanceBadge label={label} /></div>}
+        </div>
+        <span className="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600">{record.status}</span>
+      </div>
+      <dl className="mt-4 grid gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
+        <MiniFact label="User-entered dose" value={formatUserDoseWithTime(record) ?? NOT_RECORDED} />
+        {record.doseFrequency && <MiniFact label="User-entered frequency" value={record.doseFrequency} />}
+        {describeFrequency(record) && <MiniFact label="User-chosen frequency" value={describeFrequency(record) ?? NOT_RECORDED} />}
+      </dl>
+      {unverified && <p className="mt-3 text-xs text-slate-500">{NO_BIOSTACK_DATA}</p>}
+    </article>
+  );
+}
+
+function SubstanceCard({ item, label }: { item: ProtocolItem; label?: string | null }) {
   const compound = item.compound;
   const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
 
@@ -308,6 +373,7 @@ function SubstanceCard({ item }: { item: ProtocolItem }) {
         <div>
           <h4 className="font-bold text-slate-950">{compound?.name ?? 'Compound snapshot'}</h4>
           <p className="mt-1 text-sm text-slate-500">{compound?.category ?? item.compoundRecordId}</p>
+          {label && <div className="mt-1"><ProvenanceBadge label={label} /></div>}
         </div>
         <span className="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600">
           {compound?.status ?? 'snapshot'}
@@ -412,6 +478,8 @@ function BoundaryText({ children }: { children: ReactNode }) {
 interface ProviderSummaryTextInput {
   protocol: Protocol;
   activeItems: ProtocolItem[];
+  otherItems: CompoundRecord[] | null;
+  labelFor: (compoundId: string) => string | null;
   goals: string[];
   observations: ProtocolRunObservation[];
   trends: ProtocolActualTrend[];
@@ -429,6 +497,8 @@ type ProtocolActualTrend = NonNullable<Protocol['actualComparison']>['actualTren
 function buildProviderSummaryText({
   protocol,
   activeItems,
+  otherItems,
+  labelFor,
   goals,
   observations,
   trends,
@@ -453,7 +523,10 @@ function buildProviderSummaryText({
       `Snapshot state: ${protocol.isCurrentVersion ? 'Current version' : 'Prior version'}`,
       `Run state: ${run ? `${run.status} run` : 'No active run in this snapshot'}`,
     ]),
-    formatTextSection('Active substances', buildActiveSubstanceLines(activeItems), formatCount(activeItems.length, 'active substance')),
+    formatTextSection('Active substances', buildActiveSubstanceLines(activeItems, labelFor), formatCount(activeItems.length, 'active substance')),
+    ...(otherItems && otherItems.length > 0
+      ? [formatTextSection('Other items you take', buildOtherItemLines(otherItems), formatCount(otherItems.length, 'other item'))]
+      : []),
     formatTextSection('Goals and timeline', [
       `Stated goals: ${goals.length > 0 ? goals.join(', ') : NOT_RECORDED}`,
       `Protocol created: ${formatDate(protocol.createdAtUtc)}`,
@@ -474,13 +547,22 @@ function buildProviderSummaryText({
   ].join('\n\n');
 }
 
-function buildActiveSubstanceLines(activeItems: ProtocolItem[]) {
+function buildOtherItemLines(items: CompoundRecord[]) {
+  return items.map((record) => {
+    const label = provenanceLabel(record);
+    const frequency = describeFrequency(record);
+    return `${record.name} (${record.status}${label ? `; ${label}` : ''}) — User-entered dose: ${formatUserDoseWithTime(record) ?? NOT_RECORDED}${record.doseFrequency ? `; User-entered frequency: ${record.doseFrequency}` : ''}${frequency ? `; User-chosen frequency: ${frequency}` : ''}${label?.startsWith('Unverified') ? `; ${NO_BIOSTACK_DATA}` : ''}`;
+  });
+}
+
+function buildActiveSubstanceLines(activeItems: ProtocolItem[], labelFor: (compoundId: string) => string | null) {
   if (activeItems.length === 0) return [NO_ACTIVE_SUBSTANCES];
 
   return activeItems.map((item) => {
     const compound = item.compound;
     const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
-    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered dose: ${formatUserDoseWithTime(compound) ?? NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}${describeFrequency(compound) ? `; User-chosen frequency: ${describeFrequency(compound)}` : ''}`;
+    const label = labelFor(item.compoundRecordId);
+    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}${label ? `; ${label}` : ''}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered dose: ${formatUserDoseWithTime(compound) ?? NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}${describeFrequency(compound) ? `; User-chosen frequency: ${describeFrequency(compound)}` : ''}`;
   });
 }
 
