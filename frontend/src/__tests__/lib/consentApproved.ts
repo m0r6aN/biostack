@@ -27,4 +27,3 @@ export function approvedSections(): Record<string, string[]> {
   }
   return sections;
 }
-
