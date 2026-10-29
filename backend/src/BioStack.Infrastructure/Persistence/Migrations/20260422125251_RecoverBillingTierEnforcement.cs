@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Linq;
 
 #nullable disable
 
@@ -779,6 +781,59 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 principalTable: "Protocols",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            UseNativeColumnTypesOnPostgres(migrationBuilder);
+        }
+
+        /// <summary>
+        /// This baseline was scaffolded against SQLite, so every column carries a SQLite storage type
+        /// ("TEXT", "INTEGER"). Production Postgres never runs this migration: its schema predates
+        /// the migration history and <c>ProductionMigrationHistoryBaseline</c> records this ID as applied
+        /// after validating the legacy schema. On an EMPTY Postgres database, though, these types
+        /// produced text columns, and the first later migration that adds a uuid foreign key to one of them
+        /// (AddProfileGoals -> PersonProfiles.Id) failed with 42804. Clearing the provider type lets Npgsql
+        /// map each column from its CLR type (uuid, timestamp with time zone, boolean, integer, numeric(p,s),
+        /// varchar(n)), which is what the model and the production schema use. SQLite is left as scaffolded.
+        /// The type is set explicitly because, with a null column type, the Npgsql generator falls back to the
+        /// SQLite-flavoured types in this migration's own target model.
+        /// </summary>
+        private static void UseNativeColumnTypesOnPostgres(MigrationBuilder migrationBuilder)
+        {
+            if (migrationBuilder.ActiveProvider?.Contains("Npgsql", StringComparison.OrdinalIgnoreCase) != true)
+            {
+                return;
+            }
+
+            foreach (var table in migrationBuilder.Operations.OfType<CreateTableOperation>())
+            {
+                foreach (var column in table.Columns)
+                {
+                    column.ColumnType = NativePostgresType(column);
+                }
+            }
+        }
+
+        private static string NativePostgresType(AddColumnOperation column)
+        {
+            var clrType = Nullable.GetUnderlyingType(column.ClrType) ?? column.ClrType;
+            if (clrType == typeof(Guid)) return "uuid";
+            if (clrType == typeof(DateTime)) return "timestamp with time zone";
+            if (clrType == typeof(bool)) return "boolean";
+            if (clrType == typeof(int)) return "integer";
+            if (clrType == typeof(decimal))
+            {
+                return column.Precision is int precision
+                    ? $"numeric({precision},{column.Scale ?? 0})"
+                    : "numeric";
+            }
+
+            if (clrType == typeof(string))
+            {
+                return column.MaxLength is int maxLength ? $"character varying({maxLength})" : "text";
+            }
+
+            throw new InvalidOperationException(
+                $"No native Postgres type is defined for {column.Table}.{column.Name} ({column.ClrType.Name}).");
         }
 
         /// <inheritdoc />
