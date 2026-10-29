@@ -41,7 +41,7 @@ Before deployment, verify all of the following without copying secret values int
 
 ## Consent sign-off gate
 
-The consent page copy is implementation-ready. The two-reviewer AI council reviews the exact text and the `bio-observational-v1` disclosure version, and Clint signs off before live acceptance (owner rulings 2026-10-25; no legal review). Any material text change must either remain compatible with that version or deliberately bump the server version and require re-acceptance.
+The consent page copy is implemented as `bio-observational-v2`, with the text approved by Clint on 2026-10-28 (`docs/INITIATIVES/consent-v2/consent-v2-approved.md`; no legal review). The two-reviewer AI council gate on the exact text is still open. Any material text change must deliberately bump the server version and require re-acceptance. Returning people who accepted an earlier version see a "What changed" box, writes stay blocked until they agree, and reads, export, deletion and sign-out are never behind the wall. Acceptances and declines are appended to `ConsentEvents`, so earlier versions are not erased.
 
 ## Authorized live evidence scenarios
 

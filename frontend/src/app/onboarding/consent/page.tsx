@@ -1,6 +1,16 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
+import {
+  CONSENT_BUTTON_AGREE,
+  CONSENT_BUTTON_DECLINE,
+  CONSENT_DETAILS,
+  CONSENT_SHORT_VERSION,
+  CONSENT_TITLE_NEW,
+  CONSENT_TITLE_RETURNING,
+  CONSENT_WHAT_CHANGED,
+  CONSENT_WHAT_CHANGED_HEADING,
+} from '@/lib/consentTextV2';
 import { canonicalRoutes } from '@/lib/productContract';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
@@ -9,6 +19,8 @@ type ConsentStatus = {
   accepted: boolean;
   declined: boolean;
   currentVersion: string;
+  /** The version the person last accepted. Present and different from currentVersion means they are returning. */
+  consentVersion?: string | null;
 };
 
 function normalizeReturnTo(value: string | null) {
@@ -25,6 +37,7 @@ function ConsentPageContent() {
   const [status, setStatus] = useState<ConsentStatus | null>(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState<'accept' | 'decline' | null>(null);
+  const returning = Boolean(status?.consentVersion && status.consentVersion !== status.currentVersion);
 
   useEffect(() => {
     let active = true;
@@ -111,12 +124,48 @@ function ConsentPageContent() {
         </div>
 
         <section className="rounded-lg border border-white/[0.07] bg-white/[0.035] p-6 shadow-2xl sm:p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Before you save data</p>
-          <h1 className="mt-3 text-2xl font-bold tracking-tight text-white">Choose whether to continue</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">
+            {returning ? CONSENT_TITLE_RETURNING : CONSENT_TITLE_NEW}
+          </h1>
+
+          {returning && (
+            <div className="mt-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] px-4 py-3 text-sm leading-6 text-emerald-50/85">
+              <p className="font-semibold text-emerald-100">{CONSENT_WHAT_CHANGED_HEADING}</p>
+              <p className="mt-1">{CONSENT_WHAT_CHANGED}</p>
+            </div>
+          )}
+
           <div className="mt-5 space-y-3 text-sm leading-6 text-white/62">
-            <p>BioStack stores the profile, compounds, goals, and observations you choose to save.</p>
-            <p>Its outputs are observational and informational. They are not medical advice, diagnosis, or treatment instructions.</p>
-            <p>You can choose not to continue. Your unsaved preview remains on this device unless you clear browser storage.</p>
+            {CONSENT_SHORT_VERSION.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+
+          <div className="mt-5 divide-y divide-white/[0.07] rounded-lg border border-white/[0.07]">
+            {CONSENT_DETAILS.map((section) => (
+              <details key={section.heading} className="group px-4 py-3">
+                <summary className="cursor-pointer text-sm font-semibold text-white/80 marker:text-white/40">
+                  {section.heading}
+                </summary>
+                <div className="mt-2 space-y-2 text-sm leading-6 text-white/62">
+                  {section.paragraph && <p>{section.paragraph}</p>}
+                  {section.bullets && (
+                    <ul className="list-disc space-y-2 pl-5">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet.text}>
+                          {bullet.lead && (
+                            <>
+                              {bullet.leadStyle === 'em' ? <em>{bullet.lead}</em> : <strong className="font-semibold text-white/75">{bullet.lead}</strong>}{' '}
+                            </>
+                          )}
+                          {bullet.text}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </details>
+            ))}
           </div>
 
           {status?.declined && (
@@ -138,7 +187,7 @@ function ConsentPageContent() {
               disabled={!status || submitting !== null}
               className="min-h-12 rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting === 'accept' ? 'Recording...' : 'I agree and want to continue'}
+              {submitting === 'accept' ? 'Recording...' : CONSENT_BUTTON_AGREE}
             </button>
             <button
               type="button"
@@ -146,7 +195,7 @@ function ConsentPageContent() {
               disabled={!status || submitting !== null}
               className="min-h-12 rounded-lg border border-white/10 bg-white/[0.04] px-5 text-sm font-semibold text-white/75 transition-colors hover:bg-white/[0.07] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting === 'decline' ? 'Recording...' : 'Not now'}
+              {submitting === 'decline' ? 'Recording...' : CONSENT_BUTTON_DECLINE}
             </button>
           </div>
 
