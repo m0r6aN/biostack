@@ -1,11 +1,13 @@
 import { TakingTab } from '@/components/protocol-portal/tabs/TakingTab';
 import { apiClient } from '@/lib/api';
-import type { CompoundRecord, TakingItem, TakingResponse } from '@/lib/types';
+import type { CatalogLookup, CompoundRecord, TakingItem, TakingResponse } from '@/lib/types';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/lib/api', () => ({ apiClient: { getTaking: vi.fn(), updateCompound: vi.fn() } }));
+vi.mock('@/lib/api', () => ({ apiClient: {
+  getTaking: vi.fn(), updateCompound: vi.fn(), listOpenCatalogLookups: vi.fn(), createCatalogLookup: vi.fn(), linkCatalogLookup: vi.fn(), declineCatalogLookup: vi.fn(),
+} }));
 vi.mock('next/link', () => ({ default: ({ href, children }: { href: string; children: React.ReactNode }) => <a href={href}>{children}</a> }));
 
 const record = (id: string, name: string, status: string, extra: Partial<CompoundRecord> = {}): CompoundRecord => ({
@@ -20,7 +22,16 @@ const item = (compound: CompoundRecord, extra: Partial<TakingItem> = {}): Taking
 
 const taking = (items: TakingItem[], cap = { limit: 8, counted: 1 }): TakingResponse => ({ items, cap });
 
-beforeEach(() => vi.resetAllMocks());
+const openLookup = (compoundId: string, status = 'matched', extra: Partial<CatalogLookup> = {}): CatalogLookup => ({
+  id: `lookup-${compoundId}`, profileId: 'profile-1', compoundId, queryName: 'Ozempic', status, createdAtUtc: '2026-10-30T10:00:00Z', completedAtUtc: null,
+  candidates: [{ slug: 'semaglutide', name: 'Semaglutide', kind: 'alias', label: 'same_as', reason: 'alternate name' }], ...extra,
+});
+
+beforeEach(() => {
+  vi.resetAllMocks();
+  vi.mocked(apiClient.listOpenCatalogLookups).mockResolvedValue([]);
+  vi.mocked(apiClient.createCatalogLookup).mockResolvedValue(openLookup('x', 'pending'));
+});
 
 describe('Everything I\'m Taking', () => {
   it('loads only the selected profile, shows active and paused entries, and logs only an explicitly entered amount', async () => {
@@ -153,5 +164,78 @@ describe('Everything I\'m Taking', () => {
     await user.click(await screen.findByRole('checkbox', { name: 'Include Creatine in provider summary' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent("Couldn't update Creatine. Nothing was changed.");
+  });
+
+  describe('internal catalog lookup offers', () => {
+    it('shows a waiting lookup as an offer on the item it belongs to, and links nothing until the person confirms', async () => {
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([item(record('1', 'Ozempic', 'Active')), item(record('2', 'Magnesium', 'Active'))]));
+      vi.mocked(apiClient.listOpenCatalogLookups).mockResolvedValue([openLookup('1')]);
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      const card = (await screen.findByText('Ozempic')).closest('article')!;
+      expect(await within(card).findByText(/Same as/)).toHaveTextContent('Same as Semaglutide?');
+      expect(within(screen.getByText('Magnesium').closest('article')!).queryByText(/Same as/)).not.toBeInTheDocument();
+      expect(apiClient.linkCatalogLookup).not.toHaveBeenCalled();
+      expect(apiClient.updateCompound).not.toHaveBeenCalled();
+    });
+
+    it('confirming links through the lookup and reloads the list; "Not the same" declines it', async () => {
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([item(record('1', 'Ozempic', 'Active'))]));
+      vi.mocked(apiClient.listOpenCatalogLookups).mockResolvedValue([openLookup('1')]);
+      vi.mocked(apiClient.linkCatalogLookup).mockResolvedValue(openLookup('1', 'linked'));
+      vi.mocked(apiClient.declineCatalogLookup).mockResolvedValue(openLookup('1', 'declined'));
+      const user = userEvent.setup();
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      await user.click(await screen.findByRole('button', { name: 'Link Ozempic to Semaglutide' }));
+      expect(apiClient.linkCatalogLookup).toHaveBeenCalledWith('lookup-1', 'semaglutide');
+      await vi.waitFor(() => expect(apiClient.getTaking).toHaveBeenCalledTimes(2));
+
+      await user.click(await screen.findByRole('button', { name: 'Ozempic is not the same' }));
+      expect(apiClient.declineCatalogLookup).toHaveBeenCalledWith('lookup-1');
+    });
+
+    it('does not repeat an offer the exact-match suggestion already shows', async () => {
+      const suggestion = { slug: 'semaglutide', name: 'Semaglutide', category: 'Peptide', matchedOn: 'alias' as const };
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([item(record('1', 'Ozempic', 'Active'), { suggestions: [suggestion] })]));
+      vi.mocked(apiClient.listOpenCatalogLookups).mockResolvedValue([openLookup('1')]);
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      await screen.findByText('Ozempic');
+      await vi.waitFor(() => expect(apiClient.listOpenCatalogLookups).toHaveBeenCalled());
+      expect(screen.getAllByRole('button', { name: /Link Ozempic to/ })).toHaveLength(1);
+    });
+
+    it('asks once for older unverified items with no offer, at most five, and never for linked or stopped ones', async () => {
+      const unverified = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((id) => item(record(`legacy-${id}`, `Item ${id}`, 'Active')));
+      const linked = item(record('linked-1', 'Creatine', 'Active', { catalogSlug: 'creatine', verificationState: 'catalog' }), { countsTowardCap: false });
+      const stopped = item(record('stopped-1', 'Old thing', 'Discontinued'));
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([...unverified, linked, stopped]));
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      await vi.waitFor(() => expect(apiClient.createCatalogLookup).toHaveBeenCalledTimes(5));
+      const asked = vi.mocked(apiClient.createCatalogLookup).mock.calls.map((c) => c[2]);
+      expect(asked).toHaveLength(5);
+      expect(asked).not.toContain('linked-1');
+      expect(asked).not.toContain('stopped-1');
+      expect(vi.mocked(apiClient.createCatalogLookup).mock.calls.every((c) => c[0] === 'profile-1')).toBe(true);
+    });
+
+    it('keeps showing the list when the lookup service fails', async () => {
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([item(record('lookup-fail-1', 'Creatine', 'Active'))]));
+      vi.mocked(apiClient.listOpenCatalogLookups).mockRejectedValue(new Error('offline'));
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      expect(await screen.findByText('Creatine')).toBeInTheDocument();
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('shows a wait line on an item whose lookup is still running', async () => {
+      vi.mocked(apiClient.getTaking).mockResolvedValue(taking([item(record('1', 'Ozempic', 'Active'))]));
+      vi.mocked(apiClient.listOpenCatalogLookups).mockResolvedValue([openLookup('1', 'pending')]);
+      render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
+
+      expect(await screen.findByText('Please wait while we look this up…')).toBeInTheDocument();
+    });
   });
 });

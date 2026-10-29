@@ -1,6 +1,7 @@
 'use client';
 
 import { GlobalSearch } from '@/components/GlobalSearch';
+import { NoticeBell } from '@/components/NoticeBell';
 import { useProfile } from '@/lib/context';
 import { useSettings } from '@/lib/settings';
 import { cn, formatWeight } from '@/lib/utils';
@@ -74,6 +75,7 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
 
         {/* ── Right: Profile + actions ────────────────────────────────── */}
         <div className="flex items-center gap-2.5 shrink-0">
+          <NoticeBell />
           {/* Profile chip — shown when a profile is active and no custom actions */}
           {currentProfile && !actions && (
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/[0.07] bg-white/[0.03]">

@@ -1,7 +1,7 @@
 import CompoundsPage from '@/app/compounds/page';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
 import { apiClient } from '@/lib/api';
-import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import type { CatalogLookup, CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -25,6 +25,10 @@ vi.mock('@/lib/api', async (importOriginal) => ({
     getCompounds: vi.fn(),
     getAllKnowledgeCompounds: vi.fn(),
     createCompound: vi.fn(),
+    createCatalogLookup: vi.fn(),
+    getCatalogLookup: vi.fn(),
+    linkCatalogLookup: vi.fn(),
+    declineCatalogLookup: vi.fn(),
     getKnowledgeEntry: vi.fn(),
     updateCompound: vi.fn(),
     deleteCompound: vi.fn(),
@@ -250,5 +254,54 @@ describe('provider summary: custom items, per-item toggle and other items', () =
     expect(screen.getByText('No logged amounts recorded')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Copy summary' }));
     expect(writeText.mock.calls[0][0]).not.toContain('Magnesium glycinate (');
+  });
+});
+
+describe('add flow: internal catalog lookup', () => {
+  const lookupFor = (status: string): CatalogLookup => ({
+    id: 'lookup-9', profileId: 'profile-fixture', compoundId: 'created-1', queryName: 'Ozempic', status, createdAtUtc: '2026-10-30T10:00:00Z', completedAtUtc: null,
+    candidates: status === 'matched' ? [{ slug: 'semaglutide', name: 'Semaglutide', kind: 'alias', label: 'same_as', reason: 'alternate name' }] : [],
+  });
+
+  async function addFreeText(name: string) {
+    await openAddForm();
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Supplement' } });
+    type(name);
+    submit();
+    await waitFor(() => expect(apiClient.createCompound).toHaveBeenCalledTimes(1));
+  }
+
+  it('after a free-text item is saved, starts a lookup for that item and offers the match without linking it', async () => {
+    vi.mocked(apiClient.createCatalogLookup).mockResolvedValue(lookupFor('pending'));
+    vi.mocked(apiClient.getCatalogLookup).mockResolvedValue(lookupFor('matched'));
+
+    await addFreeText('Ozempic');
+
+    await waitFor(() => expect(apiClient.createCatalogLookup).toHaveBeenCalledWith('profile-fixture', 'Ozempic', 'created-1'));
+    expect(await screen.findByText(/Same as/)).toHaveTextContent('Same as Semaglutide?');
+    expect(apiClient.linkCatalogLookup).not.toHaveBeenCalled();
+    expect(apiClient.updateCompound).not.toHaveBeenCalled();
+  });
+
+  it('does not look up an item the person already linked from the library', async () => {
+    await openAddForm();
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Supplement' } });
+    type('creat');
+    fireEvent.click(await screen.findByRole('button', { name: /Creatine/ }));
+    vi.mocked(apiClient.createCompound).mockImplementation(async (_p, data) => ({ ...data, id: 'created-1', verificationState: 'catalog' }) as CompoundRecord);
+    submit();
+
+    await waitFor(() => expect(apiClient.createCompound).toHaveBeenCalledTimes(1));
+    expect(apiClient.createCatalogLookup).not.toHaveBeenCalled();
+  });
+
+  it('keeps the saved item and shows no error when the lookup cannot start', async () => {
+    vi.mocked(apiClient.createCatalogLookup).mockRejectedValue(new Error('offline'));
+
+    await addFreeText('Ozempic');
+
+    await waitFor(() => expect(apiClient.createCatalogLookup).toHaveBeenCalled());
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(apiClient.deleteCompound).not.toHaveBeenCalled();
   });
 });

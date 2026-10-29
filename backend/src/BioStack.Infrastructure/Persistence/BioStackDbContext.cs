@@ -54,6 +54,8 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<ClaimSubmission> ClaimSubmissions { get; set; }
     public DbSet<AccountDeletionRecord> AccountDeletionRecords { get; set; }
     public DbSet<ConsentEvent> ConsentEvents { get; set; }
+    public DbSet<CatalogLookup> CatalogLookups { get; set; }
+    public DbSet<UserNotice> UserNotices { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -530,6 +532,51 @@ public sealed class BioStackDbContext : DbContext
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasIndex(e => new { e.UserId, e.OccurredAtUtc });
+        });
+
+        // Everything I'm Taking: one catalog lookup per user per normalized name, owned by the user. The item link is
+        // SetNull so the lookup outlives a deleted item (re-adding the same name does not start a new row).
+        modelBuilder.Entity<CatalogLookup>(entity =>
+        {
+            entity.HasKey(l => l.Id);
+            entity.Property(l => l.NameKey).HasMaxLength(120).IsRequired();
+            entity.Property(l => l.QueryName).HasMaxLength(60).IsRequired();
+            entity.Property(l => l.Status).HasMaxLength(32).IsRequired();
+            entity.Property(l => l.MatchSlug).HasMaxLength(255);
+            entity.Property(l => l.MatchKind).HasMaxLength(32);
+            entity.Property(l => l.MatchLabel).HasMaxLength(16);
+            entity.HasOne<AppUser>()
+                .WithMany()
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne<PersonProfile>()
+                .WithMany()
+                .HasForeignKey(l => l.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne<CompoundRecord>()
+                .WithMany()
+                .HasForeignKey(l => l.CompoundRecordId)
+                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasIndex(l => new { l.UserId, l.NameKey }).IsUnique();
+            entity.HasIndex(l => new { l.PersonId, l.Status });
+            entity.HasIndex(l => l.CompoundRecordId);
+        });
+
+        // The minimal in-app inbox. A repeated (UserId, DedupeKey) updates one note instead of stacking.
+        modelBuilder.Entity<UserNotice>(entity =>
+        {
+            entity.HasKey(n => n.Id);
+            entity.Property(n => n.Kind).HasMaxLength(48).IsRequired();
+            entity.Property(n => n.TitleKey).HasMaxLength(96).IsRequired();
+            entity.Property(n => n.ParamsJson).IsRequired();
+            entity.Property(n => n.ActionPath).HasMaxLength(200);
+            entity.Property(n => n.DedupeKey).HasMaxLength(160).IsRequired();
+            entity.HasOne<AppUser>()
+                .WithMany()
+                .HasForeignKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(n => new { n.UserId, n.DedupeKey }).IsUnique();
+            entity.HasIndex(n => new { n.UserId, n.CreatedAtUtc });
         });
 
         // Non-identifying by design: no user key of any kind (see AccountDeletionRecord).

@@ -89,6 +89,40 @@ export interface CatalogSuggestion {
   matchedOn: 'name' | 'alias';
 }
 
+/** One possible catalog record for a typed name. "same_as" = exact, alternate-name or slug match; "similar" = close but not certain. */
+export interface CatalogCandidate {
+  slug: string;
+  name: string;
+  kind: 'exact' | 'alias' | 'brand_or_synonym' | 'slug' | 'partial' | 'fuzzy' | string;
+  label: 'same_as' | 'similar' | string;
+  reason: string;
+}
+
+/** The user's own internal lookup of an item name against the BioStack catalog. Nothing is linked until the user confirms. */
+export interface CatalogLookup {
+  id: string;
+  profileId: string;
+  compoundId: string | null;
+  queryName: string;
+  status: 'pending' | 'matched' | 'no_match' | 'linked' | 'declined' | string;
+  candidates: CatalogCandidate[];
+  createdAtUtc: string;
+  completedAtUtc: string | null;
+}
+
+/** A short in-app note. Text is rendered from kind and params; actionPath is an in-app path only. */
+export interface UserNotice {
+  id: string;
+  kind: string;
+  titleKey: string;
+  params: Record<string, unknown>;
+  actionPath: string | null;
+  relatedId: string | null;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+  read: boolean;
+}
+
 export interface TakingItem {
   compound: CompoundRecord;
   /** True only for an active item that occupies one of the Observer slots (server-derived). */

@@ -147,6 +147,30 @@ public sealed class CompoundService : ICompoundService
         return new TakingResponse(items, new TakingCapResponse(limit, items.Count(item => item.CountsTowardCap)));
     }
 
+    /// <summary>
+    /// Links one of the user's own items to a catalog record the person just confirmed. The state and category come from the
+    /// catalog, never from the client. Linking cannot raise the Observer count (an unverified item already counts), so the
+    /// cap is not checked here.
+    /// </summary>
+    public async Task<CompoundResponse> LinkCatalogAsync(Guid personId, Guid id, string catalogSlug, CancellationToken cancellationToken = default)
+    {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
+        var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
+        if (compound is null || compound.PersonId != personId)
+            throw new InvalidOperationException($"Compound with ID {id} not found");
+
+        var link = await ResolveLinkAsync(catalogSlug, compound.Category, compound, cancellationToken);
+        compound.Category = link.Category;
+        compound.CatalogSlug = link.Slug;
+        compound.VerificationState = link.State;
+        compound.CategorySource = link.CategorySource;
+        compound.UpdatedAtUtc = DateTime.UtcNow;
+
+        await _compoundRepository.UpdateAsync(compound, cancellationToken);
+        await _compoundRepository.SaveChangesAsync(cancellationToken);
+        return MapToResponse(compound);
+    }
+
     private static string NormalizeName(string? text) =>
         string.Join(' ', (text ?? string.Empty).Trim().ToLowerInvariant().Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries));
 
@@ -378,6 +402,7 @@ public interface ICompoundService
     Task<IEnumerable<CompoundResponse>> GetCompoundsByProfileAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default);
     Task<TakingResponse> GetTakingAsync(Guid personId, CancellationToken cancellationToken = default);
+    Task<CompoundResponse> LinkCatalogAsync(Guid personId, Guid id, string catalogSlug, CancellationToken cancellationToken = default);
     Task DeleteCompoundAsync(Guid personId, Guid id, CancellationToken cancellationToken = default);
 }
 
