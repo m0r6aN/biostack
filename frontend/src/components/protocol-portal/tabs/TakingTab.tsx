@@ -1,8 +1,9 @@
 'use client';
 
+import { CatalogOffers } from '@/components/catalog/CatalogLookupOffers';
 import { DoseLogForm } from '@/components/protocol-portal/DoseLogForm';
 import { apiClient } from '@/lib/api';
-import type { CompoundRecord, ScheduleItem, TakingItem, TakingResponse } from '@/lib/types';
+import type { CatalogLookup, CompoundRecord, ScheduleItem, TakingItem, TakingResponse } from '@/lib/types';
 import { formatDoseAmount } from '@/lib/userDose';
 import { describeFrequency } from '@/lib/userFrequency';
 import Link from 'next/link';
@@ -29,6 +30,12 @@ const FILTERS: { id: FilterId; label: string; matches: (item: CompoundRecord) =>
 /** Legacy rows (no state) read as linked only when they carry a catalog slug. */
 const isLinked = (item: CompoundRecord) => (item.verificationState ?? (item.catalogSlug ? 'catalog' : 'unverified')) === 'catalog' && Boolean(item.catalogSlug);
 
+/** Lookups started for older items during this page visit, so reloading the list never asks twice. */
+const lookupsStarted = new Set<string>();
+const MAX_LAZY_LOOKUPS = 5;
+/** Waits between re-checks while a lookup is still running, then it rests until the note arrives. */
+const OPEN_LOOKUP_RECHECK_MS = [1000, 2000, 3000, 3000, 3000];
+
 /** The PUT body for a change to one record. Response-only fields are dropped; catalogSlug is left out so a link is kept. */
 function updateBody(item: CompoundRecord, changes: Partial<CompoundRecord>): Omit<CompoundRecord, 'id'> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,6 +54,7 @@ export function TakingTab({ profileId, onLogAmount }: {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterId>('all');
   const [attempt, setAttempt] = useState(0);
+  const [lookups, setLookups] = useState<CatalogLookup[]>([]);
 
   useEffect(() => {
     let current = true;
@@ -56,6 +64,55 @@ export function TakingTab({ profileId, onLogAmount }: {
     );
     return () => { current = false; };
   }, [profileId, attempt]);
+
+  // The internal "is this already in BioStack?" check. It only adds offers the person can confirm or dismiss; a failure
+  // here never affects the list itself.
+  useEffect(() => {
+    if (!taking) return;
+    let current = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const load = async (round: number, start: boolean) => {
+      try {
+        let open = await apiClient.listOpenCatalogLookups(profileId);
+        if (!Array.isArray(open)) open = [];
+        if (start) {
+          // Older free-text items that never had a check: ask once per visit, a handful at a time, for items with no offer yet.
+          const covered = new Set(open.map((l) => l.compoundId));
+          const legacy = taking.items
+            .filter(({ compound, suggestions }) => ['active', 'paused'].includes(compound.status.toLowerCase())
+              && !isLinked(compound) && suggestions.length === 0 && !covered.has(compound.id) && !lookupsStarted.has(compound.id))
+            .slice(0, MAX_LAZY_LOOKUPS);
+          for (const { compound } of legacy) {
+            lookupsStarted.add(compound.id);
+            try { await apiClient.createCatalogLookup(profileId, compound.name, compound.id); } catch { /* try again next visit */ }
+          }
+          if (legacy.length > 0) open = await apiClient.listOpenCatalogLookups(profileId);
+        }
+        if (!current) return;
+        setLookups(open);
+        if (open.some((l) => l.status === 'pending') && round < OPEN_LOOKUP_RECHECK_MS.length) {
+          timer = setTimeout(() => { void load(round + 1, false); }, OPEN_LOOKUP_RECHECK_MS[round]);
+        }
+      } catch {
+        if (current) setLookups([]);
+      }
+    };
+    void load(0, true);
+    return () => { current = false; if (timer) clearTimeout(timer); };
+  }, [taking, profileId]);
+
+  const answerLookup = async (item: CompoundRecord, action: () => Promise<unknown>) => {
+    setBusyId(item.id);
+    setActionError(null);
+    try {
+      await action();
+      setAttempt((n) => n + 1);
+    } catch {
+      setActionError(`Couldn't update ${item.name}. Nothing was changed.`);
+    } finally {
+      setBusyId(null);
+    }
+  };
 
   const change = async (item: CompoundRecord, changes: Partial<CompoundRecord>) => {
     setBusyId(item.id);
@@ -120,6 +177,10 @@ export function TakingTab({ profileId, onLogAmount }: {
               entry={entry}
               busy={busyId === entry.compound.id}
               onLink={(slug) => change(entry.compound, { catalogSlug: slug })}
+              lookup={lookups.find((l) => l.compoundId === entry.compound.id && l.status === 'matched')}
+              pendingLookup={lookups.some((l) => l.compoundId === entry.compound.id && l.status === 'pending')}
+              onLinkLookup={(lookup, slug) => answerLookup(entry.compound, () => apiClient.linkCatalogLookup(lookup.id, slug))}
+              onDeclineLookup={(lookup) => answerLookup(entry.compound, () => apiClient.declineCatalogLookup(lookup.id))}
               onToggleSummary={(next) => change(entry.compound, { includeInProviderSummary: next })}
               onLogAmount={onLogAmount}
             />
@@ -130,10 +191,14 @@ export function TakingTab({ profileId, onLogAmount }: {
   );
 }
 
-function TakingCard({ entry, busy, onLink, onToggleSummary, onLogAmount }: {
+function TakingCard({ entry, busy, onLink, lookup, pendingLookup, onLinkLookup, onDeclineLookup, onToggleSummary, onLogAmount }: {
   entry: TakingItem;
   busy: boolean;
   onLink: (slug: string) => void;
+  lookup?: CatalogLookup;
+  pendingLookup: boolean;
+  onLinkLookup: (lookup: CatalogLookup, slug: string) => void;
+  onDeclineLookup: (lookup: CatalogLookup) => void;
   onToggleSummary: (next: boolean) => void;
   onLogAmount: (item: ScheduleItem, entry: LogEntry) => Promise<void>;
 }) {
@@ -178,6 +243,19 @@ function TakingCard({ entry, busy, onLink, onToggleSummary, onLogAmount }: {
           </button>
         </p>
       ))}
+      {lookup && !isLinked(item) && (
+        <CatalogOffers
+          itemName={item.name}
+          candidates={lookup.candidates}
+          busy={busy}
+          hideSlugs={entry.suggestions.map((s) => s.slug)}
+          onLink={(slug) => onLinkLookup(lookup, slug)}
+          onDecline={() => onDeclineLookup(lookup)}
+        />
+      )}
+      {pendingLookup && !lookup && !isLinked(item) && (
+        <p role="status" className="mt-2 text-xs text-white/55">Please wait while we look this up…</p>
+      )}
       <label className="mt-2 flex items-center gap-2 text-xs text-white/60">
         <input
           type="checkbox"

@@ -281,6 +281,13 @@ builder.Services.AddRateLimiter(options =>
             AccountPartition(httpContext),
             _ => new FixedWindowRateLimiterOptions { PermitLimit = 5, Window = TimeSpan.FromMinutes(10), QueueLimit = 0 }));
 
+    // Catalog lookups: creating one is the only call that does work; polling is covered by the global limiter. The real
+    // per-person limit (30 new names a day) is in CatalogLookupService; this just slows one address down.
+    options.AddPolicy("catalog-lookup-create", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
+            _ => new FixedWindowRateLimiterOptions { PermitLimit = 20, Window = TimeSpan.FromHours(1), QueueLimit = 0 }));
+
     options.AddPolicy("lead-capture", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
             ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
@@ -553,6 +560,13 @@ builder.Services.AddScoped<IFeatureGate, FeatureGate>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
 builder.Services.AddScoped<ICatalogItemResolver, KnowledgeCatalogItemResolver>();
+builder.Services.AddScoped<ICatalogLookupRepository, CatalogLookupRepository>();
+builder.Services.AddScoped<IUserNoticeRepository, UserNoticeRepository>();
+builder.Services.AddScoped<INoticeService, NoticeService>();
+builder.Services.AddScoped<ICatalogLookupService, CatalogLookupService>();
+builder.Services.AddScoped<ICatalogLookupProcessor, CatalogLookupProcessor>();
+builder.Services.AddSingleton<ICatalogLookupQueue, ChannelCatalogLookupQueue>();
+builder.Services.AddHostedService<CatalogLookupHostedService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolService, ProtocolService>();
 builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();
@@ -713,6 +727,8 @@ app.MapAdminEndpoints();
 app.MapKompressEndpoints();
 app.MapClaimCheckEndpoints();
 app.MapCommunityEndpoints();
+app.MapCatalogLookupEndpoints();
+app.MapNoticeEndpoints();
 
 if (app.Environment.IsDevelopment())
     app.MapDevAuthEndpoints();

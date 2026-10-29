@@ -74,6 +74,9 @@ public static class AccountDataCatalog
                         .SetProperty(x => x.EvolvedFromRunId, (Guid?)null), ct);
                 return await db.Protocols.Where(x => own.Contains(x.Id)).ExecuteDeleteAsync(ct);
             }),
+        new ScopedTable<CatalogLookup>("CatalogLookups", UserDataDisposition.UserScoped,
+            "Names you asked BioStack to look up in its own library, and what it found. Stays inside your account.",
+            (db, s) => db.CatalogLookups.Where(l => l.UserId == s.UserId)),
         new ScopedTable<CompoundRecord>("CompoundRecords", UserDataDisposition.UserScoped,
             "Everything I'm Taking items, including custom and unverified items exactly as typed.",
             (db, s) => { var p = ProfileIds(db, s); return db.CompoundRecords.Where(c => p.Contains(c.PersonId)); }),
@@ -161,6 +164,9 @@ public static class AccountDataCatalog
             "The email address(es) used to sign in.",
             (db, s) => db.AuthIdentities.Where(i => i.UserId == s.UserId)),
 
+        new ScopedTable<UserNotice>("UserNotices", UserDataDisposition.UserScoped,
+            "Notes shown to you inside BioStack, for example a library match waiting for your answer.",
+            (db, s) => db.UserNotices.Where(n => n.UserId == s.UserId)),
         new ScopedTable<ConsentEvent>("ConsentEvents", UserDataDisposition.UserScoped,
             "Your consent history: each time you accepted or declined, which version, and when.",
             (db, s) => db.ConsentEvents.Where(e => e.UserId == s.UserId)),

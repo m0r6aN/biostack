@@ -7,8 +7,10 @@ import { browserTimeZone } from './userFrequency';
 import {
     CalculatorResult,
     CheckIn,
+    CatalogLookup,
     CompoundRecord,
     TakingResponse,
+    UserNotice,
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
@@ -196,6 +198,55 @@ export class ApiClient {
 
   async getTaking(profileId: string): Promise<TakingResponse> {
     return this.request<TakingResponse>(`/api/v1/profiles/${profileId}/taking`);
+  }
+
+  // Catalog lookup (internal): the server matches a typed name against the public catalog. Linking is always confirmed by the user.
+  async createCatalogLookup(profileId: string, name: string, compoundId?: string | null): Promise<CatalogLookup> {
+    return this.request(`/api/v1/profiles/${profileId}/catalog-lookups`, {
+      method: 'POST',
+      body: JSON.stringify({ name, compoundId: compoundId ?? null }),
+    });
+  }
+
+  async listOpenCatalogLookups(profileId: string): Promise<CatalogLookup[]> {
+    return this.request<CatalogLookup[]>(`/api/v1/profiles/${profileId}/catalog-lookups`);
+  }
+
+  async getCatalogLookup(lookupId: string): Promise<CatalogLookup> {
+    return this.request<CatalogLookup>(`/api/v1/catalog-lookups/${lookupId}`);
+  }
+
+  async linkCatalogLookup(lookupId: string, slug: string): Promise<CatalogLookup> {
+    return this.request(`/api/v1/catalog-lookups/${lookupId}/link`, {
+      method: 'POST',
+      body: JSON.stringify({ slug }),
+    });
+  }
+
+  async declineCatalogLookup(lookupId: string): Promise<CatalogLookup> {
+    return this.request(`/api/v1/catalog-lookups/${lookupId}/decline`, { method: 'POST' });
+  }
+
+  // In-app notices (owner-only; no consent needed to read or dismiss)
+  async getNotices(unreadOnly = false): Promise<UserNotice[]> {
+    return this.request<UserNotice[]>(`/api/v1/notices${unreadOnly ? '?unread=true' : ''}`);
+  }
+
+  async getUnreadNoticeCount(): Promise<number> {
+    const response = await this.request<{ count: number }>('/api/v1/notices/unread-count');
+    return response.count;
+  }
+
+  async markNoticeRead(noticeId: string): Promise<void> {
+    return this.request(`/api/v1/notices/${noticeId}/read`, { method: 'POST' });
+  }
+
+  async markAllNoticesRead(): Promise<void> {
+    return this.request('/api/v1/notices/read-all', { method: 'POST' });
+  }
+
+  async dismissNotice(noticeId: string): Promise<void> {
+    return this.request(`/api/v1/notices/${noticeId}`, { method: 'DELETE' });
   }
 
   async createCompound(

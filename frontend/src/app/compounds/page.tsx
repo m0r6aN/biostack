@@ -5,6 +5,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
+import { CatalogLookupPanel } from '@/components/catalog/CatalogLookupOffers';
 import { CompoundForm } from '@/components/compounds/CompoundForm';
 import { CompoundEditForm } from '@/components/compounds/CompoundEditForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
@@ -142,6 +143,19 @@ function CompoundsPageContent() {
     }
   };
 
+  // After a free-text item is saved, the server checks the library for the same item in the background.
+  const [lookupPanel, setLookupPanel] = useState<{ lookupId: string; name: string } | null>(null);
+
+  const startCatalogLookup = async (profileId: string, compound: CompoundRecord) => {
+    if (compound.catalogSlug || compound.verificationState === 'catalog') return;
+    try {
+      const lookup = await apiClient.createCatalogLookup(profileId, compound.name, compound.id);
+      if (lookup?.id) setLookupPanel({ lookupId: lookup.id, name: compound.name });
+    } catch {
+      // The item is already saved; a missing check just means no offer this time.
+    }
+  };
+
   const handleAddCompound = async (data: Omit<CompoundRecord, 'id'>) => {
     const profileEpoch = profileEpochRef.current;
     try {
@@ -152,6 +166,8 @@ function CompoundsPageContent() {
       invalidatePanelRequests();
       setCompounds(previous => [...previous, newCompound]);
       setShowForm(false);
+      setLookupPanel(null);
+      void startCatalogLookup(currentProfileId!, newCompound);
     } catch (err) {
       setAddError(err instanceof ApiError ? err.message : 'Failed to add compound');
       throw err;
@@ -402,6 +418,18 @@ function CompoundsPageContent() {
               onSubmit={handleAddCompound}
               isLoading={adding}
               initialCompoundSlug={prefillSlug ?? undefined}
+            />
+          </div>
+        )}
+
+        {lookupPanel && (
+          <div className="rounded-xl border border-white/10 p-4" aria-label={`Library check for ${lookupPanel.name}`}>
+            <p className="text-sm text-white/80">Saved <strong>{lookupPanel.name}</strong>.</p>
+            <CatalogLookupPanel
+              key={lookupPanel.lookupId}
+              lookupId={lookupPanel.lookupId}
+              itemName={lookupPanel.name}
+              onSettled={() => { void loadCompounds(); }}
             />
           </div>
         )}
