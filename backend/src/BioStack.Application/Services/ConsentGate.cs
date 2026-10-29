@@ -1,14 +1,17 @@
 namespace BioStack.Application.Services;
 
+using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Repositories;
 
 public sealed class ConsentGate : IConsentGate
 {
     /// <summary>
-    /// Canonical initial consent version. Bumping this string requires every existing
-    /// user to re-accept before they can mutate data again.
+    /// Canonical consent version. Bumping this string requires every existing user to re-accept
+    /// before they can mutate data again (reads, export, account deletion and sign-out stay open).
+    /// v2 (approved by Clint 2026-10-28) discloses dose logs, Everything I'm Taking, and the
+    /// planned lookups, research requests and reminders. Text: docs/INITIATIVES/consent-v2/consent-v2-approved.md.
     /// </summary>
-    public const string CurrentConsentVersion = "bio-observational-v1";
+    public const string CurrentConsentVersion = "bio-observational-v2";
 
     private readonly ICurrentUserAccessor _currentUserAccessor;
     private readonly IAppUserRepository _userRepository;
@@ -65,7 +68,14 @@ public sealed class ConsentGate : IConsentGate
         user.ConsentVersion = version;
         user.ConsentDeclinedAtUtc = null;
         user.ConsentDeclinedVersion = null;
-        await _userRepository.UpdateConsentAsync(user, cancellationToken);
+        await _userRepository.UpdateConsentAsync(user, new ConsentEvent
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            EventType = ConsentEvent.Accepted,
+            Version = version,
+            OccurredAtUtc = user.ConsentAcceptedAtUtc.Value,
+        }, cancellationToken);
 
         return ToStatus(user);
     }
@@ -89,7 +99,14 @@ public sealed class ConsentGate : IConsentGate
         user.ConsentVersion = null;
         user.ConsentDeclinedAtUtc = now;
         user.ConsentDeclinedVersion = CurrentConsentVersion;
-        await _userRepository.UpdateConsentAsync(user, cancellationToken);
+        await _userRepository.UpdateConsentAsync(user, new ConsentEvent
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            EventType = ConsentEvent.Declined,
+            Version = CurrentConsentVersion,
+            OccurredAtUtc = now,
+        }, cancellationToken);
 
         return ToStatus(user);
     }

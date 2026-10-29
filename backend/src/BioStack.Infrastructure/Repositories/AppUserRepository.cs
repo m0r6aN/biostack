@@ -43,6 +43,14 @@ public sealed class AppUserRepository : IAppUserRepository
         return existing ?? user;
     }
 
+    public async Task UpdateConsentAsync(AppUser user, ConsentEvent consentEvent, CancellationToken ct = default)
+    {
+        // Latest value on the user and the history row are saved together or not at all.
+        _context.AppUsers.Update(user);
+        _context.ConsentEvents.Add(consentEvent);
+        await _context.SaveChangesAsync(ct);
+    }
+
     public async Task UpdateConsentAsync(AppUser user, CancellationToken ct = default)
     {
         // The caller is expected to have loaded the entity via GetByIdAsync, so it is tracked.
@@ -58,4 +66,5 @@ public interface IAppUserRepository
     Task<AppUser?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<AppUser>  UpsertAsync(AppUser user, CancellationToken ct = default);
     Task UpdateConsentAsync(AppUser user, CancellationToken ct = default);
+    Task UpdateConsentAsync(AppUser user, ConsentEvent consentEvent, CancellationToken ct = default);
 }

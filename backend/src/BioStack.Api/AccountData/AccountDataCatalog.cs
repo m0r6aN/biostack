@@ -161,6 +161,10 @@ public static class AccountDataCatalog
             "The email address(es) used to sign in.",
             (db, s) => db.AuthIdentities.Where(i => i.UserId == s.UserId)),
 
+        new ScopedTable<ConsentEvent>("ConsentEvents", UserDataDisposition.UserScoped,
+            "Your consent history: each time you accepted or declined, which version, and when.",
+            (db, s) => db.ConsentEvents.Where(e => e.UserId == s.UserId)),
+
         // ── Governance spine: append-only, so it is kept, not edited ────────────────────
         new ScopedTable<SpineEntry>("SpineEntries", UserDataDisposition.RetainedPseudonymous,
             "Governance receipts. Each is signed into an append-only hash chain, so editing or removing one would break every later entry. "

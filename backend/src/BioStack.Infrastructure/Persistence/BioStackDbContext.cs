@@ -53,6 +53,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<ClaimCheckQuery> ClaimCheckQueries { get; set; }
     public DbSet<ClaimSubmission> ClaimSubmissions { get; set; }
     public DbSet<AccountDeletionRecord> AccountDeletionRecords { get; set; }
+    public DbSet<ConsentEvent> ConsentEvents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -516,6 +517,19 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(s => s.Theme).HasMaxLength(64);
             entity.HasIndex(s => new { s.Status, s.CreatedAtUtc });
             entity.HasIndex(s => new { s.CompoundSlug, s.Theme, s.Status });
+        });
+
+        // Consent history: one row per accepted or declined choice, removed with the account.
+        modelBuilder.Entity<ConsentEvent>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.EventType).HasMaxLength(16).IsRequired();
+            entity.Property(e => e.Version).HasMaxLength(64).IsRequired();
+            entity.HasOne<AppUser>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(e => new { e.UserId, e.OccurredAtUtc });
         });
 
         // Non-identifying by design: no user key of any kind (see AccountDeletionRecord).

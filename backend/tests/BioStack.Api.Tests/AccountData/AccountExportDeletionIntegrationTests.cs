@@ -645,6 +645,9 @@ public sealed class AccountExportDeletionIntegrationTests : IAsyncLifetime
         db.PasskeyCredentials.Add(new PasskeyCredential { Id = Guid.NewGuid(), IdentityId = identity.Id, CredentialId = Guid.NewGuid().ToByteArray(), PublicKey = [9, 9], UserHandle = [7], CredentialType = "public-key", DisplayName = $"Key-{tag}", Transports = "internal" });
         db.PasskeyOperationChallenges.Add(new PasskeyOperationChallenge { Id = Guid.NewGuid(), UserId = userId, Operation = "register", RequestIdHash = $"rid-{tag}", OptionsJson = "{}", RedirectPath = "/", CreatedAtUtc = now, ExpiresAtUtc = now.AddMinutes(5) });
 
+        db.ConsentEvents.Add(new ConsentEvent { Id = Guid.NewGuid(), UserId = userId, EventType = ConsentEvent.Accepted, Version = "bio-observational-v1", OccurredAtUtc = now.AddDays(-30) });
+        db.ConsentEvents.Add(new ConsentEvent { Id = Guid.NewGuid(), UserId = userId, EventType = ConsentEvent.Accepted, Version = $"bio-observational-v2", OccurredAtUtc = now });
+
         db.SpineEntries.Add(new SpineEntry
         {
             ReceiptUri = $"keon://receipt/{Guid.NewGuid()}", SubjectUri = $"subject:{tag}", TenantId = "biostack-public", ActorId = resolved.ActorId,

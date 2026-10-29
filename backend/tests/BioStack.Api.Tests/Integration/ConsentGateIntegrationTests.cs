@@ -113,14 +113,14 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
         var body = await response.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
         Assert.NotNull(body);
         Assert.True(body.Accepted);
-        Assert.Equal("bio-observational-v1", body.ConsentVersion);
+        Assert.Equal("bio-observational-v2", body.ConsentVersion);
         Assert.NotNull(body.ConsentAcceptedAtUtc);
         Assert.True(body.ConsentAcceptedAtUtc >= before);
 
         var fetched = await _client.GetFromJsonAsync<ConsentStatusResponse>("/api/v1/consent", JsonOptions);
         Assert.NotNull(fetched);
         Assert.True(fetched.Accepted);
-        Assert.Equal("bio-observational-v1", fetched.ConsentVersion);
+        Assert.Equal("bio-observational-v2", fetched.ConsentVersion);
         Assert.Equal(body.ConsentAcceptedAtUtc, fetched.ConsentAcceptedAtUtc);
     }
 
@@ -129,13 +129,13 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
     {
         await SignInAsync("idem@example.com");
 
-        var first = await _client.PostAsJsonAsync("/api/v1/consent", new RecordConsentRequest("bio-observational-v1"), JsonOptions);
+        var first = await _client.PostAsJsonAsync("/api/v1/consent", new RecordConsentRequest("bio-observational-v2"), JsonOptions);
         Assert.Equal(HttpStatusCode.OK, first.StatusCode);
         var firstBody = await first.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
 
         await Task.Delay(20);
 
-        var second = await _client.PostAsJsonAsync("/api/v1/consent", new RecordConsentRequest("bio-observational-v1"), JsonOptions);
+        var second = await _client.PostAsJsonAsync("/api/v1/consent", new RecordConsentRequest("bio-observational-v2"), JsonOptions);
         Assert.Equal(HttpStatusCode.OK, second.StatusCode);
         var secondBody = await second.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
 
@@ -158,7 +158,7 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
         var body = await response.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
         Assert.NotNull(body);
         Assert.True(body.Accepted);
-        Assert.Equal("bio-observational-v1", body.ConsentVersion);
+        Assert.Equal("bio-observational-v2", body.ConsentVersion);
 
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
@@ -166,7 +166,7 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
             .Where(user => user.Email == "invented-consent@example.com")
             .Select(user => user.ConsentVersion)
             .SingleAsync();
-        Assert.Equal("bio-observational-v1", storedVersion);
+        Assert.Equal("bio-observational-v2", storedVersion);
     }
 
     [Fact]
@@ -184,8 +184,8 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
         Assert.NotNull(declined);
         Assert.False(declined.Accepted);
         Assert.True(declined.Declined);
-        Assert.Equal("bio-observational-v1", declined.CurrentVersion);
-        Assert.Equal("bio-observational-v1", declined.ConsentDeclinedVersion);
+        Assert.Equal("bio-observational-v2", declined.CurrentVersion);
+        Assert.Equal("bio-observational-v2", declined.ConsentDeclinedVersion);
         Assert.NotNull(declined.ConsentDeclinedAtUtc);
 
         var repeatedResponse = await _client.PostAsJsonAsync(
