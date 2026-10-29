@@ -253,6 +253,34 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0,
             }));
 
+    // Account export and deletion are partitioned per signed-in session rather than per address, so one
+    // person's budget is theirs. The rate limiter runs before authentication (to reject floods cheaply), so the
+    // user claim is not available yet: the session cookie (or bearer token) is hashed instead. Signed-out callers
+    // fall back to the client address. Deletion link requests also carry a per-account cap in the service.
+    static string AccountPartition(HttpContext httpContext)
+    {
+        var secret = httpContext.Request.Cookies["biostack_session"];
+        if (string.IsNullOrEmpty(secret)) secret = httpContext.Request.Headers.Authorization.ToString();
+        return string.IsNullOrEmpty(secret)
+            ? ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>())
+            : "session:" + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(secret)))[..32];
+    }
+
+    options.AddPolicy("account-export", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            AccountPartition(httpContext),
+            _ => new FixedWindowRateLimiterOptions { PermitLimit = 3, Window = TimeSpan.FromMinutes(10), QueueLimit = 0 }));
+
+    options.AddPolicy("account-deletion-request", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            AccountPartition(httpContext),
+            _ => new FixedWindowRateLimiterOptions { PermitLimit = 3, Window = TimeSpan.FromHours(1), QueueLimit = 0 }));
+
+    options.AddPolicy("account-deletion-confirm", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            AccountPartition(httpContext),
+            _ => new FixedWindowRateLimiterOptions { PermitLimit = 5, Window = TimeSpan.FromMinutes(10), QueueLimit = 0 }));
+
     options.AddPolicy("lead-capture", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
             ClientIpResolver.PartitionKey(httpContext, httpContext.RequestServices.GetRequiredService<IConfiguration>()),
@@ -494,6 +522,15 @@ builder.Services.AddSingleton(evidenceAlertOptions);
 if (hasAzureEmail) builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.AzureCommunicationAlertEmailSender>();
 else if (hasSmtp) builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.SmtpAlertEmailSender>();
 else builder.Services.AddSingleton<BioStack.Api.Alerts.IEvidenceAlertEmailSender, BioStack.Api.Alerts.NoAlertEmailSender>();
+// Account export and deletion (MHMDA). Account emails reuse the magic-link transport (ACS sender in production).
+if (hasAzureEmail) builder.Services.AddSingleton<BioStack.Api.AccountData.IAccountEmailSender, BioStack.Api.AccountData.AzureCommunicationAccountEmailSender>();
+else if (hasSmtp) builder.Services.AddSingleton<BioStack.Api.AccountData.IAccountEmailSender, BioStack.Api.AccountData.SmtpAccountEmailSender>();
+else if (useInMemoryMagicLinks) builder.Services.AddSingleton<BioStack.Api.AccountData.IAccountEmailSender, BioStack.Api.AccountData.InMemoryAccountEmailSender>();
+else builder.Services.AddSingleton<BioStack.Api.AccountData.IAccountEmailSender, BioStack.Api.AccountData.SmtpAccountEmailSender>();
+builder.Services.AddSingleton<BioStack.Api.AccountData.IStripeCustomerCloser, BioStack.Api.AccountData.StripeCustomerCloser>();
+builder.Services.AddScoped<BioStack.Api.AccountData.AccountScopeResolver>();
+builder.Services.AddScoped<BioStack.Api.AccountData.AccountExportService>();
+builder.Services.AddScoped<BioStack.Api.AccountData.AccountDeletionService>();
 builder.Services.AddScoped<BioStack.Api.Alerts.EvidenceAlertService>();
 builder.Services.AddHostedService<BioStack.Api.Alerts.EvidenceAlertHostedService>();
 
@@ -649,6 +686,7 @@ app.MapGet(ProductContract.Current.Health.KeonDependencyPath, async (IKeonRuntim
 app.MapAuthEndpoints();
 app.MapPasskeyEndpoints();
 app.MapConsentEndpoints();
+app.MapAccountEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();
 app.MapGoalEndpoints();
