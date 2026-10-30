@@ -8,7 +8,7 @@ using Xunit;
 /// Standing rule: BioStack never suggests, prefills or computes a dose, and never tells anyone to change
 /// an amount. The Protocol Portal baseline is BioStack-authored copy shown to every user, so none of it may
 /// carry dose direction ("reduce the dose", "increase L-Carnitine", "cut by 50%", "titrate", "taper").
-/// Observational wording such as "note the trend and bring it to your clinician" is what belongs here.
+/// Observational wording such as "record any changes and review them with your clinician" is what belongs here.
 /// </summary>
 public sealed class ProtocolPortalBaselineDoctrineTests
 {
@@ -65,8 +65,8 @@ public sealed class ProtocolPortalBaselineDoctrineTests
         => Assert.Contains(DoseDirectionPhrases, p => p.IsMatch(text));
 
     [Theory]
-    [InlineData("Note the trend and bring it to your clinician. Compare it with your next scheduled labs in 5–6 weeks.")]
-    [InlineData("Note the trend and bring it, with your diet and supplement log, to your clinician.")]
+    [InlineData("Record any changes and review them with your clinician. Compare with your next scheduled labs in 5–6 weeks.")]
+    [InlineData("Record any changes, along with your diet and supplement log, and review them with your clinician.")]
     public void Observational_wording_is_allowed(string text)
         => Assert.DoesNotContain(DoseDirectionPhrases, p => p.IsMatch(text));
 

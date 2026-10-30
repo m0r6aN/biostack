@@ -66,9 +66,9 @@ public sealed class ProtocolPortalBaseline : IProtocolPortalBaseline
             // Observational wording only: BioStack never suggests, prefills or computes a dose,
             // and never points a change in any amount at the user. Guarded by ProtocolPortalBaselineDoctrineTests.
             new("GGT rising",
-                "Note the trend and bring it to your clinician. Compare it with your next scheduled labs in 5–6 weeks."),
+                "Record any changes and review them with your clinician. Compare with your next scheduled labs in 5–6 weeks."),
             new("TG/HDL ratio worsening",
-                "Note the trend and bring it, with your diet and supplement log, to your clinician."),
+                "Record any changes, along with your diet and supplement log, and review them with your clinician."),
         });
 
     public IReadOnlyList<MilestoneResponse> Milestones { get; } = new List<MilestoneResponse>
