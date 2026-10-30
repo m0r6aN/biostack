@@ -3,8 +3,17 @@ import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-// Update this count when compounds are added or retired.
-export const EXPECTED_ACTIVE_RECORDS = 208;
+// The public list is every non-retired record: the curated seed plus the drafts that the daily
+// open-discovery job (kw-discovery) adds, so the count grows by design. 208 on 2026-10-26 was
+// 158 curated records plus the first 50 drafts; 237 on 2026-10-28 and 245 on 2026-10-30 are the
+// same list after later discovery runs. A hard count therefore fails on healthy production.
+// The smoke asserts a rule instead: never fewer than the curated baseline, never an absurd
+// number (runaway duplicates), and the curated sentinel records are present.
+// Raise MIN_ACTIVE_RECORDS when curated records are added; lower it only for a deliberate retirement.
+export const MIN_ACTIVE_RECORDS = 158;
+export const MAX_ACTIVE_RECORDS = 1000;
+// Curated records that must stay separate or present (creatine and creatine monohydrate stay separate by ruling D-D).
+export const SENTINEL_RECORDS = ['Semaglutide', 'Retatrutide', 'Vosilasarm', 'Creatine', 'Creatine Monohydrate'];
 
 function requireCompound(value, canonicalName) {
   if (value?.canonicalName !== canonicalName) throw new Error(`Expected ${canonicalName}, got ${value?.canonicalName ?? 'no canonical name'}`);
@@ -52,7 +61,11 @@ export async function runProductionSmoke({
     if (!Array.isArray(compounds)) throw new Error('Expected an array of active compounds');
     if (compounds.some(c => typeof c.canonicalName !== 'string' || !c.canonicalName.trim())) throw new Error('Compound list contains an unnamed record');
     if (new Set(compounds.map(c => c.canonicalName.toLowerCase())).size !== compounds.length) throw new Error('Compound list contains duplicate names');
-    if (compounds.length !== EXPECTED_ACTIVE_RECORDS) throw new Error(`Expected ${EXPECTED_ACTIVE_RECORDS} active records, got ${compounds.length}`);
+    if (compounds.length < MIN_ACTIVE_RECORDS) throw new Error(`Expected at least ${MIN_ACTIVE_RECORDS} active records, got ${compounds.length}`);
+    if (compounds.length > MAX_ACTIVE_RECORDS) throw new Error(`Expected at most ${MAX_ACTIVE_RECORDS} active records, got ${compounds.length}`);
+    const names = new Set(compounds.map(c => c.canonicalName.toLowerCase()));
+    const missing = SENTINEL_RECORDS.filter(n => !names.has(n.toLowerCase()));
+    if (missing.length) throw new Error(`Compound list is missing curated records: ${missing.join(', ')}`);
     return { activeRecords: compounds.length };
   });
   for (const [name, slug] of [['Vosilasarm', 'vosilasarm'], ['Retatrutide', 'retatrutide']]) {
@@ -82,7 +95,7 @@ export async function runProductionSmoke({
   });
   return {
     checkedAtUtc: new Date().toISOString(), apiOrigin, webOrigin,
-    expectedActiveRecords: EXPECTED_ACTIVE_RECORDS,
+    minimumActiveRecords: MIN_ACTIVE_RECORDS,
     observedActiveRecords: Array.isArray(compounds) ? compounds.length : null,
     passed: results.every(r => r.passed), results,
   };

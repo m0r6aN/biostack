@@ -2325,8 +2325,8 @@ public sealed class ProtocolService : IProtocolService
         return NormalizeComputationType(type) switch
         {
             "reconstitution" => "Reconstitution calculated",
-            "volume" => "Dosage adjusted (math only)",
-            "dosage" => "Dosage adjusted (math only)",
+            "volume" => "Volume calculated (math only)",
+            "dosage" => "Dose calculation recorded (math only)",
             "conversion" => "Unit conversion calculated",
             _ => "Protocol computation recorded"
         };

@@ -26,4 +26,10 @@ describe('protocol template qualification', () => {
       'Reference preview — dose activity is not saved',
     );
   });
+
+  it('carries no dose direction in its monitoring rules (BioStack never suggests or adjusts a dose)', () => {
+    expect(template).not.toMatch(/\b(cut|reduce|lower|increase|raise)\b[^<.]{0,40}\b(dose|by \d+%)/i);
+    expect(template).not.toMatch(/Increase L-Carnitine/i);
+    expect(template).toContain('Trends to discuss with your clinician');
+  });
 });

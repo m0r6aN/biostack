@@ -63,9 +63,12 @@ public sealed class ProtocolPortalBaseline : IProtocolPortalBaseline
         },
         AdjustmentRules: new List<AdjustmentRuleResponse>
         {
-            new("GGT rising", "Discuss reducing the primary compound dose and reassess in 5–6 weeks."),
+            // Observational wording only: BioStack never suggests, prefills or computes a dose,
+            // and never points a change in any amount at the user. Guarded by ProtocolPortalBaselineDoctrineTests.
+            new("GGT rising",
+                "Record any changes and review them with your clinician. Compare with your next scheduled labs in 5–6 weeks."),
             new("TG/HDL ratio worsening",
-                "Discuss increasing L-Carnitine and protein, and reducing the primary compound dose."),
+                "Record any changes, along with your diet and supplement log, and review them with your clinician."),
         });
 
     public IReadOnlyList<MilestoneResponse> Milestones { get; } = new List<MilestoneResponse>
