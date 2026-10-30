@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "discovery-scope",
-  "notes": "Scope taxonomy for RunMode=Discovery (docs/biostack/discovery-runbook.md). Each area drives open-ended queries against ClinicalTrials.gov v2, PubMed E-utilities and bioRxiv/medRxiv; openFDA new NDA/BLA originals are scanned regardless of area. Edit freely: adding an area widens what the worker can find without a code change. excludeKeywords drop trials and papers whose title or conditions are outside BioStack's scope (oncology and infectious disease).",
+  "notes": "Scope taxonomy for RunMode=Discovery (docs/biostack/discovery-runbook.md). Each area drives open-ended queries against ClinicalTrials.gov v2, PubMed E-utilities and bioRxiv/medRxiv; openFDA new NDA/BLA originals are scanned regardless of area. Edit freely: adding an area widens what the worker can find without a code change. excludeKeywords drop trials and papers whose title or conditions are outside BioStack's scope (infectious disease only). Oncology is deliberately NOT excluded (owner ruling t101u, 2026-10-30): a person with cancer may track any drug, so oncology drugs go through council review like every other draft. Name hygiene (procedures, ATC codes, excipient codes, misspellings) is handled by Discovery/CandidateScreening.cs and the RxNorm spelling check, not by keywords.",
   "areas": [
     {
       "areaId": "incretin-obesity",
@@ -315,20 +315,6 @@
     "CI"
   ],
   "excludeKeywords": [
-    "cancer",
-    "carcinoma",
-    "tumor",
-    "tumour",
-    "oncology",
-    "leukemia",
-    "leukaemia",
-    "lymphoma",
-    "myeloma",
-    "melanoma",
-    "neoplasm",
-    "metastatic",
-    "sarcoma",
-    "glioblastoma",
     "hiv",
     "hepatitis b",
     "tuberculosis",

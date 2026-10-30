@@ -26,12 +26,19 @@ public interface IKnowledgeSource
     Task<KnowledgeUpsertDisposition> PreviewUpsertAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Records that are currently published (not retired), as canonical name plus aliases.
+    /// Records that are currently stored and not retired (public or hidden draft), as canonical name plus aliases.
     /// Refresh uses this to find records that are no longer in the seed. The default returns
     /// nothing, so sources without retirement support never retire anything.
     /// </summary>
     Task<IReadOnlyList<KnowledgeEntryIdentity>> ListActiveIdentitiesAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<KnowledgeEntryIdentity>>(Array.Empty<KnowledgeEntryIdentity>());
+
+    /// <summary>
+    /// Auto-discovered drafts that are hidden from every public read until the AI council approves them
+    /// (<see cref="KnowledgeEntry.IsPublic"/> = false). Admin review queue only. The default returns nothing.
+    /// </summary>
+    Task<IReadOnlyList<KnowledgeEntry>> ListUnreviewedAsync(CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<KnowledgeEntry>>(Array.Empty<KnowledgeEntry>());
 
     /// <summary>
     /// Soft-retires a published record: it stays in storage (for audit and redirects) but is

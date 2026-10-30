@@ -27,7 +27,7 @@ Added 2026-10-24 after Clinton reported that BioStack had nothing on **ER-100**.
    - INN stems (`-glutide`, `-lintide`, `-glipron`, `-mab`, `-vec`, `-cel`, `-siran`, `-rsen`, ...)
    - raw names of genetic, biologic and supplement interventions
 
-   Out-of-scope titles and conditions (oncology, infectious disease) are skipped.
+   Infectious-disease titles and conditions are out of scope and skipped. **Oncology is in scope** (owner direction t101u, 2026-10-30): a person with cancer may want to track any drug, so a drug such as rituximab becomes a draft and goes through council review like any other.
 3. **Merges and matches.** Hits that share any normalized name or alias are merged (`ER-100` = `ER100` = `er 100`), so `CT-388` and `enicepatide` become one candidate. Each candidate is then checked against the seed plus discovered records:
    - `InCorpus`: the name matches an existing record.
    - `PossibleAlias`: the name is mentioned next to a record's own name, which suggests a missing alias.
@@ -38,10 +38,19 @@ Added 2026-10-24 after Clinton reported that BioStack had nothing on **ER-100**.
    - `research-requests/research-request-discovery-<stamp>.json`: a schema-valid research-request batch.
    - `discovered-records/discovered-<stamp>.json`: schema-valid draft records. A draft holds identity, registry or approval status and citations. Everything else is unknown or empty, and the record is `Not graded`.
 
-**No human gate.** Drafts go through the same pipeline as seed records:
+**Screening before a draft is written** (`CandidateScreening`, `CandidateScreener`):
+- **Rejected (never drafted):** procedures and non-substances (`blood sampling`), ATC and class codes (`L01A`, `L01AA01`), formulation excipient codes (`F-127`, `Pluronic F-127`), numbers and one- or two-character names. Each rejection is listed in the report (`screening`) with its reason.
+- **Flagged (drafted, hidden, labelled for the council):** material or class terms (`RADA16`, `Postbiotic`, `Poloxamer 188`, `DMSO`) and very long phrases. The draft carries a `name-check:<reason>` quality flag and a review reason.
+- **Misspellings:** the name is checked against NLM RxNorm (`rxcui.json`, then `spellingsuggestions.json`, edit distance 2 or less). A corrected name (`Tociliuzumab` becomes `tocilizumab`) keeps the typed form as an alias and is merged into an existing record if one exists, so no second record is created. If RxNorm is unreachable the draft is flagged `name-check:unavailable`, never blocked. Code names and multi-word phrases are not spell-checked. Set `Discovery:NameCheckEnabled=false` to turn this off; `Discovery:MaxNameChecksPerRun` (default 80) bounds the calls. RxNorm is a free NLM service (https://lhncbc.nlm.nih.gov/RxNav/); its attribution statement applies.
+
+**Visibility (owner ruling t101u, 2026-10-30).** An auto-discovered draft is **hidden from every public read until the AI council approves it**: `/api/v1/knowledge/compounds`, the detail and search endpoints, the sitemap, the catalog resolver and typeahead, and the analyzer and swap pools. Curated records stay public with their review label (ruling 9). The flag is `KnowledgeEntries.IsPublic`; Refresh recomputes it on every run (public when the record is not auto-discovered, or the council has approved it). Hidden drafts stay in storage and in the council queue (`DatabaseKnowledgeSource.ListUnreviewedAsync` for admin paths). The catalog does not offer drafts: a name with no public record goes to the external check and a private Pending-review item (spec v5, D5), so a person can still track it.
+
+Drafts still go through the same pipeline as seed records:
 - CouncilReview reviews discovered records first, so the 158 seed records do not crowd them out.
-- Refresh publishes them through the promotion gate, labelled pending review until the council decides.
+- Refresh stores them hidden and publishes them once the promotion gate approves them.
 - ResearchPlanning gives them update checks.
+
+Junk drafts that were stored before screening existed are screened out again on every Refresh and soft-retired (at most `MaxRetirementsPerRun` per run).
 
 The seed always wins on a name collision.
 

@@ -1,6 +1,7 @@
 namespace BioStack.KnowledgeWorker.Discovery;
 
 using System.Text.Json.Nodes;
+using BioStack.KnowledgeWorker.Pipeline;
 
 /// <summary>
 /// Discovered records live beside the curated seed, never inside it: curated discovered records
@@ -26,9 +27,31 @@ public static class DiscoveredRecordStore
         {
             var node = JsonNode.Parse(File.ReadAllText(file));
             var records = node as JsonArray ?? (node is JsonObject o ? new JsonArray(o.DeepClone()) : new JsonArray());
-            foreach (var record in records) Add(record, combined, seen);
+            foreach (var record in records)
+            {
+                if (IsScreenedOut(record)) continue;
+                Add(record, combined, seen);
+            }
         }
         return combined;
+    }
+
+    /// <summary>
+    /// True for an auto-discovered draft whose name is certainly not a substance (a procedure, an ATC code, an
+    /// excipient code). Drafts written before screening existed ("blood sampling", "L01A", "F-127") are dropped
+    /// here, so Refresh no longer publishes them (it soft-retires the stored rows) and the council never reviews them.
+    /// Curated records are never screened out.
+    /// </summary>
+    public static bool IsScreenedOut(JsonNode? record)
+    {
+        if (record is not JsonObject obj) return false;
+        var ops = obj["ops"] as JsonObject;
+        var autoDiscovered =
+            (ops?["ingestionSource"] is JsonValue src && src.TryGetValue<string>(out var s) && s.StartsWith(KnowledgeVisibility.DiscoveryIngestionPrefix, StringComparison.OrdinalIgnoreCase))
+            || ((ops?["qualityFlags"] as JsonArray)?.Any(f => f is JsonValue v && v.TryGetValue<string>(out var t) && string.Equals(t, KnowledgeVisibility.AutoDiscoveredFlag, StringComparison.OrdinalIgnoreCase)) ?? false);
+        if (!autoDiscovered) return false;
+        var name = obj["identity"]?["canonicalName"]?.GetValue<string>();
+        return CandidateScreening.Screen(name).Verdict == ScreenVerdict.Reject;
     }
 
     /// <summary>Normalized canonical names and aliases of every record in the array.</summary>

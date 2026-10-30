@@ -123,7 +123,11 @@ public sealed class DiscoveryTests
         var hits = ((JsonArray)Fixture("ctgov-studies.json")["studies"]!).OfType<JsonObject>()
             .SelectMany(s => ClinicalTrialsGovDiscoverySource.ParseStudy(s, area, scope, types)).ToList();
 
-        var er100 = Assert.Single(hits);
+        // PIMS screening (phase NA) and rTMS (device) are dropped. The rectal-cancer trial is NOT dropped any more:
+        // oncology is no longer out of scope (owner direction t101u), so its drug comes through for council review.
+        Assert.Equal(new[] { "ER-100", "Serplulimab" }, hits.Select(h => h.Name));
+        Assert.Equal("Biologic", hits[1].Classification);
+        var er100 = hits[0];
         Assert.Equal("ER-100", er100.Name);
         Assert.Equal("Epigenetic Therapy", er100.Classification);
         Assert.Contains("OSK epigenetic therapy", er100.Aliases);
@@ -131,7 +135,6 @@ public sealed class DiscoveryTests
         Assert.Equal("https://clinicaltrials.gov/study/NCT07290244", er100.Evidence.Url);
         Assert.Equal("PHASE1", er100.Phase);
         Assert.Equal("Life Biosciences Inc.", er100.Sponsor);
-        // PIMS screening (phase NA), rTMS (device) and the rectal-cancer trial (out of scope) are dropped.
     }
 
     [Fact]

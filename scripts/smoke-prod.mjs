@@ -3,17 +3,21 @@ import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-// The public list is every non-retired record: the curated seed plus the drafts that the daily
-// open-discovery job (kw-discovery) adds, so the count grows by design. 208 on 2026-10-26 was
-// 158 curated records plus the first 50 drafts; 237 on 2026-10-28 and 245 on 2026-10-30 are the
-// same list after later discovery runs. A hard count therefore fails on healthy production.
-// The smoke asserts a rule instead: never fewer than the curated baseline, never an absurd
-// number (runaway duplicates), and the curated sentinel records are present.
+// The public list is the curated records plus any auto-discovered record the AI council has approved.
+// Unreviewed open-discovery drafts (kw-discovery) are hidden from every public read (owner ruling t101u,
+// 2026-10-30), so the count no longer grows with each discovery run. Before that ruling the list was
+// 158 curated + the drafts: 208 on 2026-10-26, 237 on 2026-10-28 and 245 on 2026-10-30. After the
+// change expect about 158 and slow growth as the council approves records, so a hard count would
+// still be wrong. The smoke asserts a rule: never fewer than the curated baseline, never an
+// implausible number (a number near the old one means drafts are public again), the curated
+// sentinels are present, and names known to be junk drafts are not public.
 // Raise MIN_ACTIVE_RECORDS when curated records are added; lower it only for a deliberate retirement.
 export const MIN_ACTIVE_RECORDS = 158;
-export const MAX_ACTIVE_RECORDS = 1000;
-// Curated records that must stay separate or present (creatine and creatine monohydrate stay separate by ruling D-D).
+export const MAX_ACTIVE_RECORDS = 400;
 export const SENTINEL_RECORDS = ['Semaglutide', 'Retatrutide', 'Vosilasarm', 'Creatine', 'Creatine Monohydrate'];
+
+// Junk or unreviewed drafts that were once public (procedure, ATC code, excipient code, misspelling). They must never be listed.
+export const MUST_NOT_BE_PUBLIC = ['blood sampling', 'L01A', 'F-127', 'Tociliuzumab'];
 
 function requireCompound(value, canonicalName) {
   if (value?.canonicalName !== canonicalName) throw new Error(`Expected ${canonicalName}, got ${value?.canonicalName ?? 'no canonical name'}`);
@@ -66,6 +70,8 @@ export async function runProductionSmoke({
     const names = new Set(compounds.map(c => c.canonicalName.toLowerCase()));
     const missing = SENTINEL_RECORDS.filter(n => !names.has(n.toLowerCase()));
     if (missing.length) throw new Error(`Compound list is missing curated records: ${missing.join(', ')}`);
+    const leaked = MUST_NOT_BE_PUBLIC.filter(n => names.has(n.toLowerCase()));
+    if (leaked.length) throw new Error(`Compound list exposes unreviewed or junk drafts: ${leaked.join(', ')}`);
     return { activeRecords: compounds.length };
   });
   for (const [name, slug] of [['Vosilasarm', 'vosilasarm'], ['Retatrutide', 'retatrutide']]) {

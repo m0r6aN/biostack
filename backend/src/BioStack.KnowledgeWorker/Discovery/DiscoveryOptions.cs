@@ -16,6 +16,12 @@ public sealed class DiscoveryOptions
 
     public int MaxCandidatesPerRun { get; set; } = 50;
 
+    /// <summary>Check the spelling of new plain-word names against NLM RxNorm before a draft is made (a misspelling is corrected, not drafted as a separate record).</summary>
+    public bool NameCheckEnabled { get; set; } = true;
+
+    /// <summary>Upper bound on RxNorm spelling checks per run (two requests each at most).</summary>
+    public int MaxNameChecksPerRun { get; set; } = 80;
+
     public bool ClinicalTrialsEnabled { get; set; } = true;
     public bool PubMedEnabled { get; set; } = true;
     public bool OpenFdaEnabled { get; set; } = true;

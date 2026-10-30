@@ -25,9 +25,11 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         // Deterministic: a unique index on lower(CanonicalName) prevents duplicates, but if a
         // legacy duplicate survives, always serve the same row (lowest Id) instead of an
         // unordered first match.
+        // Public reads never see an unreviewed auto-discovered draft (IsPublic = false): the record
+        // exists for the review queue only. A hidden draft is treated as absent here.
         var canonicalMatch = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(k => k.CanonicalName.ToLower() == normalizedCanonicalName)
+            .Where(k => k.CanonicalName.ToLower() == normalizedCanonicalName && (k.IsPublic || k.RetiredAtUtc != null))
             .OrderBy(k => k.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
@@ -38,7 +40,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
         var entries = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(k => k.RetiredAtUtc == null)
+            .Where(k => k.RetiredAtUtc == null && k.IsPublic)
             .ToListAsync(cancellationToken);
 
         var ordered = entries.OrderBy(k => k.Id).ToList();
@@ -81,7 +83,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
     {
         return await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(k => k.RetiredAtUtc == null)
+            .Where(k => k.RetiredAtUtc == null && k.IsPublic)
             .ToListAsync(cancellationToken);
     }
 
@@ -91,7 +93,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         // Dose, schedule, pairing, and optimization columns stay on the full-entity read.
         var rows = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(entry => entry.RetiredAtUtc == null)
+            .Where(entry => entry.RetiredAtUtc == null && entry.IsPublic)
             .Select(entry => new
             {
                 entry.Id,
@@ -138,7 +140,7 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
         var entries = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(k => k.RetiredAtUtc == null)
+            .Where(k => k.RetiredAtUtc == null && k.IsPublic)
             .ToListAsync(cancellationToken);
 
         return entries
@@ -231,6 +233,16 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         return rows.Select(r => new KnowledgeEntryIdentity(r.CanonicalName, r.Aliases)).ToList();
     }
 
+    public async Task<IReadOnlyList<KnowledgeEntry>> ListUnreviewedAsync(CancellationToken cancellationToken = default)
+    {
+        // Review-queue read (admin only): hidden drafts, never served to public readers.
+        return await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .Where(k => k.RetiredAtUtc == null && !k.IsPublic)
+            .OrderBy(k => k.CanonicalName)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<bool> RetireCompoundAsync(string canonicalName, string? supersededBy, DateTime retiredAtUtc, CancellationToken cancellationToken = default)
     {
         var normalized = (canonicalName ?? string.Empty).Trim().ToLowerInvariant();
@@ -276,6 +288,9 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
         changed |= SetIfDifferent(existing.OptimizationExercise, incoming.OptimizationExercise, value => existing.OptimizationExercise = value);
         changed |= SetIfDifferent(existing.TieredDosing, incoming.TieredDosing, value => existing.TieredDosing = value, TieredDosingEquals);
         changed |= SetIfDifferent(existing.Details, incoming.Details, value => existing.Details = value, DetailsEquals);
+
+        // Public visibility follows the record and its council decision on every run (drafts hide, approved drafts show).
+        changed |= SetIfDifferent(existing.IsPublic, incoming.IsPublic, value => existing.IsPublic = value);
 
         // A record that is back in the seed is published again.
         changed |= SetIfDifferent(existing.RetiredAtUtc, null, value => existing.RetiredAtUtc = value);

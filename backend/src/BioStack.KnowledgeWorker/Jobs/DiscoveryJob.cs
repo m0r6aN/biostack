@@ -29,6 +29,7 @@ public sealed class DiscoveryJob : IDiscoveryJob
     private readonly ISubstanceRecordValidator _recordValidator;
     private readonly IReadOnlyList<IDiscoverySource> _sources;
     private readonly TimeProvider _clock;
+    private readonly IDrugNameVerifier? _nameVerifier;
 
     public DiscoveryJob(
         WorkerOptions worker,
@@ -36,8 +37,10 @@ public sealed class DiscoveryJob : IDiscoveryJob
         IResearchArtifactValidator artifactValidator,
         ISubstanceRecordValidator recordValidator,
         IReadOnlyList<IDiscoverySource> sources,
-        TimeProvider? clock = null)
+        TimeProvider? clock = null,
+        IDrugNameVerifier? nameVerifier = null)
     {
+        _nameVerifier = nameVerifier;
         _worker = worker ?? throw new ArgumentNullException(nameof(worker));
         _options = options ?? throw new ArgumentNullException(nameof(options));
         _artifactValidator = artifactValidator ?? throw new ArgumentNullException(nameof(artifactValidator));
@@ -59,7 +62,7 @@ public sealed class DiscoveryJob : IDiscoveryJob
         var scope = DiscoveryScope.Load(scopePath);
         var now = _clock.GetUtcNow();
 
-        var output = await new DiscoveryRunner(_sources, _options).RunAsync(scope, corpus, now, cancellationToken);
+        var output = await new DiscoveryRunner(_sources, _options, _nameVerifier).RunAsync(scope, corpus, now, cancellationToken);
         foreach (var r in output.SourceResults)
         {
             context.Logger.LogInformation("[Discovery] {Source}: {Queries} request(s), {Hits} hit(s), {Errors} error(s).",
@@ -138,7 +141,20 @@ public sealed class DiscoveryJob : IDiscoveryJob
                 ["possibleAlias"] = output.Candidates.Count(c => c.Status == CorpusMatchStatus.PossibleAlias),
                 ["inCorpus"] = output.Candidates.Count(c => c.Status == CorpusMatchStatus.InCorpus),
                 ["draftsWritten"] = draftsWritten,
+                ["screenedOut"] = output.Screening?.Count(n => n.Action == "rejected") ?? 0,
+                ["flagged"] = output.Screening?.Count(n => n.Action == "flagged") ?? 0,
+                ["renamedOrMerged"] = output.Screening?.Count(n => n.Action is "renamed" or "merged") ?? 0,
             },
+            // Names that were dropped (procedure, ATC code, excipient code), flagged for a name check, or corrected
+            // to the RxNorm spelling, with the reason. Nothing here becomes a public record on its own.
+            ["screening"] = new JsonArray((output.Screening ?? Array.Empty<ScreeningNote>()).Select(n => (JsonNode?)new JsonObject
+            {
+                ["name"] = n.Name,
+                ["action"] = n.Action,
+                ["code"] = n.Code,
+                ["reason"] = n.Reason,
+                ["replacement"] = n.Replacement,
+            }).ToArray()),
             ["sources"] = new JsonArray(output.SourceResults.Select(r => (JsonNode?)new JsonObject
             {
                 ["sourceId"] = r.SourceId,
