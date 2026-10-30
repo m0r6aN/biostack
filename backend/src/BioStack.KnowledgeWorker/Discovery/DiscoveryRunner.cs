@@ -7,11 +7,13 @@ public sealed class DiscoveryRunner
 {
     private readonly IReadOnlyList<IDiscoverySource> _sources;
     private readonly DiscoveryOptions _options;
+    private readonly IDrugNameVerifier? _nameVerifier;
 
-    public DiscoveryRunner(IReadOnlyList<IDiscoverySource> sources, DiscoveryOptions options)
+    public DiscoveryRunner(IReadOnlyList<IDiscoverySource> sources, DiscoveryOptions options, IDrugNameVerifier? nameVerifier = null)
     {
         _sources = sources;
         _options = options;
+        _nameVerifier = options.NameCheckEnabled ? nameVerifier : null;
     }
 
     public async Task<DiscoveryRunOutput> RunAsync(DiscoveryScope scope, JsonArray corpus, DateTimeOffset now, CancellationToken ct)
@@ -35,11 +37,19 @@ public sealed class DiscoveryRunner
         }
 
         var index = CorpusNameIndex.Build(corpus);
-        var candidates = DiscoveryAggregator.Aggregate(results.SelectMany(r => r.Hits), index, scope.CodeNamePrefixDenylist);
+        var aggregated = DiscoveryAggregator.Aggregate(results.SelectMany(r => r.Hits), index, scope.CodeNamePrefixDenylist);
+        // Screen out procedures, classification codes and excipient codes, and correct misspellings, before any draft exists.
+        var screening = await CandidateScreener.ScreenAsync(aggregated, index, _nameVerifier, _options.MinScore, _options.MaxNameChecksPerRun, ct);
+        var candidates = screening.Kept;
         var requests = DiscoveryOutputBuilder.BuildResearchRequests(candidates, now, _options.MinScore, _options.MaxCandidatesPerRun);
         var drafts = DiscoveryOutputBuilder.BuildDraftRecords(candidates, now, _options.MinScore, _options.MaxCandidatesPerRun);
-        return new DiscoveryRunOutput(candidates, results, requests, drafts);
+        return new DiscoveryRunOutput(candidates, results, requests, drafts, screening.Notes);
     }
+
+    public static IDrugNameVerifier? CreateNameVerifier(DiscoveryOptions options, Func<HttpClient> clientFactory)
+        => options.NameCheckEnabled
+            ? new RxNormNameVerifier(new DiscoveryHttp(clientFactory(), TimeSpan.FromMilliseconds(Math.Max(0, options.RequestDelayMilliseconds)), options.UserAgent))
+            : null;
 
     public static IReadOnlyList<IDiscoverySource> CreateSources(DiscoveryOptions options, Func<HttpClient> clientFactory)
     {

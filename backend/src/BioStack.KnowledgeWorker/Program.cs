@@ -167,6 +167,10 @@ var builder = Host.CreateDefaultBuilder(args)
             sp.GetRequiredService<ISubstanceRecordValidator>(),
             BioStack.KnowledgeWorker.Discovery.DiscoveryRunner.CreateSources(discoveryOptions, () => new HttpClient(
                 new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5), AutomaticDecompression = System.Net.DecompressionMethods.All },
+                disposeHandler: true) { Timeout = TimeSpan.FromSeconds(60) }),
+            clock: null,
+            nameVerifier: BioStack.KnowledgeWorker.Discovery.DiscoveryRunner.CreateNameVerifier(discoveryOptions, () => new HttpClient(
+                new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5), AutomaticDecompression = System.Net.DecompressionMethods.All },
                 disposeHandler: true) { Timeout = TimeSpan.FromSeconds(60) })));
 
         var hypeOptions = new BioStack.KnowledgeWorker.Hype.HypeOptions();

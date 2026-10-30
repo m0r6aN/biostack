@@ -40,6 +40,13 @@ public sealed class KnowledgeEntry
     // discovered records. Retired rows are kept for audit and redirects, but public reads skip them.
     // SupersededBy names the record that absorbed this one (e.g. Testolone -> Vosilasarm).
     public DateTime? RetiredAtUtc { get; set; }
+
+    // Public visibility. False for an auto-discovered draft that the two-reviewer AI council has not
+    // approved yet (owner ruling t101u, 2026-10-30): such a record stays in storage for the review
+    // queue but is excluded from every public read (list, detail, search, sitemap, analyzer pools).
+    // Curated records are always public, labeled with their review state (ruling 9 still holds for them).
+    // Refresh recomputes it from the record and the council decision on every run.
+    public bool IsPublic { get; set; } = true;
     public string? SupersededBy { get; set; }
 
     // Optimization

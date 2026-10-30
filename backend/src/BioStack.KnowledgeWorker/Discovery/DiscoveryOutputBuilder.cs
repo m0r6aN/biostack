@@ -167,7 +167,7 @@ public static class DiscoveryOutputBuilder
                 {
                     $"Auto-discovered {checkedAt[..10]} by RunMode=Discovery (score {c.Score}; sources: {string.Join(", ", c.SourceIds)}).",
                     $"Source refs: {string.Join(", ", refs.Take(10))}.",
-                }),
+                }.Concat(NameFlagNotes(c))),
                 ["lastReviewedAt"] = null,
                 ["reviewStatus"] = "draft",
             },
@@ -182,11 +182,19 @@ public static class DiscoveryOutputBuilder
                 ["isActive"] = true,
                 ["completeness"] = "minimal",
                 ["needsReview"] = true,
-                ["reviewReasons"] = Array(new[] { "Auto-discovered draft awaiting research and AI council review." }),
-                ["qualityFlags"] = Array(new[] { "auto-discovered" }),
+                ["reviewReasons"] = Array(new[] { "Auto-discovered draft awaiting research and AI council review." }.Concat(NameFlagNotes(c))),
+                ["qualityFlags"] = Array(new[] { "auto-discovered" }.Concat(c.NameFlags ?? System.Array.Empty<string>())),
             },
         };
     }
+
+    private static IEnumerable<string> NameFlagNotes(DiscoveredCandidate c)
+        => (c.NameFlags ?? System.Array.Empty<string>()).Select(f => f switch
+        {
+            _ when f.StartsWith(CandidateScreener.RenamedFlag, StringComparison.Ordinal) => "Name corrected to the RxNorm spelling; the spelling found in the source is kept as an alias. Confirm the name.",
+            CandidateScreener.UnavailableFlag => "The RxNorm spelling check was unavailable when this draft was made. Confirm the spelling.",
+            _ => "Name flagged: it may be a material, a generic class word or a study descriptor rather than a substance. Confirm it names a real substance.",
+        }).Distinct();
 
     public static string RefId(DiscoveryEvidence e)
         => $"{e.SourceId}:{CandidateNames.Slug(e.Identifier)}";

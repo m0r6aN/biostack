@@ -5,8 +5,8 @@ import { runProductionSmoke, MIN_ACTIVE_RECORDS, MAX_ACTIVE_RECORDS } from './sm
 const vosilasarm = { canonicalName: 'Vosilasarm', slug: 'vosilasarm', aliases: ['Testolone'], mechanismSummary: 'Androgen receptor research.', sourceReferences: ['https://example.org/vosilasarm'] };
 const retatrutide = { canonicalName: 'Retatrutide', slug: 'retatrutide', aliases: [], mechanismSummary: 'Multi-receptor agonist research.', sourceReferences: ['https://example.org/retatrutide'] };
 const sentinels = ['Semaglutide', 'Creatine', 'Creatine monohydrate'].map(canonicalName => ({ canonicalName, aliases: [] }));
-function responses(count, { alias = vosilasarm, readinessStatus = 200, omitSentinels = false } = {}) {
-  const fixed = [vosilasarm, retatrutide, ...(omitSentinels ? [] : sentinels)];
+function responses(count, { alias = vosilasarm, readinessStatus = 200, omitSentinels = false, extra = [] } = {}) {
+  const fixed = [vosilasarm, retatrutide, ...(omitSentinels ? [] : sentinels), ...extra.map(canonicalName => ({ canonicalName, aliases: [] }))];
   const compounds = [...fixed, ...Array.from({ length: Math.max(0, count - fixed.length) }, (_, i) => ({ canonicalName: `Record ${i}`, aliases: [] }))];
   return async url => {
     const path = new URL(url).pathname;
@@ -18,8 +18,8 @@ function responses(count, { alias = vosilasarm, readinessStatus = 200, omitSenti
   };
 }
 
-test('passes all seven checks at the curated baseline and as discovery drafts grow the list', async () => {
-  for (const count of [158, 208, 237, 245]) {
+test('passes all seven checks at the curated baseline and as the council approves records', async () => {
+  for (const count of [158, 170, 250]) {
     const result = await runProductionSmoke({ fetchImpl: responses(count) });
     assert.equal(result.passed, true, `count ${count}`);
     assert.equal(result.observedActiveRecords, count);
@@ -37,7 +37,15 @@ test('fails a list below the curated baseline without skipping the remaining che
 test('fails an absurd list size (runaway duplicates or a bad import)', async () => {
   const result = await runProductionSmoke({ fetchImpl: responses(MAX_ACTIVE_RECORDS + 1) });
   assert.equal(result.passed, false);
-  assert.match(result.results[1].error, /at most 1000 active records/);
+  assert.match(result.results[1].error, /at most 400 active records/);
+});
+
+test('fails when named junk drafts are public again', async () => {
+  const result = await runProductionSmoke({ fetchImpl: responses(245) });
+  assert.equal(result.passed, true); // 245 alone is plausible; the named junk is what proves a leak
+  const leaked = await runProductionSmoke({ fetchImpl: responses(158, { extra: ['blood sampling', 'L01A'] }) });
+  assert.equal(leaked.passed, false);
+  assert.match(leaked.results[1].error, /exposes unreviewed or junk drafts: blood sampling, L01A/);
 });
 
 test('fails when a curated sentinel record is missing', async () => {

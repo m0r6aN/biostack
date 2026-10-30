@@ -77,7 +77,18 @@ public abstract class IngestionJobBase : IIngestionJob
                 foreach (var file in extraFiles)
                 {
                     var extra = Pipeline.Run(file);
-                    accepted.AddRange(extra.Accepted.Where(a => names.Add(BioStack.KnowledgeWorker.Discovery.CandidateNames.Normalize(a.Record.Identity.CanonicalName))));
+                    var screenedOut = extra.Accepted
+                        .Where(a => KnowledgeVisibility.IsAutoDiscovered(a.Record)
+                                    && BioStack.KnowledgeWorker.Discovery.CandidateScreening.Screen(a.Record.Identity.CanonicalName).Verdict
+                                        == BioStack.KnowledgeWorker.Discovery.ScreenVerdict.Reject)
+                        .ToList();
+                    foreach (var dropped in screenedOut)
+                    {
+                        context.RecordPlanRow(dropped.Record.Identity.CanonicalName, "screened-out",
+                            "auto-discovered name is not a substance (procedure, classification code or excipient code); not published");
+                        context.Logger.LogInformation("[{Job}] SCREENED OUT '{Name}'", JobName, dropped.Record.Identity.CanonicalName);
+                    }
+                    accepted.AddRange(extra.Accepted.Where(a => !screenedOut.Contains(a)).Where(a => names.Add(BioStack.KnowledgeWorker.Discovery.CandidateNames.Normalize(a.Record.Identity.CanonicalName))));
                     rejected.AddRange(extra.Rejected);
                 }
                 context.Logger.LogInformation("[{Job}] Added {Count} discovered record file(s).", JobName, extraFiles.Count);
@@ -311,6 +322,14 @@ public abstract class IngestionJobBase : IIngestionJob
             prepared.Entry.Details.ReviewStatus = approver.StartsWith("ai-council", StringComparison.OrdinalIgnoreCase)
                 ? "ai-council-reviewed"
                 : "reviewed";
+        }
+
+        // Auto-discovered drafts stay out of every public read until the council approves them (owner ruling
+        // t101u, 2026-10-30). Curated records are public regardless of their review label.
+        prepared.Entry.IsPublic = KnowledgeVisibility.IsPublic(prepared.Record, gate.Allowed);
+        if (!prepared.Entry.IsPublic)
+        {
+            context.Logger.LogInformation("[{Job}] HIDDEN (unreviewed auto-discovered draft) '{Name}'", JobName, canonicalName);
         }
 
         if (prepared.Record.Ops.NeedsReview)

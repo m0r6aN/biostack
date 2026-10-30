@@ -66,7 +66,8 @@ public sealed record DiscoveredCandidate(
     IReadOnlyList<string> Conditions,
     int Score,
     CorpusMatchStatus Status,
-    string? MatchedRecord)
+    string? MatchedRecord,
+    IReadOnlyList<string>? NameFlags = null)
 {
     public IReadOnlyList<string> SourceIds => Evidence.Select(e => e.SourceId).Distinct(StringComparer.Ordinal).ToList();
 }
@@ -75,4 +76,5 @@ public sealed record DiscoveryRunOutput(
     IReadOnlyList<DiscoveredCandidate> Candidates,
     IReadOnlyList<DiscoverySourceResult> SourceResults,
     JsonObject? ResearchRequestBatch,
-    JsonArray DraftRecords);
+    JsonArray DraftRecords,
+    IReadOnlyList<ScreeningNote>? Screening = null);
