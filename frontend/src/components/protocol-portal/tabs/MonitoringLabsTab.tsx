@@ -35,7 +35,7 @@ function AdjustmentRulesCallout({ rules }: { rules: MonitoringProtocol['adjustme
     <div className="mt-8 rounded-2xl border border-amber-400/20 bg-amber-500/[0.07] p-5">
       <div className="mb-2 flex items-center gap-2 font-semibold text-amber-200">
         <TriangleAlert className="h-4 w-4" />
-        <span>Adjustment Rules</span>
+        <span>Trends to discuss with your clinician</span>
       </div>
       <ul className="space-y-1.5 text-sm text-amber-100/80">
         {rules.map((rule) => (
