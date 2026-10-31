@@ -59,6 +59,8 @@ describe('contact page', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }));
 
     await screen.findByText(/Thanks for reaching out/);
+    expect(screen.getByRole('link', { name: 'support@biostack.cc' })).toHaveAttribute('href', 'mailto:support@biostack.cc');
+    expect(document.body.textContent).not.toMatch(/reply to any BioStack email|same inbox/i);
     expect(screen.queryByRole('button', { name: 'Send message' })).not.toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledWith(
       '/api/v1/contact',
