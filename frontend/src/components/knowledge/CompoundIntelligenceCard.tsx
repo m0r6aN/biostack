@@ -127,7 +127,7 @@ export function CompoundIntelligenceCard({
             <p className="text-sm text-white/55 mt-1">{details.compoundFamily}</p>
           )}
           {entry.aliases.length > 0 && (
-            <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
+            <p className="text-xs text-white/50 mt-1">Also known as: {entry.aliases.join(', ')}</p>
           )}
           {showDossierLink && (
             <Link
@@ -144,12 +144,12 @@ export function CompoundIntelligenceCard({
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Classification</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Classification</p>
             <p className="text-sm text-white/65">{entry.classification}</p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Regulatory Status</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Regulatory Status</p>
             <p className="text-sm text-white/65">{entry.regulatoryStatus?.trim() || NOT_AVAILABLE}</p>
             {details?.unofficialSourceFields?.includes('regulatoryStatus') && (
               <p className="text-xs text-amber-300/80 mt-1">Unofficial source</p>
@@ -157,25 +157,25 @@ export function CompoundIntelligenceCard({
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Sources</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Sources</p>
             <p className="text-sm text-white/65" data-testid="verdict-source-count">{sourceCount}</p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Review</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Review</p>
             <p className="text-sm text-white/65" data-testid="verdict-review">{reviewLabel ?? NOT_AVAILABLE}</p>
           </div>
         </div>
 
         {entry.mechanismSummary && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Overview</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Overview</p>
             <p className="text-sm text-white/65">{entry.mechanismSummary}</p>
           </div>
         )}
 
         <section aria-label="Evidence and limitations" className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-2">
-          <h4 className="text-sm font-medium text-white/80">Evidence and limitations</h4>
+          <h3 className="text-sm font-medium text-white/80">Evidence and limitations</h3>
           {studyDesign ? (
             <div data-testid="reviewed-study-design" className="space-y-2">
               <p className="text-sm leading-6 text-white/65">{studyDesign.statement}</p>
@@ -198,7 +198,7 @@ export function CompoundIntelligenceCard({
         {currentProfile && (
           <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-white/40 text-xs" aria-hidden="true">•</span>
+              <span className="text-white/50 text-xs" aria-hidden="true">•</span>
               <p className="text-xs font-semibold text-white/55 uppercase tracking-wider">Profile Context</p>
             </div>
             <p className="text-xs text-white/55">
@@ -209,25 +209,25 @@ export function CompoundIntelligenceCard({
 
         {entry.pathways && entry.pathways.length > 0 && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Pathways</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">Pathways</p>
             <TagList items={entry.pathways} tone="emerald" />
           </div>
         )}
 
         {!details && benefits.length > 0 && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">Benefits</p>
             <TagList items={benefits} tone="emerald" />
           </div>
         )}
 
         {(entry.avoidWith.length > 0 || entry.drugInteractions.length > 0) && (
           <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-4">
-            <h4 className="text-sm font-medium text-white/80">Interactions & cautions</h4>
+            <h3 className="text-sm font-medium text-white/80">Interactions & cautions</h3>
 
             {entry.avoidWith.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-2">
                   <HelpTip tipKey="flaggedInSourceData">Flagged in source data</HelpTip>
                 </p>
                 <TagList items={entry.avoidWith} tone="rose" />
@@ -236,14 +236,14 @@ export function CompoundIntelligenceCard({
 
             {entry.drugInteractions.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-2">
                   <HelpTip tipKey="reportedDrugInteractions">Drug interactions</HelpTip>
                 </p>
                 <TagList items={entry.drugInteractions} tone="rose" />
               </div>
             )}
 
-            <p className="text-xs leading-5 text-white/45">
+            <p className="text-xs leading-5 text-white/50">
               These are observational flags for review, not individualized instructions.
             </p>
           </div>
@@ -251,7 +251,7 @@ export function CompoundIntelligenceCard({
 
         {!details && entry.sourceReferences.length > 0 && (
           <section aria-label="Sources">
-            <h4 className="text-sm font-medium text-white/80 mb-2">Sources</h4>
+            <h3 className="text-sm font-medium text-white/80 mb-2">Sources</h3>
             <ul id={referenceListId} className="text-sm space-y-2">
               {entry.sourceReferences.slice(0, showAllReferences ? undefined : 3).map((ref, i) => {
                 const link = referenceLink(ref);

@@ -60,7 +60,7 @@ function formatDose(d: KnowledgeDoseReport): string {
 function DoseColumn({ title, rows, testId }: { title: string; rows: KnowledgeDoseReport[]; testId: string }) {
   return (
     <div data-testid={testId} className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
-      <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">{title}</p>
+      <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">{title}</p>
       {rows.length === 0 ? (
         <p className="text-sm text-white/50">{NOT_AVAILABLE}</p>
       ) : (
@@ -77,7 +77,7 @@ function DoseColumn({ title, rows, testId }: { title: string; rows: KnowledgeDos
                 )}
                 <SourceLink title={d.sourceTitle} url={d.sourceUrl} />
               </p>
-              {d.notes && <p className="text-xs text-white/45">{d.notes}</p>}
+              {d.notes && <p className="text-xs text-white/50">{d.notes}</p>}
             </li>
           ))}
         </ul>
@@ -90,7 +90,7 @@ function SafetyList({ label, items }: { label: string; items: KnowledgeSafetyIte
   if (items.length === 0) return null;
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-wider text-rose-400/70 mb-1">{label}</p>
+      <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-1">{label}</p>
       <ul className="space-y-1.5">
         {items.map((s, i) => (
           <li key={i} className="text-sm text-rose-100/90">
@@ -147,7 +147,7 @@ export function CompoundRecordDetails({ details: raw }: { details: KnowledgeEntr
             {details.studiedUses.map((u, i) => (
               <li key={i} className="text-sm text-white/70">
                 <span className="font-medium text-white/80">{u.useCase}</span>
-                <span className="ml-2 text-xs text-white/45">{u.labelStatus.replace(/-/g, ' ')}</span>
+                <span className="ml-2 text-xs text-white/50">{u.labelStatus.replace(/-/g, ' ')}</span>
                 {u.summary && <span className="block">{u.summary}</span>}
               </li>
             ))}
@@ -165,11 +165,11 @@ export function CompoundRecordDetails({ details: raw }: { details: KnowledgeEntr
           <SafetyList label="Warnings" items={s.warnings} />
           <SafetyList label="Precautions" items={s.precautions} />
           {s.adverseEffectsCommon.length > 0 && (
-            <p className="text-sm text-white/70"><span className="text-xs uppercase tracking-wider text-white/45">Common: </span>{s.adverseEffectsCommon.join(', ')}</p>
+            <p className="text-sm text-white/70"><span className="text-xs uppercase tracking-wider text-white/50">Common: </span>{s.adverseEffectsCommon.join(', ')}</p>
           )}
           {s.adverseEffectsSerious.length > 0 && (
             <ul className="text-sm text-white/70 space-y-1">
-              <li className="text-xs uppercase tracking-wider text-white/45">Serious</li>
+              <li className="text-xs uppercase tracking-wider text-white/50">Serious</li>
               {s.adverseEffectsSerious.map((x, i) => <li key={i}>{x}</li>)}
             </ul>
           )}
@@ -215,7 +215,7 @@ export function CompoundRecordDetails({ details: raw }: { details: KnowledgeEntr
             {details.sources.map((src, i) => (
               <li key={i} className="[overflow-wrap:anywhere]">
                 <SourceLink title={src.title} url={src.url} />
-                <span className="text-xs text-white/40"> · {[src.publisher, src.sourceType, src.publishedAt?.slice(0, 10)].filter(Boolean).join(' · ')}</span>
+                <span className="text-xs text-white/50"> · {[src.publisher, src.sourceType, src.publishedAt?.slice(0, 10)].filter(Boolean).join(' · ')}</span>
               </li>
             ))}
           </ul>

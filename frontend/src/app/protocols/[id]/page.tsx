@@ -347,15 +347,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                 detail={commanderLockedMessage}
               />
             )}
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               <PatternMemoryPanel snapshot={patterns} compact />
               <DriftRegimePanel drift={drift} patterns={patterns} compact />
               <SequenceExpectationPanel snapshot={sequence} compact />
             </div>
 
-            <section className="grid gap-4 lg:grid-cols-[1fr_360px]">
+            <section className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_360px]">
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Tracked Stack History</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Tracked Stack History</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-1.5 text-sm font-semibold text-emerald-100">
                     v{protocol.version} {protocol.isDraft ? 'draft' : 'snapshot'}
@@ -377,15 +377,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
 
               {protocol.versionDiff && (
                 <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">What Changed</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">What Changed</p>
                   <div className="mt-3 space-y-2">
                     {protocol.versionDiff.changes.slice(0, 5).map((change) => (
                       <div key={`${change.scope}-${change.subject}-${change.before}-${change.after}`} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-3">
                         <div className="flex items-center justify-between gap-2">
                           <p className="text-sm font-semibold text-white">{change.subject}</p>
-                          <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/45">{change.changeType}</span>
+                          <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/50">{change.changeType}</span>
                         </div>
-                        <p className="mt-1 text-xs text-white/45">
+                        <p className="mt-1 text-xs text-white/50">
                           {change.before || 'none'} → {change.after || 'none'}
                         </p>
                       </div>
@@ -395,21 +395,21 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               )}
             </section>
 
-            <section id="run" className="grid scroll-mt-6 gap-6 lg:grid-cols-[360px_1fr]">
+            <section id="run" className="grid grid-cols-1 scroll-mt-6 gap-6 lg:grid-cols-[360px_1fr]">
               <div className="space-y-6">
                 <StackScoreCard score={protocol.stackScore} />
                 {/* showTrackingCta omitted: protocol is already being tracked */}
                 <InteractionIntelligenceCard intelligence={protocol.interactionIntelligence} />
               </div>
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack Compounds</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Stack Compounds</p>
                 <div className="mt-4 space-y-3">
                   {protocol.items.map((item) => (
                     <div key={item.id} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-4">
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <h3 className="font-semibold text-white">{item.compound?.name ?? 'Compound snapshot'}</h3>
-                          <p className="mt-1 text-sm text-white/45">{item.compound?.category ?? item.compoundRecordId}</p>
+                          <p className="mt-1 text-sm text-white/50">{item.compound?.category ?? item.compoundRecordId}</p>
                         </div>
                         {item.compound?.status && (
                           <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/55">{item.compound.status}</span>

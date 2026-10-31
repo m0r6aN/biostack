@@ -35,7 +35,7 @@ export function CommunityColumns({ entry, initialThemes }: { entry: KnowledgeEnt
   return (
     <details className="max-w-3xl mx-auto mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-4" data-testid="community-columns">
       <summary className="cursor-pointer text-sm font-semibold text-white/80">What people report (anecdote)</summary>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <section aria-labelledby="clinical-col" className="rounded-xl bg-cyan-500/[0.05] p-4">
           <h3 id="clinical-col" className="text-xs font-semibold tracking-wide text-cyan-200">CLINICAL DATA <span className="font-normal text-white/50">(from trials)</span></h3>
           <p className="mt-3 text-sm text-white/60">Adverse events:</p>

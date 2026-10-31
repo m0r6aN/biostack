@@ -53,7 +53,7 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
   return (
     <div className={cn('grid gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3', !sidebar && 'md:grid-cols-2')}>
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Readiness</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Readiness</p>
         <div className="flex flex-wrap gap-1.5">
           {[
             { key: 'research-requested',       label: `Research Requested (${researchRequestedCount})`, cls: 'text-violet-300 border-violet-400/30 bg-violet-400/10' },
@@ -63,7 +63,7 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
           ].map(chip => (
             <button key={chip.key} onClick={() => toggleMulti('readiness', chip.key)}
               className={cn('text-[10px] px-2.5 py-1 rounded-full border transition-all',
-                activeReadiness.includes(chip.key) ? chip.cls : 'text-white/40 border-white/15 bg-white/[0.03] hover:border-white/25')}>
+                activeReadiness.includes(chip.key) ? chip.cls : 'text-white/50 border-white/15 bg-white/[0.03] hover:border-white/25')}>
               {chip.label}
             </button>
           ))}
@@ -71,14 +71,14 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
       </div>
 
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Review Category</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Review Category</p>
         <div className="flex flex-wrap gap-1.5">
           {categories.map(cat => (
             <button key={cat.name} onClick={() => toggleMulti('category', cat.name)}
               className={cn('text-[10px] px-2.5 py-1 rounded-full border transition-all',
                 activeCategories.includes(cat.name)
                   ? 'text-white border-white/40 bg-white/15'
-                  : 'text-white/40 border-white/15 bg-white/[0.03] hover:border-white/25')}>
+                  : 'text-white/50 border-white/15 bg-white/[0.03] hover:border-white/25')}>
               {cat.name}
             </button>
           ))}
@@ -86,20 +86,20 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
       </div>
 
       <button onClick={() => setMoreOpen(v => !v)}
-        className="text-[10px] text-white/30 hover:text-white/60 text-left transition-colors">
+        className="text-[10px] text-white/50 hover:text-white/60 text-left transition-colors">
         {moreOpen ? '▲ Fewer filters' : 'More filters'}
       </button>
 
       {moreOpen && (
         <div className={cn('border-t border-white/[0.06] pt-2', !sidebar && 'md:col-span-2')}>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Evidence Tier</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Evidence Tier</p>
           <div className="flex flex-wrap gap-1.5">
             {EVIDENCE_TIERS.map(tier => (
               <button key={tier} onClick={() => toggleMulti('tier', tier)}
                 className={cn('text-[10px] px-2.5 py-1 rounded-full border transition-all',
                   activeTiers.includes(tier)
                     ? 'text-white border-white/40 bg-white/15'
-                    : 'text-white/40 border-white/15 bg-white/[0.03] hover:border-white/25')}>
+                    : 'text-white/50 border-white/15 bg-white/[0.03] hover:border-white/25')}>
                 {tier}
               </button>
             ))}
@@ -108,7 +108,7 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
       )}
 
       <div className="flex items-center gap-2">
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30">Sort</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Sort</p>
         <select value={activeSort} onChange={e => setSort(e.target.value)}
           className="bg-white/[0.05] border border-white/15 text-white/70 text-[10px] rounded-lg px-2 py-1">
           {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}

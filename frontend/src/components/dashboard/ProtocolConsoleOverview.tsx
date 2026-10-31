@@ -18,7 +18,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
     <section className="rounded-lg border border-emerald-400/15 bg-[#0f171f] p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/55">Where Am I Now?</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/70">Where Am I Now?</p>
           <h2 className="mt-2 text-2xl font-black text-white">
             {activeRun ? `${activeRun.protocolName} v${activeRun.protocolVersion} is running` : 'No tracked stack run is active'}
           </h2>
@@ -48,7 +48,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
         <OverviewCell
           label="Active run"
           value={activeRun ? `v${activeRun.protocolVersion} ${activeRun.status}` : 'None'}
@@ -94,7 +94,7 @@ function OverviewCell({
       href={href}
       className="min-h-36 rounded-lg border border-white/[0.07] bg-white/[0.025] p-4 transition-colors hover:border-emerald-400/25"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
       <p className="mt-3 text-lg font-bold text-white">{value}</p>
       <p className="mt-2 line-clamp-3 text-sm leading-5 text-white/50">{detail}</p>
     </Link>

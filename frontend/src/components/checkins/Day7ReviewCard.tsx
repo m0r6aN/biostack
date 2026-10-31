@@ -42,7 +42,7 @@ export function Day7ReviewCard({ review, suggestion = null }: Day7ReviewCardProp
       >
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-widest text-white/30">Day 7 Review</p>
+            <p className="text-xs font-black uppercase tracking-widest text-white/50">Day 7 Review</p>
             <h2 className="mt-2 text-xl font-black text-white">Keep collecting observations</h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/50">{review.confidenceNote}</p>
           </div>
@@ -114,16 +114,16 @@ export function Day7ReviewCard({ review, suggestion = null }: Day7ReviewCardProp
 
       <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
         <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-          <p className="text-xs font-black uppercase tracking-widest text-white/30">Expected timing</p>
+          <p className="text-xs font-black uppercase tracking-widest text-white/50">Expected timing</p>
           <p className="mt-2 text-sm text-white/65">Alignment is {review.alignmentWithExpected}.</p>
         </div>
         <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-          <p className="text-xs font-black uppercase tracking-widest text-white/30">Next step</p>
+          <p className="text-xs font-black uppercase tracking-widest text-white/50">Next step</p>
           <p className="mt-2 text-sm text-white/65">{nextStepLabels[review.nextStep]}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-white/35">{review.confidenceNote}</p>
+      <p className="mt-4 text-xs leading-relaxed text-white/50">{review.confidenceNote}</p>
 
       {suggestion && shouldShowSuggestion && (
         <div className="mt-5">
@@ -144,7 +144,7 @@ function TrendPill({ label, trend }: { label: string; trend: Day7ReviewTrend }) 
 
   return (
     <div className={`rounded-lg border bg-white/[0.03] p-4 ${tone}`}>
-      <p className="text-xs font-black uppercase tracking-widest text-white/30">{label}</p>
+      <p className="text-xs font-black uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-2 text-sm font-bold">{trendLabels[trend]}</p>
     </div>
   );

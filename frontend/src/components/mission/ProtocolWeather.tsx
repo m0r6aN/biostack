@@ -35,8 +35,8 @@ export function ProtocolWeather({ driftSnapshot, className }: ProtocolWeatherPro
   return (
     <div className={cn('rounded-3xl border bg-white/[0.02] p-5', t.border, className)}>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Protocol Status</p>
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Protocol Status</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Protocol Status</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Protocol Status</p>
         <WhyDrawer
           surface="Protocol Status"
           title="How is protocol status calculated?"
@@ -51,7 +51,7 @@ export function ProtocolWeather({ driftSnapshot, className }: ProtocolWeatherPro
         <div>
           <p className={cn('text-sm font-bold', t.color)}>{t.label}</p>
           {driftSnapshot?.baselineSource === 'insufficient_history' && (
-            <p className="text-[10px] text-white/30 mt-0.5">Building baseline…</p>
+            <p className="text-[10px] text-white/50 mt-0.5">Building baseline…</p>
           )}
         </div>
       </div>
@@ -60,13 +60,13 @@ export function ProtocolWeather({ driftSnapshot, className }: ProtocolWeatherPro
         <div className="space-y-1.5">
           {topFactors.map((factor, i) => (
             <div key={i} className="flex items-start gap-2">
-              <span className="text-white/20 text-[10px] mt-0.5 shrink-0">·</span>
+              <span className="text-white/50 text-[10px] mt-0.5 shrink-0">·</span>
               <span className="text-[11px] text-white/50 leading-snug">{factor}</span>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-[11px] text-white/30 italic">No contributing factors detected.</p>
+        <p className="text-[11px] text-white/50 italic">No contributing factors detected.</p>
       )}
     </div>
   );

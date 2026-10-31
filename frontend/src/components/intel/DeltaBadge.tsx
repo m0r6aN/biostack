@@ -13,7 +13,7 @@ export function DeltaBadge({ value, unit = '', reason, size = 'sm', className }:
   const neutral = value === 0;
 
   const color = neutral
-    ? 'text-white/40 border-white/10 bg-white/5'
+    ? 'text-white/50 border-white/10 bg-white/5'
     : positive
     ? 'text-emerald-300 border-emerald-400/20 bg-emerald-500/10'
     : 'text-rose-300 border-rose-400/20 bg-rose-500/10';
@@ -33,7 +33,7 @@ export function DeltaBadge({ value, unit = '', reason, size = 'sm', className }:
     >
       <span className="text-[9px] leading-none">{arrow}</span>
       {formatted}{unit}
-      {reason && <span className="hidden sm:inline text-white/40 font-normal">· {reason}</span>}
+      {reason && <span className="hidden sm:inline text-white/50 font-normal">· {reason}</span>}
     </span>
   );
 }

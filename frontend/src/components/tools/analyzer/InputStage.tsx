@@ -158,7 +158,7 @@ export function InputStage({
                 value={inputText}
                 onChange={(event) => onInputTextChange(event.target.value)}
                 rows={16}
-                className="min-h-80 w-full resize-y rounded-lg border border-white/10 bg-[#0F141B] p-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+                className="min-h-80 w-full resize-y rounded-lg border border-white/10 bg-[#0F141B] p-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
                 placeholder="Paste or type your protocol: one compound per line, with the amount, frequency and cycle exactly as you have them written."
               />
             </label>
@@ -201,7 +201,7 @@ export function InputStage({
                 type="url"
                 value={linkUrl}
                 onChange={(event) => onLinkUrlChange(event.target.value)}
-                className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+                className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
                 placeholder="https://example.com/shared-protocol.pdf"
               />
             </label>
@@ -212,7 +212,7 @@ export function InputStage({
         )}
 
         {/* Trust line */}
-        <p className="mt-2 text-xs leading-5 text-white/38">
+        <p className="mt-2 text-xs leading-5 text-white/50">
           Educational analysis only. Verify all dosing math manually.
         </p>
       </div>
@@ -221,7 +221,7 @@ export function InputStage({
       <div className="mt-4 rounded-lg border border-white/10 bg-black/20 p-3 text-sm text-white/55">
         <p className="font-semibold text-white/78">Accepted files</p>
         <p className="mt-2">PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
-        <p className="mt-2 text-xs text-white/42">{maxUploadLabel}</p>
+        <p className="mt-2 text-xs text-white/50">{maxUploadLabel}</p>
       </div>
 
       {/* Goal picker */}
@@ -308,9 +308,9 @@ function UploadPanel({
           Ready: {selectedFile.name} ({Math.max(1, Math.round(selectedFile.size / 1024))} KB)
         </p>
       ) : (
-        <p className="mt-4 text-sm text-white/42">Supported types: PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
+        <p className="mt-4 text-sm text-white/50">Supported types: PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
       )}
-      {helper ? <p className="mt-2 text-xs leading-5 text-white/38">{helper}</p> : null}
+      {helper ? <p className="mt-2 text-xs leading-5 text-white/50">{helper}</p> : null}
     </div>
   );
 }

@@ -29,7 +29,7 @@ export function WeightUnitToggle({ className }: WeightUnitToggleProps) {
           'px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-150',
           settings.weightUnit === 'metric'
             ? 'bg-emerald-500/20 text-emerald-300'
-            : 'text-white/35 hover:text-white/60'
+            : 'text-white/50 hover:text-white/60'
         )}
       >
         kg
@@ -41,7 +41,7 @@ export function WeightUnitToggle({ className }: WeightUnitToggleProps) {
           'px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-150',
           settings.weightUnit === 'imperial'
             ? 'bg-emerald-500/20 text-emerald-300'
-            : 'text-white/35 hover:text-white/60'
+            : 'text-white/50 hover:text-white/60'
         )}
       >
         lbs

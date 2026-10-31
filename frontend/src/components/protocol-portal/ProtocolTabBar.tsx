@@ -63,7 +63,7 @@ export function ProtocolTabBar({ active, onChange }: ProtocolTabBarProps) {
               'flex items-center gap-2 whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition-colors',
               isActive
                 ? 'border-emerald-400 text-white'
-                : 'border-transparent text-white/45 hover:text-white/80'
+                : 'border-transparent text-white/50 hover:text-white/80'
             )}
           >
             <Icon className="h-4 w-4 shrink-0" />

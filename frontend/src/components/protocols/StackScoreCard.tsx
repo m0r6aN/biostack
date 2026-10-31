@@ -10,7 +10,7 @@ export function StackScoreCard({ score }: StackScoreCardProps) {
   return (
     <div className="p-5 rounded-lg border border-white/[0.08] bg-[#121923]/90">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack Score</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Stack Score</p>
         <h3
           className="mt-2 flex items-baseline gap-1"
           aria-label={`Stack score ${score.score} out of 100`}
@@ -45,7 +45,7 @@ function Breakdown({ label, value, helpKey }: { label: string; value: number; he
   return (
     <div className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-3">
       <div className="flex items-center justify-between">
-        <span className="text-white/45">
+        <span className="text-white/50">
           {helpKey ? <HelpTip tipKey={helpKey}>{label}</HelpTip> : label}
         </span>
         <span className="font-semibold text-white">{value}</span>

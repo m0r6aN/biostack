@@ -14,15 +14,16 @@ import type { CompoundGraph, EvidencePacket, PromotionManifestCandidate, Researc
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type Tab = 'overview' | 'claims' | 'resolution' | 'decision' | 'relationships';
 
 const STATUS_COLOR: Record<string, string> = {
   Established: 'text-emerald-400', 'Early Evidence': 'text-blue-400', 'Plausible Theory': 'text-amber-400',
-  'Anecdotal Signal': 'text-white/40', Contradicted: 'text-rose-400', Unsupported: 'text-white/40',
-  'Hype Exceeds Evidence': 'text-rose-400', 'Not graded': 'text-white/40',
+  'Anecdotal Signal': 'text-white/50', Contradicted: 'text-rose-400', Unsupported: 'text-white/50',
+  'Hype Exceeds Evidence': 'text-rose-400', 'Not graded': 'text-white/50',
   Strong: 'text-emerald-400', Moderate: 'text-blue-400', Limited: 'text-amber-400',
-  Insufficient: 'text-rose-400', Unknown: 'text-white/40', Anecdotal: 'text-white/40',
+  Insufficient: 'text-rose-400', Unknown: 'text-white/50', Anecdotal: 'text-white/50',
   substantial: 'text-emerald-400', complete: 'text-emerald-400',
   partial: 'text-amber-400', minimal: 'text-rose-400', requested: 'text-violet-300',
   blocked: 'text-rose-400', 'review-required': 'text-amber-400', 'research-requested': 'text-violet-300',
@@ -154,12 +155,12 @@ export default function CompoundDetail() {
     return (
       <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
         <Header title="Compound Not Found" subtitle="" />
-        <main className="flex-1 p-6 max-w-4xl mx-auto w-full">
+        <PageMain className="flex-1 p-6 max-w-4xl mx-auto w-full">
           <p className="text-white/50 mb-4">Compound not found in current research run.</p>
           <button onClick={() => router.push('/admin/research/compounds')} className="text-emerald-400 text-sm hover:text-emerald-300">
             ← Back to compounds
           </button>
-        </main>
+        </PageMain>
       </div>
     );
   }
@@ -168,9 +169,9 @@ export default function CompoundDetail() {
     return (
       <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
         <Header title="Loading…" subtitle="" />
-        <main className="flex-1 p-6 flex items-center justify-center">
-          <p className="text-white/30 text-sm">Loading compound data…</p>
-        </main>
+        <PageMain className="flex-1 p-6 flex items-center justify-center">
+          <p className="text-white/50 text-sm">Loading compound data…</p>
+        </PageMain>
       </div>
     );
   }
@@ -178,12 +179,12 @@ export default function CompoundDetail() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title={compound.name} subtitle="Compound Review Detail · Internal" />
-      <main className="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col gap-4">
         <div className="flex items-center gap-2 text-[11px]">
           <button onClick={() => router.push('/admin/research/compounds')} className="text-emerald-400 hover:text-emerald-300">
             ← Compounds
           </button>
-          <span className="text-white/30">/ {compound.name}</span>
+          <span className="text-white/50">/ {compound.name}</span>
         </div>
 
         <div className="flex gap-1 bg-white/[0.04] rounded-xl p-1 w-fit">
@@ -199,7 +200,7 @@ export default function CompoundDetail() {
               onClick={() => setTab(t.key)}
               className={cn(
                 'text-[11px] px-3 py-1.5 rounded-lg transition-all',
-                tab === t.key ? 'bg-white/12 text-white' : 'text-white/40 hover:text-white/70'
+                tab === t.key ? 'bg-white/12 text-white' : 'text-white/50 hover:text-white/70'
               )}
             >
               {t.label}
@@ -213,7 +214,7 @@ export default function CompoundDetail() {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h2 className="text-xl font-bold text-white">{compound.name}</h2>
-                  <p className="text-[11px] text-white/40 mt-0.5">Classification: {compound.classification}</p>
+                  <p className="text-[11px] text-white/50 mt-0.5">Classification: {compound.classification}</p>
                 </div>
                 <ReadinessBadge readiness={compound.promotionReadiness} />
               </div>
@@ -227,7 +228,7 @@ export default function CompoundDetail() {
                   { label: 'Decisions',     value: compound.reviewDecisionIds.length > 0 ? String(compound.reviewDecisionIds.length) : 'None' },
                 ].map(({ label, value }) => (
                   <div key={label} className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-2">
-                    <p className="text-[9px] text-white/35 uppercase tracking-widest">{label}</p>
+                    <p className="text-[9px] text-white/50 uppercase tracking-widest">{label}</p>
                     <p className={`text-[12px] font-semibold mt-0.5 ${STATUS_COLOR[value.split(' ')[0]] ?? 'text-white/80'}`}>
                       {value}
                     </p>
@@ -240,7 +241,7 @@ export default function CompoundDetail() {
               <GlassCard className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Queued Evidence Task</h3>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50">Queued Evidence Task</h3>
                     <p className="mt-2 text-sm text-white/70">
                       This compound is still waiting for its first evidence packet. Use the queued task below for agent pickup.
                     </p>
@@ -258,7 +259,7 @@ export default function CompoundDetail() {
                     </button>
                   </div>
                 </div>
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <TaskMeta label="Target evidence path" value={queuedResearchTask.targetEvidencePath} />
                   <TaskMeta label="Required schema" value={queuedResearchTask.requiredSchema} />
                   <TaskMeta label="Request IDs" value={queuedResearchTask.requestIds.join(', ') || 'None'} />
@@ -283,7 +284,7 @@ export default function CompoundDetail() {
                 )}
                 {queuedResearchTask.suggestedResearchDirectives.length > 0 && (
                   <div className="mt-4">
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Suggested Research Directives</p>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Suggested Research Directives</p>
                     <ul className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/65">
                       {queuedResearchTask.suggestedResearchDirectives.slice(0, 3).map(directive => (
                         <li key={directive} className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
@@ -300,7 +301,7 @@ export default function CompoundDetail() {
               <GlassCard className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Research Task Consumed</h3>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50">Research Task Consumed</h3>
                     <p className="mt-2 text-sm text-white/70">
                       The initial research request cleared from the active queue on the latest run because evidence is now in the pipeline.
                     </p>
@@ -309,7 +310,7 @@ export default function CompoundDetail() {
                     {consumedResearchTask.currentReadiness}
                   </span>
                 </div>
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <TaskMeta label="Target evidence path" value={consumedResearchTask.targetEvidencePath} />
                   <TaskMeta label="Resolution" value={consumedResearchTask.resolution} />
                   <TaskMeta label="Request IDs" value={consumedResearchTask.requestIds.join(', ') || 'None'} />
@@ -333,7 +334,7 @@ export default function CompoundDetail() {
 
             {compound.promotionBlockers.length > 0 && (
               <GlassCard className="p-5">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Promotion Blockers</h3>
+                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">Promotion Blockers</h3>
                 <div className="flex flex-col gap-2">
                   {compound.promotionBlockers.map(b => <BlockerCard key={b} blocker={b} />)}
                 </div>
@@ -342,7 +343,7 @@ export default function CompoundDetail() {
 
             {candidate && candidate.requiredNextActions.length > 0 && (
               <GlassCard className="p-5">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Required Next Actions</h3>
+                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">Required Next Actions</h3>
                 <div className="flex flex-col gap-2">
                   {candidate.requiredNextActions.map(action => (
                     <div key={action} className="rounded-xl bg-blue-900/15 border border-blue-400/20 px-3 py-2">
@@ -355,7 +356,7 @@ export default function CompoundDetail() {
 
             {compound.qualityFlags.length > 0 && (
               <GlassCard className="p-5">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Quality Flags</h3>
+                <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">Quality Flags</h3>
                 <div className="flex flex-wrap gap-2">
                   {compound.qualityFlags.map(flag => (
                     <span key={flag} className={`text-[10px] px-2.5 py-1 rounded-full border ${
@@ -376,13 +377,13 @@ export default function CompoundDetail() {
 
         {tab === 'resolution' && (
           <GlassCard className="p-5">
-            <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">
+            <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-4">
               Suggested Remediation Plan ({planItems.length})
             </h3>
             <p className="mb-4 rounded-xl border border-blue-400/20 bg-blue-500/10 px-3 py-2 text-[11px] leading-5 text-blue-100/70">
               These generated remediation items explain what must be fixed before promotion. Items with a checked next-round control are already carried by a generated research task.
             </p>
-            {planItems.length === 0 && <p className="text-sm text-white/30">No resolution items for this compound.</p>}
+            {planItems.length === 0 && <p className="text-sm text-white/50">No resolution items for this compound.</p>}
             <div className="flex flex-col gap-3">
               {planItems.map(item => {
                 const queuedTask = taskForPlanItem(item.itemId);
@@ -395,7 +396,7 @@ export default function CompoundDetail() {
 
         {tab === 'decision' && candidate && (
           <GlassCard className="p-5">
-            <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">
+            <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-4">
               Review Decision — {compound.name}
             </h3>
             <ReviewDecisionForm candidate={candidate} compound={compound} evidencePacket={evidencePacket} planItems={planItems} reviewQueueItems={compoundQueueItems} />
@@ -403,7 +404,7 @@ export default function CompoundDetail() {
         )}
         {tab === 'decision' && !candidate && (
           <GlassCard className="p-5">
-            <p className="text-sm text-white/30">Promotion manifest entry not found for this compound.</p>
+            <p className="text-sm text-white/50">Promotion manifest entry not found for this compound.</p>
           </GlassCard>
         )}
 
@@ -414,7 +415,7 @@ export default function CompoundDetail() {
             knownSlugs={knownCompoundSlugs}
           />
         )}
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -422,7 +423,7 @@ export default function CompoundDetail() {
 function TaskMeta({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-2">
-      <p className="text-[9px] text-white/35 uppercase tracking-widest">{label}</p>
+      <p className="text-[9px] text-white/50 uppercase tracking-widest">{label}</p>
       <p className="mt-1 break-all text-[11px] font-medium text-white/75">{value}</p>
     </div>
   );
@@ -432,8 +433,8 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
   if (missing) {
     return (
       <GlassCard className="p-5">
-        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">Evidence Claims</h3>
-        <p className="text-sm text-white/30">Research artifacts not yet generated for this compound evidence packet.</p>
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-4">Evidence Claims</h3>
+        <p className="text-sm text-white/50">Research artifacts not yet generated for this compound evidence packet.</p>
       </GlassCard>
     );
   }
@@ -441,8 +442,8 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
   if (!packet) {
     return (
       <GlassCard className="p-5">
-        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">Evidence Claims</h3>
-        <p className="text-sm text-white/30">Loading evidence packet…</p>
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-4">Evidence Claims</h3>
+        <p className="text-sm text-white/50">Loading evidence packet…</p>
       </GlassCard>
     );
   }
@@ -451,8 +452,8 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
     <GlassCard className="p-5">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Evidence Claims</h3>
-          <p className="mt-1 text-[11px] text-white/35">{packet.claims.length} claims · {packet.sources.length} sources</p>
+          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50">Evidence Claims</h3>
+          <p className="mt-1 text-[11px] text-white/50">{packet.claims.length} claims · {packet.sources.length} sources</p>
         </div>
         <span className={`text-[10px] font-semibold ${STATUS_COLOR[packet.ops.completeness] ?? 'text-white/50'}`}>
           {packet.ops.completeness}
@@ -474,15 +475,15 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <span className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-1 text-[10px] text-white/55">{claim.claimType}</span>
                 <span className={`text-[10px] font-semibold ${STATUS_COLOR[claim.evidenceTier] ?? 'text-white/50'}`}>Evidence support: {claim.evidenceTier}</span>
-                <span className="text-[10px] text-white/35">Extraction confidence: {claim.confidence}</span>
+                <span className="text-[10px] text-white/50">Extraction confidence: {claim.confidence}</span>
               </div>
-              <p className="mb-2 font-mono text-[10px] text-white/30">Claim ID: {claim.claimId}</p>
+              <p className="mb-2 font-mono text-[10px] text-white/50">Claim ID: {claim.claimId}</p>
               <p className="text-sm leading-6 text-white/75">{claim.statement}</p>
 
               {claim.extractedEvidence.length > 0 && (
                 <div className="mt-3 space-y-2">
                   {claim.extractedEvidence.map((evidence, index) => (
-                    <p key={`${claim.claimId}-evidence-${index}`} className="border-l border-emerald-300/25 pl-3 text-[11px] leading-5 text-white/45">
+                    <p key={`${claim.claimId}-evidence-${index}`} className="border-l border-emerald-300/25 pl-3 text-[11px] leading-5 text-white/50">
                       {evidence.quote ?? evidence.pageOrSection ?? evidence.sourceRef}
                     </p>
                   ))}
@@ -491,7 +492,7 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
 
               {sources.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-white/25">Sources used by this claim</span>
+                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-white/50">Sources used by this claim</span>
                   {sources.map(source => source && (
                     <span key={source.sourceId} className="rounded-full bg-blue-900/15 px-2 py-1 text-[10px] text-blue-200/80">
                       {source.authorityTier} · {source.title}
@@ -502,7 +503,7 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
 
               {claim.reviewFlags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-amber-200/50">Reviewer guardrails — not auto-approved output</span>
+                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-amber-200/70">Reviewer guardrails — not auto-approved output</span>
                   {claim.reviewFlags.map(flag => <span key={flag} className="rounded-full border border-amber-300/20 bg-amber-500/10 px-2 py-1 text-[10px] text-amber-200/80">{flag}</span>)}
                 </div>
               )}

@@ -433,7 +433,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
         {step === 'goals' && (
           <motion.div
             key="goals"
-            className="mt-8 grid gap-6 lg:grid-cols-[1fr_0.84fr]"
+            className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_0.84fr]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
@@ -452,7 +452,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                     <button
                       key={goal.id}
                       type="button"
-                      aria-label={goal.label}
+                      aria-pressed={isSelected}
                       onClick={() => toggleGoal(goal.id)}
                       className={cn(
                         'rounded-lg border px-4 py-3 text-left transition-colors',
@@ -509,7 +509,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
           >
-            <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.08fr_0.92fr]">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <p className="text-sm font-medium text-emerald-200/85">Build a quick stack preview</p>
@@ -536,7 +536,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         onChange={(event) => setBulkInput(event.target.value)}
                         placeholder="BPC-157&#10;TB-500&#10;NAD+"
                         rows={4}
-                        className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/40"
+                        className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/40"
                       />
                     </label>
                     <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -548,7 +548,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       >
                         Add stack
                       </button>
-                      <p className="text-sm text-white/45">Fast paste first. Honest read next.</p>
+                      <p className="text-sm text-white/50">Fast paste first. Honest read next.</p>
                     </div>
                   </div>
                 )}
@@ -556,7 +556,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 {!isExistingMode && (
                   <div className="mt-6">
                     <p className="text-sm font-semibold text-white/78">Not sure yet? Start from an example</p>
-                    <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                       {starterStacks.map((starterStack) => (
                         <button
                           key={starterStack.id}
@@ -590,7 +590,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         }
                       }}
                       placeholder="Type a compound, supplement, or medication…"
-                      className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/40"
+                      className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/40"
                     />
                     <button
                       type="button"
@@ -626,17 +626,17 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-white/46">We don&apos;t recognize this one yet, but you can still add it and BioStack will analyze the rest.</p>
+                        <p className="text-sm text-white/50">We don&apos;t recognize this one yet, but you can still add it and BioStack will analyze the rest.</p>
                       )}
-                      <p className="mt-2 text-sm text-white/42">Press Enter to add &ldquo;{query.trim()}&rdquo; manually.</p>
+                      <p className="mt-2 text-sm text-white/50">Press Enter to add &ldquo;{query.trim()}&rdquo; manually.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
                 <div className="mt-6 min-h-24 rounded-2xl border border-white/8 bg-black/15 p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-white/35">Your list</p>
-                    <p className="text-xs text-white/38">Remove anything with one tap</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/50">Your list</p>
+                    <p className="text-xs text-white/50">Remove anything with one tap</p>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {selectedCompounds.length > 0 ? (
@@ -652,7 +652,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         </button>
                       ))
                     ) : (
-                      <p className="text-sm text-white/38">
+                      <p className="text-sm text-white/50">
                         {isExistingMode
                           ? 'Paste or add the compounds, supplements, or medications already in your stack.'
                           : "Type anything you take — a supplement, medication, or peptide. Don't worry about getting it perfect."}
@@ -669,7 +669,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   >
                     Analyze My Stack
                   </button>
-                  <p className="text-sm text-white/45">We&apos;ll flag overlaps and conflicts once you&apos;ve added two recognized items.</p>
+                  <p className="text-sm text-white/50">We&apos;ll flag overlaps and conflicts once you&apos;ve added two recognized items.</p>
                 </div>
               </div>
 
@@ -689,7 +689,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
         {step === 'aha' && (
           <motion.div
             key="aha"
-            className="mt-8 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]"
+            className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.08fr_0.92fr]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
@@ -740,9 +740,9 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 </div>
               )}
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Selected stack</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">Selected stack</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {selectedCompounds.map((compound) => (
                       <span
@@ -756,7 +756,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 </div>
 
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Current read</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">Current read</p>
                   <p className="mt-3 text-sm leading-7 text-white/58">
                     {recognizedCompounds.length >= 2
                       ? 'Free shows the first finding. Save this stack to keep going.'

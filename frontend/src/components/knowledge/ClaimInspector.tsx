@@ -14,7 +14,7 @@ export function ClaimInspector({ claims }: ClaimInspectorProps) {
 
   if (claims.length === 0) {
     return (
-      <p className="text-sm text-white/40 py-4">No claims available for this compound.</p>
+      <p className="text-sm text-white/50 py-4">No claims available for this compound.</p>
     );
   }
 
@@ -52,7 +52,7 @@ export function ClaimInspector({ claims }: ClaimInspectorProps) {
                   </span>
                 )}
                 <svg
-                  className={cn('w-4 h-4 text-white/30 transition-transform', isOpen && 'rotate-180')}
+                  className={cn('w-4 h-4 text-white/50 transition-transform', isOpen && 'rotate-180')}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -66,7 +66,7 @@ export function ClaimInspector({ claims }: ClaimInspectorProps) {
 
                 {claim.sourceRefs.length > 0 && (
                   <div>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">
                       Source References
                     </p>
                     <ul className="space-y-1">
@@ -81,7 +81,7 @@ export function ClaimInspector({ claims }: ClaimInspectorProps) {
 
                 {claim.extractedQuote && (
                   <div>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">
                       Extracted Quote
                     </p>
                     <blockquote className="border-l-2 border-blue-400/40 pl-3 text-sm text-blue-200/70 italic leading-relaxed">
@@ -92,7 +92,7 @@ export function ClaimInspector({ claims }: ClaimInspectorProps) {
 
                 {claim.reviewFlags.length > 0 && (
                   <div>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">
                       Review Flags
                     </p>
                     <div className="flex flex-wrap gap-1.5">

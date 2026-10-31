@@ -15,10 +15,10 @@ export function ObservationSignalsPanel({ signals }: ObservationSignalsPanelProp
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Observation Signals</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Observation Signals</p>
           <h2 className="mt-2 text-lg font-bold text-white">{signals.length} current signal{signals.length === 1 ? '' : 's'}</h2>
         </div>
-        <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/45">
+        <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/50">
           timeline anchored
         </span>
       </div>
@@ -36,7 +36,7 @@ export function ObservationSignalsPanel({ signals }: ObservationSignalsPanelProp
                     <span className={`mt-1 h-2 w-2 rounded-full ${severityDot(signal.severity)}`} />
                     <div>
                       <p className="text-xs leading-5 text-white/55">{signal.detail}</p>
-                      <p className="mt-0.5 text-[11px] uppercase tracking-[0.12em] text-white/30">{signal.severity}</p>
+                      <p className="mt-0.5 text-[11px] uppercase tracking-[0.12em] text-white/50">{signal.severity}</p>
                     </div>
                   </div>
                 ))}

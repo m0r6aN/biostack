@@ -139,7 +139,7 @@ export function TakingTab({ profileId, onLogAmount }: {
           <h2 className="text-xl font-semibold text-white">Everything I&apos;m Taking</h2>
           <p className="text-sm text-white/60">Only what you entered. BioStack doesn&apos;t suggest amounts.</p>
         </div>
-        <Link href="/compounds" className="rounded-lg border border-white/20 px-3 py-2 text-sm text-white">Add or manage items</Link>
+        <Link href="/compounds" className="inline-flex min-h-11 items-center rounded-lg border border-white/20 px-3 py-2 text-sm text-white">Add or manage items</Link>
       </div>
       {cap?.limit != null && (
         <p className="text-xs text-white/55" data-testid="cap-line">
@@ -166,7 +166,7 @@ export function TakingTab({ profileId, onLogAmount }: {
           <button type="button" className="underline" onClick={() => { setError(false); setAttempt((n) => n + 1); }}>Try again</button>
         </div>
       ) : taking === null ? (
-        <p className="text-sm text-white/60">Loading your items…</p>
+        <p role="status" className="text-sm text-white/60">Loading your items…</p>
       ) : visible.length === 0 ? (
         <p className="text-sm text-white/60">{filter === 'all' ? 'No active or paused items yet.' : 'No items match this filter.'}</p>
       ) : (
@@ -222,6 +222,7 @@ function TakingCard({ entry, busy, onLink, lookup, pendingLookup, onLinkLookup, 
             className="text-xs text-white/60"
           >
             Unverified
+            <span className="sr-only">. We couldn&apos;t confirm this item. For Observer plans it counts toward your research limit until it&apos;s confirmed.</span>
           </span>
         )}
       </div>
@@ -235,11 +236,10 @@ function TakingCard({ entry, busy, onLink, lookup, pendingLookup, onLinkLookup, 
           <button
             type="button"
             disabled={busy}
-            aria-label={`Link ${item.name} to ${s.name}`}
-            className="underline disabled:opacity-50"
+            className="inline-flex min-h-6 items-center underline disabled:opacity-50"
             onClick={() => onLink(s.slug)}
           >
-            Link it
+            Link it<span className="sr-only">: link {item.name} to {s.name}</span>
           </button>
         </p>
       ))}
@@ -253,9 +253,10 @@ function TakingCard({ entry, busy, onLink, lookup, pendingLookup, onLinkLookup, 
           onDecline={() => onDeclineLookup(lookup)}
         />
       )}
-      {pendingLookup && !lookup && !isLinked(item) && (
-        <p role="status" className="mt-2 text-xs text-white/55">Please wait while we look this up…</p>
-      )}
+      {/* Always mounted so the polite live region announces "Please wait…" when a lookup starts. */}
+      <p role="status" aria-live="polite" className={pendingLookup && !lookup && !isLinked(item) ? 'mt-2 text-xs text-white/55' : 'sr-only'}>
+        {pendingLookup && !lookup && !isLinked(item) ? 'Please wait while we look this up…' : ''}
+      </p>
       <label className="mt-2 flex items-center gap-2 text-xs text-white/60">
         <input
           type="checkbox"

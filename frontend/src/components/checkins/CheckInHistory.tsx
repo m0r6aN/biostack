@@ -23,7 +23,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
         >
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h4 className="font-bold text-white text-lg">{formatDate(checkIn.date)}</h4>
+              <h2 className="font-bold text-white text-lg">{formatDate(checkIn.date)}</h2>
               <div className="flex items-center gap-2 mt-1">
                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/50 uppercase tracking-wider">
                   Weight: {formatWeight(checkIn.weight, settings.weightUnit)}
@@ -33,7 +33,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
                     checkIn.mood === 'excellent' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
                     checkIn.mood === 'positive' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
                     checkIn.mood === 'negative' ? 'bg-red-500/10 text-red-400 border border-red-500/20' :
-                    'bg-white/5 text-white/40 border border-white/10'
+                    'bg-white/5 text-white/50 border border-white/10'
                   }`}>
                     {checkIn.mood}
                   </span>
@@ -68,7 +68,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
               )}
               {checkIn.notes && (
                 <div>
-                  <p className="text-[10px] font-black uppercase text-emerald-400/40 mb-1 tracking-widest">Narrative</p>
+                  <p className="text-[10px] font-black uppercase text-emerald-400 mb-1 tracking-widest">Narrative</p>
                   <p className="text-sm text-white/60 leading-relaxed">{checkIn.notes}</p>
                 </div>
               )}
@@ -77,7 +77,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
 
           {checkIn.taggedPhotoUrls && checkIn.taggedPhotoUrls.length > 0 && (
             <div className="mt-4 pt-4 border-t border-white/[0.05]">
-              <p className="text-[10px] font-black uppercase text-white/20 mb-2 tracking-widest">Visual Evidence</p>
+              <p className="text-[10px] font-black uppercase text-white/50 mb-2 tracking-widest">Visual Evidence</p>
               <div className="flex flex-wrap gap-2">
                 {checkIn.taggedPhotoUrls.map((url, i) => (
                   <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-white/[0.08] hover:border-emerald-500/50 transition-all cursor-zoom-in">
@@ -99,7 +99,7 @@ function MetricBadge({ label, value, invert = false }: { label: string; value: n
   
   return (
     <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col items-center justify-center transition-colors hover:bg-white/[0.04]">
-      <p className="text-[10px] font-black text-white/20 uppercase tracking-wider mb-1">{label}</p>
+      <p className="text-[10px] font-black text-white/50 uppercase tracking-wider mb-1">{label}</p>
       <p className={`text-sm font-black ${isGood ? 'text-emerald-400' : isBad ? 'text-red-400' : 'text-amber-400'}`}>
         {value}
       </p>

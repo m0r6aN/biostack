@@ -49,7 +49,7 @@ export function StackClarityMeter({ stackIntelligence, compounds, checkInCount, 
   return (
     <div className={cn('rounded-3xl border border-white/5 bg-white/[0.02] p-5', className)}>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Stack Clarity</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Stack Clarity</p>
         <WhyDrawer
           surface="Stack Clarity"
           title="How is clarity calculated?"
@@ -99,7 +99,7 @@ export function StackClarityMeter({ stackIntelligence, compounds, checkInCount, 
               ))}
             </div>
           ) : (
-            <p className="text-[11px] text-white/40">All clarity signals nominal.</p>
+            <p className="text-[11px] text-white/50">All clarity signals nominal.</p>
           )}
         </div>
       </div>

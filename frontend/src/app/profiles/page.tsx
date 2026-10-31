@@ -389,14 +389,14 @@ export default function ProfilesPage() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
                 ['Recovered inputs', onboardingPreview.compounds.join(', ')],
                 ['Profile state', continuationStatuses?.profile.title ?? 'Pending'],
                 ['Persistence', continuationStatuses?.persistence.title ?? 'Ready'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-lg border border-white/8 bg-black/20 p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">{label}</p>
                   <p className="mt-2 text-sm font-medium leading-6 text-white/78">{value}</p>
                 </div>
               ))}
@@ -424,7 +424,7 @@ export default function ProfilesPage() {
                   <h3 className="text-lg font-semibold text-white">{profile.displayName}</h3>
                   <button
                     onClick={(e) => handleDeleteProfile(e, profile.id)}
-                    className="opacity-60 sm:opacity-0 sm:group-hover:opacity-100 p-2 text-white/20 hover:text-red-400 active:text-red-400 transition-all"
+                    className="opacity-60 sm:opacity-0 sm:group-hover:opacity-100 p-2 text-white/50 hover:text-red-400 active:text-red-400 transition-all"
                     title="Delete Profile"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -441,7 +441,7 @@ export default function ProfilesPage() {
                         <GoalBadge key={goal.id} goal={goal} compact />
                       ))}
                       {profileGoalMap[profile.id].length > 3 && (
-                        <span className="text-xs text-white/35 px-1.5 py-0.5">
+                        <span className="text-xs text-white/50 px-1.5 py-0.5">
                           +{profileGoalMap[profile.id].length - 3} more
                         </span>
                       )}
@@ -451,7 +451,7 @@ export default function ProfilesPage() {
                     <p className="mt-2">{profile.goalSummary}</p>
                   )}
                 </div>
-                <p className="text-xs text-white/35 mt-4">
+                <p className="text-xs text-white/50 mt-4">
                   Created {formatDate(profile.createdAtUtc)}
                 </p>
               </Link>

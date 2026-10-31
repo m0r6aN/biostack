@@ -30,6 +30,7 @@ import {
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type SurfaceMode = ToolMode;
 type OverlapStatus = 'caution' | 'avoid' | 'unknown';
@@ -366,8 +367,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   }
 
   return (
-    <main className="pb-24 md:pb-0">
-      <section className="mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-12 lg:pt-12">
+    <PageMain className="pb-24 md:pb-0">
+      <section className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-6 px-4 pb-8 pt-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-12 lg:pt-12">
         <div className="space-y-5">
           {!compactIntro && (
             <div>
@@ -417,14 +418,14 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
 
             {mode === 'convert' ? (
-              <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_0.8fr_0.8fr]">
+              <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_0.8fr_0.8fr]">
                 <NumberField label="Value" value={conversion.amount} onChange={(amount) => setConversion((current) => ({ ...current, amount }))} />
                 <SelectField label="From" value={conversion.fromUnit} values={conversionUnits} onChange={(fromUnit) => setConversion((current) => ({ ...current, fromUnit }))} />
                 <SelectField label="To" value={conversion.toUnit} values={conversionUnits} onChange={(toUnit) => setConversion((current) => ({ ...current, toUnit }))} />
               </div>
             ) : (
               <div className="mt-5 space-y-5">
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
                   <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
@@ -432,7 +433,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
                   <summary className="cursor-pointer text-sm font-semibold text-white/78">Advanced controls</summary>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <SelectField label="Concentration source" value={input.concentrationSource} values={['reconstitution', 'known']} onChange={(concentrationSource) => setInput((current) => ({ ...current, concentrationSource }))} />
                     {input.concentrationSource === 'known' && (
                       <NumberWithUnitField label="Known concentration" value={input.knownConcentration} unit={input.concentrationUnit} units={concentrationUnits} onValueChange={(knownConcentration) => setInput((current) => ({ ...current, knownConcentration }))} onUnitChange={(concentrationUnit) => setInput((current) => ({ ...current, concentrationUnit }))} />
@@ -449,7 +450,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <SafetyDisclaimer type="calculation" />
           {mode !== 'convert' && (
-            <p className="text-xs leading-5 text-white/45">
+            <p className="text-xs leading-5 text-white/50">
               Draw volumes are shown for U-100 syringes only (100 units = 1 mL). U-40 and U-50 syringes are not supported.
             </p>
           )}
@@ -472,7 +473,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </section>
           )}
           {mode !== 'convert' && dosing.result && (
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
               <Metric label="Concentration" value={`${formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(dosing.result.concentrationMgPerMl, 4)} mg/mL`} />
             </div>
@@ -505,7 +506,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
           </MobileAccordion>
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button type="button" onClick={saveCalculation} disabled={mode === 'convert' ? conversionResult.empty : !dosing.result} className="rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-50">
                 Save this calculation
               </button>
@@ -514,7 +515,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
               </button>
             </div>
             {saveMessage && <p className="mt-3 text-sm leading-6 text-emerald-100/78">{saveMessage}</p>}
-            <p className="mt-3 text-xs leading-5 text-white/42">Math-only output. Not medical advice. Verify against your source.</p>
+            <p className="mt-3 text-xs leading-5 text-white/50">Math-only output. Not medical advice. Verify against your source.</p>
             <div className="mt-4 flex flex-wrap gap-3 text-sm">
               <Link href="/start" className="font-semibold text-emerald-200 hover:text-white">New to this? Start here</Link>
               <Link href="/start?mode=existing" className="font-semibold text-white/65 hover:text-white">Already have a stack? Open map</Link>
@@ -527,7 +528,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         </aside>
       </section>
-    </main>
+    </PageMain>
   );
 }
 
@@ -614,14 +615,14 @@ function CompoundChooser({
 
       <form className="mt-4" onSubmit={submitSearch}>
         <label className="block">
-          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/40">Search all compounds</span>
-          <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Search all compounds</span>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto]">
             <input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               onFocus={(event) => event.currentTarget.select()}
               placeholder="Search or enter compound"
-              className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+              className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
             />
             <button
               type="submit"
@@ -639,7 +640,7 @@ function CompoundChooser({
             <p className="text-sm text-white/52">Searching...</p>
           ) : suggestions.length > 0 ? (
             <>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/38">Matches found</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Matches found</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {suggestions.map((name) => (
                   <button
@@ -665,7 +666,7 @@ function CompoundChooser({
 
       {recentCompounds.length > 0 && (
         <div className="mt-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Recent</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Recent</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {recentCompounds.map((item) => (
               <button key={item} type="button" onClick={() => onSelect(item)} className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-white/62 hover:text-white">
@@ -682,7 +683,7 @@ function CompoundChooser({
 function ModeTabs({ mode, setMode }: { mode: SurfaceMode; setMode: (mode: SurfaceMode) => void }) {
   return (
     <div className="rounded-lg border border-white/10 bg-[#101820]/95 p-3">
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {(Object.keys(modeCopy) as SurfaceMode[]).map((item) => (
           <button key={item} type="button" onClick={() => setMode(item)} aria-pressed={mode === item} className={`rounded-lg px-3 py-3 text-left transition-colors ${mode === item ? 'bg-emerald-400 text-[#07110c]' : 'bg-white/[0.035] text-white/64 hover:bg-white/[0.07]'}`}>
             <span className="block text-sm font-bold">{modeCopy[item].label}</span>
@@ -709,7 +710,7 @@ function MobileAccordion({ title, open, onToggle, children }: { title: string; o
     <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
       <button type="button" onClick={onToggle} className="flex w-full items-center justify-between gap-3 text-left sm:pointer-events-none">
         <h3 className="text-base font-semibold text-white">{title}</h3>
-        <span className="text-sm text-white/45 sm:hidden">{open ? 'Hide' : 'Show'}</span>
+        <span className="text-sm text-white/50 sm:hidden">{open ? 'Hide' : 'Show'}</span>
       </button>
       <div className={`overflow-hidden transition-[max-height,opacity] duration-300 sm:mt-3 sm:max-h-none sm:opacity-100 ${open ? 'mt-3 max-h-[900px] opacity-100' : 'max-h-0 opacity-0'}`}>
         {children}
@@ -744,11 +745,11 @@ function CompoundOverlapPanel({
   return (
     <div>
       <p className="text-sm leading-6 text-white/52">{COMPOUND_OVERLAP_COPY.helper}</p>
-      <p className="mt-2 text-xs leading-5 text-white/42">{COMPOUND_OVERLAP_COPY.boundary}</p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+      <p className="mt-2 text-xs leading-5 text-white/50">{COMPOUND_OVERLAP_COPY.boundary}</p>
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
         <label className="block">
           <span className="mb-2 block text-sm text-white/62">Additional compound</span>
-          <input list="biostack-overlap-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
+          <input list="biostack-overlap-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45" />
           <datalist id="biostack-overlap-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
         </label>
         <button type="button" onClick={onCheck} className="self-end rounded-lg border border-emerald-300/25 bg-emerald-400/12 px-4 py-3 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50">
@@ -756,7 +757,7 @@ function CompoundOverlapPanel({
         </button>
       </div>
       <div className={`mt-4 rounded-lg border p-3 ${result.status === 'avoid' ? 'border-red-300/20 bg-red-500/10' : result.status === 'caution' ? 'border-amber-300/20 bg-amber-500/10' : 'border-white/10 bg-black/18'}`}>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">{result.status}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">{result.status}</p>
         <ul className="mt-2 space-y-1">
           {result.reasons.map((reason) => <li key={reason} className="text-sm leading-6 text-white/72">{reason}</li>)}
         </ul>
@@ -770,14 +771,14 @@ function SavedCalculationsPanel({ items, onOpen, onDelete }: { items: SavedToolA
     <div className="mt-4 rounded-lg border border-white/[0.08] bg-black/18 p-3">
       <h3 className="text-sm font-semibold text-white">Saved calculations</h3>
       {items.length === 0 ? (
-        <p className="mt-3 text-sm leading-6 text-white/45">No saved calculations yet.</p>
+        <p className="mt-3 text-sm leading-6 text-white/50">No saved calculations yet.</p>
       ) : (
         <div className="mt-3 space-y-3">
           {items.map((item) => (
             <article key={item.id} className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-3">
               <p className="text-sm font-semibold text-white">{item.substances.join(' + ') || modeCopy[item.calculatorType].title}</p>
               <p className="mt-1 text-sm text-white/55">{summaryForArtifact(item)}</p>
-              <p className="mt-1 text-xs text-white/35">{formatTimestamp(item.updatedAt)}</p>
+              <p className="mt-1 text-xs text-white/50">{formatTimestamp(item.updatedAt)}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <button type="button" onClick={() => onOpen(item)} className="rounded-lg border border-emerald-300/25 px-3 py-1.5 text-sm font-semibold text-emerald-100">Open</button>
                 <button type="button" onClick={() => onOpen(item)} className="rounded-lg border border-white/10 px-3 py-1.5 text-sm font-semibold text-white/70">Edit</button>
@@ -805,9 +806,9 @@ function InsightPanel({ title, items }: { title: string; items: string[] }) {
 function Metric({ label, value, detail }: { label: string; value: string; detail: string }) {
   return (
     <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-white/35">{label}</p>
+      <p className="text-xs uppercase tracking-[0.16em] text-white/50">{label}</p>
       <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-      <p className="mt-1 text-xs text-white/45">{detail}</p>
+      <p className="mt-1 text-xs text-white/50">{detail}</p>
     </div>
   );
 }
@@ -816,9 +817,9 @@ function NumberField({ label, help, value, onChange, suffix, step = '0.1' }: { l
   return (
     <label className="block">
       <span className="mb-2 block text-sm text-white/62">{label}</span>
-      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
+      {help && <span className="mb-2 block text-xs leading-5 text-white/50">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step={step} value={Number.isNaN(value) ? '' : value} onChange={(event) => onChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step={step} value={Number.isNaN(value) ? '' : value} onChange={(event) => onChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/50" />
         {suffix && <span className="border-l border-white/10 px-3 py-3 text-sm text-white/50">{suffix}</span>}
       </div>
     </label>
@@ -840,9 +841,9 @@ function NumberWithUnitField<TUnit extends string>({ label, help, value, unit, u
   return (
     <label className="block">
       <span className="mb-2 block text-sm text-white/62">{label}</span>
-      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
+      {help && <span className="mb-2 block text-xs leading-5 text-white/50">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/50" />
         <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
@@ -892,16 +893,16 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
           aria-expanded={open}
           aria-controls={open ? dialogId : undefined}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+          className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-white/50 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
         >
           <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
             <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-2.5a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 8 5.5Zm0-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
           </svg>
         </button>
       </span>
-      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
+      {help && <span className="mb-2 block text-xs leading-5 text-white/50">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(parseNumberInput(event.target.value))} placeholder={EMPTY_NUMBER_PLACEHOLDER} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/50" />
         <select aria-label={`${label} unit`} value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>

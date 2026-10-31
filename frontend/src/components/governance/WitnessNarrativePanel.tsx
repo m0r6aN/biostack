@@ -65,7 +65,7 @@ function TimelineEntry({ entry }: { entry: WitnessEntry }) {
         <span className={cn('inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border', eventChipClass(entry.eventType))}>
           {entry.eventType}
         </span>
-        <span className="ml-auto flex items-center gap-1 text-[10px] text-white/30 font-mono">
+        <span className="ml-auto flex items-center gap-1 text-[10px] text-white/50 font-mono">
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
@@ -76,7 +76,7 @@ function TimelineEntry({ entry }: { entry: WitnessEntry }) {
       <p className="text-[12px] text-white/70 leading-relaxed">{entry.summary}</p>
 
       {entry.findingIds.length > 0 && (
-        <p className="mt-1 text-[10px] font-mono text-white/30">
+        <p className="mt-1 text-[10px] font-mono text-white/50">
           References: {entry.findingIds.join(', ')}
         </p>
       )}
@@ -100,13 +100,13 @@ export function WitnessNarrativePanel({ narrative, className }: WitnessNarrative
         className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/[0.02] transition-colors"
       >
         <div className="flex items-center gap-2.5">
-          <span className="text-[11px] font-mono text-white/30 uppercase tracking-widest">KE-7</span>
+          <span className="text-[11px] font-mono text-white/50 uppercase tracking-widest">KE-7</span>
           <span className="text-sm font-semibold text-white/80">Witness Narrative</span>
-          <span className="text-[10px] text-white/30 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full font-mono">
+          <span className="text-[10px] text-white/50 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full font-mono">
             {narrative.entries.length} events
           </span>
         </div>
-        <svg className="w-4 h-4 text-white/30 transition-transform" style={{ transform: expanded ? 'rotate(180deg)' : undefined }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <svg className="w-4 h-4 text-white/50 transition-transform" style={{ transform: expanded ? 'rotate(180deg)' : undefined }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
           <polyline points="6 9 12 15 18 9"/>
         </svg>
       </button>
@@ -115,7 +115,7 @@ export function WitnessNarrativePanel({ narrative, className }: WitnessNarrative
         <div className="border-t border-white/8">
           {/* Filter bar */}
           <div className="flex items-center gap-1.5 px-5 py-3 border-b border-white/8">
-            <svg className="w-3.5 h-3.5 text-white/20 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <svg className="w-3.5 h-3.5 text-white/50 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
           </svg>
             {FILTER_OPTIONS.map(opt => (
@@ -126,7 +126,7 @@ export function WitnessNarrativePanel({ narrative, className }: WitnessNarrative
                   'text-[10px] font-semibold px-2.5 py-1 rounded-full border transition-all',
                   activeFilter === opt
                     ? 'bg-white/10 text-white/80 border-white/20'
-                    : 'bg-transparent text-white/30 border-white/8 hover:bg-white/5 hover:text-white/50',
+                    : 'bg-transparent text-white/50 border-white/8 hover:bg-white/5 hover:text-white/50',
                 )}
               >
                 {opt}
@@ -137,7 +137,7 @@ export function WitnessNarrativePanel({ narrative, className }: WitnessNarrative
           {/* Timeline */}
           <div className="px-5 py-4">
             {filtered.length === 0 ? (
-              <p className="text-[12px] text-white/30 text-center py-6">
+              <p className="text-[12px] text-white/50 text-center py-6">
                 No events match this filter.
               </p>
             ) : (

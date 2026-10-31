@@ -336,8 +336,8 @@ export default function MyProtocolPage() {
             onClick={() => setContactOpen(true)}
             className="flex items-center gap-2 rounded-xl border border-white/[0.1] px-3 py-1.5 text-sm font-medium text-white/75 transition-colors hover:border-white/20"
           >
-            <Headset className="h-3.5 w-3.5" />
-            <span className="hidden md:inline">Care Team Note</span>
+            <Headset aria-hidden="true" className="h-3.5 w-3.5" />
+            <span className="sr-only md:not-sr-only">Care Team Note</span>
           </button>
         }
       />

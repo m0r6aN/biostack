@@ -9,6 +9,7 @@ import { toSlug } from '@/lib/research/slugs';
 import type { PromotionManifest, ResearchCategoryTaxonomy, ResearchSummary, ResearchSummaryCompound, ResearchTaskQueue } from '@/lib/research/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type QueueTabKey = 'requested' | 'review' | 'rereview' | 'processing';
 
@@ -180,9 +181,9 @@ function CompoundListContent() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Compound Review" subtitle="Research pipeline triage queue · Internal" />
-      <main className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
         {summary && manifest && (
-          <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
+          <section className="grid grid-cols-1 gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
             <aside className="flex flex-col gap-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto xl:pr-1">
               <FilterBar
                 researchRequestedCount={manifest.counts.researchRequested ?? summary.researchRequestCount ?? 0}
@@ -208,9 +209,9 @@ function CompoundListContent() {
           </section>
         )}
 
-        {loading && <p className="text-sm text-white/30 px-1">Loading...</p>}
+        {loading && <p className="text-sm text-white/50 px-1">Loading...</p>}
         {error && <p className="text-sm text-rose-300 px-1">{error}</p>}
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -219,9 +220,9 @@ function AdminResearchPageFallback({ title }: { title: string }) {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title={title} subtitle="Research pipeline triage queue · Internal" />
-      <main className="flex-1 p-4 max-w-7xl mx-auto w-full">
-        <p className="text-sm text-white/30 px-1">Loading...</p>
-      </main>
+      <PageMain className="flex-1 p-4 max-w-7xl mx-auto w-full">
+        <p className="text-sm text-white/50 px-1">Loading...</p>
+      </PageMain>
     </div>
   );
 }
@@ -246,7 +247,7 @@ function QueueWorkspace({
       <div className="border-b border-white/8 pb-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">Compound Queues</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">Compound Queues</p>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-white/55">
               Keep filters and intake pinned while you work one operator queue at a time.
             </p>
@@ -271,7 +272,7 @@ function QueueWorkspace({
                 className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
                   isActive
                     ? 'border-white/20 bg-white/10 text-white'
-                    : 'border-white/10 text-white/45 hover:border-white/20 hover:text-white/75'
+                    : 'border-white/10 text-white/50 hover:border-white/20 hover:text-white/75'
                 }`}
               >
                 {tab.tabLabel} ({tab.count})
@@ -281,7 +282,7 @@ function QueueWorkspace({
         </div>
 
         {statusMessage && (
-          <p className="mt-4 text-sm text-white/35">{statusMessage}</p>
+          <p className="mt-4 text-sm text-white/50">{statusMessage}</p>
         )}
       </div>
 
@@ -321,7 +322,7 @@ function CompoundLane({ title, subtitle, count, tone, compounds, empty, onOpen, 
       <div className="mb-4 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-semibold text-white">{title}</h2>
-          <p className="mt-1 text-[11px] leading-5 text-white/40">{subtitle}</p>
+          <p className="mt-1 text-[11px] leading-5 text-white/50">{subtitle}</p>
           {queuedTaskCount > 0 && tone === 'requested' && (
             <div className="mt-2 flex flex-wrap items-center gap-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-200/75">
@@ -343,7 +344,7 @@ function CompoundLane({ title, subtitle, count, tone, compounds, empty, onOpen, 
       </div>
 
       {compounds.length === 0 ? (
-        <div className="flex min-h-48 items-center justify-center rounded-xl border border-dashed border-white/10 bg-black/10 px-4 text-center text-sm text-white/25">
+        <div className="flex min-h-48 items-center justify-center rounded-xl border border-dashed border-white/10 bg-black/10 px-4 text-center text-sm text-white/50">
           {empty}
         </div>
       ) : (
@@ -414,11 +415,11 @@ function ResearchRequestForm({ onRequested, categoryTaxonomy }: { onRequested: (
   return (
     <div className="rounded-2xl border border-violet-400/15 bg-violet-500/[0.035] p-3">
       <p className="text-[10px] font-bold uppercase tracking-widest text-violet-200/70">Request Research</p>
-      <p className="mt-1 text-[11px] leading-5 text-white/40">Queue a new compound for initial evidence research.</p>
+      <p className="mt-1 text-[11px] leading-5 text-white/50">Queue a new compound for initial evidence research.</p>
       <div className="mt-3 flex flex-col gap-2">
-        <input value={compoundName} onChange={e => setCompoundName(e.target.value)} placeholder="Compound name" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40" />
-        <div className="grid gap-2 md:grid-cols-2">
-          <input value={requesterId} onChange={e => setRequesterId(e.target.value)} placeholder="Requester ID" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40" />
+        <input value={compoundName} onChange={e => setCompoundName(e.target.value)} placeholder="Compound name" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <input value={requesterId} onChange={e => setRequesterId(e.target.value)} placeholder="Requester ID" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
           <select value={priority} onChange={e => setPriority(e.target.value as 'low' | 'normal' | 'high' | 'urgent')} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none focus:border-violet-300/40">
             <option value="normal">Priority: normal</option>
             <option value="high">Priority: high</option>
@@ -426,14 +427,14 @@ function ResearchRequestForm({ onRequested, categoryTaxonomy }: { onRequested: (
             <option value="low">Priority: low</option>
           </select>
         </div>
-        <input list="research-category-presets" value={categories} onChange={e => setCategories(e.target.value)} placeholder="Categories (comma-separated, e.g. Nootropics)" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40" />
+        <input list="research-category-presets" value={categories} onChange={e => setCategories(e.target.value)} placeholder="Categories (comma-separated, e.g. Nootropics)" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
         <datalist id="research-category-presets">
           {categoryPresets.map((category) => (
             <option key={category} value={category} />
           ))}
         </datalist>
         <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Category presets</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Category presets</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {categoryPresets.map((category) => (
               <button
@@ -446,7 +447,7 @@ function ResearchRequestForm({ onRequested, categoryTaxonomy }: { onRequested: (
               </button>
             ))}
           </div>
-          <p className="mt-2 text-[10px] leading-5 text-white/40">Freeform categories are still allowed, but presets are normalized to reduce taxonomy drift.</p>
+          <p className="mt-2 text-[10px] leading-5 text-white/50">Freeform categories are still allowed, but presets are normalized to reduce taxonomy drift.</p>
           {normalizedCategories.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
               {normalizedCategories.map((category) => (
@@ -457,8 +458,8 @@ function ResearchRequestForm({ onRequested, categoryTaxonomy }: { onRequested: (
             </div>
           )}
         </div>
-        <textarea value={rationale} onChange={e => setRationale(e.target.value)} placeholder="Why should BioStack research it?" rows={3} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40" />
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Optional notes for the evidence agent" rows={2} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40" />
+        <textarea value={rationale} onChange={e => setRationale(e.target.value)} placeholder="Why should BioStack research it?" rows={3} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Optional notes for the evidence agent" rows={2} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
         <button onClick={submit} disabled={submitting} className="rounded-lg bg-violet-600 px-3 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-50">
           {submitting ? 'Queuing…' : 'Queue Research Request'}
         </button>

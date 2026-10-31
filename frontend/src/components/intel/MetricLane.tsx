@@ -34,8 +34,8 @@ export function MetricLane({ label, events, min = 1, max = 10, color = 'emerald'
   if (filled.length === 0) {
     return (
       <div className={cn('flex items-center gap-3 h-10', className)}>
-        <span className="text-[10px] font-medium text-white/30 w-24 shrink-0 truncate">{label}</span>
-        <span className="text-[10px] text-white/20 italic">No data</span>
+        <span className="text-[10px] font-medium text-white/50 w-24 shrink-0 truncate">{label}</span>
+        <span className="text-[10px] text-white/50 italic">No data</span>
       </div>
     );
   }
@@ -52,7 +52,7 @@ export function MetricLane({ label, events, min = 1, max = 10, color = 'emerald'
 
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <span className="text-[10px] font-medium text-white/40 w-24 shrink-0 truncate">{label}</span>
+      <span className="text-[10px] font-medium text-white/50 w-24 shrink-0 truncate">{label}</span>
       <div className="relative flex-1 min-w-0">
         <svg width="100%" viewBox={`0 0 ${w} ${h}`} className="overflow-visible" preserveAspectRatio="none">
           <polyline points={pts.map((p) => `${p.x},${p.y}`).join(' ')} fill="none" strokeWidth="1.5" className={c.line} />

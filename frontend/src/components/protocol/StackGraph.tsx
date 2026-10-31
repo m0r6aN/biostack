@@ -74,7 +74,7 @@ function CompoundNode({ data, selected }: { data: StackGraphNode['data']; select
 
       <CompoundLink
         displayName={data.label}
-        className="text-[9px] text-white/20 hover:text-white/50 mt-1 block"
+        className="text-[9px] text-white/50 hover:text-white/50 mt-1 block"
       />
 
       <Handle type="source" position={Position.Bottom} className="!w-2 !h-2 !bg-white/20 !border-0" />
@@ -100,7 +100,7 @@ function InteractionEdge({
           className="absolute nodrag nopan"
         >
           {data?.label && (
-            <span className="text-[9px] text-white/30 bg-[#0B0F14] px-1.5 py-0.5 rounded-full border border-white/8 font-mono">
+            <span className="text-[9px] text-white/50 bg-[#0B0F14] px-1.5 py-0.5 rounded-full border border-white/8 font-mono">
               {labelHelpKey
                 ? <HelpTip tipKey={labelHelpKey}>{data.label}</HelpTip>
                 : data.label}
@@ -165,12 +165,12 @@ function StackGraphInner({ intelligence, compounds, onNodeClick, onEdgeClick, va
     return (
       <div className="flex flex-col items-center justify-center h-full text-center p-8">
         <div className="w-16 h-16 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center mb-4">
-          <svg className="w-7 h-7 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+          <svg className="w-7 h-7 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
           </svg>
         </div>
         <p className="text-sm font-semibold text-white/50">No active compounds</p>
-        <p className="text-xs text-white/30 mt-1">Add compounds to visualize stack interactions.</p>
+        <p className="text-xs text-white/50 mt-1">Add compounds to visualize stack interactions.</p>
       </div>
     );
   }
@@ -191,7 +191,7 @@ function StackGraphInner({ intelligence, compounds, onNodeClick, onEdgeClick, va
                 }))}
                 className={cn(
                   'text-[10px] font-semibold px-2.5 py-1 rounded-full border transition-all',
-                  active ? `${token.bg} ${token.color} ${token.border}` : 'border-white/10 text-white/30 bg-white/[0.02] hover:bg-white/5',
+                  active ? `${token.bg} ${token.color} ${token.border}` : 'border-white/10 text-white/50 bg-white/[0.02] hover:bg-white/5',
                 )}
               >
                 {token.label}
@@ -201,14 +201,14 @@ function StackGraphInner({ intelligence, compounds, onNodeClick, onEdgeClick, va
           <button
             onClick={() => setFilter((f) => ({ ...f, concernsOnly: !f.concernsOnly, synergiesOnly: false }))}
             className={cn('text-[10px] font-semibold px-2.5 py-1 rounded-full border transition-all',
-              filter.concernsOnly ? 'bg-rose-500/10 text-rose-300 border-rose-400/20' : 'border-white/10 text-white/30 bg-white/[0.02] hover:bg-white/5')}
+              filter.concernsOnly ? 'bg-rose-500/10 text-rose-300 border-rose-400/20' : 'border-white/10 text-white/50 bg-white/[0.02] hover:bg-white/5')}
           >
             Concerns only
           </button>
           <button
             onClick={() => setFilter((f) => ({ ...f, synergiesOnly: !f.synergiesOnly, concernsOnly: false }))}
             className={cn('text-[10px] font-semibold px-2.5 py-1 rounded-full border transition-all',
-              filter.synergiesOnly ? 'bg-emerald-500/10 text-emerald-300 border-emerald-400/20' : 'border-white/10 text-white/30 bg-white/[0.02] hover:bg-white/5')}
+              filter.synergiesOnly ? 'bg-emerald-500/10 text-emerald-300 border-emerald-400/20' : 'border-white/10 text-white/50 bg-white/[0.02] hover:bg-white/5')}
           >
             Synergies only
           </button>

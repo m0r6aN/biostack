@@ -13,7 +13,7 @@ export function ActiveCompoundsCard({ compounds }: ActiveCompoundsCardProps) {
     <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#121923]/90 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
       <h3 className="text-lg font-semibold text-white mb-4">Active Compounds</h3>
       {activeCompounds.length === 0 ? (
-        <p className="text-sm text-white/45">No active compounds</p>
+        <p className="text-sm text-white/50">No active compounds</p>
       ) : (
         <div className="space-y-3">
           {activeCompounds.slice(0, FREE_TIER_COMPOUND_LIMIT).map((compound) => (
@@ -25,7 +25,7 @@ export function ActiveCompoundsCard({ compounds }: ActiveCompoundsCardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium text-white">{compound.name}</p>
-                  <p className="text-xs text-white/45 mt-1">{compound.category}</p>
+                  <p className="text-xs text-white/50 mt-1">{compound.category}</p>
                 </div>
                 <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/20">
                   Active

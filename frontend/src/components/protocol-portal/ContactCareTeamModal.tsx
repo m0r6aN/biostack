@@ -57,7 +57,7 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
         value={note}
         onChange={(event) => setNote(event.target.value)}
         placeholder="Write a note for your protocol record..."
-        className="mt-5 h-28 w-full resize-none rounded-xl border border-white/[0.08] bg-black/20 p-4 text-sm text-white outline-none placeholder:text-white/30 focus:border-emerald-400/50"
+        className="mt-5 h-28 w-full resize-none rounded-xl border border-white/[0.08] bg-black/20 p-4 text-sm text-white outline-none placeholder:text-white/50 focus:border-emerald-400/50"
       />
 
       <div className="mt-4 flex justify-end gap-3">

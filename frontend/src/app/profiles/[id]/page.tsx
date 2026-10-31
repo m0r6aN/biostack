@@ -158,7 +158,7 @@ export default function ProfileDetailPage() {
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => setIsEditing(true)}
-                        className="p-2.5 rounded-xl bg-white/[0.03] text-white/40 hover:text-emerald-400 hover:bg-emerald-400/10 transition-all active:scale-95"
+                        className="p-2.5 rounded-xl bg-white/[0.03] text-white/50 hover:text-emerald-400 hover:bg-emerald-400/10 transition-all active:scale-95"
                         title="Edit Profile"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +167,7 @@ export default function ProfileDetailPage() {
                       </button>
                       <button
                         onClick={handleDelete}
-                        className="p-2.5 rounded-xl bg-white/[0.03] text-white/40 hover:text-red-400 hover:bg-red-400/10 transition-all active:scale-95"
+                        className="p-2.5 rounded-xl bg-white/[0.03] text-white/50 hover:text-red-400 hover:bg-red-400/10 transition-all active:scale-95"
                         title="Delete Profile"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,23 +178,23 @@ export default function ProfileDetailPage() {
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-emerald-400/70">Sex</div>
+                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-emerald-400">Sex</div>
                       <p className="text-lg font-semibold text-white/90">{profile.sex}</p>
                     </div>
                     <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-blue-400/70">Weight</div>
+                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-blue-400">Weight</div>
                       <p className="text-lg font-semibold text-white/90">{formatWeight(profile.weight, settings.weightUnit)}</p>
                     </div>
                     {currentPhase && (
                       <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] col-span-2 md:col-span-1">
-                        <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-purple-400/70">Current Phase</div>
+                        <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-purple-400">Current Phase</div>
                         <p className="text-lg font-semibold text-white/90">{currentPhase.name}</p>
                       </div>
                     )}
                   </div>
                   {(profileGoals.length > 0 || profile.goalSummary) && (
                     <div className="mt-8 pt-8 border-t border-white/5">
-                      <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/30 mb-6 flex items-center gap-2">
+                      <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/50 mb-6 flex items-center gap-2">
                         <span className="w-8 h-[1px] bg-white/10"></span>
                         Active Goals
                       </h3>
@@ -207,7 +207,7 @@ export default function ProfileDetailPage() {
                   )}
                   {profile.notes && (
                     <div className="mt-8 pt-8 border-t border-white/5">
-                      <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/30 mb-4 flex items-center gap-2">
+                      <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/50 mb-4 flex items-center gap-2">
                         <span className="w-8 h-[1px] bg-white/10"></span>
                         Physiology Notes
                       </h3>
@@ -234,7 +234,7 @@ export default function ProfileDetailPage() {
               </div>
               {compounds.length === 0 ? (
                 <div className="p-10 text-center rounded-xl bg-white/[0.01] border border-dashed border-white/10">
-                  <p className="text-xs text-white/30">No active compounds recorded</p>
+                  <p className="text-xs text-white/50">No active compounds recorded</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -242,7 +242,7 @@ export default function ProfileDetailPage() {
                     <Link key={comp.id} href={`/compounds?select=${comp.id}`} className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:bg-white/[0.04] transition-colors group">
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-white/80 truncate group-hover:text-white transition-colors">{comp.name}</p>
-                        <p className="text-[10px] uppercase font-bold tracking-wider text-white/20 mt-0.5">{comp.category}</p>
+                        <p className="text-[10px] uppercase font-bold tracking-wider text-white/50 mt-0.5">{comp.category}</p>
                       </div>
                       <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-md border ${
                         comp.status === 'Active'
@@ -256,7 +256,7 @@ export default function ProfileDetailPage() {
                     </Link>
                   ))}
                   {compounds.length > 5 && (
-                    <Link href="/compounds" className="block text-center text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white/40 pt-2 transition-colors">
+                    <Link href="/compounds" className="block text-center text-[10px] font-bold uppercase tracking-widest text-white/50 hover:text-white/50 pt-2 transition-colors">
                       + {compounds.length - 5} More Compounds
                     </Link>
                   )}
@@ -277,7 +277,7 @@ export default function ProfileDetailPage() {
               </div>
               {checkIns.length === 0 ? (
                 <div className="p-10 text-center rounded-xl bg-white/[0.01] border border-dashed border-white/10">
-                  <p className="text-xs text-white/30">No check-in history yet</p>
+                  <p className="text-xs text-white/50">No check-in history yet</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -289,7 +289,7 @@ export default function ProfileDetailPage() {
                           {checkin.energy}/10 E
                         </span>
                       </div>
-                      <div className="flex items-center gap-3 text-[11px] text-white/40">
+                      <div className="flex items-center gap-3 text-[11px] text-white/50">
                         <span className="flex items-center gap-1">
                           <span className="w-1.5 h-1.5 rounded-full bg-blue-500/50"></span>
                           {formatWeight(checkin.weight, settings.weightUnit)}
@@ -309,7 +309,7 @@ export default function ProfileDetailPage() {
             <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#121923]/90 shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:border-white/[0.12] transition-colors">
               <h2 className="text-base font-bold text-white tracking-tight italic mb-6">Execution Phases</h2>
               {phases.length === 0 ? (
-                <p className="text-xs text-white/30 text-center py-4">Structure your progress with phases</p>
+                <p className="text-xs text-white/50 text-center py-4">Structure your progress with phases</p>
               ) : (
                 <div className="space-y-3">
                   {phases.map((phase) => (
@@ -317,8 +317,8 @@ export default function ProfileDetailPage() {
                       {!phase.endDate && <div className="absolute top-0 right-0 w-1 h-full bg-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.3)]"></div>}
                       <p className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">{phase.name}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] font-bold text-white/20 uppercase tracking-tighter">Timeline:</span>
-                        <span className="text-[10px] font-medium text-white/40 italic">
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-tighter">Timeline:</span>
+                        <span className="text-[10px] font-medium text-white/50 italic">
                           {formatDate(phase.startDate)} {phase.endDate ? `→ ${formatDate(phase.endDate)}` : '(Current)'}
                         </span>
                       </div>

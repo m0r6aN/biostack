@@ -42,10 +42,10 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
   if (!telemetry.run) {
     return (
       <div className={cn('rounded-3xl border border-white/8 bg-[#0F141B] p-6', className)}>
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3">Flight Recorder</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-3">Flight Recorder</p>
         <div className="text-center py-8">
-          <p className="text-sm text-white/40">No active run to record.</p>
-          <p className="text-xs text-white/25 mt-1">Start a protocol run to begin telemetry recording.</p>
+          <p className="text-sm text-white/50">No active run to record.</p>
+          <p className="text-xs text-white/50 mt-1">Start a protocol run to begin telemetry recording.</p>
         </div>
       </div>
     );
@@ -66,11 +66,11 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
       {/* Header */}
       <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-white/5">
         <div>
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">Flight Recorder</p>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Flight Recorder</p>
           <h2 className="text-base font-bold text-white/90">{run.protocolName}</h2>
           <div className="flex items-center gap-3 mt-1">
             {startDate && (
-              <span className="text-xs text-white/40 font-mono">
+              <span className="text-xs text-white/50 font-mono">
                 {formatDate(startDate)}
                 {endDate ? ` → ${formatDate(endDate)}` : ' → ongoing'}
               </span>
@@ -81,7 +81,7 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
                 ? 'text-emerald-300 bg-emerald-500/10 border-emerald-400/20'
                 : run.status === 'completed'
                 ? 'text-blue-300 bg-blue-500/10 border-blue-400/20'
-                : 'text-white/40 bg-white/5 border-white/10',
+                : 'text-white/50 bg-white/5 border-white/10',
             )}>
               {run.status}
             </span>
@@ -108,8 +108,8 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
 
           {lanes.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-sm text-white/30">No telemetry data for this run yet.</p>
-              <p className="text-xs text-white/20 mt-1">Log observations to populate the recorder.</p>
+              <p className="text-sm text-white/50">No telemetry data for this run yet.</p>
+              <p className="text-xs text-white/50 mt-1">Log observations to populate the recorder.</p>
             </div>
           )}
         </div>
@@ -118,8 +118,8 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
         {selectedEvent && (
           <div className="w-72 border-l border-white/5 px-5 py-5 shrink-0">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Event Detail</p>
-              <button onClick={() => setSelectedEvent(null)} className="p-1 hover:bg-white/5 rounded-lg text-white/30 hover:text-white/50">
+              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Event Detail</p>
+              <button onClick={() => setSelectedEvent(null)} className="p-1 hover:bg-white/5 rounded-lg text-white/50 hover:text-white/50">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
@@ -128,18 +128,18 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
 
             <div className="space-y-3">
               <div>
-                <p className="text-[10px] text-white/30 mb-0.5">Day</p>
+                <p className="text-[10px] text-white/50 mb-0.5">Day</p>
                 <p className="text-sm font-semibold text-white/80">Day {selectedEvent.day} · {formatDate(selectedEvent.date)}</p>
               </div>
 
               <div>
-                <p className="text-[10px] text-white/30 mb-0.5">Event</p>
+                <p className="text-[10px] text-white/50 mb-0.5">Event</p>
                 <p className="text-sm text-white/70">{selectedEvent.label}</p>
               </div>
 
               {selectedEvent.status && selectedEvent.status !== 'neutral' && (
                 <div>
-                  <p className="text-[10px] text-white/30 mb-0.5">Alignment</p>
+                  <p className="text-[10px] text-white/50 mb-0.5">Alignment</p>
                   {(() => {
                     const t = TIMELINE_TAG_TOKENS[selectedEvent.status as keyof typeof TIMELINE_TAG_TOKENS];
                     return t ? (
@@ -153,20 +153,20 @@ export function FlightRecorder({ telemetry, className }: FlightRecorderProps) {
 
               {selectedEvent.value != null && (
                 <div>
-                  <p className="text-[10px] text-white/30 mb-0.5">Value</p>
+                  <p className="text-[10px] text-white/50 mb-0.5">Value</p>
                   <p className="text-lg font-bold text-white/80 font-mono">{selectedEvent.value}</p>
                 </div>
               )}
 
               {selectedEvent.detail && (
                 <div>
-                  <p className="text-[10px] text-white/30 mb-0.5">Detail</p>
+                  <p className="text-[10px] text-white/50 mb-0.5">Detail</p>
                   <p className="text-xs text-white/50 leading-relaxed">{selectedEvent.detail}</p>
                 </div>
               )}
 
               <div className="pt-2 border-t border-white/5">
-                <p className="text-[10px] text-white/20 leading-relaxed">
+                <p className="text-[10px] text-white/50 leading-relaxed">
                   Values are observed and logged — not computed outcomes or causal claims.
                 </p>
               </div>
@@ -199,9 +199,9 @@ function LaneSection({
         <div className="flex items-center gap-2">
           <div className={cn('w-1 h-4 rounded-full', `bg-${color}-400/60`)} />
           <span className="text-[11px] font-semibold text-white/50 group-hover:text-white/70 transition-colors">{lane.label}</span>
-          <span className="text-[9px] text-white/25">{lane.events.length} events</span>
+          <span className="text-[9px] text-white/50">{lane.events.length} events</span>
         </div>
-        <svg className={cn('w-3.5 h-3.5 text-white/20 transition-transform', expanded ? 'rotate-180' : '')} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <svg className={cn('w-3.5 h-3.5 text-white/50 transition-transform', expanded ? 'rotate-180' : '')} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
       </button>
@@ -230,7 +230,7 @@ function LaneSection({
                 onClick={() => onEventClick(e)}
                 className="w-full flex items-start gap-2.5 text-left rounded-xl px-2 py-1.5 hover:bg-white/[0.03] transition-colors group"
               >
-                <span className="text-[10px] font-mono text-white/25 pt-0.5 shrink-0 w-12">D{e.day}</span>
+                <span className="text-[10px] font-mono text-white/50 pt-0.5 shrink-0 w-12">D{e.day}</span>
                 <span className="text-[11px] text-white/60 flex-1 leading-snug">{e.label}</span>
                 {tagToken && (
                   <span className={cn('text-[9px] font-semibold px-1.5 py-0.5 rounded-full border shrink-0', tagToken.bg, tagToken.color, tagToken.border)}>
@@ -238,13 +238,13 @@ function LaneSection({
                   </span>
                 )}
                 {typeof e.value === 'number' && (
-                  <span className="font-mono text-[10px] text-white/40 shrink-0">{e.value}</span>
+                  <span className="font-mono text-[10px] text-white/50 shrink-0">{e.value}</span>
                 )}
               </button>
             );
           })}
           {lane.events.length === 0 && (
-            <p className="text-[11px] text-white/25 italic pl-2">No events in this lane.</p>
+            <p className="text-[11px] text-white/50 italic pl-2">No events in this lane.</p>
           )}
         </div>
       )}

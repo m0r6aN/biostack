@@ -88,7 +88,7 @@ export default async function CheckPage({ searchParams }: PageProps) {
         </section>
       )}
 
-      <p className="text-xs text-white/40">The checker only returns verdicts our reviewers have already published. It never makes one up.</p>
+      <p className="text-xs text-white/50">The checker only returns verdicts our reviewers have already published. It never makes one up.</p>
     </main>
   );
 }

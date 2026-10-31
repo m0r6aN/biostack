@@ -14,6 +14,7 @@ import type { ResearchCategoryTaxonomyAuditEntry, ResearchCategoryTaxonomyAuditL
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type AuditFilter = 'all' | ResearchCategoryTaxonomyAuditEntry['action'];
 
@@ -82,14 +83,14 @@ function ResearchTaxonomyHistoryContent() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</div>}
 
         <GlassCard className="p-5 space-y-4">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Taxonomy governance event stream</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Review saved taxonomy revisions and migration receipts as a chronological operator timeline.
               </p>
               {focusedEntry && (
@@ -116,12 +117,12 @@ function ResearchTaxonomyHistoryContent() {
             </div>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <input
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search taxonomy history"
-              className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40"
+              className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40"
             />
             {searchQuery && (
               <button
@@ -147,7 +148,7 @@ function ResearchTaxonomyHistoryContent() {
             ))}
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <TimelineStat label="All Events" value={entries.length} />
             <TimelineStat label="Taxonomy Saves" value={entries.filter((entry) => entry.action === 'save-taxonomy').length} />
             <TimelineStat label="Migration Applies" value={entries.filter((entry) => entry.action === 'apply-migration-fixup').length} />
@@ -157,7 +158,7 @@ function ResearchTaxonomyHistoryContent() {
         <section className="space-y-4">
           {filteredEntries.length === 0 ? (
             <GlassCard className="p-6">
-              <p className="text-sm text-white/35">No taxonomy governance events match the current filter/search.</p>
+              <p className="text-sm text-white/50">No taxonomy governance events match the current filter/search.</p>
             </GlassCard>
           ) : (
             <div className="space-y-4">
@@ -167,7 +168,7 @@ function ResearchTaxonomyHistoryContent() {
             </div>
           )}
         </section>
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -176,9 +177,9 @@ function ResearchTaxonomyHistoryFallback() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
-        <p className="text-sm text-white/30">Loading...</p>
-      </main>
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full">
+        <p className="text-sm text-white/50">Loading...</p>
+      </PageMain>
     </div>
   );
 }
@@ -186,7 +187,7 @@ function ResearchTaxonomyHistoryFallback() {
 function TimelineStat({ label, value }: { label: string; value: number }) {
   return (
     <GlassCard className="p-4">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">{label}</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-2 text-lg font-semibold text-white">{value}</p>
     </GlassCard>
   );

@@ -33,7 +33,7 @@ export default function SafetyPage() {
           </p>
         </section>
 
-        <section className="mt-10 grid gap-4 md:grid-cols-2">
+        <section className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {boundaries.map((boundary) => (
             <div key={boundary} className="rounded-lg border border-white/10 bg-white/[0.035] p-5">
               <p className="text-base leading-7 text-white/72">{boundary}</p>

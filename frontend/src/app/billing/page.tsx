@@ -172,7 +172,7 @@ export default function BillingPage() {
                 <div>
                   <h2 className="text-2xl font-semibold text-white">{copy.label}</h2>
                   <p className="mt-2 text-sm leading-6 text-white/65">{copy.title}</p>
-                  <p className="mt-1 max-w-2xl text-sm leading-6 text-white/45">{copy.detail}</p>
+                  <p className="mt-1 max-w-2xl text-sm leading-6 text-white/50">{copy.detail}</p>
                 </div>
                 {subscription.isPaid ? (
                   <button
@@ -202,9 +202,9 @@ export default function BillingPage() {
               </section>
             )}
 
-            <section className="grid gap-4 md:grid-cols-2">
+            <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Operator — {tierTagline('Operator')}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Operator — {tierTagline('Operator')}</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Protocol scoring and analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active item limit.</p>
                 <ul aria-label="Operator plan features" className="mt-3 space-y-1.5">
@@ -235,7 +235,7 @@ export default function BillingPage() {
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander — {tierTagline('Commander')}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Commander — {tierTagline('Commander')}</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Run history and trend analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.</p>
                 <ul aria-label="Commander plan features" className="mt-3 space-y-1.5">

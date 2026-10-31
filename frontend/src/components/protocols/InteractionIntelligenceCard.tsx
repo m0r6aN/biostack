@@ -77,10 +77,10 @@ export function InteractionIntelligenceCard({
     <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">{title}</p>
           <h3 className="mt-2 text-lg font-bold text-white">What this stack is doing together</h3>
         </div>
-        <div className="min-w-0 text-right text-xs text-white/45">
+        <div className="min-w-0 text-right text-xs text-white/50">
           <div>{intelligence.compositeScore.toFixed(1)} predicted score</div>
           <div>+{intelligence.score.synergyScore.toFixed(2)} synergy</div>
           <div>-{intelligence.score.redundancyPenalty.toFixed(2)} redundancy</div>
@@ -88,7 +88,7 @@ export function InteractionIntelligenceCard({
         </div>
       </div>
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-lg border border-emerald-400/15 bg-emerald-500/10 p-3">
           <p className="text-xs uppercase tracking-[0.16em] text-emerald-200/60"><HelpTip tipKey="synergy">Synergies</HelpTip></p>
           <p className="mt-2 text-2xl font-bold text-emerald-100">{summary.synergies}</p>
@@ -105,7 +105,7 @@ export function InteractionIntelligenceCard({
 
       {groupedInteractions.length > 0 && (
         <div className="mt-4 rounded-lg border border-white/[0.08] bg-white/[0.02] p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Why this score</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Why this score</p>
           <div className="mt-3 space-y-3">
             {groupedInteractions.map((group) => (
               <div key={group.key}>
@@ -116,7 +116,7 @@ export function InteractionIntelligenceCard({
                   {group.items.map((item) => (
                     <li key={`${item.compoundA}-${item.compoundB}`} className="text-sm text-white/60">
                       {item.compoundA} + {item.compoundB}
-                      <span className="ml-2 text-xs text-white/40">{Math.round(item.confidence * 100)}% confidence</span>
+                      <span className="ml-2 text-xs text-white/50">{Math.round(item.confidence * 100)}% confidence</span>
                     </li>
                   ))}
                 </ul>
@@ -143,7 +143,7 @@ export function InteractionIntelligenceCard({
             <p className="mt-2 text-sm font-semibold text-white">
               Compare {bestSwap.originalCompound} vs {bestSwap.candidateCompound}
             </p>
-            <p className="mt-1 text-xs text-white/45">
+            <p className="mt-1 text-xs text-white/50">
               internal score delta: +{bestSwap.deltaScore.toFixed(1)}
             </p>
             <p className="mt-2 text-sm leading-6 text-white/65">{bestSwap.recommendation}</p>
@@ -180,7 +180,7 @@ export function InteractionIntelligenceCard({
                   {finding.type.toLowerCase()}
                 </span>
                 <span className="text-sm font-semibold text-white">{finding.compounds.join(' + ')}</span>
-                <span className="text-xs text-white/40">{Math.round(finding.confidence * 100)}% confidence</span>
+                <span className="text-xs text-white/50">{Math.round(finding.confidence * 100)}% confidence</span>
               </div>
               <p className="mt-2 text-sm leading-6 text-white/60">{finding.message}</p>
             </div>
@@ -224,7 +224,7 @@ function ReducedInteractionIntelligenceView({
   return (
     <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">{title}</p>
         <h3 className="mt-2 text-lg font-bold text-white">Pair signals in this stack</h3>
       </div>
 
@@ -330,7 +330,7 @@ function TeaserButton({
 function ReasoningCell({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
       <p className="mt-2 text-sm text-white/72">{value}</p>
     </div>
   );

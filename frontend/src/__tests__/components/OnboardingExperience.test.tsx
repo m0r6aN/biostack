@@ -110,7 +110,7 @@ describe('OnboardingExperience', () => {
     render(<OnboardingExperience />);
 
     expect(screen.getByText('What do you want help with first?')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Energy' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Energy/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
 
     expect(

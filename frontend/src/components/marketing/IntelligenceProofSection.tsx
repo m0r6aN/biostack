@@ -86,7 +86,7 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
 
   return (
     <section className="border-y border-white/8 bg-black/15">
-      <div className="mx-auto grid max-w-7xl gap-7 px-5 py-10 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:py-14">
+      <div className="mx-auto grid grid-cols-1 max-w-7xl gap-7 px-5 py-10 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:py-14">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             See what BioStack catches

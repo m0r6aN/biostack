@@ -16,7 +16,7 @@ export function DayDetailModal({ day, onClose }: DayDetailModalProps) {
         <h2 id="day-modal-title" className="text-2xl font-semibold tracking-tight text-white">
           {day.title}
         </h2>
-        <p className="mt-0.5 text-sm text-white/45">{day.subtitle}</p>
+        <p className="mt-0.5 text-sm text-white/50">{day.subtitle}</p>
       </div>
 
       <div className="mt-5 space-y-3 text-sm">
@@ -28,17 +28,17 @@ export function DayDetailModal({ day, onClose }: DayDetailModalProps) {
             <div>
               <div className="font-semibold text-white">{item.name}</div>
               {item.dose && <div className="text-xs font-medium text-emerald-200/80">Your dose: {item.dose}</div>}
-              <div className="text-xs text-white/45">{item.detail}</div>
+              <div className="text-xs text-white/50">{item.detail}</div>
               <ScheduleItemDetails item={item} />
             </div>
-            <div className="whitespace-nowrap pt-0.5 text-right font-mono text-xs text-white/45">
+            <div className="whitespace-nowrap pt-0.5 text-right font-mono text-xs text-white/50">
               {item.time}
             </div>
           </div>
         ))}
       </div>
 
-      <p className="mt-6 border-t border-white/[0.06] pt-4 text-xs text-white/35">
+      <p className="mt-6 border-t border-white/[0.06] pt-4 text-xs text-white/50">
         All times are suggested. Adjust based on your routine while maintaining consistency.
       </p>
     </ModalShell>

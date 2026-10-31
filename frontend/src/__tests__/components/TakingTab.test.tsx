@@ -48,7 +48,7 @@ describe('Everything I\'m Taking', () => {
     const card = activeName.closest('article')!;
     expect(within(card).getByText('2 capsule · twice weekly · Mon, Thu · 08:00')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Add or manage items' })).toHaveAttribute('href', '/compounds');
-    await user.click(within(card).getByRole('button', { name: 'Log amount taken' }));
+    await user.click(within(card).getByRole('button', { name: /^Log amount taken/ }));
     expect(within(card).getByLabelText('Amount taken')).toHaveValue(null);
     expect(within(card).getByLabelText('Unit taken')).toHaveValue('');
     await user.type(within(card).getByLabelText('Amount taken'), '3');
@@ -56,7 +56,7 @@ describe('Everything I\'m Taking', () => {
     await user.click(within(card).getByRole('button', { name: 'Save amount' }));
     expect(onLog).toHaveBeenCalledWith(expect.objectContaining({ compoundId: '1' }), { amount: 3, unit: 'capsule', note: '' });
     const pausedCard = screen.getByText('Paused item').closest('article')!;
-    expect(within(pausedCard).queryByRole('button', { name: 'Log amount taken' })).not.toBeInTheDocument();
+    expect(within(pausedCard).queryByRole('button', { name: /^Log amount taken/ })).not.toBeInTheDocument();
   });
 
   it('shows a retryable error instead of reporting an empty list when loading fails', async () => {
@@ -126,7 +126,7 @@ describe('Everything I\'m Taking', () => {
     expect(card.textContent).not.toMatch(/Related/);
     expect(apiClient.updateCompound).not.toHaveBeenCalled(); // an offer alone changes nothing
 
-    await user.click(within(card).getByRole('button', { name: 'Link Cholecalciferol to Vitamin D3' }));
+    await user.click(within(card).getByRole('button', { name: /^Link it: link Cholecalciferol to Vitamin D3$/  }));
 
     expect(apiClient.updateCompound).toHaveBeenCalledTimes(1);
     const [profileId, id, body] = vi.mocked(apiClient.updateCompound).mock.calls[0];
@@ -187,11 +187,11 @@ describe('Everything I\'m Taking', () => {
       const user = userEvent.setup();
       render(<TakingTab profileId="profile-1" onLogAmount={vi.fn()} />);
 
-      await user.click(await screen.findByRole('button', { name: 'Link Ozempic to Semaglutide' }));
+      await user.click(await screen.findByRole('button', { name: /^Link it: link Ozempic to Semaglutide$/ }));
       expect(apiClient.linkCatalogLookup).toHaveBeenCalledWith('lookup-1', 'semaglutide');
       await vi.waitFor(() => expect(apiClient.getTaking).toHaveBeenCalledTimes(2));
 
-      await user.click(await screen.findByRole('button', { name: 'Ozempic is not the same' }));
+      await user.click(await screen.findByRole('button', { name: /^Not the same: Ozempic is not the same as the suggestion$/ }));
       expect(apiClient.declineCatalogLookup).toHaveBeenCalledWith('lookup-1');
     });
 
@@ -203,7 +203,7 @@ describe('Everything I\'m Taking', () => {
 
       await screen.findByText('Ozempic');
       await vi.waitFor(() => expect(apiClient.listOpenCatalogLookups).toHaveBeenCalled());
-      expect(screen.getAllByRole('button', { name: /Link Ozempic to/ })).toHaveLength(1);
+      expect(screen.getAllByRole('button', { name: /link Ozempic to/ })).toHaveLength(1);
     });
 
     it('asks once for older unverified items with no offer, at most five, and never for linked or stopped ones', async () => {

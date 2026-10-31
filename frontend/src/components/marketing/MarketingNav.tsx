@@ -51,6 +51,7 @@ export function MarketingNav() {
           {menuOpen && (
             <nav
               id="marketing-mobile-menu"
+              aria-label="Mobile"
               className="absolute left-0 right-0 top-full z-40 border-b border-white/8 bg-[#0B0F14]/97 px-5 py-4 backdrop-blur-xl md:hidden"
             >
               <div className="flex flex-col gap-3 text-sm text-white/70">
@@ -75,7 +76,7 @@ export function MarketingNav() {
               </div>
             </nav>
           )}
-          <nav className="hidden min-w-0 grow basis-0 flex-wrap items-center justify-end gap-x-5 gap-y-1 whitespace-nowrap text-sm text-white/55 md:flex xl:grow-0 xl:basis-auto xl:gap-x-6">
+          <nav aria-label="Primary" className="hidden min-w-0 grow basis-0 flex-wrap items-center justify-end gap-x-5 gap-y-1 whitespace-nowrap text-sm text-white/55 md:flex xl:grow-0 xl:basis-auto xl:gap-x-6">
             <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               How it works
             </Link>

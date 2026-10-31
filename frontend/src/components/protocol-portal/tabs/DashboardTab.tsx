@@ -38,8 +38,8 @@ export function DashboardTab({
       <GlassCard variant="base" className="p-6 lg:col-span-2">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">{today.title}</h3>
-            <p className="text-sm text-white/45">{today.subtitle}</p>
+            <h2 className="text-lg font-semibold text-white">{today.title}</h2>
+            <p className="text-sm text-white/50">{today.subtitle}</p>
           </div>
           <button
             type="button"
@@ -66,7 +66,7 @@ export function DashboardTab({
       </GlassCard>
 
       <GlassCard variant="base" className="p-6">
-        <h3 className="mb-4 text-lg font-semibold text-white">Quick Actions</h3>
+        <h2 className="mb-4 text-lg font-semibold text-white">Quick Actions</h2>
         <div className="space-y-2">
           <button
             type="button"
@@ -106,7 +106,7 @@ function ScheduleItemRow({
         <div>
           <div className="font-medium text-white">{item.name}</div>
           {item.dose && <div className="text-xs font-medium text-emerald-200/80">Your dose: {item.dose}</div>}
-          <div className="text-xs text-white/45">{item.detail}</div>
+          <div className="text-xs text-white/50">{item.detail}</div>
           <ScheduleItemDetails item={item} />
           {onLogAmount && <DoseLogForm item={item} onLog={onLogAmount} />}
         </div>

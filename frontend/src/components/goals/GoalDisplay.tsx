@@ -27,7 +27,7 @@ export function GoalDisplay({ goals }: GoalDisplayProps) {
           <div key={cat.key}>
             <div className="flex items-center gap-2 mb-1.5">
               <span className={`w-2 h-2 rounded-full ${meta.dotColor}`} />
-              <span className="text-xs uppercase tracking-[0.15em] text-white/40">{cat.label}</span>
+              <span className="text-xs uppercase tracking-[0.15em] text-white/50">{cat.label}</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {categoryGoals.map(goal => (

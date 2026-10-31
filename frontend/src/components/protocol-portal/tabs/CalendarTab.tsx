@@ -30,8 +30,8 @@ export function CalendarTab({
     <GlassCard variant="base" className="p-6">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-xl font-semibold text-white">Weekly Schedule</h3>
-          <p className="text-sm text-white/45">
+          <h2 className="text-xl font-semibold text-white">Weekly Schedule</h2>
+          <p className="text-sm text-white/50">
             Week {activePhase.currentWeek} · {activePhase.label} · {doseHeadline}
           </p>
         </div>
@@ -58,7 +58,7 @@ export function CalendarTab({
 
       <div className="grid grid-cols-7 gap-2 sm:gap-3">
         {WEEKDAY_HEADERS.map((header) => (
-          <div key={header} className="py-2 text-center text-[10px] font-semibold tracking-wide text-white/40 sm:text-xs">
+          <div key={header} className="py-2 text-center text-[10px] font-semibold tracking-wide text-white/50 sm:text-xs">
             {header}
           </div>
         ))}
@@ -75,7 +75,7 @@ export function CalendarTab({
                 : 'border-white/[0.08] hover:bg-white/[0.04]'
             )}
           >
-            <div className={cn('text-xs', day.isToday ? 'text-emerald-300' : 'text-white/40')}>
+            <div className={cn('text-xs', day.isToday ? 'text-emerald-300' : 'text-white/50')}>
               {day.dayLabel}
             </div>
             <div className="mt-1 text-sm font-medium text-white">{day.weekdayLabel}</div>
@@ -90,7 +90,7 @@ export function CalendarTab({
         ))}
       </div>
 
-      <div className="mt-6 flex items-center gap-2 text-xs text-white/45">
+      <div className="mt-6 flex items-center gap-2 text-xs text-white/50">
         <Info className="h-3.5 w-3.5" />
         <span>Tap any day to view full scheduled substances and times.</span>
       </div>

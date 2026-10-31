@@ -6,7 +6,7 @@ export function MarketingFooter() {
       <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-white/60 sm:px-8 md:flex-row md:items-center md:justify-between">
         <p>BioStack. What the research says, graded by evidence strength.</p>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <a href="mailto:support@biostack.cc" className="inline-flex min-h-11 items-center text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             BioStack Support
           </a>
@@ -40,7 +40,7 @@ export function MarketingFooter() {
           <Link href="/privacy" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Privacy
           </Link>
-        </div>
+        </nav>
       </div>
     </footer>
   );

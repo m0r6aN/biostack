@@ -306,9 +306,9 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             }}
             placeholder="Search or enter custom compound name..."
             required
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
-          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can&apos;t find your compound in the list above.</p>
+          <p className="mt-1 text-[10px] text-white/50 italic px-1">Tip: Use this if you can&apos;t find your compound in the list above.</p>
           {typeaheadMatches.length > 0 && (
             <ul aria-label="Matches in BioStack's library" className="mt-2 divide-y divide-white/5 overflow-hidden rounded-xl border border-white/10 bg-[#0F141B]">
               {typeaheadMatches.map(entry => (
@@ -319,7 +319,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
                     className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left text-sm text-white hover:bg-white/[0.04]"
                   >
                     <span>{entry.canonicalName}</span>
-                    <span className="text-xs text-white/45">{entry.classification}</span>
+                    <span className="text-xs text-white/50">{entry.classification}</span>
                   </button>
                 </li>
               ))}
@@ -350,13 +350,13 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
               placeholder="e.g., BioStack Labs"
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
             />
           </div>
           <div>
             <label htmlFor={`${formId}-price-paid`} className="block text-sm font-medium text-white/70 mb-2">5b. Optional: Price Paid</label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30">$</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">$</span>
               <input
                 id={`${formId}-price-paid`}
                 type="number"
@@ -364,7 +364,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
                 value={formData.pricePaid}
                 onChange={(e) => setFormData({ ...formData, pricePaid: e.target.value })}
                 placeholder="0.00"
-                className="w-full pl-8 pr-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+                className="w-full pl-8 pr-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
               />
             </div>
           </div>
@@ -440,7 +440,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           placeholder="Any additional notes..."
           rows={3}
-          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
         />
       </div>
 

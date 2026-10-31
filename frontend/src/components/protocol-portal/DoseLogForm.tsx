@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DOSE_UNITS } from '@/lib/userDose';
 import type { ScheduleItem } from '@/lib/types';
 
@@ -23,6 +23,17 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [announcement, setAnnouncement] = useState<string>('');
+  const amountRef = useRef<HTMLInputElement>(null);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
+  // Focus follows the disclosure: into the first field when the form opens, back to the opener when it closes
+  // (otherwise focus is lost to <body> when the button unmounts - WCAG 2.4.3).
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (open) amountRef.current?.focus();
+    else if (wasOpen.current) openButtonRef.current?.focus();
+    wasOpen.current = open;
+  }, [open]);
 
   const savedEntry =
     item.doseAmount != null && item.doseUnit ? { amount: item.doseAmount, unit: item.doseUnit } : null;
@@ -51,6 +62,7 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
       setUnit('');
       setNote('');
       setOpen(false);
+      setAnnouncement(`Amount logged for ${item.name}.`);
     } catch (cause) {
       setError(cause instanceof Error && cause.message ? cause.message : 'That amount could not be logged.');
     } finally {
@@ -59,17 +71,23 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
   }
 
   const idBase = `dose-log-${item.compoundId ?? item.name}`;
+  const errorId = `${idBase}-error`;
+  const live = <p role="status" aria-live="polite" className="sr-only">{announcement}</p>;
 
   if (!open) {
     return (
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen(true)}
-        className="mt-2 rounded-lg border border-white/[0.1] px-3 py-1.5 text-xs font-medium text-white/75 transition-colors hover:border-white/20 disabled:opacity-50"
-      >
-        Log amount taken
-      </button>
+      <>
+        <button
+          ref={openButtonRef}
+          type="button"
+          disabled={disabled}
+          onClick={() => { setAnnouncement(''); setOpen(true); }}
+          className="mt-2 min-h-8 rounded-lg border border-white/[0.1] px-3 py-1.5 text-xs font-medium text-white/75 transition-colors hover:border-white/20 disabled:opacity-50"
+        >
+          Log amount taken <span className="sr-only">for {item.name}</span>
+        </button>
+        {live}
+      </>
     );
   }
 
@@ -82,12 +100,15 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
           </label>
           <input
             id={`${idBase}-amount`}
+            ref={amountRef}
             type="number"
             inputMode="decimal"
             step="any"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            required
             aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : undefined}
             className="w-28 rounded-lg border border-white/10 bg-[#0F141B] px-3 py-2 text-sm text-white focus:border-emerald-500/50 focus:outline-none"
           />
         </div>
@@ -99,6 +120,9 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
             id={`${idBase}-unit`}
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
+            required
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : undefined}
             className="rounded-lg border border-white/10 bg-[#0F141B] px-3 py-2 text-sm text-white focus:border-emerald-500/50 focus:outline-none"
           >
             <option value="">Unit</option>
@@ -134,7 +158,7 @@ export function DoseLogForm({ item, disabled, onLog }: DoseLogFormProps) {
           className="w-full rounded-lg border border-white/10 bg-[#0F141B] px-3 py-2 text-sm text-white focus:border-emerald-500/50 focus:outline-none"
         />
       </div>
-      {error && <p role="alert" className="text-xs text-red-300">{error}</p>}
+      {error && <p id={errorId} role="alert" className="text-xs text-red-300">{error}</p>}
       <div className="flex gap-2">
         <button
           type="button"

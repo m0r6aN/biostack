@@ -34,7 +34,7 @@ export function ParsedProtocolSection({ result }: ParsedProtocolSectionProps) {
               {itemCount} {itemCount === 1 ? 'item' : 'items'}
             </span>
           )}
-          <span className="ml-1 text-white/40">{collapsed ? '▸' : '▾'}</span>
+          <span className="ml-1 text-white/50">{collapsed ? '▸' : '▾'}</span>
         </button>
         {result?.decomposedBlends.length ? (
           <span className="rounded-lg border border-emerald-300/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-100">
@@ -57,7 +57,7 @@ export function ParsedProtocolSection({ result }: ParsedProtocolSectionProps) {
 
           <div className="mt-4 hidden overflow-x-auto md:block">
             <table className="w-full min-w-[560px] text-left text-sm">
-              <thead className="border-b border-white/10 text-xs uppercase tracking-[0.16em] text-white/35">
+              <thead className="border-b border-white/10 text-xs uppercase tracking-[0.16em] text-white/50">
                 <tr>
                   <th className="py-3 font-semibold">Compound</th>
                   <th className="py-3 font-semibold">Dose</th>
@@ -85,7 +85,7 @@ export function ParsedProtocolSection({ result }: ParsedProtocolSectionProps) {
                   ))
                 ) : (
                   <tr>
-                    <td className="py-5 text-white/45" colSpan={5}>No parsed compounds yet.</td>
+                    <td className="py-5 text-white/50" colSpan={5}>No parsed compounds yet.</td>
                   </tr>
                 )}
               </tbody>
@@ -103,7 +103,7 @@ export function ParsedProtocolSection({ result }: ParsedProtocolSectionProps) {
                 </article>
               ))
             ) : (
-              <p className="text-sm text-white/45">No parsed compounds yet.</p>
+              <p className="text-sm text-white/50">No parsed compounds yet.</p>
             )}
           </div>
         </>

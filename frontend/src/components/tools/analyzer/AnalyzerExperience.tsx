@@ -34,6 +34,7 @@ import {
 import type { AnalyzerErrorKind } from './analyzerView';
 import { useAnalyzerSession } from './useAnalyzerSession';
 import type { AnalyzerContextFields } from './useAnalyzerSession';
+import { PageMain } from '@/components/ui/PageMain';
 
 const ANALYZER_PRICING_HREF = '/pricing?intent=analyzer';
 const PAID_ANALYZER_FEATURE = 'paid_intelligence';
@@ -502,7 +503,7 @@ export function AnalyzerExperience() {
   }
 
   return (
-    <main
+    <PageMain
       id="main"
       tabIndex={-1}
       className={`mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8 ${result ? 'pb-40 md:pb-28' : 'pb-28'}`}
@@ -608,7 +609,7 @@ export function AnalyzerExperience() {
           </div>
         </div>
       )}
-    </main>
+    </PageMain>
   );
 }
 

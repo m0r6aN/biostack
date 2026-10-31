@@ -7,6 +7,7 @@ import { fetchCompoundGraph, fetchDryRunReport, fetchImportPreview, fetchPromoti
 import type { CompoundGraph, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest, ResearchSummary, ReviewResolutionPlan } from '@/lib/research/types';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Safety Critical':               'text-rose-400 bg-rose-400/8 border-rose-400/20',
@@ -59,7 +60,7 @@ export default function ResearchDashboard() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Research Runs" subtitle="Compound Pipeline Review · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && (
           <div className="rounded-xl bg-rose-500/10 border border-rose-400/20 px-4 py-3 text-sm text-rose-300">{error}</div>
         )}
@@ -79,19 +80,19 @@ export default function ResearchDashboard() {
         {/* Compound Relationship Graph counts */}
         <GlassCard className="px-5 py-3">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px]">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mr-2">Relationship Graph</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50 mr-2">Relationship Graph</h3>
             {graph ? (
               <>
                 <span className="text-white/80"><strong className="text-white">{graph.counts.edges}</strong> relationships</span>
-                <span className="text-white/30">·</span>
+                <span className="text-white/50">·</span>
                 <span className="text-amber-400"><strong>{graph.counts.reviewRequiredEdges}</strong> review-required</span>
-                <span className="text-white/30">·</span>
+                <span className="text-white/50">·</span>
                 <span className="text-sky-300"><strong>{graph.counts.communitySignalEdges}</strong> community-signal</span>
-                <span className="text-white/30">·</span>
+                <span className="text-white/50">·</span>
                 <span className="text-rose-400"><strong>{graph.counts.conflictEdges}</strong> conflicts</span>
               </>
             ) : (
-              <span className="text-white/30">Relationship graph not generated for this run yet.</span>
+              <span className="text-white/50">Relationship graph not generated for this run yet.</span>
             )}
           </div>
         </GlassCard>
@@ -99,8 +100,8 @@ export default function ResearchDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left: Review Categories */}
           <GlassCard className="p-5 flex flex-col gap-3">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Review Categories</h3>
-            {!summary && <p className="text-sm text-white/30">Loading...</p>}
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50">Review Categories</h3>
+            {!summary && <p className="text-sm text-white/50">Loading...</p>}
             {summary?.reviewCategories.map(cat => (
               <Link
                 key={cat.name}
@@ -114,14 +115,14 @@ export default function ResearchDashboard() {
               </Link>
             ))}
             {summary?.reviewCategories.length === 0 && (
-              <p className="text-sm text-white/30">No categories — all compounds clear.</p>
+              <p className="text-sm text-white/50">No categories — all compounds clear.</p>
             )}
           </GlassCard>
 
           {/* Right: Promotion Readiness + Resolution Summary */}
           <div className="flex flex-col gap-4">
             <GlassCard className="p-5 flex flex-col gap-3">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Promotion Readiness</h3>
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50">Promotion Readiness</h3>
               {summary?.promotionReadiness.map(bucket => (
                 <div key={bucket.name} className="flex items-center gap-3">
                   <div
@@ -137,11 +138,11 @@ export default function ResearchDashboard() {
                   </span>
                 </div>
               ))}
-              {!summary && <p className="text-sm text-white/30">Loading...</p>}
+              {!summary && <p className="text-sm text-white/50">Loading...</p>}
             </GlassCard>
 
             <GlassCard className="p-5 flex flex-col gap-2">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Resolution Plan</h3>
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50">Resolution Plan</h3>
               {plan ? (
                 <>
                   <div className="flex gap-4 text-[12px]">
@@ -157,11 +158,11 @@ export default function ResearchDashboard() {
                   ))}
                 </>
               ) : (
-                <p className="text-sm text-white/30">Loading...</p>
+                <p className="text-sm text-white/50">Loading...</p>
               )}
             </GlassCard>
             <GlassCard className="p-5 flex flex-col gap-2">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Promotion Dry-Run Gate</h3>
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50">Promotion Dry-Run Gate</h3>
               {dryRun ? (
                 <>
                   <div className="flex gap-4 text-[12px]">
@@ -175,7 +176,7 @@ export default function ResearchDashboard() {
                   </Link>
                 </>
               ) : (
-                <p className="text-sm text-white/30">Dry-run report not generated for this run yet.</p>
+                <p className="text-sm text-white/50">Dry-run report not generated for this run yet.</p>
               )}
             </GlassCard>
           </div>
@@ -194,7 +195,7 @@ export default function ResearchDashboard() {
             </Link>
           </div>
         </div>
-      </main>
+      </PageMain>
     </div>
   );
 }

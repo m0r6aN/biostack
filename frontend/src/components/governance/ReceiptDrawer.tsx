@@ -15,7 +15,7 @@ export interface ReceiptDrawerProps {
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid grid-cols-[140px_1fr] gap-2 py-2 border-b border-white/5 last:border-0">
-      <span className="text-[10px] font-bold uppercase tracking-widest text-white/30 pt-0.5">
+      <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 pt-0.5">
         {label}
       </span>
       <span className="text-xs font-mono text-white/70 break-all">{value}</span>
@@ -111,7 +111,7 @@ export function ReceiptDrawer({ receiptUri, open, onClose }: ReceiptDrawerProps)
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-white/40" aria-hidden />
+            <Shield className="w-4 h-4 text-white/50" aria-hidden />
             <span className="text-xs font-bold uppercase tracking-widest text-white/60">
               Decision Receipt
             </span>
@@ -120,7 +120,7 @@ export function ReceiptDrawer({ receiptUri, open, onClose }: ReceiptDrawerProps)
             type="button"
             onClick={onClose}
             aria-label="Close receipt drawer"
-            className="rounded p-1 text-white/30 hover:text-white/70 hover:bg-white/5 transition-colors"
+            className="rounded p-1 text-white/50 hover:text-white/70 hover:bg-white/5 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -129,14 +129,14 @@ export function ReceiptDrawer({ receiptUri, open, onClose }: ReceiptDrawerProps)
         {/* Body */}
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {loading && (
-            <div className="flex items-center gap-2 text-white/40 text-sm py-8 justify-center">
+            <div className="flex items-center gap-2 text-white/50 text-sm py-8 justify-center">
               <Loader2 className="w-4 h-4 animate-spin" />
               Loading receipt...
             </div>
           )}
 
           {error && (
-            <div className="flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-sm">
+            <div role="alert" className="flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-sm">
               <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
               {error}
             </div>
@@ -147,7 +147,7 @@ export function ReceiptDrawer({ receiptUri, open, onClose }: ReceiptDrawerProps)
               {/* Status pill + URI */}
               <div className="space-y-2">
                 <EffectStatusPill status={receipt.effectStatus} />
-                <p className="text-[10px] font-mono text-white/30 break-all">
+                <p className="text-[10px] font-mono text-white/50 break-all">
                   {receipt.receiptUri}
                 </p>
               </div>
@@ -170,11 +170,11 @@ export function ReceiptDrawer({ receiptUri, open, onClose }: ReceiptDrawerProps)
 
               {/* Evidence refs */}
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/20 mb-2">
+                <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">
                   Evidence References
                 </p>
                 {receipt.evidenceRefs.length === 0 ? (
-                  <p className="text-xs text-white/30 italic">None</p>
+                  <p className="text-xs text-white/50 italic">None</p>
                 ) : (
                   <ul className="space-y-1">
                     {receipt.evidenceRefs.map((ref: string, i: number) => (

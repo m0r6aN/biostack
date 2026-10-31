@@ -32,32 +32,32 @@ describe('Sidebar — Library as the primary destination', () => {
     render(<Sidebar />);
     const nav = screen.getByRole('navigation');
     const links = within(nav).getAllByRole('link');
-    expect(links[0]).toHaveAccessibleName('Library');
+    expect(links[0]).toHaveAccessibleName(/^Library/);
     expect(links[0]).toHaveAttribute('href', '/knowledge');
   });
 
   it('shows the "Compounds & evidence" sublabel under the Library label when expanded', () => {
     render(<Sidebar />);
-    const libraryLink = screen.getByRole('link', { name: 'Library' });
+    const libraryLink = screen.getByRole('link', { name: /^Library/ });
     expect(within(libraryLink).getByText('Compounds & evidence')).toBeVisible();
   });
 
   it('still exposes an accessible name for the Library link when the rail is collapsed', () => {
     window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, '1');
     render(<Sidebar />);
-    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute('href', '/knowledge');
+    expect(screen.getByRole('link', { name: /^Library/ })).toHaveAttribute('href', '/knowledge');
   });
 
   it('shows a rail tooltip labeled Library on hover when collapsed', () => {
     window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, '1');
     render(<Sidebar />);
-    fireEvent.mouseEnter(screen.getByRole('link', { name: 'Library' }));
+    fireEvent.mouseEnter(screen.getByRole('link', { name: /^Library/ }));
     expect(screen.getByRole('tooltip', { hidden: true })).toHaveTextContent('Library');
   });
 
   it('keeps the existing Compounds tracking link distinct from Library', () => {
     render(<Sidebar />);
-    expect(screen.getByRole('link', { name: 'Compounds' })).toHaveAttribute('href', '/compounds');
-    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute('href', '/knowledge');
+    expect(screen.getByRole('link', { name: /^Compounds$/ })).toHaveAttribute('href', '/compounds');
+    expect(screen.getByRole('link', { name: /^Library/ })).toHaveAttribute('href', '/knowledge');
   });
 });

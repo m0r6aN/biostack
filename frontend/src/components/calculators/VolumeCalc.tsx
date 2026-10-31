@@ -48,7 +48,7 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
               onChange={(e) =>
                 setInputs({ ...inputs, desiredDoseMcg: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
           </div>
 
@@ -64,7 +64,7 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
               onChange={(e) =>
                 setInputs({ ...inputs, concentrationMcgPerMl: e.target.value.trim() === '' ? Number.NaN : parseFloat(e.target.value) })
               }
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
             />
           </div>
 
@@ -86,7 +86,7 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
         {result && (
           <div className="mt-6 space-y-4">
             <div className="p-4 bg-blue-500/10 border border-blue-400/15 rounded-2xl">
-              <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Volume Required</p>
+              <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Volume Required</p>
               <p className="text-2xl font-bold text-blue-300">
                 {result.output} {result.unit}
               </p>
@@ -94,7 +94,7 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
 
             {result.formula && (
               <div className="p-3 bg-white/[0.03] border border-white/[0.08] rounded-xl">
-                <p className="text-xs text-white/35 mb-1">Formula</p>
+                <p className="text-xs text-white/50 mb-1">Formula</p>
                 <p className="text-xs text-white/65 font-mono">{result.formula}</p>
               </div>
             )}

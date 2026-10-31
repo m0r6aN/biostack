@@ -45,7 +45,7 @@ export function GoalPicker({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <label className="block text-sm font-medium text-white/70">Goals</label>
-        <span className="text-xs text-white/35">
+        <span className="text-xs text-white/50">
           {selectedGoalIds.length} selected
         </span>
       </div>
@@ -73,7 +73,7 @@ export function GoalPicker({
                     </span>
                   )}
                 </div>
-                <span className="text-white/35 text-xs">{isCollapsed ? '+' : '-'}</span>
+                <span className="text-white/50 text-xs">{isCollapsed ? '+' : '-'}</span>
               </button>
 
               {!isCollapsed && (
@@ -98,7 +98,7 @@ export function GoalPicker({
                         )}>
                           {goal.name}
                         </p>
-                        <p className="text-xs text-white/35 mt-0.5">{goal.description}</p>
+                        <p className="text-xs text-white/50 mt-0.5">{goal.description}</p>
                       </button>
                     );
                   })}
@@ -119,7 +119,7 @@ export function GoalPicker({
             onChange={(e) => onCustomGoalNoteChange(e.target.value)}
             placeholder="Anything else you're working toward..."
             rows={2}
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
           />
         </div>
       )}

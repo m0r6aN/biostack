@@ -118,7 +118,7 @@ function RelationEdge({
           className="absolute nodrag nopan"
         >
           {data?.relation && (
-            <span className="text-[9px] text-white/25 bg-[#0a0a0c] px-1.5 py-0.5 rounded-full border border-white/8 font-mono">
+            <span className="text-[9px] text-white/50 bg-[#0a0a0c] px-1.5 py-0.5 rounded-full border border-white/8 font-mono">
               {data.relation}
             </span>
           )}
@@ -202,23 +202,23 @@ function NodeDetailPanel({ node, onClose }: { node: GraphNode; onClose: () => vo
         </span>
         <button
           onClick={onClose}
-          className="text-white/30 hover:text-white/60 text-sm leading-none mt-0.5"
+          className="text-white/50 hover:text-white/60 text-sm leading-none mt-0.5"
         >
           ✕
         </button>
       </div>
       <p className="text-[12px] text-white/80 leading-relaxed mb-2">{node.label}</p>
       {node.roleOrigin && (
-        <p className="text-[11px] text-white/40 font-mono">Origin: {node.roleOrigin}</p>
+        <p className="text-[11px] text-white/50 font-mono">Origin: {node.roleOrigin}</p>
       )}
       {node.evidenceRefs && node.evidenceRefs.length > 0 && (
         <div className="mt-2">
-          <p className="text-[10px] text-white/30 mb-1 uppercase tracking-wider">Evidence</p>
+          <p className="text-[10px] text-white/50 mb-1 uppercase tracking-wider">Evidence</p>
           <div className="flex flex-wrap gap-1">
             {node.evidenceRefs.map((ref, i) => (
               <span
                 key={i}
-                className="text-[9px] font-mono text-white/40 bg-white/5 px-1.5 py-0.5 rounded border border-white/8"
+                className="text-[9px] font-mono text-white/50 bg-white/5 px-1.5 py-0.5 rounded border border-white/8"
               >
                 {ref}
               </span>
@@ -301,16 +301,16 @@ function ReasoningGraphViewerInner({ graph, className }: ReasoningGraphViewerPro
     <div className={cn('rounded-2xl border border-white/10 bg-[#0a0a0c] overflow-hidden', className)}>
       {/* Header */}
       <div className="px-5 py-3 border-b border-white/8 flex items-center gap-2.5">
-        <span className="text-[11px] font-mono text-white/30 uppercase tracking-widest">KE-8</span>
+        <span className="text-[11px] font-mono text-white/50 uppercase tracking-widest">KE-8</span>
         <span className="text-sm font-semibold text-white/80">Reasoning Graph</span>
-        <span className="text-[10px] text-white/30 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full font-mono ml-auto">
+        <span className="text-[10px] text-white/50 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full font-mono ml-auto">
           {graph.graphId}
         </span>
       </div>
 
       {/* Node-kind filter */}
       <div className="flex flex-wrap items-center gap-1.5 px-5 py-2.5 border-b border-white/8">
-        <span className="text-[10px] text-white/20 font-mono uppercase tracking-widest mr-1">Nodes</span>
+        <span className="text-[10px] text-white/50 font-mono uppercase tracking-widest mr-1">Nodes</span>
         {ALL_KINDS.map(kind => (
           <button
             key={kind}
@@ -319,7 +319,7 @@ function ReasoningGraphViewerInner({ graph, className }: ReasoningGraphViewerPro
               'text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all',
               visibleKinds.has(kind)
                 ? NODE_KIND_STYLES[kind]
-                : 'border-white/8 text-white/20 bg-transparent hover:bg-white/5',
+                : 'border-white/8 text-white/50 bg-transparent hover:bg-white/5',
             )}
           >
             {kind}
@@ -329,7 +329,7 @@ function ReasoningGraphViewerInner({ graph, className }: ReasoningGraphViewerPro
 
       {/* Edge-relation filter */}
       <div className="flex flex-wrap items-center gap-1.5 px-5 py-2.5 border-b border-white/8">
-        <span className="text-[10px] text-white/20 font-mono uppercase tracking-widest mr-1">Edges</span>
+        <span className="text-[10px] text-white/50 font-mono uppercase tracking-widest mr-1">Edges</span>
         {ALL_RELATIONS.map(rel => (
           <button
             key={rel}
@@ -338,7 +338,7 @@ function ReasoningGraphViewerInner({ graph, className }: ReasoningGraphViewerPro
               'text-[10px] font-medium px-2 py-0.5 rounded-full border transition-all',
               visibleRelations.has(rel)
                 ? 'border-white/20 text-white/60 bg-white/8'
-                : 'border-white/8 text-white/20 bg-transparent hover:bg-white/5',
+                : 'border-white/8 text-white/50 bg-transparent hover:bg-white/5',
             )}
           >
             {rel}

@@ -50,7 +50,7 @@ export default async function ReceiptsDropPage({ params }: PageProps) {
           <ul className="space-y-1 text-sm">{myths.map(m => <li key={m.slot.slug}><Link href={`/myths/${m.slot.slug}`} className="text-cyan-300 underline underline-offset-4">&ldquo;{m.hit.claim.statement}&rdquo;</Link></li>)}</ul>
         </section>
       )}
-      <p className="text-xs text-white/40">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
+      <p className="text-xs text-white/50">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
     </main>
   );
 }

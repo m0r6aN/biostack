@@ -5,6 +5,7 @@ import { ClaimRow } from '@/components/knowledge/PublicClaimsPanel';
 import { fetchAllEntries, publishedLibrary } from '@/lib/claimLibrary';
 import { todaysClaim } from '@/lib/editorialCalendar';
 import { cardImageUrl } from '@/lib/verdictCard';
+import { PageMain } from '@/components/ui/PageMain';
 
 export const revalidate = 3600;
 
@@ -32,8 +33,8 @@ export default async function TodayPage({ params }: PageProps) {
   const hit = await load(date);
   if (hit === undefined) notFound();
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10 space-y-4">
-      <p className="text-xs uppercase tracking-[0.2em] text-white/45">Today&rsquo;s claim · {date}</p>
+    <PageMain className="max-w-3xl mx-auto px-4 py-10 space-y-4">
+      <p className="text-xs uppercase tracking-[0.2em] text-white/50">Today&rsquo;s claim · {date}</p>
       {hit ? (
         <>
           <h1 className="text-2xl font-semibold text-white">{hit.entry.canonicalName}</h1>
@@ -41,8 +42,11 @@ export default async function TodayPage({ params }: PageProps) {
           <Link href={`/knowledge/${hit.slug}`} className="text-sm text-cyan-300 underline underline-offset-4">Full {hit.entry.canonicalName} record</Link>
         </>
       ) : (
-        <p className="text-sm text-white/60">No graded claims yet. Verdicts appear here once the evidence council publishes them.</p>
+        <>
+          <h1 className="text-2xl font-semibold text-white">Today&rsquo;s claim</h1>
+          <p className="text-sm text-white/60">No graded claims yet. Verdicts appear here once the evidence council publishes them.</p>
+        </>
       )}
-    </main>
+    </PageMain>
   );
 }

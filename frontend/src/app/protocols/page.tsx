@@ -15,6 +15,7 @@ import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
+import { PageMain } from '@/components/ui/PageMain';
 
 function LockedTierCard({ eyebrow, title, detail }: { eyebrow: string; title: string; detail: string }) {
   return (
@@ -87,7 +88,7 @@ function ProtocolCard({ protocol }: { protocol: Protocol }) {
           {protocol.isCurrentVersion ? 'Current version' : 'Prior version'}
         </span>
         {protocol.priorVersions.length > 0 && (
-          <span className="text-white/45">
+          <span className="text-white/50">
             {protocol.priorVersions.length} prior version{protocol.priorVersions.length === 1 ? '' : 's'}
           </span>
         )}
@@ -95,14 +96,14 @@ function ProtocolCard({ protocol }: { protocol: Protocol }) {
 
       <p className="mt-3 break-words text-sm leading-6 text-white/60">{compoundSummary(protocol)}</p>
 
-      <p className="mt-2 text-xs text-white/45">
+      <p className="mt-2 text-xs text-white/50">
         {protocol.activeRun
           ? `Run active since ${new Date(protocol.activeRun.startedAtUtc).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}`
           : 'No active run yet'}
       </p>
 
       {protocol.evolvedFromRunId && (
-        <p className="mt-2 text-xs text-white/40">Derived from an observed run. Compare changes before tracking.</p>
+        <p className="mt-2 text-xs text-white/50">Derived from an observed run. Compare changes before tracking.</p>
       )}
 
       {protocol.stackScore.chips.length > 0 && (
@@ -289,7 +290,7 @@ export default function ProtocolsPage() {
         actions={<ProfileSwitcher />}
       />
 
-      <main className="max-w-6xl space-y-8 p-8">
+      <PageMain className="max-w-6xl space-y-8 p-8">
         <ActiveProfileChip />
 
         {loading ? (
@@ -339,7 +340,7 @@ export default function ProtocolsPage() {
                   />
                 </div>
               ) : (
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {protocols.map((protocol) => (
                     <ProtocolCard key={protocol.id} protocol={protocol} />
                   ))}
@@ -355,7 +356,7 @@ export default function ProtocolsPage() {
               </p>
 
               {currentStack ? (
-                <div className="mt-4 grid gap-6 lg:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
                   <div className="min-w-0 space-y-6">
                     {saveForm}
                     <StackScoreCard score={currentStack.stackScore} />
@@ -386,7 +387,7 @@ export default function ProtocolsPage() {
             </section>
           </>
         )}
-      </main>
+      </PageMain>
     </div>
   );
 }
