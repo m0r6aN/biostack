@@ -21,7 +21,7 @@ export function passkeyRegistrationErrorMessage(error: unknown): string {
     if (error.status === 429) return 'Too many attempts. Wait a few minutes, then try adding your passkey again.';
     if (error.status >= 500) return 'BioStack could not save your passkey. Please try again shortly.';
     if (error.code === 'invalid_passkey') return 'BioStack could not verify this passkey request. Start again with Add passkey.';
-    return 'BioStack could not complete passkey registration. Please try again or contact support@biostack.cc.';
+    return 'BioStack could not complete passkey registration. Please try again, or visit the Support page at biostack.cc/support.';
   }
   if (error instanceof Error || (typeof DOMException !== 'undefined' && error instanceof DOMException)) {
     if (error.name === 'NotAllowedError' || error.name === 'AbortError') return 'The passkey request was cancelled or timed out. Choose Add passkey to try again.';
@@ -29,7 +29,7 @@ export function passkeyRegistrationErrorMessage(error: unknown): string {
     if (error.name === 'SecurityError') return 'Passkeys could not be used on this address. Open https://biostack.cc and try again.';
     if (error.name === 'NotSupportedError') return 'This device or passkey manager could not create a passkey. Try another supported option.';
   }
-  return 'Your passkey could not be added. Check your connection and try again, or contact support@biostack.cc.';
+  return 'Your passkey could not be added. Check your connection and try again, or visit the Support page at biostack.cc/support.';
 }
 
 // The server uses invalid_passkey for several verification failures. Keep its

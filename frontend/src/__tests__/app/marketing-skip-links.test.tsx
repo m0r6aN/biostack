@@ -3,6 +3,7 @@ import HowItWorksPage from '@/app/how-it-works/page';
 import PricingPage from '@/app/pricing/page';
 import ProvidersPage from '@/app/providers/page';
 import SafetyPage from '@/app/safety/page';
+import SupportPage from '@/app/support/page';
 import { cleanup, render, screen } from '@testing-library/react';
 import type { ComponentProps, ComponentType } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -47,6 +48,7 @@ const marketingPages: Array<[route: string, Page: ComponentType]> = [
   ['/providers', ProvidersPage],
   ['/faq', FaqPage],
   ['/safety', SafetyPage],
+  ['/support', SupportPage],
 ];
 
 describe('public marketing pages expose the skip-link target', () => {

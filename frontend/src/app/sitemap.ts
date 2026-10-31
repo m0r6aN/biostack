@@ -20,6 +20,7 @@ const STATIC_PATHS = [
   '/safety',
   '/pricing',
   '/faq',
+  '/support',
   '/tools',
   '/tools/analyzer',
   '/tools/reconstitution-calculator',

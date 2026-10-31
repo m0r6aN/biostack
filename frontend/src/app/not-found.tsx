@@ -41,6 +41,12 @@ export default function NotFound() {
           >
             Start free
           </Link>
+          <Link
+            href="/support"
+            className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+          >
+            Get help
+          </Link>
         </div>
       </main>
 
