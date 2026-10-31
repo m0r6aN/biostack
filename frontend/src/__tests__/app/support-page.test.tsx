@@ -1,5 +1,5 @@
 import SupportPage from '@/app/support/page';
-import { SUPPORT_ENTRIES, SUPPORT_GROUPS } from '@/lib/supportContent';
+import { SUPPORT_EMAIL, SUPPORT_ENTRIES, SUPPORT_GROUPS } from '@/lib/supportContent';
 import { cleanup, render, screen } from '@testing-library/react';
 import type { ComponentProps } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -23,7 +23,7 @@ describe('/support', () => {
 
   it('covers the topics the product has to explain', () => {
     const questions = SUPPORT_ENTRIES.map((entry) => entry.question.toLowerCase()).join('\n');
-    for (const topic of ['signing in', 'consent', 'download my data', 'delete my account', 'evidence tiers', 'report it', 'how much']) {
+    for (const topic of ['signing in', 'consent', 'download my data', 'delete my account', 'evidence tiers', 'report it', 'how much', 'contact biostack']) {
       expect(questions + SUPPORT_GROUPS.map((g) => g.heading.toLowerCase()).join('\n')).toContain(topic);
     }
   });
@@ -39,11 +39,14 @@ describe('/support', () => {
     }
   });
 
-  it('sends people to the contact form, not to an email address', () => {
+  it('offers the contact form and the real support mailbox, and no other address', () => {
     render(<SupportPage />);
-    expect(screen.getAllByRole('link', { name: /contact us|open the contact form/i }).every((a) => a.getAttribute('href')?.startsWith('/contact') || a.getAttribute('href') === '#contact')).toBe(true);
-    expect(document.body.innerHTML).not.toMatch(/mailto:|@biostack\.cc/i);
-    expect(allText).not.toMatch(/@/);
+    expect(SUPPORT_EMAIL).toBe('support@biostack.cc');
+    const mailtos = [...document.querySelectorAll('a[href^="mailto:"]')].map((a) => a.getAttribute('href'));
+    expect(mailtos).toEqual([`mailto:${SUPPORT_EMAIL}`]);
+    expect(screen.getAllByRole('link', { name: /contact us|open the contact form/i }).some((a) => a.getAttribute('href') === '/contact')).toBe(true);
+    const addresses = new Set(allText.match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g) ?? []);
+    expect([...addresses]).toEqual([SUPPORT_EMAIL]);
   });
 
   it('states the no-dose-advice boundary and never offers dosing guidance', () => {
@@ -84,7 +87,7 @@ describe('/support', () => {
   });
 
   it('only links to routes that exist in the app', () => {
-    const known = ['/auth/signin', '/contact', '/onboarding/consent', '/privacy', '/account/data', '/how-it-works', '/knowledge', '/safety', '/knowledge/methodology', '/pricing', '/billing'];
+    const known = ['mailto:support@biostack.cc', '/auth/signin', '/contact', '/onboarding/consent', '/privacy', '/account/data', '/how-it-works', '/knowledge', '/safety', '/knowledge/methodology', '/pricing', '/billing'];
     for (const link of SUPPORT_ENTRIES.flatMap((entry) => entry.links ?? [])) {
       expect(known).toContain(link.href);
     }

@@ -24,8 +24,8 @@ public sealed class AzureCommunicationEmailContactMessageSender : IContactMessag
     public const string SupportInboxConfigKey = "Contact:SupportInboxAddress";
 
     /// <summary>
-    /// The address that existed before the setting did. Its domain has no MX record (checked 2026-10-31), so mail to it
-    /// bounces. Set <see cref="SupportInboxConfigKey"/> to a mailbox that receives mail.
+    /// The address used when <see cref="SupportInboxConfigKey"/> is unset: the Google Workspace support alias
+    /// (MX, SPF and DKIM live as of 2026-10-31; before that the domain had no MX record and mail bounced).
     /// </summary>
     public const string DefaultSupportInboxAddress = "support@biostack.cc";
 

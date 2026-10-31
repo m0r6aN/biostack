@@ -3,6 +3,7 @@
 import { Header } from '@/components/Header';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { SUPPORT_EMAIL } from '@/lib/supportContent';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
@@ -60,7 +61,8 @@ export default function ContactPage() {
               <span className="font-semibold text-white/80">{email}</span>.
             </p>
             <p className="text-sm text-white/50">
-              If it’s urgent, reply to any BioStack email and it will reach the same inbox.
+              You can also write to us directly at{' '}
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">{SUPPORT_EMAIL}</a>.
             </p>
           </GlassCard>
         ) : (

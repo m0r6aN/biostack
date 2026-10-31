@@ -26,6 +26,7 @@ public sealed class AzureCommunicationAccountEmailSender(IConfiguration config, 
 
         var client = new EmailClient(connectionString);
         var message = new EmailMessage(sender, email.To, new EmailContent(email.Subject) { PlainText = email.PlainText, Html = email.Html });
+        BioStack.Api.Auth.OutgoingEmailReplyTo.Apply(message, config);
         await client.SendAsync(WaitUntil.Started, message, ct);
         logger.LogInformation("Queued BioStack account email through Azure Communication Email");
     }

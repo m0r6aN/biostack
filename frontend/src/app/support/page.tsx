@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { createPublicPageMetadata } from '@/lib/site';
-import { SUPPORT_ENTRIES, SUPPORT_GROUPS } from '@/lib/supportContent';
+import { SUPPORT_EMAIL, SUPPORT_ENTRIES, SUPPORT_GROUPS } from '@/lib/supportContent';
 
 export const metadata = createPublicPageMetadata({
   title: 'Support and Help | BioStack',
@@ -34,7 +34,7 @@ export default function SupportPage() {
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">How can we help?</h1>
           <p className="mt-5 text-lg leading-8 text-white/62">
             Answers about signing in, your data, and what BioStack does and does not do. If you do not find what you need,
-            use the contact form and we will read it.
+            use the contact form or email {SUPPORT_EMAIL}, and we will read it.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
@@ -62,11 +62,6 @@ export default function SupportPage() {
                 </a>
               </li>
             ))}
-            <li>
-              <a href="#contact" className="inline-flex min-h-8 items-center text-sm text-emerald-200 underline-offset-4 hover:underline">
-                Contact us
-              </a>
-            </li>
           </ul>
         </nav>
 
@@ -91,9 +86,15 @@ export default function SupportPage() {
                       <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
                         {entry.links.map((link) => (
                           <li key={link.href}>
-                            <Link href={link.href} className="inline-flex min-h-8 items-center text-sm font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">
-                              {link.label}
-                            </Link>
+                            {link.href.startsWith('mailto:') ? (
+                              <a href={link.href} className="inline-flex min-h-8 items-center text-sm font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">
+                                {link.label}
+                              </a>
+                            ) : (
+                              <Link href={link.href} className="inline-flex min-h-8 items-center text-sm font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">
+                                {link.label}
+                              </Link>
+                            )}
                           </li>
                         ))}
                       </ul>
@@ -103,22 +104,6 @@ export default function SupportPage() {
               </div>
             </section>
           ))}
-
-          <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-24 rounded-lg border border-emerald-300/16 bg-emerald-400/[0.06] p-6">
-            <h2 id="contact-heading" className="text-2xl font-semibold text-white">Contact us</h2>
-            <p className="mt-3 max-w-3xl leading-7 text-white/70">
-              Use the contact form. Pick the category that fits (Support, Billing, Feedback, Partnership, or Other), include the
-              email you want us to reply to, and tell us what happened and what you expected. Please do not put passwords or
-              sign-in links in a message. Do not use the form for anything urgent or medical. For that, contact a clinician or
-              your local emergency services.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-emerald-400 px-5 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
-            >
-              Open the contact form
-            </Link>
-          </section>
         </div>
       </main>
 

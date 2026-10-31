@@ -40,3 +40,11 @@ It is the right fix for the silent-loss problem (a stored ticket survives a boun
 ## 5. Production config (for Codex, after Clint names the inbox)
 
 Dry run first. Stop before applying. Set one app setting, `Contact__SupportInboxAddress=<address Clint chose>`, on the API container app. Nothing else changes. Roll back by clearing the value (the code falls back to the old default). Do not touch `AzureCommunicationEmail__*`.
+
+## 6. Update 2026-10-31 (after the mailbox went live)
+
+Clint set up `support@biostack.cc` (Google Workspace alias; MX, SPF and DKIM live; tested both directions). Changes:
+- `/contact` success text no longer claims that replying to any BioStack email reaches the inbox. It now says we reply by email to the address given and that people can also write to `support@biostack.cc` (a mailto).
+- `/support` shows the address in a "Contact us" group (contact form or email), so it is also in the FAQPage structured data. The footer keeps one "BioStack Support" link to `/support` rather than a raw mailto on every marketing page; the page carries both channels.
+- Optional Reply-To on system mail sent through Azure Communication Email (magic link, account emails, evidence alerts): app setting `Email:ReplyToAddress` (env `Email__ReplyToAddress`). Unset, blank or malformed adds no header, which is the previous behavior. Before this, none of those emails set a Reply-To, so a reply to a sign-in email went to `noreply@`. SMTP fallback senders are unchanged. The contact form is unchanged (its Reply-To is the visitor).
+- Decision for Clint: to make replies reach the inbox, set `Email__ReplyToAddress=support@biostack.cc` on the API. The default behavior is unchanged until then.
