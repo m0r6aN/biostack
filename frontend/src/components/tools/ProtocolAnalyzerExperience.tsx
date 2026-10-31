@@ -12,6 +12,7 @@ import type {
   ProtocolAnalyzerResult,
   ProtocolAnalyzerSwap,
 } from '@/lib/types';
+import { PageMain } from '@/components/ui/PageMain';
 
 const STORAGE_KEY = 'biostack.analyzer.session.v3';
 const supportedFileTypes = '.pdf,.docx,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.webp';
@@ -176,7 +177,7 @@ export function ProtocolAnalyzerExperience() {
     ((mode === 'FileUpload' || mode === 'CameraScan') && !selectedFile);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-28 pt-8 sm:px-6 lg:px-8 lg:pt-10">
+    <PageMain className="mx-auto max-w-7xl px-4 pb-28 pt-8 sm:px-6 lg:px-8 lg:pt-10">
       <section className="mb-6 border-b border-white/[0.08] pb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Protocol Analyzer</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
@@ -450,7 +451,7 @@ export function ProtocolAnalyzerExperience() {
           </div>
         </div>
       )}
-    </main>
+    </PageMain>
   );
 }
 

@@ -30,7 +30,7 @@ export function CalendarTab({
     <GlassCard variant="base" className="p-6">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-xl font-semibold text-white">Weekly Schedule</h3>
+          <h2 className="text-xl font-semibold text-white">Weekly Schedule</h2>
           <p className="text-sm text-white/50">
             Week {activePhase.currentWeek} · {activePhase.label} · {doseHeadline}
           </p>

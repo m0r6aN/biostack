@@ -58,7 +58,7 @@ export function NextObservationCard({ payload, checkIns, compounds, goals, class
               <p className="text-sm font-semibold text-white/90 leading-snug">{top.title}</p>
               <p className="text-xs text-white/50 mt-1 leading-relaxed">{top.reason}</p>
               {top.impact && (
-                <p className="text-xs text-emerald-400/70 mt-1.5 font-medium">↑ {top.impact}</p>
+                <p className="text-xs text-emerald-400 mt-1.5 font-medium">↑ {top.impact}</p>
               )}
             </div>
           </div>

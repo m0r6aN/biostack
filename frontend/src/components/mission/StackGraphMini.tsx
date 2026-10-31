@@ -37,7 +37,7 @@ export function StackGraphMini({ intelligence, compounds, activeProtocolId, clas
         <Link
           href={labHref}
           onClick={() => track({ name: 'surface_view', surface: 'stack-graph-full' })}
-          className="text-[11px] font-semibold text-emerald-400/70 hover:text-emerald-300 transition-colors flex items-center gap-1"
+          className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
         >
           Open Lab
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">

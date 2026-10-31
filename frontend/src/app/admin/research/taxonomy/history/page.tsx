@@ -14,6 +14,7 @@ import type { ResearchCategoryTaxonomyAuditEntry, ResearchCategoryTaxonomyAuditL
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type AuditFilter = 'all' | ResearchCategoryTaxonomyAuditEntry['action'];
 
@@ -82,7 +83,7 @@ function ResearchTaxonomyHistoryContent() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</div>}
 
         <GlassCard className="p-5 space-y-4">
@@ -167,7 +168,7 @@ function ResearchTaxonomyHistoryContent() {
             </div>
           )}
         </section>
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -176,9 +177,9 @@ function ResearchTaxonomyHistoryFallback() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full">
         <p className="text-sm text-white/50">Loading...</p>
-      </main>
+      </PageMain>
     </div>
   );
 }

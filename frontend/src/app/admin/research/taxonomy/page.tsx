@@ -13,6 +13,7 @@ import type {
 } from '@/lib/research/types';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type EditableCategory = {
   id: string;
@@ -188,7 +189,7 @@ export default function ResearchTaxonomyPage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Category Taxonomy" subtitle="Canonical research category governance · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && (
           <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</div>
         )}
@@ -412,7 +413,7 @@ export default function ResearchTaxonomyPage() {
           <Link href="/admin/research/tasks" className="text-violet-300 transition-colors hover:text-violet-200">View task board →</Link>
           <Link href="/admin/research" className="text-emerald-400 transition-colors hover:text-emerald-300">Back to research dashboard →</Link>
         </div>
-      </main>
+      </PageMain>
     </div>
   );
 }

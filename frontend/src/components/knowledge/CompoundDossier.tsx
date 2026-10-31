@@ -150,7 +150,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
 
           {data.conflicts.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-rose-400/70 uppercase tracking-wider mb-2">Conflicts</p>
+              <p className="text-xs font-semibold text-rose-400 uppercase tracking-wider mb-2">Conflicts</p>
               <ul className="space-y-2">
                 {data.conflicts.map((conflict, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-rose-200/60">

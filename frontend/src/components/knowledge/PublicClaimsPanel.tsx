@@ -69,7 +69,7 @@ export function ClaimRow({ claim, href }: { claim: KnowledgePublicClaim; href?: 
             return (
               <li key={src.id}>
                 {href ? (
-                  <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-300/90 underline underline-offset-4 [overflow-wrap:anywhere]">
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center text-cyan-300/90 underline underline-offset-4 [overflow-wrap:anywhere]">
                     {src.title || href}<span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 ) : <span>{src.title}</span>}

@@ -30,6 +30,7 @@ import {
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type SurfaceMode = ToolMode;
 type OverlapStatus = 'caution' | 'avoid' | 'unknown';
@@ -366,7 +367,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   }
 
   return (
-    <main className="pb-24 md:pb-0">
+    <PageMain className="pb-24 md:pb-0">
       <section className="mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-12 lg:pt-12">
         <div className="space-y-5">
           {!compactIntro && (
@@ -527,7 +528,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         </aside>
       </section>
-    </main>
+    </PageMain>
   );
 }
 

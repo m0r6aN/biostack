@@ -7,15 +7,15 @@ import { GlassCard } from '@/components/ui/GlassCard';
 export function MonitoringLabsTab({ monitoring }: { monitoring: MonitoringProtocol }) {
   return (
     <GlassCard variant="base" className="p-6 sm:p-8">
-      <h3 className="text-2xl font-semibold text-white">Monitoring &amp; Lab Protocol</h3>
+      <h2 className="text-2xl font-semibold text-white">Monitoring &amp; Lab Protocol</h2>
 
       <div className="mt-6">
-        <h4 className="mb-2 font-semibold text-white">Baseline (Completed)</h4>
+        <h3 className="mb-2 font-semibold text-white">Baseline (Completed)</h3>
         <p className="text-sm text-white/55">{monitoring.baselineCompleted}</p>
       </div>
 
       <div className="mt-6">
-        <h4 className="mb-3 font-semibold text-white">Recurring Labs ({monitoring.recurringCadence})</h4>
+        <h3 className="mb-3 font-semibold text-white">Recurring Labs ({monitoring.recurringCadence})</h3>
         <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2 md:grid-cols-3">
           {monitoring.recurringLabs.map((lab) => (
             <div key={lab} className="rounded-xl bg-white/[0.03] px-4 py-3 text-white/75">

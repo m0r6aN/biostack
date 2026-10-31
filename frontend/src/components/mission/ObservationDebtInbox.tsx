@@ -87,14 +87,14 @@ function InboxItem({ item, onDismiss }: { item: ObservationDebtItem; onDismiss?:
         <p className="text-xs font-semibold text-white/80 leading-snug">{item.title}</p>
         <p className="text-[11px] text-white/50 mt-0.5 leading-relaxed">{item.reason}</p>
         {item.impact && (
-          <p className="text-[10px] text-emerald-400/60 mt-1 font-medium">↑ {item.impact}</p>
+          <p className="text-[10px] text-emerald-400 mt-1 font-medium">↑ {item.impact}</p>
         )}
       </div>
 
       <div className="flex items-center gap-1.5 shrink-0">
         <Link
           href={item.ctaHref}
-          className="text-[11px] font-semibold text-emerald-400/80 hover:text-emerald-300 transition-colors whitespace-nowrap"
+          className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors whitespace-nowrap"
         >
           {item.ctaLabel}
         </Link>

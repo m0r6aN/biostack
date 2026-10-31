@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 export function ProgressMilestonesTab({ milestones }: { milestones: Milestone[] }) {
   return (
     <GlassCard variant="base" className="p-6 sm:p-8">
-      <h3 className="mb-6 text-2xl font-semibold text-white">Expected Milestones</h3>
+      <h2 className="mb-6 text-2xl font-semibold text-white">Expected Milestones</h2>
 
       <div className="space-y-6">
         {milestones.map((milestone) => (

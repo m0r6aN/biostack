@@ -367,7 +367,7 @@ export default function DecisionTheaterPage() {
                     <div className="space-y-3">
                       <div className="rounded-xl border border-orange-400/20 bg-orange-500/5 px-4 py-4">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="text-[9px] font-bold uppercase tracking-widest text-orange-400/60">
+                          <span className="text-[9px] font-bold uppercase tracking-widest text-orange-400">
                             Active Contradiction — Non-Executable
                           </span>
                           <ClaimBadgeStack badges={['not-executable', 'commentary-only']} size="xs" className="ml-auto" />

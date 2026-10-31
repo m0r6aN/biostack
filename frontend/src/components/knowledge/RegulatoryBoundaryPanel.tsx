@@ -44,7 +44,7 @@ export function RegulatoryBoundaryPanel({ boundary, promotionBlockers = [] }: Re
               Promotion Blockers ({promotionBlockers.length})
             </span>
             <svg
-              className={cn('w-4 h-4 text-amber-400/60 transition-transform', blockersOpen && 'rotate-180')}
+              className={cn('w-4 h-4 text-amber-400 transition-transform', blockersOpen && 'rotate-180')}
               fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />

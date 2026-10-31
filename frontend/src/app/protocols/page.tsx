@@ -15,6 +15,7 @@ import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
+import { PageMain } from '@/components/ui/PageMain';
 
 function LockedTierCard({ eyebrow, title, detail }: { eyebrow: string; title: string; detail: string }) {
   return (
@@ -289,7 +290,7 @@ export default function ProtocolsPage() {
         actions={<ProfileSwitcher />}
       />
 
-      <main className="max-w-6xl space-y-8 p-8">
+      <PageMain className="max-w-6xl space-y-8 p-8">
         <ActiveProfileChip />
 
         {loading ? (
@@ -386,7 +387,7 @@ export default function ProtocolsPage() {
             </section>
           </>
         )}
-      </main>
+      </PageMain>
     </div>
   );
 }

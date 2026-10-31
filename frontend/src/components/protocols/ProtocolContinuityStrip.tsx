@@ -36,7 +36,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
     <section className="rounded-lg border border-emerald-400/15 bg-[#0f171f] p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/55">Stack History</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/70">Stack History</p>
           <h2 className="mt-1 text-lg font-bold text-white">
             v{protocol.version} {protocol.isDraft ? 'draft' : 'snapshot'}
             {prior ? ` follows v${prior.version}` : ' starts this tracked stack'}

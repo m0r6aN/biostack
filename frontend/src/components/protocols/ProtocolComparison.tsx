@@ -39,7 +39,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
       {summary && (
         <div className="mt-5 grid gap-4 rounded-lg border border-emerald-400/15 bg-emerald-500/[0.04] p-4 lg:grid-cols-[220px_1fr_160px]">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] text-emerald-200/55">Active Run</p>
+            <p className="text-xs uppercase tracking-[0.14em] text-emerald-200/70">Active Run</p>
             <p className="mt-2 text-lg font-bold text-white">Started {summary.daysActive} day{summary.daysActive === 1 ? '' : 's'} ago</p>
           </div>
           <div className="grid gap-2 sm:grid-cols-2">

@@ -178,16 +178,16 @@ export default function ProfileDetailPage() {
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-emerald-400/70">Sex</div>
+                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-emerald-400">Sex</div>
                       <p className="text-lg font-semibold text-white/90">{profile.sex}</p>
                     </div>
                     <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-blue-400/70">Weight</div>
+                      <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-blue-400">Weight</div>
                       <p className="text-lg font-semibold text-white/90">{formatWeight(profile.weight, settings.weightUnit)}</p>
                     </div>
                     {currentPhase && (
                       <div className="relative group p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] col-span-2 md:col-span-1">
-                        <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-purple-400/70">Current Phase</div>
+                        <div className="absolute -top-3 left-4 px-2 bg-[#121923] text-[10px] font-bold uppercase tracking-widest text-purple-400">Current Phase</div>
                         <p className="text-lg font-semibold text-white/90">{currentPhase.name}</p>
                       </div>
                     )}

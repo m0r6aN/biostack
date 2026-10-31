@@ -23,7 +23,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
         >
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h4 className="font-bold text-white text-lg">{formatDate(checkIn.date)}</h4>
+              <h2 className="font-bold text-white text-lg">{formatDate(checkIn.date)}</h2>
               <div className="flex items-center gap-2 mt-1">
                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/50 uppercase tracking-wider">
                   Weight: {formatWeight(checkIn.weight, settings.weightUnit)}
@@ -68,7 +68,7 @@ export function CheckInHistory({ checkIns }: CheckInHistoryProps) {
               )}
               {checkIn.notes && (
                 <div>
-                  <p className="text-[10px] font-black uppercase text-emerald-400/40 mb-1 tracking-widest">Narrative</p>
+                  <p className="text-[10px] font-black uppercase text-emerald-400 mb-1 tracking-widest">Narrative</p>
                   <p className="text-sm text-white/60 leading-relaxed">{checkIn.notes}</p>
                 </div>
               )}

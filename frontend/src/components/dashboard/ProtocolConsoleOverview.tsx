@@ -18,7 +18,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
     <section className="rounded-lg border border-emerald-400/15 bg-[#0f171f] p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/55">Where Am I Now?</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/70">Where Am I Now?</p>
           <h2 className="mt-2 text-2xl font-black text-white">
             {activeRun ? `${activeRun.protocolName} v${activeRun.protocolVersion} is running` : 'No tracked stack run is active'}
           </h2>

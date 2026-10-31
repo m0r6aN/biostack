@@ -98,7 +98,7 @@ export function CognitiveHeatGauge({ heat, compact = false, className }: Cogniti
       )}
 
       {heat.band === 'critical' && (
-        <p className="text-[10px] text-red-400/80 leading-relaxed">
+        <p className="text-[10px] text-red-400 leading-relaxed">
           Collective cognition critically strained — non-essential perspectives collapsed
         </p>
       )}

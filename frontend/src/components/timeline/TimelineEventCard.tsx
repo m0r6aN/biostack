@@ -13,7 +13,7 @@ export function TimelineEventCard({ event }: TimelineEventCardProps) {
         <div className="w-1 h-12 bg-white/[0.08] mt-2"></div>
       </div>
       <div className="flex-1 pt-1">
-        <h4 className="font-semibold text-white">{event.title}</h4>
+        <h2 className="font-semibold text-white">{event.title}</h2>
         <p className="text-sm text-white/65 mt-1">{event.description}</p>
         <p className="text-xs text-white/50 mt-2">{formatDateTime(event.occurredAtUtc)}</p>
       </div>

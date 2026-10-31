@@ -13,13 +13,16 @@ interface EmptyStateProps {
     label: string;
     href: string;
   };
+  /** Heading level for the title. Defaults to 2 because empty states sit directly under the page's h1. */
+  headingLevel?: 2 | 3;
 }
 
-export function EmptyState({ title, description, icon, action, secondaryAction }: EmptyStateProps) {
+export function EmptyState({ title, description, icon, action, secondaryAction, headingLevel = 2 }: EmptyStateProps) {
+  const Heading = headingLevel === 3 ? 'h3' : 'h2';
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4">
       {icon && <div className="mb-4 text-4xl opacity-50">{icon}</div>}
-      <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+      <Heading className="text-lg font-semibold text-white mb-2">{title}</Heading>
       <p className="text-sm text-white/50 mb-6 text-center max-w-sm">{description}</p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         {action && (

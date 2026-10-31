@@ -11,6 +11,7 @@ import {
 } from '@/lib/research/loader';
 import type { PromotionExportManifest, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest } from '@/lib/research/types';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 function SectionHeader({ title, open, toggle }: { title: string; open: boolean; toggle: () => void }) {
   return (
@@ -73,7 +74,7 @@ export default function PipelinePage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Promotion Pipeline" subtitle="Export · Import Preview · Dry-Run · Internal" />
-      <main className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
 
         <GlassCard className="p-5">
           <SectionHeader title="Promotion Manifest" open={open.manifest} toggle={() => toggle('manifest')} />
@@ -217,7 +218,7 @@ export default function PipelinePage() {
           )}
         </GlassCard>
 
-      </main>
+      </PageMain>
     </div>
   );
 }

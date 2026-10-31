@@ -9,6 +9,7 @@ import { toSlug } from '@/lib/research/slugs';
 import type { PromotionManifest, ResearchCategoryTaxonomy, ResearchSummary, ResearchSummaryCompound, ResearchTaskQueue } from '@/lib/research/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type QueueTabKey = 'requested' | 'review' | 'rereview' | 'processing';
 
@@ -180,7 +181,7 @@ function CompoundListContent() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Compound Review" subtitle="Research pipeline triage queue · Internal" />
-      <main className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
         {summary && manifest && (
           <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
             <aside className="flex flex-col gap-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto xl:pr-1">
@@ -210,7 +211,7 @@ function CompoundListContent() {
 
         {loading && <p className="text-sm text-white/50 px-1">Loading...</p>}
         {error && <p className="text-sm text-rose-300 px-1">{error}</p>}
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -219,9 +220,9 @@ function AdminResearchPageFallback({ title }: { title: string }) {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title={title} subtitle="Research pipeline triage queue · Internal" />
-      <main className="flex-1 p-4 max-w-7xl mx-auto w-full">
+      <PageMain className="flex-1 p-4 max-w-7xl mx-auto w-full">
         <p className="text-sm text-white/50 px-1">Loading...</p>
-      </main>
+      </PageMain>
     </div>
   );
 }

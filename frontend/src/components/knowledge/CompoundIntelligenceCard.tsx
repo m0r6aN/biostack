@@ -175,7 +175,7 @@ export function CompoundIntelligenceCard({
         )}
 
         <section aria-label="Evidence and limitations" className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-2">
-          <h4 className="text-sm font-medium text-white/80">Evidence and limitations</h4>
+          <h3 className="text-sm font-medium text-white/80">Evidence and limitations</h3>
           {studyDesign ? (
             <div data-testid="reviewed-study-design" className="space-y-2">
               <p className="text-sm leading-6 text-white/65">{studyDesign.statement}</p>
@@ -223,11 +223,11 @@ export function CompoundIntelligenceCard({
 
         {(entry.avoidWith.length > 0 || entry.drugInteractions.length > 0) && (
           <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-4">
-            <h4 className="text-sm font-medium text-white/80">Interactions & cautions</h4>
+            <h3 className="text-sm font-medium text-white/80">Interactions & cautions</h3>
 
             {entry.avoidWith.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-2">
                   <HelpTip tipKey="flaggedInSourceData">Flagged in source data</HelpTip>
                 </p>
                 <TagList items={entry.avoidWith} tone="rose" />
@@ -236,7 +236,7 @@ export function CompoundIntelligenceCard({
 
             {entry.drugInteractions.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-2">
                   <HelpTip tipKey="reportedDrugInteractions">Drug interactions</HelpTip>
                 </p>
                 <TagList items={entry.drugInteractions} tone="rose" />
@@ -251,7 +251,7 @@ export function CompoundIntelligenceCard({
 
         {!details && entry.sourceReferences.length > 0 && (
           <section aria-label="Sources">
-            <h4 className="text-sm font-medium text-white/80 mb-2">Sources</h4>
+            <h3 className="text-sm font-medium text-white/80 mb-2">Sources</h3>
             <ul id={referenceListId} className="text-sm space-y-2">
               {entry.sourceReferences.slice(0, showAllReferences ? undefined : 3).map((ref, i) => {
                 const link = referenceLink(ref);

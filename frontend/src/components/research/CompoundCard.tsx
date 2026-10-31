@@ -51,7 +51,7 @@ export function CompoundCard({ compound, selected, onClick, secondaryAction }: C
         )}
       </div>
       {showBlocker && (
-        <p className="mt-1.5 text-[10px] text-rose-400/70 italic truncate">
+        <p className="mt-1.5 text-[10px] text-rose-400 italic truncate">
           {firstBlocker}
         </p>
       )}

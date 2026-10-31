@@ -6,6 +6,7 @@ import { SaveToBioStackPanel } from '@/components/research/SaveToBioStackPanel';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import type { StagedTranscriptCandidateReview } from '@/lib/types';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -95,7 +96,7 @@ export default function StagedReviewsPage() {
         title="Staged Transcript Reviews"
         subtitle="Review, approve, and promote knowledge entries to BioStack"
       />
-      <main className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
 
         {/* Filter bar */}
         <div className="flex items-center gap-2">
@@ -206,7 +207,7 @@ export default function StagedReviewsPage() {
           </GlassCard>
         ))}
 
-      </main>
+      </PageMain>
     </div>
   );
 }

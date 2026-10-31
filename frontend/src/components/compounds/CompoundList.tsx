@@ -23,13 +23,13 @@ export function CompoundList({ compounds, onSelect }: CompoundListProps) {
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h4 className="font-semibold text-white">{compound.name?.trim() || 'Unnamed compound'}</h4>
+              <h2 className="font-semibold text-white">{compound.name?.trim() || 'Unnamed compound'}</h2>
               <div className="flex flex-wrap items-center gap-2 mt-1">
                 <span className="text-xs text-white/50">{compound.category}</span>
                 {compound.goal && (
                   <>
                     <span className="text-xs text-white/50">•</span>
-                    <span className="text-xs text-emerald-400/70" title={compoundGoalDisplay(compound.goal).context}>
+                    <span className="text-xs text-emerald-400" title={compoundGoalDisplay(compound.goal).context}>
                       {compoundGoalDisplay(compound.goal).label}
                     </span>
                   </>

@@ -105,7 +105,7 @@ export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimel
             )}
           </h2>
         </div>
-        <Link href="/timeline" className="text-xs font-semibold text-emerald-400/70 hover:text-emerald-300 transition-colors flex items-center gap-1">
+        <Link href="/timeline" className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1">
           Full timeline
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

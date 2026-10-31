@@ -9,6 +9,7 @@ import { mythKicker, publishedMyths } from '@/lib/editorialCalendar';
 import { isAllowlistedSourceUrl } from '@/lib/outboundLinks';
 import { createPublicPageMetadata } from '@/lib/site';
 import { cardImageUrl } from '@/lib/verdictCard';
+import { PageMain } from '@/components/ui/PageMain';
 
 export const revalidate = 3600;
 
@@ -49,7 +50,7 @@ export default async function MythPage({ params }: PageProps) {
   ].map(redactDoseText).filter(Boolean);
   const gaps = (entry.details?.evidenceGaps ?? []).map(redactDoseText).slice(0, 3);
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10 space-y-6">
+    <PageMain className="max-w-3xl mx-auto px-4 py-10 space-y-6">
       <p className="text-xs uppercase tracking-[0.2em] text-white/50">{mythKicker(claim.verdict)}</p>
       <h1 className="text-2xl font-semibold text-white">Myth of the Week: &ldquo;{claim.statement}&rdquo;</h1>
       <p className="text-sm text-white/70 flex flex-wrap gap-3 items-center">
@@ -85,6 +86,6 @@ export default async function MythPage({ params }: PageProps) {
         <Link href={`/knowledge/${compound}/changelog`} className="text-cyan-300 underline underline-offset-4">Changelog</Link>
       </nav>
       <p className="text-xs text-white/50">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
-    </main>
+    </PageMain>
   );
 }

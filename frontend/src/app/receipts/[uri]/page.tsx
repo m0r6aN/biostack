@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Shield, ArrowLeft, AlertCircle } from "lucide-react";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import type { DecisionReceiptResponse } from "@/lib/types";
+import { PageMain } from '@/components/ui/PageMain';
 
 interface ReceiptPageProps {
   params: Promise<{ uri: string }>;
@@ -72,7 +73,7 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white">
+    <PageMain className="min-h-screen bg-[#0a0a0b] text-white">
       <div className="max-w-2xl mx-auto px-4 py-10">
         {/* Back nav */}
         <Link
@@ -142,6 +143,6 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
           )}
         </div>
       </div>
-    </main>
+    </PageMain>
   );
 }

@@ -14,6 +14,7 @@ import type { CompoundGraph, EvidencePacket, PromotionManifestCandidate, Researc
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type Tab = 'overview' | 'claims' | 'resolution' | 'decision' | 'relationships';
 
@@ -154,12 +155,12 @@ export default function CompoundDetail() {
     return (
       <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
         <Header title="Compound Not Found" subtitle="" />
-        <main className="flex-1 p-6 max-w-4xl mx-auto w-full">
+        <PageMain className="flex-1 p-6 max-w-4xl mx-auto w-full">
           <p className="text-white/50 mb-4">Compound not found in current research run.</p>
           <button onClick={() => router.push('/admin/research/compounds')} className="text-emerald-400 text-sm hover:text-emerald-300">
             ← Back to compounds
           </button>
-        </main>
+        </PageMain>
       </div>
     );
   }
@@ -168,9 +169,9 @@ export default function CompoundDetail() {
     return (
       <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
         <Header title="Loading…" subtitle="" />
-        <main className="flex-1 p-6 flex items-center justify-center">
+        <PageMain className="flex-1 p-6 flex items-center justify-center">
           <p className="text-white/50 text-sm">Loading compound data…</p>
-        </main>
+        </PageMain>
       </div>
     );
   }
@@ -178,7 +179,7 @@ export default function CompoundDetail() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title={compound.name} subtitle="Compound Review Detail · Internal" />
-      <main className="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-4 max-w-5xl mx-auto w-full flex flex-col gap-4">
         <div className="flex items-center gap-2 text-[11px]">
           <button onClick={() => router.push('/admin/research/compounds')} className="text-emerald-400 hover:text-emerald-300">
             ← Compounds
@@ -414,7 +415,7 @@ export default function CompoundDetail() {
             knownSlugs={knownCompoundSlugs}
           />
         )}
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -502,7 +503,7 @@ function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | nul
 
               {claim.reviewFlags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-amber-200/50">Reviewer guardrails — not auto-approved output</span>
+                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-amber-200/70">Reviewer guardrails — not auto-approved output</span>
                   {claim.reviewFlags.map(flag => <span key={flag} className="rounded-full border border-amber-300/20 bg-amber-500/10 px-2 py-1 text-[10px] text-amber-200/80">{flag}</span>)}
                 </div>
               )}

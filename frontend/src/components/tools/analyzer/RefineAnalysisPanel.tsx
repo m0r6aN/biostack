@@ -112,7 +112,7 @@ export function RefineAnalysisPanel({
             <Link
               href={isAuthenticated ? '/profiles' : '/auth/signin?callbackUrl=/tools/analyzer'}
               onClick={handleNudgeClick}
-              className="text-xs text-emerald-400/80 hover:text-emerald-400 transition-colors underline underline-offset-2"
+              className="text-xs text-emerald-400 hover:text-emerald-400 transition-colors underline underline-offset-2"
             >
               Create a profile to autofill this and track your results over time.
             </Link>

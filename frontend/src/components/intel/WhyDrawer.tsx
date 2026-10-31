@@ -49,7 +49,7 @@ export function WhyDrawer({
     <span className={cn('inline-flex items-center', className)}>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1 text-[10px] font-semibold text-white/50 hover:text-white/60 hover:bg-white/5 rounded-full px-2 py-0.5 transition-colors border border-transparent hover:border-white/10"
+        className="inline-flex min-h-6 items-center gap-1 text-[10px] font-semibold text-white/50 hover:text-white/60 hover:bg-white/5 rounded-full px-2 py-0.5 transition-colors border border-transparent hover:border-white/10"
         aria-label={`Why? — ${surface}`}
       >
         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeWidth="1.5">
@@ -108,7 +108,7 @@ export function WhyDrawer({
           {/* Caveats */}
           {caveats && caveats.length > 0 && (
             <div className="rounded-2xl border border-amber-400/15 bg-amber-500/5 px-4 py-3">
-              <p className="text-[10px] font-bold text-amber-400/70 uppercase tracking-widest mb-2">Caveats</p>
+              <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-2">Caveats</p>
               <ul className="space-y-1">
                 {caveats.map((c) => (
                   <li key={c} className="text-xs text-amber-300/70 leading-relaxed flex gap-2">

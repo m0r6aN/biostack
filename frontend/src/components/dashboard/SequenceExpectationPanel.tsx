@@ -23,7 +23,7 @@ export function SequenceExpectationPanel({ snapshot, compact = false }: Sequence
     <section className="rounded-lg border border-cyan-300/15 bg-[#111821]/95 p-5 shadow-[0_0_28px_rgba(34,211,238,0.04)]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100/45">Sequence Expectation</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100/70">Sequence Expectation</p>
           <h2 className="mt-2 text-lg font-bold text-white">Built from {snapshot.historicalRunCount} completed runs</h2>
         </div>
         <span className={`rounded-lg border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] ${statusClass(status)}`}>
@@ -34,7 +34,7 @@ export function SequenceExpectationPanel({ snapshot, compact = false }: Sequence
       {event ? (
         <div className="mt-4 space-y-3">
           <div className="rounded-lg border border-cyan-300/15 bg-cyan-400/[0.06] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-cyan-100/45">Next commonly observed event</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-cyan-100/70">Next commonly observed event</p>
             <p className="mt-2 text-xl font-black text-white">{formatEvent(event.eventType)}</p>
             <p className="mt-2 text-sm leading-6 text-white/60">{event.timingWindow}</p>
           </div>

@@ -437,7 +437,7 @@ function BatchActions({ decisionCount, onExport, onProcess, processing, processE
       {processResult && (
         <div className="mt-2 rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-left">
           <p className="text-[11px] font-semibold text-emerald-200">Processed {processResult.savedFilename}</p>
-          <p className="mt-1 text-[10px] text-emerald-100/55">Worker exit code: {processResult.exitCode ?? 'unknown'} · Refreshing artifacts…</p>
+          <p className="mt-1 text-[10px] text-emerald-100/70">Worker exit code: {processResult.exitCode ?? 'unknown'} · Refreshing artifacts…</p>
         </div>
       )}
     </div>

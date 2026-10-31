@@ -193,12 +193,42 @@ import { useProfile } from '@/lib/context';
 import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
 
 const SIDEBAR_NAV_ID = 'app-sidebar-nav';
+export const SIDEBAR_ID = 'app-sidebar';
+
+/**
+ * Below the `lg` breakpoint the sidebar is an off-canvas drawer. When it is closed it is
+ * translated off-screen but would otherwise stay in the tab order and the accessibility tree,
+ * so keyboard and screen-reader users land on invisible links. Track the breakpoint so the
+ * closed drawer can be made inert. Defaults to "desktop" so server and first client render match.
+ */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+    const query = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+  return isDesktop;
+}
 
 export function Sidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setSidebarOpen } = useProfile();
   const [collapsed, setCollapsed] = useSidebarCollapsed();
   const { user, loading, logout } = useAuth();
+  const isDesktop = useIsDesktop();
+  const drawerClosed = !isDesktop && !isSidebarOpen;
+
+  // Escape closes the mobile drawer (WCAG 2.1.2 / 1.4.13-style dismissal for overlays).
+  useEffect(() => {
+    if (isDesktop || !isSidebarOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') setSidebarOpen(false); };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isDesktop, isSidebarOpen, setSidebarOpen]);
 
   const [railLabel, setRailLabel] = useState<{ text: string; top: number; left: number } | null>(null);
   useEffect(() => {
@@ -233,12 +263,16 @@ export function Sidebar() {
       {/* Mobile Overlay Backdrop */}
       {isSidebarOpen && (
         <div
+          aria-hidden="true"
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       <aside
+        id={SIDEBAR_ID}
+        aria-label="Application sidebar"
+        inert={drawerClosed}
         className={cn(
           'fixed inset-y-0 left-0 z-50 w-72 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-[width,transform] duration-300 ease-in-out motion-reduce:transition-none lg:static lg:translate-x-0',
           collapsed ? 'lg:w-16' : 'lg:w-64',
@@ -265,10 +299,12 @@ export function Sidebar() {
 
           {/* Mobile close button */}
           <button
+            type="button"
             onClick={() => setSidebarOpen(false)}
+            aria-label="Close navigation"
             className="lg:hidden p-2 rounded-xl hover:bg-white/5 text-white/50 transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -304,7 +340,7 @@ export function Sidebar() {
         </div>
 
         {/* ── Navigation zone ───────────────────────────────────────────────── */}
-        <nav id={SIDEBAR_NAV_ID} className={cn("flex-1 overflow-y-auto py-4 px-4 min-h-0", collapsed && "lg:px-1")}>
+        <nav id={SIDEBAR_NAV_ID} aria-label="App navigation" className={cn("flex-1 overflow-y-auto py-4 px-4 min-h-0", collapsed && "lg:px-1")}>
           <div className="space-y-1">
             {visibleNavItems.map((item) => {
               const isActive =
@@ -319,7 +355,7 @@ export function Sidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
                   onMouseEnter={e => showRailLabel(e.currentTarget, item.label)}
                   onMouseLeave={() => setRailLabel(null)}
                   onFocus={e => showRailLabel(e.currentTarget, item.label)}
@@ -350,7 +386,9 @@ export function Sidebar() {
                   </span>
 
                   {/* Label */}
-                  <span className={cn('flex min-w-0 flex-col leading-tight', collapsed && 'lg:hidden')}>
+                  {/* When the rail is collapsed the label stays in the accessible name (sr-only) instead of
+                      being display:none, so the link never loses its name and the name always contains the visible text. */}
+                  <span className={cn('flex min-w-0 flex-col leading-tight', collapsed && 'lg:sr-only')}>
                     <span className="tracking-tight">{item.label}</span>
                     {'sublabel' in item && item.sublabel && (
                       <span className="text-[10px] font-medium text-white/50 truncate">{item.sublabel}</span>
@@ -364,7 +402,7 @@ export function Sidebar() {
 
         {collapsed && (
           <div className="hidden lg:flex flex-col items-center gap-2 px-1 pb-4" role="group" aria-label="Account and support">
-            <Link href="/contact" aria-label="Contact Us" title="Contact Us" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+            <Link href="/support" aria-label="Help and support" title="Help and support" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
               <span aria-hidden="true">?</span>
             </Link>
             {user && (
@@ -384,9 +422,15 @@ export function Sidebar() {
         {/* ── User zone ──────────────────────────────────────────────────────── */}
         <div className={cn("px-4 pb-4", collapsed && "lg:hidden")}>
           <Link
+            href="/support"
+            onClick={() => setSidebarOpen(false)}
+            className="mb-1 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            Help &amp; support
+          </Link>
+          <Link
             href="/contact"
-            aria-label="Contact Us"
-            title="Contact Us"
+            onClick={() => setSidebarOpen(false)}
             className="mb-3 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
           >
             Contact Us
@@ -413,7 +457,7 @@ export function Sidebar() {
                   {user.displayName || user.email}
                 </p>
                 {isAdmin && (
-                  <span className="inline-block mt-1 text-[9px] font-bold tracking-widest text-amber-400/80 uppercase">
+                  <span className="inline-block mt-1 text-[9px] font-bold tracking-widest text-amber-400 uppercase">
                     Admin
                   </span>
                 )}
@@ -421,7 +465,8 @@ export function Sidebar() {
               <button
                 onClick={() => void logout()}
                 title="Sign out"
-                className="shrink-0 flex items-center gap-1.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold text-white/50 transition-colors hover:bg-white/5 hover:text-white/65"
+                type="button"
+                className="shrink-0 flex min-h-8 items-center gap-1.5 rounded-xl px-2 py-1.5 text-[11px] font-semibold text-white/60 transition-colors hover:bg-white/5 hover:text-white/80"
               >
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" className="w-4 h-4">
                   <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />

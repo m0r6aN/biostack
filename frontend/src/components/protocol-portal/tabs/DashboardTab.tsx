@@ -38,7 +38,7 @@ export function DashboardTab({
       <GlassCard variant="base" className="p-6 lg:col-span-2">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">{today.title}</h3>
+            <h2 className="text-lg font-semibold text-white">{today.title}</h2>
             <p className="text-sm text-white/50">{today.subtitle}</p>
           </div>
           <button
@@ -66,7 +66,7 @@ export function DashboardTab({
       </GlassCard>
 
       <GlassCard variant="base" className="p-6">
-        <h3 className="mb-4 text-lg font-semibold text-white">Quick Actions</h3>
+        <h2 className="mb-4 text-lg font-semibold text-white">Quick Actions</h2>
         <div className="space-y-2">
           <button
             type="button"

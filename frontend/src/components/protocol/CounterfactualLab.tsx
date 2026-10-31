@@ -199,8 +199,8 @@ function VariantCard({
 
       <div className="flex items-center gap-2 mb-2">
         <span className="text-[11px] font-mono text-white/50">{baseScore.toFixed(0)} → {variantScore.toFixed(0)}</span>
-        {positive && <span className="text-[10px] text-emerald-400/70 font-medium">↑ improves</span>}
-        {negative && <span className="text-[10px] text-rose-400/70 font-medium">↓ worsens</span>}
+        {positive && <span className="text-[10px] text-emerald-400 font-medium">↑ improves</span>}
+        {negative && <span className="text-[10px] text-rose-400 font-medium">↓ worsens</span>}
       </div>
 
       <p className="text-[11px] text-white/50 leading-relaxed mb-2">{description}</p>
@@ -214,7 +214,7 @@ function VariantCard({
 
       <div className="mt-3 flex justify-end">
         {savedDraft ? (
-          <span className="text-[11px] text-emerald-400/70 font-medium">✓ Saved as draft</span>
+          <span className="text-[11px] text-emerald-400 font-medium">✓ Saved as draft</span>
         ) : (
           <button
             onClick={onSaveDraft}

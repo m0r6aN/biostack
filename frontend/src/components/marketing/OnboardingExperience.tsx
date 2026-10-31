@@ -452,7 +452,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                     <button
                       key={goal.id}
                       type="button"
-                      aria-label={goal.label}
+                      aria-pressed={isSelected}
                       onClick={() => toggleGoal(goal.id)}
                       className={cn(
                         'rounded-lg border px-4 py-3 text-left transition-colors',

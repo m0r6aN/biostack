@@ -44,9 +44,12 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
           <button
             onClick={() => setSidebarOpen(!isSidebarOpen)}
             className="flex lg:hidden flex-shrink-0 items-center justify-center w-9 h-9 rounded-xl border border-white/10 bg-white/[0.03] text-white/50 hover:text-white transition-all active:scale-95"
+            type="button"
             aria-label="Toggle navigation"
+            aria-expanded={isSidebarOpen}
+            aria-controls="app-sidebar"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
               {isSidebarOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               ) : (

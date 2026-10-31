@@ -7,6 +7,7 @@ import { fetchCompoundGraph, fetchDryRunReport, fetchImportPreview, fetchPromoti
 import type { CompoundGraph, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest, ResearchSummary, ReviewResolutionPlan } from '@/lib/research/types';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Safety Critical':               'text-rose-400 bg-rose-400/8 border-rose-400/20',
@@ -59,7 +60,7 @@ export default function ResearchDashboard() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Research Runs" subtitle="Compound Pipeline Review · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && (
           <div className="rounded-xl bg-rose-500/10 border border-rose-400/20 px-4 py-3 text-sm text-rose-300">{error}</div>
         )}
@@ -194,7 +195,7 @@ export default function ResearchDashboard() {
             </Link>
           </div>
         </div>
-      </main>
+      </PageMain>
     </div>
   );
 }

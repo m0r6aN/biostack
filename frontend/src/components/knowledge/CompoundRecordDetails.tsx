@@ -90,7 +90,7 @@ function SafetyList({ label, items }: { label: string; items: KnowledgeSafetyIte
   if (items.length === 0) return null;
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-wider text-rose-400/70 mb-1">{label}</p>
+      <p className="text-[10px] uppercase tracking-wider text-rose-400 mb-1">{label}</p>
       <ul className="space-y-1.5">
         {items.map((s, i) => (
           <li key={i} className="text-sm text-rose-100/90">
