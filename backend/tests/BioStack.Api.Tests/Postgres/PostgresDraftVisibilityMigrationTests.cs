@@ -55,7 +55,11 @@ public sealed class PostgresDraftVisibilityMigrationTests
 
             await db.Database.ExecuteSqlRawAsync(AddKnowledgeEntryIsPublic.HideUnreviewedDraftsSql);
 
-            var hidden = await db.KnowledgeEntries.AsNoTracking().Where(e => !e.IsPublic).Select(e => e.CanonicalName).OrderBy(n => n).ToListAsync();
+            // Sort on the client, ordinally: a database ORDER BY follows the server's collation (en_US on CI puts
+            // "blood sampling" before "Rituximab"; the C collation does the opposite), which made this test depend on
+            // where Postgres runs.
+            var hidden = (await db.KnowledgeEntries.AsNoTracking().Where(e => !e.IsPublic).Select(e => e.CanonicalName).ToListAsync())
+                .OrderBy(n => n, StringComparer.Ordinal).ToList();
             Assert.Equal(new[] { "Rituximab", "blood sampling" }, hidden);
 
             // Reversible: one UPDATE restores today's behaviour.
