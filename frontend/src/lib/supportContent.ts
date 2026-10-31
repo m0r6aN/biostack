@@ -1,10 +1,13 @@
 import { METHODOLOGY_TIERS } from '@/lib/evidenceTiers';
+import { SUPPORT_EMAIL } from '@/lib/supportContact';
+
+export { SUPPORT_EMAIL };
 
 /**
  * Content for /support. Every answer restates behavior that exists in the product today and links to the place
  * where it happens. Wording on consent, export and deletion follows docs/INITIATIVES/consent-v2/consent-v2-approved.md
  * and the Account data page. Do not add dosing guidance, effects claims, or promises about response time here.
- * The email address is deliberately absent: the contact form is the support channel (see /contact).
+ * The support mailbox comes from supportContact.ts; the contact form (/contact) is the other channel.
  */
 
 export type SupportLink = { href: string; label: string };
@@ -45,7 +48,7 @@ export const SUPPORT_GROUPS: readonly SupportGroup[] = [
         question: 'The sign-in email did not arrive. What should I do?',
         answer: [
           'Check your spam or promotions folder and make sure you typed the address correctly. Links expire after 15 minutes, so ask for a new one if yours is old.',
-          'If it still does not arrive, send us a message through the contact form, choose Support, and tell us which address you used. Do not send us the link itself.',
+          'If it still does not arrive, send us a message through the contact form (choose Support) or email us, and tell us which address you used. Do not send us the link itself.',
         ],
         links: [{ href: '/contact', label: 'Contact us' }],
       },
@@ -139,6 +142,31 @@ export const SUPPORT_GROUPS: readonly SupportGroup[] = [
           'Send us a message through the contact form and choose Feedback. Tell us the compound, the exact claim or number, and what you think is wrong. A source makes a report much easier to check, so include a PubMed ID, a DOI, or a link if you have one.',
         ],
         links: [{ href: '/contact', label: 'Report a data error' }],
+      },
+    ],
+  },
+  {
+    id: 'contact',
+    heading: 'Contact us',
+    entries: [
+      {
+        id: 'contact-us',
+        question: 'How do I contact BioStack?',
+        answer: [
+          `Use the contact form, or email ${SUPPORT_EMAIL}. In the form, pick the category that fits (Support, Billing, Feedback, Partnership, or Other), include the email you want us to reply to, and tell us what happened and what you expected. We reply by email.`,
+          'Please do not put passwords or sign-in links in a message.',
+        ],
+        links: [
+          { href: '/contact', label: 'Open the contact form' },
+          { href: `mailto:${SUPPORT_EMAIL}`, label: `Email ${SUPPORT_EMAIL}` },
+        ],
+      },
+      {
+        id: 'urgent-or-medical',
+        question: 'Can I use support for something urgent or medical?',
+        answer: [
+          'No. Support cannot give medical advice and is not an emergency service. For a medical concern, contact a clinician or your local emergency services.',
+        ],
       },
     ],
   },

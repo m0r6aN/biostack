@@ -170,6 +170,7 @@ public sealed class AzureCommunicationEmailMagicLinkDelivery : IMagicLinkDeliver
             Html = BuildHtmlBody(magicLink, expiresAtUtc),
         };
         var message = new EmailMessage(senderAddress, contact, content);
+        OutgoingEmailReplyTo.Apply(message, _config);
 
         await client.SendAsync(WaitUntil.Started, message, ct);
         _logger.LogInformation("Queued BioStack magic link email through Azure Communication Email");

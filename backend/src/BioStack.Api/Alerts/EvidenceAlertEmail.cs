@@ -66,6 +66,7 @@ public sealed class AzureCommunicationAlertEmailSender(IConfiguration config) : 
     {
         var client = new EmailClient(config["AzureCommunicationEmail:ConnectionString"]);
         var message = new EmailMessage(Sender, email.To, new EmailContent(email.Subject) { PlainText = email.PlainText, Html = email.Html });
+        BioStack.Api.Auth.OutgoingEmailReplyTo.Apply(message, config);
         message.Headers.Add("List-Unsubscribe", $"<{email.OneClickUrl}>");
         message.Headers.Add("List-Unsubscribe-Post", "List-Unsubscribe=One-Click");
         await client.SendAsync(WaitUntil.Started, message, ct);
