@@ -84,7 +84,7 @@ export function AlertSettings() {
           <ul className="space-y-2">
             {notices.map(n => (
               <li key={n.id} className="text-sm text-white/80">
-                <span className="text-white/45">{formatAsOf(n.createdAtUtc)} · </span>
+                <span className="text-white/50">{formatAsOf(n.createdAtUtc)} · </span>
                 <Link href={`/knowledge/${n.compoundSlug}/changelog`} className="text-cyan-300 underline underline-offset-4">{n.compoundSlug}</Link>: {noticeLine(n)}
               </li>
             ))}

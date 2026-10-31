@@ -3,7 +3,7 @@ const powderLabels = ['5 mg', '10 mg', '20 mg', '30 mg', '60 mg'];
 export function PowderAmountGuide() {
   return (
     <div className="rounded-xl border border-emerald-300/20 bg-[#07110d] p-5 text-white shadow-2xl">
-      <div className="grid gap-5 sm:grid-cols-[0.95fr_1.05fr] sm:items-center">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-[0.95fr_1.05fr] sm:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/70">
             Powder amount

@@ -58,7 +58,7 @@ export default function ContactPage() {
               Thanks for reaching out — we read every message and will get back to you at{' '}
               <span className="font-semibold text-white/80">{email}</span>.
             </p>
-            <p className="text-sm text-white/35">
+            <p className="text-sm text-white/50">
               If it’s urgent, reply to any BioStack email and it will reach the same inbox.
             </p>
           </GlassCard>
@@ -74,7 +74,7 @@ export default function ContactPage() {
                   required
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-300/50"
+                  className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-300/50"
                   placeholder="Your name"
                 />
               </label>
@@ -89,7 +89,7 @@ export default function ContactPage() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-300/50"
+                  className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-300/50"
                   placeholder="you@example.com"
                 />
               </label>
@@ -119,7 +119,7 @@ export default function ContactPage() {
                   maxLength={4000}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-300/50"
+                  className="w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-300/50"
                   placeholder="How can we help?"
                 />
               </label>

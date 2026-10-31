@@ -15,11 +15,11 @@ export function OverlapFlagsBanner({ flags }: OverlapFlagsBannerProps) {
       <div className="flex items-start gap-3">
         <span className="text-xl">⚠️</span>
         <div className="flex-1">
-          <h4 className="font-semibold text-amber-200 text-sm mb-1">
+          <h2 className="font-semibold text-amber-200 text-sm mb-1">
             {flags.length}{' '}
             <HelpTip tipKey="pathwayOverlap">Pathway Overlap</HelpTip>{' '}
             {flags.length === 1 ? 'Detected' : 'Flags Detected'}
-          </h4>
+          </h2>
           <p className="text-xs text-amber-100/70 mb-2">
             Review pathway overlaps in the Knowledge panel for more details.
           </p>

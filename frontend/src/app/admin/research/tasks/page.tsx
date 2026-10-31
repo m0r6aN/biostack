@@ -11,6 +11,7 @@ import type { ResearchCategoryTaxonomy, ResearchTaskQueue, ResearchTaskQueueItem
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 type TaskFilterable = {
   compoundName: string;
@@ -128,7 +129,7 @@ function ResearchTasksPageContent() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Research Tasks" subtitle="Evidence-generation intake queue · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full space-y-6">
         {error && (
           <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
             {error}
@@ -140,7 +141,7 @@ function ResearchTasksPageContent() {
           </div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-6">
           <TaskStat label="Queued Tasks" value={taskQueue?.counts.totalItems ?? '—'} tone="neutral" />
           <TaskStat label="Consumed" value={taskQueue?.counts.resolvedItems ?? resolvedItems.length} tone="emerald" />
           <TaskStat label="Urgent" value={taskQueue?.counts.urgent ?? '—'} tone="rose" />
@@ -153,7 +154,7 @@ function ResearchTasksPageContent() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Evidence task queue</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Filter active and consumed intake tasks, then copy or export filtered handoff payloads for agent execution.
               </p>
               {focusedCompoundSlug && (
@@ -177,7 +178,7 @@ function ResearchTasksPageContent() {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-3">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <FilterSelect label="Priority" value={priorityFilter} onChange={setPriorityFilter} options={priorityOptions} />
             <FilterSelect label="Requester" value={requesterFilter} onChange={setRequesterFilter} options={requesterOptions} />
             <FilterSelect label="Category" value={categoryFilter} onChange={setCategoryFilter} options={categoryOptions} />
@@ -209,7 +210,7 @@ function ResearchTasksPageContent() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h3 className="text-sm font-semibold text-white">Queued for agent pickup</h3>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 These are still waiting for the first evidence packet.
               </p>
             </div>
@@ -219,10 +220,10 @@ function ResearchTasksPageContent() {
           </div>
           {taskQueue && filteredActiveItems.length === 0 ? (
             <GlassCard className="p-6">
-              <p className="text-sm text-white/35">No queued task matches the current filters.</p>
+              <p className="text-sm text-white/50">No queued task matches the current filters.</p>
             </GlassCard>
           ) : (
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {filteredActiveItems.map((item) => (
                 <TaskCard key={item.taskId} item={item} onCopy={() => copyTask(item)} />
               ))}
@@ -234,7 +235,7 @@ function ResearchTasksPageContent() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h3 className="text-sm font-semibold text-white">Consumed on the latest run</h3>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 These requests cleared out of the active queue because evidence is now present in the pipeline.
               </p>
             </div>
@@ -244,17 +245,17 @@ function ResearchTasksPageContent() {
           </div>
           {taskQueue && filteredResolvedItems.length === 0 ? (
             <GlassCard className="p-6">
-              <p className="text-sm text-white/35">No consumed task matches the current filters.</p>
+              <p className="text-sm text-white/50">No consumed task matches the current filters.</p>
             </GlassCard>
           ) : (
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {filteredResolvedItems.map((item) => (
                 <ResolvedTaskCard key={item.taskId} item={item} />
               ))}
             </div>
           )}
         </section>
-      </main>
+      </PageMain>
     </div>
   );
 }
@@ -263,9 +264,9 @@ function ResearchTasksPageFallback() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Research Tasks" subtitle="Evidence-generation intake queue · Internal" />
-      <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
-        <p className="text-sm text-white/30">Loading...</p>
-      </main>
+      <PageMain className="flex-1 p-6 max-w-6xl mx-auto w-full">
+        <p className="text-sm text-white/50">Loading...</p>
+      </PageMain>
     </div>
   );
 }
@@ -282,9 +283,9 @@ function TaskCard({ item, onCopy }: { item: ResearchTaskQueueItem; onCopy: () =>
     <GlassCard className="p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Queued evidence task</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Queued evidence task</p>
           <h3 className="mt-2 text-lg font-semibold text-white">{item.compoundName}</h3>
-          <p className="mt-1 text-[11px] text-white/45">
+          <p className="mt-1 text-[11px] text-white/50">
             {item.classification} · {item.taskType}
           </p>
         </div>
@@ -300,7 +301,7 @@ function TaskCard({ item, onCopy }: { item: ResearchTaskQueueItem; onCopy: () =>
 
       <TaskTags categories={item.categories ?? []} requesterIds={item.requesterIds} aliases={item.aliases} />
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <TaskMeta label="Target evidence path" value={item.targetEvidencePath} />
         <TaskMeta label="Required schema" value={item.requiredSchema} />
         <TaskMeta label="Request IDs" value={item.requestIds.join(', ') || 'None'} />
@@ -318,7 +319,7 @@ function TaskCard({ item, onCopy }: { item: ResearchTaskQueueItem; onCopy: () =>
 
       {item.notes.length > 0 && (
         <div className="mt-4">
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Operator notes</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Operator notes</p>
           <ul className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/65">
             {item.notes.map((note) => (
               <li key={note} className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
@@ -330,7 +331,7 @@ function TaskCard({ item, onCopy }: { item: ResearchTaskQueueItem; onCopy: () =>
       )}
 
       <div className="mt-4">
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Suggested directives</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Suggested directives</p>
         <ul className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/65">
           {item.suggestedResearchDirectives.map((directive) => (
             <li key={directive} className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
@@ -354,9 +355,9 @@ function ResolvedTaskCard({ item }: { item: ResearchTaskQueueResolvedItem }) {
     <GlassCard className="p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Consumed task</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Consumed task</p>
           <h3 className="mt-2 text-lg font-semibold text-white">{item.compoundName}</h3>
-          <p className="mt-1 text-[11px] text-white/45">
+          <p className="mt-1 text-[11px] text-white/50">
             {item.classification} · moved to {item.currentReadiness.replace(/-/g, ' ')}
           </p>
         </div>
@@ -367,7 +368,7 @@ function ResolvedTaskCard({ item }: { item: ResearchTaskQueueResolvedItem }) {
 
       <TaskTags categories={item.categories ?? []} requesterIds={item.requesterIds} aliases={item.aliases} />
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <TaskMeta label="Target evidence path" value={item.targetEvidencePath} />
         <TaskMeta label="Resolution" value={item.resolution} />
         <TaskMeta label="Current readiness" value={item.currentReadiness} />
@@ -404,7 +405,7 @@ function TaskTags({ categories, requesterIds, aliases }: { categories: string[];
         </span>
       ))}
       {aliases.map((alias) => (
-        <span key={alias} className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-white/45">
+        <span key={alias} className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-white/50">
           alias: {alias}
         </span>
       ))}
@@ -415,7 +416,7 @@ function TaskTags({ categories, requesterIds, aliases }: { categories: string[];
 function TaskMeta({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
-      <p className="text-[9px] uppercase tracking-widest text-white/35">{label}</p>
+      <p className="text-[9px] uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-1 break-all text-[11px] font-medium text-white/75">{value}</p>
     </div>
   );
@@ -446,7 +447,7 @@ function TaskStat({ label, value, tone }: { label: string; value: string | numbe
 
   return (
     <div className={`rounded-2xl border px-4 py-3 ${toneClass}`}>
-      <p className="text-[9px] uppercase tracking-widest text-white/45">{label}</p>
+      <p className="text-[9px] uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-2 text-2xl font-semibold">{value}</p>
     </div>
   );

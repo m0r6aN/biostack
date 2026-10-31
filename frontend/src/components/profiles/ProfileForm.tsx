@@ -47,7 +47,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
         <button
           type="button"
           onClick={onCancel}
-          className="text-sm text-white/35 hover:text-white/60 transition-colors"
+          className="text-sm text-white/50 hover:text-white/60 transition-colors"
         >
           Cancel
         </button>
@@ -61,7 +61,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
           value={formData.displayName}
           onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
           required
-          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
         />
       </div>
 
@@ -72,7 +72,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
             id={`${formId}-sex`}
             value={formData.sex}
             onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
           >
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -87,7 +87,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
             value={formData.age || ''}
             onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || undefined })}
             placeholder="Years"
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
           />
         </div>
         <div className="col-span-2 sm:col-span-1">
@@ -104,7 +104,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
               const v = parseFloat(e.target.value);
               setFormData({ ...formData, weight: settings.weightUnit === 'imperial' ? lbsToKg(isNaN(v) ? 0 : v) : (isNaN(v) ? 0 : v) });
             }}
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
           />
         </div>
       </div>
@@ -124,7 +124,7 @@ export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmi
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           placeholder="Any additional notes..."
           rows={2}
-          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
+          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
         />
       </div>
 

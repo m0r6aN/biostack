@@ -49,7 +49,7 @@ function PhaseBadge({ overview, activePhase, onSwitchPhase }: ProtocolOverviewHe
   return (
     <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-xl">
       <div>
-        <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/50">
           Current phase
         </div>
         <div className="font-semibold text-white">

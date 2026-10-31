@@ -62,13 +62,13 @@ export default function PricingClient() {
           </p>
         </section>
 
-        <section className="mt-10 grid gap-5 lg:grid-cols-3">
+        <section className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {pricingTiers.map((tier) => (
             <article
               key={tier.name}
               className={`rounded-lg border p-6 ${tier.featured ? 'border-emerald-400/24 bg-emerald-500/[0.07] shadow-[0_16px_52px_rgba(16,185,129,0.08)]' : 'border-white/10 bg-white/[0.03]'}`}
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-wrap items-start justify-between gap-3">
                 <h2 className="text-2xl font-semibold text-white">{tier.name}</h2>
                 {tier.featured && (
                   <span className="shrink-0 rounded-lg border border-emerald-300/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-emerald-200">
@@ -113,12 +113,12 @@ export default function PricingClient() {
             </article>
           ))}
         </section>
-        {checkoutError && <p className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
+        {checkoutError && <p role="alert" className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
 
         <section className="mt-10 rounded-lg border border-white/10 bg-[#101820]/90 p-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/35">Clinics / Coaches</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Clinics / Coaches</p>
               <h2 className="mt-3 text-2xl font-semibold text-white">Scale protocol intelligence across clients.</h2>
               <p className="mt-3 max-w-3xl text-sm leading-7 text-white/60">
                 Built to support client seats, white-label surfaces, and co-branded protocol views without turning the product into an ad board.
@@ -145,12 +145,12 @@ export default function PricingClient() {
                   placeholder="you@clinic.com"
                   className="min-w-0 flex-1 rounded-lg border border-white/[0.08] bg-black/20 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400/50"
                 />
-                <button className="rounded-lg border border-white/12 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/24">
+                <button className="min-h-10 rounded-lg border border-white/12 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/24">
                   {leadState === 'saving' ? 'Sending' : 'Contact'}
                 </button>
               </div>
               {leadState === 'saved' && <p className="text-sm text-emerald-200/80">Received. We will follow up with clinic options.</p>}
-              {leadState === 'error' && <p className="text-sm text-amber-100/80">Could not save this lead right now.</p>}
+              {leadState === 'error' && <p role="alert" className="text-sm text-amber-100/80">Could not save this lead right now.</p>}
             </form>
           </div>
         </section>

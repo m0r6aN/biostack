@@ -128,14 +128,14 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
     <section className="max-w-3xl mx-auto mt-6 px-4">
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
         <div className="flex items-center gap-3 mb-1">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/40">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/50">
             Relationships
           </h2>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-white/40 border border-white/10">
+          <span className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 border border-white/10">
             {matched.length}
           </span>
         </div>
-        <p className="text-xs text-white/30 mb-5">
+        <p className="text-xs text-white/50 mb-5">
           Educational reference only. These are research observations, not recommendations.
         </p>
 
@@ -161,7 +161,7 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
                 <span className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 border border-white/[0.08]">
                   {edge.relationshipLabel}
                 </span>
-                <span className="text-xs text-white/35">
+                <span className="text-xs text-white/50">
                   <HelpTip tipKey={tierHelpKey(edge.evidenceTierLabel)}>{edge.evidenceTierLabel}</HelpTip>
                 </span>
               </div>

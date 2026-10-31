@@ -173,7 +173,7 @@ export function ProviderObservationalSummary({
         </div>
       </div>
 
-      <div className="grid gap-0 divide-y divide-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Stack overview">
           <Fact label="Protocol" value={protocol.name} />
           <Fact label="Version" value={`v${protocol.version}${protocol.isDraft ? ' draft' : ' snapshot'}`} />
@@ -193,7 +193,7 @@ export function ProviderObservationalSummary({
         {activeItems.length === 0 ? (
           <Placeholder>{NO_ACTIVE_SUBSTANCES}</Placeholder>
         ) : (
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {activeItems.map((item) => (
               <SubstanceCard key={item.id} item={item} label={labelFor(item.compoundRecordId)} />
             ))}
@@ -203,7 +203,7 @@ export function ProviderObservationalSummary({
 
       {currentItems && otherItems.length > 0 && (
         <SummarySection title="Other items you take" metadata={formatCount(otherItems.length, 'other item')} label={USER_ENTERED_LABEL} fullWidth>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {otherItems.map((record) => (
               <OtherItemCard key={record.id} record={record} label={provenanceLabel(record)} />
             ))}
@@ -226,7 +226,7 @@ export function ProviderObservationalSummary({
         )}
       </SummarySection>}
 
-      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Recent check-ins" metadata={formatCount(observations.length, 'recent check-in')} label={USER_ENTERED_LABEL}>
           {observations.length === 0 ? (
             <Placeholder>{NO_RECENT_CHECK_INS}</Placeholder>
@@ -257,7 +257,7 @@ export function ProviderObservationalSummary({
         </SummarySection>
       </div>
 
-      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Interaction and overlap notes" metadata={formatCount(interactionNoteCount, 'interaction/overlap note')} label={BIOSTACK_OBSERVED_LABEL}>
           {findings.length === 0 && interactions.length === 0 && flaggedPairs.length === 0 ? (
             <Placeholder>{NO_INTERACTION_NOTES}</Placeholder>
@@ -277,7 +277,7 @@ export function ProviderObservationalSummary({
       </div>
 
       <SummarySection title="Safety boundary" fullWidth>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {SAFETY_BOUNDARY_LINES.map((line) => <BoundaryText key={line}>{line}</BoundaryText>)}
         </div>
       </SummarySection>
@@ -353,7 +353,7 @@ function OtherItemCard({ record, label }: { record: CompoundRecord; label: strin
         </div>
         <span className="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600">{record.status}</span>
       </div>
-      <dl className="mt-4 grid gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
+      <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
         <MiniFact label="User-entered dose" value={formatUserDoseWithTime(record) ?? NOT_RECORDED} />
         {record.doseFrequency && <MiniFact label="User-entered frequency" value={record.doseFrequency} />}
         {describeFrequency(record) && <MiniFact label="User-chosen frequency" value={describeFrequency(record) ?? NOT_RECORDED} />}
@@ -379,7 +379,7 @@ function SubstanceCard({ item, label }: { item: ProtocolItem; label?: string | n
           {compound?.status ?? 'snapshot'}
         </span>
       </div>
-      <dl className="mt-4 grid gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
+      <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
         <MiniFact label="Start" value={formatDate(compound?.startDate)} />
         <MiniFact label="Stop" value={compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'} />
         <MiniFact label="Goal" value={compound?.goal || NOT_RECORDED} />

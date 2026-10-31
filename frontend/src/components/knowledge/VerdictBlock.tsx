@@ -104,26 +104,26 @@ export function VerdictBlock({ entry, path }: { entry: KnowledgeEntry; path: str
             <a href={HYPE_METHOD_HREF} className="text-cyan-300 underline underline-offset-4">How we measure hype</a>
           </p>
         )}
-        {asOf && <p className="text-xs text-white/45">Evidence as of {asOf} · v{headline.version}</p>}
+        {asOf && <p className="text-xs text-white/50">Evidence as of {asOf} · v{headline.version}</p>}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" data-testid="trials-internet-gap">
         <div className="rounded-xl border border-white/10 p-3">
-          <p className="text-[11px] uppercase tracking-[0.15em] text-white/45 mb-1">What the trials showed</p>
+          <p className="text-[11px] uppercase tracking-[0.15em] text-white/50 mb-1">What the trials showed</p>
           <p className="text-sm text-white/75">{published && headline.note ? headline.note : 'Not graded yet. Sources are listed below.'}</p>
         </div>
         <div className="rounded-xl border border-white/10 p-3">
-          <p className="text-[11px] uppercase tracking-[0.15em] text-white/45 mb-1">What the internet says</p>
+          <p className="text-[11px] uppercase tracking-[0.15em] text-white/50 mb-1">What the internet says</p>
           <p className="text-sm text-white/75">&ldquo;{headline.statement}&rdquo;</p>
         </div>
         <div className="rounded-xl border border-white/10 p-3">
-          <p className="text-[11px] uppercase tracking-[0.15em] text-white/45 mb-1">The gap</p>
+          <p className="text-[11px] uppercase tracking-[0.15em] text-white/50 mb-1">The gap</p>
           <p className="text-sm text-white/75">
             {published ? `${verdict}.${headline.hypeBand ? ` Hype Gap: ${headline.hypeBand}.` : ''}` : 'Not measured until the claim is graded.'}
           </p>
         </div>
       </div>
-      <p className="text-[11px] text-white/40">{VERDICT_FOOTNOTE}</p>
+      <p className="text-[11px] text-white/50">{VERDICT_FOOTNOTE}</p>
     </section>
   );
 }

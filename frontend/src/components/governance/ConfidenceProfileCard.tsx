@@ -63,7 +63,7 @@ export function ConfidenceProfileCard({ profile, compact = false, className }: C
           })}
         </div>
         <div className="flex justify-end">
-          <span className="text-[9px] text-white/30 font-mono">{profile.calibrationVersion}</span>
+          <span className="text-[9px] text-white/50 font-mono">{profile.calibrationVersion}</span>
         </div>
       </div>
     );
@@ -73,17 +73,17 @@ export function ConfidenceProfileCard({ profile, compact = false, className }: C
     <div className={cn('space-y-3', className)}>
       <div className="flex items-start justify-between gap-2">
         <div>
-          <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-0.5">
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-0.5">
             Confidence Profile
           </p>
           <p
-            className="text-[10px] text-white/40 italic"
+            className="text-[10px] text-white/50 italic"
             title="Confidence speaks. It does not command."
           >
             Confidence speaks. It does not command.
           </p>
         </div>
-        <span className="text-[9px] text-white/30 font-mono shrink-0 pt-0.5">
+        <span className="text-[9px] text-white/50 font-mono shrink-0 pt-0.5">
           {profile.calibrationVersion}
         </span>
       </div>

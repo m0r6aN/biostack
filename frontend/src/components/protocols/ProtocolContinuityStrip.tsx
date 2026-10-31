@@ -36,7 +36,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
     <section className="rounded-lg border border-emerald-400/15 bg-[#0f171f] p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/55">Stack History</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/70">Stack History</p>
           <h2 className="mt-1 text-lg font-bold text-white">
             v{protocol.version} {protocol.isDraft ? 'draft' : 'snapshot'}
             {prior ? ` follows v${prior.version}` : ' starts this tracked stack'}
@@ -50,10 +50,10 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
         </div>
       </div>
 
-      <div className="mt-4 grid gap-4 xl:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">History</p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">History</p>
+          <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
         <ContinuityCell label="Current" value={`v${protocol.version}`} detail={protocol.isCurrentVersion ? 'Current version' : 'Prior version'} />
         <ContinuityCell
           label="Parent"
@@ -64,8 +64,8 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Tracked state</p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">Tracked state</p>
+          <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Run"
           value={run ? run.status : 'No run'}
@@ -99,8 +99,8 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Delta preview</p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">Delta preview</p>
+          <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Changed"
           value={changes.length > 0 ? `${changes.length} item${changes.length === 1 ? '' : 's'}` : 'No diff'}
@@ -171,9 +171,9 @@ function ContinuityCell({
 }) {
   const content = (
     <>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">{label}</p>
       <p className="mt-2 font-bold text-white">{value}</p>
-      <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/45">{detail}</p>
+      <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/50">{detail}</p>
     </>
   );
 

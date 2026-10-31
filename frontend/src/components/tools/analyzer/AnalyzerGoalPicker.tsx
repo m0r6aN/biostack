@@ -38,7 +38,7 @@ export function AnalyzerGoalPicker({
 
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Goal</p>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Goal</p>
       <div className="flex flex-wrap gap-2">
         <GoalChip
           label="Not sure yet"
@@ -57,7 +57,7 @@ export function AnalyzerGoalPicker({
 
       {refinements.length > 0 && (
         <div className="mt-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
             Refine (optional)
           </p>
           <div className="flex flex-wrap gap-2">
@@ -76,7 +76,7 @@ export function AnalyzerGoalPicker({
               </button>
             ))}
           </div>
-          <p className="mt-2 text-xs leading-5 text-white/38">
+          <p className="mt-2 text-xs leading-5 text-white/50">
             Pick up to {MAX_REFINEMENTS}. Refinements sharpen the goal-aware alternatives.
           </p>
         </div>

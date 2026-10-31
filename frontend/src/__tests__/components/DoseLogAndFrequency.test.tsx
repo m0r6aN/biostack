@@ -342,7 +342,7 @@ describe('schedule: logging the amount actually taken', () => {
   it('opens a log form whose amount and unit start blank, even when the user saved a dose on the compound', async () => {
     renderDashboard([bpc]);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
 
     expect((screen.getByLabelText('Amount taken') as HTMLInputElement).value).toBe('');
     expect((screen.getByLabelText('Unit taken') as HTMLSelectElement).value).toBe('');
@@ -351,7 +351,7 @@ describe('schedule: logging the amount actually taken', () => {
 
   it('copies the user\'s own saved entry only when they press "Same as my saved entry"', async () => {
     renderDashboard([bpc]);
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
 
     // Present, but nothing has been copied yet.
     const same = screen.getByRole('button', { name: 'Same as my saved entry (250 mcg)' });
@@ -366,7 +366,7 @@ describe('schedule: logging the amount actually taken', () => {
   it('has no "same as" button when the user saved no dose entry, and never fills anything in', async () => {
     renderDashboard([{ ...bpc, dose: null, doseAmount: null, doseUnit: null }]);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
 
     expect(screen.queryByRole('button', { name: /Same as my saved entry/ })).not.toBeInTheDocument();
     expect((screen.getByLabelText('Amount taken') as HTMLInputElement).value).toBe('');
@@ -374,7 +374,7 @@ describe('schedule: logging the amount actually taken', () => {
 
   it('logs the amount the user typed, with an optional note, and closes the form', async () => {
     const { onLogAmount } = renderDashboard([bpc]);
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
 
     await userEvent.type(screen.getByLabelText('Amount taken'), '0.5');
     await userEvent.selectOptions(screen.getByLabelText('Unit taken'), 'mg');
@@ -393,7 +393,7 @@ describe('schedule: logging the amount actually taken', () => {
     ['250', '', 'Choose the unit.'],
   ])('refuses amount "%s" / unit "%s" with a plain error and logs nothing', async (amount, unit, message) => {
     const { onLogAmount } = renderDashboard([bpc]);
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
     fireEvent.change(screen.getByLabelText('Amount taken'), { target: { value: amount } });
     fireEvent.change(screen.getByLabelText('Unit taken'), { target: { value: unit } });
 
@@ -407,7 +407,7 @@ describe('schedule: logging the amount actually taken', () => {
   it('keeps what the user typed and shows the error when logging fails', async () => {
     const onLogAmount = vi.fn().mockRejectedValue(new Error('Amount must be a number greater than zero.'));
     renderDashboard([bpc], { onLogAmount });
-    await userEvent.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Log amount taken/ }));
     await userEvent.type(screen.getByLabelText('Amount taken'), '250');
     await userEvent.selectOptions(screen.getByLabelText('Unit taken'), 'mcg');
 
@@ -420,7 +420,7 @@ describe('schedule: logging the amount actually taken', () => {
   it('shows no log button for a row that has no compound id (an older response)', () => {
     renderDashboard([{ ...bpc, compoundId: null }]);
 
-    expect(screen.queryByRole('button', { name: 'Log amount taken' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^Log amount taken/ })).not.toBeInTheDocument();
   });
 
   it('still offers the original "Log Today\'s Doses" button', async () => {

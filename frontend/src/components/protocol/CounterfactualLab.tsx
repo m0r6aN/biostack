@@ -24,10 +24,10 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
   if (!intelligence) {
     return (
       <div className={cn('rounded-3xl border border-white/5 bg-white/[0.02] p-5', className)}>
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3">
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-3">
           <HelpTip tipKey="counterfactual">Counterfactual</HelpTip> Lab
         </p>
-        <p className="text-sm text-white/40">Stack intelligence data is required to run counterfactual variants.</p>
+        <p className="text-sm text-white/50">Stack intelligence data is required to run counterfactual variants.</p>
       </div>
     );
   }
@@ -54,10 +54,10 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
     <div className={cn('rounded-3xl border border-white/8 bg-white/[0.02]', className)}>
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">
           <HelpTip tipKey="counterfactual">Counterfactual</HelpTip> Lab
         </p>
-        <p className="text-xs text-white/40">Explore what the stack would look like with different configurations. These are not recommendations.</p>
+        <p className="text-xs text-white/50">Explore what the stack would look like with different configurations. These are not recommendations.</p>
       </div>
 
       {/* Tabs */}
@@ -70,12 +70,12 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
               'flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-xl border transition-all',
               tab === t.key
                 ? 'bg-white/5 border-white/15 text-white/80'
-                : 'border-transparent text-white/35 hover:text-white/55',
+                : 'border-transparent text-white/50 hover:text-white/55',
             )}
           >
             {t.label}
             {t.count > 0 && (
-              <span className="text-[9px] font-bold text-white/30 bg-white/5 rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="text-[9px] font-bold text-white/50 bg-white/5 rounded-full w-4 h-4 flex items-center justify-center">
                 {t.count}
               </span>
             )}
@@ -87,7 +87,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
         {tab === 'remove' && (
           <>
             {counterfactuals.length === 0 ? (
-              <p className="text-xs text-white/30 px-1 py-3">No removal variants available. Add more compounds to enable counterfactual analysis.</p>
+              <p className="text-xs text-white/50 px-1 py-3">No removal variants available. Add more compounds to enable counterfactual analysis.</p>
             ) : (
               counterfactuals.map((cf) => (
                 <VariantCard
@@ -112,7 +112,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
         {tab === 'swap' && (
           <>
             {swaps.length === 0 ? (
-              <p className="text-xs text-white/30 px-1 py-3">No swap candidates found.</p>
+              <p className="text-xs text-white/50 px-1 py-3">No swap candidates found.</p>
             ) : (
               swaps.slice(0, 5).map((sw, i) => (
                 <VariantCard
@@ -137,7 +137,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
         {tab === 'simplified' && (
           <>
             {!bestRemoval ? (
-              <p className="text-xs text-white/30 px-1 py-3">Simplified variant requires at least one removal counterfactual.</p>
+              <p className="text-xs text-white/50 px-1 py-3">Simplified variant requires at least one removal counterfactual.</p>
             ) : (
               <VariantCard
                 title={<>Simplified: Remove <CompoundLink displayName={bestRemoval.removedCompound} /></>}
@@ -159,7 +159,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
 
       {/* Disclaimer */}
       <div className="mx-4 mb-4 px-3 py-2.5 rounded-2xl border border-white/5 bg-white/[0.02]">
-        <p className="text-[10px] text-white/25 leading-relaxed">
+        <p className="text-[10px] text-white/50 leading-relaxed">
           These variants are observational simulations based on existing interaction data. They are not recommendations. Consult a healthcare provider before making any protocol changes.
         </p>
       </div>
@@ -198,15 +198,15 @@ function VariantCard({
       </div>
 
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-[11px] font-mono text-white/40">{baseScore.toFixed(0)} → {variantScore.toFixed(0)}</span>
-        {positive && <span className="text-[10px] text-emerald-400/70 font-medium">↑ improves</span>}
-        {negative && <span className="text-[10px] text-rose-400/70 font-medium">↓ worsens</span>}
+        <span className="text-[11px] font-mono text-white/50">{baseScore.toFixed(0)} → {variantScore.toFixed(0)}</span>
+        {positive && <span className="text-[10px] text-emerald-400 font-medium">↑ improves</span>}
+        {negative && <span className="text-[10px] text-rose-400 font-medium">↓ worsens</span>}
       </div>
 
       <p className="text-[11px] text-white/50 leading-relaxed mb-2">{description}</p>
 
       {findings.slice(0, 2).map((f, i) => (
-        <div key={i} className="flex items-start gap-1.5 text-[11px] text-white/35">
+        <div key={i} className="flex items-start gap-1.5 text-[11px] text-white/50">
           <span className="mt-0.5 shrink-0">·</span>
           <span className="leading-snug">{f}</span>
         </div>
@@ -214,11 +214,11 @@ function VariantCard({
 
       <div className="mt-3 flex justify-end">
         {savedDraft ? (
-          <span className="text-[11px] text-emerald-400/70 font-medium">✓ Saved as draft</span>
+          <span className="text-[11px] text-emerald-400 font-medium">✓ Saved as draft</span>
         ) : (
           <button
             onClick={onSaveDraft}
-            className="text-[11px] font-semibold text-white/40 hover:text-white/70 transition-colors"
+            className="text-[11px] font-semibold text-white/50 hover:text-white/70 transition-colors"
           >
             Save as Protocol Draft
           </button>

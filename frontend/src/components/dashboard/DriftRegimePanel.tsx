@@ -10,7 +10,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
   if (!drift) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
         <h2 className="mt-2 text-xl font-black text-white">No drift snapshot</h2>
         <p className="mt-2 text-sm text-white/50">Drift classification appears after protocol run context is available.</p>
       </section>
@@ -24,7 +24,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
           <h2 className="mt-2 text-xl font-black text-white">Current regime: {formatValue(regime)}</h2>
           <p className="mt-2 text-sm text-white/50">{baselineText(drift, patterns)}</p>
         </div>
@@ -40,7 +40,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
             <div key={`${signal.type}-${signal.description}`} className="rounded-lg border border-white/[0.07] bg-white/[0.025] p-3">
               <div className="flex items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-white">{formatSignalType(signal.type)}</p>
-                <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-[11px] uppercase tracking-[0.12em] text-white/45">
+                <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-[11px] uppercase tracking-[0.12em] text-white/50">
                   {signal.severity}
                 </span>
               </div>
@@ -57,7 +57,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
       {!compact && drift.regimeClassification?.contributingFactors.length ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {drift.regimeClassification.contributingFactors.map((factor) => (
-            <span key={factor} className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-white/45">
+            <span key={factor} className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-white/50">
               {formatSignalType(factor)}
             </span>
           ))}
@@ -70,7 +70,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
 function StatePill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] px-3 py-2">
-      <p className="text-[11px] uppercase tracking-[0.12em] text-white/35">{label}</p>
+      <p className="text-[11px] uppercase tracking-[0.12em] text-white/50">{label}</p>
       <p className="mt-1 text-sm font-semibold text-white">{value}</p>
     </div>
   );

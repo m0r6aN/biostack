@@ -139,11 +139,11 @@ export default function CheckInsPage() {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-2xl font-black text-white">Quick Check-In</h2>
-                <p className="text-sm text-white/40 mt-1">Sleep, energy, recovery, and anything worth noting.</p>
+                <p className="text-sm text-white/50 mt-1">Sleep, energy, recovery, and anything worth noting.</p>
               </div>
               <button
                 onClick={() => setShowForm(false)}
-                className="p-2 text-white/20 hover:text-white transition-all"
+                className="p-2 text-white/50 hover:text-white transition-all"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>

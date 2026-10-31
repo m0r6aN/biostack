@@ -136,7 +136,7 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
           }}
           className="z-50 w-56 rounded-lg border border-white/10 bg-[#1e293b] p-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
         >
-          <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-white/40">
+          <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-white/50">
             {DISPLAY_LABELS[tipKey]}
           </p>
           <p className="text-xs leading-relaxed text-white/70">

@@ -6,6 +6,7 @@ import { SaveToBioStackPanel } from '@/components/research/SaveToBioStackPanel';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import type { StagedTranscriptCandidateReview } from '@/lib/types';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -24,7 +25,7 @@ const REVIEW_STATE_APPROVED = 'review_approved_for_promotion';
 function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex gap-2 items-baseline">
-      <span className="text-white/30 shrink-0">{label}</span>
+      <span className="text-white/50 shrink-0">{label}</span>
       <span className="text-white/60 truncate">{value}</span>
     </div>
   );
@@ -95,7 +96,7 @@ export default function StagedReviewsPage() {
         title="Staged Transcript Reviews"
         subtitle="Review, approve, and promote knowledge entries to BioStack"
       />
-      <main className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
 
         {/* Filter bar */}
         <div className="flex items-center gap-2">
@@ -106,14 +107,14 @@ export default function StagedReviewsPage() {
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 filter === key
                   ? 'bg-white/10 text-white'
-                  : 'text-white/40 hover:text-white/70'
+                  : 'text-white/50 hover:text-white/70'
               }`}
             >
               {FILTER_LABELS[key]}
             </button>
           ))}
           {!loading && (
-            <span className="ml-auto text-xs text-white/30">
+            <span className="ml-auto text-xs text-white/50">
               {filtered.length} {filtered.length === 1 ? 'review' : 'reviews'}
             </span>
           )}
@@ -121,7 +122,7 @@ export default function StagedReviewsPage() {
 
         {/* Loading */}
         {loading && (
-          <p className="text-sm text-white/40 animate-pulse">Loading staged reviews…</p>
+          <p className="text-sm text-white/50 animate-pulse">Loading staged reviews…</p>
         )}
 
         {/* Error */}
@@ -130,7 +131,7 @@ export default function StagedReviewsPage() {
             <p className="text-sm text-rose-300">{error}</p>
             <button
               onClick={() => acquireToken().then(loadReviews)}
-              className="mt-2 text-xs text-white/40 hover:text-white/60 underline"
+              className="mt-2 text-xs text-white/50 hover:text-white/60 underline"
             >
               Retry
             </button>
@@ -139,7 +140,7 @@ export default function StagedReviewsPage() {
 
         {/* Empty */}
         {!loading && !error && filtered.length === 0 && (
-          <p className="text-sm text-white/30 italic">No reviews match the current filter.</p>
+          <p className="text-sm text-white/50 italic">No reviews match the current filter.</p>
         )}
 
         {/* Review cards */}
@@ -154,7 +155,7 @@ export default function StagedReviewsPage() {
                     <span className="text-amber-400 italic">Target not assigned</span>
                   )}
                 </p>
-                <p className="mt-0.5 font-mono text-[10px] text-white/30 truncate">
+                <p className="mt-0.5 font-mono text-[10px] text-white/50 truncate">
                   {review.artifactId}
                 </p>
               </div>
@@ -163,7 +164,7 @@ export default function StagedReviewsPage() {
                   ? 'bg-emerald-500/15 text-emerald-400'
                   : review.reviewState === REVIEW_STATE_APPROVED
                     ? 'bg-blue-500/15 text-blue-400'
-                    : 'bg-white/5 text-white/30'
+                    : 'bg-white/5 text-white/50'
               }`}>
                 {review.promotedKnowledgeEntryId
                   ? 'promoted'
@@ -206,7 +207,7 @@ export default function StagedReviewsPage() {
           </GlassCard>
         ))}
 
-      </main>
+      </PageMain>
     </div>
   );
 }

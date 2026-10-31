@@ -28,7 +28,7 @@ export interface GovernedSentenceProps {
 }
 
 const DEFAULT_BLOCKED_FALLBACK = (
-  <span className="text-xs text-white/30 italic font-mono">
+  <span className="text-xs text-white/50 italic font-mono">
     [Content policy: not renderable]
   </span>
 );

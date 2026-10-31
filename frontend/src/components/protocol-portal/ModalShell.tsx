@@ -41,7 +41,7 @@ export function ModalShell({ onClose, labelledBy, children, className }: ModalSh
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 rounded-lg p-1 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80"
+          className="absolute right-4 top-4 rounded-lg p-1 text-white/50 transition-colors hover:bg-white/5 hover:text-white/80"
         >
           <X className="h-5 w-5" />
         </button>

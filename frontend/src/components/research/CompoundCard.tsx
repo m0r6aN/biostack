@@ -51,7 +51,7 @@ export function CompoundCard({ compound, selected, onClick, secondaryAction }: C
         )}
       </div>
       {showBlocker && (
-        <p className="mt-1.5 text-[10px] text-rose-400/70 italic truncate">
+        <p className="mt-1.5 text-[10px] text-rose-400 italic truncate">
           {firstBlocker}
         </p>
       )}
@@ -76,7 +76,7 @@ export function CompoundCard({ compound, selected, onClick, secondaryAction }: C
 
 function MetaItem({ label, value }: { label: string; value: string }) {
   return (
-    <span className="text-[11px] text-white/40">
+    <span className="text-[11px] text-white/50">
       {label}: <span className="text-white/70">{value}</span>
     </span>
   );

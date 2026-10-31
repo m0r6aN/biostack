@@ -331,12 +331,12 @@ export function StackIntelligencePanel({
               {stageLabels.map((label, index) => (
                 <span key={label} className="contents">
                   <span>{label}</span>
-                  {index < stageLabels.length - 1 && <span className="text-white/18">/</span>}
+                  {index < stageLabels.length - 1 && <span className="text-white/50">/</span>}
                 </span>
               ))}
             </div>
 
-          <div className="relative mt-3 grid gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
+          <div className="relative mt-3 grid grid-cols-1 gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
             {stats.map(([label, value]) => (
               <div key={label} className="rounded-lg border border-white/7 bg-black/20 px-3 py-2">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/56">{label}</p>
@@ -349,7 +349,7 @@ export function StackIntelligencePanel({
             {activeContent.relationshipGroups.map((relationship) => (
               <motion.div
                 key={`${mode}-${relationship.type}-${relationship.label}`}
-                className="grid gap-3 rounded-lg border border-white/8 bg-black/20 p-3 sm:grid-cols-[116px_1fr]"
+                className="grid grid-cols-1 gap-3 rounded-lg border border-white/8 bg-black/20 p-3 sm:grid-cols-[116px_1fr]"
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeOut' }}

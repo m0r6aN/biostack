@@ -55,7 +55,7 @@ export function ClaimRow({ claim, href }: { claim: KnowledgePublicClaim; href?: 
       </div>
       {published && claim.qualifier && <p className="text-xs text-emerald-200/80">{claim.qualifier}</p>}
       {published && claim.note && <p className="text-sm text-white/65">{claim.note}</p>}
-      {!published && <p className="text-xs text-white/45">{STATUS_COPY[claim.status ?? 'pending-council'] ?? STATUS_COPY['pending-council']}</p>}
+      {!published && <p className="text-xs text-white/50">{STATUS_COPY[claim.status ?? 'pending-council'] ?? STATUS_COPY['pending-council']}</p>}
       {published && claim.hypeBand && (
         <p className="text-xs text-white/60">
           Hype Gap: <span className="font-medium text-white/80">{claim.hypeBand}</span>{' '}
@@ -69,7 +69,7 @@ export function ClaimRow({ claim, href }: { claim: KnowledgePublicClaim; href?: 
             return (
               <li key={src.id}>
                 {href ? (
-                  <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-300/90 underline underline-offset-4 [overflow-wrap:anywhere]">
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center text-cyan-300/90 underline underline-offset-4 [overflow-wrap:anywhere]">
                     {src.title || href}<span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 ) : <span>{src.title}</span>}
@@ -79,7 +79,7 @@ export function ClaimRow({ claim, href }: { claim: KnowledgePublicClaim; href?: 
         </ul>
       )}
       {asOf && (
-        <p className="text-[11px] text-white/40">
+        <p className="text-[11px] text-white/50">
           Evidence as of {asOf} · v{claim.version}
           {claim.reviewedBy === 'ai-council' && claim.reviewers.length > 0 && <> · Reviewed by the AI evidence council ({claim.reviewers.join(', ')})</>}
           {claim.reviewedBy === 'owner' && <> · Decided by the owner after council disagreement</>}
@@ -94,7 +94,7 @@ export function PublicClaimsPanel({ claims }: { claims: KnowledgePublicClaim[] }
   return (
     <section aria-label="What people claim" data-testid="public-claims">
       <h4 className="text-sm font-medium text-white/80 mb-1">What people claim, and what the evidence says</h4>
-      <p className="text-xs text-white/45 mb-2">
+      <p className="text-xs text-white/50 mb-2">
         <a href={VERDICT_METHOD_HREF} className="underline underline-offset-4">How verdicts work</a>
       </p>
       <ul className="space-y-2">{claims.map(c => <ClaimRow key={c.id} claim={c} />)}</ul>

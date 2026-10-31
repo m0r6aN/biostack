@@ -14,7 +14,7 @@ import {
 function TrustMetric({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
       <p className="mt-2 text-sm font-semibold text-white/82">{value}</p>
     </div>
   );
@@ -23,7 +23,7 @@ function TrustMetric({ label, value }: { label: string; value: string }) {
 function ArtifactPreview({ artifact }: { artifact: ProtocolAnalyzerArtifact }) {
   return (
     <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/42">{artifact.label}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{artifact.label}</p>
       <p className="mt-2 text-sm leading-6 text-white/68">{artifact.preview}</p>
     </div>
   );
@@ -57,7 +57,7 @@ function FindingList({
           ))}
         </ul>
       ) : (
-        <p className="mt-3 text-sm leading-6 text-white/45">{empty}</p>
+        <p className="mt-3 text-sm leading-6 text-white/50">{empty}</p>
       )}
     </section>
   );
@@ -77,7 +77,7 @@ function ResultList({ title, empty, items }: { title: string; empty: string; ite
           ))}
         </ul>
       ) : (
-        <p className="mt-3 text-sm leading-6 text-white/45">{empty}</p>
+        <p className="mt-3 text-sm leading-6 text-white/50">{empty}</p>
       )}
     </section>
   );
@@ -113,14 +113,14 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
         </div>
 
         {/* Trust metrics strip (3 TrustMetrics: source type, confidence, items inferred) */}
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <TrustMetric label="Source type" value={sourceTypeLabel(result)} />
           <TrustMetric label="Confidence" value={confidenceLabel(result)} />
           <TrustMetric label="Items inferred" value={`${inferredCount} found, ${normalizedCount} normalized`} />
         </div>
 
         {/* Notes + artifact previews + extracted-text toggle */}
-        <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1fr]">
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr]">
           <div className="space-y-2 text-sm text-white/62">
             {result.sourceName ? <p>Source: {result.sourceName}</p> : null}
             {notes.length > 0
@@ -145,7 +145,7 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
                 {result.extractedTextPreview || 'No extraction preview available.'}
               </p>
             ) : (
-              <p className="mt-3 text-sm leading-6 text-white/45">
+              <p className="mt-3 text-sm leading-6 text-white/50">
                 Preview is available for review before converting this into a BioStack protocol.
               </p>
             )}
@@ -154,7 +154,7 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
       </section>
 
       {/* Findings list + parser notes */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FindingList
           title="Analysis findings"
           empty="More findings are available in Operator."

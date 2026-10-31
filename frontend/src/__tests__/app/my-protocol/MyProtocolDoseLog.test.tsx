@@ -104,7 +104,7 @@ describe('/my-protocol: dose log pipeline (250 mcg twice weekly on Mon/Thu)', ()
     expect(screen.getByText('No amounts logged yet.')).toBeInTheDocument();
 
     // The amount starts blank; the user types it themselves.
-    await user.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await user.click(screen.getByRole('button', { name: /^Log amount taken/ }));
     expect((screen.getByLabelText('Amount taken') as HTMLInputElement).value).toBe('');
     expect((screen.getByLabelText('Unit taken') as HTMLSelectElement).value).toBe('');
 
@@ -135,7 +135,7 @@ describe('/my-protocol: dose log pipeline (250 mcg twice weekly on Mon/Thu)', ()
     const user = userEvent.setup();
     render(<MyProtocolPage />);
     await screen.findByText('BPC-157');
-    await user.click(screen.getByRole('button', { name: 'Log amount taken' }));
+    await user.click(screen.getByRole('button', { name: /^Log amount taken/ }));
     await user.type(screen.getByLabelText('Amount taken'), '250');
     await user.selectOptions(screen.getByLabelText('Unit taken'), 'mcg');
     vi.mocked(apiClient.getProtocolPortalSchedule).mockRejectedValueOnce(new Error('refresh failed'));

@@ -26,7 +26,7 @@ function ImprovementCard({
 }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{title}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">{title}</p>
       {teaser ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">
@@ -53,7 +53,7 @@ function ImprovementCard({
 function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult['counterfactuals']['bestSimplifiedProtocol'] }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Simplified protocol</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Simplified protocol</p>
       {protocol ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">{protocol.score} / 100 after simplification</p>
@@ -78,7 +78,7 @@ function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult
 function GoalAwareCard({ option }: { option: ProtocolAnalyzerGoalAwareOption | null }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Goal-aware alternative</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Goal-aware alternative</p>
       {option ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">Closest fit for {option.goal}</p>
@@ -131,7 +131,7 @@ export function AlternativeScenarios({ result, optimized }: AlternativeScenarios
           // WhyBetterBlocks are rendered at the ComparisonSection level;
           // here we just surface the optimized label as a reference card.
           <article className="rounded-lg border border-emerald-300/20 bg-emerald-400/[0.07] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Optimized arrangement</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Optimized arrangement</p>
             <p className="mt-2 text-base font-semibold text-white">{optimized.label}</p>
             <p className="mt-1 text-sm text-emerald-100/85">Internal model score {optimized.score}</p>
           </article>

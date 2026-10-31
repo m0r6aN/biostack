@@ -14,20 +14,20 @@ export function GrowthLists({ feed, showSearch = true }: { feed: GrowthFeed; sho
         <form action="/check" method="get" role="search" className="flex flex-wrap items-center gap-3">
           <label htmlFor="ask-biostack" className="sr-only">Ask BioStack</label>
           <input id="ask-biostack" name="q" type="search" placeholder="Ask BioStack: paste a compound or a claim"
-            className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-white placeholder:text-white/40" />
+            className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-white placeholder:text-white/50" />
           <button type="submit" className="rounded-xl border border-emerald-300/40 px-4 py-3 text-sm font-semibold text-emerald-100">Settle it.</button>
         </form>
       )}
       {feed.today && (
         <p className="text-sm text-white/80" data-testid="todays-claim">
-          <span className="text-[11px] uppercase tracking-[0.2em] text-white/45 mr-2">Today&rsquo;s claim</span>
+          <span className="text-[11px] uppercase tracking-[0.2em] text-white/50 mr-2">Today&rsquo;s claim</span>
           <Link href={feed.today.permalink} className="underline underline-offset-4">&ldquo;{feed.today.statement}&rdquo;</Link>{' '}
           <VerdictChip verdict={feed.today.verdict} />
         </p>
       )}
       {feed.myth && (
         <p className="text-sm text-white/80" data-testid="myth-of-the-week">
-          <span className="text-[11px] uppercase tracking-[0.2em] text-white/45 mr-2">Myth of the week</span>
+          <span className="text-[11px] uppercase tracking-[0.2em] text-white/50 mr-2">Myth of the week</span>
           &ldquo;{feed.myth.statement}&rdquo; <VerdictChip verdict={feed.myth.verdict} />{' '}
           <Link href={feed.myth.mythHref} className="text-cyan-300 underline underline-offset-4">Read the receipts</Link>
         </p>
@@ -42,7 +42,7 @@ export function GrowthLists({ feed, showSearch = true }: { feed: GrowthFeed; sho
               </li>
             ))}
           </ol>
-          <p className="mt-1 text-xs text-white/45">{HYPE_LIST_METHOD_NOTE} <a href={HYPE_METHOD_HREF} className="underline underline-offset-4">How we measure hype</a></p>
+          <p className="mt-1 text-xs text-white/50">{HYPE_LIST_METHOD_NOTE} <a href={HYPE_METHOD_HREF} className="underline underline-offset-4">How we measure hype</a></p>
         </div>
       )}
       {feed.trending.length > 0 && (
@@ -51,7 +51,7 @@ export function GrowthLists({ feed, showSearch = true }: { feed: GrowthFeed; sho
           <ul className="flex flex-wrap gap-3 text-sm">
             {feed.trending.map(t => <li key={t.slug}><Link href={t.href} className="text-cyan-300 underline underline-offset-4">{t.name}</Link></li>)}
           </ul>
-          <p className="mt-1 text-xs text-white/45">Unique visitors to each dossier over the last 7 days. It counts lookups, not use.</p>
+          <p className="mt-1 text-xs text-white/50">Unique visitors to each dossier over the last 7 days. It counts lookups, not use.</p>
         </div>
       )}
       {feed.headToHead.length > 0 && (

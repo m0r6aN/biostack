@@ -31,9 +31,9 @@ describe('CatalogOffers', () => {
     expect(screen.getByText(/^Similar/)).toHaveTextContent('Similar Creatine?');
     expect(onLink).not.toHaveBeenCalled();
 
-    await user.click(screen.getByRole('button', { name: 'Link Ozempic to Creatine' }));
+    await user.click(screen.getByRole('button', { name: /^Link it: link Ozempic to Creatine$/ }));
     expect(onLink).toHaveBeenCalledWith('creatine');
-    await user.click(screen.getByRole('button', { name: 'Ozempic is not the same' }));
+    await user.click(screen.getByRole('button', { name: /^Not the same: Ozempic is not the same as the suggestion$/ }));
     expect(onDecline).toHaveBeenCalledTimes(1);
   });
 
@@ -44,8 +44,8 @@ describe('CatalogOffers', () => {
 
   it('disables the actions while a change is saving', () => {
     render(<CatalogOffers itemName="Ozempic" candidates={[sameAs]} busy onLink={vi.fn()} onDecline={vi.fn()} />);
-    expect(screen.getByRole('button', { name: 'Link Ozempic to Semaglutide' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Ozempic is not the same' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^Link it: link Ozempic to Semaglutide$/ })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^Not the same: Ozempic is not the same as the suggestion$/ })).toBeDisabled();
   });
 });
 
@@ -88,7 +88,7 @@ describe('CatalogLookupPanel', () => {
     const user = userEvent.setup();
     render(<CatalogLookupPanel lookupId="lookup-1" itemName="Ozempic" onSettled={onSettled} />);
 
-    await user.click(await screen.findByRole('button', { name: 'Link Ozempic to Semaglutide' }));
+    await user.click(await screen.findByRole('button', { name: /^Link it: link Ozempic to Semaglutide$/ }));
 
     expect(apiClient.linkCatalogLookup).toHaveBeenCalledWith('lookup-1', 'semaglutide');
     expect(await screen.findByRole('status')).toHaveTextContent('Linked to Semaglutide.');
@@ -102,7 +102,7 @@ describe('CatalogLookupPanel', () => {
     const user = userEvent.setup();
     render(<CatalogLookupPanel lookupId="lookup-1" itemName="cretine" onSettled={onSettled} />);
 
-    await user.click(await screen.findByRole('button', { name: 'cretine is not the same' }));
+    await user.click(await screen.findByRole('button', { name: /^Not the same: cretine is not the same as the suggestion$/ }));
 
     expect(await screen.findByRole('status')).toHaveTextContent('it stays as you entered it');
     expect(onSettled).toHaveBeenCalledWith('declined');
@@ -116,11 +116,11 @@ describe('CatalogLookupPanel', () => {
     const user = userEvent.setup();
     render(<CatalogLookupPanel lookupId="lookup-1" itemName="Ozempic" onSettled={onSettled} />);
 
-    await user.click(await screen.findByRole('button', { name: 'Link Ozempic to Semaglutide' }));
+    await user.click(await screen.findByRole('button', { name: /^Link it: link Ozempic to Semaglutide$/ }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Nothing was changed');
     expect(onSettled).not.toHaveBeenCalled();
-    expect(screen.getByRole('button', { name: 'Link Ozempic to Semaglutide' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: /^Link it: link Ozempic to Semaglutide$/ })).toBeEnabled();
   });
 
   it('says nothing was found without offering anything, and a failed check never blocks the item', async () => {

@@ -5,7 +5,7 @@ interface CommunitySignalBadgeProps {
 }
 
 const strengthClasses: Record<string, string> = {
-  none:       'bg-white/[0.05] text-white/40 border-white/10',
+  none:       'bg-white/[0.05] text-white/50 border-white/10',
   isolated:   'bg-blue-500/10 text-blue-300 border-blue-400/20',
   recurring:  'bg-violet-500/15 text-violet-300 border-violet-400/25',
   widespread: 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-400/25',
@@ -27,7 +27,7 @@ function kebabToTitle(value: string | undefined | null): string {
 
 export function CommunitySignalBadge({ signal }: CommunitySignalBadgeProps) {
   const strengthKey = normalize(signal.signalStrength);
-  const classes = strengthClasses[strengthKey] ?? 'bg-white/[0.05] text-white/40 border-white/10';
+  const classes = strengthClasses[strengthKey] ?? 'bg-white/[0.05] text-white/50 border-white/10';
   const strengthLabel = kebabToTitle(signal.signalStrength) || 'Unknown';
 
   const truthStatus = signal.canonicalTruthStatus

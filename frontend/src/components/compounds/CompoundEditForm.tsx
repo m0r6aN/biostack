@@ -138,7 +138,7 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
             if (formError) setFormError(null);
           }}
           required
-          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
         />
       </div>
       <div>
@@ -193,7 +193,7 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
+          className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all"
         />
       </div>
       <div className="flex gap-3">

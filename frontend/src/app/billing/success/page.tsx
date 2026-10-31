@@ -6,6 +6,7 @@ import { useEntitlements } from '@/lib/entitlements';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 export default function BillingSuccessPage() {
   return (
@@ -44,7 +45,7 @@ function BillingSuccessContent() {
   }, [refreshEntitlements]);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6">
+    <PageMain className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6">
       <div className="rounded-lg border border-emerald-300/20 bg-[#121923]/90 p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200/70">Billing</p>
         <h1 className="mt-3 text-3xl font-bold text-white">
@@ -66,6 +67,6 @@ function BillingSuccessContent() {
           </Link>
         </div>
       </div>
-    </main>
+    </PageMain>
   );
 }

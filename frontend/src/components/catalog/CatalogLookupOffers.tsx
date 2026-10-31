@@ -4,6 +4,7 @@ import { apiClient } from '@/lib/api';
 import type { CatalogCandidate, CatalogLookup } from '@/lib/types';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 
 /** Delays between status checks while the server looks a name up: about 13 seconds in all, then it waits for the note. */
 export const LOOKUP_POLL_DELAYS_MS = [1000, 1000, 2000, 3000, 3000, 3000];
@@ -33,22 +34,20 @@ export function CatalogOffers({ itemName, candidates, busy, onLink, onDecline, h
           <button
             type="button"
             disabled={busy}
-            aria-label={`Link ${itemName} to ${c.name}`}
-            className="underline disabled:opacity-50"
+            className="inline-flex min-h-6 items-center underline disabled:opacity-50"
             onClick={() => onLink(c.slug)}
           >
-            Link it
+            Link it<span className="sr-only">: link {itemName} to {c.name}</span>
           </button>
         </p>
       ))}
       <button
         type="button"
         disabled={busy}
-        aria-label={`${itemName} is not the same`}
-        className="text-xs text-white/55 underline disabled:opacity-50"
+        className="inline-flex min-h-6 items-center text-xs text-white/55 underline disabled:opacity-50"
         onClick={onDecline}
       >
-        Not the same
+        Not the same<span className="sr-only">: {itemName} is not the same as the suggestion</span>
       </button>
     </div>
   );
@@ -110,46 +109,45 @@ export function CatalogLookupPanel({ lookupId, itemName, onSettled }: {
     }
   }, [itemName, onSettled]);
 
+  // One persistent polite live region carries every state change ("Please wait…", the outcome), so assistive
+  // technology announces the update. A status element that is mounted together with its text is often not announced.
+  let tone = 'mt-2 text-xs text-white/55';
+  let message: ReactNode;
   if (failed && !lookup) {
-    return <p role="status" className="mt-2 text-xs text-white/55">We couldn&apos;t check the library just now. Your item is saved as you entered it.</p>;
-  }
-  if (!lookup || lookup.status === 'pending') {
-    return (
-      <p role="status" className="mt-2 text-sm text-white/65">
-        {waitedOut
-          ? 'This is taking longer than usual. Your item is saved. We\u2019ll leave a note here if we find a match.'
-          : 'Please wait while we look this up\u2026'}
-      </p>
-    );
-  }
-  if (lookup.status === 'matched') {
-    return (
-      <div>
-        <CatalogOffers
-          itemName={itemName}
-          candidates={lookup.candidates}
-          busy={busy}
-          onLink={(slug) => { void answer(() => apiClient.linkCatalogLookup(lookup.id, slug), 'linked'); }}
-          onDecline={() => { void answer(() => apiClient.declineCatalogLookup(lookup.id), 'declined'); }}
-        />
-        {actionError && <p role="alert" className="mt-1 text-sm text-amber-200">{actionError}</p>}
-      </div>
-    );
-  }
-  if (lookup.status === 'linked') {
+    message = <>We couldn&apos;t check the library just now. Your item is saved as you entered it.</>;
+  } else if (!lookup || lookup.status === 'pending') {
+    tone = 'mt-2 text-sm text-white/65';
+    message = waitedOut
+      ? 'This is taking longer than usual. Your item is saved. We\u2019ll leave a note here if we find a match.'
+      : 'Please wait while we look this up\u2026';
+  } else if (lookup.status === 'matched') {
+    tone = 'sr-only';
+    message = `We found a possible match for ${itemName}. You can link it or keep it as you entered it.`;
+  } else if (lookup.status === 'linked') {
     const linked = lookup.candidates.length === 1 ? lookup.candidates[0] : undefined;
-    return (
-      <p role="status" className="mt-2 text-sm text-emerald-300">
-        Linked{linked ? <> to <Link href={`/knowledge/${linked.slug}`} className="underline">{linked.name}</Link></> : ''}.
-      </p>
-    );
+    tone = 'mt-2 text-sm text-emerald-300';
+    message = <>Linked{linked ? <> to <Link href={`/knowledge/${linked.slug}`} className="underline">{linked.name}</Link></> : ''}.</>;
+  } else if (lookup.status === 'declined') {
+    message = 'Okay, it stays as you entered it.';
+  } else {
+    message = <>We didn&apos;t find this in the BioStack library yet. It stays in your list as Unverified.</>;
   }
-  if (lookup.status === 'declined') {
-    return <p role="status" className="mt-2 text-xs text-white/55">Okay, it stays as you entered it.</p>;
-  }
+
   return (
-    <p role="status" className="mt-2 text-xs text-white/55">
-      We didn&apos;t find this in the BioStack library yet. It stays in your list as Unverified.
-    </p>
+    <div>
+      <p role="status" aria-live="polite" className={tone}>{message}</p>
+      {lookup?.status === 'matched' && (
+        <>
+          <CatalogOffers
+            itemName={itemName}
+            candidates={lookup.candidates}
+            busy={busy}
+            onLink={(slug) => { void answer(() => apiClient.linkCatalogLookup(lookup.id, slug), 'linked'); }}
+            onDecline={() => { void answer(() => apiClient.declineCatalogLookup(lookup.id), 'declined'); }}
+          />
+          {actionError && <p role="alert" className="mt-1 text-sm text-amber-200">{actionError}</p>}
+        </>
+      )}
+    </div>
   );
 }

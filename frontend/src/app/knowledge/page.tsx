@@ -146,7 +146,7 @@ export default function KnowledgePage() {
           <form onSubmit={handleSearch} className="flex gap-3">
             <div className="relative flex-1">
               <svg
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
               >
                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -158,7 +158,7 @@ export default function KnowledgePage() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search compounds, supplements, substances…"
-                className="w-full h-12 pl-11 pr-4 bg-white/[0.05] border border-white/[0.08] rounded-xl text-white placeholder:text-white/25 focus:outline-none focus:border-emerald-500/40 focus:bg-white/[0.07] focus:shadow-[0_0_0_1px_rgba(34,197,94,0.15)] transition-all"
+                className="w-full h-12 pl-11 pr-4 bg-white/[0.05] border border-white/[0.08] rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/40 focus:bg-white/[0.07] focus:shadow-[0_0_0_1px_rgba(34,197,94,0.15)] transition-all"
               />
             </div>
             <button
@@ -182,7 +182,7 @@ export default function KnowledgePage() {
           <LoadingState />
         ) : searchResults.length > 0 ? (
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/35">
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50">
               {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
             </p>
             {searchResults.map(result => (
@@ -195,7 +195,7 @@ export default function KnowledgePage() {
           </div>
         ) : completedSearchQuery !== null && !searchError ? (
           <GlassCard variant="base" className="p-8 text-center">
-            <p className="text-white/40 text-sm">No results for &ldquo;{completedSearchQuery}&rdquo;</p>
+            <p className="text-white/50 text-sm">No results for &ldquo;{completedSearchQuery}&rdquo;</p>
           </GlassCard>
         ) : null}
 
@@ -222,7 +222,7 @@ export default function KnowledgePage() {
             </p>
           )}
           {libraryStatus === 'ready' && (
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {library.map((entry) => (
                 <li key={entry.canonicalName}>
                   <Link
@@ -232,7 +232,7 @@ export default function KnowledgePage() {
                     <span className="text-sm font-semibold text-white">{entry.canonicalName}</span>
                     <span className="mt-2 flex items-center gap-2">
                       <EvidenceTierBadge tier={entry.evidenceTier} />
-                      <span className="text-xs text-white/45">{entry.classification}</span>
+                      <span className="text-xs text-white/50">{entry.classification}</span>
                     </span>
                   </Link>
                 </li>
@@ -286,7 +286,7 @@ export default function KnowledgePage() {
             {/* Selection chips from search results */}
             {searchResults.length > 0 && (
               <div className="mb-5">
-                <p className="text-xs uppercase tracking-[0.15em] text-white/35 mb-2">From search results</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">From search results</p>
                 <div className="flex flex-wrap gap-2">
                   {searchResults.map(r => (
                     <button
@@ -314,7 +314,7 @@ export default function KnowledgePage() {
               <p className="text-sm text-white/50">
                 {selectedCompounds.length > 0
                   ? <><span className="text-amber-300 font-medium">{selectedCompounds.length}</span> compound{selectedCompounds.length !== 1 ? 's' : ''} selected</>
-                  : <span className="text-white/30">No compounds selected</span>
+                  : <span className="text-white/50">No compounds selected</span>
                 }
               </p>
               {selectedCompounds.length > 0 && (
@@ -323,7 +323,7 @@ export default function KnowledgePage() {
                     setSelectedCompounds([]);
                     invalidateOverlap();
                   }}
-                  className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                  className="text-xs text-white/50 hover:text-white/60 transition-colors"
                 >
                   Clear
                 </button>
@@ -361,7 +361,7 @@ export default function KnowledgePage() {
             <span className="text-blue-400 text-lg mt-0.5">📡</span>
             <div>
               <h3 className="text-sm font-semibold text-blue-300 mb-1">About This Knowledge Base</h3>
-              <p className="text-sm text-white/45 leading-relaxed">
+              <p className="text-sm text-white/50 leading-relaxed">
                 Information is curated from scientific literature for observational and educational
                 purposes only. Not a substitute for professional medical advice.
               </p>

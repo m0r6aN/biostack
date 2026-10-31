@@ -76,7 +76,7 @@ export default function MapMyStackPage() {
       <Header title="Map My Stack" subtitle="Paste compounds, preview relationships, unlock full stack intelligence" />
 
       <div className="max-w-6xl space-y-8 p-8">
-        <section className="grid gap-6 lg:grid-cols-[1fr_380px]">
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
           <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/65">Premium stack funnel</p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-white">Turn a list into an intelligence map.</h1>
@@ -88,11 +88,11 @@ export default function MapMyStackPage() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               rows={6}
-              className="mt-6 w-full rounded-lg border border-white/[0.08] bg-black/20 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-400/45"
+              className="mt-6 w-full rounded-lg border border-white/[0.08] bg-black/20 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
               placeholder="BPC-157, TB-500, NAD+"
             />
 
-            {error && <p className="mt-3 rounded-lg border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-100/80">{error}</p>}
+            {error && <p role="alert" className="mt-3 rounded-lg border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-100/80">{error}</p>}
 
             <button
               onClick={mapStack}
@@ -115,23 +115,23 @@ export default function MapMyStackPage() {
         {loading && <LoadingState />}
 
         {compounds.length >= 2 && !loading && (
-          <section className="grid gap-6 lg:grid-cols-[1fr_420px]">
+          <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_420px]">
             <div className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack visualization</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Stack visualization</p>
                   <h2 className="mt-2 text-xl font-bold text-white">{compounds.length} compounds mapped</h2>
                 </div>
-                <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/45">
+                <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/50">
                   {entitlements.isPro ? 'full map' : 'free preview'}
                 </span>
               </div>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {compounds.map((compound) => (
                   <div key={compound} className="rounded-lg border border-emerald-300/15 bg-emerald-400/[0.06] p-4">
                     <p className="font-bold text-white">{compound}</p>
-                    <p className="mt-1 text-xs text-white/40">
+                    <p className="mt-1 text-xs text-white/50">
                       {entries.find((entry) => entry.canonicalName.toLowerCase() === compound.toLowerCase())?.classification ?? 'Manual input'}
                     </p>
                   </div>

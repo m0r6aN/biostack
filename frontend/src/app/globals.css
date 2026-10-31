@@ -21,6 +21,49 @@
   }
 }
 
+/* ============================================================
+   Accessibility baseline (WCAG 2.2 AA)
+   - 2.4.7 / 2.4.11 / 2.4.13: every keyboard-focused control gets a visible,
+     high-contrast indicator. Unlayered on purpose: it must win over Tailwind's
+     layered `outline-none` utilities that previously left inputs with only a
+     faint border-colour change.
+   - 2.3.3 / 2.2.2: honour the OS "reduce motion" preference everywhere,
+     including Tailwind animate-* utilities that have no motion-reduce variant.
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid #6ee7b7;
+  outline-offset: 2px;
+}
+
+/* Containers focused programmatically by the skip link are not controls. */
+main[tabindex='-1']:focus-visible,
+[tabindex='-1'][id='main']:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Loading spinners are essential motion; keep them readable as "busy". */
+  .animate-spin {
+    animation-duration: 1.5s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
 body {
   background-color: var(--color-bg-primary);
   color: rgba(255, 255, 255, 0.9);

@@ -32,7 +32,7 @@ export default async function ChangelogPage({ params }: PageProps) {
   const anyPublished = (entry.details?.publicClaims ?? []).some(isPublished);
   return (
     <main className="max-w-3xl mx-auto px-4 py-10 space-y-6">
-      <p className="text-xs uppercase tracking-[0.2em] text-white/45">Changelog</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-white/50">Changelog</p>
       <h1 className="text-2xl font-semibold text-white">{entry.canonicalName}: what changed and why</h1>
       <div className="flex flex-wrap items-center gap-4">
         <WatchButton targetType="compound" targetId={compoundSlug(entry.canonicalName)} returnTo={`${base}/changelog`} />
@@ -51,12 +51,12 @@ export default async function ChangelogPage({ params }: PageProps) {
                 <Link href={`${base}/claims/${r.claimId}`} className="underline underline-offset-4">&ldquo;{r.statement}&rdquo;</Link>: <strong>{r.verdict}</strong>
               </p>
               {r.reason && <p className="text-sm text-white/70">{r.reason}</p>}
-              {r.reviewers.length > 0 && <p className="text-xs text-white/45">Reviewed by {r.reviewers.join(', ')}</p>}
+              {r.reviewers.length > 0 && <p className="text-xs text-white/50">Reviewed by {r.reviewers.join(', ')}</p>}
             </li>
           ))}
         </ol>
       )}
-      <p className="text-xs text-white/40">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
+      <p className="text-xs text-white/50">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
     </main>
   );
 }

@@ -26,7 +26,7 @@ export function TrustTimeline({ completeness, needsReview, status, qualityFlags 
 
   return (
     <div className="p-4 rounded-xl border border-white/8 bg-white/[0.03]">
-      <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">
+      <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-4">
         Trust Pipeline
       </p>
       <div className="flex items-center gap-0">
@@ -43,7 +43,7 @@ export function TrustTimeline({ completeness, needsReview, status, qualityFlags 
                     'w-7 h-7 rounded-full border-2 flex items-center justify-center text-[11px] font-bold transition-colors',
                     isActive && 'border-emerald-400 bg-emerald-500/20 text-emerald-300',
                     isPast && 'border-white/30 bg-white/10 text-white/50',
-                    !isActive && !isPast && 'border-white/10 bg-transparent text-white/20',
+                    !isActive && !isPast && 'border-white/10 bg-transparent text-white/50',
                   )}
                 >
                   {isPast ? (
@@ -55,13 +55,13 @@ export function TrustTimeline({ completeness, needsReview, status, qualityFlags 
                 <div className="text-center">
                   <p className={cn(
                     'text-[11px] font-semibold',
-                    isActive ? 'text-emerald-300' : isPast ? 'text-white/50' : 'text-white/20',
+                    isActive ? 'text-emerald-300' : isPast ? 'text-white/50' : 'text-white/50',
                   )}>
                     {step.label}
                   </p>
                   <p className={cn(
                     'text-[10px]',
-                    isActive ? 'text-emerald-300/60' : 'text-white/20',
+                    isActive ? 'text-emerald-300/60' : 'text-white/50',
                   )}>
                     {step.sub}
                   </p>
@@ -80,7 +80,7 @@ export function TrustTimeline({ completeness, needsReview, status, qualityFlags 
 
       {qualityFlags.length > 0 && (
         <div className="mt-4 pt-3 border-t border-white/5">
-          <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">Quality Flags</p>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Quality Flags</p>
           <div className="flex flex-wrap gap-1.5">
             {qualityFlags.map((flag, i) => (
               <span

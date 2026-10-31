@@ -177,7 +177,7 @@ function VerifyPageContent() {
               >
                 Not now
               </button>
-              <p className="mt-4 text-xs leading-5 text-white/35">
+              <p className="mt-4 text-xs leading-5 text-white/50">
                 Email sign-in links always remain available for recovery.
               </p>
             </>
@@ -188,12 +188,12 @@ function VerifyPageContent() {
                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-emerald-400" />
               </div>
               <h1 className="text-xl font-bold tracking-tight text-white">Signing you in…</h1>
-              <p className="mt-2 text-sm text-white/45">Hang on while we verify your link.</p>
+              <p className="mt-2 text-sm text-white/50">Hang on while we verify your link.</p>
             </>
           ) : (
             <>
               <h1 className="text-xl font-bold tracking-tight text-white">Invalid link</h1>
-              <p className="mt-2 text-sm text-white/45">
+              <p className="mt-2 text-sm text-white/50">
                 This sign-in link is missing a token.{' '}
                 <a href="/auth/signin" className="text-emerald-400 underline-offset-2 hover:underline">
                   Request a new one.

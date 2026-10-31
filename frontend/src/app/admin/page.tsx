@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 const API_URL = getApiBaseUrl();
 
@@ -69,7 +70,7 @@ export default function AdminPage() {
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="System Administration" subtitle="Infrastructure & Knowledge Management" />
 
-      <main className="flex-1 p-6 space-y-6 max-w-5xl mx-auto w-full">
+      <PageMain className="flex-1 p-6 space-y-6 max-w-5xl mx-auto w-full">
         {/* Stats overview */}
         {statsError ? (
           <p role="status" className="text-sm text-white/55">{statsError}</p>
@@ -99,7 +100,7 @@ export default function AdminPage() {
             </li>
           </ul>
         </GlassCard>
-      </main>
+      </PageMain>
     </div>
   );
 }

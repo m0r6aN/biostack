@@ -11,19 +11,20 @@ import {
 } from '@/lib/research/loader';
 import type { PromotionExportManifest, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest } from '@/lib/research/types';
 import { useEffect, useRef, useState } from 'react';
+import { PageMain } from '@/components/ui/PageMain';
 
 function SectionHeader({ title, open, toggle }: { title: string; open: boolean; toggle: () => void }) {
   return (
     <button onClick={toggle} className="w-full flex items-center justify-between text-left">
-      <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">{title}</h3>
-      <span className="text-white/30 text-xs">{open ? '▲' : '▼'}</span>
+      <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/50">{title}</h3>
+      <span className="text-white/50 text-xs">{open ? '▲' : '▼'}</span>
     </button>
   );
 }
 
 function ArtifactEmpty({ name }: { name: string }) {
   return (
-    <p className="text-sm text-white/30 py-2">
+    <p className="text-sm text-white/50 py-2">
       Artifact not yet generated for this run: <code className="text-white/50">{name}</code>
     </p>
   );
@@ -73,7 +74,7 @@ export default function PipelinePage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Promotion Pipeline" subtitle="Export · Import Preview · Dry-Run · Internal" />
-      <main className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
+      <PageMain className="flex-1 p-6 max-w-5xl mx-auto w-full flex flex-col gap-4">
 
         <GlassCard className="p-5">
           <SectionHeader title="Promotion Manifest" open={open.manifest} toggle={() => toggle('manifest')} />
@@ -89,7 +90,7 @@ export default function PipelinePage() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-[11px]">
                     <thead>
-                      <tr className="text-white/30 text-left border-b border-white/[0.06]">
+                      <tr className="text-white/50 text-left border-b border-white/[0.06]">
                         <th className="py-2 pr-4">Name</th>
                         <th className="py-2 pr-4">Classification</th>
                         <th className="py-2 pr-4">Readiness</th>
@@ -120,7 +121,7 @@ export default function PipelinePage() {
               ? <div className="mt-4 flex flex-col gap-3">
                   <div className="flex gap-6 text-[12px]">
                     <span className="text-white/60">Exported: <strong className="text-white">{exportManifest.exportedCount}</strong></span>
-                    <span className="text-white/40">Skipped: {exportManifest.skippedCompounds.length}</span>
+                    <span className="text-white/50">Skipped: {exportManifest.skippedCompounds.length}</span>
                   </div>
                   {exportManifest.candidates.map(candidate => (
                     <div key={candidate.slug} className="rounded-xl border border-emerald-400/15 bg-emerald-400/5 px-3 py-2">
@@ -128,7 +129,7 @@ export default function PipelinePage() {
                         <span className="text-[12px] font-semibold text-white/80">{candidate.name}</span>
                         <span className="text-[9px] uppercase tracking-widest text-emerald-300">{candidate.readiness.replace(/-/g, ' ')}</span>
                       </div>
-                      <p className="mt-1 text-[10px] text-white/40">Review decisions: {candidate.reviewDecisionIds.length > 0 ? candidate.reviewDecisionIds.join(', ') : 'none'}</p>
+                      <p className="mt-1 text-[10px] text-white/50">Review decisions: {candidate.reviewDecisionIds.length > 0 ? candidate.reviewDecisionIds.join(', ') : 'none'}</p>
                     </div>
                   ))}
                 </div>
@@ -145,11 +146,11 @@ export default function PipelinePage() {
                   <span className="text-white/60">Exported: {importPreview.counts.totalExported}</span>
                   <span className="text-emerald-400">Create: {importPreview.counts.wouldCreate}</span>
                   <span className="text-blue-400">Update: {importPreview.counts.wouldUpdate}</span>
-                  <span className="text-white/40">Skip: {importPreview.counts.wouldSkip}</span>
+                  <span className="text-white/50">Skip: {importPreview.counts.wouldSkip}</span>
                 </div>
                 <table className="w-full text-[11px]">
                   <thead>
-                    <tr className="text-white/30 text-left border-b border-white/[0.06]">
+                    <tr className="text-white/50 text-left border-b border-white/[0.06]">
                       <th className="py-2 pr-4">Name</th>
                       <th className="py-2 pr-4">Action</th>
                       <th className="py-2 pr-4">Schema Valid</th>
@@ -164,7 +165,7 @@ export default function PipelinePage() {
                           <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
                             item.action === 'create' ? 'bg-emerald-500/15 text-emerald-400'
                             : item.action === 'update' ? 'bg-blue-500/15 text-blue-400'
-                            : 'bg-white/5 text-white/30'
+                            : 'bg-white/5 text-white/50'
                           }`}>{item.action}</span>
                         </td>
                         <td className="py-2 pr-4 text-white/60">{item.schemaValid ? '✓' : '✕'}</td>
@@ -196,7 +197,7 @@ export default function PipelinePage() {
                   )}
                   <table className="w-full text-[11px]">
                     <thead>
-                      <tr className="text-white/30 text-left border-b border-white/[0.06]">
+                      <tr className="text-white/50 text-left border-b border-white/[0.06]">
                         <th className="py-2 pr-4">Name</th>
                         <th className="py-2 pr-4">Planned Action</th>
                         <th className="py-2 pr-4">Schema Valid</th>
@@ -217,7 +218,7 @@ export default function PipelinePage() {
           )}
         </GlassCard>
 
-      </main>
+      </PageMain>
     </div>
   );
 }

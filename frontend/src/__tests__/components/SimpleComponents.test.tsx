@@ -148,7 +148,7 @@ describe('OverlapFlagsBanner', () => {
     }];
     render(<OverlapFlagsBanner flags={flags} />);
     // heading text is split across child spans due to HelpTip wrapper
-    expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent(/1.*pathway overlap.*detected/i);
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/1.*pathway overlap.*detected/i);
   });
 
   it('renders plural text for multiple flags', () => {
@@ -158,7 +158,7 @@ describe('OverlapFlagsBanner', () => {
     ];
     render(<OverlapFlagsBanner flags={flags} />);
     // heading text is split across child spans due to HelpTip wrapper
-    expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent(/2.*pathway overlap.*flags detected/i);
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/2.*pathway overlap.*flags detected/i);
   });
 });
 

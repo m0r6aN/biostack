@@ -31,13 +31,13 @@ export function StackGraphMini({ intelligence, compounds, activeProtocolId, clas
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-4 pb-2">
         <div>
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Stack Graph</p>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Stack Graph</p>
           <p className="text-xs text-white/50 mt-0.5">{activeCount} compound{activeCount !== 1 ? 's' : ''}{topFindingCount > 0 ? ` · ${topFindingCount} finding${topFindingCount !== 1 ? 's' : ''}` : ''}</p>
         </div>
         <Link
           href={labHref}
           onClick={() => track({ name: 'surface_view', surface: 'stack-graph-full' })}
-          className="text-[11px] font-semibold text-emerald-400/70 hover:text-emerald-300 transition-colors flex items-center gap-1"
+          className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
         >
           Open Lab
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
