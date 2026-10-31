@@ -3,6 +3,7 @@
 import { Header } from '@/components/Header';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
 const CATEGORIES = ['Support', 'Billing', 'Feedback', 'Partnership', 'Other'] as const;
@@ -64,6 +65,9 @@ export default function ContactPage() {
           </GlassCard>
         ) : (
           <GlassCard className="p-6 sm:p-8">
+            <p className="mb-5 text-sm leading-6 text-white/60">
+              Looking for a quick answer first? <Link href="/support" className="font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">Help and support</Link> covers signing in, your data, and what BioStack does and does not do.
+            </p>
             <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
               <label className="block">
                 <span className="mb-2 block text-sm font-semibold text-white/70">Name</span>

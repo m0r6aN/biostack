@@ -38,6 +38,7 @@ describe('contact page', () => {
     render(<ContactPage />);
 
     expect(screen.getByRole('heading', { name: 'Contact Us' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Help and support' })).toHaveAttribute('href', '/support');
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     expect(screen.getByLabelText('Email')).toBeInTheDocument();
     expect(screen.getByLabelText('Message')).toBeInTheDocument();

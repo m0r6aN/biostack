@@ -7,6 +7,9 @@ import HowItWorksPage from '@/app/how-it-works/page';
 import PricingPage from '@/app/pricing/page';
 import PrivacyPage from '@/app/privacy/page';
 import SafetyPage from '@/app/safety/page';
+import SupportPage from '@/app/support/page';
+import NotFoundPage from '@/app/not-found';
+import RouteError from '@/app/error';
 import TermsPage from '@/app/terms/page';
 import { NoticeBell } from '@/components/NoticeBell';
 import { Sidebar } from '@/components/Sidebar';
@@ -102,6 +105,9 @@ describe('axe: public marketing and legal pages', () => {
     ['/safety', () => <SafetyPage />],
     ['/privacy', () => <PrivacyPage />],
     ['/terms', () => <TermsPage />],
+    ['/support', () => <SupportPage />],
+    ['404 (not-found)', () => <NotFoundPage />],
+    ['route error boundary', () => <RouteError error={new Error('x')} reset={() => undefined} />],
   ];
 
   it.each(pages)('%s has no serious or critical violations', async (route, page) => {
