@@ -6,10 +6,14 @@ import { hasPendingAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { useAnalyzerProtocolDraft } from '@/lib/useAnalyzerProtocolDraft';
 import { canonicalRoutes } from '@/lib/productContract';
 import { authenticateWithPasskey, passkeyAuthenticationErrorMessage, passkeysSupported } from '@/lib/passkeys';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 const API_URL = getApiBaseUrl();
+
+const subscribeNever = () => () => {};
+const passkeysUnsupportedOnServer = () => false;
 
 function resolveRedirectPath(callbackUrl: string | null) {
   if (!callbackUrl) {
@@ -49,7 +53,12 @@ function SignInPageContent() {
   // Optimistic: show the passkey option the moment the browser supports WebAuthn.
   // The status check below only HIDES it on an explicit disable — waiting for the
   // check before showing anything delayed the option for seconds on cold starts.
-  const [passkeysEnabled, setPasskeysEnabled] = useState(() => passkeysSupported());
+  // Browser support is read with useSyncExternalStore: the server snapshot is always
+  // "unsupported", so the server HTML and the first client render match (no hydration
+  // mismatch) and React then re-renders with the real answer.
+  const passkeysSupportedHere = useSyncExternalStore(subscribeNever, passkeysSupported, passkeysUnsupportedOnServer);
+  const [passkeysDisabled, setPasskeysDisabled] = useState(false);
+  const passkeysEnabled = passkeysSupportedHere && !passkeysDisabled;
   const [isUsingPasskey, setIsUsingPasskey] = useState(false);
   const [passkeyError, setPasskeyError] = useState('');
 
@@ -70,7 +79,7 @@ function SignInPageContent() {
           const response = await fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' });
           if (response.ok) {
             const status = (await response.json()) as { enabled?: boolean } | null;
-            if (!cancelled && status?.enabled === false) setPasskeysEnabled(false);
+            if (!cancelled && status?.enabled === false) setPasskeysDisabled(true);
             return;
           }
         } catch {
@@ -84,7 +93,7 @@ function SignInPageContent() {
       // Unverifiable after a retry: when the browser supports WebAuthn, offer
       // passkey sign-in rather than silently hiding it — an actual disablement
       // surfaces at click time as a clear error instead of an invisible button.
-      if (!cancelled) setPasskeysEnabled(true);
+      if (!cancelled) setPasskeysDisabled(false);
     }
 
     void loadPasskeysEnabled();
@@ -160,7 +169,9 @@ function SignInPageContent() {
     <main id="main" tabIndex={-1} className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md flex-col justify-center">
         <div className="mb-8 flex justify-center">
-          <BioStackLogo variant="stacked" theme="dark" size="lg" />
+          <Link href="/" aria-label="BioStack home" className="rounded-lg">
+            <BioStackLogo variant="stacked" theme="dark" size="lg" />
+          </Link>
         </div>
 
         <section className="rounded-lg border border-white/[0.07] bg-white/[0.035] p-6 shadow-2xl sm:p-8">
@@ -246,6 +257,10 @@ function SignInPageContent() {
                   {isSending ? 'Sending...' : 'Email me a sign-in link'}
                 </button>
               </form>
+              <p className="mt-6 text-center text-sm text-white/60">
+                Trouble signing in?{' '}
+                <Link href="/support" className="inline-flex min-h-6 items-center font-medium text-emerald-200 underline underline-offset-4 hover:text-emerald-100">Help and support</Link>
+              </p>
             </>
           ) : (
             <div className="text-center">

@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/AuthProvider';
 import { isEnabled } from '@/lib/flags';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 
@@ -230,6 +230,26 @@ export function Sidebar() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [isDesktop, isSidebarOpen, setSidebarOpen]);
 
+  // Focus management for the mobile drawer (WCAG 2.4.3): opening moves focus into the drawer,
+  // closing returns it to the navigation toggle instead of dropping it on <body>.
+  const asideRef = useRef<HTMLElement>(null);
+  const wasOpenRef = useRef(false);
+  useEffect(() => {
+    if (isDesktop) {
+      wasOpenRef.current = false;
+      return;
+    }
+    if (isSidebarOpen && !wasOpenRef.current) {
+      asideRef.current?.querySelector<HTMLElement>('[data-drawer-close]')?.focus({ preventScroll: true });
+    } else if (!isSidebarOpen && wasOpenRef.current) {
+      const active = document.activeElement;
+      if (!active || active === document.body || asideRef.current?.contains(active)) {
+        document.querySelector<HTMLElement>(`button[aria-controls="${SIDEBAR_ID}"]`)?.focus({ preventScroll: true });
+      }
+    }
+    wasOpenRef.current = isSidebarOpen;
+  }, [isDesktop, isSidebarOpen]);
+
   const [railLabel, setRailLabel] = useState<{ text: string; top: number; left: number } | null>(null);
   useEffect(() => {
     const dismiss = () => setRailLabel(null);
@@ -270,6 +290,7 @@ export function Sidebar() {
       )}
 
       <aside
+        ref={asideRef}
         id={SIDEBAR_ID}
         aria-label="Application sidebar"
         inert={drawerClosed}
@@ -301,6 +322,7 @@ export function Sidebar() {
           <button
             type="button"
             onClick={() => setSidebarOpen(false)}
+            data-drawer-close=""
             aria-label="Close navigation"
             className="lg:hidden p-2 rounded-xl hover:bg-white/5 text-white/50 transition-colors"
           >

@@ -82,10 +82,10 @@ jsdom has no layout, so contrast, target size and reflow are not covered by it. 
 
 | # | Item | Why not fixed | Severity |
 |---|---|---|---|
-| R1 | Hydration mismatch on `/auth/signin` (passkey button renders differently on the server and client). A form submitted before hydration completes does a native GET. It also shows in the console. | Needs a design decision on how the passkey control renders when WebAuthn support is unknown. Separate from a11y. | Medium |
-| R2 | Drawer focus on open. Focus stays on the toggle when the drawer opens, rather than moving into it. Acceptable (the toggle announces `expanded`) but not ideal. | Behavior change in a shared component. | Low |
+| R1 | ~~Hydration mismatch on `/auth/signin`~~ **Fixed (follow-up PR).** The passkey option is now read with `useSyncExternalStore` (server snapshot: unsupported), so server and first client render match and the option appears right after hydration. Covered by `SignInPage.hydration.test.tsx`. | Done | n/a |
+| R2 | ~~Drawer focus on open~~ **Fixed (follow-up PR).** Opening the drawer moves focus to its Close button; closing returns focus to the toggle. Verified in Chromium at 390px and covered by `Sidebar.drawerFocus.test.tsx`. | Done | n/a |
 | R3 | Dark theme only. There is no light theme, so there is no theme-level choice for people who need light mode (not a WCAG 2.2 AA requirement). | Product decision. | Low |
-| R4 | Manual screen-reader testing (NVDA, VoiceOver, TalkBack) was **not** performed. Only automated tools and code review. | Needs people and devices. | Medium. Do this before claiming conformance. |
+| R4 | Manual screen-reader testing (NVDA, VoiceOver, TalkBack) was **not** performed. Section 7 is an automated stand-in only. | Needs people and devices. | Medium. Do this before claiming conformance. |
 | R5 | `/profiles` and `/map-my-stack` redirected to sign-in in the authed scan (`session-unavailable`, a session blip). They were covered by code review and by the axe test, not by the live scan. | Not rerun. | Low |
 | R6 | Third-party Stripe Checkout and Customer Portal pages are outside this repo and were not audited. | n/a | n/a |
 
@@ -97,3 +97,38 @@ npm test -- src/__tests__/a11y           # the CI gate
 npm i --no-save playwright && npx playwright install chromium
 node scripts/a11y/scan.mjs https://biostack.cc /,/pricing,/tools /tmp/out.json
 ```
+
+## 7. Automated screen-reader stand-in (2026-10-31, after the follow-up PR)
+
+`frontend/scripts/a11y/structure.mjs` walks a route in Chromium and reports what a screen reader would be given: landmarks, heading outline, accessible names, live regions, skip link, title and language, and the Tab order.
+Routes: `/`, `/knowledge` (compound list and search), `/knowledge/bpc-157` (a compound page), `/support`, `/auth/signin`, `/contact`, `/pricing`, desktop and 390px.
+
+| Check | Result |
+|---|---|
+| Exactly one `h1` and one `main`, skip link lands on `#main`, unique titles, `lang="en"` | pass on all routes |
+| Heading levels never skip | pass |
+| Controls with no accessible name, images without `alt`, unlabeled fields | none |
+| Landmarks | named where there is more than one of a kind (`Primary`, `Footer`, `Head to head`, `Compound pages`, `Support topics`); one section landmark per compound-page section |
+| Tab order | follows reading order; every stop shows the focus ring; Tab wraps through the browser chrome |
+| Home tabs (`List` / `Evidence`) | roving tabindex, ArrowRight moves selection and focus, panel is labelled by its tab |
+| Drawer (390px, signed-in shell) | opens with focus on Close; Escape and Close return focus to the toggle; closed drawer is `inert` |
+
+Gaps the pass found, fixed in the follow-up PR:
+
+- `/knowledge`: search results, "no results", and the full compound list appeared silently, and "Show all compounds" unmounted while focused so focus fell to `<body>`. Both now have an always-mounted `aria-live` region, and focus moves to the section heading.
+- `/auth/signin`: no way out (no home link, no help link). The logo now links home and a "Help and support" link was added.
+- Anonymous visitors triggered `401` console errors on every public page (entitlements) and on `/pricing` (subscription). Both calls now wait for a signed-in session.
+- `/knowledge/<unknown>` returned HTTP 200 with a "not found" body and an `index, follow` robots tag. It is now a real 404; a timeout or API error still renders the retrying client fallback.
+
+Known and not changed:
+
+- `/contact` has the in-app header (title and library search) but no site navigation or footer. It is reachable from `/support` and the footer; adding the marketing chrome is a layout decision.
+- The compound page shows an `h2` with the compound name directly under the `h1` with the same name.
+
+Still needs a human with NVDA (Windows) and VoiceOver (macOS and iOS), plus TalkBack if Android matters:
+
+- Reading order and verbosity of the verdict block, evidence-tier badges and the "doses found" tables.
+- Whether the new live regions are announced once, at the right time, without interrupting typing.
+- The home-page tablist, the notice bell, the dose log result and the sidebar drawer with real speech.
+- Charts, tooltips (`HelpTip`) and any content that depends on hover.
+- Zoom to 200% and 400%, Windows High Contrast, and voice control (Dragon, Voice Control) name matching.

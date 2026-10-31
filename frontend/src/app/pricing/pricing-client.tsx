@@ -3,6 +3,7 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
+import { useOptionalAuth } from '@/lib/AuthProvider';
 import { useEntitlements } from '@/lib/entitlements';
 import { pricingTiers } from '@/lib/marketing';
 import { tierRank } from '@/lib/productContract';
@@ -16,11 +17,17 @@ export default function PricingClient() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [currentTier, setCurrentTier] = useState<string | null>(null);
 
+  const auth = useOptionalAuth();
+  const authLoading = auth ? auth.loading : false;
+  const signedIn = auth ? Boolean(auth.user) : true;
+
   useEffect(() => {
+    // An anonymous visitor has no subscription; asking would only log a 401 in the console.
+    if (authLoading || !signedIn) return;
     void apiClient.getCurrentSubscription()
       .then((subscription) => setCurrentTier(subscription.tier))
       .catch(() => setCurrentTier(null));
-  }, []);
+  }, [authLoading, signedIn]);
 
   async function captureClinicLead(event: React.FormEvent) {
     event.preventDefault();
