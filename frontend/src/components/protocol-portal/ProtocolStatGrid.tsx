@@ -28,10 +28,10 @@ function ProtocolStatCard({ stat }: { stat: ProtocolStat }) {
     <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">
       {/* Ambient corner glow tuned to the accent */}
       <div className={cn('pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full blur-2xl', accent.bg)} />
-      <p className="relative text-xs uppercase tracking-[0.15em] text-white/40">{stat.label}</p>
+      <p className="relative text-xs uppercase tracking-[0.15em] text-white/50">{stat.label}</p>
       <div className="relative mt-2 flex items-baseline gap-1.5">
         <span className="text-3xl font-semibold tabular-nums text-white">{stat.value}</span>
-        {stat.unit && <span className="text-sm text-white/40">{stat.unit}</span>}
+        {stat.unit && <span className="text-sm text-white/50">{stat.unit}</span>}
       </div>
       {stat.caption && <p className={cn('relative mt-2 text-xs', accent.text)}>{stat.caption}</p>}
     </div>

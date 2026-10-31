@@ -142,7 +142,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
       <form onSubmit={handleSubmit} className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-5">
           <div>
-            <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Date</label>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Date</label>
             <input
               type="date"
               value={formData.date}
@@ -159,13 +159,13 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Notes optional</label>
+          <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Notes optional</label>
           <textarea
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder="Anything worth remembering?"
             rows={3}
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
           />
         </div>
 
@@ -187,7 +187,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4">Basics</h3>
           <div>
-            <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Date</label>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Date</label>
             <input
               type="date"
               value={formData.date}
@@ -199,7 +199,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-medium text-white/40 uppercase">Weight</label>
+              <label className="text-xs font-medium text-white/50 uppercase">Weight</label>
               <WeightUnitToggle />
             </div>
             <input
@@ -209,7 +209,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
               onChange={(e) => { const v = parseFloat(e.target.value); setFormData({ ...formData, weight: isNaN(v) ? 0 : v }); }}
               required
               placeholder={settings.weightUnit === 'imperial' ? 'e.g. 170' : 'e.g. 77'}
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:outline-none focus:border-emerald-500/50 transition-all font-mono"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all font-mono"
             />
           </div>
         </div>
@@ -261,7 +261,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
         <div className="space-y-6">
           <div>
-            <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Overall Mood</label>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Overall Mood</label>
             <div className="grid grid-cols-2 gap-2">
               {['negative', 'neutral', 'positive', 'excellent'].map((m) => (
                 <button
@@ -271,7 +271,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
                   className={`px-3 py-2 text-xs rounded-xl border transition-all capitalize ${
                     formData.mood === m
                       ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
-                      : 'bg-white/5 border-white/10 text-white/40 hover:text-white/60 hover:border-white/20'
+                      : 'bg-white/5 border-white/10 text-white/50 hover:text-white/60 hover:border-white/20'
                   }`}
                 >
                   {m}
@@ -280,17 +280,17 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Side Effects / Issues</label>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Side Effects / Issues</label>
             <textarea
               value={formData.sideEffects}
               onChange={(e) => setFormData({ ...formData, sideEffects: e.target.value })}
               placeholder="Report any negative reactions..."
               rows={3}
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-red-500/30 transition-all text-sm"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-red-500/30 transition-all text-sm"
             />
           </div>
           <div>
-            <label htmlFor="gi-symptoms" className="block text-xs font-medium text-white/40 mb-2 uppercase">
+            <label htmlFor="gi-symptoms" className="block text-xs font-medium text-white/50 mb-2 uppercase">
               GI / digestive notes (optional)
             </label>
             <textarea
@@ -299,26 +299,26 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
               onChange={(e) => setFormData({ ...formData, giSymptoms: e.target.value })}
               placeholder="Bloating, regularity, anything off?"
               rows={3}
-              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-emerald-500/30 transition-all text-sm"
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/30 transition-all text-sm"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Narrative Notes</label>
+          <label className="block text-xs font-medium text-white/50 mb-2 uppercase">Narrative Notes</label>
           <textarea
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder="Tell us more about how you feel today..."
             rows={7}
-            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
           />
         </div>
       </div>
 
       {/* Visual Tracking */}
       <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-        <label className="block text-xs font-medium text-white/40 mb-4 uppercase flex items-center gap-2">
+        <label className="block text-xs font-medium text-white/50 mb-4 uppercase flex items-center gap-2">
           Visual Progress
         </label>
         
@@ -328,7 +328,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
             value={newPhotoUrl}
             onChange={(e) => setNewPhotoUrl(e.target.value)}
             placeholder="Paste evidence image URL..."
-            className="flex-1 px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
+            className="flex-1 px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
           />
           <button
             type="button"

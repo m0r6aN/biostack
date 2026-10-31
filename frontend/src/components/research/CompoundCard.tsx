@@ -76,7 +76,7 @@ export function CompoundCard({ compound, selected, onClick, secondaryAction }: C
 
 function MetaItem({ label, value }: { label: string; value: string }) {
   return (
-    <span className="text-[11px] text-white/40">
+    <span className="text-[11px] text-white/50">
       {label}: <span className="text-white/70">{value}</span>
     </span>
   );

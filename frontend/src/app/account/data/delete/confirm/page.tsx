@@ -77,10 +77,10 @@ export default function ConfirmAccountDeletionPage() {
           <section className="rounded-2xl border border-emerald-300/20 bg-emerald-400/[0.05] p-6" role="status">
             <h2 className="text-lg font-semibold text-white">Your account has been deleted</h2>
             <dl className="mt-4 space-y-2 text-sm text-white/70">
-              <div><dt className="inline text-white/45">Deleted on: </dt><dd className="inline">{day(receipt.deletedOnUtc)} (UTC)</dd></div>
-              <div><dt className="inline text-white/45">Receipt id: </dt><dd className="inline font-mono">{receipt.receiptId}</dd></div>
+              <div><dt className="inline text-white/50">Deleted on: </dt><dd className="inline">{day(receipt.deletedOnUtc)} (UTC)</dd></div>
+              <div><dt className="inline text-white/50">Receipt id: </dt><dd className="inline font-mono">{receipt.receiptId}</dd></div>
               <div>
-                <dt className="inline text-white/45">Backups: </dt>
+                <dt className="inline text-white/50">Backups: </dt>
                 <dd className="inline">they age out within {receipt.backupRetentionDays} days, by {day(receipt.backupsAgeOutByUtc)}.</dd>
               </div>
             </dl>

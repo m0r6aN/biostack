@@ -18,7 +18,7 @@ interface FrequencyFieldsProps {
 }
 
 const INPUT_CLASS =
-  'w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all';
+  'w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/50 transition-all';
 
 /**
  * How often the user takes the compound, picked by the user. The choice starts blank and is never

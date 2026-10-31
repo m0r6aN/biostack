@@ -28,12 +28,12 @@ export function NextObservationCard({ payload, checkIns, compounds, goals, class
   if (!top) {
     return (
       <div className={cn('rounded-3xl border border-white/5 bg-white/[0.02] p-5', className)}>
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-2">Next Best Observation</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Next Best Observation</p>
         <div className="flex items-center gap-3">
           <span className="text-emerald-400 text-xl">✓</span>
           <div>
             <p className="text-sm font-semibold text-white/80">All signals current</p>
-            <p className="text-xs text-white/40 mt-0.5">No observation debt detected. Keep up the cadence.</p>
+            <p className="text-xs text-white/50 mt-0.5">No observation debt detected. Keep up the cadence.</p>
           </div>
         </div>
       </div>
@@ -43,9 +43,9 @@ export function NextObservationCard({ payload, checkIns, compounds, goals, class
   return (
     <div className={cn('rounded-3xl border border-white/5 bg-white/[0.02] p-5', className)}>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Next Best Observation</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Next Best Observation</p>
         {items.length > 1 && (
-          <span className="text-[10px] text-white/30 font-medium">{items.length} items</span>
+          <span className="text-[10px] text-white/50 font-medium">{items.length} items</span>
         )}
       </div>
 
@@ -53,7 +53,7 @@ export function NextObservationCard({ payload, checkIns, compounds, goals, class
         {/* Top priority item */}
         <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
           <div className="flex items-start gap-3">
-            <span className="text-white/30 mt-0.5 text-sm leading-none">{TYPE_ICONS[top.type] ?? '○'}</span>
+            <span className="text-white/50 mt-0.5 text-sm leading-none">{TYPE_ICONS[top.type] ?? '○'}</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white/90 leading-snug">{top.title}</p>
               <p className="text-xs text-white/50 mt-1 leading-relaxed">{top.reason}</p>
@@ -82,9 +82,9 @@ export function NextObservationCard({ payload, checkIns, compounds, goals, class
             href={item.ctaHref}
             className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-2.5 hover:bg-white/[0.04] transition-colors group"
           >
-            <span className="text-white/20 text-xs">{TYPE_ICONS[item.type] ?? '○'}</span>
+            <span className="text-white/50 text-xs">{TYPE_ICONS[item.type] ?? '○'}</span>
             <span className="text-xs text-white/50 flex-1 truncate">{item.title}</span>
-            <svg className="w-3 h-3 text-white/20 group-hover:text-white/40 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <svg className="w-3 h-3 text-white/50 group-hover:text-white/50 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
           </Link>

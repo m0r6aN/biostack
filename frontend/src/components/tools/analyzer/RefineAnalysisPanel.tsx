@@ -14,7 +14,7 @@ type RefineAnalysisPanelProps = {
 };
 
 const inputClass =
-  'min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45';
+  'min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45';
 
 const labelClass = 'block text-xs text-white/50 mb-1';
 
@@ -80,7 +80,7 @@ export function RefineAnalysisPanel({
             Refine analysis (optional)
           </button>
           {!expanded && (
-            <p className="text-xs text-white/40 mt-0.5">
+            <p className="text-xs text-white/50 mt-0.5">
               Add context to sharpen scoring. Nothing here is required.
             </p>
           )}
@@ -89,7 +89,7 @@ export function RefineAnalysisPanel({
           type="button"
           onClick={handleToggle}
           aria-label={expanded ? 'Collapse refine panel' : 'Expand refine panel'}
-          className="text-white/40 hover:text-white/70 transition-colors text-xs"
+          className="text-white/50 hover:text-white/70 transition-colors text-xs"
         >
           {expanded ? '▲' : '▼'}
         </button>
@@ -104,7 +104,7 @@ export function RefineAnalysisPanel({
               <span className="text-xs text-emerald-400 bg-emerald-400/10 rounded px-2 py-0.5">
                 From your profile
               </span>
-              <Link href="/profiles" className="text-xs text-white/40 hover:text-white/60 transition-colors">
+              <Link href="/profiles" className="text-xs text-white/50 hover:text-white/60 transition-colors">
                 Edit profile
               </Link>
             </div>
@@ -166,7 +166,7 @@ export function RefineAnalysisPanel({
                 placeholder="e.g. 80"
                 className={`${inputClass} pr-12`}
               />
-              <span className="absolute right-4 text-xs text-white/40 pointer-events-none">kg</span>
+              <span className="absolute right-4 text-xs text-white/50 pointer-events-none">kg</span>
             </div>
           </div>
 

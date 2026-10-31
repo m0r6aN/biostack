@@ -18,7 +18,7 @@ export function SuggestionCard({ suggestion, onDismiss }: SuggestionCardProps) {
           <p className="text-xs font-black uppercase tracking-widest text-cyan-200/60">Secondary finding</p>
           <h3 className="mt-2 text-base font-black text-white">{suggestion.title}</h3>
           <p className="mt-2 text-sm leading-6 text-white/65">{suggestion.explanation}</p>
-          <p className="mt-3 text-xs leading-5 text-white/42">{suggestion.reasoning}</p>
+          <p className="mt-3 text-xs leading-5 text-white/50">{suggestion.reasoning}</p>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -34,7 +34,7 @@ export function SuggestionCard({ suggestion, onDismiss }: SuggestionCardProps) {
             <button
               type="button"
               onClick={onDismiss}
-              className="rounded-lg border border-white/[0.08] px-3 py-2 text-xs font-bold text-white/45 transition-colors hover:bg-white/[0.04] hover:text-white/70"
+              className="rounded-lg border border-white/[0.08] px-3 py-2 text-xs font-bold text-white/50 transition-colors hover:bg-white/[0.04] hover:text-white/70"
             >
               Not now
             </button>

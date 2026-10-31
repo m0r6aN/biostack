@@ -49,19 +49,19 @@ export function StatCard({
       <div className={`absolute -top-6 -right-6 w-24 h-24 rounded-full blur-2xl pointer-events-none ${glowClasses[color]}`} />
       <div className="flex items-start justify-between">
         <div className="flex-1 relative">
-          <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">{title}</p>
+          <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">{title}</p>
           <div className="flex items-baseline gap-2" aria-label={ariaLabel}>
             <span className="text-3xl font-semibold text-white">{value}</span>
             {/* unit text (e.g. "/ 100") already carries its own leading space,
                 matching StackScoreCard's rendering of the same score suffix;
                 no extra margin here or the gap doubles up. */}
-            {unit && <span className="text-sm text-white/40">{unit}</span>}
+            {unit && <span className="text-sm text-white/50">{unit}</span>}
           </div>
           {trend && (
             <p className={`text-xs mt-2 ${
               trend.direction === 'up' ? 'text-emerald-300' :
               trend.direction === 'down' ? 'text-red-400' :
-              'text-white/40'
+              'text-white/50'
             }`}>
               {trendIcons[trend.direction]} {Math.abs(trend.value)}% from last period
             </p>

@@ -52,7 +52,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
 
       <div className="mt-4 grid gap-4 xl:grid-cols-3">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">History</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">History</p>
           <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell label="Current" value={`v${protocol.version}`} detail={protocol.isCurrentVersion ? 'Current version' : 'Prior version'} />
         <ContinuityCell
@@ -64,7 +64,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Tracked state</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">Tracked state</p>
           <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Run"
@@ -99,7 +99,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Delta preview</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">Delta preview</p>
           <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Changed"
@@ -171,9 +171,9 @@ function ContinuityCell({
 }) {
   const content = (
     <>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">{label}</p>
       <p className="mt-2 font-bold text-white">{value}</p>
-      <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/45">{detail}</p>
+      <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/50">{detail}</p>
     </>
   );
 

@@ -92,7 +92,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
       <nav className="max-w-3xl mx-auto mb-6 flex items-center justify-between gap-3">
         <Link
           href="/knowledge"
-          className="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/70 transition-colors"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -101,7 +101,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
         </Link>
         <Link
           href="/knowledge/methodology"
-          className="text-xs text-white/40 hover:text-white/70 transition-colors"
+          className="text-xs text-white/50 hover:text-white/70 transition-colors"
         >
           How evidence is graded
         </Link>

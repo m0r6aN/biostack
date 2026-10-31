@@ -89,7 +89,7 @@ function ResearchTaxonomyHistoryContent() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Taxonomy governance event stream</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Review saved taxonomy revisions and migration receipts as a chronological operator timeline.
               </p>
               {focusedEntry && (
@@ -121,7 +121,7 @@ function ResearchTaxonomyHistoryContent() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search taxonomy history"
-              className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40"
+              className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40"
             />
             {searchQuery && (
               <button
@@ -157,7 +157,7 @@ function ResearchTaxonomyHistoryContent() {
         <section className="space-y-4">
           {filteredEntries.length === 0 ? (
             <GlassCard className="p-6">
-              <p className="text-sm text-white/35">No taxonomy governance events match the current filter/search.</p>
+              <p className="text-sm text-white/50">No taxonomy governance events match the current filter/search.</p>
             </GlassCard>
           ) : (
             <div className="space-y-4">
@@ -177,7 +177,7 @@ function ResearchTaxonomyHistoryFallback() {
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
       <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
-        <p className="text-sm text-white/30">Loading...</p>
+        <p className="text-sm text-white/50">Loading...</p>
       </main>
     </div>
   );
@@ -186,7 +186,7 @@ function ResearchTaxonomyHistoryFallback() {
 function TimelineStat({ label, value }: { label: string; value: number }) {
   return (
     <GlassCard className="p-4">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">{label}</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-2 text-lg font-semibold text-white">{value}</p>
     </GlassCard>
   );

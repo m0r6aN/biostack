@@ -48,8 +48,8 @@ export default async function VsPage({ params }: PageProps) {
       <VsLedger a={ea} b={eb} left={left} right={right} ruling={ruling} curated={curated} />
       <VsShare a={ea.canonicalName} b={eb.canonicalName} path={vsPath(a, b)} />
       <WatchButton targetType="vs" targetId={`${a}/${b}`} returnTo={vsPath(a, b)} />
-      {asOf && <p className="text-xs text-white/45">Evidence as of {asOf}</p>}
-      <p className="text-xs text-white/40">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
+      {asOf && <p className="text-xs text-white/50">Evidence as of {asOf}</p>}
+      <p className="text-xs text-white/50">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
     </main>
   );
 }

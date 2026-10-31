@@ -21,7 +21,7 @@ export function TaxonomyAuditEntryCard({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-semibold text-white">{entry.summary}</p>
         <div className="flex items-center gap-3">
-          <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/45">{entry.action}</span>
+          <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/50">{entry.action}</span>
           {timelineHref && (
             <Link href={timelineHref} className="text-[11px] font-semibold text-violet-200/80 transition-colors hover:text-violet-100">
               Open in timeline →
@@ -33,12 +33,12 @@ export function TaxonomyAuditEntryCard({
         {new Date(entry.createdAtUtc).toLocaleString()} · taxonomy {entry.taxonomyVersion}
       </p>
       {entry.applyReceipt && (
-        <p className="mt-1 text-[11px] text-white/45">
+        <p className="mt-1 text-[11px] text-white/50">
           Files updated {entry.applyReceipt.counts.totalFilesUpdated} · categories rewritten {entry.applyReceipt.counts.categoriesRewritten}
         </p>
       )}
       {entry.beforeTaxonomy && entry.afterTaxonomy && entry.action === 'save-taxonomy' && (
-        <p className="mt-1 text-[11px] text-white/45">
+        <p className="mt-1 text-[11px] text-white/50">
           Categories {entry.beforeTaxonomy.categories.length} → {entry.afterTaxonomy.categories.length}
         </p>
       )}
@@ -54,7 +54,7 @@ export function TaxonomyAuditEntryCard({
             {diff.aliasChanged.map((name) => <AuditDiffPill key={`aliases-${entry.entryId}-${name}`} tone="neutral" label={`Aliases changed: ${name}`} />)}
           </div>
           {diff.migrationDelta && (
-            <p className="text-[11px] text-white/45">
+            <p className="text-[11px] text-white/50">
               Migration impact Δ total {formatSignedDelta(diff.migrationDelta.totalFindings)} · requests {formatSignedDelta(diff.migrationDelta.requestFindings)} · queued {formatSignedDelta(diff.migrationDelta.taskItemFindings)} · resolved {formatSignedDelta(diff.migrationDelta.resolvedTaskItemFindings)}
             </p>
           )}

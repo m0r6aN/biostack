@@ -539,24 +539,24 @@ function CompoundsPageContent() {
                         )}
 
                         <div className="space-y-2 text-sm text-white/65">
-                          <p><span className="text-white/40">Category:</span> {selectedCompound.category}</p>
+                          <p><span className="text-white/50">Category:</span> {selectedCompound.category}</p>
                           {selectedCompound.goal && (
                             <div>
-                              <p><span className="text-white/40">Goal:</span> {compoundGoalDisplay(selectedCompound.goal).label}</p>
+                              <p><span className="text-white/50">Goal:</span> {compoundGoalDisplay(selectedCompound.goal).label}</p>
                               {compoundGoalDisplay(selectedCompound.goal).context && (
                                 <p className="mt-1 break-words text-xs leading-relaxed text-white/55">{compoundGoalDisplay(selectedCompound.goal).context}</p>
                               )}
                             </div>
                           )}
-                          {selectedCompound.source && <p><span className="text-white/40">Source:</span> {selectedCompound.source}</p>}
-                          {selectedCompound.pricePaid && <p><span className="text-white/40">Price:</span> ${selectedCompound.pricePaid}</p>}
+                          {selectedCompound.source && <p><span className="text-white/50">Source:</span> {selectedCompound.source}</p>}
+                          {selectedCompound.pricePaid && <p><span className="text-white/50">Price:</span> ${selectedCompound.pricePaid}</p>}
                           {formatUserDoseWithTime(selectedCompound) && (
-                            <p><span className="text-white/40">Your dose:</span> {formatUserDoseWithTime(selectedCompound)}</p>
+                            <p><span className="text-white/50">Your dose:</span> {formatUserDoseWithTime(selectedCompound)}</p>
                           )}
-                          <p><span className="text-white/40">Status:</span> {selectedCompound.status}</p>
-                          <p><span className="text-white/40">Start Date:</span> {selectedCompound.startDate}</p>
+                          <p><span className="text-white/50">Status:</span> {selectedCompound.status}</p>
+                          <p><span className="text-white/50">Start Date:</span> {selectedCompound.startDate}</p>
                           {selectedCompound.notes && (
-                            <p><span className="text-white/40">Notes:</span> {selectedCompound.notes}</p>
+                            <p><span className="text-white/50">Notes:</span> {selectedCompound.notes}</p>
                           )}
                         </div>
                       </>

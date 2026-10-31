@@ -127,7 +127,7 @@ export function CompoundIntelligenceCard({
             <p className="text-sm text-white/55 mt-1">{details.compoundFamily}</p>
           )}
           {entry.aliases.length > 0 && (
-            <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
+            <p className="text-xs text-white/50 mt-1">Also known as: {entry.aliases.join(', ')}</p>
           )}
           {showDossierLink && (
             <Link
@@ -144,12 +144,12 @@ export function CompoundIntelligenceCard({
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Classification</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Classification</p>
             <p className="text-sm text-white/65">{entry.classification}</p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Regulatory Status</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Regulatory Status</p>
             <p className="text-sm text-white/65">{entry.regulatoryStatus?.trim() || NOT_AVAILABLE}</p>
             {details?.unofficialSourceFields?.includes('regulatoryStatus') && (
               <p className="text-xs text-amber-300/80 mt-1">Unofficial source</p>
@@ -157,19 +157,19 @@ export function CompoundIntelligenceCard({
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Sources</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Sources</p>
             <p className="text-sm text-white/65" data-testid="verdict-source-count">{sourceCount}</p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Review</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Review</p>
             <p className="text-sm text-white/65" data-testid="verdict-review">{reviewLabel ?? NOT_AVAILABLE}</p>
           </div>
         </div>
 
         {entry.mechanismSummary && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Overview</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-1">Overview</p>
             <p className="text-sm text-white/65">{entry.mechanismSummary}</p>
           </div>
         )}
@@ -198,7 +198,7 @@ export function CompoundIntelligenceCard({
         {currentProfile && (
           <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-white/40 text-xs" aria-hidden="true">•</span>
+              <span className="text-white/50 text-xs" aria-hidden="true">•</span>
               <p className="text-xs font-semibold text-white/55 uppercase tracking-wider">Profile Context</p>
             </div>
             <p className="text-xs text-white/55">
@@ -209,14 +209,14 @@ export function CompoundIntelligenceCard({
 
         {entry.pathways && entry.pathways.length > 0 && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Pathways</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">Pathways</p>
             <TagList items={entry.pathways} tone="emerald" />
           </div>
         )}
 
         {!details && benefits.length > 0 && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/50 mb-2">Benefits</p>
             <TagList items={benefits} tone="emerald" />
           </div>
         )}
@@ -243,7 +243,7 @@ export function CompoundIntelligenceCard({
               </div>
             )}
 
-            <p className="text-xs leading-5 text-white/45">
+            <p className="text-xs leading-5 text-white/50">
               These are observational flags for review, not individualized instructions.
             </p>
           </div>

@@ -94,7 +94,7 @@ function OverviewCell({
       href={href}
       className="min-h-36 rounded-lg border border-white/[0.07] bg-white/[0.025] p-4 transition-colors hover:border-emerald-400/25"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
       <p className="mt-3 text-lg font-bold text-white">{value}</p>
       <p className="mt-2 line-clamp-3 text-sm leading-5 text-white/50">{detail}</p>
     </Link>

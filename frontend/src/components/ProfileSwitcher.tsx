@@ -43,7 +43,7 @@ export function ProfileSwitcher() {
         <span className="text-sm font-medium text-white/80">
           {currentProfile?.displayName || 'Select Profile'}
         </span>
-        <span className="text-xs text-white/45">▼</span>
+        <span className="text-xs text-white/50">▼</span>
       </button>
 
       {isOpen && (
@@ -60,7 +60,7 @@ export function ProfileSwitcher() {
                 }`}
               >
                 <div className="font-medium">{profile.displayName}</div>
-                <div className="text-xs text-white/45">{formatWeight(profile.weight, settings.weightUnit)}</div>
+                <div className="text-xs text-white/50">{formatWeight(profile.weight, settings.weightUnit)}</div>
               </button>
             ))}
           </div>

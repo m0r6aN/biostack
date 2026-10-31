@@ -8,7 +8,7 @@ export function SimulationTimeline({ simulation }: SimulationTimelineProps) {
   return (
     <div className="p-5 rounded-lg border border-white/[0.08] bg-[#121923]/90">
       <div className="mb-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Simulator v1</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Simulator v1</p>
         <h3 className="mt-2 text-xl font-bold text-white">Projected observation timeline</h3>
       </div>
 

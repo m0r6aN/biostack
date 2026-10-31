@@ -151,7 +151,7 @@ export function ScoreHero({ result, scoreInsight, whatThisMeans }: ScoreHeroProp
           <span className="block text-3xl font-semibold tracking-tight text-white">
             {displayScore}
           </span>
-          <span className="block text-xs text-white/42">/ 100</span>
+          <span className="block text-xs text-white/50">/ 100</span>
         </div>
       </div>
 

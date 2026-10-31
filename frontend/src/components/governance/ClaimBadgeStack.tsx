@@ -64,7 +64,7 @@ const BADGE_CONFIG: Record<ClaimBadge, {
   'not-executable': {
     icon: Ban,
     label: 'Not-executable',
-    text: 'text-white/40',
+    text: 'text-white/50',
     bg: 'bg-white/5',
     border: 'border-white/10',
   },

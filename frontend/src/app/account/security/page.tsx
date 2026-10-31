@@ -115,7 +115,7 @@ export default function AccountSecurityPage() {
       <div className="mx-auto max-w-3xl space-y-6 p-5 sm:p-8">
         <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6">
           <h2 className="text-lg font-semibold text-white">Passkeys</h2>
-          <p className="mt-2 text-sm leading-6 text-white/45">
+          <p className="mt-2 text-sm leading-6 text-white/50">
             Passkeys use your device screen lock, fingerprint, or face verification. BioStack keeps the public key only; your private key stays with your authenticator.
           </p>
 
@@ -160,14 +160,14 @@ export default function AccountSecurityPage() {
           <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6">
             <h2 className="text-lg font-semibold text-white">Your passkeys</h2>
             {credentials.length === 0 ? (
-              <p className="mt-3 text-sm text-white/40">No passkeys enrolled yet.</p>
+              <p className="mt-3 text-sm text-white/50">No passkeys enrolled yet.</p>
             ) : (
               <div className="mt-4 divide-y divide-white/[0.06]">
                 {credentials.map(credential => (
                   <div key={credential.id} className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0">
                     <div>
                       <p className="text-sm font-semibold text-white/80">{credential.displayName}</p>
-                      <p className="mt-1 text-xs text-white/35">
+                      <p className="mt-1 text-xs text-white/50">
                         Added {new Date(credential.createdAtUtc).toLocaleDateString()}
                         {credential.isBackedUp ? ' · synced backup reported' : ''}
                       </p>
@@ -189,7 +189,7 @@ export default function AccountSecurityPage() {
 
         <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6">
           <h2 className="text-lg font-semibold text-white">Email recovery</h2>
-          <p className="mt-2 text-sm leading-6 text-white/45">
+          <p className="mt-2 text-sm leading-6 text-white/50">
             Verified email magic links remain available for registration, recovery, and fallback. Each link expires after 15 minutes and can be used once.
           </p>
         </section>

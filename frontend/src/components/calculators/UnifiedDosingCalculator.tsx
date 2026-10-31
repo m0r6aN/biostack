@@ -140,7 +140,7 @@ export function UnifiedDosingCalculator({
 
         <div className="space-y-4">
           <SafetyDisclaimer type="calculation" />
-          <p className="text-xs text-white/45">Draw volumes are shown for U-100 syringes only (100 units = 1 mL). U-40 and U-50 syringes are not supported.</p>
+          <p className="text-xs text-white/50">Draw volumes are shown for U-100 syringes only (100 units = 1 mL). U-40 and U-50 syringes are not supported.</p>
 
           {calculation.error && (
             <div className="rounded-lg border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
@@ -164,7 +164,7 @@ export function UnifiedDosingCalculator({
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-black/20 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Formula</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Formula</p>
                 <p className="mt-2 text-xs leading-5 text-white/65">{result.formula}</p>
               </div>
 
@@ -201,7 +201,7 @@ function NumberField({
           value={Number.isNaN(value) ? '' : value}
           onChange={(event) => onChange(parseNumberInput(event.target.value))}
           placeholder={EMPTY_NUMBER_PLACEHOLDER}
-          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/30"
+          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/50"
         />
         {suffix && <span className="border-l border-white/10 px-3 py-3 text-sm text-white/50">{suffix}</span>}
       </div>
@@ -235,7 +235,7 @@ function NumberWithUnitField<TUnit extends string>({
           value={Number.isNaN(value) ? '' : value}
           onChange={(event) => onValueChange(parseNumberInput(event.target.value))}
           placeholder={EMPTY_NUMBER_PLACEHOLDER}
-          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/30"
+          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-white outline-none placeholder:text-white/50"
         />
         <select
           value={unit}
@@ -300,9 +300,9 @@ function DoseBasisButton({
 function Metric({ label, value, detail }: { label: string; value: string; detail: string }) {
   return (
     <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-white/35">{label}</p>
+      <p className="text-xs uppercase tracking-[0.16em] text-white/50">{label}</p>
       <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-      <p className="mt-1 text-xs text-white/45">{detail}</p>
+      <p className="mt-1 text-xs text-white/50">{detail}</p>
     </div>
   );
 }

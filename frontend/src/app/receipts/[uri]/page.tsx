@@ -33,7 +33,7 @@ async function fetchReceipt(
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid grid-cols-[160px_1fr] gap-3 py-3 border-b border-white/5 last:border-0">
-      <span className="text-[10px] font-bold uppercase tracking-widest text-white/30 pt-0.5">
+      <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 pt-0.5">
         {label}
       </span>
       <span className="text-sm font-mono text-white/70 break-all">{value}</span>
@@ -77,7 +77,7 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
         {/* Back nav */}
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/70 transition-colors mb-8"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Back
@@ -86,13 +86,13 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
         {/* Header */}
         <div className="flex items-start gap-3 mb-8">
           <div className="mt-0.5 w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-            <Shield className="w-4 h-4 text-white/40" aria-hidden />
+            <Shield className="w-4 h-4 text-white/50" aria-hidden />
           </div>
           <div>
             <h1 className="text-sm font-bold uppercase tracking-widest text-white/60 mb-1">
               Decision Receipt
             </h1>
-            <p className="text-xs font-mono text-white/30 break-all">
+            <p className="text-xs font-mono text-white/50 break-all">
               {receipt.receiptUri}
             </p>
           </div>
@@ -121,11 +121,11 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
 
         {/* Evidence refs */}
         <div>
-          <h2 className="text-[9px] font-bold uppercase tracking-widest text-white/20 mb-3">
+          <h2 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">
             Evidence References
           </h2>
           {receipt.evidenceRefs.length === 0 ? (
-            <p className="text-xs text-white/30 italic">
+            <p className="text-xs text-white/50 italic">
               No evidence references attached.
             </p>
           ) : (

@@ -76,12 +76,12 @@ export function OperatingStateHero({ payload, compounds, className }: OperatingS
           {result.activeRun && (
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
               {result.activeRun.startedAtUtc && (
-                <span className="text-[11px] text-white/35">
+                <span className="text-[11px] text-white/50">
                   Started {new Date(result.activeRun.startedAtUtc).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </span>
               )}
               {result.activeRun.protocolName && (
-                <span className="text-[11px] text-white/35">Run: {result.activeRun.protocolName}</span>
+                <span className="text-[11px] text-white/50">Run: {result.activeRun.protocolName}</span>
               )}
             </div>
           )}

@@ -95,7 +95,7 @@ export default function PcacVoteInsightPage() {
           An FDA committee recommended six peptides for compounding. Here is what that does and
           does not mean.
         </h1>
-        <p className="mt-4 text-sm text-white/40">Published {PUBLISHED_AT} · Sources cited below</p>
+        <p className="mt-4 text-sm text-white/50">Published {PUBLISHED_AT} · Sources cited below</p>
 
         <section className="mt-10 space-y-5 text-base leading-8 text-white/72">
           <p>
@@ -185,7 +185,7 @@ export default function PcacVoteInsightPage() {
                 ) : (
                   <p className="text-lg font-semibold text-white">
                     {compound.name}
-                    <span className="ml-2 text-xs font-normal uppercase tracking-wider text-white/40">
+                    <span className="ml-2 text-xs font-normal uppercase tracking-wider text-white/50">
                       dossier in final review
                     </span>
                   </p>

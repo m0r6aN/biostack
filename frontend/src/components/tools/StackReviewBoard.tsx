@@ -63,7 +63,7 @@ export function StackReviewBoard({
         aria-label="Stack Review Board section — commentary only"
       >
         <div className="h-px flex-1 bg-white/[0.08]" />
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/38">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
           Stack Review Board · commentary only
         </span>
         <div className="h-px flex-1 bg-white/[0.08]" />
@@ -146,7 +146,7 @@ function DeterministicSafetyPanel({ findings }: { findings: SrbDeterministicFind
         </span>
       </div>
       {findings.length === 0 ? (
-        <p className="mt-3 text-sm text-white/45">No deterministic findings for this stack.</p>
+        <p className="mt-3 text-sm text-white/50">No deterministic findings for this stack.</p>
       ) : (
         <ul className="mt-3 space-y-2">
           {findings.map((f) => (
@@ -157,7 +157,7 @@ function DeterministicSafetyPanel({ findings }: { findings: SrbDeterministicFind
               </div>
               <p className="mt-1 text-sm leading-6 text-white/78">{f.narrative}</p>
               {f.compoundSlugs.length > 0 && (
-                <p className="mt-1 text-xs text-white/40">
+                <p className="mt-1 text-xs text-white/50">
                   Compounds: {f.compoundSlugs.join(', ')}
                 </p>
               )}
@@ -200,12 +200,12 @@ function SrbPanel({
       <div className="flex flex-wrap items-center gap-2">
         <h3 className="text-base font-semibold text-white">{title}</h3>
         {badge && (
-          <span className="rounded-full border border-white/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/42">
+          <span className="rounded-full border border-white/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
             {badge}
           </span>
         )}
       </div>
-      {summary && <p className="mt-1 text-xs leading-5 text-white/48">{summary}</p>}
+      {summary && <p className="mt-1 text-xs leading-5 text-white/50">{summary}</p>}
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -213,7 +213,7 @@ function SrbPanel({
 
 function FindingList({ findings }: { findings: SrbPerspectiveFinding[] }) {
   if (findings.length === 0) {
-    return <p className="text-sm text-white/45">No findings for this perspective.</p>;
+    return <p className="text-sm text-white/50">No findings for this perspective.</p>;
   }
   return (
     <ul className="space-y-2">
@@ -278,7 +278,7 @@ function PatternRecognitionPanel({
     <SrbPanel title="Pattern Recognition" badge="Historian" summary={perspective?.summary}>
       {historianFindings.length > 0 && (
         <>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
             Collective Historian Findings
           </p>
           <FindingList findings={historianFindings} />
@@ -286,7 +286,7 @@ function PatternRecognitionPanel({
       )}
       {knownPatterns.length > 0 && (
         <div className={historianFindings.length > 0 ? 'mt-4' : ''}>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
             BioStack Known-Pattern Memory
           </p>
           <ul className="space-y-2">
@@ -298,7 +298,7 @@ function PatternRecognitionPanel({
               >
                 <p className="text-sm font-semibold text-white/85">{p.name}</p>
                 <p className="mt-1 text-xs leading-5 text-white/55">{p.description}</p>
-                <p className="mt-1 text-xs text-white/35">
+                <p className="mt-1 text-xs text-white/50">
                   Compounds: {p.matchedCompoundSlugs.join(', ')}
                 </p>
               </li>
@@ -307,7 +307,7 @@ function PatternRecognitionPanel({
         </div>
       )}
       {knownPatterns.length === 0 && historianFindings.length === 0 && (
-        <p className="text-sm text-white/45">No pattern history matched this stack combination.</p>
+        <p className="text-sm text-white/50">No pattern history matched this stack combination.</p>
       )}
     </SrbPanel>
   );
@@ -330,7 +330,7 @@ function ChallengePanel({ contradiction }: { contradiction: SrbContradictionRevi
             </div>
           </>
         ) : (
-          <p className="text-sm text-white/45">No counter-position generated for this stack.</p>
+          <p className="text-sm text-white/50">No counter-position generated for this stack.</p>
         )}
       </div>
     </SrbPanel>
@@ -349,7 +349,7 @@ function ConfidenceProfileSidebar({
       data-testid="confidence-profile-sidebar"
       className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4"
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
         Confidence Profile
       </p>
       <dl className="mt-3 space-y-2">
@@ -360,13 +360,13 @@ function ConfidenceProfileSidebar({
         <ProfileRow label="Calibration" value={profile.calibrationVersion} />
       </dl>
       <div className="mt-4 border-t border-white/[0.06] pt-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
           Reasoning Graph
         </p>
         <p className="mt-2 text-xs text-white/50">
           {graphRef.nodeCount} nodes · {graphRef.edgeCount} edges
         </p>
-        <p className="mt-1 font-mono text-xs text-white/30">{graphRef.graphId}</p>
+        <p className="mt-1 font-mono text-xs text-white/50">{graphRef.graphId}</p>
       </div>
     </section>
   );
@@ -375,7 +375,7 @@ function ConfidenceProfileSidebar({
 function ProfileRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-2 text-xs">
-      <dt className="text-white/45">{label}</dt>
+      <dt className="text-white/50">{label}</dt>
       <dd className="capitalize font-semibold text-white/75">{value}</dd>
     </div>
   );

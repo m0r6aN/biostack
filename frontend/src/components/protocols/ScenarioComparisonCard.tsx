@@ -21,7 +21,7 @@ export function ScenarioComparisonCard({ intelligence }: ScenarioComparisonCardP
     <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Scenario Comparison</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Scenario Comparison</p>
           <h3 className="mt-2 text-xl font-bold text-white">Current stack vs best next scenario</h3>
           <p className="mt-2 max-w-2xl text-sm text-white/50">
             Compare the current stack with the strongest remove-one or swap path without changing the underlying analysis engine.
@@ -103,7 +103,7 @@ function ScenarioPanel({
 }) {
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">{eyebrow}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">{eyebrow}</p>
       <h4 className="mt-2 text-lg font-semibold text-white">{title}</h4>
       <div className="mt-4 grid grid-cols-3 gap-3">
         <Metric label="Current" value={baseline} />
@@ -119,7 +119,7 @@ function ScenarioPanel({
 function Metric({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
       <p className="mt-2 text-lg font-bold text-white">{value}</p>
     </div>
   );

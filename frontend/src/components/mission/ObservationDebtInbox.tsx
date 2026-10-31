@@ -39,7 +39,7 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
           </span>
           <div>
             <p className="text-sm font-semibold text-white/80">Inbox clear</p>
-            <p className="text-xs text-white/40">No check-ins due. All signal paths current.</p>
+            <p className="text-xs text-white/50">No check-ins due. All signal paths current.</p>
           </div>
         </div>
       </div>
@@ -51,11 +51,11 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-5 pb-3">
         <div className="flex items-center gap-2.5">
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Check-ins Due</p>
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Check-ins Due</p>
-          <span className="text-[10px] font-bold text-white/30 bg-white/5 rounded-full px-2 py-0.5">{items.length}</span>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Check-ins Due</p>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Check-ins Due</p>
+          <span className="text-[10px] font-bold text-white/50 bg-white/5 rounded-full px-2 py-0.5">{items.length}</span>
         </div>
-        <p className="text-[10px] text-white/25">Ranked by impact</p>
+        <p className="text-[10px] text-white/50">Ranked by impact</p>
       </div>
 
       {/* Items */}
@@ -76,7 +76,7 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
 }
 
 function InboxItem({ item, onDismiss }: { item: ObservationDebtItem; onDismiss?: () => void }) {
-  const color = PRIORITY_COLOR[item.priority] ?? 'text-white/40';
+  const color = PRIORITY_COLOR[item.priority] ?? 'text-white/50';
 
   return (
     <div className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3 group hover:bg-white/[0.04] transition-colors">
@@ -85,7 +85,7 @@ function InboxItem({ item, onDismiss }: { item: ObservationDebtItem; onDismiss?:
 
       <div className="flex-1 min-w-0">
         <p className="text-xs font-semibold text-white/80 leading-snug">{item.title}</p>
-        <p className="text-[11px] text-white/45 mt-0.5 leading-relaxed">{item.reason}</p>
+        <p className="text-[11px] text-white/50 mt-0.5 leading-relaxed">{item.reason}</p>
         {item.impact && (
           <p className="text-[10px] text-emerald-400/60 mt-1 font-medium">↑ {item.impact}</p>
         )}
@@ -101,7 +101,7 @@ function InboxItem({ item, onDismiss }: { item: ObservationDebtItem; onDismiss?:
         {onDismiss && (
           <button
             onClick={onDismiss}
-            className="p-1 rounded-lg hover:bg-white/5 text-white/20 hover:text-white/40 transition-colors"
+            className="p-1 rounded-lg hover:bg-white/5 text-white/50 hover:text-white/50 transition-colors"
             title="Dismiss"
           >
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">

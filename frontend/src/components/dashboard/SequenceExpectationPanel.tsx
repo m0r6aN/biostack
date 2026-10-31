@@ -9,7 +9,7 @@ export function SequenceExpectationPanel({ snapshot, compact = false }: Sequence
   if (!snapshot || snapshot.baselineSource === 'insufficient_history') {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#111821]/95 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Sequence Expectation</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Sequence Expectation</p>
         <h2 className="mt-2 text-lg font-bold text-white">Not enough sequence history yet</h2>
         <p className="mt-2 text-sm text-white/50">Sequence patterns will appear after multiple completed runs.</p>
       </section>
@@ -56,9 +56,9 @@ export function SequenceExpectationPanel({ snapshot, compact = false }: Sequence
                 <p className="text-sm font-semibold text-white">
                   {formatEvent(transition.fromState)} {'->'} {formatEvent(transition.toEventType)}
                 </p>
-                <span className="text-xs text-white/35">{transition.observedCount} observed</span>
+                <span className="text-xs text-white/50">{transition.observedCount} observed</span>
               </div>
-              <p className="mt-1 text-xs leading-5 text-white/45">{transition.timingPattern}</p>
+              <p className="mt-1 text-xs leading-5 text-white/50">{transition.timingPattern}</p>
             </div>
           ))}
         </div>

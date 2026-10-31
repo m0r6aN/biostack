@@ -8,9 +8,9 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
   if (!comparison) {
     return (
       <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Observed vs Projected</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Observed vs Projected</p>
         <h3 className="mt-2 text-xl font-bold text-white">Simulate or start your first run</h3>
-        <p className="mt-2 text-sm text-white/45">Track this protocol to begin comparing projected timing with attached observations.</p>
+        <p className="mt-2 text-sm text-white/50">Track this protocol to begin comparing projected timing with attached observations.</p>
       </div>
     );
   }
@@ -26,9 +26,9 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
 
   return (
     <div className="p-5 rounded-lg border border-white/[0.08] bg-[#121923]/90">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Observed vs Projected</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Observed vs Projected</p>
       <h3 className="mt-2 text-xl font-bold text-white">Run intelligence</h3>
-      <p className="mt-2 text-sm text-white/45">Observed correlation only. BioStack does not assign causation.</p>
+      <p className="mt-2 text-sm text-white/50">Observed correlation only. BioStack does not assign causation.</p>
 
       {comparison.run && comparison.observations.length === 0 && (
         <div className="mt-5 rounded-lg border border-sky-400/15 bg-sky-500/[0.06] px-4 py-3 text-sm text-sky-100/75">
@@ -51,7 +51,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
             ))}
           </div>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-3">
-            <p className="text-xs uppercase tracking-[0.14em] text-white/35">Alignment</p>
+            <p className="text-xs uppercase tracking-[0.14em] text-white/50">Alignment</p>
             <p className="mt-2 text-sm font-semibold text-white">{summary.alignedCount} aligned</p>
             <p className="mt-1 text-sm font-semibold text-white">{summary.divergingCount} diverging</p>
           </div>
@@ -63,7 +63,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
           <div className="absolute inset-y-0 left-0 w-[21%] bg-emerald-500/[0.06]" />
           <div className="absolute inset-y-0 left-[21%] w-[29%] bg-sky-500/[0.06]" />
           <div className="absolute inset-y-0 left-[50%] w-[50%] bg-amber-500/[0.05]" />
-          <div className="absolute inset-x-0 top-3 flex justify-between px-3 text-[11px] font-semibold text-white/35">
+          <div className="absolute inset-x-0 top-3 flex justify-between px-3 text-[11px] font-semibold text-white/50">
             <span>Days 1-3</span>
             <span>Days 4-7</span>
             <span>Days 7-14</span>
@@ -95,7 +95,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
               );
             })}
           </div>
-          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[11px] text-white/30">
+          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[11px] text-white/50">
             <span>0/10</span>
             <span>actual check-in markers over projected bands</span>
             <span>10/10</span>
@@ -115,7 +115,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
               <span className="font-semibold text-white">{trend.metric}</span>
               <span className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/55">{trend.direction}</span>
             </div>
-            <p className="mt-3 text-sm text-white/45">
+            <p className="mt-3 text-sm text-white/50">
               Before {trend.beforeAverage ?? 'n/a'} · After {trend.afterAverage ?? 'n/a'}
             </p>
           </div>

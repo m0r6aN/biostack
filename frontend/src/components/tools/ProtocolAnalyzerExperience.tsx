@@ -231,7 +231,7 @@ export function ProtocolAnalyzerExperience() {
                         value={inputText}
                         onChange={(event) => setInputText(event.target.value)}
                         rows={16}
-                        className="min-h-80 w-full resize-y rounded-lg border border-white/10 bg-[#0F141B] p-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+                        className="min-h-80 w-full resize-y rounded-lg border border-white/10 bg-[#0F141B] p-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
                         placeholder={`BPC-157 500mcg daily\nTB-500 500mcg daily\nNAD+ 100mg 2x weekly\n8 weeks on, 8 weeks off`}
                       />
                     </label>
@@ -274,7 +274,7 @@ export function ProtocolAnalyzerExperience() {
                         type="url"
                         value={linkUrl}
                         onChange={(event) => setLinkUrl(event.target.value)}
-                        className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+                        className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
                         placeholder="https://example.com/shared-protocol.pdf"
                       />
                     </label>
@@ -284,14 +284,14 @@ export function ProtocolAnalyzerExperience() {
                   </>
                 )}
 
-                <p className="mt-2 text-xs leading-5 text-white/38">
+                <p className="mt-2 text-xs leading-5 text-white/50">
                   Educational analysis only. Verify all dosing math manually.
                 </p>
               </div>
 
               <div className="space-y-4 lg:w-56">
                 <div>
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Goal</p>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Goal</p>
                   <div className="grid gap-2">
                     {[
                       ['healing', 'Healing'],
@@ -315,7 +315,7 @@ export function ProtocolAnalyzerExperience() {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Try an example</p>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Try an example</p>
                   <div className="flex flex-wrap gap-2 lg:flex-col">
                     <ExampleButton label="Healing stack" onClick={() => loadExample('healing')} />
                     <ExampleButton label="Fat loss stack" onClick={() => loadExample('fatLoss')} />
@@ -326,7 +326,7 @@ export function ProtocolAnalyzerExperience() {
                 <div className="rounded-lg border border-white/10 bg-black/20 p-3 text-sm text-white/55">
                   <p className="font-semibold text-white/78">Accepted files</p>
                   <p className="mt-2">PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
-                  <p className="mt-2 text-xs text-white/42">{maxUploadLabel}</p>
+                  <p className="mt-2 text-xs text-white/50">{maxUploadLabel}</p>
                 </div>
               </div>
             </div>
@@ -378,7 +378,7 @@ export function ProtocolAnalyzerExperience() {
           <section className={`rounded-lg border p-5 ${scoreTone}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/55">BioStack Score</p>
             <p className="mt-3 text-5xl font-semibold tracking-tight text-white">
-              {result ? result.score : '--'} <span className="text-2xl text-white/42">/ 100</span>
+              {result ? result.score : '--'} <span className="text-2xl text-white/50">/ 100</span>
             </p>
             <div className="mt-4 h-2 rounded-full bg-black/20">
               <div className="h-2 rounded-full bg-white/80 transition-all" style={{ width: `${Math.max(4, result?.score ?? 0)}%` }} />
@@ -491,9 +491,9 @@ function UploadPanel({
           Ready: {selectedFile.name} ({Math.max(1, Math.round(selectedFile.size / 1024))} KB)
         </p>
       ) : (
-        <p className="mt-4 text-sm text-white/42">Supported types: PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
+        <p className="mt-4 text-sm text-white/50">Supported types: PDF, DOCX, XLSX, CSV, TXT, JPG, PNG, WEBP</p>
       )}
-      {helper ? <p className="mt-2 text-xs leading-5 text-white/38">{helper}</p> : null}
+      {helper ? <p className="mt-2 text-xs leading-5 text-white/50">{helper}</p> : null}
     </div>
   );
 }
@@ -519,7 +519,7 @@ function ExtractionNotesPanel({ result }: { result: ProtocolAnalyzerResult }) {
           {result.artifacts.length > 0 ? result.artifacts.slice(0, 3).map((artifact) => <ArtifactPreview key={`${artifact.kind}-${artifact.label}`} artifact={artifact} />) : null}
         </div>
         <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/42">What we read</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">What we read</p>
           <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-white/72">
             {result.extractedTextPreview || 'No extraction preview available.'}
           </p>
@@ -532,7 +532,7 @@ function ExtractionNotesPanel({ result }: { result: ProtocolAnalyzerResult }) {
 function ArtifactPreview({ artifact }: { artifact: ProtocolAnalyzerArtifact }) {
   return (
     <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/42">{artifact.label}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{artifact.label}</p>
       <p className="mt-2 text-sm leading-6 text-white/68">{artifact.preview}</p>
     </div>
   );
@@ -599,7 +599,7 @@ function ParsedProtocolSection({ result }: { result: ProtocolAnalyzerResult | nu
 
       <div className="mt-4 hidden overflow-x-auto md:block">
         <table className="w-full min-w-[560px] text-left text-sm">
-          <thead className="border-b border-white/10 text-xs uppercase tracking-[0.16em] text-white/35">
+          <thead className="border-b border-white/10 text-xs uppercase tracking-[0.16em] text-white/50">
             <tr>
               <th className="py-3 font-semibold">Compound</th>
               <th className="py-3 font-semibold">Dose</th>
@@ -627,7 +627,7 @@ function ParsedProtocolSection({ result }: { result: ProtocolAnalyzerResult | nu
               ))
             ) : (
               <tr>
-                <td className="py-5 text-white/45" colSpan={5}>No parsed compounds yet.</td>
+                <td className="py-5 text-white/50" colSpan={5}>No parsed compounds yet.</td>
               </tr>
             )}
           </tbody>
@@ -645,7 +645,7 @@ function ParsedProtocolSection({ result }: { result: ProtocolAnalyzerResult | nu
             </article>
           ))
         ) : (
-          <p className="text-sm text-white/45">No parsed compounds yet.</p>
+          <p className="text-sm text-white/50">No parsed compounds yet.</p>
         )}
       </div>
     </section>
@@ -666,7 +666,7 @@ function ResultList({ title, empty, items }: { title: string; empty: string; ite
           ))}
         </ul>
       ) : (
-        <p className="mt-3 text-sm leading-6 text-white/45">{empty}</p>
+        <p className="mt-3 text-sm leading-6 text-white/50">{empty}</p>
       )}
     </section>
   );
@@ -685,7 +685,7 @@ function ImprovementCard({
 }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{title}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">{title}</p>
       {teaser ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">
@@ -697,7 +697,7 @@ function ImprovementCard({
           <p className="mt-2 text-sm leading-6 text-white/58">{teaser.recommendation}</p>
         </>
       ) : (
-        <p className="mt-2 text-sm leading-6 text-white/45">{empty}</p>
+        <p className="mt-2 text-sm leading-6 text-white/50">{empty}</p>
       )}
     </article>
   );
@@ -706,7 +706,7 @@ function ImprovementCard({
 function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult['counterfactuals']['bestSimplifiedProtocol'] }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Simplified protocol</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Simplified protocol</p>
       {protocol ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">{protocol.score} / 100 after simplification</p>
@@ -714,7 +714,7 @@ function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult
           <p className="mt-2 text-sm leading-6 text-white/58">{protocol.reasons[0]}</p>
         </>
       ) : (
-        <p className="mt-2 text-sm leading-6 text-white/45">No cleaner version improved this stack yet.</p>
+        <p className="mt-2 text-sm leading-6 text-white/50">No cleaner version improved this stack yet.</p>
       )}
     </article>
   );
@@ -723,7 +723,7 @@ function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult
 function GoalAwareCard({ option }: { option: ProtocolAnalyzerGoalAwareOption | null }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Goal-aware optimization</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Goal-aware optimization</p>
       {option ? (
         <>
           <p className="mt-2 text-base font-semibold text-white">Best fit for {option.goal}</p>
@@ -731,7 +731,7 @@ function GoalAwareCard({ option }: { option: ProtocolAnalyzerGoalAwareOption | n
           <p className="mt-2 text-sm leading-6 text-white/58">{option.reasons[0]}</p>
         </>
       ) : (
-        <p className="mt-2 text-sm leading-6 text-white/45">Goal-aware optimization unlocks after baseline analysis.</p>
+        <p className="mt-2 text-sm leading-6 text-white/50">Goal-aware optimization unlocks after baseline analysis.</p>
       )}
     </article>
   );

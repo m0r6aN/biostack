@@ -107,7 +107,7 @@ export default function AuditReceiptFeedPage() {
           actions — protocol reviews, compound classifications, data exports, and
           promotion gates — so every consequential decision can be audited after the fact.
         </p>
-        <p className="text-sm text-white/40">
+        <p className="text-sm text-white/50">
           It is not enabled in this environment yet.
         </p>
       </div>
@@ -201,7 +201,7 @@ function AuditReceiptFeedContent() {
                 "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                 activeFilter === pill.id
                   ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
-                  : "border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20 hover:text-white/60",
+                  : "border-white/10 bg-white/[0.03] text-white/50 hover:border-white/20 hover:text-white/60",
               )}
             >
               {pill.label}
@@ -211,7 +211,7 @@ function AuditReceiptFeedContent() {
 
         {/* Body */}
         {loading && (
-          <div className="flex items-center justify-center gap-2 py-16 text-white/40 text-sm">
+          <div className="flex items-center justify-center gap-2 py-16 text-white/50 text-sm">
             <Loader2 className="w-4 h-4 animate-spin" aria-hidden />
             Loading receipts...
           </div>
@@ -226,8 +226,8 @@ function AuditReceiptFeedContent() {
 
         {!loading && !error && filtered.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
-            <Shield className="w-8 h-8 text-white/20" aria-hidden />
-            <p className="text-sm text-white/40">
+            <Shield className="w-8 h-8 text-white/50" aria-hidden />
+            <p className="text-sm text-white/50">
               No governed actions yet — receipts appear here when governed
               effects are produced.
             </p>
@@ -255,7 +255,7 @@ function AuditReceiptFeedContent() {
                       <p className="text-sm font-medium text-white/80 truncate">
                         {actionLabel(receipt.subjectUri)}
                       </p>
-                      <p className="text-[10px] font-mono text-white/30 truncate">
+                      <p className="text-[10px] font-mono text-white/50 truncate">
                         {receipt.subjectUri}
                       </p>
                     </div>
@@ -264,10 +264,10 @@ function AuditReceiptFeedContent() {
                     <div className="flex flex-wrap items-center gap-2 shrink-0">
                       <DecisionPill decision={receipt.decision} />
                       <EffectPill status={receipt.effectStatus} />
-                      <span className="font-mono text-[10px] text-white/30">
+                      <span className="font-mono text-[10px] text-white/50">
                         v{receipt.policyHash.version}
                       </span>
-                      <span className="text-[10px] text-white/25">
+                      <span className="text-[10px] text-white/50">
                         {formatTimestamp(receipt.timestampUtc)}
                       </span>
                     </div>

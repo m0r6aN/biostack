@@ -17,7 +17,7 @@ export function ResolutionPlanItem({ item, queuedTask, pendingDecisionId = null,
       <div className="rounded-lg bg-blue-900/20 border border-blue-400/20 px-2.5 py-2">
         <p className="text-[11px] text-blue-300">Recommended remediation: {item.recommendedAction}</p>
       </div>
-      <label className={`flex items-start gap-2 rounded-lg border px-2.5 py-2 text-[11px] ${isQueuedForNextRound ? 'border-emerald-400/25 bg-emerald-500/10 text-emerald-100/80' : 'border-white/10 bg-white/[0.025] text-white/45'}`}>
+      <label className={`flex items-start gap-2 rounded-lg border px-2.5 py-2 text-[11px] ${isQueuedForNextRound ? 'border-emerald-400/25 bg-emerald-500/10 text-emerald-100/80' : 'border-white/10 bg-white/[0.025] text-white/50'}`}>
         <input
           type="checkbox"
           checked={isQueuedForNextRound}
@@ -42,7 +42,7 @@ export function ResolutionPlanItem({ item, queuedTask, pendingDecisionId = null,
       {item.relatedQualityFlags.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {item.relatedQualityFlags.map(f => (
-            <span key={f} className="text-[9px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-white/40">{f}</span>
+            <span key={f} className="text-[9px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-white/50">{f}</span>
           ))}
         </div>
       )}

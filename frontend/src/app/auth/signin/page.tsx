@@ -168,7 +168,7 @@ function SignInPageContent() {
             <>
               <div className="mb-7 text-center">
                 <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to BioStack</h1>
-                <p className="mt-2 text-sm leading-6 text-white/45">
+                <p className="mt-2 text-sm leading-6 text-white/50">
                   Already added a passkey? Use it for one-tap sign-in. New here, or on a new device? Email yourself a sign-in link — you can add a passkey once you’re in.
                 </p>
                 <p className="mt-3 text-sm leading-6 text-white/55">
@@ -215,7 +215,7 @@ function SignInPageContent() {
                   >
                     {isUsingPasskey ? 'Checking passkey…' : 'Sign in with a passkey'}
                   </button>
-                  <div className="my-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/25">
+                  <div className="my-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">
                     <span className="h-px flex-1 bg-white/10" />
                     <span>Or use email</span>
                     <span className="h-px flex-1 bg-white/10" />
@@ -234,7 +234,7 @@ function SignInPageContent() {
                     required
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-300/50"
+                    className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-300/50"
                     placeholder="you@example.com"
                   />
                 </label>
@@ -253,7 +253,7 @@ function SignInPageContent() {
               <p className="mt-3 text-sm leading-6 text-white/50">
                 We sent a sign-in link to <span className="font-semibold text-white/80">{maskEmail(submittedEmail)}</span>.
               </p>
-              <p className="mt-4 text-sm text-white/35">Open the link on this device to continue.</p>
+              <p className="mt-4 text-sm text-white/50">Open the link on this device to continue.</p>
 
               <button
                 type="button"

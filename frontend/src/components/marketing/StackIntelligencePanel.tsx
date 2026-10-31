@@ -331,7 +331,7 @@ export function StackIntelligencePanel({
               {stageLabels.map((label, index) => (
                 <span key={label} className="contents">
                   <span>{label}</span>
-                  {index < stageLabels.length - 1 && <span className="text-white/18">/</span>}
+                  {index < stageLabels.length - 1 && <span className="text-white/50">/</span>}
                 </span>
               ))}
             </div>

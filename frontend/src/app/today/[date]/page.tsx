@@ -33,7 +33,7 @@ export default async function TodayPage({ params }: PageProps) {
   if (hit === undefined) notFound();
   return (
     <main className="max-w-3xl mx-auto px-4 py-10 space-y-4">
-      <p className="text-xs uppercase tracking-[0.2em] text-white/45">Today&rsquo;s claim · {date}</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-white/50">Today&rsquo;s claim · {date}</p>
       {hit ? (
         <>
           <h1 className="text-2xl font-semibold text-white">{hit.entry.canonicalName}</h1>

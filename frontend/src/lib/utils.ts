@@ -61,7 +61,7 @@ export function getEvidenceTierColor(tier: string): string {
       return 'bg-rose-500/10 text-rose-300 border border-rose-400/20';
     case 'unsupported':
     case 'notgraded':
-      return 'bg-white/5 text-white/40 border border-white/10';
+      return 'bg-white/5 text-white/50 border border-white/10';
     case 'strong':
       return 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20';
     case 'moderate':
@@ -73,9 +73,9 @@ export function getEvidenceTierColor(tier: string): string {
     case 'insufficient':
       return 'bg-rose-500/10 text-rose-300 border border-rose-400/20';
     case 'anecdotal':
-      return 'bg-white/5 text-white/40 border border-white/10';
+      return 'bg-white/5 text-white/50 border border-white/10';
     case 'unknown':
-      return 'bg-white/5 text-white/40 border border-white/10';
+      return 'bg-white/5 text-white/50 border border-white/10';
     default:
       return 'bg-white/10 text-white/70 border border-white/15';
   }

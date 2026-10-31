@@ -266,7 +266,7 @@ export function Sidebar() {
           {/* Mobile close button */}
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-2 rounded-xl hover:bg-white/5 text-white/40 transition-colors"
+            className="lg:hidden p-2 rounded-xl hover:bg-white/5 text-white/50 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -283,7 +283,7 @@ export function Sidebar() {
         >
           <p
             className={cn(
-              'text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5',
+              'text-[10px] font-bold text-white/50 uppercase tracking-[0.3em] pl-0.5',
               collapsed && 'lg:hidden'
             )}
           >
@@ -296,7 +296,7 @@ export function Sidebar() {
             aria-expanded={!collapsed}
             aria-controls={SIDEBAR_NAV_ID}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className="hidden lg:inline-flex items-center justify-center w-8 h-8 rounded-xl border border-white/5 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            className="hidden lg:inline-flex items-center justify-center w-8 h-8 rounded-xl border border-white/5 text-white/50 transition-colors hover:bg-white/5 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
           >
             <span className="sr-only">{collapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
             <IconChevron direction={collapsed ? 'right' : 'left'} />
@@ -329,7 +329,7 @@ export function Sidebar() {
                     collapsed && 'lg:justify-center lg:gap-0 lg:px-2',
                     isActive
                       ? 'text-emerald-400 bg-emerald-400/5 shadow-[inset_0_0_12px_rgba(52,211,153,0.03)]'
-                      : 'text-white/40 hover:text-white/80 hover:bg-white/[0.03]'
+                      : 'text-white/50 hover:text-white/80 hover:bg-white/[0.03]'
                   )}
                 >
                   {/* Active edge illumination */}
@@ -343,7 +343,7 @@ export function Sidebar() {
                       'flex items-center justify-center w-8 h-8 rounded-xl border transition-all duration-200 shrink-0',
                       isActive
                         ? 'bg-emerald-500/10 border-emerald-400/20 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
-                        : 'bg-white/[0.02] border-white/5 text-white/30 group-hover:bg-white/[0.05] group-hover:border-white/10 group-hover:text-white/60'
+                        : 'bg-white/[0.02] border-white/5 text-white/50 group-hover:bg-white/[0.05] group-hover:border-white/10 group-hover:text-white/60'
                     )}
                   >
                     {item.icon}
@@ -353,7 +353,7 @@ export function Sidebar() {
                   <span className={cn('flex min-w-0 flex-col leading-tight', collapsed && 'lg:hidden')}>
                     <span className="tracking-tight">{item.label}</span>
                     {'sublabel' in item && item.sublabel && (
-                      <span className="text-[10px] font-medium text-white/25 truncate">{item.sublabel}</span>
+                      <span className="text-[10px] font-medium text-white/50 truncate">{item.sublabel}</span>
                     )}
                   </span>
                 </Link>
@@ -421,7 +421,7 @@ export function Sidebar() {
               <button
                 onClick={() => void logout()}
                 title="Sign out"
-                className="shrink-0 flex items-center gap-1.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold text-white/35 transition-colors hover:bg-white/5 hover:text-white/65"
+                className="shrink-0 flex items-center gap-1.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold text-white/50 transition-colors hover:bg-white/5 hover:text-white/65"
               >
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" className="w-4 h-4">
                   <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
@@ -454,7 +454,7 @@ export function Sidebar() {
 
               <div className="min-w-0">
                 <p className="text-[11px] font-bold text-white/50 leading-none">SYSTEM ACTIVE</p>
-                <p className="text-[10px] text-white/20 mt-1 font-medium tracking-wide">
+                <p className="text-[10px] text-white/50 mt-1 font-medium tracking-wide">
                   ESTABLISHED · 128-BIT
                 </p>
               </div>

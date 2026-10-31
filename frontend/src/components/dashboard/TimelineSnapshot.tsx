@@ -12,7 +12,7 @@ export function TimelineSnapshot({ events }: TimelineSnapshotProps) {
     <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#121923]/90 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
       <h3 className="text-lg font-semibold text-white mb-4">Recent Events</h3>
       {recent.length === 0 ? (
-        <p className="text-sm text-white/45">No events yet</p>
+        <p className="text-sm text-white/50">No events yet</p>
       ) : (
         <div className="space-y-3">
           {recent.map((event) => (
@@ -20,7 +20,7 @@ export function TimelineSnapshot({ events }: TimelineSnapshotProps) {
               <span className="text-lg">{getEventIcon(event.eventType)}</span>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-white text-sm">{event.title}</p>
-                <p className="text-xs text-white/35 mt-1">
+                <p className="text-xs text-white/50 mt-1">
                   {formatDateTime(event.occurredAtUtc)}
                 </p>
               </div>

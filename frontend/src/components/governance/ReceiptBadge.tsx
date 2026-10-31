@@ -47,7 +47,7 @@ export function ReceiptBadge({
         className,
       )}
     >
-      <Shield className="w-2.5 h-2.5 shrink-0 text-white/40" aria-hidden />
+      <Shield className="w-2.5 h-2.5 shrink-0 text-white/50" aria-hidden />
       <span>{truncateUri(receiptUri)}</span>
       <span
         className={cn(

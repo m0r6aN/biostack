@@ -56,17 +56,17 @@ export default async function ClaimPage({ params }: PageProps) {
   const compoundHref = `/knowledge/${compoundSlug(entry.canonicalName)}`;
   return (
     <main className="max-w-3xl mx-auto px-4 py-10 space-y-6">
-      <p className="text-xs uppercase tracking-[0.2em] text-white/45">The claim</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-white/50">The claim</p>
       <h1 className="text-2xl font-semibold text-white">{entry.canonicalName}: &ldquo;{claim.statement}&rdquo;</h1>
       <ul><ClaimRow claim={claim} /></ul>
-      <p className="text-xs text-white/45">{VERDICT_FOOTNOTE}</p>
+      <p className="text-xs text-white/50">{VERDICT_FOOTNOTE}</p>
       <WatchButton targetType="claim" targetId={claim.id} returnTo={`${compoundHref}/claims/${claim.id}`} />
       <nav className="flex flex-wrap gap-4 text-sm">
         <Link href={compoundHref} className="text-cyan-300 underline underline-offset-4">Full {entry.canonicalName} record</Link>
         <Link href={`${compoundHref}/changelog`} className="text-cyan-300 underline underline-offset-4">Changelog</Link>
         <a href={cardImageUrl('claim', claim.id, claim.version, 'story')} download className="text-cyan-300 underline underline-offset-4">Story card</a>
       </nav>
-      <p className="text-xs text-white/40">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
+      <p className="text-xs text-white/50">BioStack grades evidence. It doesn&rsquo;t tell you what to take.</p>
     </main>
   );
 }

@@ -51,7 +51,7 @@ function severityColor(severity: string): string {
 function DeterministicSection({ findings }: { findings: SrbEnvelopeDeterministic[] }) {
   if (findings.length === 0) {
     return (
-      <p className="text-xs text-white/30 italic py-4">
+      <p className="text-xs text-white/50 italic py-4">
         No deterministic findings for this stack.
       </p>
     );
@@ -66,9 +66,9 @@ function DeterministicSection({ findings }: { findings: SrbEnvelopeDeterministic
           <div className="flex items-start gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[9px] font-mono font-bold text-white/30 uppercase">{f.code}</span>
-                <span className="text-[9px] text-white/20">{f.category}</span>
-                <span className="text-[9px] text-white/20">· {f.evidenceTier}</span>
+                <span className="text-[9px] font-mono font-bold text-white/50 uppercase">{f.code}</span>
+                <span className="text-[9px] text-white/50">{f.category}</span>
+                <span className="text-[9px] text-white/50">· {f.evidenceTier}</span>
               </div>
               <p className="text-xs text-white/70 leading-relaxed">{f.narrative}</p>
             </div>
@@ -87,7 +87,7 @@ function PerspectiveFindingRow({ finding }: { finding: SrbEnvelopeFinding }) {
         <span className={cn('text-[10px] font-semibold uppercase tracking-wide', severityColor(finding.severity))}>
           {finding.severity}
         </span>
-        <span className="text-[10px] text-white/20">· {finding.category}</span>
+        <span className="text-[10px] text-white/50">· {finding.category}</span>
         <ClaimBadgeStack badges={['commentary-only', 'not-executable']} size="xs" className="ml-auto" />
       </div>
       <GovernedSentence text={finding.narrative} context="srb-finding" />
@@ -104,14 +104,14 @@ function RoleTab({ role, findings, summary }: {
     <div className="space-y-4">
       {summary && (
         <div className="rounded-xl border border-white/8 bg-emerald-500/5 px-4 py-3">
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/20 mb-1">
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-1">
             {role} Summary
           </p>
           <GovernedSentence text={summary} context="srb-finding" />
         </div>
       )}
       {findings.length === 0 ? (
-        <p className="text-xs text-white/30 italic py-4">
+        <p className="text-xs text-white/50 italic py-4">
           No findings from the {role} perspective.
         </p>
       ) : (
@@ -242,7 +242,7 @@ export default function DecisionTheaterPage() {
   if (loadingProtocol) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#070809]">
-        <div className="text-white/30 text-sm">Loading protocol…</div>
+        <div className="text-white/50 text-sm">Loading protocol…</div>
       </div>
     );
   }
@@ -276,12 +276,12 @@ export default function DecisionTheaterPage() {
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link
             href={`/protocols/${protocolId}`}
-            className="text-[10px] font-mono text-white/30 hover:text-white/60 transition-colors"
+            className="text-[10px] font-mono text-white/50 hover:text-white/60 transition-colors"
           >
             ← protocol
           </Link>
           <div className="flex-1 min-w-0">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-white/20">Decision Theater Preview</p>
+            <p className="text-[9px] font-bold uppercase tracking-widest text-white/50">Decision Theater Preview</p>
             <h1 className="text-sm font-semibold text-white/90 truncate">
               {protocol?.name ?? 'Loading…'}
             </h1>
@@ -295,7 +295,7 @@ export default function DecisionTheaterPage() {
           <button
             onClick={handleExportMemo}
             disabled={!envelope}
-            className="px-3 py-2 rounded-lg text-[11px] font-semibold border border-white/10 text-white/40 hover:text-white/70 hover:border-white/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-3 py-2 rounded-lg text-[11px] font-semibold border border-white/10 text-white/50 hover:text-white/70 hover:border-white/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Export Memo
           </button>
@@ -309,7 +309,7 @@ export default function DecisionTheaterPage() {
           is not server-bound to the protocol record, and does not complete a protocol review.
         </div>
         {loadingEnvelope && (
-          <div className="flex items-center justify-center py-24 text-white/30 text-sm">
+          <div className="flex items-center justify-center py-24 text-white/50 text-sm">
             Generating deliberation envelope…
           </div>
         )}
@@ -318,7 +318,7 @@ export default function DecisionTheaterPage() {
           <SafetyHierarchy
             deterministic={
               <section>
-                <h2 className="text-[9px] font-bold uppercase tracking-widest text-white/25 mb-4">
+                <h2 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-4">
                   Deterministic Findings — BioStack Native · Always Rendered First
                 </h2>
                 <DeterministicSection findings={envelope.deterministicFindings} />
@@ -336,7 +336,7 @@ export default function DecisionTheaterPage() {
                         'px-3 py-1.5 rounded-lg text-[11px] font-semibold border transition-all',
                         activeTab === tab
                           ? 'bg-white/10 border-white/20 text-white/90'
-                          : 'bg-transparent border-white/8 text-white/35 hover:bg-white/5 hover:text-white/60',
+                          : 'bg-transparent border-white/8 text-white/50 hover:bg-white/5 hover:text-white/60',
                       )}
                     >
                       {tab}
@@ -356,7 +356,7 @@ export default function DecisionTheaterPage() {
                         summary={review.summary}
                       />
                     ) : (
-                      <p className="text-xs text-white/30 italic py-4">
+                      <p className="text-xs text-white/50 italic py-4">
                         No data for {activeTab} perspective.
                       </p>
                     );

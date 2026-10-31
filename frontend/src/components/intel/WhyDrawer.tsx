@@ -49,7 +49,7 @@ export function WhyDrawer({
     <span className={cn('inline-flex items-center', className)}>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1 text-[10px] font-semibold text-white/30 hover:text-white/60 hover:bg-white/5 rounded-full px-2 py-0.5 transition-colors border border-transparent hover:border-white/10"
+        className="inline-flex items-center gap-1 text-[10px] font-semibold text-white/50 hover:text-white/60 hover:bg-white/5 rounded-full px-2 py-0.5 transition-colors border border-transparent hover:border-white/10"
         aria-label={`Why? — ${surface}`}
       >
         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeWidth="1.5">
@@ -68,12 +68,12 @@ export function WhyDrawer({
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/8">
           <div>
-            <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-0.5">{surface}</p>
+            <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-0.5">{surface}</p>
             <h3 className="text-sm font-semibold text-white/90">{title}</h3>
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="p-2 rounded-xl hover:bg-white/5 text-white/30 hover:text-white/60 transition-colors"
+            className="p-2 rounded-xl hover:bg-white/5 text-white/50 hover:text-white/60 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -85,13 +85,13 @@ export function WhyDrawer({
           {/* Inputs */}
           {inputs.length > 0 && (
             <div>
-              <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">Inputs Used</p>
+              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Inputs Used</p>
               <div className="space-y-1.5">
                 {inputs.map(({ label, value }) => (
                   <div key={label} className="flex justify-between items-center gap-4 text-xs">
                     <span className="text-white/50">{label}</span>
                     <span className="font-mono text-white/80 text-right shrink-0">
-                      {value === null || value === undefined ? <span className="text-white/25 italic">none</span> : String(value)}
+                      {value === null || value === undefined ? <span className="text-white/50 italic">none</span> : String(value)}
                     </span>
                   </div>
                 ))}
@@ -101,7 +101,7 @@ export function WhyDrawer({
 
           {/* Reasoning */}
           <div>
-            <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">Reasoning</p>
+            <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Reasoning</p>
             <p className="text-xs text-white/70 leading-relaxed">{reasoning}</p>
           </div>
 
@@ -125,7 +125,7 @@ export function WhyDrawer({
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-white/5">
-          <p className="text-[10px] text-white/25 leading-relaxed">
+          <p className="text-[10px] text-white/50 leading-relaxed">
             This explanation reflects the system's inputs and logic at the time of calculation. It is observational and does not constitute medical advice.
           </p>
         </div>

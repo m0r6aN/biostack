@@ -214,7 +214,7 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
         <div className="rounded-xl bg-emerald-500/10 border border-emerald-400/25 px-4 py-3">
           <p className="text-sm text-emerald-300">Decision added to batch ({submittedCount} total).</p>
           <button onClick={() => { setSubmitted(false); setDecision(''); setNotes(''); setClearsSoft(null); setSelectedClaimIds(new Set()); setSelectedReviewQueueItemIds(new Set()); }}
-            className="text-[11px] text-white/40 mt-2 hover:text-white/70">Add another decision</button>
+            className="text-[11px] text-white/50 mt-2 hover:text-white/70">Add another decision</button>
         </div>
         <BatchActions
           decisionCount={batch.decisions.length}
@@ -266,14 +266,14 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
 
       {softBlockers.length > 0 && (
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Soft promotion blockers currently active</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Soft promotion blockers currently active</p>
           <div className="flex flex-col gap-2">{softBlockers.map(b => <BlockerCard key={b} blocker={b} />)}</div>
         </div>
       )}
 
       {compound.reviewReasons.length > 0 && (
         <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5">
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Review findings still attached to draft</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Review findings still attached to draft</p>
           <div className="flex flex-col gap-1.5">
             {compound.reviewReasons.map(reason => <p key={reason} className="text-[11px] leading-5 text-white/55">• {reason}</p>)}
           </div>
@@ -281,14 +281,14 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
       )}
 
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Decision scope</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">Decision scope</p>
         <div className="flex flex-col gap-2">
           {DECISIONS.map(d => (
             <label key={d.value} className={`flex items-center gap-2.5 rounded-xl border px-3 py-2 cursor-pointer transition-all ${decision === d.value ? 'border-emerald-400/40 bg-emerald-500/8' : 'border-white/10 hover:border-white/20'}`}>
               <input type="radio" aria-label={d.value} name="decision" value={d.value} checked={decision === d.value} onChange={() => setDecision(d.value)} className="accent-emerald-500" />
               <span className="flex flex-col gap-0.5">
                 <span className="text-[11px] text-white/85">{d.label}</span>
-                <span className="text-[10px] text-white/35">{d.helper}</span>
+                <span className="text-[10px] text-white/50">{d.helper}</span>
               </span>
             </label>
           ))}
@@ -297,11 +297,11 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
 
       {decision === 'approve-claims' && (
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">
             Evidence claims to approve <span className="text-rose-400">*</span>
           </p>
           {claims.length === 0 ? (
-            <p className="text-[11px] text-white/30">No per-compound evidence packet is loaded, so claim-level approval is unavailable.</p>
+            <p className="text-[11px] text-white/50">No per-compound evidence packet is loaded, so claim-level approval is unavailable.</p>
           ) : (
             <div className="flex flex-col gap-2">
               {claims.map(claim => (
@@ -315,7 +315,7 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
                   <span className="flex flex-col gap-1 text-[11px] text-white/80">
                     <span className="font-mono text-[10px] text-emerald-200/80">{claim.claimId}</span>
                     <span>{claim.statement}</span>
-                    <span className="text-[10px] text-white/35">Approve only this source-scoped claim; draft promotion remains separate.</span>
+                    <span className="text-[10px] text-white/50">Approve only this source-scoped claim; draft promotion remains separate.</span>
                   </span>
                 </label>
               ))}
@@ -326,14 +326,14 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
 
       {decision === 'resolve-review-items' && (
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">
             Pending review items to resolve <span className="text-rose-400">*</span>
           </p>
-          <p className="mb-2 text-[11px] leading-5 text-white/40">
+          <p className="mb-2 text-[11px] leading-5 text-white/50">
             Select only items that are genuinely fixed or no longer pending. They disappear after this batch is applied and artifacts regenerate.
           </p>
           {reviewQueueItems.length === 0 ? (
-            <p className="text-[11px] text-white/30">No active review queue items are loaded for this compound.</p>
+            <p className="text-[11px] text-white/50">No active review queue items are loaded for this compound.</p>
           ) : (
             <div className="flex flex-col gap-2">
               {reviewQueueItems.map(item => (
@@ -347,7 +347,7 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
                   <span className="flex flex-col gap-1 text-[11px] text-white/80">
                     <span className="font-mono text-[10px] text-emerald-200/80">{item.itemId}</span>
                     <span>{item.reason}</span>
-                    <span className="text-[10px] text-white/35">Severity: {item.severity} · References: {item.references.length > 0 ? item.references.join(', ') : 'none'}</span>
+                    <span className="text-[10px] text-white/50">Severity: {item.severity} · References: {item.references.length > 0 ? item.references.join(', ') : 'none'}</span>
                   </span>
                 </label>
               ))}
@@ -366,13 +366,13 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
       )}
 
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-1.5">Reviewer ID</p>
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-1.5">Reviewer ID</p>
         <input type="text" value={reviewerId} onChange={e => setReviewerId(e.target.value)} placeholder="your-reviewer-id"
           className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-[12px] text-white placeholder-white/25 focus:outline-none focus:border-white/30" />
       </div>
 
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-1.5">
+        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-1.5">
           Notes {((decision === 'approve-for-promotion' && softBlockers.length > 0) || decision === 'archive-draft') && <span className="text-rose-400">*</span>}
         </p>
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} placeholder="Add notes for this decision..."
@@ -381,10 +381,10 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
 
       {softBlockers.length > 0 && (
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-2">
             Clear soft promotion blockers? {decision === 'approve-for-promotion' && <span className="text-rose-400">*</span>}
           </p>
-          <p className="mb-2 text-[11px] leading-5 text-white/40">
+          <p className="mb-2 text-[11px] leading-5 text-white/50">
             Select Yes only for draft promotion approval. Claim approval should normally leave this set to No.
           </p>
           <div className="flex gap-3">
@@ -419,7 +419,7 @@ export function ReviewDecisionForm({ candidate, compound, evidencePacket, planIt
 function BatchActions({ decisionCount, onExport, onProcess, processing, processError, processResult }: { decisionCount: number; onExport: () => void; onProcess: () => void; processing: boolean; processError: string; processResult: ProcessBatchResult | null }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 text-center">
-      <p className="text-[10px] text-white/35">{decisionCount} decision(s) in batch</p>
+      <p className="text-[10px] text-white/50">{decisionCount} decision(s) in batch</p>
       <div className="mt-2 flex flex-col justify-center gap-2 sm:flex-row">
         <button onClick={onExport} disabled={decisionCount === 0}
           className="rounded-lg border border-white/15 px-3 py-2 text-[11px] font-semibold text-white/55 transition-colors hover:border-white/25 hover:text-white/75 disabled:cursor-not-allowed disabled:opacity-40">
@@ -430,8 +430,8 @@ function BatchActions({ decisionCount, onExport, onProcess, processing, processE
           {processing ? 'Saving & processing…' : 'Save & Process Batch'}
         </button>
       </div>
-      <p className="mt-2 text-[10px] leading-4 text-white/30">
-        Requires local <code className="text-white/45">RESEARCH_AUTOMATION_ENABLED=true</code>. On success, artifacts regenerate and the page refreshes.
+      <p className="mt-2 text-[10px] leading-4 text-white/50">
+        Requires local <code className="text-white/50">RESEARCH_AUTOMATION_ENABLED=true</code>. On success, artifacts regenerate and the page refreshes.
       </p>
       {processError && <p className="mt-2 rounded-lg border border-rose-400/20 bg-rose-500/10 px-3 py-2 text-[11px] text-rose-200">{processError}</p>}
       {processResult && (
@@ -451,8 +451,8 @@ function AiSuggestionCard({ suggestion, onApply }: { suggestion: AiReviewSuggest
     <div className="mt-3 rounded-xl border border-white/10 bg-black/15 p-3">
       <div className="mb-2 flex flex-wrap items-center gap-2">
         <span className="rounded-full border border-fuchsia-200/25 bg-fuchsia-400/10 px-2 py-1 text-[10px] text-fuchsia-100">{decisionLabel}</span>
-        <span className="text-[10px] text-white/40">AI confidence: {suggestion.confidence}</span>
-        {suggestion.modelUsed && <span className="text-[10px] text-white/25">Model: {suggestion.modelUsed}</span>}
+        <span className="text-[10px] text-white/50">AI confidence: {suggestion.confidence}</span>
+        {suggestion.modelUsed && <span className="text-[10px] text-white/50">Model: {suggestion.modelUsed}</span>}
       </div>
       <p className="text-[12px] leading-5 text-white/75">{suggestion.summary}</p>
 
@@ -466,7 +466,7 @@ function AiSuggestionCard({ suggestion, onApply }: { suggestion: AiReviewSuggest
 
       {suggestion.draftNotes && (
         <div className="mt-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-          <p className="mb-1 text-[9px] font-bold uppercase tracking-widest text-white/30">Draft reviewer notes</p>
+          <p className="mb-1 text-[9px] font-bold uppercase tracking-widest text-white/50">Draft reviewer notes</p>
           <p className="whitespace-pre-wrap text-[11px] leading-5 text-white/60">{suggestion.draftNotes}</p>
         </div>
       )}
@@ -481,9 +481,9 @@ function AiSuggestionCard({ suggestion, onApply }: { suggestion: AiReviewSuggest
 function SuggestionList({ title, items, empty = 'None returned.' }: { title: string; items: string[]; empty?: string }) {
   return (
     <div>
-      <p className="mb-1 text-[9px] font-bold uppercase tracking-widest text-white/30">{title}</p>
+      <p className="mb-1 text-[9px] font-bold uppercase tracking-widest text-white/50">{title}</p>
       {items.length === 0 ? (
-        <p className="text-[11px] text-white/30">{empty}</p>
+        <p className="text-[11px] text-white/50">{empty}</p>
       ) : (
         <ul className="space-y-1 text-[11px] leading-5 text-white/55">
           {items.map(item => <li key={item}>• {item}</li>)}

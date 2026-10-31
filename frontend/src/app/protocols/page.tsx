@@ -87,7 +87,7 @@ function ProtocolCard({ protocol }: { protocol: Protocol }) {
           {protocol.isCurrentVersion ? 'Current version' : 'Prior version'}
         </span>
         {protocol.priorVersions.length > 0 && (
-          <span className="text-white/45">
+          <span className="text-white/50">
             {protocol.priorVersions.length} prior version{protocol.priorVersions.length === 1 ? '' : 's'}
           </span>
         )}
@@ -95,14 +95,14 @@ function ProtocolCard({ protocol }: { protocol: Protocol }) {
 
       <p className="mt-3 break-words text-sm leading-6 text-white/60">{compoundSummary(protocol)}</p>
 
-      <p className="mt-2 text-xs text-white/45">
+      <p className="mt-2 text-xs text-white/50">
         {protocol.activeRun
           ? `Run active since ${new Date(protocol.activeRun.startedAtUtc).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}`
           : 'No active run yet'}
       </p>
 
       {protocol.evolvedFromRunId && (
-        <p className="mt-2 text-xs text-white/40">Derived from an observed run. Compare changes before tracking.</p>
+        <p className="mt-2 text-xs text-white/50">Derived from an observed run. Compare changes before tracking.</p>
       )}
 
       {protocol.stackScore.chips.length > 0 && (

@@ -25,17 +25,17 @@ export function CompoundList({ compounds, onSelect }: CompoundListProps) {
             <div className="flex-1">
               <h4 className="font-semibold text-white">{compound.name?.trim() || 'Unnamed compound'}</h4>
               <div className="flex flex-wrap items-center gap-2 mt-1">
-                <span className="text-xs text-white/40">{compound.category}</span>
+                <span className="text-xs text-white/50">{compound.category}</span>
                 {compound.goal && (
                   <>
-                    <span className="text-xs text-white/35">•</span>
+                    <span className="text-xs text-white/50">•</span>
                     <span className="text-xs text-emerald-400/70" title={compoundGoalDisplay(compound.goal).context}>
                       {compoundGoalDisplay(compound.goal).label}
                     </span>
                   </>
                 )}
-                <span className="text-xs text-white/35">•</span>
-                <span className="text-xs text-white/40">{formatDate(compound.startDate)}</span>
+                <span className="text-xs text-white/50">•</span>
+                <span className="text-xs text-white/50">{formatDate(compound.startDate)}</span>
               </div>
               {formatUserDoseWithTime(compound) && (
                 <p className="text-xs text-white/65 mt-2">Your dose: {formatUserDoseWithTime(compound)}</p>

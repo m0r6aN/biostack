@@ -11,7 +11,7 @@ export function ClaimCard({ claim }: ClaimCardProps) {
   return (
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 py-2.5 flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[9px] font-bold tracking-widest uppercase text-white/40">{claim.claimType}</span>
+        <span className="text-[9px] font-bold tracking-widest uppercase text-white/50">{claim.claimType}</span>
         <EvidenceTierBadge tier={claim.evidenceTier} variant="research" />
       </div>
       <p className="text-[12px] text-white/90 leading-relaxed">{claim.statement}</p>
@@ -23,7 +23,7 @@ export function ClaimCard({ claim }: ClaimCardProps) {
           { label: 'Use Case',   value: claim.context.useCase },
           { label: 'Dose',       value: claim.context.doseText },
         ].map(({ label, value }) => (
-          <span key={label} className="text-[10px] text-white/35">
+          <span key={label} className="text-[10px] text-white/50">
             {label}: <span className="text-white/60">{value ?? '—'}</span>
           </span>
         ))}
@@ -35,13 +35,13 @@ export function ClaimCard({ claim }: ClaimCardProps) {
           </span>
         )}
         {claim.reviewFlags.map(flag => (
-          <span key={flag} className="text-[9px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-white/40">{flag}</span>
+          <span key={flag} className="text-[9px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-white/50">{flag}</span>
         ))}
       </div>
       {claim.extractedEvidence.length > 0 && (
         <div>
           <button onClick={() => setShowEvidence(v => !v)}
-            className="text-[10px] text-white/30 hover:text-white/60 transition-colors">
+            className="text-[10px] text-white/50 hover:text-white/60 transition-colors">
             {showEvidence ? 'Hide evidence' : `Show evidence (${claim.extractedEvidence.length})`}
           </button>
           {showEvidence && (
@@ -49,7 +49,7 @@ export function ClaimCard({ claim }: ClaimCardProps) {
               {claim.extractedEvidence.map((ev, i) => (
                 <div key={i} className="rounded-lg bg-white/[0.03] border border-white/[0.06] px-2.5 py-2">
                   {ev.quote && <p className="text-[11px] text-white/70 italic">&ldquo;{ev.quote}&rdquo;</p>}
-                  <p className="text-[10px] text-white/35 mt-1">{ev.sourceRef}{ev.pageOrSection && ` · ${ev.pageOrSection}`}</p>
+                  <p className="text-[10px] text-white/50 mt-1">{ev.sourceRef}{ev.pageOrSection && ` · ${ev.pageOrSection}`}</p>
                 </div>
               ))}
             </div>

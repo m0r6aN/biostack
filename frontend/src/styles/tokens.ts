@@ -114,7 +114,7 @@ export const OPERATING_STATE_TOKENS: Record<OperatingState, {
   'no-active-run': {
     label: 'No Active Protocol',
     sub: 'Start a protocol run to begin tracking signal quality.',
-    color: 'text-white/40',
+    color: 'text-white/50',
     bg: 'bg-white/3',
     border: 'border-white/8',
     cta: 'Start Protocol',
@@ -139,7 +139,7 @@ export const DRIFT_TOKENS: Record<string, {
   stable: { label: 'Stable', emoji: '◉', color: 'text-emerald-300', bg: 'bg-emerald-500/10', border: 'border-emerald-400/20' },
   drifting: { label: 'Drifting', emoji: '◑', color: 'text-amber-300', bg: 'bg-amber-500/10', border: 'border-amber-400/20' },
   shifted: { label: 'Shifted', emoji: '◆', color: 'text-rose-300', bg: 'bg-rose-500/10', border: 'border-rose-400/20' },
-  unknown: { label: 'Unknown', emoji: '○', color: 'text-white/40', bg: 'bg-white/5', border: 'border-white/10' },
+  unknown: { label: 'Unknown', emoji: '○', color: 'text-white/50', bg: 'bg-white/5', border: 'border-white/10' },
 };
 
 // ── Evidence Tiers ─────────────────────────────────────────────────────────
@@ -156,9 +156,9 @@ export const EVIDENCE_TIER_TOKENS: Record<string, {
   moderate: { label: 'Moderate Evidence', short: 'Moderate', color: 'text-blue-300', bg: 'bg-blue-500/10', border: 'border-blue-400/20' },
   limited: { label: 'Limited Evidence', short: 'Limited', color: 'text-amber-300', bg: 'bg-amber-500/10', border: 'border-amber-400/20' },
   theoretical: { label: 'Theoretical', short: 'Theoretical', color: 'text-white/50', bg: 'bg-white/5', border: 'border-white/10' },
-  anecdotal: { label: 'Anecdotal', short: 'Anecdotal', color: 'text-white/40', bg: 'bg-white/5', border: 'border-white/8' },
+  anecdotal: { label: 'Anecdotal', short: 'Anecdotal', color: 'text-white/50', bg: 'bg-white/5', border: 'border-white/8' },
   insufficient: { label: 'Insufficient Data', short: 'Insufficient', color: 'text-rose-300', bg: 'bg-rose-500/10', border: 'border-rose-400/20' },
-  unknown: { label: 'Unknown', short: 'Unknown', color: 'text-white/30', bg: 'bg-white/4', border: 'border-white/8' },
+  unknown: { label: 'Unknown', short: 'Unknown', color: 'text-white/50', bg: 'bg-white/4', border: 'border-white/8' },
 };
 
 // ── Regulatory Boundary ────────────────────────────────────────────────────
@@ -177,7 +177,7 @@ export const REGULATORY_TOKENS: Record<string, {
   controlled: { label: 'Controlled Substance', short: 'Controlled', color: 'text-orange-300', bg: 'bg-orange-500/10', border: 'border-orange-400/20' },
   'research-only': { label: 'Research Use Only', short: 'Research', color: 'text-purple-300', bg: 'bg-purple-500/10', border: 'border-purple-400/20' },
   prohibited: { label: 'Prohibited', short: 'Prohibited', color: 'text-rose-300', bg: 'bg-rose-500/10', border: 'border-rose-400/20' },
-  unknown: { label: 'Unknown', short: 'Unknown', color: 'text-white/40', bg: 'bg-white/5', border: 'border-white/10' },
+  unknown: { label: 'Unknown', short: 'Unknown', color: 'text-white/50', bg: 'bg-white/5', border: 'border-white/10' },
 };
 
 // ── Interaction Types ──────────────────────────────────────────────────────

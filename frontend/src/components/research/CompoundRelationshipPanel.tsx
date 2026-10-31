@@ -78,8 +78,8 @@ export function CompoundRelationshipPanel({ graph, compound, knownSlugs }: Compo
   if (!graph) {
     return (
       <GlassCard className="p-5">
-        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Cross-Compound Relationships</h3>
-        <p className="text-sm text-white/30">No cross-compound relationships recorded for this compound yet.</p>
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">Cross-Compound Relationships</h3>
+        <p className="text-sm text-white/50">No cross-compound relationships recorded for this compound yet.</p>
       </GlassCard>
     );
   }
@@ -180,8 +180,8 @@ export function CompoundRelationshipPanel({ graph, compound, knownSlugs }: Compo
   if (matched.length === 0 && unresolvedFindings.length === 0) {
     return (
       <GlassCard className="p-5">
-        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Cross-Compound Relationships</h3>
-        <p className="text-sm text-white/30">No cross-compound relationships recorded for this compound yet.</p>
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">Cross-Compound Relationships</h3>
+        <p className="text-sm text-white/50">No cross-compound relationships recorded for this compound yet.</p>
       </GlassCard>
     );
   }
@@ -190,14 +190,14 @@ export function CompoundRelationshipPanel({ graph, compound, knownSlugs }: Compo
     <div className="flex flex-col gap-4">
       <GlassCard className="p-5">
         <div className="mb-4 flex items-baseline justify-between gap-3">
-          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">
+          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50">
             Cross-Compound Relationships
           </h3>
-          <p className="text-[10px] text-white/30">{matched.length} relationship{matched.length === 1 ? '' : 's'}</p>
+          <p className="text-[10px] text-white/50">{matched.length} relationship{matched.length === 1 ? '' : 's'}</p>
         </div>
 
         {matched.length === 0 ? (
-          <p className="text-sm text-white/30">No relationship edges for this compound.</p>
+          <p className="text-sm text-white/50">No relationship edges for this compound.</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {matched.map((m, idx) => {
@@ -246,9 +246,9 @@ export function CompoundRelationshipPanel({ graph, compound, knownSlugs }: Compo
                   </div>
 
                   {showAsserted && (
-                    <p className="text-[11px] text-white/45">
+                    <p className="text-[11px] text-white/50">
                       Asserted: <span className="text-white/65">{kebabOrPascalToTitle(assertedRaw)}</span>
-                      <span className="px-1 text-white/30">→</span>
+                      <span className="px-1 text-white/50">→</span>
                       effective: <span className="text-white/65">{kebabOrPascalToTitle(edgeTypeRaw)}</span>
                     </p>
                   )}
@@ -261,7 +261,7 @@ export function CompoundRelationshipPanel({ graph, compound, knownSlugs }: Compo
 
       {unresolvedFindings.length > 0 && (
         <GlassCard className="p-5">
-          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">
+          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-3">
             Review Findings ({unresolvedFindings.length})
           </h3>
           <ul className="flex flex-col gap-3">

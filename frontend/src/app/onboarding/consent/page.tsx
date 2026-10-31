@@ -144,7 +144,7 @@ function ConsentPageContent() {
           <div className="mt-5 divide-y divide-white/[0.07] rounded-lg border border-white/[0.07]">
             {CONSENT_DETAILS.map((section) => (
               <details key={section.heading} className="group px-4 py-3">
-                <summary className="cursor-pointer text-sm font-semibold text-white/80 marker:text-white/40">
+                <summary className="cursor-pointer text-sm font-semibold text-white/80 marker:text-white/50">
                   {section.heading}
                 </summary>
                 <div className="mt-2 space-y-2 text-sm leading-6 text-white/62">
@@ -200,7 +200,7 @@ function ConsentPageContent() {
           </div>
 
           {status?.currentVersion && (
-            <p className="mt-5 text-center text-xs text-white/30">Consent record: {status.currentVersion}</p>
+            <p className="mt-5 text-center text-xs text-white/50">Consent record: {status.currentVersion}</p>
           )}
         </section>
       </div>

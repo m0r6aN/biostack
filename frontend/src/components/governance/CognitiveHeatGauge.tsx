@@ -76,7 +76,7 @@ export function CognitiveHeatGauge({ heat, compact = false, className }: Cogniti
   return (
     <div className={cn('space-y-2', className)}>
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">
+        <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
           Cognitive Heat
         </span>
         <span className={cn('text-[10px] font-semibold', text)}>{bandLabel}</span>
@@ -104,7 +104,7 @@ export function CognitiveHeatGauge({ heat, compact = false, className }: Cogniti
       )}
 
       {heat.message && (
-        <p className="text-[10px] text-white/40 leading-relaxed">{heat.message}</p>
+        <p className="text-[10px] text-white/50 leading-relaxed">{heat.message}</p>
       )}
     </div>
   );

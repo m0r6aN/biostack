@@ -19,7 +19,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
   if (!review) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Review</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Protocol Review</p>
         <h2 className="mt-2 text-2xl font-black text-white">Review pending</h2>
         <p className="mt-2 max-w-2xl text-sm text-white/50">Review available after this lineage has run history.</p>
       </section>
@@ -36,7 +36,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
       <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Review</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Protocol Review</p>
           <h2 className="mt-2 text-2xl font-black text-white">Lineage observations</h2>
           <p className="mt-2 max-w-2xl text-sm text-white/50">
             Rule-based synthesis across versions, runs, and attached check-ins. Observed patterns only.
@@ -83,10 +83,10 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
               <div key={version.protocolId} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-4">
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-semibold text-white">v{version.version} {version.isDraft ? 'draft' : 'snapshot'}</p>
-                  <span className="text-xs text-white/40">{version.runs.length} run{version.runs.length === 1 ? '' : 's'}</span>
+                  <span className="text-xs text-white/50">{version.runs.length} run{version.runs.length === 1 ? '' : 's'}</span>
                 </div>
                 {version.versionDiff && (
-                  <p className="mt-2 text-xs text-white/45">
+                  <p className="mt-2 text-xs text-white/50">
                     {version.versionDiff.changes.slice(0, 2).map((change) => change.subject).join(' | ')}
                   </p>
                 )}
@@ -113,7 +113,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
               const tags = timelineTags(event, drift, sequence);
               return (
               <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[92px_1fr] gap-3">
-                <time className="pt-1 text-xs text-white/35">{formatDate(event.occurredAtUtc)}</time>
+                <time className="pt-1 text-xs text-white/50">{formatDate(event.occurredAtUtc)}</time>
                 <div className="relative border-l border-white/[0.08] pl-4">
                   <span className={`absolute -left-1.5 top-1.5 h-3 w-3 rounded-full ${eventDotClass(event.eventType)}`} />
                   <p className="text-sm font-semibold text-white">{event.label}</p>
@@ -121,7 +121,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
                   {tags.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {tags.map((tag) => (
-                        <span key={tag} className="rounded-lg border border-white/[0.08] px-2 py-1 text-[11px] text-white/40">
+                        <span key={tag} className="rounded-lg border border-white/[0.08] px-2 py-1 text-[11px] text-white/50">
                           {tag}
                         </span>
                       ))}
@@ -136,7 +136,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
 
       <div className="mt-6 flex flex-wrap gap-2 border-t border-white/[0.06] pt-4">
         {review.safetyNotes.map((note) => (
-          <span key={note} className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-white/45">
+          <span key={note} className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-white/50">
             {note}
           </span>
         ))}
@@ -266,7 +266,7 @@ function ReviewStat({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-3">
       <p className="text-lg font-black text-white">{value}</p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/35">{label}</p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/50">{label}</p>
     </div>
   );
 }

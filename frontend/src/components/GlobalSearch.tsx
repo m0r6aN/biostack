@@ -142,7 +142,7 @@ export function GlobalSearch() {
       <div className="relative">
         <svg
           aria-hidden="true"
-          className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/25"
+          className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/50"
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -169,7 +169,7 @@ export function GlobalSearch() {
           }}
           onKeyDown={handleKeyDown}
           placeholder="Search the library…"
-          className="w-full h-9 pl-8 pr-3 rounded-lg border border-white/10 bg-white/[0.04] text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 focus:bg-white/[0.06] transition-colors motion-reduce:transition-none"
+          className="w-full h-9 pl-8 pr-3 rounded-lg border border-white/10 bg-white/[0.04] text-[13px] text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-500/40 focus:bg-white/[0.06] transition-colors motion-reduce:transition-none"
         />
       </div>
 
@@ -193,7 +193,7 @@ export function GlobalSearch() {
                   className={`flex cursor-pointer items-center justify-between gap-3 px-3 py-2 text-[13px] text-white/80 hover:bg-white/5 ${activeIndex === index ? 'bg-white/10' : ''}`}
                 >
                   <span className="truncate">{entry.canonicalName}</span>
-                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-white/45">{entry.classification}</span>
+                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-white/50">{entry.classification}</span>
                 </li>
               ))}
             </ul>

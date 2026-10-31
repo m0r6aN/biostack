@@ -44,7 +44,7 @@ export function VsLedger({ a, b, left, right, ruling, curated }: {
   return (
     <div className="space-y-6">
       <section aria-label="The ruling" className="rounded-2xl border border-white/12 bg-white/[0.05] p-5">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-white/45 mb-1">The ruling (evidence only)</p>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-1">The ruling (evidence only)</p>
         <p className="text-lg text-white" data-testid="vs-ruling">{curated ? (ruling ?? NO_RULING_COPY) : NOT_CURATED_COPY}</p>
       </section>
       <section aria-label="Evidence ledger">

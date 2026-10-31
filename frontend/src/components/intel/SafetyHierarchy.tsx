@@ -24,7 +24,7 @@ export function SafetyHierarchy({ deterministic, commentary, className }: Safety
           aria-label="Intelligence commentary"
           className="border-t border-white/5 pt-4"
         >
-          <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest mb-3">
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest mb-3">
             Intelligence Commentary · Observational only
           </p>
           {commentary}

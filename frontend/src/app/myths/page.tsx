@@ -24,7 +24,7 @@ export default async function MythsIndex() {
         <ul className="space-y-3">
           {myths.map(({ slot, hit }) => (
             <li key={slot.slug} className="text-sm text-white/80">
-              <span className="text-[11px] uppercase tracking-[0.2em] text-white/45 mr-2">{mythKicker(hit.claim.verdict)}</span>
+              <span className="text-[11px] uppercase tracking-[0.2em] text-white/50 mr-2">{mythKicker(hit.claim.verdict)}</span>
               <Link href={`/myths/${slot.slug}`} className="underline underline-offset-4">&ldquo;{hit.claim.statement}&rdquo;</Link>{' '}
               <VerdictChip verdict={hit.claim.verdict} />
             </li>

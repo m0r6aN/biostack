@@ -153,7 +153,7 @@ export default function AccountDataPage() {
               {summary.tables.filter(table => table.count > 0).map(table => (
                 <li key={table.name} className="flex items-center justify-between gap-4 py-2.5">
                   <span className="text-white/75">{label(table.name)}</span>
-                  <span className="text-white/45">{table.count}</span>
+                  <span className="text-white/50">{table.count}</span>
                 </li>
               ))}
             </ul>
@@ -162,7 +162,7 @@ export default function AccountDataPage() {
 
         <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6" aria-labelledby="export-heading">
           <h2 id="export-heading" className="text-lg font-semibold text-white">Download your data</h2>
-          <p className="mt-2 text-sm leading-6 text-white/45">
+          <p className="mt-2 text-sm leading-6 text-white/50">
             Get a copy of everything above in one file. JSON keeps the structure; CSV gives you one spreadsheet per list, in a zip. Passwords, link secrets, and passkey keys are never included.
           </p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -194,7 +194,7 @@ export default function AccountDataPage() {
                 Deleting is permanent. We remove your profiles, the items you track, dose logs, check-ins, protocols, notes, alert settings, sign-in details, and sessions. We can’t bring them back, so download a copy first if you want one.
               </p>
               {removable.length > 0 && (
-                <p className="mt-3 text-sm text-white/45">
+                <p className="mt-3 text-sm text-white/50">
                   Right now that includes {removable.map(table => `${table.count} ${label(table.name).toLowerCase()}`).slice(0, 6).join(', ')}{removable.length > 6 ? ', and more' : ''}.
                 </p>
               )}

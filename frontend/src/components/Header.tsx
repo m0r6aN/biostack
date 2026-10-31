@@ -43,7 +43,7 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
           {/* Mobile hamburger — only visible on small screens */}
           <button
             onClick={() => setSidebarOpen(!isSidebarOpen)}
-            className="flex lg:hidden flex-shrink-0 items-center justify-center w-9 h-9 rounded-xl border border-white/10 bg-white/[0.03] text-white/40 hover:text-white transition-all active:scale-95"
+            className="flex lg:hidden flex-shrink-0 items-center justify-center w-9 h-9 rounded-xl border border-white/10 bg-white/[0.03] text-white/50 hover:text-white transition-all active:scale-95"
             aria-label="Toggle navigation"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -61,7 +61,7 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
               {title}
             </h1>
             {subtitle && (
-              <span className="hidden sm:block text-xs text-white/28 font-medium tracking-wide whitespace-nowrap">
+              <span className="hidden sm:block text-xs text-white/50 font-medium tracking-wide whitespace-nowrap">
                 {subtitle}
               </span>
             )}
@@ -88,7 +88,7 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
               <span className="text-[13px] font-medium text-white/65 leading-none">
                 {currentProfile.displayName}
               </span>
-              <span className="text-[11px] text-white/28 leading-none hidden md:block">
+              <span className="text-[11px] text-white/50 leading-none hidden md:block">
                 {currentProfile.age ? `${currentProfile.age}y · ` : ''}
                 {formatWeight(currentProfile.weight, settings.weightUnit)}
               </span>

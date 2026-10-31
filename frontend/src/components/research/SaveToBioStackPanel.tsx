@@ -68,7 +68,7 @@ function PreviewDetails({ preview }: { preview: PromotionPreview }) {
         <Row label="Evidence tier" value={preview.evidenceGate.tier} />
       )}
       <Row label="Citations" value={String(preview.evidenceGate.citationCount)} />
-      <Row label="WouldWrite" value={<span className="text-white/30">{String(preview.wouldWrite)}</span>} />
+      <Row label="WouldWrite" value={<span className="text-white/50">{String(preview.wouldWrite)}</span>} />
     </div>
   );
 }
@@ -76,14 +76,14 @@ function PreviewDetails({ preview }: { preview: PromotionPreview }) {
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex justify-between items-start gap-2">
-      <span className="text-white/40 shrink-0">{label}</span>
+      <span className="text-white/50 shrink-0">{label}</span>
       <span className="text-right text-white/70">{value}</span>
     </div>
   );
 }
 
 function SafetyNote() {
-  return <p className="text-[10px] text-white/25 italic">{SAFETY_NOTE}</p>;
+  return <p className="text-[10px] text-white/50 italic">{SAFETY_NOTE}</p>;
 }
 
 // ── Main component ────────────────────────────────────────────────────────
@@ -176,7 +176,7 @@ export function SaveToBioStackPanel({
             </code>
           </p>
           {(review.promotedAtUtc ?? preview?.promotedKnowledgeEntryId) && (
-            <p className="text-xs text-white/40">
+            <p className="text-xs text-white/50">
               {review.promotedAtUtc ? `Saved: ${review.promotedAtUtc}` : ''}
             </p>
           )}
@@ -200,7 +200,7 @@ export function SaveToBioStackPanel({
 
       {/* Idle + not eligible — show reason */}
       {phase === 'idle' && !isEligible && (
-        <p className="text-xs text-white/30 italic">
+        <p className="text-xs text-white/50 italic">
           {review.reviewState === 'pending_review'
             ? 'Pending review — not yet eligible to save.'
             : 'Not eligible to save to BioStack in current state.'}
@@ -272,7 +272,7 @@ export function SaveToBioStackPanel({
             </p>
           )}
           {successRecord.promotedAtUtc && (
-            <p className="text-xs text-white/40">Saved: {successRecord.promotedAtUtc}</p>
+            <p className="text-xs text-white/50">Saved: {successRecord.promotedAtUtc}</p>
           )}
           <SafetyNote />
         </div>
@@ -284,7 +284,7 @@ export function SaveToBioStackPanel({
           <p className="text-xs text-rose-300">{errorMessage}</p>
           <button
             onClick={() => setPhase('idle')}
-            className="text-[10px] text-white/40 hover:text-white/60 underline"
+            className="text-[10px] text-white/50 hover:text-white/60 underline"
           >
             Try again
           </button>

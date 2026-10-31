@@ -88,7 +88,7 @@ export default function MapMyStackPage() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               rows={6}
-              className="mt-6 w-full rounded-lg border border-white/[0.08] bg-black/20 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-400/45"
+              className="mt-6 w-full rounded-lg border border-white/[0.08] bg-black/20 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45"
               placeholder="BPC-157, TB-500, NAD+"
             />
 
@@ -119,10 +119,10 @@ export default function MapMyStackPage() {
             <div className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack visualization</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Stack visualization</p>
                   <h2 className="mt-2 text-xl font-bold text-white">{compounds.length} compounds mapped</h2>
                 </div>
-                <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/45">
+                <span className="rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white/50">
                   {entitlements.isPro ? 'full map' : 'free preview'}
                 </span>
               </div>
@@ -131,7 +131,7 @@ export default function MapMyStackPage() {
                 {compounds.map((compound) => (
                   <div key={compound} className="rounded-lg border border-emerald-300/15 bg-emerald-400/[0.06] p-4">
                     <p className="font-bold text-white">{compound}</p>
-                    <p className="mt-1 text-xs text-white/40">
+                    <p className="mt-1 text-xs text-white/50">
                       {entries.find((entry) => entry.canonicalName.toLowerCase() === compound.toLowerCase())?.classification ?? 'Manual input'}
                     </p>
                   </div>

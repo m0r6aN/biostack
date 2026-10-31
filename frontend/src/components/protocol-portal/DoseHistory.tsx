@@ -24,7 +24,7 @@ export function DoseHistory({ entries, onDelete }: DoseHistoryProps) {
   return (
     <GlassCard variant="base" className="p-6 lg:col-span-3">
       <h3 className="text-lg font-semibold text-white">Your logged amounts</h3>
-      <p className="text-sm text-white/45">What you recorded taking, in your own words and numbers.</p>
+      <p className="text-sm text-white/50">What you recorded taking, in your own words and numbers.</p>
       {entries.length === 0 ? (
         <p className="mt-4 text-sm text-white/55">No amounts logged yet.</p>
       ) : (
@@ -40,7 +40,7 @@ export function DoseHistory({ entries, onDelete }: DoseHistoryProps) {
                 {entry.note && <div className="text-xs text-white/55">{entry.note}</div>}
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-white/45">{formatLogDate(entry.logDate)}</span>
+                <span className="text-xs text-white/50">{formatLogDate(entry.logDate)}</span>
                 <button
                   type="button"
                   onClick={() => onDelete(entry)}

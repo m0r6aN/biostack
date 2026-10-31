@@ -43,7 +43,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-2xl font-semibold text-white">{data.canonicalName}</h1>
-            <p className="font-mono text-xs text-white/35 mt-1">{data.slug}</p>
+            <p className="font-mono text-xs text-white/50 mt-1">{data.slug}</p>
           </div>
           <EvidenceTierBadge tier={data.evidenceTier} />
         </div>
@@ -51,7 +51,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
 
       {/* ── Section 2: Trust State ── */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-4">
-        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Trust State</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Trust State</p>
 
         <div className="flex flex-wrap items-center gap-3">
           <span
@@ -96,7 +96,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
 
       {/* ── Section 3: Regulatory Boundary ── */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Regulatory Boundary</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Regulatory Boundary</p>
         <RegulatoryBoundaryPanel
           boundary={data.regulatoryBoundary}
           promotionBlockers={data.promotionBlockers}
@@ -105,7 +105,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
 
       {/* ── Section 4: Claim Inspector (review-gated gate) ── */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Claim Inspector</p>
+        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Claim Inspector</p>
 
         {isReviewGated ? (
           <div className="rounded-xl border border-amber-400/25 bg-amber-500/[0.07] p-5 space-y-3">
@@ -132,7 +132,7 @@ export function CompoundDossier({ data }: CompoundDossierProps) {
       {/* ── Section 5: Research Ops ── */}
       {hasResearchOps && (
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-5">
-          <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Research Ops</p>
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Research Ops</p>
 
           {data.requiredNextActions.length > 0 && (
             <div>

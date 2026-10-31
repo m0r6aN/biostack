@@ -207,7 +207,7 @@ export default function ResearchTaxonomyPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Canonical research categories</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Edit canonical names and aliases for request normalization, task-board presets, and worker-side category governance.
               </p>
             </div>
@@ -226,29 +226,29 @@ export default function ResearchTaxonomyPage() {
               <div key={category.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
                 <div className="grid gap-3 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)_minmax(0,220px)_auto] lg:items-start">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/35">Canonical name</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/50">Canonical name</label>
                     <input
                       value={category.name}
                       onChange={(e) => updateCategory(index, 'name', e.target.value)}
                       placeholder="Canonical category name"
-                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40"
+                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40"
                     />
                     {category.deprecated && (
                       <p className="text-[10px] leading-5 text-amber-200/70">Deprecated category name; input will normalize to its replacement canon.</p>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/35">Aliases</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/50">Aliases</label>
                     <input
                       value={category.aliases}
                       onChange={(e) => updateCategory(index, 'aliases', e.target.value)}
                       placeholder="Comma-separated aliases"
-                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40"
+                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40"
                     />
-                    <p className="text-[10px] leading-5 text-white/35">Aliases are trimmed, deduped, and excluded when they match the canonical name.</p>
+                    <p className="text-[10px] leading-5 text-white/50">Aliases are trimmed, deduped, and excluded when they match the canonical name.</p>
                   </div>
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/35">
+                    <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/50">
                       <input
                         type="checkbox"
                         checked={category.deprecated}
@@ -262,9 +262,9 @@ export default function ResearchTaxonomyPage() {
                       onChange={(e) => updateCategory(index, 'replacedBy', e.target.value)}
                       placeholder="Replacement canonical category"
                       disabled={!category.deprecated}
-                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/25 focus:border-violet-300/40 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40 disabled:cursor-not-allowed disabled:opacity-40"
                     />
-                    <p className="text-[10px] leading-5 text-white/35">When deprecated, the category name and aliases normalize to this replacement canon.</p>
+                    <p className="text-[10px] leading-5 text-white/50">When deprecated, the category name and aliases normalize to this replacement canon.</p>
                   </div>
                   <button type="button" onClick={() => removeCategory(index)} className="rounded-lg border border-rose-400/20 bg-rose-500/10 px-3 py-2 text-[11px] font-semibold text-rose-200 transition-colors hover:bg-rose-500/20">
                     Remove
@@ -273,7 +273,7 @@ export default function ResearchTaxonomyPage() {
               </div>
             ))}
             {categories.length === 0 && (
-              <div className="rounded-xl border border-dashed border-white/10 bg-black/10 px-4 py-6 text-sm text-white/35">
+              <div className="rounded-xl border border-dashed border-white/10 bg-black/10 px-4 py-6 text-sm text-white/50">
                 No categories configured yet. Add at least one canonical category before saving.
               </div>
             )}
@@ -284,7 +284,7 @@ export default function ResearchTaxonomyPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Migration impact preview</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Scan current research requests and task artifacts for deprecated categories that will normalize to a replacement canon.
               </p>
             </div>
@@ -314,7 +314,7 @@ export default function ResearchTaxonomyPage() {
               ) : (
                 <>
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">Deprecated mappings in use</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">Deprecated mappings in use</p>
                     <div className="grid gap-3 lg:grid-cols-2">
                       {migrationReport.deprecatedCategories.map((summary) => (
                         <div key={`${summary.deprecatedCategory}-${summary.replacementCategory}`} className="rounded-xl border border-amber-400/15 bg-amber-500/[0.05] px-4 py-3 text-sm text-white/80">
@@ -328,17 +328,17 @@ export default function ResearchTaxonomyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">Findings</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">Findings</p>
                     {migrationReport.findings.map((finding, index) => (
                       <div key={`${finding.sourcePath}-${finding.requestId ?? finding.taskId ?? index}-${finding.matchedCategory}-${index}`} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/80">
                         <div className="flex flex-wrap items-center justify-between gap-3">
                           <p className="font-semibold text-white">{finding.compoundName}</p>
-                          <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/45">{finding.sourceType}</span>
+                          <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/50">{finding.sourceType}</span>
                         </div>
                         <p className="mt-2 text-[11px] text-white/55">
                           {finding.matchedCategory} will normalize from {finding.deprecatedCategory} to {finding.replacementCategory}.
                         </p>
-                        <p className="mt-1 text-[10px] text-white/35">
+                        <p className="mt-1 text-[10px] text-white/50">
                           {finding.sourcePath}{finding.requestId ? ` · ${finding.requestId}` : ''}{finding.taskId ? ` · ${finding.taskId}` : ''}
                         </p>
                       </div>
@@ -348,14 +348,14 @@ export default function ResearchTaxonomyPage() {
               )}
             </>
           ) : (
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-4 text-sm text-white/40">
+            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-4 text-sm text-white/50">
               Migration report unavailable.
             </div>
           )}
 
           {migrationReceipt && (
             <div className="space-y-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">Last migration receipt</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">Last migration receipt</p>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <TaxonomyStat label="Files Updated" value={migrationReceipt.counts.totalFilesUpdated} />
                 <TaxonomyStat label="Request Files" value={migrationReceipt.counts.requestFilesUpdated} />
@@ -369,7 +369,7 @@ export default function ResearchTaxonomyPage() {
                     <div key={`${file.sourceType}-${file.sourcePath}`} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/80">
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <p className="font-semibold text-white">{file.sourcePath}</p>
-                        <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/45">{file.sourceType}</span>
+                        <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/50">{file.sourceType}</span>
                       </div>
                       <p className="mt-2 text-[11px] text-white/50">
                         Rewrote {file.categoriesRewritten} category reference{file.categoriesRewritten === 1 ? '' : 's'} across {file.compounds.join(', ')}.
@@ -386,7 +386,7 @@ export default function ResearchTaxonomyPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-white">Governance audit history</h2>
-              <p className="mt-1 text-[11px] leading-5 text-white/40">
+              <p className="mt-1 text-[11px] leading-5 text-white/50">
                 Saved taxonomy revisions and migration-apply receipts are preserved here for operator review.
               </p>
             </div>
@@ -402,7 +402,7 @@ export default function ResearchTaxonomyPage() {
               ))}
             </div>
           ) : (
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-4 text-sm text-white/40">
+            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-4 text-sm text-white/50">
               No taxonomy audit history has been recorded yet.
             </div>
           )}
@@ -420,7 +420,7 @@ export default function ResearchTaxonomyPage() {
 function TaxonomyStat({ label, value }: { label: string; value: string | number }) {
   return (
     <GlassCard className="p-4">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/35">{label}</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{label}</p>
       <p className="mt-2 text-lg font-semibold text-white">{value}</p>
     </GlassCard>
   );

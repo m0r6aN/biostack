@@ -9,8 +9,8 @@ export function PatternMemoryPanel({ snapshot, compact = false }: PatternMemoryP
   if (!snapshot) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Pattern Memory</p>
-        <p className="mt-3 text-sm text-white/45">Historical run recall appears after protocol runs are recorded.</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Pattern Memory</p>
+        <p className="mt-3 text-sm text-white/50">Historical run recall appears after protocol runs are recorded.</p>
       </section>
     );
   }
@@ -25,7 +25,7 @@ export function PatternMemoryPanel({ snapshot, compact = false }: PatternMemoryP
     <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Pattern Memory</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Pattern Memory</p>
           <h2 className="mt-2 text-lg font-bold text-white">
             Built from {snapshot.historicalRunCount} completed run{snapshot.historicalRunCount === 1 ? '' : 's'}
           </h2>
@@ -44,7 +44,7 @@ export function PatternMemoryPanel({ snapshot, compact = false }: PatternMemoryP
           ))}
         </div>
       ) : (
-        <p className="mt-4 text-sm text-white/45">
+        <p className="mt-4 text-sm text-white/50">
           {snapshot.historicalRunCount < 2 ? 'Insufficient completed run history for recurring patterns.' : 'Sparse completed run data keeps pattern recall limited.'}
         </p>
       )}

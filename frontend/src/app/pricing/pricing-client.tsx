@@ -118,7 +118,7 @@ export default function PricingClient() {
         <section className="mt-10 rounded-lg border border-white/10 bg-[#101820]/90 p-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/35">Clinics / Coaches</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Clinics / Coaches</p>
               <h2 className="mt-3 text-2xl font-semibold text-white">Scale protocol intelligence across clients.</h2>
               <p className="mt-3 max-w-3xl text-sm leading-7 text-white/60">
                 Built to support client seats, white-label surfaces, and co-branded protocol views without turning the product into an ad board.
