@@ -19,6 +19,8 @@ export function NoticeBell() {
   const [notices, setNotices] = useState<UserNotice[] | null>(null);
   const [failed, setFailed] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!signedIn) return;
@@ -37,7 +39,15 @@ export function NoticeBell() {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    // Move focus into the popover when it opens so keyboard and screen-reader users land in it, and return
+    // focus to the bell when Escape closes it (WCAG 2.4.3 focus order).
+    panelRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    };
     const onClick = (event: MouseEvent) => {
       if (root.current && !root.current.contains(event.target as Node)) setOpen(false);
     };
@@ -98,12 +108,13 @@ export function NoticeBell() {
   return (
     <div ref={root} className="relative">
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => { void toggle(); }}
         aria-label={count > 0 ? `Notes, ${count} unread` : 'Notes'}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/50 transition-all hover:text-white active:scale-95"
+        className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/50 transition-all hover:text-white active:scale-95 motion-reduce:transition-none motion-reduce:active:scale-100"
       >
         <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
@@ -115,7 +126,7 @@ export function NoticeBell() {
         )}
       </button>
       {open && (
-        <div role="dialog" aria-label="Notes" className="absolute right-0 z-30 mt-2 w-80 max-w-[90vw] rounded-xl border border-white/10 bg-[#0B0F14] p-3 shadow-xl">
+        <div ref={panelRef} role="dialog" tabIndex={-1} aria-label="Notes" className="absolute right-0 z-30 mt-2 w-80 max-w-[90vw] rounded-xl border border-white/10 bg-[#0B0F14] p-3 shadow-xl">
           <div className="mb-2 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-white">Notes</h2>
             {notices && notices.some((n) => !n.read) && (
@@ -124,9 +135,9 @@ export function NoticeBell() {
           </div>
           {failed && <p role="alert" className="mb-2 text-xs text-amber-200">Something went wrong. Please try again.</p>}
           {notices === null && !failed ? (
-            <p className="text-sm text-white/60">Loading…</p>
+            <p role="status" className="text-sm text-white/60">Loading…</p>
           ) : notices && notices.length === 0 ? (
-            <p className="text-sm text-white/60">No notes right now.</p>
+            <p role="status" className="text-sm text-white/60">No notes right now.</p>
           ) : (
             <ul className="max-h-80 space-y-2 overflow-y-auto">
               {(notices ?? []).map((notice) => {
