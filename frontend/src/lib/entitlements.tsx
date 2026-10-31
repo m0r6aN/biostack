@@ -1,6 +1,7 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
+import { useOptionalAuth } from '@/lib/AuthProvider';
 import { Entitlements } from '@/lib/types';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -44,6 +45,9 @@ const EntitlementsContext = createContext<EntitlementsContextValue | undefined>(
 export function EntitlementsProvider({ children }: { children: React.ReactNode }) {
   const [entitlements, setEntitlements] = useState<Entitlements>(FREE_ENTITLEMENTS);
   const [loading, setLoading] = useState(true);
+  const auth = useOptionalAuth();
+  const authLoading = auth ? auth.loading : false;
+  const signedIn = auth ? Boolean(auth.user) : true;
 
   const refreshEntitlements = useCallback(async () => {
     try {
@@ -63,13 +67,24 @@ export function EntitlementsProvider({ children }: { children: React.ReactNode }
     window.location.href = checkoutUrl;
   }, []);
 
+  // Anonymous visitors are on the free plan by definition. Asking the API anyway returns a 401
+  // that the browser prints to the console on every public page, so skip the call until a
+  // signed-in session is known.
+  const anonymous = !authLoading && !signedIn;
+
   useEffect(() => {
+    if (authLoading || !signedIn) return;
     void refreshEntitlements();
-  }, [refreshEntitlements]);
+  }, [authLoading, signedIn, refreshEntitlements]);
 
   const value = useMemo(
-    () => ({ entitlements, loading, refreshEntitlements, startCheckout }),
-    [entitlements, loading, refreshEntitlements, startCheckout]
+    () => ({
+      entitlements: anonymous ? FREE_ENTITLEMENTS : entitlements,
+      loading: anonymous ? false : loading,
+      refreshEntitlements,
+      startCheckout,
+    }),
+    [anonymous, entitlements, loading, refreshEntitlements, startCheckout]
   );
 
   return <EntitlementsContext.Provider value={value}>{children}</EntitlementsContext.Provider>;

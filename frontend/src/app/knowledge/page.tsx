@@ -36,6 +36,27 @@ export default function KnowledgePage() {
   const [library, setLibrary] = useState<KnowledgeEntry[]>([]);
   const [libraryStatus, setLibraryStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
 
+  const libraryHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  // Screen-reader announcements. The live regions below are always mounted (a region that appears
+  // together with its text is often not announced), and their wording differs from the visible text
+  // so nothing is read twice by a sighted-and-listening user.
+  const searchAnnouncement = searching
+    ? 'Searching the library.'
+    : searchResults.length > 0
+      ? `Search complete: ${searchResults.length} ${searchResults.length === 1 ? 'compound matches' : 'compounds match'}.`
+      : completedSearchQuery !== null && !searchError
+        ? `Search complete: no compounds match ${completedSearchQuery}.`
+        : '';
+  const libraryAnnouncement =
+    libraryStatus === 'loading'
+      ? 'Loading the compound list.'
+      : libraryStatus === 'ready'
+        ? `Compound list loaded: ${library.length} compounds.`
+        : libraryStatus === 'error'
+          ? 'The compound list could not be loaded.'
+          : '';
+
   const loadLibrary = async () => {
     setLibraryStatus('loading');
     try {
@@ -170,6 +191,8 @@ export default function KnowledgePage() {
             </button>
           </form>
 
+          <p aria-live="polite" aria-atomic="true" className="sr-only">{searchAnnouncement}</p>
+
           {searchError && (
             <p role="alert" className="mt-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
               {searchError}
@@ -201,13 +224,18 @@ export default function KnowledgePage() {
 
         {/* ── Browse the library ───────────────────────────────── */}
         <section aria-label="Browse the library">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/50 mb-4">
+          <h2 ref={libraryHeadingRef} tabIndex={-1} className="text-sm font-semibold uppercase tracking-[0.15em] text-white/50 mb-4">
             Browse the library
           </h2>
+          <p aria-live="polite" aria-atomic="true" className="sr-only">{libraryAnnouncement}</p>
           {libraryStatus === 'idle' && (
             <button
               type="button"
-              onClick={() => void loadLibrary()}
+              onClick={() => {
+                // The button unmounts once loading starts; keep keyboard focus in the section.
+                libraryHeadingRef.current?.focus({ preventScroll: true });
+                void loadLibrary();
+              }}
               className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24 focus-visible:outline-none focus-visible:ring-2"
             >
               Show all compounds

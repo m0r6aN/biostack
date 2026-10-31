@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { compoundPath, compoundSlug } from '@/lib/compoundSlug';
 import { dossierCardAlt, dossierCardUrl, dossierDescription, dossierShareTitle } from '@/lib/dossierMeta';
 import { redactDoseText } from '@/lib/doseRedaction';
-import { dossierVersionDate, fetchKnowledgeEntry, safeDecodeSlug } from '@/lib/knowledgeServer';
+import { dossierVersionDate, lookupKnowledgeEntry, safeDecodeSlug } from '@/lib/knowledgeServer';
 import { createPublicPageMetadata } from '@/lib/site';
 import type { KnowledgeEntry } from '@/lib/types';
 import { CompoundDossierExperience } from '@/components/knowledge/CompoundDossierExperience';
@@ -16,9 +16,11 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const entry = await fetchKnowledgeEntry(slug);
+  const { entry, missing } = await lookupKnowledgeEntry(slug);
 
   if (!entry) {
+    // A confirmed-missing record is served as a real 404 by the page; keep it out of the index.
+    if (missing) return { title: 'Compound not found | BioStack', robots: { index: false, follow: false } };
     return createPublicPageMetadata({
       title: 'Compound Dossier | BioStack',
       description:
@@ -64,7 +66,11 @@ function buildStructuredData(entry: KnowledgeEntry, path: string) {
 
 export default async function CompoundDossierPage({ params }: PageProps) {
   const { slug } = await params;
-  const entry = await fetchKnowledgeEntry(slug);
+  const { entry, missing } = await lookupKnowledgeEntry(slug);
+
+  // An unknown or non-public slug is a 404, not a 200 page that says "not found". A timeout or API
+  // error (missing === false) still renders the client fallback, which retries the lookup.
+  if (!entry && missing) notFound();
 
   // One public URL per compound: /knowledge/Retatrutide, /knowledge/LY3437943 (alias) and
   // /knowledge/retatrutide all resolve to the canonical slug.

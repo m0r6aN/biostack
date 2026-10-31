@@ -10,7 +10,13 @@ export function safeDecodeSlug(value: string): string {
 }
 
 /** Server-side dossier fetch (best effort; null when the API is unreachable or the compound is unknown). */
-export async function fetchKnowledgeEntry(slug: string): Promise<KnowledgeEntry | null> {
+export type KnowledgeEntryLookup = {
+  entry: KnowledgeEntry | null;
+  /** True only when the API answered 404: the record does not exist or is not public. A timeout or 5xx is not "missing". */
+  missing: boolean;
+};
+
+export async function lookupKnowledgeEntry(slug: string): Promise<KnowledgeEntryLookup> {
   try {
     const response = await fetch(
       `${getApiBaseUrl()}/api/v1/knowledge/compounds/${encodeURIComponent(safeDecodeSlug(slug))}`,
@@ -21,13 +27,17 @@ export async function fetchKnowledgeEntry(slug: string): Promise<KnowledgeEntry 
     );
 
     if (!response.ok) {
-      return null;
+      return { entry: null, missing: response.status === 404 };
     }
 
-    return (await response.json()) as KnowledgeEntry;
+    return { entry: (await response.json()) as KnowledgeEntry, missing: false };
   } catch {
-    return null;
+    return { entry: null, missing: false };
   }
+}
+
+export async function fetchKnowledgeEntry(slug: string): Promise<KnowledgeEntry | null> {
+  return (await lookupKnowledgeEntry(slug)).entry;
 }
 
 /** Version date of a dossier: when the record was last reviewed (falls back to null). */
