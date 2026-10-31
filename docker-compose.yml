@@ -52,6 +52,8 @@ services:
       - Smtp__MagicLinkSubject=${Smtp__MagicLinkSubject:-BioStack Quick Login}
       - AzureCommunicationEmail__ConnectionString=${AzureCommunicationEmail__ConnectionString:-}
       - AzureCommunicationEmail__SenderAddress=${AzureCommunicationEmail__SenderAddress:-}
+      # Where the /contact form delivers. Blank keeps the built-in default (support@biostack.cc, which has no MX record).
+      - Contact__SupportInboxAddress=${Contact__SupportInboxAddress:-}
       # PR-PROV-001 deployment-config review: pass-through only. KeonRuntime__LiveMode is fixed
       # at false here (not operator-overridable through this file) so this compose change cannot
       # itself enable live mode; BaseUrl/BearerToken/TimeoutMs default to current stub-preserving

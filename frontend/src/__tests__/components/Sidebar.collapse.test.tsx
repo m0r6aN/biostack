@@ -122,6 +122,7 @@ it('keeps compact account actions named and operable without the wide footer', (
     render(<Sidebar />);
     const compact = screen.getByRole('group', { name: 'Account and support' });
     expect(within(compact).getByRole('link', { name: 'Contact Us' })).toHaveAttribute('href', '/contact');
+    expect(within(compact).getByRole('link', { name: 'Help and support' })).toHaveAttribute('href', '/support');
     fireEvent.click(within(compact).getByRole('button', { name: 'Sign out' }));
     expect(auth.logout).toHaveBeenCalledOnce();
     expect(compact.className).toContain('lg:flex');

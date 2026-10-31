@@ -20,7 +20,14 @@ public interface IContactMessageSender
 /// </summary>
 public sealed class AzureCommunicationEmailContactMessageSender : IContactMessageSender
 {
-    public const string SupportInboxAddress = "support@biostack.cc";
+    /// <summary>App setting that overrides where contact-form messages are delivered. Unset means the default below.</summary>
+    public const string SupportInboxConfigKey = "Contact:SupportInboxAddress";
+
+    /// <summary>
+    /// The address that existed before the setting did. Its domain has no MX record (checked 2026-10-31), so mail to it
+    /// bounces. Set <see cref="SupportInboxConfigKey"/> to a mailbox that receives mail.
+    /// </summary>
+    public const string DefaultSupportInboxAddress = "support@biostack.cc";
 
     private readonly IConfiguration _config;
     private readonly ILogger<AzureCommunicationEmailContactMessageSender> _logger;
@@ -53,13 +60,40 @@ public sealed class AzureCommunicationEmailContactMessageSender : IContactMessag
             PlainText = BuildPlainTextBody(message),
             Html = BuildHtmlBody(message),
         };
-        var email = new EmailMessage(senderAddress, SupportInboxAddress, content);
+        var email = new EmailMessage(senderAddress, ResolveRecipient(_config, _logger), content);
         email.ReplyTo.Add(new EmailAddress(message.Email, message.Name));
 
         await client.SendAsync(WaitUntil.Started, email, ct);
         _logger.LogInformation(
             "Queued BioStack contact message ({Category}) to the support inbox through Azure Communication Email",
             message.Category);
+    }
+
+    /// <summary>
+    /// The configured recipient, or the default when the setting is unset. A configured value that is not a plain address
+    /// is ignored (and logged) rather than sending support mail to a malformed recipient.
+    /// </summary>
+    public static string ResolveRecipient(IConfiguration config, ILogger logger)
+    {
+        var configured = config[SupportInboxConfigKey]?.Trim();
+        if (string.IsNullOrEmpty(configured))
+        {
+            return DefaultSupportInboxAddress;
+        }
+
+        var at = configured.IndexOf('@');
+        var plain = at > 0
+            && at == configured.LastIndexOf('@')
+            && at < configured.Length - 3
+            && configured.IndexOf('.', at) > at + 1
+            && !configured.Any(char.IsWhiteSpace);
+        if (!plain)
+        {
+            logger.LogWarning("Contact:SupportInboxAddress is not a valid email address; using the default support inbox");
+            return DefaultSupportInboxAddress;
+        }
+
+        return configured;
     }
 
     private static string BuildPlainTextBody(ContactMessage message)

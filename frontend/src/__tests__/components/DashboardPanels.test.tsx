@@ -122,7 +122,7 @@ describe('MarketingFooter', () => {
   it('renders footer content', () => {
     render(<MarketingFooter />);
     expect(screen.getByText('BioStack. What the research says, graded by evidence strength.')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'BioStack Support' })).toHaveAttribute('href', 'mailto:support@biostack.cc');
+    expect(screen.getByRole('link', { name: 'BioStack Support' })).toHaveAttribute('href', '/support');
   });
 
   it('renders navigation links', () => {

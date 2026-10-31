@@ -10,6 +10,7 @@ import robots from '@/app/robots';
 import { metadata as safetyMetadata } from '@/app/safety/page';
 import sitemap from '@/app/sitemap';
 import { metadata as startMetadata } from '@/app/start/page';
+import { metadata as supportMetadata } from '@/app/support/page';
 import { metadata as analyzerMetadata } from '@/app/tools/analyzer/page';
 import { metadata as toolsMetadata } from '@/app/tools/page';
 import { metadata as reconstitutionMetadata } from '@/app/tools/reconstitution-calculator/page';
@@ -37,6 +38,7 @@ const publicPages: Array<{ path: string; metadata: Metadata }> = [
   { path: '/safety', metadata: safetyMetadata },
   { path: '/pricing', metadata: pricingMetadata },
   { path: '/faq', metadata: faqMetadata },
+  { path: '/support', metadata: supportMetadata },
   { path: '/tools', metadata: toolsMetadata },
   { path: '/tools/analyzer', metadata: analyzerMetadata },
   { path: '/tools/reconstitution-calculator', metadata: reconstitutionMetadata },
