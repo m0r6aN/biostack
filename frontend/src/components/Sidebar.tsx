@@ -402,7 +402,7 @@ export function Sidebar() {
 
         {collapsed && (
           <div className="hidden lg:flex flex-col items-center gap-2 px-1 pb-4" role="group" aria-label="Account and support">
-            <Link href="/support" aria-label="Help and support" title="Help and support" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+            <Link href="/contact" aria-label="Contact Us" title="Contact Us" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
               <span aria-hidden="true">?</span>
             </Link>
             {user && (
@@ -422,15 +422,9 @@ export function Sidebar() {
         {/* ── User zone ──────────────────────────────────────────────────────── */}
         <div className={cn("px-4 pb-4", collapsed && "lg:hidden")}>
           <Link
-            href="/support"
-            onClick={() => setSidebarOpen(false)}
-            className="mb-1 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-          >
-            Help &amp; support
-          </Link>
-          <Link
             href="/contact"
-            onClick={() => setSidebarOpen(false)}
+            aria-label="Contact Us"
+            title="Contact Us"
             className="mb-3 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
           >
             Contact Us

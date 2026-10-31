@@ -175,7 +175,7 @@ function ConsentPageContent() {
           )}
 
           {error && (
-            <p className="mt-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+            <p role="alert" className="mt-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
               {error}
             </p>
           )}

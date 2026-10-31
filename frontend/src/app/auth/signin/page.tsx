@@ -184,7 +184,7 @@ function SignInPageContent() {
               )}
 
               {error && (
-                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                <div role="alert" className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {error === 'session-expired'
                     ? 'Your session expired. Sign in again to continue where you left off.'
                     : error === 'session-unavailable'
@@ -194,13 +194,13 @@ function SignInPageContent() {
               )}
 
               {sendError && (
-                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                <div role="alert" className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {sendError}
                 </div>
               )}
 
               {passkeyError && (
-                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                <div role="alert" className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {passkeyError}
                 </div>
               )}

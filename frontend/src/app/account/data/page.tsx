@@ -142,7 +142,7 @@ export default function AccountDataPage() {
           {loadState === 'loading' && <p className="mt-3 text-sm text-white/60" role="status">Loading your data summary…</p>}
           {loadState === 'error' && (
             <div className="mt-3">
-              <p className="text-sm text-amber-100/80">We couldn’t load the summary. Your export and deletion still work.</p>
+              <p role="alert" className="text-sm text-amber-100/80">We couldn’t load the summary. Your export and deletion still work.</p>
               <button type="button" onClick={() => void load()} className="mt-3 min-h-11 rounded-lg border border-white/20 px-4 text-sm text-white hover:bg-white/10">
                 Reload summary
               </button>

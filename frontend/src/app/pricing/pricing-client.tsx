@@ -113,7 +113,7 @@ export default function PricingClient() {
             </article>
           ))}
         </section>
-        {checkoutError && <p className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
+        {checkoutError && <p role="alert" className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
 
         <section className="mt-10 rounded-lg border border-white/10 bg-[#101820]/90 p-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
@@ -150,7 +150,7 @@ export default function PricingClient() {
                 </button>
               </div>
               {leadState === 'saved' && <p className="text-sm text-emerald-200/80">Received. We will follow up with clinic options.</p>}
-              {leadState === 'error' && <p className="text-sm text-amber-100/80">Could not save this lead right now.</p>}
+              {leadState === 'error' && <p role="alert" className="text-sm text-amber-100/80">Could not save this lead right now.</p>}
             </form>
           </div>
         </section>

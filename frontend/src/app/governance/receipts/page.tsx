@@ -218,7 +218,7 @@ function AuditReceiptFeedContent() {
         )}
 
         {!loading && error && (
-          <div className="flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-sm">
+          <div role="alert" className="flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-sm">
             <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" aria-hidden />
             {error}
           </div>

@@ -250,7 +250,7 @@ export default function DecisionTheaterPage() {
   if (error && !envelope) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#070809]">
-        <div className="text-red-400 text-sm max-w-sm text-center">{error}</div>
+        <div role="alert" className="text-red-400 text-sm max-w-sm text-center">{error}</div>
       </div>
     );
   }
