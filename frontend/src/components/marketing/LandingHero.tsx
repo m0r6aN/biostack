@@ -122,7 +122,7 @@ export function LandingHero() {
             href="/tools"
             className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline focus-visible:outline-none focus-visible:ring-2 sm:text-base"
           >
-            Need to calculate dose volume or reconstitution? → Start here
+            Need to convert units or work out a volume? → Start here
           </Link>
           <Link
             href="/pricing"

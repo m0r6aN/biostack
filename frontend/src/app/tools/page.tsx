@@ -4,7 +4,7 @@ import { ToolsDecisionSurface } from '@/components/tools/ToolsDecisionSurface';
 import { createPublicPageMetadata } from '@/lib/site';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Dose, Mix, and Compatibility Tools | BioStack',
+  title: 'Unit, Volume, and Overlap Tools | BioStack',
   description: 'Free volume, concentration, unit-conversion, and compatibility calculations. No account required.',
   path: '/tools',
 });

@@ -315,7 +315,11 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
       setCompatibility(artifact.compatibilityFindings as InteractionFlag[]);
       setCompatibilityState(artifact.compatibilityFindings.length > 0 ? 'checked' : 'idle');
     }
-    setSaveMessage('Calculation opened. Edit any field, then save again.');
+    setSaveMessage(
+      artifact.calculatorType !== 'convert' && isTotalBasis(artifact.inputs.doseBasis)
+        ? 'Calculation opened. It was saved with a daily or weekly total, which is no longer offered, so enter the amount again.'
+        : 'Calculation opened. Edit any field, then save again.'
+    );
   }
 
   function deleteSaved(artifactId: string) {
@@ -374,7 +378,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Start here</p>
               <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                {heading ?? 'Dose it right. Mix correctly. Check compatibility.'}
+                {heading ?? 'Unit and volume math for the amounts you enter.'}
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
                 Free volume, concentration, unit-conversion, and compatibility calculations. No account required.
@@ -428,7 +432,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
-                  <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
+                  <NumberWithUnitField label="Amount to convert (entered by you)" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
@@ -438,8 +442,6 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                     {input.concentrationSource === 'known' && (
                       <NumberWithUnitField label="Known concentration" value={input.knownConcentration} unit={input.concentrationUnit} units={concentrationUnits} onValueChange={(knownConcentration) => setInput((current) => ({ ...current, knownConcentration }))} onUnitChange={(concentrationUnit) => setInput((current) => ({ ...current, concentrationUnit }))} />
                     )}
-                    <SelectField label="Dose basis" value={input.doseBasis} values={['per-dose', 'daily-total', 'weekly-total']} onChange={(doseBasis) => setInput((current) => ({ ...current, doseBasis }))} />
-                    <NumberField label={input.doseBasis === 'daily-total' ? 'Doses per day' : 'Doses per week'} value={input.splitCount} step="1" onChange={(splitCount) => setInput((current) => ({ ...current, splitCount }))} />
                   </div>
                 </details>
               </div>
@@ -479,10 +481,10 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
           )}
           {mode !== 'convert' && dosing.result && (
-            <section aria-labelledby="shots-per-vial-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-              <h3 id="shots-per-vial-title" className="text-base font-semibold text-white">Shots per vial</h3>
+            <section aria-labelledby="draws-per-vial-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h3 id="draws-per-vial-title" className="text-base font-semibold text-white">Draws per vial</h3>
               <p className="mt-2 text-sm leading-6 text-white/65">
-                There are exactly {formatNumber(dosing.result.shotsPerVialExact, 2)} shots of {formatNumber(dosing.result.u100UnitsPerAdministration, 2)} units ({formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL) in a {formatNumber(input.diluentVolumeMl)} mL vial, though practically you will get {Math.max(dosing.result.shotsPerVialWhole - 1, 0)} to {dosing.result.shotsPerVialWhole} shots depending on syringe math and vial waste.
+                {formatNumber(dosing.result.shotsPerVialExact, 2)} draws of {formatNumber(dosing.result.u100UnitsPerAdministration, 2)} units ({formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL) fit in {formatNumber(input.diluentVolumeMl)} mL of solution, by arithmetic on the values you entered. Syringe and vial losses are not included.
               </p>
             </section>
           )}
@@ -594,7 +596,11 @@ function CompoundChooser({
   }
 
   return (
-    <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+    <section aria-labelledby="compound-label-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+      <p id="compound-label-title" className="text-sm font-semibold text-white/80">Optional: label this calculation</p>
+      <p className="mb-4 mt-1 text-xs leading-5 text-white/50">
+        A compound name only labels what you save and feeds the overlap check. It never fills in an amount.
+      </p>
       {isAuthenticated && stackCompounds.length > 0 && (
         <label className="mb-4 block">
           <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300/70">From your stack</span>
@@ -978,6 +984,10 @@ function pairedNote(compound: string, additionalCompound: string, knowledge: Kno
   return pair ? 'Source data reports this pairing, but does not establish compatibility or safety.' : '';
 }
 
+function isTotalBasis(value: unknown): boolean {
+  return value === 'daily-total' || value === 'weekly-total';
+}
+
 function restoreDosingInput(inputs: Record<string, unknown>): UnifiedDosingInput {
   return {
     ...DEFAULT_UNIFIED_DOSING_INPUT,
@@ -987,10 +997,12 @@ function restoreDosingInput(inputs: Record<string, unknown>): UnifiedDosingInput
     concentrationSource: inputs.concentrationSource === 'known' ? 'known' : 'reconstitution',
     knownConcentration: numberFromInput(inputs.knownConcentration, DEFAULT_UNIFIED_DOSING_INPUT.knownConcentration),
     concentrationUnit: inputs.concentrationUnit === 'mg/mL' ? 'mg/mL' : 'mcg/mL',
-    desiredDose: numberFromInput(inputs.desiredDose, DEFAULT_UNIFIED_DOSING_INPUT.desiredDose),
+    // Daily and weekly totals are no longer offered. A saved total cannot be reinterpreted as a single
+    // amount, so it opens with the amount blank for the user to enter again.
+    desiredDose: isTotalBasis(inputs.doseBasis) ? DEFAULT_UNIFIED_DOSING_INPUT.desiredDose : numberFromInput(inputs.desiredDose, DEFAULT_UNIFIED_DOSING_INPUT.desiredDose),
     desiredDoseUnit: massUnitFromInput(inputs.desiredDoseUnit, DEFAULT_UNIFIED_DOSING_INPUT.desiredDoseUnit),
-    doseBasis: inputs.doseBasis === 'daily-total' || inputs.doseBasis === 'weekly-total' ? inputs.doseBasis : 'per-dose',
-    splitCount: numberFromInput(inputs.splitCount, DEFAULT_UNIFIED_DOSING_INPUT.splitCount),
+    doseBasis: 'per-dose',
+    splitCount: DEFAULT_UNIFIED_DOSING_INPUT.splitCount,
   };
 }
 
