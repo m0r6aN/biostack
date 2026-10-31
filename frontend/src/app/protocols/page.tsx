@@ -340,7 +340,7 @@ export default function ProtocolsPage() {
                   />
                 </div>
               ) : (
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {protocols.map((protocol) => (
                     <ProtocolCard key={protocol.id} protocol={protocol} />
                   ))}
@@ -356,7 +356,7 @@ export default function ProtocolsPage() {
               </p>
 
               {currentStack ? (
-                <div className="mt-4 grid gap-6 lg:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
                   <div className="min-w-0 space-y-6">
                     {saveForm}
                     <StackScoreCard score={currentStack.stackScore} />

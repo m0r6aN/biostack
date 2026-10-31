@@ -117,7 +117,7 @@ function ResearchTaxonomyHistoryContent() {
             </div>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <input
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
@@ -148,7 +148,7 @@ function ResearchTaxonomyHistoryContent() {
             ))}
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <TimelineStat label="All Events" value={entries.length} />
             <TimelineStat label="Taxonomy Saves" value={entries.filter((entry) => entry.action === 'save-taxonomy').length} />
             <TimelineStat label="Migration Applies" value={entries.filter((entry) => entry.action === 'apply-migration-fixup').length} />

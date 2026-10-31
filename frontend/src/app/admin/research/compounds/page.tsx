@@ -183,7 +183,7 @@ function CompoundListContent() {
       <Header title="Compound Review" subtitle="Research pipeline triage queue · Internal" />
       <PageMain className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
         {summary && manifest && (
-          <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
+          <section className="grid grid-cols-1 gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
             <aside className="flex flex-col gap-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto xl:pr-1">
               <FilterBar
                 researchRequestedCount={manifest.counts.researchRequested ?? summary.researchRequestCount ?? 0}
@@ -418,7 +418,7 @@ function ResearchRequestForm({ onRequested, categoryTaxonomy }: { onRequested: (
       <p className="mt-1 text-[11px] leading-5 text-white/50">Queue a new compound for initial evidence research.</p>
       <div className="mt-3 flex flex-col gap-2">
         <input value={compoundName} onChange={e => setCompoundName(e.target.value)} placeholder="Compound name" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
-        <div className="grid gap-2 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           <input value={requesterId} onChange={e => setRequesterId(e.target.value)} placeholder="Requester ID" className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none placeholder:text-white/50 focus:border-violet-300/40" />
           <select value={priority} onChange={e => setPriority(e.target.value as 'low' | 'normal' | 'high' | 'urgent')} className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none focus:border-violet-300/40">
             <option value="normal">Priority: normal</option>

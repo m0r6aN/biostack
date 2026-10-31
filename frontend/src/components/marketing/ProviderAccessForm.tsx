@@ -55,7 +55,7 @@ export function ProviderAccessForm() {
         Contact information only. Do not include client, health, compound, or protocol details.
       </p>
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+      <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Name" name="name" autoComplete="name" />
         <Field label="Work email" name="email" type="email" autoComplete="email" />
         <Field label="Organization" name="organization" autoComplete="organization" />

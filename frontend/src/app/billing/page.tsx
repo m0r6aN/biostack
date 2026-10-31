@@ -202,7 +202,7 @@ export default function BillingPage() {
               </section>
             )}
 
-            <section className="grid gap-4 md:grid-cols-2">
+            <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">Operator — {tierTagline('Operator')}</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Protocol scoring and analysis</h3>

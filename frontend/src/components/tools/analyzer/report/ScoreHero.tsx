@@ -170,7 +170,7 @@ export function ScoreHero({ result, scoreInsight, whatThisMeans }: ScoreHeroProp
       </button>
 
       {showWhyScore && (
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <ScoreChip label="Base" value={result.scoreExplanation.baseScore} tone="neutral" />
           <ScoreChip label="Synergy"      helpKey="synergy"      value={result.scoreExplanation.synergy}      tone="positive" />
           <ScoreChip label="Redundancy"   helpKey="redundancy"   value={result.scoreExplanation.redundancy}   tone="negative" />

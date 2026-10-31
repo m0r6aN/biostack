@@ -368,7 +368,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
   return (
     <PageMain className="pb-24 md:pb-0">
-      <section className="mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-12 lg:pt-12">
+      <section className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-6 px-4 pb-8 pt-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-12 lg:pt-12">
         <div className="space-y-5">
           {!compactIntro && (
             <div>
@@ -418,14 +418,14 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
 
             {mode === 'convert' ? (
-              <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_0.8fr_0.8fr]">
+              <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_0.8fr_0.8fr]">
                 <NumberField label="Value" value={conversion.amount} onChange={(amount) => setConversion((current) => ({ ...current, amount }))} />
                 <SelectField label="From" value={conversion.fromUnit} values={conversionUnits} onChange={(fromUnit) => setConversion((current) => ({ ...current, fromUnit }))} />
                 <SelectField label="To" value={conversion.toUnit} values={conversionUnits} onChange={(toUnit) => setConversion((current) => ({ ...current, toUnit }))} />
               </div>
             ) : (
               <div className="mt-5 space-y-5">
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
                   <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
@@ -433,7 +433,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
                   <summary className="cursor-pointer text-sm font-semibold text-white/78">Advanced controls</summary>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <SelectField label="Concentration source" value={input.concentrationSource} values={['reconstitution', 'known']} onChange={(concentrationSource) => setInput((current) => ({ ...current, concentrationSource }))} />
                     {input.concentrationSource === 'known' && (
                       <NumberWithUnitField label="Known concentration" value={input.knownConcentration} unit={input.concentrationUnit} units={concentrationUnits} onValueChange={(knownConcentration) => setInput((current) => ({ ...current, knownConcentration }))} onUnitChange={(concentrationUnit) => setInput((current) => ({ ...current, concentrationUnit }))} />
@@ -473,7 +473,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </section>
           )}
           {mode !== 'convert' && dosing.result && (
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
               <Metric label="Concentration" value={`${formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(dosing.result.concentrationMgPerMl, 4)} mg/mL`} />
             </div>
@@ -506,7 +506,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
           </MobileAccordion>
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button type="button" onClick={saveCalculation} disabled={mode === 'convert' ? conversionResult.empty : !dosing.result} className="rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-50">
                 Save this calculation
               </button>
@@ -616,7 +616,7 @@ function CompoundChooser({
       <form className="mt-4" onSubmit={submitSearch}>
         <label className="block">
           <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Search all compounds</span>
-          <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto]">
             <input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
@@ -683,7 +683,7 @@ function CompoundChooser({
 function ModeTabs({ mode, setMode }: { mode: SurfaceMode; setMode: (mode: SurfaceMode) => void }) {
   return (
     <div className="rounded-lg border border-white/10 bg-[#101820]/95 p-3">
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {(Object.keys(modeCopy) as SurfaceMode[]).map((item) => (
           <button key={item} type="button" onClick={() => setMode(item)} aria-pressed={mode === item} className={`rounded-lg px-3 py-3 text-left transition-colors ${mode === item ? 'bg-emerald-400 text-[#07110c]' : 'bg-white/[0.035] text-white/64 hover:bg-white/[0.07]'}`}>
             <span className="block text-sm font-bold">{modeCopy[item].label}</span>
@@ -746,7 +746,7 @@ function CompoundOverlapPanel({
     <div>
       <p className="text-sm leading-6 text-white/52">{COMPOUND_OVERLAP_COPY.helper}</p>
       <p className="mt-2 text-xs leading-5 text-white/50">{COMPOUND_OVERLAP_COPY.boundary}</p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
         <label className="block">
           <span className="mb-2 block text-sm text-white/62">Additional compound</span>
           <input list="biostack-overlap-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/50 focus:border-emerald-400/45" />

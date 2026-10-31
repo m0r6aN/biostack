@@ -456,7 +456,7 @@ function AiSuggestionCard({ suggestion, onApply }: { suggestion: AiReviewSuggest
       </div>
       <p className="text-[12px] leading-5 text-white/75">{suggestion.summary}</p>
 
-      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <SuggestionList title="Rationale" items={suggestion.rationale} />
         <SuggestionList title="Safety / review cautions" items={suggestion.safetyWarnings} />
         <SuggestionList title="Suggested claim IDs" items={suggestion.claimIdsToApprove} empty="No claim-level approvals suggested." />

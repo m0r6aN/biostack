@@ -73,7 +73,7 @@ export default function HowItWorksPage() {
         </section>
 
         <section className="border-y border-white/8 bg-black/15">
-          <div className="mx-auto grid max-w-7xl gap-4 px-5 py-10 sm:px-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid grid-cols-1 max-w-7xl gap-4 px-5 py-10 sm:px-8 md:grid-cols-2 lg:grid-cols-3">
             {provides.map((item) => (
               <div key={item} className="rounded-lg border border-white/8 bg-white/[0.03] p-4">
                 <p className="text-base leading-6 text-white/76">{item}</p>
@@ -86,7 +86,7 @@ export default function HowItWorksPage() {
 
         <section className="mx-auto grid max-w-7xl gap-5 px-5 py-10 sm:px-8 lg:py-14">
           {sections.map((section) => (
-            <article key={section.eyebrow} className="grid gap-5 border-b border-white/8 pb-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <article key={section.eyebrow} className="grid grid-cols-1 gap-5 border-b border-white/8 pb-8 lg:grid-cols-[0.8fr_1.2fr]">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300/68">
                   {section.eyebrow}

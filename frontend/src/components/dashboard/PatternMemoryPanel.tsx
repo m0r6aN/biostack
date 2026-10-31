@@ -60,7 +60,7 @@ export function PatternMemoryPanel({ snapshot, compact = false }: PatternMemoryP
       )}
 
       {comparison && (comparison.matchingSignals.length > 0 || comparison.divergentSignals.length > 0) && (
-        <div className="mt-4 grid gap-2 md:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
           {comparison.matchingSignals.slice(0, 3).map((signal) => (
             <p key={signal} className="rounded-lg border border-emerald-400/15 bg-emerald-500/[0.06] px-3 py-2 text-sm text-emerald-100/75">
               {signal}

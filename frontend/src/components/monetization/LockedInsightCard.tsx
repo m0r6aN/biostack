@@ -23,7 +23,7 @@ export function LockedInsightCard({ title, visibleInsight, lockedItems, cta, ret
         <div className="pointer-events-none absolute inset-0 bg-[#121923]/35 backdrop-blur-[2px]" />
         <div className="relative opacity-45">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">{title}</p>
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             {lockedItems.map((item) => (
               <div key={item} className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-3">
                 <p className="text-sm font-semibold text-white">{item}</p>

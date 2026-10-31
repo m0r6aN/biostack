@@ -57,7 +57,7 @@ function OriginalVsOptimizedSection({
           {result.score} vs {optimizedScore} · model delta {formatDelta(delta)}
         </span>
       </div>
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_auto_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto_1fr]">
         <ProtocolComparisonList title="Original protocol" entries={result.protocol} empty="No original compounds parsed." />
         <div className="hidden items-center justify-center text-white/50 lg:flex">vs</div>
         <ProtocolComparisonList

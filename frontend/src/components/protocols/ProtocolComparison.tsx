@@ -37,12 +37,12 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
       )}
 
       {summary && (
-        <div className="mt-5 grid gap-4 rounded-lg border border-emerald-400/15 bg-emerald-500/[0.04] p-4 lg:grid-cols-[220px_1fr_160px]">
+        <div className="mt-5 grid grid-cols-1 gap-4 rounded-lg border border-emerald-400/15 bg-emerald-500/[0.04] p-4 lg:grid-cols-[220px_1fr_160px]">
           <div>
             <p className="text-xs uppercase tracking-[0.14em] text-emerald-200/70">Active Run</p>
             <p className="mt-2 text-lg font-bold text-white">Started {summary.daysActive} day{summary.daysActive === 1 ? '' : 's'} ago</p>
           </div>
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {summary.signals.map((signal) => (
               <div key={signal.metric} className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.06] bg-white/[0.025] px-3 py-2">
                 <span className="text-sm text-white/65">{signal.metric}</span>
@@ -108,7 +108,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 md:grid-cols-2">
+      <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
         {comparison.actualTrends.map((trend) => (
           <div key={trend.metric} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-4">
             <div className="flex items-center justify-between gap-3">
@@ -123,7 +123,7 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
       </div>
 
       {comparison.insights.length > 0 && (
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
           {comparison.insights.map((insight) => (
             <div key={insight.message} className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-4">
               <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${insightClass(insight.type)}`}>

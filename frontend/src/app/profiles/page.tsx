@@ -389,7 +389,7 @@ export default function ProfilesPage() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
                 ['Recovered inputs', onboardingPreview.compounds.join(', ')],
                 ['Profile state', continuationStatuses?.profile.title ?? 'Pending'],

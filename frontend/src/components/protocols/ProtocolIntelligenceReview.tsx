@@ -34,7 +34,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
 
   return (
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
-      <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_280px]">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Protocol Review</p>
           <h2 className="mt-2 text-2xl font-black text-white">Lineage observations</h2>
@@ -49,7 +49,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         {review.sections.map((section) => (
           <article
             key={`${section.type}-${section.title}`}
@@ -75,7 +75,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
         ))}
       </div>
 
-      <div className="mt-6 grid gap-5 lg:grid-cols-[320px_1fr]">
+      <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
         <div>
           <h3 className="font-semibold text-white">Versions and runs</h3>
           <div className="mt-3 space-y-3">

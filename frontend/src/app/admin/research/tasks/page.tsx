@@ -141,7 +141,7 @@ function ResearchTasksPageContent() {
           </div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-6">
           <TaskStat label="Queued Tasks" value={taskQueue?.counts.totalItems ?? '—'} tone="neutral" />
           <TaskStat label="Consumed" value={taskQueue?.counts.resolvedItems ?? resolvedItems.length} tone="emerald" />
           <TaskStat label="Urgent" value={taskQueue?.counts.urgent ?? '—'} tone="rose" />
@@ -178,7 +178,7 @@ function ResearchTasksPageContent() {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-3">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <FilterSelect label="Priority" value={priorityFilter} onChange={setPriorityFilter} options={priorityOptions} />
             <FilterSelect label="Requester" value={requesterFilter} onChange={setRequesterFilter} options={requesterOptions} />
             <FilterSelect label="Category" value={categoryFilter} onChange={setCategoryFilter} options={categoryOptions} />
@@ -223,7 +223,7 @@ function ResearchTasksPageContent() {
               <p className="text-sm text-white/50">No queued task matches the current filters.</p>
             </GlassCard>
           ) : (
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {filteredActiveItems.map((item) => (
                 <TaskCard key={item.taskId} item={item} onCopy={() => copyTask(item)} />
               ))}
@@ -248,7 +248,7 @@ function ResearchTasksPageContent() {
               <p className="text-sm text-white/50">No consumed task matches the current filters.</p>
             </GlassCard>
           ) : (
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {filteredResolvedItems.map((item) => (
                 <ResolvedTaskCard key={item.taskId} item={item} />
               ))}
@@ -301,7 +301,7 @@ function TaskCard({ item, onCopy }: { item: ResearchTaskQueueItem; onCopy: () =>
 
       <TaskTags categories={item.categories ?? []} requesterIds={item.requesterIds} aliases={item.aliases} />
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <TaskMeta label="Target evidence path" value={item.targetEvidencePath} />
         <TaskMeta label="Required schema" value={item.requiredSchema} />
         <TaskMeta label="Request IDs" value={item.requestIds.join(', ') || 'None'} />
@@ -368,7 +368,7 @@ function ResolvedTaskCard({ item }: { item: ResearchTaskQueueResolvedItem }) {
 
       <TaskTags categories={item.categories ?? []} requesterIds={item.requesterIds} aliases={item.aliases} />
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <TaskMeta label="Target evidence path" value={item.targetEvidencePath} />
         <TaskMeta label="Resolution" value={item.resolution} />
         <TaskMeta label="Current readiness" value={item.currentReadiness} />

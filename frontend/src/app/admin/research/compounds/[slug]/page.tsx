@@ -259,7 +259,7 @@ export default function CompoundDetail() {
                     </button>
                   </div>
                 </div>
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <TaskMeta label="Target evidence path" value={queuedResearchTask.targetEvidencePath} />
                   <TaskMeta label="Required schema" value={queuedResearchTask.requiredSchema} />
                   <TaskMeta label="Request IDs" value={queuedResearchTask.requestIds.join(', ') || 'None'} />
@@ -310,7 +310,7 @@ export default function CompoundDetail() {
                     {consumedResearchTask.currentReadiness}
                   </span>
                 </div>
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <TaskMeta label="Target evidence path" value={consumedResearchTask.targetEvidencePath} />
                   <TaskMeta label="Resolution" value={consumedResearchTask.resolution} />
                   <TaskMeta label="Request IDs" value={consumedResearchTask.requestIds.join(', ') || 'None'} />

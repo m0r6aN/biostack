@@ -433,7 +433,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
         {step === 'goals' && (
           <motion.div
             key="goals"
-            className="mt-8 grid gap-6 lg:grid-cols-[1fr_0.84fr]"
+            className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_0.84fr]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
@@ -509,7 +509,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
           >
-            <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.08fr_0.92fr]">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <p className="text-sm font-medium text-emerald-200/85">Build a quick stack preview</p>
@@ -556,7 +556,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 {!isExistingMode && (
                   <div className="mt-6">
                     <p className="text-sm font-semibold text-white/78">Not sure yet? Start from an example</p>
-                    <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                       {starterStacks.map((starterStack) => (
                         <button
                           key={starterStack.id}
@@ -689,7 +689,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
         {step === 'aha' && (
           <motion.div
             key="aha"
-            className="mt-8 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]"
+            className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.08fr_0.92fr]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
@@ -740,7 +740,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 </div>
               )}
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-white/50">Selected stack</p>
                   <div className="mt-3 flex flex-wrap gap-2">

@@ -88,7 +88,7 @@ export function InteractionIntelligenceCard({
         </div>
       </div>
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-lg border border-emerald-400/15 bg-emerald-500/10 p-3">
           <p className="text-xs uppercase tracking-[0.16em] text-emerald-200/60"><HelpTip tipKey="synergy">Synergies</HelpTip></p>
           <p className="mt-2 text-2xl font-bold text-emerald-100">{summary.synergies}</p>

@@ -45,11 +45,11 @@ export function UnifiedDosingCalculator({
 
       </div>
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
+      <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="space-y-5">
           <fieldset className="space-y-4">
             <legend className="text-sm font-semibold text-white">Solution</legend>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <NumberWithUnitField
                 label="Powder amount"
                 value={input.powderAmount}
@@ -66,7 +66,7 @@ export function UnifiedDosingCalculator({
               />
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <ToggleButton
                 active={input.concentrationSource === 'reconstitution'}
                 label="Calculate concentration"
@@ -104,7 +104,7 @@ export function UnifiedDosingCalculator({
               onUnitChange={(unit) => setInput((current) => ({ ...current, desiredDoseUnit: unit }))}
             />
 
-            <div className="grid gap-3 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
               <DoseBasisButton
                 basis="per-dose"
                 current={input.doseBasis}
@@ -152,7 +152,7 @@ export function UnifiedDosingCalculator({
             <>
               <SyringeDrawVisualizer result={result} />
 
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Metric label="Concentration" value={`${formatNumber(result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(result.concentrationMgPerMl, 4)} mg/mL`} />
                 <Metric label="Per dose" value={formatDose(result.dosePerAdministrationMcg)} detail={`${formatNumber(result.dosePerTenthMlMcg)} mcg per 0.1 mL`} />
                 {Number.isFinite(input.splitCount) && (

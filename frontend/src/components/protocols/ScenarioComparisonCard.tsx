@@ -36,7 +36,7 @@ export function ScenarioComparisonCard({ intelligence }: ScenarioComparisonCardP
         </button>
       </div>
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-2">
+      <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
         {bestRemoval && (
           <ScenarioPanel
             eyebrow="Drop one"

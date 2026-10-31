@@ -14,7 +14,7 @@ export function SimulationTimeline({ simulation }: SimulationTimelineProps) {
 
       <div className="space-y-4">
         {simulation.timeline.map((entry) => (
-          <div key={entry.dayRange} className="grid gap-3 rounded-lg border border-white/[0.06] bg-white/[0.025] p-4 md:grid-cols-[96px_1fr]">
+          <div key={entry.dayRange} className="grid grid-cols-1 gap-3 rounded-lg border border-white/[0.06] bg-white/[0.025] p-4 md:grid-cols-[96px_1fr]">
             <div className="text-sm font-bold text-emerald-300">Day {entry.dayRange}</div>
             <div className="space-y-2">
               {entry.signals.map((signal) => (

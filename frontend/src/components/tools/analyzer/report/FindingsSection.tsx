@@ -113,14 +113,14 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
         </div>
 
         {/* Trust metrics strip (3 TrustMetrics: source type, confidence, items inferred) */}
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <TrustMetric label="Source type" value={sourceTypeLabel(result)} />
           <TrustMetric label="Confidence" value={confidenceLabel(result)} />
           <TrustMetric label="Items inferred" value={`${inferredCount} found, ${normalizedCount} normalized`} />
         </div>
 
         {/* Notes + artifact previews + extracted-text toggle */}
-        <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1fr]">
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr]">
           <div className="space-y-2 text-sm text-white/62">
             {result.sourceName ? <p>Source: {result.sourceName}</p> : null}
             {notes.length > 0
@@ -154,7 +154,7 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
       </section>
 
       {/* Findings list + parser notes */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FindingList
           title="Analysis findings"
           empty="More findings are available in Operator."

@@ -76,7 +76,7 @@ export default function MapMyStackPage() {
       <Header title="Map My Stack" subtitle="Paste compounds, preview relationships, unlock full stack intelligence" />
 
       <div className="max-w-6xl space-y-8 p-8">
-        <section className="grid gap-6 lg:grid-cols-[1fr_380px]">
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
           <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/65">Premium stack funnel</p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-white">Turn a list into an intelligence map.</h1>
@@ -115,7 +115,7 @@ export default function MapMyStackPage() {
         {loading && <LoadingState />}
 
         {compounds.length >= 2 && !loading && (
-          <section className="grid gap-6 lg:grid-cols-[1fr_420px]">
+          <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_420px]">
             <div className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -127,7 +127,7 @@ export default function MapMyStackPage() {
                 </span>
               </div>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {compounds.map((compound) => (
                   <div key={compound} className="rounded-lg border border-emerald-300/15 bg-emerald-400/[0.06] p-4">
                     <p className="font-bold text-white">{compound}</p>

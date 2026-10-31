@@ -72,7 +72,7 @@ export function StackReviewBoard({
       {/* ── Non-executable badge ── */}
       <NonExecutableBadge />
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_280px]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_280px]">
         <div className="space-y-4">
           {loading ? (
             <SrbLoadingSkeleton />

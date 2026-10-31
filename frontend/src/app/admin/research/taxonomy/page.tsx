@@ -197,7 +197,7 @@ export default function ResearchTaxonomyPage() {
           <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">{message}</div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <TaxonomyStat label="Version" value={taxonomy?.taxonomyVersion ?? '—'} />
           <TaxonomyStat label="Active" value={categories.filter((category) => !category.deprecated).length} />
           <TaxonomyStat label="Deprecated" value={categories.filter((category) => category.deprecated).length} />
@@ -225,7 +225,7 @@ export default function ResearchTaxonomyPage() {
           <div className="space-y-3">
             {categories.map((category, index) => (
               <div key={category.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                <div className="grid gap-3 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)_minmax(0,220px)_auto] lg:items-start">
+                <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)_minmax(0,220px)_auto] lg:items-start">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-white/50">Canonical name</label>
                     <input
@@ -299,7 +299,7 @@ export default function ResearchTaxonomyPage() {
 
           {migrationReport ? (
             <>
-              <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-6">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 xl:grid-cols-6">
                 <TaxonomyStat label="Deprecated Mappings" value={migrationReport.deprecatedCategories.length} />
                 <TaxonomyStat label="Request Files" value={migrationReport.counts.requestFilesScanned} />
                 <TaxonomyStat label="Request Hits" value={migrationReport.counts.requestFindings} />
@@ -316,7 +316,7 @@ export default function ResearchTaxonomyPage() {
                 <>
                   <div className="space-y-2">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">Deprecated mappings in use</p>
-                    <div className="grid gap-3 lg:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                       {migrationReport.deprecatedCategories.map((summary) => (
                         <div key={`${summary.deprecatedCategory}-${summary.replacementCategory}`} className="rounded-xl border border-amber-400/15 bg-amber-500/[0.05] px-4 py-3 text-sm text-white/80">
                           <p className="font-semibold text-amber-100">{summary.deprecatedCategory} → {summary.replacementCategory}</p>
@@ -357,7 +357,7 @@ export default function ResearchTaxonomyPage() {
           {migrationReceipt && (
             <div className="space-y-3">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">Last migration receipt</p>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <TaxonomyStat label="Files Updated" value={migrationReceipt.counts.totalFilesUpdated} />
                 <TaxonomyStat label="Request Files" value={migrationReceipt.counts.requestFilesUpdated} />
                 <TaxonomyStat label="Task Artifacts" value={migrationReceipt.counts.taskArtifactsUpdated} />

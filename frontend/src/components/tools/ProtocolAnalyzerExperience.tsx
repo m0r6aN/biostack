@@ -194,7 +194,7 @@ export function ProtocolAnalyzerExperience() {
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+      <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1.02fr_0.98fr]">
         <div className="space-y-5">
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.24)] sm:p-5">
             <div className="flex flex-wrap gap-2">
@@ -219,7 +219,7 @@ export function ProtocolAnalyzerExperience() {
               ))}
             </div>
 
-            <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_auto]">
+            <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto]">
               <div>
                 <h2 className="text-lg font-semibold text-white">{modeConfig.title}</h2>
                 <p className="mt-2 text-sm leading-6 text-white/58">{modeConfig.description}</p>
@@ -369,7 +369,7 @@ export function ProtocolAnalyzerExperience() {
           {result && <ExtractionNotesPanel result={result} />}
           <ParsedProtocolSection result={result} />
 
-          <section className="grid gap-4 md:grid-cols-2">
+          <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <ResultList title="What BioStack found" empty="No issues yet." items={result?.issues.map((issue) => issue.message) ?? []} />
             <ResultList title="Parser notes" empty="Parser confidence looks clean." items={result?.parserWarnings ?? buildParserWarnings(result)} />
           </section>
@@ -395,7 +395,7 @@ export function ProtocolAnalyzerExperience() {
               Why this score?
             </button>
             {showWhyScore && result && (
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <ScoreChip label="Base" value={result.scoreExplanation.baseScore} tone="neutral" />
                 <ScoreChip label="Synergy" value={result.scoreExplanation.synergy} tone="positive" />
                 <ScoreChip label="Redundancy" value={result.scoreExplanation.redundancy} tone="negative" />
@@ -513,7 +513,7 @@ function ExtractionNotesPanel({ result }: { result: ProtocolAnalyzerResult }) {
           {result.inputType}
         </span>
       </div>
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr]">
         <div className="space-y-2 text-sm text-white/62">
           {result.sourceName ? <p>Source: {result.sourceName}</p> : null}
           {notes.length > 0 ? notes.map((note) => <p key={note}>{note}</p>) : <p>Text extraction looked stable for this source.</p>}

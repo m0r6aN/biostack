@@ -11,7 +11,7 @@ export function DietLifestyleTab({ diet }: { diet: DietFramework }) {
       <h2 className="text-2xl font-semibold text-white">{diet.title}</h2>
       <p className="mt-1 text-white/55">{diet.summary}</p>
 
-      <div className="mt-6 grid gap-8 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2">
         <div>
           <h3 className="mb-3 flex items-center gap-2 font-semibold text-white">
             <Utensils className="h-4 w-4 text-emerald-400" />
