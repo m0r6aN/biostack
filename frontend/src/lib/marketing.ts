@@ -21,7 +21,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'Is BioStack medical advice?',
     answer:
-      'No. BioStack is an organizational and observational tool. It helps you track what you take, calculate doses accurately, and surface evidence from scientific literature. BioStack does not recommend compounds, suggest dosages, or provide clinical guidance.',
+      'No. BioStack is an organizational and observational tool. It helps you track what you take, convert the amounts you enter, and surface evidence from scientific literature. BioStack does not recommend compounds, suggest dosages, or provide clinical guidance.',
   },
   {
     question: 'What does BioStack actually do?',

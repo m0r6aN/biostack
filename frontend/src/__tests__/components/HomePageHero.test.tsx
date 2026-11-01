@@ -35,7 +35,7 @@ describe('HomePage hero', () => {
     expect(screen.getByRole('link', { name: /Analyze a protocol/ })).toHaveAttribute('href', '/tools/analyzer');
     // Exactly one entry path may target the analyzer (Round 1 F1: no duplicate destinations).
     expect(screen.getAllByRole('link', { name: /Analyze/ })).toHaveLength(1);
-    expect(screen.getByRole('link', { name: 'Need to calculate dose volume or reconstitution? → Start here' })).toHaveAttribute('href', '/tools');
+    expect(screen.getByRole('link', { name: 'Need to convert units or work out a volume? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByRole('link', { name: 'See Observer, Operator, and Commander' })).toHaveAttribute('href', '/pricing');
     expect(screen.getByText('Library')).toBeInTheDocument();
     expect(screen.getByText('Browse compound dossiers with evidence tiers, sources, and mechanism summaries.')).toBeInTheDocument();

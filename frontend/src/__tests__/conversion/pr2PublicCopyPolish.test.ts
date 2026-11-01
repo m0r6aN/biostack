@@ -15,9 +15,9 @@ const BANNED_RETIRED_PR2 = [
 // Curated allow-list only — not a codebase-wide grep.
 const TOUCHED_SURFACE_COPY = [
   // ToolsDecisionSurface hero H1
-  'Dose it right. Mix correctly. Check compatibility.',
-  // LandingHero dosage/mixing CTA
-  'Need to calculate dose volume or reconstitution? → Start here',
+  'Unit and volume math for the amounts you enter.',
+  // LandingHero unit and volume CTA
+  'Need to convert units or work out a volume? → Start here',
   // Providers page H1
   'A workspace for organizing and tracking client protocol records.',
   // Billing — Operator tier box heading (PR 2 rename)
@@ -58,11 +58,11 @@ describe('PR 2 public copy polish — retired copy must not appear in new string
     expect(hasEvolveCopy, 'no touched-surface string should contain "evolve"').toBe(false);
   });
 
-  it('tools hero H1 uses compatibility language, not a safety verdict', () => {
-    const heroH1 = TOUCHED_SURFACE_COPY.find((s) => s.startsWith('Dose it right'));
+  it('tools hero H1 uses conversion language, not a dose instruction or safety verdict', () => {
+    const heroH1 = TOUCHED_SURFACE_COPY.find((s) => s.startsWith('Unit and volume math'));
     expect(heroH1).toBeDefined();
-    expect(heroH1).toContain('Check compatibility');
-    expect(heroH1).not.toContain('Blend safely');
+    expect(heroH1).toContain('the amounts you enter');
+    expect(heroH1).not.toMatch(/dose it right|blend safely/i);
   });
 
   it('no prescriptive or verdict language present in new copy', () => {

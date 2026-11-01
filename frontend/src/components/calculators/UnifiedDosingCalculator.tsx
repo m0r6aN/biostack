@@ -1,5 +1,8 @@
 'use client';
 
+// UNUSED: no route renders this component. Do not wire it back in (see README.md in this folder).
+// It shows daily and weekly totals; the live calculator (components/tools/ToolsDecisionSurface.tsx) deliberately does not.
+
 import { useMemo, useState } from 'react';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
 import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';

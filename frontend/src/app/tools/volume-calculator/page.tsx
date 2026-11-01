@@ -4,8 +4,8 @@ import { PublicCalculatorExperience } from '@/components/marketing/PublicCalcula
 import { createPublicPageMetadata } from '@/lib/site';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Dose Volume Calculator | BioStack',
-  description: 'Calculate the draw volume for a target dose from a known concentration.',
+  title: 'Volume Calculator | BioStack',
+  description: 'Work out the volume that corresponds to an amount you enter, from a known concentration.',
   path: '/tools/volume-calculator',
 });
 
@@ -13,13 +13,13 @@ export default function VolumeCalculatorPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Use the BioStack Dose Volume Calculator',
-    description: 'Calculate the volume required for a target dose from concentration.',
+    name: 'Use the BioStack Volume Calculator',
+    description: 'Work out the volume that corresponds to an amount you enter, from a concentration.',
     step: [
-      { '@type': 'HowToStep', text: 'Enter the target dose in micrograms.' },
+      { '@type': 'HowToStep', text: 'Enter the amount to convert, in micrograms.' },
       { '@type': 'HowToStep', text: 'Use the calculated concentration or enter a known concentration.' },
-      { '@type': 'HowToStep', text: 'Choose per-dose, daily total, or weekly total splitting.' },
-      { '@type': 'HowToStep', text: 'Review the exact draw volume and schedule totals.' },
+      { '@type': 'HowToStep', text: 'Choose the units for each value you enter.' },
+      { '@type': 'HowToStep', text: 'Review the volume and syringe units that correspond to the entered amount.' },
     ],
   };
 
